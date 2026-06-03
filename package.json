@@ -1,0 +1,13 @@
+{
+  "name": "easy-italia-hub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Easy Italia Hub — landing page + AI Consigliere (Claude API + RAG)",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1"
+  }
+}

@@ -214,6 +214,61 @@ body{
 .nav-cta:hover{opacity:.88;transform:translateY(-2px)}
 .nav-cta:active{transform:scale(0.97)}
 .nav-cta:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:var(--radius-full)}
+/* Desktop: collapse is transparent (children act as direct nav flex items) */
+.nav-collapse{display:contents}
+/* Hamburger toggle (hidden on desktop) */
+.nav-toggle{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:44px;height:44px;padding:0 10px;border:none;background:none;cursor:pointer;
+  border-radius:var(--radius-sm);
+}
+.nav-toggle span{
+  display:block;height:2px;width:100%;border-radius:2px;background:var(--ink);
+  transition:transform var(--dur-std) var(--ease-spring),opacity var(--dur-micro);
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-toggle:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+/* ─── LANGUAGE SWITCHER ─── */
+.lang-switch{position:relative}
+.lang-btn{
+  display:inline-flex;align-items:center;gap:.35rem;
+  padding:.4rem .6rem;border-radius:var(--radius-sm);
+  border:1px solid var(--border);background:var(--surface);cursor:pointer;
+  font-family:inherit;font-size:var(--text-sm);font-weight:500;color:var(--ink);
+  min-height:38px;
+  transition:background var(--dur-micro),border-color var(--dur-micro);
+}
+.lang-btn:hover{background:var(--surface-hover);border-color:var(--border-bright)}
+.lang-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.lang-flag{font-size:1rem;line-height:1}
+.lang-code{letter-spacing:.04em}
+.lang-chevron{width:14px;height:14px;stroke:var(--fg-muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--dur-std) var(--ease-spring)}
+.lang-btn[aria-expanded="true"] .lang-chevron{transform:rotate(180deg)}
+.lang-menu{
+  position:absolute;top:calc(100% + .4rem);right:0;z-index:210;
+  min-width:160px;list-style:none;padding:.35rem;
+  border-radius:var(--radius-sm);border:1px solid var(--border-bright);
+  background:#fffdf9;
+  box-shadow:0 16px 40px rgba(20,30,48,.16);
+  transform:translateY(-8px) scale(.97);transform-origin:top right;
+  opacity:0;pointer-events:none;
+  transition:transform var(--dur-std) var(--ease-spring),opacity var(--dur-micro);
+}
+.lang-menu.open{transform:translateY(0) scale(1);opacity:1;pointer-events:auto}
+.lang-menu button{
+  display:flex;align-items:center;gap:.6rem;width:100%;
+  padding:.55rem .7rem;border:none;background:none;cursor:pointer;
+  font-family:inherit;font-size:var(--text-sm);color:var(--ink);text-align:left;
+  border-radius:8px;min-height:40px;
+  transition:background var(--dur-micro);
+}
+.lang-menu button:hover{background:var(--surface-hover)}
+.lang-menu button:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+.lang-menu button[aria-current="true"]{background:var(--gold-dim);font-weight:600}
+.lang-menu button span{font-size:1.05rem}
 
 /* ─── HERO ─── */
 .hero{
@@ -782,10 +837,93 @@ footer{
 .footer-legal a:hover{color:var(--fg)}
 .footer-legal a:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:3px}
 
-@media(max-width:860px){
-  .footer-inner{grid-template-columns:1fr 1fr}
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE — breakpoints 1440 / 1024 / 768 / 480
+   PC ≥1024 · Tablet 768-1023 · Mobile ≤767
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Large desktop cap ── */
+@media(min-width:1441px){
+  .hero,.features,.members,.cta-section,.ad-section,.footer-inner,.footer-bottom{max-width:1380px;margin-left:auto;margin-right:auto}
+}
+
+/* ── TABLET & below (<1024): hamburger nav ── */
+@media(max-width:1023px){
+  .nav-toggle{display:flex}
+  .site-nav{padding:var(--sp-2) var(--sp-3)}
+  /* collapse becomes a dropdown panel */
+  .nav-collapse{
+    display:flex;flex-direction:column;align-items:stretch;gap:var(--sp-2);
+    position:absolute;top:100%;left:0;right:0;
+    padding:var(--sp-3);
+    background:rgba(255,253,249,0.98);
+    backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);
+    border-bottom:1px solid var(--border);
+    box-shadow:0 16px 40px rgba(20,30,48,.12);
+    transform:translateY(-12px);opacity:0;pointer-events:none;
+    transition:transform var(--dur-std) var(--ease-spring),opacity var(--dur-micro);
+  }
+  .nav-collapse.open{transform:translateY(0);opacity:1;pointer-events:auto}
+  .nav-links{flex-direction:column;gap:0}
+  .nav-links li{border-bottom:1px solid var(--border)}
+  .nav-links a{display:block;padding:.85rem .25rem;font-size:var(--text-base)}
+  .nav-right{flex-direction:column;align-items:stretch;gap:var(--sp-1);margin-top:var(--sp-1)}
+  .nav-login,.nav-cta{width:100%;text-align:center;padding:.75rem 1rem;min-height:44px}
+}
+
+/* ── TABLET (768-1023): hero stacks, grids shrink ── */
+@media(max-width:1023px){
+  .hero{
+    grid-template-columns:1fr;gap:var(--sp-4);
+    min-height:auto;padding:calc(var(--sp-6) + 1.5rem) var(--sp-3) var(--sp-4);
+    text-align:center;
+  }
+  .hero-left{max-width:640px;margin:0 auto}
+  .eyebrow{justify-content:center}
+  .hero-actions{justify-content:center}
+  .hero-stats{justify-content:center;flex-wrap:wrap;gap:var(--sp-3)}
+  .hero-right{max-width:560px;margin:0 auto;width:100%}
+  .feat-grid{grid-template-columns:repeat(2,1fr)}
+  .features,.members,.cta-section,.ad-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}
+  .footer-inner{grid-template-columns:1fr 1fr;padding-left:var(--sp-3);padding-right:var(--sp-3)}
+  .footer-bottom{padding-left:var(--sp-3);padding-right:var(--sp-3)}
+}
+
+/* ── MOBILE (≤767): single column everywhere ── */
+@media(max-width:767px){
+  .cards-grid{grid-template-columns:1fr;gap:var(--sp-2)}
+  .feat-grid{grid-template-columns:1fr}
   .plans,.ad-grid{grid-template-columns:1fr}
-  .nav-links{display:none}
+  .hero-stats{gap:var(--sp-2) var(--sp-4)}
+  .hero-stats>div{flex:0 0 40%}
+  .footer-inner{grid-template-columns:1fr;gap:var(--sp-3);text-align:left}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:var(--sp-1)}
+  .footer-legal{flex-wrap:wrap;gap:.75rem var(--sp-2)}
+  .modal{padding:var(--sp-3)}
+  .modal-title{font-size:var(--text-xl)}
+  /* chat panel fills width on phones */
+  #chat-panel{right:1rem;left:1rem;width:auto;bottom:5rem}
+  /* keep CTA buttons full-width-friendly */
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .hero-actions .btn-primary,.hero-actions .btn-ghost{justify-content:center}
+}
+
+/* ── SMALL MOBILE (≤480): tighten spacing & type ── */
+@media(max-width:480px){
+  html{font-size:15px}
+  .site-nav{padding:var(--sp-1) var(--sp-2)}
+  .hero{padding:calc(var(--sp-5) + 1.5rem) var(--sp-2) var(--sp-3)}
+  .features,.members,.cta-section,.ad-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
+  .footer-inner,.footer-bottom{padding-left:var(--sp-2);padding-right:var(--sp-2)}
+  .hero-stats>div{flex:0 0 45%}
+  .cta-card{padding:var(--sp-4) var(--sp-2)}
+  #to-top{bottom:1rem;left:1rem;width:44px;height:44px}
+  #chat-btn{bottom:1rem;right:1rem}
+}
+
+/* ── Landscape phones: cap hero height ── */
+@media(max-height:520px) and (orientation:landscape){
+  .hero{min-height:auto;padding-top:calc(var(--sp-5) + 1rem)}
 }
 
 /* ─── BACK TO TOP ─── */
@@ -808,6 +946,16 @@ footer{
 #to-top:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 #to-top svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 
+/* ─── Chat typing indicator ─── */
+.bubble.typing{display:inline-flex;gap:4px;align-items:center;padding:.7rem .9rem}
+.bubble.typing span{
+  width:6px;height:6px;border-radius:50%;background:var(--fg-muted);
+  animation:typingDot 1.2s ease-in-out infinite;
+}
+.bubble.typing span:nth-child(2){animation-delay:.18s}
+.bubble.typing span:nth-child(3){animation-delay:.36s}
+@keyframes typingDot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+
 /* sr-only utility */
 .sr{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
@@ -822,16 +970,33 @@ footer{
 <!-- NAV -->
 <nav class="site-nav" aria-label="Navigazione principale">
   <a href="#" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a>
-  <ul class="nav-links">
-    <li><a href="#">Guide</a></li>
-    <li><a href="#">Community</a></li>
-    <li><a href="#">AI Assistant</a></li>
-    <li><a href="#">News</a></li>
-    <li><a href="#">Mappa</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="nav-login" onclick="openAuth('login')">Accedi</button>
-    <button class="nav-cta" onclick="openAuth('signup')">Registrati gratis</button>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-collapse" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-collapse" id="nav-collapse">
+    <ul class="nav-links">
+      <li><a href="#" data-i18n="nav.guide">Guide</a></li>
+      <li><a href="#" data-i18n="nav.community">Community</a></li>
+      <li><a href="#" data-i18n="nav.ai">AI Assistant</a></li>
+      <li><a href="#" data-i18n="nav.news">News</a></li>
+      <li><a href="#" data-i18n="nav.map">Mappa</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-switch">
+        <button class="lang-btn" id="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Seleziona lingua / Select language" onclick="toggleLang(event)">
+          <span class="lang-flag" id="lang-flag">🇮🇹</span>
+          <span class="lang-code" id="lang-code">IT</span>
+          <svg class="lang-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="lang-menu" id="lang-menu" role="menu" aria-label="Lingue">
+          <li role="none"><button role="menuitem" onclick="setLang('it')"><span>🇮🇹</span> Italiano</button></li>
+          <li role="none"><button role="menuitem" onclick="setLang('en')"><span>🇬🇧</span> English</button></li>
+          <li role="none"><button role="menuitem" onclick="setLang('si')"><span>🇱🇰</span> සිංහල</button></li>
+        </ul>
+      </div>
+      <button class="nav-login" onclick="openAuth('login')" data-i18n="nav.login">Accedi</button>
+      <button class="nav-cta" onclick="openAuth('signup')" data-i18n="nav.signup">Registrati gratis</button>
+    </div>
   </div>
 </nav>
 
@@ -840,36 +1005,36 @@ footer{
 <!-- ─── HERO ─── -->
 <section class="hero" aria-labelledby="hero-heading">
   <div class="hero-left">
-    <p class="eyebrow" aria-label="La comunità srilankese in Italia">
+    <p class="eyebrow">
       <span class="eyebrow-line" aria-hidden="true"></span>
-      La comunità srilankese in Italia
+      <span data-i18n="hero.eyebrow">La comunità srilankese in Italia</span>
       <span class="eyebrow-line" aria-hidden="true"></span>
     </p>
 
-    <h1 id="hero-heading">
+    <h1 id="hero-heading" data-i18n-html="hero.title">
       La tua casa<br/>
       <em>digitale</em><br/>
       in Italia
     </h1>
 
-    <p class="hero-sub">Guide burocratiche, assistente AI multilingua, community di supporto e news aggiornate — in italiano, inglese, sinhala e tamil.</p>
+    <p class="hero-sub" data-i18n="hero.sub">Guide burocratiche, assistente AI multilingua, community di supporto e news aggiornate — in italiano, inglese, sinhala e tamil.</p>
 
     <div class="hero-actions">
       <a href="#" class="btn-primary">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        Inizia gratis
+        <span data-i18n="hero.cta1">Inizia gratis</span>
       </a>
       <a href="#" class="btn-ghost">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
-        Esplora le guide
+        <span data-i18n="hero.cta2">Esplora le guide</span>
       </a>
     </div>
 
     <dl class="hero-stats">
-      <div><dt class="stat-l">Utenti attivi</dt><dd class="stat-n">12K+</dd></div>
-      <div><dt class="stat-l">Guide pratiche</dt><dd class="stat-n">48+</dd></div>
-      <div><dt class="stat-l">Lingue</dt><dd class="stat-n">4</dd></div>
-      <div><dt class="stat-l">Soddisfazione</dt><dd class="stat-n">98%</dd></div>
+      <div><dt class="stat-l" data-i18n="hero.stat1">Utenti attivi</dt><dd class="stat-n">12K+</dd></div>
+      <div><dt class="stat-l" data-i18n="hero.stat2">Guide pratiche</dt><dd class="stat-n">48+</dd></div>
+      <div><dt class="stat-l" data-i18n="hero.stat3">Lingue</dt><dd class="stat-n">4</dd></div>
+      <div><dt class="stat-l" data-i18n="hero.stat4">Soddisfazione</dt><dd class="stat-n">98%</dd></div>
     </dl>
   </div>
 
@@ -885,9 +1050,9 @@ footer{
           <div class="card-img-fade" aria-hidden="true"></div>
         </div>
         <div class="card-body">
-          <span class="card-tag" style="background:rgba(27,79,140,.55);color:#93c5fd">Burocrazia</span>
-          <p class="card-title">Permesso di Soggiorno</p>
-          <p class="card-sub">Guida completa al rinnovo</p>
+          <span class="card-tag" style="background:rgba(27,79,140,.55);color:#93c5fd" data-i18n="card1.tag">Burocrazia</span>
+          <p class="card-title" data-i18n="card1.title">Permesso di Soggiorno</p>
+          <p class="card-sub" data-i18n="card1.sub">Guida completa al rinnovo</p>
         </div>
       </article>
 
@@ -899,9 +1064,9 @@ footer{
           <div class="card-img-fade" aria-hidden="true"></div>
         </div>
         <div class="card-body">
-          <span class="card-tag" style="background:rgba(109,40,217,.5);color:#d8b4fe">AI</span>
-          <p class="card-title">Assistente AI</p>
-          <p class="card-sub">Risposte in 4 lingue 24/7</p>
+          <span class="card-tag" style="background:rgba(109,40,217,.5);color:#d8b4fe" data-i18n="card2.tag">AI</span>
+          <p class="card-title" data-i18n="card2.title">Assistente AI</p>
+          <p class="card-sub" data-i18n="card2.sub">Risposte in 4 lingue 24/7</p>
         </div>
       </article>
 
@@ -913,9 +1078,9 @@ footer{
           <div class="card-img-fade" aria-hidden="true"></div>
         </div>
         <div class="card-body">
-          <span class="card-tag" style="background:rgba(0,120,55,.5);color:#86efac">Community</span>
-          <p class="card-title">Community</p>
-          <p class="card-sub">5.000+ persone attive</p>
+          <span class="card-tag" style="background:rgba(0,120,55,.5);color:#86efac" data-i18n="card3.tag">Community</span>
+          <p class="card-title" data-i18n="card3.title">Community</p>
+          <p class="card-sub" data-i18n="card3.sub">5.000+ persone attive</p>
         </div>
       </article>
 
@@ -927,9 +1092,9 @@ footer{
           <div class="card-img-fade" aria-hidden="true"></div>
         </div>
         <div class="card-body">
-          <span class="card-tag" style="background:rgba(161,98,7,.55);color:#fde68a">Finanza</span>
-          <p class="card-title">Money Transfer</p>
-          <p class="card-sub">Wise, Ria, Western Union</p>
+          <span class="card-tag" style="background:rgba(161,98,7,.55);color:#fde68a" data-i18n="card4.tag">Finanza</span>
+          <p class="card-title" data-i18n="card4.title">Money Transfer</p>
+          <p class="card-sub" data-i18n="card4.sub">Wise, Ria, Western Union</p>
         </div>
       </article>
 
@@ -940,10 +1105,10 @@ footer{
 <!-- ─── AD SLOT: Leaderboard ─── -->
 <section class="ad-section" aria-label="Spazio pubblicitario">
   <div class="ad-slot ad-leaderboard">
-    <span class="ad-label">Pubblicità</span>
+    <span class="ad-label" data-i18n="ad.label">Pubblicità</span>
     <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg></div>
-    <p class="ad-text">Il tuo annuncio qui — raggiungi 12.000+ utenti della community</p>
-    <button class="ad-cta" onclick="openPricing()">Acquista questo spazio →</button>
+    <p class="ad-text" data-i18n="ad.lead">Il tuo annuncio qui — raggiungi 12.000+ utenti della community</p>
+    <button class="ad-cta" onclick="openPricing()" data-i18n="ad.buy">Acquista questo spazio →</button>
   </div>
 </section>
 
@@ -951,61 +1116,61 @@ footer{
 
 <!-- ─── FEATURES ─── -->
 <section class="features" aria-labelledby="features-heading">
-  <p class="section-label">Cosa offriamo</p>
-  <h2 id="features-heading" class="section-title">Tutto ciò di cui hai bisogno,<br/><em>in un unico posto</em></h2>
-  <p class="section-sub">Dalla burocrazia all'integrazione quotidiana — ti supportiamo in ogni passo del tuo percorso.</p>
+  <p class="section-label" data-i18n="feat.label">Cosa offriamo</p>
+  <h2 id="features-heading" class="section-title" data-i18n-html="feat.heading">Tutto ciò di cui hai bisogno,<br/><em>in un unico posto</em></h2>
+  <p class="section-sub" data-i18n="feat.sub">Dalla burocrazia all'integrazione quotidiana — ti supportiamo in ogni passo del tuo percorso.</p>
   <div class="feat-grid">
     <div class="feat" tabindex="0">
       <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="13" y2="15"/></svg></div>
-      <h3 class="feat-title">Guide Burocratiche</h3>
-      <p class="feat-desc">Permesso di soggiorno, codice fiscale, SPID, residenza — guide passo-passo con checklist scaricabili.</p>
+      <h3 class="feat-title" data-i18n="feat1.title">Guide Burocratiche</h3>
+      <p class="feat-desc" data-i18n="feat1.desc">Permesso di soggiorno, codice fiscale, SPID, residenza — guide passo-passo con checklist scaricabili.</p>
     </div>
     <div class="feat" tabindex="0">
       <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></div>
-      <h3 class="feat-title">Assistente AI Multilingua</h3>
-      <p class="feat-desc">Risposte immediate in italiano, inglese, sinhala e tamil. Disponibile 24 ore su 24, 7 giorni su 7.</p>
+      <h3 class="feat-title" data-i18n="feat2.title">Assistente AI Multilingua</h3>
+      <p class="feat-desc" data-i18n="feat2.desc">Risposte immediate in italiano, inglese, sinhala e tamil. Disponibile 24 ore su 24, 7 giorni su 7.</p>
     </div>
     <div class="feat" tabindex="0">
       <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-      <h3 class="feat-title">Community Attiva</h3>
-      <p class="feat-desc">5.000+ persone che si supportano ogni giorno. Trova risposte, condividi esperienze, cresci insieme.</p>
+      <h3 class="feat-title" data-i18n="feat3.title">Community Attiva</h3>
+      <p class="feat-desc" data-i18n="feat3.desc">5.000+ persone che si supportano ogni giorno. Trova risposte, condividi esperienze, cresci insieme.</p>
     </div>
     <div class="feat" tabindex="0">
       <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-      <h3 class="feat-title">Money Transfer</h3>
-      <p class="feat-desc">Confronta Wise, Western Union e Ria in tempo reale. Risparmia sulle rimesse verso lo Sri Lanka.</p>
+      <h3 class="feat-title" data-i18n="feat4.title">Money Transfer</h3>
+      <p class="feat-desc" data-i18n="feat4.desc">Confronta Wise, Western Union e Ria in tempo reale. Risparmia sulle rimesse verso lo Sri Lanka.</p>
     </div>
     <div class="feat" tabindex="0">
       <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
-      <h3 class="feat-title">Mappa dei Servizi</h3>
-      <p class="feat-desc">CAF, patronati, negozi e luoghi di culto srilankesi nelle principali città italiane.</p>
+      <h3 class="feat-title" data-i18n="feat5.title">Mappa dei Servizi</h3>
+      <p class="feat-desc" data-i18n="feat5.desc">CAF, patronati, negozi e luoghi di culto srilankesi nelle principali città italiane.</p>
     </div>
     <div class="feat" tabindex="0">
       <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3"/><polyline points="17 2 17 8 23 8"/><path d="M21 12V6l-4-4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7"/></svg></div>
-      <h3 class="feat-title">News Aggiornate</h3>
-      <p class="feat-desc">Leggi, decreti e opportunità per la comunità srilankese. Aggiornato ogni giorno.</p>
+      <h3 class="feat-title" data-i18n="feat6.title">News Aggiornate</h3>
+      <p class="feat-desc" data-i18n="feat6.desc">Leggi, decreti e opportunità per la comunità srilankese. Aggiornato ogni giorno.</p>
     </div>
   </div>
 
   <!-- ─── AD SLOTS: Rectangles ─── -->
   <div class="ad-grid">
     <div class="ad-slot ad-rect">
-      <span class="ad-label">Sponsorizzato</span>
+      <span class="ad-label" data-i18n="ad.sponsor">Sponsorizzato</span>
       <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-      <p class="ad-text">Spazio ad — 300×250</p>
-      <button class="ad-cta" onclick="openPricing()">Prenota →</button>
+      <p class="ad-text" data-i18n="ad.slot">Spazio ad — 300×250</p>
+      <button class="ad-cta" onclick="openPricing()" data-i18n="ad.book">Prenota →</button>
     </div>
     <div class="ad-slot ad-rect">
-      <span class="ad-label">Sponsorizzato</span>
+      <span class="ad-label" data-i18n="ad.sponsor">Sponsorizzato</span>
       <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-      <p class="ad-text">Spazio ad — 300×250</p>
-      <button class="ad-cta" onclick="openPricing()">Prenota →</button>
+      <p class="ad-text" data-i18n="ad.slot">Spazio ad — 300×250</p>
+      <button class="ad-cta" onclick="openPricing()" data-i18n="ad.book">Prenota →</button>
     </div>
     <div class="ad-slot ad-rect">
-      <span class="ad-label">Sponsorizzato</span>
+      <span class="ad-label" data-i18n="ad.sponsor">Sponsorizzato</span>
       <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-      <p class="ad-text">Spazio ad — 300×250</p>
-      <button class="ad-cta" onclick="openPricing()">Prenota →</button>
+      <p class="ad-text" data-i18n="ad.slot">Spazio ad — 300×250</p>
+      <button class="ad-cta" onclick="openPricing()" data-i18n="ad.book">Prenota →</button>
     </div>
   </div>
 </section>
@@ -1019,18 +1184,18 @@ footer{
     <div class="avatar">R</div><div class="avatar">P</div>
     <div class="avatar" style="background:rgba(255,255,255,.08);color:var(--fg-muted);font-family:'Inter',sans-serif;font-size:.65rem">+12K</div>
   </div>
-  <p class="member-count" id="members-heading"><strong>12.000+ utenti</strong> già nella community</p>
-  <p class="section-sub" style="margin:0 auto var(--sp-4);text-align:center;max-width:420px">Unisciti a migliaia di srilankesi che vivono e lavorano in Italia. Insieme è più facile.</p>
+  <p class="member-count" id="members-heading" data-i18n-html="members.count"><strong>12.000+ utenti</strong> già nella community</p>
+  <p class="section-sub" style="margin:0 auto var(--sp-4);text-align:center;max-width:420px" data-i18n="members.sub">Unisciti a migliaia di srilankesi che vivono e lavorano in Italia. Insieme è più facile.</p>
 </section>
 
 <!-- ─── CTA ─── -->
 <section class="cta-section" aria-labelledby="cta-heading">
   <div class="cta-card">
-    <h2 id="cta-heading" class="cta-title">Pronto a iniziare<br/><em style="font-style:italic;color:var(--gold)">il tuo percorso?</em></h2>
-    <p class="cta-sub">Registrati gratis. Nessuna carta di credito richiesta.</p>
+    <h2 id="cta-heading" class="cta-title" data-i18n-html="cta.title">Pronto a iniziare<br/><em style="font-style:italic;color:var(--gold)">il tuo percorso?</em></h2>
+    <p class="cta-sub" data-i18n="cta.sub">Registrati gratis. Nessuna carta di credito richiesta.</p>
     <div class="cta-btns">
-      <a href="#" class="btn-primary">Crea il tuo account gratuito</a>
-      <a href="#" class="btn-ghost">Scopri come funziona</a>
+      <a href="#" class="btn-primary" data-i18n="cta.btn1">Crea il tuo account gratuito</a>
+      <a href="#" class="btn-ghost" data-i18n="cta.btn2">Scopri come funziona</a>
     </div>
   </div>
 </section>
@@ -1042,42 +1207,42 @@ footer{
   <div class="footer-inner">
     <div class="footer-brand">
       <a href="#" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a>
-      <p class="footer-tag">La casa digitale della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.</p>
+      <p class="footer-tag" data-i18n="footer.tag">La casa digitale della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.</p>
     </div>
     <div class="footer-col">
-      <h4>Prodotto</h4>
+      <h4 data-i18n="footer.product">Prodotto</h4>
       <ul>
-        <li><a href="#">Guide</a></li>
-        <li><a href="#">Assistente AI</a></li>
-        <li><a href="#">Community</a></li>
-        <li><a href="#">Mappa servizi</a></li>
+        <li><a href="#" data-i18n="nav.guide">Guide</a></li>
+        <li><a href="#" data-i18n="footer.aiAssistant">Assistente AI</a></li>
+        <li><a href="#" data-i18n="nav.community">Community</a></li>
+        <li><a href="#" data-i18n="footer.mapServices">Mappa servizi</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Azienda</h4>
+      <h4 data-i18n="footer.company">Azienda</h4>
       <ul>
-        <li><a href="#">Chi siamo</a></li>
-        <li><a href="#">News</a></li>
-        <li><button class="nav-login" style="padding:0" onclick="openPricing()">Pubblicità</button></li>
-        <li><a href="#">Contatti</a></li>
+        <li><a href="#" data-i18n="footer.about">Chi siamo</a></li>
+        <li><a href="#" data-i18n="nav.news">News</a></li>
+        <li><button class="nav-login" style="padding:0" onclick="openPricing()" data-i18n="footer.advertising">Pubblicità</button></li>
+        <li><a href="#" data-i18n="footer.contact">Contatti</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Account</h4>
+      <h4 data-i18n="footer.account">Account</h4>
       <ul>
-        <li><button class="nav-login" style="padding:0" onclick="openAuth('login')">Accedi</button></li>
-        <li><button class="nav-login" style="padding:0" onclick="openAuth('signup')">Registrati</button></li>
-        <li><a href="#">Abbonamenti</a></li>
+        <li><button class="nav-login" style="padding:0" onclick="openAuth('login')" data-i18n="nav.login">Accedi</button></li>
+        <li><button class="nav-login" style="padding:0" onclick="openAuth('signup')" data-i18n="footer.register">Registrati</button></li>
+        <li><a href="#" data-i18n="footer.subscriptions">Abbonamenti</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p class="footer-copy">© 2026 Easy Italia Hub. Tutti i diritti riservati.</p>
+    <p class="footer-copy" data-i18n="footer.copy">© 2026 Easy Italia Hub. Tutti i diritti riservati.</p>
     <nav class="footer-legal" aria-label="Note legali">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Cookie Policy</a>
-      <a href="#">Termini di Servizio</a>
-      <a href="#">Note legali</a>
+      <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
+      <a href="#" data-i18n="footer.cookie">Cookie Policy</a>
+      <a href="#" data-i18n="footer.terms">Termini di Servizio</a>
+      <a href="#" data-i18n="footer.legal">Note legali</a>
     </nav>
   </div>
 </footer>
@@ -1188,8 +1353,8 @@ footer{
       <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14H11v-2h2zm0-4H11V7h2z"/></svg>
     </div>
     <div>
-      <div class="ch-name">Assistente Easy Italia</div>
-      <div class="ch-status" role="status" aria-label="Stato: online">Online ora</div>
+      <div class="ch-name" data-i18n="chat.name">Assistente Easy Italia</div>
+      <div class="ch-status" role="status" aria-label="Stato: online" data-i18n="chat.status">Online ora</div>
     </div>
     <button class="ch-x" onclick="toggleChat()" aria-label="Chiudi assistente">
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -1198,25 +1363,25 @@ footer{
 
   <div class="ch-msgs" id="ch-msgs" role="log" aria-label="Messaggi">
     <div class="msg bot">
-      <div class="bubble">Ciao! Sono l'assistente di Easy Italia Hub. Come posso aiutarti oggi?</div>
-      <div class="ts">Ora</div>
+      <div class="bubble" data-i18n="chat.welcome1">Ciao! Sono l'assistente di Easy Italia Hub. Come posso aiutarti oggi?</div>
+      <div class="ts" data-i18n="chat.now">Ora</div>
     </div>
     <div class="msg bot">
-      <div class="bubble">Posso risponderti in italiano, inglese, <span lang="si">සිංහල</span> o <span lang="ta">தமிழ்</span>.</div>
-      <div class="ts">Ora</div>
+      <div class="bubble" data-i18n-html="chat.welcome2">Posso risponderti in italiano, inglese, <span lang="si">සිංහල</span> o <span lang="ta">தமிழ்</span>.</div>
+      <div class="ts" data-i18n="chat.now">Ora</div>
     </div>
   </div>
 
   <div class="ch-sugs" role="group" aria-label="Domande suggerite">
-    <button class="sug" onclick="sendSug(this)">Permesso di soggiorno</button>
-    <button class="sug" onclick="sendSug(this)">SPID</button>
-    <button class="sug" onclick="sendSug(this)">Money transfer</button>
-    <button class="sug" onclick="sendSug(this)">Codice fiscale</button>
+    <button class="sug" onclick="sendSug(this)" data-i18n="chat.sug1">Permesso di soggiorno</button>
+    <button class="sug" onclick="sendSug(this)" data-i18n="chat.sug2">SPID</button>
+    <button class="sug" onclick="sendSug(this)" data-i18n="chat.sug3">Money transfer</button>
+    <button class="sug" onclick="sendSug(this)" data-i18n="chat.sug4">Codice fiscale</button>
   </div>
 
   <div class="ch-row">
     <label for="ch-in" class="sr">Messaggio</label>
-    <input class="ch-in" id="ch-in" type="text" placeholder="Scrivi un messaggio…"
+    <input class="ch-in" id="ch-in" type="text" placeholder="Scrivi un messaggio…" data-i18n-ph="chat.placeholder"
            autocomplete="off" onkeydown="if(event.key==='Enter')sendMsg()"/>
     <button class="ch-send" onclick="sendMsg()" aria-label="Invia">
       <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
@@ -1320,6 +1485,87 @@ if(!mediaQ.matches){
   start();
 })();
 
+/* ═══ i18n — IT / EN / Sinhala (සිංහල flagged for native review) ═══ */
+const I18N={
+  it:{
+    "nav.guide":"Guide","nav.community":"Community","nav.ai":"AI Assistant","nav.news":"News","nav.map":"Mappa","nav.login":"Accedi","nav.signup":"Registrati gratis",
+    "hero.eyebrow":"La comunità srilankese in Italia","hero.title":"La tua casa<br/><em>digitale</em><br/>in Italia","hero.sub":"Guide burocratiche, assistente AI multilingua, community di supporto e news aggiornate — in italiano, inglese, sinhala e tamil.","hero.cta1":"Inizia gratis","hero.cta2":"Esplora le guide","hero.stat1":"Utenti attivi","hero.stat2":"Guide pratiche","hero.stat3":"Lingue","hero.stat4":"Soddisfazione",
+    "card1.tag":"Burocrazia","card1.title":"Permesso di Soggiorno","card1.sub":"Guida completa al rinnovo","card2.tag":"AI","card2.title":"Assistente AI","card2.sub":"Risposte in 4 lingue 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"5.000+ persone attive","card4.tag":"Finanza","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
+    "ad.label":"Pubblicità","ad.lead":"Il tuo annuncio qui — raggiungi 12.000+ utenti della community","ad.buy":"Acquista questo spazio →","ad.sponsor":"Sponsorizzato","ad.slot":"Spazio ad — 300×250","ad.book":"Prenota →",
+    "feat.label":"Cosa offriamo","feat.heading":"Tutto ciò di cui hai bisogno,<br/><em>in un unico posto</em>","feat.sub":"Dalla burocrazia all'integrazione quotidiana — ti supportiamo in ogni passo del tuo percorso.",
+    "feat1.title":"Guide Burocratiche","feat1.desc":"Permesso di soggiorno, codice fiscale, SPID, residenza — guide passo-passo con checklist scaricabili.","feat2.title":"Assistente AI Multilingua","feat2.desc":"Risposte immediate in italiano, inglese, sinhala e tamil. Disponibile 24 ore su 24, 7 giorni su 7.","feat3.title":"Community Attiva","feat3.desc":"5.000+ persone che si supportano ogni giorno. Trova risposte, condividi esperienze, cresci insieme.","feat4.title":"Money Transfer","feat4.desc":"Confronta Wise, Western Union e Ria in tempo reale. Risparmia sulle rimesse verso lo Sri Lanka.","feat5.title":"Mappa dei Servizi","feat5.desc":"CAF, patronati, negozi e luoghi di culto srilankesi nelle principali città italiane.","feat6.title":"News Aggiornate","feat6.desc":"Leggi, decreti e opportunità per la comunità srilankese. Aggiornato ogni giorno.",
+    "members.count":"<strong>12.000+ utenti</strong> già nella community","members.sub":"Unisciti a migliaia di srilankesi che vivono e lavorano in Italia. Insieme è più facile.",
+    "cta.title":"Pronto a iniziare<br/><em style=\"font-style:italic;color:var(--gold)\">il tuo percorso?</em>","cta.sub":"Registrati gratis. Nessuna carta di credito richiesta.","cta.btn1":"Crea il tuo account gratuito","cta.btn2":"Scopri come funziona",
+    "footer.tag":"La casa digitale della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.","footer.product":"Prodotto","footer.aiAssistant":"Assistente AI","footer.mapServices":"Mappa servizi","footer.company":"Azienda","footer.about":"Chi siamo","footer.advertising":"Pubblicità","footer.contact":"Contatti","footer.account":"Account","footer.register":"Registrati","footer.subscriptions":"Abbonamenti","footer.copy":"© 2026 Easy Italia Hub. Tutti i diritti riservati.","footer.privacy":"Privacy Policy","footer.cookie":"Cookie Policy","footer.terms":"Termini di Servizio","footer.legal":"Note legali",
+    "chat.name":"Assistente Easy Italia","chat.status":"Online ora","chat.welcome1":"Ciao! Sono l'assistente di Easy Italia Hub. Come posso aiutarti oggi?","chat.welcome2":"Posso risponderti in italiano, inglese, <span lang=\"si\">සිංහල</span> o <span lang=\"ta\">தமிழ்</span>.","chat.now":"Ora","chat.sug1":"Permesso di soggiorno","chat.sug2":"SPID","chat.sug3":"Money transfer","chat.sug4":"Codice fiscale","chat.placeholder":"Scrivi un messaggio…"
+  },
+  en:{
+    "nav.guide":"Guides","nav.community":"Community","nav.ai":"AI Assistant","nav.news":"News","nav.map":"Map","nav.login":"Log in","nav.signup":"Sign up free",
+    "hero.eyebrow":"The Sri Lankan community in Italy","hero.title":"Your<br/><em>digital</em> home<br/>in Italy","hero.sub":"Bureaucratic guides, multilingual AI assistant, support community and up-to-date news — in Italian, English, Sinhala and Tamil.","hero.cta1":"Start free","hero.cta2":"Explore the guides","hero.stat1":"Active users","hero.stat2":"Practical guides","hero.stat3":"Languages","hero.stat4":"Satisfaction",
+    "card1.tag":"Bureaucracy","card1.title":"Residence Permit","card1.sub":"Complete renewal guide","card2.tag":"AI","card2.title":"AI Assistant","card2.sub":"Answers in 4 languages 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"5,000+ active people","card4.tag":"Finance","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
+    "ad.label":"Advertising","ad.lead":"Your ad here — reach 12,000+ community users","ad.buy":"Buy this space →","ad.sponsor":"Sponsored","ad.slot":"Ad space — 300×250","ad.book":"Book →",
+    "feat.label":"What we offer","feat.heading":"Everything you need,<br/><em>in one place</em>","feat.sub":"From bureaucracy to daily integration — we support you at every step of your journey.",
+    "feat1.title":"Bureaucratic Guides","feat1.desc":"Residence permit, tax code, SPID, residency — step-by-step guides with downloadable checklists.","feat2.title":"Multilingual AI Assistant","feat2.desc":"Immediate answers in Italian, English, Sinhala and Tamil. Available 24/7.","feat3.title":"Active Community","feat3.desc":"5,000+ people supporting each other every day. Find answers, share experiences, grow together.","feat4.title":"Money Transfer","feat4.desc":"Compare Wise, Western Union and Ria in real time. Save on remittances to Sri Lanka.","feat5.title":"Services Map","feat5.desc":"CAF offices, patronati, Sri Lankan shops and places of worship in major Italian cities.","feat6.title":"Up-to-date News","feat6.desc":"Laws, decrees and opportunities for the Sri Lankan community. Updated every day.",
+    "members.count":"<strong>12,000+ users</strong> already in the community","members.sub":"Join thousands of Sri Lankans living and working in Italy. Together it's easier.",
+    "cta.title":"Ready to start<br/><em style=\"font-style:italic;color:var(--gold)\">your journey?</em>","cta.sub":"Sign up free. No credit card required.","cta.btn1":"Create your free account","cta.btn2":"See how it works",
+    "footer.tag":"The digital home of the Sri Lankan community in Italy. Guides, multilingual AI, community and services — all in one place.","footer.product":"Product","footer.aiAssistant":"AI Assistant","footer.mapServices":"Services map","footer.company":"Company","footer.about":"About us","footer.advertising":"Advertising","footer.contact":"Contact","footer.account":"Account","footer.register":"Register","footer.subscriptions":"Subscriptions","footer.copy":"© 2026 Easy Italia Hub. All rights reserved.","footer.privacy":"Privacy Policy","footer.cookie":"Cookie Policy","footer.terms":"Terms of Service","footer.legal":"Legal notice",
+    "chat.name":"Easy Italia Assistant","chat.status":"Online now","chat.welcome1":"Hi! I'm the Easy Italia Hub assistant. How can I help you today?","chat.welcome2":"I can reply in Italian, English, <span lang=\"si\">සිංහල</span> or <span lang=\"ta\">தமிழ்</span>.","chat.now":"Now","chat.sug1":"Residence permit","chat.sug2":"SPID","chat.sug3":"Money transfer","chat.sug4":"Tax code","chat.placeholder":"Type a message…"
+  },
+  si:{
+    "nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.ai":"AI සහායක","nav.news":"පුවත්","nav.map":"සිතියම","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
+    "hero.eyebrow":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව","hero.title":"ඉතාලියේ ඔබේ<br/><em>ඩිජිටල්</em><br/>නිවස","hero.sub":"නිලධාරී මාර්ගෝපදේශ, බහුභාෂා AI සහායක, සහාය ප්‍රජාව සහ යාවත්කාලීන පුවත් — ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින්.","hero.cta1":"නොමිලේ අරඹන්න","hero.cta2":"මාර්ගෝපදේශ ගවේෂණය කරන්න","hero.stat1":"සක්‍රිය පරිශීලකයින්","hero.stat2":"ප්‍රායෝගික මාර්ගෝපදේශ","hero.stat3":"භාෂා","hero.stat4":"තෘප්තිය",
+    "card1.tag":"නිලධාරිවාදය","card1.title":"පදිංචි බලපත්‍රය","card1.sub":"සම්පූර්ණ අලුත් කිරීමේ මාර්ගෝපදේශය","card2.tag":"AI","card2.title":"AI සහායක","card2.sub":"භාෂා 4කින් 24/7 පිළිතුරු","card3.tag":"ප්‍රජාව","card3.title":"ප්‍රජාව","card3.sub":"5,000+ සක්‍රිය පුද්ගලයින්","card4.tag":"මුල්‍ය","card4.title":"මුදල් හුවමාරුව","card4.sub":"Wise, Ria, Western Union",
+    "ad.label":"දැන්වීම්","ad.lead":"ඔබේ දැන්වීම මෙහි — ප්‍රජා පරිශීලකයින් 12,000+ දෙනෙකු වෙත ළඟා වන්න","ad.buy":"මෙම අවකාශය මිලදී ගන්න →","ad.sponsor":"අනුග්‍රාහක","ad.slot":"දැන්වීම් අවකාශය — 300×250","ad.book":"වෙන්කරවා ගන්න →",
+    "feat.label":"අපි පිරිනමන දේ","feat.heading":"ඔබට අවශ්‍ය සියල්ල,<br/><em>එක තැනකින්</em>","feat.sub":"නිලධාරිවාදයේ සිට දෛනික ඒකාබද්ධතාව දක්වා — ඔබේ ගමනේ සෑම පියවරකදීම අපි ඔබට සහාය වෙමු.",
+    "feat1.title":"නිලධාරී මාර්ගෝපදේශ","feat1.desc":"පදිංචි බලපත්‍රය, බදු කේතය, SPID, පදිංචිය — බාගත හැකි පිරික්සුම් ලැයිස්තු සහිත පියවරෙන් පියවර මාර්ගෝපදේශ.","feat2.title":"බහුභාෂා AI සහායක","feat2.desc":"ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින් ක්ෂණික පිළිතුරු. දිනපතා පැය 24 පුරා ලබා ගත හැක.","feat3.title":"සක්‍රිය ප්‍රජාව","feat3.desc":"සෑම දිනකම එකිනෙකාට සහාය වන 5,000+ දෙනෙක්. පිළිතුරු සොයාගන්න, අත්දැකීම් බෙදාගන්න, එකට වර්ධනය වන්න.","feat4.title":"මුදල් හුවමාරුව","feat4.desc":"Wise, Western Union සහ Ria තත්‍ය කාලීනව සසඳන්න. ශ්‍රී ලංකාවට යවන මුදල් වලින් ඉතිරි කරගන්න.","feat5.title":"සේවා සිතියම","feat5.desc":"ප්‍රධාන ඉතාලි නගරවල CAF, patronati, ශ්‍රී ලාංකික වෙළඳසැල් සහ පූජනීය ස්ථාන.","feat6.title":"යාවත්කාලීන පුවත්","feat6.desc":"ශ්‍රී ලාංකික ප්‍රජාව සඳහා නීති, නියෝග සහ අවස්ථා. දිනපතා යාවත්කාලීන වේ.",
+    "members.count":"<strong>පරිශීලකයින් 12,000+</strong> දැනටමත් ප්‍රජාවේ","members.sub":"ඉතාලියේ ජීවත්වන සහ වැඩකරන දහස් ගණන් ශ්‍රී ලාංකිකයන් හා එක්වන්න. එකට වඩා පහසුයි.",
+    "cta.title":"ඔබේ ගමන<br/><em style=\"font-style:italic;color:var(--gold)\">අරඹන්න සූදානම්ද?</em>","cta.sub":"නොමිලේ ලියාපදිංචි වන්න. ණයපතක් අවශ්‍ය නැත.","cta.btn1":"ඔබේ නොමිලේ ගිණුම සාදන්න","cta.btn2":"එය ක්‍රියා කරන ආකාරය බලන්න",
+    "footer.tag":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාවේ ඩිජිටල් නිවස. මාර්ගෝපදේශ, බහුභාෂා AI, ප්‍රජාව සහ සේවා — සියල්ල එක තැනක.","footer.product":"නිෂ්පාදනය","footer.aiAssistant":"AI සහායක","footer.mapServices":"සේවා සිතියම","footer.company":"සමාගම","footer.about":"අප ගැන","footer.advertising":"දැන්වීම්","footer.contact":"සම්බන්ධ වන්න","footer.account":"ගිණුම","footer.register":"ලියාපදිංචි වන්න","footer.subscriptions":"දායකත්ව","footer.copy":"© 2026 Easy Italia Hub. සියලු හිමිකම් ඇවිරිණි.","footer.privacy":"පෞද්ගලිකත්ව ප්‍රතිපත්තිය","footer.cookie":"කුකී ප්‍රතිපත්තිය","footer.terms":"සේවා කොන්දේසි","footer.legal":"නෛතික දැන්වීම",
+    "chat.name":"Easy Italia සහායක","chat.status":"දැන් සබැඳිව","chat.welcome1":"ආයුබෝවන්! මම Easy Italia Hub සහායකයා. අද මට ඔබට කෙසේ උදව් කළ හැකිද?","chat.welcome2":"මට ඉතාලි, ඉංග්‍රීසි, <span lang=\"si\">සිංහල</span> හෝ <span lang=\"ta\">தமிழ்</span> භාෂාවෙන් පිළිතුරු දිය හැක.","chat.now":"දැන්","chat.sug1":"පදිංචි බලපත්‍රය","chat.sug2":"SPID","chat.sug3":"මුදල් හුවමාරුව","chat.sug4":"බදු කේතය","chat.placeholder":"පණිවිඩයක් ටයිප් කරන්න…"
+  }
+};
+const LANG_META={it:{flag:"🇮🇹",code:"IT"},en:{flag:"🇬🇧",code:"EN"},si:{flag:"🇱🇰",code:"SI"}};
+let currentLang=localStorage.getItem('eih-lang')||(navigator.language||'it').slice(0,2);
+if(!I18N[currentLang])currentLang='it';
+
+function applyLang(lang){
+  if(!I18N[lang])lang='it';
+  currentLang=lang;
+  const d=I18N[lang];
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(d[k]!=null)el.textContent=d[k];});
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.getAttribute('data-i18n-html');if(d[k]!=null)el.innerHTML=d[k];});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(d[k]!=null)el.setAttribute('placeholder',d[k]);});
+  document.getElementById('lang-flag').textContent=LANG_META[lang].flag;
+  document.getElementById('lang-code').textContent=LANG_META[lang].code;
+  document.querySelectorAll('#lang-menu button').forEach(b=>b.setAttribute('aria-current',b.getAttribute('onclick').includes("'"+lang+"'")?'true':'false'));
+  try{localStorage.setItem('eih-lang',lang);}catch(e){}
+}
+function toggleLang(e){if(e)e.stopPropagation();const m=document.getElementById('lang-menu'),b=document.getElementById('lang-btn');const open=!m.classList.contains('open');m.classList.toggle('open',open);b.setAttribute('aria-expanded',open);}
+function closeLang(){const m=document.getElementById('lang-menu');if(m){m.classList.remove('open');document.getElementById('lang-btn').setAttribute('aria-expanded','false');}}
+function setLang(lang){applyLang(lang);closeLang();}
+document.addEventListener('click',e=>{if(!e.target.closest('.lang-switch'))closeLang();});
+applyLang(currentLang);
+
+/* ── Mobile nav (hamburger) ── */
+function toggleMenu(){
+  const btn=document.getElementById('nav-toggle');
+  const panel=document.getElementById('nav-collapse');
+  const willOpen=btn.getAttribute('aria-expanded')!=='true';
+  btn.setAttribute('aria-expanded',willOpen);
+  btn.setAttribute('aria-label',willOpen?'Chiudi menu':'Apri menu');
+  panel.classList.toggle('open',willOpen);
+}
+function closeMenu(){
+  const btn=document.getElementById('nav-toggle');
+  if(btn.getAttribute('aria-expanded')==='true')toggleMenu();
+}
+/* close the mobile menu after tapping a link or auth button, and on resize to desktop */
+document.getElementById('nav-collapse').addEventListener('click',e=>{
+  if(e.target.closest('a,button'))closeMenu();
+});
+window.addEventListener('resize',()=>{if(window.innerWidth>=1024)closeMenu();},{passive:true});
+
 /* ── Back to top ── */
 const toTopBtn=document.getElementById('to-top');
 function scrollToTop(){
@@ -1416,15 +1662,10 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-/* ── Chatbot ── */
+/* ── AI Consigliere (Claude API + RAG via /api/chat) ── */
 let open=false;
-const REPLIES=[
-  "Per il permesso di soggiorno devi andare all'ufficio postale con il kit apposito. La prenotazione si fa sul sito della Polizia di Stato. Vuoi la guida completa?",
-  "Lo SPID si ottiene tramite un Identity Provider (PosteID, Namirial, ecc.). Servono: documento d'identità, tessera sanitaria e cellulare. Vuoi i link ufficiali?",
-  "Per le rimesse verso lo Sri Lanka Wise offre commissioni molto basse (~0.5%). Posso mostrarti il confronto aggiornato tra Wise, Ria e Western Union.",
-  "Il codice fiscale si richiede all'Agenzia delle Entrate con passaporto e modulo AA4/8. Alcune questure lo rilasciano anche contestualmente al permesso di soggiorno.",
-];
-let ri=0;
+const chatHistory=[];   // {role:'user'|'assistant', content}
+let chatBusy=false;
 
 function toggleChat(){
   open=!open;
@@ -1435,26 +1676,70 @@ function toggleChat(){
   if(open) setTimeout(()=>document.getElementById('ch-in').focus(),300);
 }
 
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function nowLabel(){return (I18N[currentLang]&&I18N[currentLang]['chat.now'])||'Ora';}
+
 function appendMsg(text,type){
   const log=document.getElementById('ch-msgs');
   const d=document.createElement('div');
   d.className='msg '+type;
-  d.innerHTML=`<div class="bubble">${text}</div><div class="ts">Ora</div>`;
+  const safe=escapeHtml(text).replace(/\n/g,'<br>'); // user/AI text rendered safely (no HTML injection)
+  d.innerHTML='<div class="bubble"></div><div class="ts"></div>';
+  d.querySelector('.bubble').innerHTML=safe;
+  d.querySelector('.ts').textContent=nowLabel();
   log.appendChild(d);
   log.scrollTop=log.scrollHeight;
+  return d;
+}
+function showTyping(){
+  const log=document.getElementById('ch-msgs');
+  const d=document.createElement('div');
+  d.className='msg bot';d.id='ch-typing';
+  d.innerHTML='<div class="bubble typing" aria-label="Sta scrivendo"><span></span><span></span><span></span></div>';
+  log.appendChild(d);log.scrollTop=log.scrollHeight;
+}
+function hideTyping(){const t=document.getElementById('ch-typing');if(t)t.remove();}
+
+async function sendToAgent(text){
+  text=(text||'').trim();
+  if(chatBusy||!text)return;
+  chatBusy=true;
+  appendMsg(text,'usr');
+  chatHistory.push({role:'user',content:text});
+  showTyping();
+  try{
+    const r=await fetch('/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:chatHistory,lang:currentLang})
+    });
+    if(!r.ok)throw new Error('http '+r.status);
+    const data=await r.json();
+    hideTyping();
+    const reply=(data&&data.reply)?data.reply:'…';
+    appendMsg(reply,'bot');
+    chatHistory.push({role:'assistant',content:reply});
+  }catch(err){
+    hideTyping();
+    const fb={
+      it:"Al momento non riesco a contattare l'assistente. Riprova tra poco — intanto puoi esplorare le guide del sito.",
+      en:"I can't reach the assistant right now. Please try again shortly — meanwhile you can explore the site guides.",
+      si:"මට මේ මොහොතේ සහායකයා වෙත සම්බන්ධ විය නොහැක. මඳ වේලාවකින් නැවත උත්සාහ කරන්න — මේ අතර ඔබට වෙබ් අඩවියේ මාර්ගෝපදේශ බැලිය හැක."
+    };
+    appendMsg(fb[currentLang]||fb.it,'bot');
+  }finally{
+    chatBusy=false;
+  }
 }
 
 function sendMsg(){
   const inp=document.getElementById('ch-in');
-  const t=inp.value.trim();if(!t)return;
-  appendMsg(t,'usr');inp.value='';
-  setTimeout(()=>appendMsg(REPLIES[ri%REPLIES.length],'bot'),680);ri++;
+  const t=inp.value;inp.value='';
+  sendToAgent(t);
 }
-
-function sendSug(el){
-  appendMsg(el.textContent,'usr');
-  setTimeout(()=>appendMsg(REPLIES[ri%REPLIES.length],'bot'),680);ri++;
-}
+function sendSug(el){sendToAgent(el.textContent);}
 </script>
 </body>
 </html>
