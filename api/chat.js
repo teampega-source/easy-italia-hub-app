@@ -1,17 +1,20 @@
 // ─────────────────────────────────────────────────────────────
-// Easy Italia Hub — AI Consigliere (Claude API + RAG)
+// Easy Italia Hub — AI Consigliere (Google Gemini + RAG)
 // Vercel serverless function. Implements Documento Strategico §3.7 + §9-C:
-// "Collegare il bot all'API di Claude con sistema RAG sulla knowledge base,
-//  così risponde con informazioni verificate invece di risposte predefinite."
+// risposte verificate via LLM + RAG sulla knowledge base, non predefinite.
 //
-// The API key NEVER lives in client code. Set ANTHROPIC_API_KEY in the Vercel
-// project env (Settings → Environment Variables). Until then the endpoint
-// answers in a graceful "demo mode" so the UI keeps working.
+// Provider: Google Gemini (free tier). The API key NEVER lives in client code.
+// Set GEMINI_API_KEY in the Vercel project env (Settings → Environment Variables).
+// Get a free key at https://aistudio.google.com/apikey
+// Until the key is set, the endpoint answers in a graceful "demo mode".
+//
+// Zero npm dependencies: uses the global fetch (Node 18+) against the Gemini
+// REST API. The fetch runs server-side, so it is not subject to the page CSP.
 // ─────────────────────────────────────────────────────────────
 
 const { retrieve } = require("./_knowledge");
 
-const MODEL = process.env.CLAUDE_MODEL || "claude-sonnet-4-5";
+const MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash";
 const MAX_TOKENS = 700;
 
 const LANG_NAME = { it: "italiano", en: "English", si: "සිංහල (Sinhala)", ta: "தமிழ் (Tamil)" };
@@ -49,7 +52,6 @@ function buildContext(query) {
 }
 
 module.exports = async (req, res) => {
-  // CORS for same-origin is automatic; keep it strict.
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Method not allowed" });
@@ -65,64 +67,84 @@ module.exports = async (req, res) => {
 
   const lastUser = [...messages].reverse().find((m) => m.role === "user");
   const query = lastUser?.content || "";
-
-  if (!query.trim()) {
-    return res.status(400).json({ error: "empty_query" });
-  }
+  if (!query.trim()) return res.status(400).json({ error: "empty_query" });
 
   // ── Demo mode: no API key configured yet ──
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!process.env.GEMINI_API_KEY) {
     const demo = {
-      it: "L'assistente AI è quasi pronto: appena verrà configurata la chiave Claude risponderò con informazioni verificate dalle fonti ufficiali. Intanto, dimmi su cosa stai lavorando (permesso, SPID, codice fiscale, rimesse…) e ti indico la guida giusta.",
-      en: "The AI assistant is almost ready: once the Claude key is configured I'll answer with information verified from official sources. Meanwhile, tell me what you're working on (permit, SPID, tax code, remittances…) and I'll point you to the right guide.",
-      si: "AI සහායකයා පාහේ සූදානම්: Claude යතුර වින්‍යාස කළ පසු, මම නිල මූලාශ්‍රවලින් තහවුරු කළ තොරතුරු සමඟ පිළිතුරු දෙන්නෙමි. මේ අතර, ඔබ කරමින් සිටින දේ මට කියන්න (බලපත්‍රය, SPID, බදු කේතය, මුදල් යැවීම්…) — මම නිවැරදි මාර්ගෝපදේශය වෙත ඔබව යොමු කරමි.",
-      ta: "AI உதவியாளர் கிட்டத்தட்ட தயாராக உள்ளது: Claude விசை அமைக்கப்பட்டவுடன், அதிகாரப்பூர்வ ஆதாரங்களில் சரிபார்க்கப்பட்ட தகவலுடன் பதிலளிப்பேன்.",
+      it: "L'assistente AI è quasi pronto: appena verrà configurata la chiave Gemini risponderò con informazioni verificate dalle fonti ufficiali. Intanto, dimmi su cosa stai lavorando (permesso, SPID, codice fiscale, rimesse…) e ti indico la guida giusta.",
+      en: "The AI assistant is almost ready: once the Gemini key is configured I'll answer with information verified from official sources. Meanwhile, tell me what you're working on (permit, SPID, tax code, remittances…) and I'll point you to the right guide.",
+      si: "AI සහායකයා පාහේ සූදානම්: Gemini යතුර වින්‍යාස කළ පසු, මම නිල මූලාශ්‍රවලින් තහවුරු කළ තොරතුරු සමඟ පිළිතුරු දෙන්නෙමි. මේ අතර, ඔබ කරමින් සිටින දේ මට කියන්න (බලපත්‍රය, SPID, බදු කේතය, මුදල් යැවීම්…).",
+      ta: "AI உதவியாளர் கிட்டத்தட்ட தயாராக உள்ளது: Gemini விசை அமைக்கப்பட்டவுடன், அதிகாரப்பூர்வ ஆதாரங்களில் சரிபார்க்கப்பட்ட தகவலுடன் பதிலளிப்பேன்.",
     };
     return res.status(200).json({ reply: demo[lang] || demo.it, demo: true });
   }
 
-  // ── Live mode: call Claude ──
-  let Anthropic;
+  // ── Live mode: call Google Gemini (REST) ──
   try {
-    Anthropic = require("@anthropic-ai/sdk");
-  } catch {
-    return res.status(500).json({ error: "sdk_missing", reply: "Configurazione incompleta: dipendenza @anthropic-ai/sdk mancante." });
-  }
-
-  try {
-    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
-    // Keep only role/content, cap history to last 12 turns.
-    const history = messages
+    // Map history to Gemini format: roles are "user" and "model"; cap to last 12 turns.
+    const contents = messages
       .filter((m) => (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
       .slice(-12)
-      .map((m) => ({ role: m.role, content: m.content }));
+      .map((m) => ({
+        role: m.role === "assistant" ? "model" : "user",
+        parts: [{ text: m.content }],
+      }));
+    if (!contents.length) contents.push({ role: "user", parts: [{ text: query }] });
 
-    const response = await client.messages.create({
-      model: MODEL,
-      max_tokens: MAX_TOKENS,
-      system: [
-        // Stable persona → cached across requests for cost/latency.
-        { type: "text", text: systemPersona(langName), cache_control: { type: "ephemeral" } },
-        // Per-query retrieved knowledge (RAG).
-        { type: "text", text: buildContext(query) },
-      ],
-      messages: history.length ? history : [{ role: "user", content: query }],
+    const systemText = `${systemPersona(langName)}\n\n${buildContext(query)}`;
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(MODEL)}:generateContent?key=${encodeURIComponent(process.env.GEMINI_API_KEY)}`;
+
+    const gemRes = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        system_instruction: { parts: [{ text: systemText }] },
+        contents,
+        generationConfig: { maxOutputTokens: MAX_TOKENS, temperature: 0.6, topP: 0.95 },
+        safetySettings: [
+          { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_ONLY_HIGH" },
+          { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_ONLY_HIGH" },
+          { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_ONLY_HIGH" },
+          { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_ONLY_HIGH" },
+        ],
+      }),
     });
 
-    const reply = (response.content || [])
-      .filter((b) => b.type === "text")
-      .map((b) => b.text)
-      .join("\n")
+    if (!gemRes.ok) {
+      const detail = await gemRes.text().catch(() => "");
+      const msg =
+        gemRes.status === 400 ? "Configurazione o richiesta non valida."
+        : gemRes.status === 401 || gemRes.status === 403 ? "Chiave Gemini non valida o non autorizzata."
+        : gemRes.status === 429 ? "Limite di richieste gratuite raggiunto, riprova tra poco."
+        : "Si è verificato un errore temporaneo. Riprova tra poco.";
+      return res.status(200).json({ reply: msg, error: "gemini_error", status: gemRes.status, detail: detail.slice(0, 300) });
+    }
+
+    const data = await gemRes.json();
+    const cand = data?.candidates?.[0];
+    const reply = (cand?.content?.parts || [])
+      .map((p) => p.text || "")
+      .join("")
       .trim();
 
-    return res.status(200).json({ reply: reply || "…", model: MODEL });
+    if (!reply) {
+      const blocked = cand?.finishReason && cand.finishReason !== "STOP";
+      return res.status(200).json({
+        reply: blocked
+          ? "Non posso rispondere a questo. Prova a riformulare, oppure consulta la fonte ufficiale pertinente."
+          : "…",
+        finishReason: cand?.finishReason || "EMPTY",
+      });
+    }
+
+    return res.status(200).json({ reply, model: MODEL });
   } catch (err) {
-    const status = err?.status || 500;
-    const msg =
-      status === 401 ? "Chiave API non valida o assente."
-      : status === 429 ? "Troppo traffico in questo momento, riprova tra poco."
-      : "Si è verificato un errore temporaneo. Riprova tra poco.";
-    return res.status(200).json({ reply: msg, error: "claude_error", detail: String(err?.message || err) });
+    return res.status(200).json({
+      reply: "Si è verificato un errore temporaneo. Riprova tra poco.",
+      error: "exception",
+      detail: String(err?.message || err),
+    });
   }
 };
