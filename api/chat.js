@@ -14,7 +14,15 @@
 
 const { retrieve } = require("./_knowledge");
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+// Try the configured model first, then fall back across free-tier models on
+// quota/availability errors (429/404) so a single deploy can find one that works.
+const MODEL_CHAIN = [
+  process.env.GEMINI_MODEL,
+  "gemini-2.5-flash",      // known to have free-tier quota for this project
+  "gemini-2.0-flash",
+  "gemini-2.0-flash-lite",
+  "gemini-1.5-flash",
+].filter(Boolean).filter((m, i, a) => a.indexOf(m) === i); // unique, drop empties
 const MAX_TOKENS = 700;
 
 const LANG_NAME = { it: "italiano", en: "English", si: "සිංහල (Sinhala)", ta: "தமிழ் (Tamil)" };
@@ -93,33 +101,36 @@ module.exports = async (req, res) => {
     if (!contents.length) contents.push({ role: "user", parts: [{ text: query }] });
 
     const systemText = `${systemPersona(langName)}\n\n${buildContext(query)}`;
-
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(MODEL)}:generateContent?key=${encodeURIComponent(process.env.GEMINI_API_KEY)}`;
-
-    const gemRes = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        system_instruction: { parts: [{ text: systemText }] },
-        contents,
-        generationConfig: { maxOutputTokens: MAX_TOKENS, temperature: 0.6, topP: 0.95 },
-        safetySettings: [
-          { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_ONLY_HIGH" },
-          { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_ONLY_HIGH" },
-          { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_ONLY_HIGH" },
-          { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_ONLY_HIGH" },
-        ],
-      }),
+    const payload = JSON.stringify({
+      system_instruction: { parts: [{ text: systemText }] },
+      contents,
+      generationConfig: { maxOutputTokens: MAX_TOKENS, temperature: 0.6, topP: 0.95 },
+      safetySettings: [
+        { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_ONLY_HIGH" },
+        { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_ONLY_HIGH" },
+        { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_ONLY_HIGH" },
+        { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_ONLY_HIGH" },
+      ],
     });
 
-    if (!gemRes.ok) {
-      const detail = await gemRes.text().catch(() => "");
+    let gemRes = null, usedModel = null, lastStatus = 0, lastDetail = "";
+    for (const model of MODEL_CHAIN) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(process.env.GEMINI_API_KEY)}`;
+      const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: payload });
+      if (r.ok) { gemRes = r; usedModel = model; break; }
+      lastStatus = r.status;
+      lastDetail = (await r.text().catch(() => "")).slice(0, 300);
+      // 429 (quota) or 404 (model not available) → try next model; other errors → stop
+      if (r.status !== 429 && r.status !== 404) break;
+    }
+
+    if (!gemRes) {
       const msg =
-        gemRes.status === 400 ? "Configurazione o richiesta non valida."
-        : gemRes.status === 401 || gemRes.status === 403 ? "Chiave Gemini non valida o non autorizzata."
-        : gemRes.status === 429 ? "Limite di richieste gratuite raggiunto, riprova tra poco."
+        lastStatus === 400 ? "Configurazione o richiesta non valida."
+        : lastStatus === 401 || lastStatus === 403 ? "Chiave Gemini non valida o non autorizzata."
+        : lastStatus === 429 ? "Limite di richieste gratuite raggiunto su tutti i modelli, riprova tra poco."
         : "Si è verificato un errore temporaneo. Riprova tra poco.";
-      return res.status(200).json({ reply: msg, error: "gemini_error", status: gemRes.status, detail: detail.slice(0, 300) });
+      return res.status(200).json({ reply: msg, error: "gemini_error", status: lastStatus, detail: lastDetail, triedModels: MODEL_CHAIN });
     }
 
     const data = await gemRes.json();
@@ -139,7 +150,7 @@ module.exports = async (req, res) => {
       });
     }
 
-    return res.status(200).json({ reply, model: MODEL });
+    return res.status(200).json({ reply, model: usedModel });
   } catch (err) {
     return res.status(200).json({
       reply: "Si è verificato un errore temporaneo. Riprova tra poco.",
