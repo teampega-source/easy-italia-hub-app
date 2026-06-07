@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Abbonamenti — Easy Italia Hub</title>
+<meta name="description" content="Abbonamenti Easy Italia Hub: la parte informativa resta gratis per sempre. Premium famiglia sblocca tracker avanzati, simulatori illimitati e percorsi personalizzati."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/abbonamenti"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<style>
+.plan{padding:var(--sp-3);border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);display:flex;flex-direction:column;position:relative}
+.plan.featured{border-color:rgba(125,112,88,.5);background:rgba(125,112,88,.06)}
+.plan .flag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:.22rem .7rem;border-radius:99px;font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,var(--blue-deep),var(--blue));white-space:nowrap}
+.plan .pname{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);color:var(--ink);margin-bottom:.3rem}
+.plan .price{display:flex;align-items:baseline;gap:.25rem;margin-bottom:.4rem}
+.plan .price .amt{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-2xl);font-weight:600;color:var(--ink)}
+.plan .price .per{font-size:var(--text-xs);color:var(--fg-muted)}
+.plan ul{list-style:none;margin:0 0 var(--sp-3);padding:0;display:flex;flex-direction:column;gap:.5rem;flex:1}
+.plan li{display:flex;gap:.5rem;font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.5}
+.plan li::before{content:'✓';color:var(--green);font-weight:700}
+</style>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+</head>
+<body data-page="abbonamenti">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <div class="page">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Abbonamenti</p>
+    <h1 class="reveal">Cresci con<br/><em>una marcia in più.</em></h1>
+    <p class="lead reveal">La parte informativa — guide, news, community — resta <strong>gratis per sempre</strong>. Premium aggiunge gli strumenti che fanno la differenza. Mai pagare per le informazioni essenziali.</p>
+
+    <div class="card-grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));align-items:stretch;margin-top:var(--sp-4)">
+      <div class="plan">
+        <div class="pname">Base</div>
+        <div class="price"><span class="amt">Gratis</span></div>
+        <p class="muted" style="margin-bottom:var(--sp-2)">Per tutti, sempre.</p>
+        <ul><li>Guide burocratiche da fonti ufficiali</li><li>Consigliere AI (24/7, 4 lingue)</li><li>Community</li><li>Il Mio Percorso (9 fasi)</li><li>Test di italiano</li></ul>
+        <a href="percorso.html" class="btn-ghost">Inizia gratis</a>
+      </div>
+      <div class="plan featured">
+        <span class="flag">Più popolare</span>
+        <div class="pname">Premium famiglia</div>
+        <div class="price"><span class="amt">€4,99</span><span class="per">/mese</span></div>
+        <p class="muted" style="margin-bottom:var(--sp-2)">Per chi costruisce sul serio.</p>
+        <ul><li>Tutto il piano Base</li><li>Tracker scadenze avanzato con allerte</li><li>Simulatori illimitati (busta paga, mutuo)</li><li>Percorsi personalizzati pluriennali</li><li>Consigliere AI prioritario</li></ul>
+        <a href="percorso.html" class="btn-primary">Prova Premium</a>
+      </div>
+      <div class="plan">
+        <div class="pname">Professionisti</div>
+        <div class="price"><span class="amt">Su misura</span></div>
+        <p class="muted" style="margin-bottom:var(--sp-2)">Commercialisti, avvocati, agenzie.</p>
+        <ul><li>Profilo verificato nel marketplace</li><li>Contatti qualificati dalla community</li><li>Spazi e visibilità dedicati</li><li>Supporto multilingua</li></ul>
+        <a href="contatti.html" class="btn-ghost">Contattaci</a>
+      </div>
+    </div>
+
+    <p class="muted reveal" style="margin-top:var(--sp-4)">⚠️ Prezzi indicativi a scopo dimostrativo. Il principio guida resta uno: <strong>guadagnare aiutandoti a crescere, mai dalla tua difficoltà</strong>. Niente pubblicità predatoria, niente prestiti ad alto interesse.</p>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+</body>
+</html>

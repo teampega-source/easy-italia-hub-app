@@ -295,10 +295,10 @@ html.returning #preloader{display:none}
   <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-collapse" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   <div class="nav-collapse" id="nav-collapse">
     <ul class="nav-links">
-      <li><a href="index.html#guide" data-i18n="nav.guide">Guide</a></li>
-      <li><a href="index.html#community" data-i18n="nav.community">Community</a></li>
+      <li><a href="guide.html" data-i18n="nav.guide">Guide</a></li>
+      <li><a href="community.html" data-i18n="nav.community">Community</a></li>
       <li><a href="percorso.html" class="active" data-i18n="nav.journey">Il Mio Percorso</a></li>
-      <li><a href="index.html#news" data-i18n="nav.news">News</a></li>
+      <li><a href="news.html" data-i18n="nav.news">News</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-switch">
@@ -355,6 +355,60 @@ html.returning #preloader{display:none}
     </div>
   </div>
 </main>
+
+<!-- FOOTER (self-contained, scoped pf-*) -->
+<style>
+.pf{position:relative;z-index:1;margin-top:4rem;border-top:1px solid rgba(118,118,118,0.16);background:rgba(246,242,234,0.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.pf-inner{max-width:1200px;margin:0 auto;padding:3rem 1.5rem 1.5rem;display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:2rem}
+.pf-logo{font-family:'Clash Grotesk',sans-serif;font-size:1.125rem;font-weight:600;color:#161412;text-decoration:none;letter-spacing:-.01em}
+.pf-logo .ac{color:#b7ab98}
+.pf-tag{font-size:.875rem;color:#857e72;line-height:1.6;font-weight:300;max-width:280px;margin-top:.8rem}
+.pf-col h4{font-family:'Clash Grotesk',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#161412;margin-bottom:1rem}
+.pf-col ul{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin:0;padding:0}
+.pf-col a,.pf-col button{font-size:.875rem;color:#857e72;text-decoration:none;font-weight:300;background:none;border:none;padding:0;font-family:inherit;cursor:pointer;text-align:left;transition:color .15s}
+.pf-col a:hover,.pf-col button:hover{color:#161412}
+.pf-bottom{max-width:1200px;margin:0 auto;padding:1rem 1.5rem 1.5rem;border-top:1px solid rgba(118,118,118,0.16);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem}
+.pf-copy{font-size:.75rem;color:#857e72;font-weight:300}
+.pf-legal{display:flex;gap:1rem;flex-wrap:wrap}
+.pf-legal a{font-size:.75rem;color:#857e72;text-decoration:none;font-weight:300;transition:color .15s}
+.pf-legal a:hover{color:#7c7059}
+@media(max-width:720px){.pf-inner{grid-template-columns:1fr 1fr;gap:1.5rem}.pf-brand{grid-column:1 / -1}.pf-bottom{flex-direction:column;align-items:flex-start}}
+</style>
+<footer class="pf" aria-label="Piè di pagina">
+  <div class="pf-inner">
+    <div class="pf-brand">
+      <a href="index.html" class="pf-logo">Easy <span class="ac">Italia</span> Hub</a>
+      <p class="pf-tag">La casa digitale della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — in un unico posto.</p>
+    </div>
+    <div class="pf-col">
+      <h4>Piattaforma</h4>
+      <ul>
+        <li><a href="guide.html">Guide</a></li>
+        <li><a href="percorso.html">Il Mio Percorso</a></li>
+        <li><a href="community.html">Community</a></li>
+        <li><a href="mappa.html">Mappa servizi</a></li>
+      </ul>
+    </div>
+    <div class="pf-col">
+      <h4>Risorse</h4>
+      <ul>
+        <li><a href="chi-siamo.html">Chi siamo</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="contatti.html">Contatti</a></li>
+        <li><a href="abbonamenti.html">Abbonamenti</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="pf-bottom">
+    <p class="pf-copy">© 2026 Easy Italia Hub. Tutti i diritti riservati.</p>
+    <nav class="pf-legal" aria-label="Note legali">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="cookie.html">Cookie Policy</a>
+      <a href="termini.html">Termini di Servizio</a>
+      <a href="note-legali.html">Note legali</a>
+    </nav>
+  </div>
+</footer>
 
 <!-- CHAT TOGGLE + PANEL -->
 <button id="chat-btn" onclick="toggleChat()" aria-label="Apri Consigliere AI" aria-expanded="false" aria-controls="chat-panel">

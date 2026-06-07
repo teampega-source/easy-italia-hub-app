@@ -1066,17 +1066,17 @@ html.returning #preloader{display:none}
 
 <!-- NAV -->
 <nav class="site-nav" aria-label="Navigazione principale">
-  <a href="#" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a>
+  <a href="index.html" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a>
   <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-collapse" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
   <div class="nav-collapse" id="nav-collapse">
     <ul class="nav-links">
-      <li><a href="#" data-i18n="nav.guide">Guide</a></li>
-      <li><a href="#" data-i18n="nav.community">Community</a></li>
+      <li><a href="guide.html" data-i18n="nav.guide">Guide</a></li>
+      <li><a href="community.html" data-i18n="nav.community">Community</a></li>
       <li><a href="percorso.html" class="nav-journey" data-i18n="nav.journey">Il Mio Percorso</a></li>
-      <li><a href="#" data-i18n="nav.news">News</a></li>
-      <li><a href="#" data-i18n="nav.map">Mappa</a></li>
+      <li><a href="news.html" data-i18n="nav.news">News</a></li>
+      <li><a href="mappa.html" data-i18n="nav.map">Mappa</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-switch">
@@ -1119,7 +1119,7 @@ html.returning #preloader{display:none}
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         <span data-i18n="hero.cta1">Inizia gratis</span>
       </a>
-      <a href="#" class="btn-ghost">
+      <a href="guide.html" class="btn-ghost">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
         <span data-i18n="hero.cta2">Esplora le guide</span>
       </a>
@@ -1307,8 +1307,8 @@ html.returning #preloader{display:none}
     <h2 id="cta-heading" class="cta-title" data-i18n-html="cta.title">Pronto a iniziare<br/><em style="font-style:italic;color:var(--gold)">il tuo percorso?</em></h2>
     <p class="cta-sub" data-i18n="cta.sub">Registrati gratis. Nessuna carta di credito richiesta.</p>
     <div class="cta-btns">
-      <a href="#" class="btn-primary" data-i18n="cta.btn1">Crea il tuo account gratuito</a>
-      <a href="#" class="btn-ghost" data-i18n="cta.btn2">Scopri come funziona</a>
+      <a href="percorso.html" class="btn-primary" data-i18n="cta.btn1" onclick="if(typeof openAuth==='function'){openAuth('signup');return false;}">Crea il tuo account gratuito</a>
+      <a href="chi-siamo.html" class="btn-ghost" data-i18n="cta.btn2">Scopri come funziona</a>
     </div>
   </div>
 </section>
@@ -1319,25 +1319,25 @@ html.returning #preloader{display:none}
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="#" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a>
+      <a href="index.html" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a>
       <p class="footer-tag" data-i18n="footer.tag">La casa digitale della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.</p>
     </div>
     <div class="footer-col">
       <h4 data-i18n="footer.product">Prodotto</h4>
       <ul>
-        <li><a href="#" data-i18n="nav.guide">Guide</a></li>
-        <li><a href="#" data-i18n="footer.aiAssistant">Assistente AI</a></li>
-        <li><a href="#" data-i18n="nav.community">Community</a></li>
-        <li><a href="#" data-i18n="footer.mapServices">Mappa servizi</a></li>
+        <li><a href="guide.html" data-i18n="nav.guide">Guide</a></li>
+        <li><a href="percorso.html" data-i18n="footer.aiAssistant">Assistente AI</a></li>
+        <li><a href="community.html" data-i18n="nav.community">Community</a></li>
+        <li><a href="mappa.html" data-i18n="footer.mapServices">Mappa servizi</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4 data-i18n="footer.company">Azienda</h4>
       <ul>
-        <li><a href="#" data-i18n="footer.about">Chi siamo</a></li>
-        <li><a href="#" data-i18n="nav.news">News</a></li>
+        <li><a href="chi-siamo.html" data-i18n="footer.about">Chi siamo</a></li>
+        <li><a href="news.html" data-i18n="nav.news">News</a></li>
         <li><button class="nav-login" style="padding:0" onclick="openPricing()" data-i18n="footer.advertising">Pubblicità</button></li>
-        <li><a href="#" data-i18n="footer.contact">Contatti</a></li>
+        <li><a href="contatti.html" data-i18n="footer.contact">Contatti</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1345,17 +1345,17 @@ html.returning #preloader{display:none}
       <ul>
         <li><button class="nav-login" style="padding:0" onclick="openAuth('login')" data-i18n="nav.login">Accedi</button></li>
         <li><button class="nav-login" style="padding:0" onclick="openAuth('signup')" data-i18n="footer.register">Registrati</button></li>
-        <li><a href="#" data-i18n="footer.subscriptions">Abbonamenti</a></li>
+        <li><a href="abbonamenti.html" data-i18n="footer.subscriptions">Abbonamenti</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
     <p class="footer-copy" data-i18n="footer.copy">© 2026 Easy Italia Hub. Tutti i diritti riservati.</p>
     <nav class="footer-legal" aria-label="Note legali">
-      <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
-      <a href="#" data-i18n="footer.cookie">Cookie Policy</a>
-      <a href="#" data-i18n="footer.terms">Termini di Servizio</a>
-      <a href="#" data-i18n="footer.legal">Note legali</a>
+      <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+      <a href="cookie.html" data-i18n="footer.cookie">Cookie Policy</a>
+      <a href="termini.html" data-i18n="footer.terms">Termini di Servizio</a>
+      <a href="note-legali.html" data-i18n="footer.legal">Note legali</a>
     </nav>
   </div>
 </footer>
