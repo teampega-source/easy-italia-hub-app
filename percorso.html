@@ -258,6 +258,25 @@ html.returning #preloader{display:none}
 @keyframes preBar{to{transform:translateX(0)}}
 #wipe{position:fixed;inset:0;z-index:9998;background:var(--ink);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .5s var(--ease-spring),visibility .5s}
 #wipe.cover{opacity:1;visibility:visible}
+/* ─── TOOLS launcher + simulators + onboarding ─── */
+.tools{max-width:620px;margin:var(--sp-2) auto 0;display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
+.tool-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1rem;border-radius:var(--radius-full);border:1px solid var(--border-bright);background:var(--surface);color:var(--ink);font-family:inherit;font-size:var(--text-sm);font-weight:500;cursor:pointer;transition:background var(--dur-micro),transform var(--dur-std) var(--ease-spring)}
+.tool-btn:hover{background:var(--surface-hover);transform:translateY(-2px)}
+.tool-btn:active{transform:scale(.97)}
+.tool-btn .ico{font-size:1rem}
+.modal.tool{max-width:520px;text-align:left}
+.sim-field{display:flex;flex-direction:column;gap:.35rem;margin-bottom:var(--sp-2)}
+.sim-field label{font-size:var(--text-xs);color:var(--fg-secondary);font-weight:500}
+.sim-field input,.sim-field select{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.65rem .9rem;font-size:var(--text-base);color:var(--ink);font-family:inherit;outline:none;min-height:44px}
+.sim-field input:focus,.sim-field select:focus{border-color:rgba(125,112,88,.5)}
+.sim-result{margin-top:var(--sp-2);padding:var(--sp-3);border-radius:var(--radius);background:var(--gold-dim);border:1px solid rgba(124,112,89,.2)}
+.sim-result .big{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-2xl);font-weight:600;color:var(--ink);letter-spacing:-.02em}
+.sim-result .big .per{font-size:var(--text-sm);color:var(--fg-muted);font-weight:400}
+.sim-row{display:flex;justify-content:space-between;font-size:var(--text-sm);color:var(--fg-secondary);padding:.3rem 0;border-top:1px solid var(--border)}
+.sim-row:first-of-type{border-top:none}
+.sim-row b{color:var(--ink);font-variant-numeric:tabular-nums}
+.sim-note{font-size:var(--text-xs);color:var(--fg-muted);margin-top:var(--sp-2);line-height:1.5}
+.sim-go{margin-top:.4rem}
 </style>
 <script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
 </head>
@@ -311,6 +330,11 @@ html.returning #preloader{display:none}
         <span class="progress-count"><span id="prog-done">0</span>/9 <span data-i18n="jr.phases">fasi</span></span>
       </div>
       <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+    </div>
+    <div class="tools">
+      <button class="tool-btn" onclick="openOnboarding()"><span class="ico">🧭</span> <span data-i18n="tool.onboarding">Personalizza percorso</span></button>
+      <button class="tool-btn" onclick="openSim('payslip')"><span class="ico">💶</span> <span data-i18n="tool.payslip">Simulatore busta paga</span></button>
+      <button class="tool-btn" onclick="openSim('mortgage')"><span class="ico">🏠</span> <span data-i18n="tool.mortgage">Simulatore mutuo</span></button>
     </div>
   </header>
 
@@ -370,6 +394,30 @@ html.returning #preloader{display:none}
   </div>
 </div>
 
+<!-- ─── ONBOARDING MODAL ─── -->
+<div class="modal-overlay" id="onb-modal" role="dialog" aria-modal="true" aria-labelledby="onb-title" onclick="if(event.target===this)closeOnboarding()">
+  <div class="modal tool">
+    <button class="modal-close" onclick="closeOnboarding()" aria-label="Chiudi"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="modal-head">
+      <h2 class="modal-title" id="onb-title" data-i18n="onb.title">Dove ti trovi ora?</h2>
+      <p class="modal-sub" data-i18n="onb.sub">Personalizziamo il percorso sul tuo momento.</p>
+    </div>
+    <div id="onb-options" style="display:flex;flex-direction:column;gap:.55rem"></div>
+  </div>
+</div>
+
+<!-- ─── SIMULATOR MODAL (payslip / mortgage) ─── -->
+<div class="modal-overlay" id="sim-modal" role="dialog" aria-modal="true" aria-labelledby="sim-title" onclick="if(event.target===this)closeSim()">
+  <div class="modal tool">
+    <button class="modal-close" onclick="closeSim()" aria-label="Chiudi"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="modal-head" style="text-align:left">
+      <h2 class="modal-title" id="sim-title">Simulatore</h2>
+      <p class="modal-sub" id="sim-sub"></p>
+    </div>
+    <div id="sim-body"></div>
+  </div>
+</div>
+
 <script>
 /* ═══ i18n (journey page) ═══ */
 const I18N={
@@ -378,19 +426,28 @@ const I18N={
     "st.done":"Completata","st.current":"In corso","st.todo":"Da fare","st.locked":"Bloccata","st.next":"Prossimo passo","st.ask":"Chiedi al Consigliere","st.markCurrent":"Sono qui ora","st.markDone":"Segna completata","st.lockMsg":"Registrati per sbloccare questa fase.","st.unlock":"Sblocca",
     "gate.title":"Continua il tuo percorso","gate.text":"La prima fase è libera. Registrati gratis per sbloccare tutte e 9 le fasi, salvare i tuoi progressi e ricevere consigli su misura dal Consigliere AI.","gate.cta":"Registrati gratis e sblocca",
     "chat.name":"Consigliere Easy Italia","chat.status":"Online ora","chat.welcome":"Ciao! Sono il tuo Consigliere di percorso. Dimmi a che punto sei e ti suggerisco il prossimo passo concreto.","chat.now":"Ora","chat.placeholder":"Scrivi un messaggio…","chat.err":"Al momento non riesco a contattare il Consigliere. Riprova tra poco.",
-    "auth.name":"Nome completo","auth.email":"Email","auth.pass":"Password","auth.signup":"Registrati gratis","auth.login":"Accedi","auth.haveAccount":"Hai già un account?","auth.noAccount":"Non hai un account?","auth.createTitle":"Crea il tuo account","auth.createSub":"Registrati gratis e sblocca il tuo percorso","auth.welcomeTitle":"Bentornato","auth.welcomeSub":"Accedi al tuo account Easy Italia Hub"},
+    "auth.name":"Nome completo","auth.email":"Email","auth.pass":"Password","auth.signup":"Registrati gratis","auth.login":"Accedi","auth.haveAccount":"Hai già un account?","auth.noAccount":"Non hai un account?","auth.createTitle":"Crea il tuo account","auth.createSub":"Registrati gratis e sblocca il tuo percorso","auth.welcomeTitle":"Bentornato","auth.welcomeSub":"Accedi al tuo account Easy Italia Hub",
+    "tool.onboarding":"Personalizza percorso","tool.payslip":"Simulatore busta paga","tool.mortgage":"Simulatore mutuo",
+    "onb.title":"Dove ti trovi ora?","onb.sub":"Personalizziamo il percorso sul tuo momento.","onb.o1":"Sono appena arrivato/a","onb.o2":"Sto sistemando i documenti","onb.o3":"Cerco o ho un lavoro","onb.o4":"Penso a casa e famiglia","onb.o5":"Soldi, impresa o cittadinanza","onb.saved":"Percorso aggiornato!",
+    "sim.payTitle":"Simulatore busta paga","sim.paySub":"Dal lordo annuo (RAL) al netto stimato.","sim.mortTitle":"Simulatore mutuo","sim.mortSub":"Quanto mutuo puoi permetterti.","sim.gross":"Stipendio lordo annuo · RAL (€)","sim.calc":"Calcola","sim.net":"Netto mensile stimato","sim.netY":"Netto annuo","sim.irpef":"IRPEF (stima)","sim.inps":"Contributi INPS","sim.income":"Reddito mensile netto (€)","sim.rate":"Tasso annuo (%)","sim.years":"Durata (anni)","sim.maxInstall":"Rata sostenibile (~1/3)","sim.maxLoan":"Mutuo stimato","sim.note":"⚠️ Stima semplificata a scopo informativo. Importi e aliquote cambiano: verifica sempre con un commercialista/patronato o le fonti ufficiali."},
   en:{"nav.guide":"Guides","nav.community":"Community","nav.journey":"My Journey","nav.news":"News","nav.login":"Log in","nav.signup":"Sign up free",
     "jr.eyebrow":"Your journey platform","jr.title":"My <em>Journey</em>","jr.intro":"Not a list of paperwork, but the map of your life in Italy. You always know where you are and the next step — with the AI Advisor beside you, phase by phase.","jr.progress":"Your progress","jr.phases":"phases",
     "st.done":"Completed","st.current":"In progress","st.todo":"To do","st.locked":"Locked","st.next":"Next step","st.ask":"Ask the Advisor","st.markCurrent":"I'm here now","st.markDone":"Mark completed","st.lockMsg":"Sign up to unlock this phase.","st.unlock":"Unlock",
     "gate.title":"Continue your journey","gate.text":"The first phase is free. Sign up for free to unlock all 9 phases, save your progress and get tailored advice from the AI Advisor.","gate.cta":"Sign up free and unlock",
     "chat.name":"Easy Italia Advisor","chat.status":"Online now","chat.welcome":"Hi! I'm your journey Advisor. Tell me where you are and I'll suggest the concrete next step.","chat.now":"Now","chat.placeholder":"Type a message…","chat.err":"I can't reach the Advisor right now. Please try again shortly.",
-    "auth.name":"Full name","auth.email":"Email","auth.pass":"Password","auth.signup":"Sign up free","auth.login":"Log in","auth.haveAccount":"Already have an account?","auth.noAccount":"No account yet?","auth.createTitle":"Create your account","auth.createSub":"Sign up free and unlock your journey","auth.welcomeTitle":"Welcome back","auth.welcomeSub":"Log in to your Easy Italia Hub account"},
+    "auth.name":"Full name","auth.email":"Email","auth.pass":"Password","auth.signup":"Sign up free","auth.login":"Log in","auth.haveAccount":"Already have an account?","auth.noAccount":"No account yet?","auth.createTitle":"Create your account","auth.createSub":"Sign up free and unlock your journey","auth.welcomeTitle":"Welcome back","auth.welcomeSub":"Log in to your Easy Italia Hub account",
+    "tool.onboarding":"Personalize journey","tool.payslip":"Payslip simulator","tool.mortgage":"Mortgage simulator",
+    "onb.title":"Where are you now?","onb.sub":"Let's tailor the journey to your moment.","onb.o1":"I just arrived","onb.o2":"Sorting out documents","onb.o3":"Looking for / have a job","onb.o4":"Thinking about home & family","onb.o5":"Money, business or citizenship","onb.saved":"Journey updated!",
+    "sim.payTitle":"Payslip simulator","sim.paySub":"From gross annual (RAL) to estimated net.","sim.mortTitle":"Mortgage simulator","sim.mortSub":"How much mortgage you can afford.","sim.gross":"Gross annual salary · RAL (€)","sim.calc":"Calculate","sim.net":"Estimated monthly net","sim.netY":"Annual net","sim.irpef":"IRPEF (est.)","sim.inps":"INPS contributions","sim.income":"Monthly net income (€)","sim.rate":"Annual rate (%)","sim.years":"Term (years)","sim.maxInstall":"Affordable instalment (~1/3)","sim.maxLoan":"Estimated mortgage","sim.note":"⚠️ Simplified estimate for information only. Amounts and rates change: always verify with an accountant/patronato or official sources."},
   si:{"nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.journey":"මගේ ගමන","nav.news":"පුවත්","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
     "jr.eyebrow":"ඔබේ ගමන් වේදිකාව","jr.title":"මගේ <em>ගමන</em>","jr.intro":"ලේඛන ලැයිස්තුවක් නොව, ඉතාලියේ ඔබේ ජීවිතයේ සිතියම. ඔබ සිටින තැන සහ මීළඟ පියවර සැමවිටම දැනගන්න — සෑම අදියරකදීම AI උපදේශක ඔබ සමඟ.","jr.progress":"ඔබේ ප්‍රගතිය","jr.phases":"අදියර",
     "st.done":"සම්පූර්ණයි","st.current":"ක්‍රියාත්මකයි","st.todo":"කළ යුතුයි","st.locked":"අගුලු දමා ඇත","st.next":"මීළඟ පියවර","st.ask":"උපදේශකගෙන් අසන්න","st.markCurrent":"මම දැන් මෙහි","st.markDone":"සම්පූර්ණ ලෙස සලකුණු කරන්න","st.lockMsg":"මෙම අදියර අගුළු ඇරීමට ලියාපදිංචි වන්න.","st.unlock":"අගුළු හරින්න",
     "gate.title":"ඔබේ ගමන දිගටම කරගෙන යන්න","gate.text":"පළමු අදියර නොමිලේ. අදියර 9ම අගුළු ඇරීමට, ඔබේ ප්‍රගතිය සුරැකීමට සහ AI උපදේශකගෙන් උපදෙස් ලබා ගැනීමට නොමිලේ ලියාපදිංචි වන්න.","gate.cta":"නොමිලේ ලියාපදිංචි වී අගුළු හරින්න",
     "chat.name":"Easy Italia උපදේශක","chat.status":"දැන් සබැඳිව","chat.welcome":"ආයුබෝවන්! මම ඔබේ ගමන් උපදේශකයා. ඔබ සිටින තැන කියන්න, මම මීළඟ පියවර යෝජනා කරමි.","chat.now":"දැන්","chat.placeholder":"පණිවිඩයක් ටයිප් කරන්න…","chat.err":"මට දැන් උපදේශක වෙත සම්බන්ධ විය නොහැක. මඳ වේලාවකින් උත්සාහ කරන්න.",
-    "auth.name":"සම්පූර්ණ නම","auth.email":"විද්‍යුත් තැපෑල","auth.pass":"මුරපදය","auth.signup":"නොමිලේ ලියාපදිංචි වන්න","auth.login":"පිවිසෙන්න","auth.haveAccount":"දැනටමත් ගිණුමක් තිබේද?","auth.noAccount":"ගිණුමක් නැද්ද?","auth.createTitle":"ඔබේ ගිණුම සාදන්න","auth.createSub":"නොමිලේ ලියාපදිංචි වී ඔබේ ගමන අගුළු හරින්න","auth.welcomeTitle":"නැවත සාදරයෙන් පිළිගනිමු","auth.welcomeSub":"ඔබේ Easy Italia Hub ගිණුමට පිවිසෙන්න"}
+    "auth.name":"සම්පූර්ණ නම","auth.email":"විද්‍යුත් තැපෑල","auth.pass":"මුරපදය","auth.signup":"නොමිලේ ලියාපදිංචි වන්න","auth.login":"පිවිසෙන්න","auth.haveAccount":"දැනටමත් ගිණුමක් තිබේද?","auth.noAccount":"ගිණුමක් නැද්ද?","auth.createTitle":"ඔබේ ගිණුම සාදන්න","auth.createSub":"නොමිලේ ලියාපදිංචි වී ඔබේ ගමන අගුළු හරින්න","auth.welcomeTitle":"නැවත සාදරයෙන් පිළිගනිමු","auth.welcomeSub":"ඔබේ Easy Italia Hub ගිණුමට පිවිසෙන්න",
+    "tool.onboarding":"ගමන පුද්ගලීකරණය","tool.payslip":"වැටුප් සිමියුලේටරය","tool.mortgage":"නිවාස ණය සිමියුලේටරය",
+    "onb.title":"ඔබ දැන් සිටින්නේ කොහේද?","onb.sub":"ඔබේ මොහොතට ගමන සකසමු.","onb.o1":"මම දැන් පැමිණියා","onb.o2":"ලේඛන සකසමින්","onb.o3":"රැකියාවක් සොයමින්/තිබේ","onb.o4":"නිවස සහ පවුල ගැන","onb.o5":"මුදල්, ව්‍යාපාර හෝ පුරවැසිභාවය","onb.saved":"ගමන යාවත්කාලීන විය!",
+    "sim.payTitle":"වැටුප් සිමියුලේටරය","sim.paySub":"වාර්ෂික දළ (RAL) සිට ශුද්ධ දක්වා.","sim.mortTitle":"නිවාස ණය සිමියුලේටරය","sim.mortSub":"ඔබට දරාගත හැකි ණය ප්‍රමාණය.","sim.gross":"වාර්ෂික දළ වැටුප · RAL (€)","sim.calc":"ගණනය","sim.net":"ඇස්තමේන්තුගත මාසික ශුද්ධ","sim.netY":"වාර්ෂික ශුද්ධ","sim.irpef":"IRPEF (ඇස්ත.)","sim.inps":"INPS දායකත්ව","sim.income":"මාසික ශුද්ධ ආදායම (€)","sim.rate":"වාර්ෂික පොලී (%)","sim.years":"කාලය (වසර)","sim.maxInstall":"දරාගත හැකි වාරිකය (~1/3)","sim.maxLoan":"ඇස්තමේන්තුගත ණය","sim.note":"⚠️ තොරතුරු සඳහා පමණක් සරල ඇස්තමේන්තුවකි. මුදල් සහ අනුපාත වෙනස් වේ: සැමවිට ගණකාධිකාරියෙකු/patronato හෝ නිල මූලාශ්‍ර සමඟ තහවුරු කරගන්න."}
 };
 const LANG_META={it:{flag:"🇮🇹",code:"IT"},en:{flag:"🇬🇧",code:"EN"},si:{flag:"🇱🇰",code:"SI"}};
 let currentLang=localStorage.getItem('eih-lang')||'it'; if(!I18N[currentLang])currentLang='it';
@@ -571,6 +628,80 @@ function completeAuth(){
   state.registered=true; saveState(state);
   try{localStorage.setItem('eih-registered','1');}catch(e){}
   closeAuth(); renderPhases();
+  // First-time signup → run onboarding to personalize the starting phase
+  if(authMode==='signup' && !state.onboarded){ setTimeout(openOnboarding,350); }
+}
+
+/* ═══ Onboarding (sets starting phase) ═══ */
+const ONB_MAP=[['onb.o1',1],['onb.o2',2],['onb.o3',3],['onb.o4',4],['onb.o5',6]];
+function openOnboarding(){
+  const box=document.getElementById('onb-options');
+  box.innerHTML=ONB_MAP.map(([k,ph])=>'<button class="tool-btn" style="width:100%;justify-content:flex-start" onclick="pickOnboarding('+ph+')">'+t(k)+'</button>').join('');
+  document.getElementById('onb-modal').classList.add('open');document.body.style.overflow='hidden';
+}
+function closeOnboarding(){document.getElementById('onb-modal').classList.remove('open');document.body.style.overflow='';}
+function pickOnboarding(ph){
+  state.current=ph; state.onboarded=true; saveState(state);
+  state._open=ph; renderPhases();
+  closeOnboarding();
+  // gentle confirmation via the chat advisor
+  if(typeof appendMsg==='function'){ /* no-op */ }
+}
+
+/* ═══ Simulators (payslip / mortgage) — simplified estimates ═══ */
+function fmtEur(n){return '€ '+Math.round(n).toLocaleString('it-IT');}
+function estIrpef(taxable){
+  // 2024 brackets (simplified): 23% to 28k, 35% 28-50k, 43% over 50k
+  let tax=0;
+  if(taxable<=28000)tax=taxable*0.23;
+  else if(taxable<=50000)tax=28000*0.23+(taxable-28000)*0.35;
+  else tax=28000*0.23+22000*0.35+(taxable-50000)*0.43;
+  return Math.max(0,tax);
+}
+function openSim(kind){
+  const m=document.getElementById('sim-modal');
+  document.getElementById('sim-title').textContent=t(kind==='payslip'?'sim.payTitle':'sim.mortTitle');
+  document.getElementById('sim-sub').textContent=t(kind==='payslip'?'sim.paySub':'sim.mortSub');
+  const body=document.getElementById('sim-body');
+  if(kind==='payslip'){
+    body.innerHTML=
+      '<div class="sim-field"><label for="ps-gross">'+t('sim.gross')+'</label><input id="ps-gross" type="number" inputmode="numeric" min="0" step="500" placeholder="25000" oninput="calcPayslip()"/></div>'+
+      '<div id="ps-out"></div>'+
+      '<p class="sim-note">'+t('sim.note')+'</p>';
+  }else{
+    body.innerHTML=
+      '<div class="sim-field"><label for="mo-income">'+t('sim.income')+'</label><input id="mo-income" type="number" inputmode="numeric" min="0" step="50" placeholder="1500" oninput="calcMortgage()"/></div>'+
+      '<div class="sim-field"><label for="mo-rate">'+t('sim.rate')+'</label><input id="mo-rate" type="number" inputmode="decimal" min="0" step="0.1" value="3.5" oninput="calcMortgage()"/></div>'+
+      '<div class="sim-field"><label for="mo-years">'+t('sim.years')+'</label><input id="mo-years" type="number" inputmode="numeric" min="5" max="40" step="1" value="25" oninput="calcMortgage()"/></div>'+
+      '<div id="mo-out"></div>'+
+      '<p class="sim-note">'+t('sim.note')+'</p>';
+  }
+  m.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeSim(){document.getElementById('sim-modal').classList.remove('open');document.body.style.overflow='';}
+function calcPayslip(){
+  const g=parseFloat(document.getElementById('ps-gross').value)||0;
+  const out=document.getElementById('ps-out'); if(g<=0){out.innerHTML='';return;}
+  const inps=g*0.0919;                 // employee social contributions ~9.19%
+  const taxable=g-inps;
+  const irpef=estIrpef(taxable);
+  const netY=g-inps-irpef;
+  const netM=netY/13;                  // 13 mensilità (approx)
+  out.innerHTML='<div class="sim-result"><div class="big">'+fmtEur(netM)+' <span class="per">/ '+t('sim.net').toLowerCase()+'</span></div>'+
+    '<div class="sim-row"><span>'+t('sim.netY')+'</span><b>'+fmtEur(netY)+'</b></div>'+
+    '<div class="sim-row"><span>'+t('sim.irpef')+'</span><b>'+fmtEur(irpef)+'</b></div>'+
+    '<div class="sim-row"><span>'+t('sim.inps')+'</span><b>'+fmtEur(inps)+'</b></div></div>';
+}
+function calcMortgage(){
+  const inc=parseFloat(document.getElementById('mo-income').value)||0;
+  const rate=parseFloat(document.getElementById('mo-rate').value)||0;
+  const years=parseFloat(document.getElementById('mo-years').value)||25;
+  const out=document.getElementById('mo-out'); if(inc<=0){out.innerHTML='';return;}
+  const maxInstall=inc/3;              // sustainable instalment ~1/3 of net income
+  const i=rate/100/12, n=years*12;
+  const loan=i>0 ? maxInstall*(1-Math.pow(1+i,-n))/i : maxInstall*n;
+  out.innerHTML='<div class="sim-result"><div class="big">'+fmtEur(loan)+' <span class="per">'+t('sim.maxLoan').toLowerCase()+'</span></div>'+
+    '<div class="sim-row"><span>'+t('sim.maxInstall')+'</span><b>'+fmtEur(maxInstall)+' / mese</b></div></div>';
 }
 
 /* ═══ Chat (Consigliere) — passes journey context to /api/chat ═══ */
@@ -606,7 +737,11 @@ function askAdvisor(n){
   if(!chatOpen)toggleChat();
   setTimeout(()=>sendToAgent(q),chatOpen?0:350);
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('auth-modal').classList.contains('open'))closeAuth();else if(chatOpen)toggleChat();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){
+  const open=document.querySelector('.modal-overlay.open');
+  if(open){open.classList.remove('open');document.body.style.overflow='';}
+  else if(chatOpen)toggleChat();
+}});
 
 /* ═══ Custom dual-layer cursor (fine pointers only) ═══ */
 (function(){
