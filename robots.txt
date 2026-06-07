@@ -1,0 +1,15 @@
+# Easy Italia Hub — robots.txt
+User-agent: *
+Allow: /
+
+# AI crawlers — allowed for brand visibility in AI search (GEO strategy)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://easyitaliahub.it/sitemap.xml
