@@ -335,6 +335,7 @@ html.returning #preloader{display:none}
       <button class="tool-btn" onclick="openOnboarding()"><span class="ico">🧭</span> <span data-i18n="tool.onboarding">Personalizza percorso</span></button>
       <button class="tool-btn" onclick="openSim('payslip')"><span class="ico">💶</span> <span data-i18n="tool.payslip">Simulatore busta paga</span></button>
       <button class="tool-btn" onclick="openSim('mortgage')"><span class="ico">🏠</span> <span data-i18n="tool.mortgage">Simulatore mutuo</span></button>
+      <button class="tool-btn" onclick="openQuiz()"><span class="ico">🇮🇹</span> <span data-i18n="tool.quiz">Test di italiano</span></button>
     </div>
   </header>
 
@@ -418,6 +419,18 @@ html.returning #preloader{display:none}
   </div>
 </div>
 
+<!-- ─── QUIZ MODAL (Italian mini-test) ─── -->
+<div class="modal-overlay" id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title" onclick="if(event.target===this)closeQuiz()">
+  <div class="modal tool">
+    <button class="modal-close" onclick="closeQuiz()" aria-label="Chiudi"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="modal-head" style="text-align:left">
+      <h2 class="modal-title" id="quiz-title" data-i18n="quiz.title">Test di italiano</h2>
+      <p class="modal-sub" id="quiz-sub" data-i18n="quiz.sub">Piccolo quiz di lessico pratico. Buona fortuna!</p>
+    </div>
+    <div id="quiz-body"></div>
+  </div>
+</div>
+
 <script>
 /* ═══ i18n (journey page) ═══ */
 const I18N={
@@ -429,7 +442,8 @@ const I18N={
     "auth.name":"Nome completo","auth.email":"Email","auth.pass":"Password","auth.signup":"Registrati gratis","auth.login":"Accedi","auth.haveAccount":"Hai già un account?","auth.noAccount":"Non hai un account?","auth.createTitle":"Crea il tuo account","auth.createSub":"Registrati gratis e sblocca il tuo percorso","auth.welcomeTitle":"Bentornato","auth.welcomeSub":"Accedi al tuo account Easy Italia Hub",
     "tool.onboarding":"Personalizza percorso","tool.payslip":"Simulatore busta paga","tool.mortgage":"Simulatore mutuo",
     "onb.title":"Dove ti trovi ora?","onb.sub":"Personalizziamo il percorso sul tuo momento.","onb.o1":"Sono appena arrivato/a","onb.o2":"Sto sistemando i documenti","onb.o3":"Cerco o ho un lavoro","onb.o4":"Penso a casa e famiglia","onb.o5":"Soldi, impresa o cittadinanza","onb.saved":"Percorso aggiornato!",
-    "sim.payTitle":"Simulatore busta paga","sim.paySub":"Dal lordo annuo (RAL) al netto stimato.","sim.mortTitle":"Simulatore mutuo","sim.mortSub":"Quanto mutuo puoi permetterti.","sim.gross":"Stipendio lordo annuo · RAL (€)","sim.calc":"Calcola","sim.net":"Netto mensile stimato","sim.netY":"Netto annuo","sim.irpef":"IRPEF (stima)","sim.inps":"Contributi INPS","sim.income":"Reddito mensile netto (€)","sim.rate":"Tasso annuo (%)","sim.years":"Durata (anni)","sim.maxInstall":"Rata sostenibile (~1/3)","sim.maxLoan":"Mutuo stimato","sim.note":"⚠️ Stima semplificata a scopo informativo. Importi e aliquote cambiano: verifica sempre con un commercialista/patronato o le fonti ufficiali."},
+    "sim.payTitle":"Simulatore busta paga","sim.paySub":"Dal lordo annuo (RAL) al netto stimato.","sim.mortTitle":"Simulatore mutuo","sim.mortSub":"Quanto mutuo puoi permetterti.","sim.gross":"Stipendio lordo annuo · RAL (€)","sim.calc":"Calcola","sim.net":"Netto mensile stimato","sim.netY":"Netto annuo","sim.irpef":"IRPEF (stima)","sim.inps":"Contributi INPS","sim.income":"Reddito mensile netto (€)","sim.rate":"Tasso annuo (%)","sim.years":"Durata (anni)","sim.maxInstall":"Rata sostenibile (~1/3)","sim.maxLoan":"Mutuo stimato","sim.note":"⚠️ Stima semplificata a scopo informativo. Importi e aliquote cambiano: verifica sempre con un commercialista/patronato o le fonti ufficiali.",
+    "tool.quiz":"Test di italiano","quiz.title":"Test di italiano","quiz.sub":"Piccolo quiz di lessico pratico. Buona fortuna!","quiz.next":"Avanti","quiz.retry":"Riprova","quiz.correct":"Giusto!","quiz.wrong":"Quasi! La risposta giusta è:","quiz.scorePre":"Hai totalizzato","quiz.scorePost":"risposte giuste su","quiz.q":"Domanda"},
   en:{"nav.guide":"Guides","nav.community":"Community","nav.journey":"My Journey","nav.news":"News","nav.login":"Log in","nav.signup":"Sign up free",
     "jr.eyebrow":"Your journey platform","jr.title":"My <em>Journey</em>","jr.intro":"Not a list of paperwork, but the map of your life in Italy. You always know where you are and the next step — with the AI Advisor beside you, phase by phase.","jr.progress":"Your progress","jr.phases":"phases",
     "st.done":"Completed","st.current":"In progress","st.todo":"To do","st.locked":"Locked","st.next":"Next step","st.ask":"Ask the Advisor","st.markCurrent":"I'm here now","st.markDone":"Mark completed","st.lockMsg":"Sign up to unlock this phase.","st.unlock":"Unlock",
@@ -438,7 +452,8 @@ const I18N={
     "auth.name":"Full name","auth.email":"Email","auth.pass":"Password","auth.signup":"Sign up free","auth.login":"Log in","auth.haveAccount":"Already have an account?","auth.noAccount":"No account yet?","auth.createTitle":"Create your account","auth.createSub":"Sign up free and unlock your journey","auth.welcomeTitle":"Welcome back","auth.welcomeSub":"Log in to your Easy Italia Hub account",
     "tool.onboarding":"Personalize journey","tool.payslip":"Payslip simulator","tool.mortgage":"Mortgage simulator",
     "onb.title":"Where are you now?","onb.sub":"Let's tailor the journey to your moment.","onb.o1":"I just arrived","onb.o2":"Sorting out documents","onb.o3":"Looking for / have a job","onb.o4":"Thinking about home & family","onb.o5":"Money, business or citizenship","onb.saved":"Journey updated!",
-    "sim.payTitle":"Payslip simulator","sim.paySub":"From gross annual (RAL) to estimated net.","sim.mortTitle":"Mortgage simulator","sim.mortSub":"How much mortgage you can afford.","sim.gross":"Gross annual salary · RAL (€)","sim.calc":"Calculate","sim.net":"Estimated monthly net","sim.netY":"Annual net","sim.irpef":"IRPEF (est.)","sim.inps":"INPS contributions","sim.income":"Monthly net income (€)","sim.rate":"Annual rate (%)","sim.years":"Term (years)","sim.maxInstall":"Affordable instalment (~1/3)","sim.maxLoan":"Estimated mortgage","sim.note":"⚠️ Simplified estimate for information only. Amounts and rates change: always verify with an accountant/patronato or official sources."},
+    "sim.payTitle":"Payslip simulator","sim.paySub":"From gross annual (RAL) to estimated net.","sim.mortTitle":"Mortgage simulator","sim.mortSub":"How much mortgage you can afford.","sim.gross":"Gross annual salary · RAL (€)","sim.calc":"Calculate","sim.net":"Estimated monthly net","sim.netY":"Annual net","sim.irpef":"IRPEF (est.)","sim.inps":"INPS contributions","sim.income":"Monthly net income (€)","sim.rate":"Annual rate (%)","sim.years":"Term (years)","sim.maxInstall":"Affordable instalment (~1/3)","sim.maxLoan":"Estimated mortgage","sim.note":"⚠️ Simplified estimate for information only. Amounts and rates change: always verify with an accountant/patronato or official sources.",
+    "tool.quiz":"Italian test","quiz.title":"Italian test","quiz.sub":"A short practical-vocabulary quiz. Good luck!","quiz.next":"Next","quiz.retry":"Try again","quiz.correct":"Correct!","quiz.wrong":"Almost! The right answer is:","quiz.scorePre":"You scored","quiz.scorePost":"correct out of","quiz.q":"Question"},
   si:{"nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.journey":"මගේ ගමන","nav.news":"පුවත්","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
     "jr.eyebrow":"ඔබේ ගමන් වේදිකාව","jr.title":"මගේ <em>ගමන</em>","jr.intro":"ලේඛන ලැයිස්තුවක් නොව, ඉතාලියේ ඔබේ ජීවිතයේ සිතියම. ඔබ සිටින තැන සහ මීළඟ පියවර සැමවිටම දැනගන්න — සෑම අදියරකදීම AI උපදේශක ඔබ සමඟ.","jr.progress":"ඔබේ ප්‍රගතිය","jr.phases":"අදියර",
     "st.done":"සම්පූර්ණයි","st.current":"ක්‍රියාත්මකයි","st.todo":"කළ යුතුයි","st.locked":"අගුලු දමා ඇත","st.next":"මීළඟ පියවර","st.ask":"උපදේශකගෙන් අසන්න","st.markCurrent":"මම දැන් මෙහි","st.markDone":"සම්පූර්ණ ලෙස සලකුණු කරන්න","st.lockMsg":"මෙම අදියර අගුළු ඇරීමට ලියාපදිංචි වන්න.","st.unlock":"අගුළු හරින්න",
@@ -447,7 +462,8 @@ const I18N={
     "auth.name":"සම්පූර්ණ නම","auth.email":"විද්‍යුත් තැපෑල","auth.pass":"මුරපදය","auth.signup":"නොමිලේ ලියාපදිංචි වන්න","auth.login":"පිවිසෙන්න","auth.haveAccount":"දැනටමත් ගිණුමක් තිබේද?","auth.noAccount":"ගිණුමක් නැද්ද?","auth.createTitle":"ඔබේ ගිණුම සාදන්න","auth.createSub":"නොමිලේ ලියාපදිංචි වී ඔබේ ගමන අගුළු හරින්න","auth.welcomeTitle":"නැවත සාදරයෙන් පිළිගනිමු","auth.welcomeSub":"ඔබේ Easy Italia Hub ගිණුමට පිවිසෙන්න",
     "tool.onboarding":"ගමන පුද්ගලීකරණය","tool.payslip":"වැටුප් සිමියුලේටරය","tool.mortgage":"නිවාස ණය සිමියුලේටරය",
     "onb.title":"ඔබ දැන් සිටින්නේ කොහේද?","onb.sub":"ඔබේ මොහොතට ගමන සකසමු.","onb.o1":"මම දැන් පැමිණියා","onb.o2":"ලේඛන සකසමින්","onb.o3":"රැකියාවක් සොයමින්/තිබේ","onb.o4":"නිවස සහ පවුල ගැන","onb.o5":"මුදල්, ව්‍යාපාර හෝ පුරවැසිභාවය","onb.saved":"ගමන යාවත්කාලීන විය!",
-    "sim.payTitle":"වැටුප් සිමියුලේටරය","sim.paySub":"වාර්ෂික දළ (RAL) සිට ශුද්ධ දක්වා.","sim.mortTitle":"නිවාස ණය සිමියුලේටරය","sim.mortSub":"ඔබට දරාගත හැකි ණය ප්‍රමාණය.","sim.gross":"වාර්ෂික දළ වැටුප · RAL (€)","sim.calc":"ගණනය","sim.net":"ඇස්තමේන්තුගත මාසික ශුද්ධ","sim.netY":"වාර්ෂික ශුද්ධ","sim.irpef":"IRPEF (ඇස්ත.)","sim.inps":"INPS දායකත්ව","sim.income":"මාසික ශුද්ධ ආදායම (€)","sim.rate":"වාර්ෂික පොලී (%)","sim.years":"කාලය (වසර)","sim.maxInstall":"දරාගත හැකි වාරිකය (~1/3)","sim.maxLoan":"ඇස්තමේන්තුගත ණය","sim.note":"⚠️ තොරතුරු සඳහා පමණක් සරල ඇස්තමේන්තුවකි. මුදල් සහ අනුපාත වෙනස් වේ: සැමවිට ගණකාධිකාරියෙකු/patronato හෝ නිල මූලාශ්‍ර සමඟ තහවුරු කරගන්න."}
+    "sim.payTitle":"වැටුප් සිමියුලේටරය","sim.paySub":"වාර්ෂික දළ (RAL) සිට ශුද්ධ දක්වා.","sim.mortTitle":"නිවාස ණය සිමියුලේටරය","sim.mortSub":"ඔබට දරාගත හැකි ණය ප්‍රමාණය.","sim.gross":"වාර්ෂික දළ වැටුප · RAL (€)","sim.calc":"ගණනය","sim.net":"ඇස්තමේන්තුගත මාසික ශුද්ධ","sim.netY":"වාර්ෂික ශුද්ධ","sim.irpef":"IRPEF (ඇස්ත.)","sim.inps":"INPS දායකත්ව","sim.income":"මාසික ශුද්ධ ආදායම (€)","sim.rate":"වාර්ෂික පොලී (%)","sim.years":"කාලය (වසර)","sim.maxInstall":"දරාගත හැකි වාරිකය (~1/3)","sim.maxLoan":"ඇස්තමේන්තුගත ණය","sim.note":"⚠️ තොරතුරු සඳහා පමණක් සරල ඇස්තමේන්තුවකි. මුදල් සහ අනුපාත වෙනස් වේ: සැමවිට ගණකාධිකාරියෙකු/patronato හෝ නිල මූලාශ්‍ර සමඟ තහවුරු කරගන්න.",
+    "tool.quiz":"ඉතාලි පරීක්ෂණය","quiz.title":"ඉතාලි පරීක්ෂණය","quiz.sub":"කෙටි ප්‍රායෝගික වචන මාලා ප්‍රශ්නාවලියක්. සුබ පැතුම්!","quiz.next":"ඊළඟ","quiz.retry":"නැවත උත්සාහ කරන්න","quiz.correct":"හරි!","quiz.wrong":"පාහේ! නිවැරදි පිළිතුර:","quiz.scorePre":"ඔබ ලකුණු","quiz.scorePost":"න් නිවැරදි","quiz.q":"ප්‍රශ්නය"}
 };
 const LANG_META={it:{flag:"🇮🇹",code:"IT"},en:{flag:"🇬🇧",code:"EN"},si:{flag:"🇱🇰",code:"SI"}};
 let currentLang=localStorage.getItem('eih-lang')||'it'; if(!I18N[currentLang])currentLang='it';
@@ -702,6 +718,48 @@ function calcMortgage(){
   const loan=i>0 ? maxInstall*(1-Math.pow(1+i,-n))/i : maxInstall*n;
   out.innerHTML='<div class="sim-result"><div class="big">'+fmtEur(loan)+' <span class="per">'+t('sim.maxLoan').toLowerCase()+'</span></div>'+
     '<div class="sim-row"><span>'+t('sim.maxInstall')+'</span><b>'+fmtEur(maxInstall)+' / mese</b></div></div>';
+}
+
+/* ═══ Italian mini-test (quiz) — questions in Italian (it's a language test) ═══ */
+const QUIZ=[
+  {q:"Quale documento ti identifica con la Pubblica Amministrazione italiana?",o:["Codice Fiscale","La patente","Il biglietto del bus"],a:0},
+  {q:"Cosa significa «scadenza»?",o:["La data entro cui fare qualcosa","Un tipo di permesso","Un ufficio comunale"],a:0},
+  {q:"Dove si richiede la «residenza»?",o:["Al Comune (Anagrafe)","Alla Posta","Al supermercato"],a:0},
+  {q:"Il «permesso di soggiorno» serve per…",o:["Vivere legalmente in Italia","Guidare l'auto","Viaggiare in aereo"],a:0},
+  {q:"Cos'è la «busta paga»?",o:["Il documento dello stipendio","Una bolletta","Un contratto d'affitto"],a:0}
+];
+let quizI=0,quizScore=0,quizLock=false;
+function openQuiz(){quizI=0;quizScore=0;quizLock=false;document.getElementById('quiz-modal').classList.add('open');document.body.style.overflow='hidden';renderQuiz();}
+function closeQuiz(){document.getElementById('quiz-modal').classList.remove('open');document.body.style.overflow='';}
+function renderQuiz(){
+  const body=document.getElementById('quiz-body');
+  if(quizI>=QUIZ.length){
+    body.innerHTML='<div class="sim-result" style="text-align:center"><div class="big">'+quizScore+'/'+QUIZ.length+'</div>'+
+      '<p class="modal-sub" style="margin-top:.4rem">'+t('quiz.scorePre')+' <b>'+quizScore+'</b> '+t('quiz.scorePost')+' '+QUIZ.length+'.</p></div>'+
+      '<button class="btn-primary" style="width:100%;justify-content:center;margin-top:var(--sp-2)" onclick="openQuiz()">'+t('quiz.retry')+'</button>';
+    return;
+  }
+  const item=QUIZ[quizI];quizLock=false;
+  body.innerHTML='<p style="font-size:var(--text-xs);color:var(--fg-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem">'+t('quiz.q')+' '+(quizI+1)+'/'+QUIZ.length+'</p>'+
+    '<p style="font-family:\'Clash Grotesk\',sans-serif;font-size:var(--text-lg);color:var(--ink);margin-bottom:var(--sp-2);line-height:1.3">'+item.q+'</p>'+
+    '<div id="quiz-opts" style="display:flex;flex-direction:column;gap:.5rem">'+
+      item.o.map((op,i)=>'<button class="tool-btn" style="width:100%;justify-content:flex-start;text-align:left" onclick="answerQuiz('+i+')">'+op+'</button>').join('')+
+    '</div><div id="quiz-fb" style="margin-top:.7rem;font-size:var(--text-sm)"></div>';
+}
+function answerQuiz(i){
+  if(quizLock)return;quizLock=true;
+  const item=QUIZ[quizI];const correct=(i===item.a);
+  if(correct)quizScore++;
+  document.querySelectorAll('#quiz-opts .tool-btn').forEach((b,idx)=>{
+    b.disabled=true;
+    if(idx===item.a){b.style.borderColor='var(--green)';b.style.background='var(--green-dim)';}
+    else if(idx===i){b.style.borderColor='var(--coral)';}
+  });
+  const fb=document.getElementById('quiz-fb');
+  fb.innerHTML=(correct
+    ?'<span style="color:var(--green);font-weight:600">✓ '+t('quiz.correct')+'</span>'
+    :'<span style="color:var(--coral)">'+t('quiz.wrong')+' <b>'+item.o[item.a]+'</b></span>')+
+    '<button class="btn-primary" style="width:100%;justify-content:center;margin-top:.7rem" onclick="quizI++;renderQuiz()">'+t('quiz.next')+'</button>';
 }
 
 /* ═══ Chat (Consigliere) — passes journey context to /api/chat ═══ */
