@@ -73,6 +73,12 @@ module.exports = async (req, res) => {
   const lang = ["it", "en", "si", "ta"].includes(body?.lang) ? body.lang : "it";
   const langName = LANG_NAME[lang];
 
+  // Journey context (from "Il Mio Percorso"): makes the advisor proactive/contextual.
+  const userPhase = typeof body?.userPhase === "string" ? body.userPhase.slice(0, 120) : "";
+  const completedSteps = Array.isArray(body?.completedSteps)
+    ? body.completedSteps.filter((s) => typeof s === "string").slice(0, 40).map((s) => s.slice(0, 80))
+    : [];
+
   const lastUser = [...messages].reverse().find((m) => m.role === "user");
   const query = lastUser?.content || "";
   if (!query.trim()) return res.status(400).json({ error: "empty_query" });
@@ -100,7 +106,17 @@ module.exports = async (req, res) => {
       }));
     if (!contents.length) contents.push({ role: "user", parts: [{ text: query }] });
 
-    const systemText = `${systemPersona(langName)}\n\n${buildContext(query)}`;
+    let journeyBlock = "";
+    if (userPhase) {
+      journeyBlock =
+        `\n\nCONTESTO PERCORSO UTENTE (usalo per essere proattivo e contestuale):\n` +
+        `- Fase attuale dell'utente nel percorso di vita: ${userPhase}\n` +
+        (completedSteps.length
+          ? `- Passi già completati: ${completedSteps.join(", ")}\n`
+          : `- Nessun passo ancora completato.\n`) +
+        `Adatta il consiglio alla fase attuale: conferma cosa ha fatto, evita di ripetere passi già completati, e indica il prossimo passo concreto e sensato per questa fase, spiegando brevemente il perché.`;
+    }
+    const systemText = `${systemPersona(langName)}\n\n${buildContext(query)}${journeyBlock}`;
     const payload = JSON.stringify({
       system_instruction: { parts: [{ text: systemText }] },
       contents,
