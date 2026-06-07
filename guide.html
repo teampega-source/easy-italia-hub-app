@@ -20,23 +20,156 @@
 <div id="site-nav"></div>
 
 <main id="main">
+  <style>
+    /* scoped to the guide page — keeps the jump-nav and anchors tidy without touching eih.css */
+    [data-page="guide"] .page section{scroll-margin-top:6rem}
+    [data-page="guide"] .page section:first-of-type h2{margin-top:var(--sp-4)}
+    [data-page="guide"] .jump-nav{margin:0 0 var(--sp-3);padding:1.1rem 1.3rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border)}
+    [data-page="guide"] .jump-nav .jump-title{margin:0 0 .6rem;font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+    [data-page="guide"] .jump-nav ul{list-style:none;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.4rem .9rem}
+    [data-page="guide"] .jump-nav li{margin:0}
+  </style>
   <div class="page page-wide">
     <p class="eyebrow reveal"><span class="eyebrow-line"></span> Guide</p>
     <h1 class="reveal">Tutto chiaro,<br/><em>passo dopo passo.</em></h1>
-    <p class="lead reveal">Guide pratiche per ogni fase della tua vita in Italia. Sempre da <strong>fonti ufficiali</strong> (Polizia di Stato, INPS, Agenzia delle Entrate, Ministero dell'Interno), con checklist e tempi reali.</p>
+    <p class="lead reveal">Guide pratiche per i documenti e i passaggi più importanti della tua vita in Italia: codice fiscale, permesso di soggiorno, SPID, residenza, sanità, lavoro, tasse e cittadinanza. Spiegate in modo semplice, con il <strong>link alla fonte ufficiale</strong> in ogni sezione.</p>
 
-    <div class="draft-banner reveal">📚 <span>Stiamo pubblicando le guide complete e verificate. Le categorie sono pronte: i contenuti dettagliati arrivano a breve. Intanto, il <a class="inline" href="percorso.html">Consigliere AI</a> risponde subito alle tue domande.</span></div>
+    <div class="draft-banner reveal">ℹ️ <span>Informazioni a scopo orientativo, basate su fonti ufficiali (link in ogni sezione). Costi, tempi e documenti possono cambiare: verifica sempre sulla fonte ufficiale e, per casi specifici, rivolgiti a un <strong>patronato o CAF gratuito</strong>.</span></div>
 
-    <div class="card-grid reveal">
-      <div class="icard"><div class="ic">🛬</div><h3>Arrivo</h3><p>Codice fiscale, SIM, conto base, alloggio — i tuoi primi 90 giorni.</p></div>
-      <div class="icard"><div class="ic">📋</div><h3>Documenti</h3><p>Permesso di soggiorno, SPID, residenza, tessera sanitaria.</p></div>
-      <div class="icard"><div class="ic">💼</div><h3>Lavoro</h3><p>Riconoscimento titoli, contratto, busta paga, formazione.</p></div>
-      <div class="icard"><div class="ic">🏠</div><h3>Casa</h3><p>Affitto sicuro, evitare truffe, garante, verso l'acquisto.</p></div>
-      <div class="icard"><div class="ic">👨‍👩‍👧</div><h3>Famiglia</h3><p>Ricongiungimento, scuola dei figli, pediatra, assegno unico.</p></div>
-      <div class="icard"><div class="ic">📊</div><h3>Soldi e tasse</h3><p>Busta paga, contributi, pensione, risparmio.</p></div>
-      <div class="icard"><div class="ic">🚀</div><h3>Impresa</h3><p>Partita IVA, regime forfettario, aprire un'attività.</p></div>
-      <div class="icard"><div class="ic">🇮🇹</div><h3>Cittadinanza</h3><p>Lungo soggiorno UE, cittadinanza, piena partecipazione.</p></div>
-    </div>
+    <nav class="jump-nav reveal" aria-label="In questa guida">
+      <p class="jump-title">In questa guida</p>
+      <ul>
+        <li><a class="inline" href="#codice-fiscale">1. Codice fiscale</a></li>
+        <li><a class="inline" href="#permesso-soggiorno">2. Permesso di soggiorno</a></li>
+        <li><a class="inline" href="#spid">3. SPID — identità digitale</a></li>
+        <li><a class="inline" href="#residenza">4. Residenza e anagrafe</a></li>
+        <li><a class="inline" href="#tessera-sanitaria">5. Tessera sanitaria e SSN</a></li>
+        <li><a class="inline" href="#busta-paga">6. Leggere la busta paga</a></li>
+        <li><a class="inline" href="#naspi">7. NASpI — disoccupazione</a></li>
+        <li><a class="inline" href="#partita-iva">8. Partita IVA e forfettario</a></li>
+        <li><a class="inline" href="#cittadinanza">9. Cittadinanza e lungo soggiorno UE</a></li>
+        <li><a class="inline" href="#rimesse">10. Inviare denaro a casa</a></li>
+      </ul>
+    </nav>
+
+    <section id="codice-fiscale" class="reveal">
+      <h2>1. Codice fiscale</h2>
+      <p>Il codice fiscale è il codice che ti identifica verso la Pubblica Amministrazione italiana. Serve praticamente per tutto: firmare un contratto di lavoro o di affitto, aprire un conto in banca, iscriverti al Servizio Sanitario, andare dal medico. È il primo documento da ottenere appena arrivi.</p>
+      <p>Si richiede all'<strong>Agenzia delle Entrate</strong> (modulo AA4/8) presentando un documento d'identità o il passaporto. Per i cittadini non UE può essere rilasciato anche dallo <strong>Sportello Unico per l'Immigrazione</strong> oppure insieme al permesso di soggiorno. Il rilascio è <strong>gratuito</strong>.</p>
+      <ol>
+        <li>Procurati un documento d'identità o il passaporto valido.</li>
+        <li>Vai a un ufficio dell'Agenzia delle Entrate (o allo Sportello Unico per l'Immigrazione) e compila il modulo di richiesta.</li>
+        <li>Conserva con cura il codice: lo userai moltissime volte. Più avanti riceverai la tessera sanitaria, che riporta anche il codice fiscale.</li>
+      </ol>
+      <p>Diffida di chi ti chiede soldi per ottenerlo: è una procedura gratuita. <a class="inline" href="https://www.agenziaentrate.gov.it" rel="noopener noreferrer" target="_blank">Verifica la procedura aggiornata su agenziaentrate.gov.it</a>.</p>
+    </section>
+
+    <section id="permesso-soggiorno" class="reveal">
+      <h2>2. Permesso di soggiorno</h2>
+      <p>Il permesso di soggiorno è il documento che ti autorizza a restare in Italia in regola. Si richiede per il primo rilascio e poi va rinnovato. La domanda di primo rilascio va presentata, di norma, <strong>entro 8 giorni lavorativi dall'ingresso</strong> in Italia.</p>
+      <p>La richiesta si fa con il cosiddetto <strong>"kit giallo"</strong>, disponibile gratuitamente negli uffici postali con lo <strong>Sportello Amico</strong>. Si compila il kit, lo si consegna alle Poste e si riceve una <strong>ricevuta</strong>: conservala, perché dimostra che la pratica è in corso. In seguito sarai convocato in Questura per foto e impronte digitali.</p>
+      <ol>
+        <li>Ritira il kit giallo a un ufficio postale con Sportello Amico.</li>
+        <li>Compila i moduli e prepara i documenti che giustificano il motivo del soggiorno (lavoro, famiglia, studio), il passaporto e le eventuali marche da bollo.</li>
+        <li>Consegna il kit alle Poste e <strong>conserva la ricevuta</strong>.</li>
+        <li>Presentati in Questura nel giorno indicato per foto e impronte.</li>
+      </ol>
+      <p>Per il <strong>rinnovo</strong>, avvia la pratica con buon anticipo rispetto alla scadenza (in genere intorno ai 60 giorni prima): verifica la tempistica corretta sulla fonte ufficiale. Documenti, tempi e requisiti cambiano spesso. <a class="inline" href="https://www.portaleimmigrazione.it" rel="noopener noreferrer" target="_blank">Controlla i requisiti aggiornati sul Portale Immigrazione (portaleimmigrazione.it)</a> e sul sito della <a class="inline" href="https://www.poliziadistato.it" rel="noopener noreferrer" target="_blank">Polizia di Stato (poliziadistato.it)</a>.</p>
+    </section>
+
+    <section id="spid" class="reveal">
+      <h2>3. SPID — identità digitale</h2>
+      <p>Lo SPID (Sistema Pubblico di Identità Digitale) è la tua "chiave" unica per accedere ai servizi online della Pubblica Amministrazione: INPS, Agenzia delle Entrate, sito del Comune, fascicolo sanitario e molto altro. Con un solo SPID entri in tutti questi siti senza creare account diversi.</p>
+      <p>Si ottiene tramite un <strong>Identity Provider</strong> accreditato (per esempio PosteID, Namirial, InfoCert, Aruba). Di solito servono un documento d'identità italiano valido o il permesso, la tessera sanitaria / codice fiscale, un indirizzo email e un numero di cellulare.</p>
+      <ol>
+        <li>Scegli un Identity Provider tra quelli accreditati su spid.gov.it.</li>
+        <li>Registrati online inserendo i tuoi dati, email e numero di cellulare.</li>
+        <li>Completa il riconoscimento: di persona (per esempio all'ufficio postale), via webcam, oppure con CIE o firma digitale.</li>
+      </ol>
+      <p>Alcuni metodi di riconoscimento sono gratuiti, altri a pagamento: controlla le condizioni del provider che scegli. <a class="inline" href="https://www.spid.gov.it" rel="noopener noreferrer" target="_blank">Confronta i provider attivi su spid.gov.it</a>.</p>
+    </section>
+
+    <section id="residenza" class="reveal">
+      <h2>4. Residenza e anagrafe</h2>
+      <p>La residenza anagrafica è la registrazione ufficiale del luogo in cui vivi stabilmente. Si richiede all'ufficio <strong>Anagrafe del Comune</strong> dove abiti. Serve per ottenere la carta d'identità, iscriverti al medico di base e accedere a molti diritti e servizi.</p>
+      <p>Di norma servono un documento valido, il <strong>permesso di soggiorno in corso di validità</strong> e la prova di disponibilità dell'alloggio (per esempio il contratto di affitto o una dichiarazione di ospitalità). Dopo la domanda, la polizia municipale può fare un controllo per verificare che tu abiti davvero a quell'indirizzo.</p>
+      <ol>
+        <li>Prepara documento d'identità, permesso di soggiorno valido e prova dell'alloggio.</li>
+        <li>Presenta la richiesta di iscrizione anagrafica all'ufficio Anagrafe del tuo Comune.</li>
+        <li>Attendi l'eventuale controllo di dimora e la conferma dell'iscrizione.</li>
+      </ol>
+      <p>Le modalità (sportello, online, documenti richiesti) variano da Comune a Comune. <strong>Verifica i requisiti sul sito ufficiale del tuo Comune</strong> di residenza.</p>
+    </section>
+
+    <section id="tessera-sanitaria" class="reveal">
+      <h2>5. Tessera sanitaria e SSN</h2>
+      <p>L'iscrizione al <strong>Servizio Sanitario Nazionale (SSN)</strong> ti dà diritto al medico di base (e al pediatra per i bambini) e alle cure pubbliche. È uno dei passaggi più importanti per la tua salute e quella della tua famiglia.</p>
+      <p>L'iscrizione si fa alla <strong>ASL</strong> del territorio dopo aver ottenuto la residenza (o un domicilio) e con il permesso di soggiorno valido. Per alcune categorie di persone l'iscrizione è <strong>obbligatoria e gratuita</strong>, per altre è volontaria con il pagamento di un contributo. Dopo l'iscrizione potrai scegliere il medico di base e ricevere la tessera sanitaria.</p>
+      <ol>
+        <li>Ottieni prima la residenza o un domicilio e assicurati di avere il permesso di soggiorno valido.</li>
+        <li>Recati allo sportello della tua ASL per l'iscrizione al SSN.</li>
+        <li>Scegli il medico di base (o il pediatra per i figli).</li>
+      </ol>
+      <p>Le regole possono cambiare in base alla tua Regione e alla tua situazione. <a class="inline" href="https://www.salute.gov.it" rel="noopener noreferrer" target="_blank">Consulta le informazioni ufficiali del Ministero della Salute (salute.gov.it)</a> e verifica le regole della tua ASL.</p>
+    </section>
+
+    <section id="busta-paga" class="reveal">
+      <h2>6. Leggere la busta paga</h2>
+      <p>La busta paga è il documento che ricevi ogni mese dal datore di lavoro e che spiega come è composto il tuo stipendio. Capirla ti aiuta a controllare di essere pagato correttamente e a pianificare risparmio, mutuo e pensione.</p>
+      <p>La differenza chiave è tra <strong>lordo</strong> e <strong>netto</strong>. Dallo stipendio lordo si sottraggono:</p>
+      <ul>
+        <li><strong>Contributi previdenziali (INPS):</strong> versamenti per la tua futura pensione e per le tutele (malattia, disoccupazione).</li>
+        <li><strong>IRPEF:</strong> l'imposta sul reddito, calcolata a scaglioni, più eventuali addizionali regionali e comunali.</li>
+      </ul>
+      <p>Quello che resta è il <strong>netto</strong>, cioè i soldi che ricevi effettivamente. Se pensi di tornare un giorno in Sri Lanka, è utile sapere cosa succede ai contributi versati in Italia (esistono regole di totalizzazione e convenzioni): per i conteggi ufficiali rivolgiti a un commercialista o a un patronato.</p>
+      <p>Vuoi una stima rapida del tuo netto? Usa il <a class="inline" href="percorso.html">simulatore busta paga nel tuo Percorso</a>. È una stima indicativa: per i conteggi ufficiali fai riferimento a un commercialista o a un patronato.</p>
+    </section>
+
+    <section id="naspi" class="reveal">
+      <h2>7. NASpI — disoccupazione</h2>
+      <p>La NASpI è l'indennità di disoccupazione erogata dall'<strong>INPS</strong> a chi perde <strong>involontariamente</strong> un lavoro dipendente (per esempio un licenziamento). Non spetta, di norma, a chi si licenzia volontariamente. Serve a darti un sostegno economico mentre cerchi un nuovo impiego.</p>
+      <p>La domanda va presentata entro un termine preciso dalla fine del rapporto di lavoro, tramite il sito INPS (serve lo SPID), un <strong>patronato</strong> o il contact center INPS. La durata e l'importo dipendono dalla tua storia contributiva.</p>
+      <ol>
+        <li>Verifica di avere i requisiti (cessazione involontaria del lavoro e contributi sufficienti).</li>
+        <li>Presenta la domanda entro i termini previsti, online con SPID o tramite un patronato.</li>
+        <li>Segui le eventuali attività richieste per la ricerca di un nuovo lavoro.</li>
+      </ol>
+      <p>I termini, gli importi e i requisiti possono cambiare: verifica sempre le informazioni aggiornate. <a class="inline" href="https://www.inps.it" rel="noopener noreferrer" target="_blank">Consulta requisiti e importi su inps.it</a>.</p>
+    </section>
+
+    <section id="partita-iva" class="reveal">
+      <h2>8. Partita IVA e regime forfettario</h2>
+      <p>Se vuoi lavorare in proprio o aprire un'attività (un minimarket, un ristorante, servizi di cura, import-export e così via) ti serve la <strong>partita IVA</strong>. Il <strong>regime forfettario</strong> è un regime fiscale agevolato pensato per chi ha ricavi sotto una certa soglia ed è spesso il punto di partenza per le piccole attività.</p>
+      <p>Oltre all'apertura della partita IVA, aprire un'impresa comporta altri adempimenti, per esempio l'iscrizione alla <strong>Camera di Commercio</strong>, all'<strong>INPS</strong> (gestione commercianti o artigiani) ed eventuali licenze comunali in base al tipo di attività.</p>
+      <ul>
+        <li>Valuta se il regime forfettario fa al caso tuo (dipende da ricavi e tipo di attività).</li>
+        <li>Apri la partita IVA presso l'Agenzia delle Entrate e completa le iscrizioni necessarie.</li>
+        <li>Fatti seguire da un commercialista, possibilmente che parli la tua lingua, per evitare errori.</li>
+      </ul>
+      <p>Soglie, aliquote e adempimenti cambiano nel tempo: non fidarti di importi sentiti dire e verifica sempre le regole aggiornate. <a class="inline" href="https://www.agenziaentrate.gov.it" rel="noopener noreferrer" target="_blank">Informazioni ufficiali sull'Agenzia delle Entrate (agenziaentrate.gov.it)</a>.</p>
+    </section>
+
+    <section id="cittadinanza" class="reveal">
+      <h2>9. Cittadinanza e lungo soggiorno UE</h2>
+      <p>Dopo diversi anni di vita regolare in Italia puoi puntare a una stabilità maggiore. Due percorsi importanti sono il <strong>permesso di soggiorno UE per soggiornanti di lungo periodo</strong> e la <strong>cittadinanza italiana</strong>.</p>
+      <ul>
+        <li><strong>Permesso UE per lungo soggiorno:</strong> in genere richiede diversi anni di residenza legale, un reddito sufficiente e un attestato di conoscenza della lingua italiana (in genere livello A2). È a tempo indeterminato e dà più diritti rispetto a un permesso ordinario.</li>
+        <li><strong>Cittadinanza per naturalizzazione:</strong> per i cittadini non UE richiede in genere molti anni di residenza legale e continuativa. In altri casi (per esempio matrimonio o discendenza) i tempi e i requisiti sono diversi.</li>
+      </ul>
+      <p>I requisiti, i tempi di attesa e i documenti per entrambi i percorsi cambiano spesso e variano molto da caso a caso: per la tua situazione specifica conviene rivolgersi a un patronato o a un legale. <a class="inline" href="https://www.interno.gov.it" rel="noopener noreferrer" target="_blank">Verifica i requisiti aggiornati sul Ministero dell'Interno (interno.gov.it)</a>.</p>
+    </section>
+
+    <section id="rimesse" class="reveal">
+      <h2>10. Inviare denaro a casa</h2>
+      <p>Mandare soldi alla famiglia in Sri Lanka è una parte importante della vita di molti. Il punto chiave è capire il <strong>costo totale</strong> di un invio, che non è solo la commissione dichiarata.</p>
+      <p>Il costo totale è dato da due elementi:</p>
+      <ul>
+        <li><strong>La commissione</strong> applicata sull'operazione.</li>
+        <li><strong>Il margine sul tasso di cambio</strong>, cioè la differenza tra il cambio reale e quello che ti viene applicato. A volte questo margine pesa più della commissione visibile.</li>
+      </ul>
+      <p>I diversi servizi hanno caratteristiche diverse: alcuni puntano su commissioni basse e cambio vicino a quello reale, altri offrono reti capillari per il ritiro in contanti. Le condizioni cambiano in continuazione, quindi conviene <strong>confrontare il costo totale in tempo reale</strong> prima di inviare e considerare velocità, sicurezza e modalità di ritiro per chi riceve.</p>
+      <p>Trova punti e servizi utili sul territorio nella <a class="inline" href="mappa.html">mappa dei servizi</a>, oppure chiedi consiglio nella <a class="inline" href="community.html">community</a> a chi invia già denaro dall'Italia.</p>
+    </section>
 
     <div class="cta-row reveal">
       <a href="percorso.html" class="btn-primary">Apri Il Mio Percorso</a>

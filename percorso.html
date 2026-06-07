@@ -336,6 +336,7 @@ html.returning #preloader{display:none}
       <button class="tool-btn" onclick="openSim('payslip')"><span class="ico">💶</span> <span data-i18n="tool.payslip">Simulatore busta paga</span></button>
       <button class="tool-btn" onclick="openSim('mortgage')"><span class="ico">🏠</span> <span data-i18n="tool.mortgage">Simulatore mutuo</span></button>
       <button class="tool-btn" onclick="openQuiz()"><span class="ico">🇮🇹</span> <span data-i18n="tool.quiz">Test di italiano</span></button>
+      <button class="tool-btn" onclick="openMatch()"><span class="ico">🧩</span> <span data-i18n="tool.match">Abbina la parola</span></button>
     </div>
   </header>
 
@@ -485,6 +486,18 @@ html.returning #preloader{display:none}
   </div>
 </div>
 
+<!-- ─── MATCH MODAL (Abbina la parola — mini-game) ─── -->
+<div class="modal-overlay" id="match-modal" role="dialog" aria-modal="true" aria-labelledby="match-title" onclick="if(event.target===this)closeMatch()">
+  <div class="modal tool">
+    <button class="modal-close" onclick="closeMatch()" aria-label="Chiudi"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="modal-head" style="text-align:left">
+      <h2 class="modal-title" id="match-title" data-i18n="match.title">Abbina la parola</h2>
+      <p class="modal-sub" id="match-sub" data-i18n="match.sub">Scegli il significato giusto del termine. Buon divertimento!</p>
+    </div>
+    <div id="match-body"></div>
+  </div>
+</div>
+
 <script>
 /* ═══ i18n (journey page) ═══ */
 const I18N={
@@ -497,7 +510,8 @@ const I18N={
     "tool.onboarding":"Personalizza percorso","tool.payslip":"Simulatore busta paga","tool.mortgage":"Simulatore mutuo",
     "onb.title":"Dove ti trovi ora?","onb.sub":"Personalizziamo il percorso sul tuo momento.","onb.o1":"Sono appena arrivato/a","onb.o2":"Sto sistemando i documenti","onb.o3":"Cerco o ho un lavoro","onb.o4":"Penso a casa e famiglia","onb.o5":"Soldi, impresa o cittadinanza","onb.saved":"Percorso aggiornato!",
     "sim.payTitle":"Simulatore busta paga","sim.paySub":"Dal lordo annuo (RAL) al netto stimato.","sim.mortTitle":"Simulatore mutuo","sim.mortSub":"Quanto mutuo puoi permetterti.","sim.gross":"Stipendio lordo annuo · RAL (€)","sim.calc":"Calcola","sim.net":"Netto mensile stimato","sim.netY":"Netto annuo","sim.irpef":"IRPEF (stima)","sim.inps":"Contributi INPS","sim.income":"Reddito mensile netto (€)","sim.rate":"Tasso annuo (%)","sim.years":"Durata (anni)","sim.maxInstall":"Rata sostenibile (~1/3)","sim.maxLoan":"Mutuo stimato","sim.note":"⚠️ Stima semplificata a scopo informativo. Importi e aliquote cambiano: verifica sempre con un commercialista/patronato o le fonti ufficiali.",
-    "tool.quiz":"Test di italiano","quiz.title":"Test di italiano","quiz.sub":"Piccolo quiz di lessico pratico. Buona fortuna!","quiz.next":"Avanti","quiz.retry":"Riprova","quiz.correct":"Giusto!","quiz.wrong":"Quasi! La risposta giusta è:","quiz.scorePre":"Hai totalizzato","quiz.scorePost":"risposte giuste su","quiz.q":"Domanda"},
+    "tool.quiz":"Test di italiano","quiz.title":"Test di italiano","quiz.sub":"Piccolo quiz di lessico pratico. Buona fortuna!","quiz.next":"Avanti","quiz.retry":"Riprova","quiz.correct":"Giusto!","quiz.wrong":"Quasi! La risposta giusta è:","quiz.scorePre":"Hai totalizzato","quiz.scorePost":"risposte giuste su","quiz.q":"Domanda",
+    "tool.match":"Abbina la parola","match.title":"Abbina la parola","match.sub":"Scegli il significato giusto del termine. Buon divertimento!","match.prompt":"Cosa significa…","match.next":"Avanti","match.retry":"Riprova","match.correct":"Esatto!","match.wrong":"Quasi! Il significato giusto è:","match.scorePre":"Hai abbinato","match.scorePost":"parole su","match.q":"Parola"},
   en:{"nav.guide":"Guides","nav.community":"Community","nav.journey":"My Journey","nav.news":"News","nav.login":"Log in","nav.signup":"Sign up free",
     "jr.eyebrow":"Your journey platform","jr.title":"My <em>Journey</em>","jr.intro":"Not a list of paperwork, but the map of your life in Italy. You always know where you are and the next step — with the AI Advisor beside you, phase by phase.","jr.progress":"Your progress","jr.phases":"phases",
     "st.done":"Completed","st.current":"In progress","st.todo":"To do","st.locked":"Locked","st.next":"Next step","st.ask":"Ask the Advisor","st.markCurrent":"I'm here now","st.markDone":"Mark completed","st.lockMsg":"Sign up to unlock this phase.","st.unlock":"Unlock",
@@ -507,7 +521,8 @@ const I18N={
     "tool.onboarding":"Personalize journey","tool.payslip":"Payslip simulator","tool.mortgage":"Mortgage simulator",
     "onb.title":"Where are you now?","onb.sub":"Let's tailor the journey to your moment.","onb.o1":"I just arrived","onb.o2":"Sorting out documents","onb.o3":"Looking for / have a job","onb.o4":"Thinking about home & family","onb.o5":"Money, business or citizenship","onb.saved":"Journey updated!",
     "sim.payTitle":"Payslip simulator","sim.paySub":"From gross annual (RAL) to estimated net.","sim.mortTitle":"Mortgage simulator","sim.mortSub":"How much mortgage you can afford.","sim.gross":"Gross annual salary · RAL (€)","sim.calc":"Calculate","sim.net":"Estimated monthly net","sim.netY":"Annual net","sim.irpef":"IRPEF (est.)","sim.inps":"INPS contributions","sim.income":"Monthly net income (€)","sim.rate":"Annual rate (%)","sim.years":"Term (years)","sim.maxInstall":"Affordable instalment (~1/3)","sim.maxLoan":"Estimated mortgage","sim.note":"⚠️ Simplified estimate for information only. Amounts and rates change: always verify with an accountant/patronato or official sources.",
-    "tool.quiz":"Italian test","quiz.title":"Italian test","quiz.sub":"A short practical-vocabulary quiz. Good luck!","quiz.next":"Next","quiz.retry":"Try again","quiz.correct":"Correct!","quiz.wrong":"Almost! The right answer is:","quiz.scorePre":"You scored","quiz.scorePost":"correct out of","quiz.q":"Question"},
+    "tool.quiz":"Italian test","quiz.title":"Italian test","quiz.sub":"A short practical-vocabulary quiz. Good luck!","quiz.next":"Next","quiz.retry":"Try again","quiz.correct":"Correct!","quiz.wrong":"Almost! The right answer is:","quiz.scorePre":"You scored","quiz.scorePost":"correct out of","quiz.q":"Question",
+    "tool.match":"Match the word","match.title":"Match the word","match.sub":"Pick the right meaning of the term. Have fun!","match.prompt":"What does it mean…","match.next":"Next","match.retry":"Try again","match.correct":"Correct!","match.wrong":"Almost! The right meaning is:","match.scorePre":"You matched","match.scorePost":"words out of","match.q":"Word"},
   si:{"nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.journey":"මගේ ගමන","nav.news":"පුවත්","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
     "jr.eyebrow":"ඔබේ ගමන් වේදිකාව","jr.title":"මගේ <em>ගමන</em>","jr.intro":"ලේඛන ලැයිස්තුවක් නොව, ඉතාලියේ ඔබේ ජීවිතයේ සිතියම. ඔබ සිටින තැන සහ මීළඟ පියවර සැමවිටම දැනගන්න — සෑම අදියරකදීම AI උපදේශක ඔබ සමඟ.","jr.progress":"ඔබේ ප්‍රගතිය","jr.phases":"අදියර",
     "st.done":"සම්පූර්ණයි","st.current":"ක්‍රියාත්මකයි","st.todo":"කළ යුතුයි","st.locked":"අගුලු දමා ඇත","st.next":"මීළඟ පියවර","st.ask":"උපදේශකගෙන් අසන්න","st.markCurrent":"මම දැන් මෙහි","st.markDone":"සම්පූර්ණ ලෙස සලකුණු කරන්න","st.lockMsg":"මෙම අදියර අගුළු ඇරීමට ලියාපදිංචි වන්න.","st.unlock":"අගුළු හරින්න",
@@ -517,7 +532,8 @@ const I18N={
     "tool.onboarding":"ගමන පුද්ගලීකරණය","tool.payslip":"වැටුප් සිමියුලේටරය","tool.mortgage":"නිවාස ණය සිමියුලේටරය",
     "onb.title":"ඔබ දැන් සිටින්නේ කොහේද?","onb.sub":"ඔබේ මොහොතට ගමන සකසමු.","onb.o1":"මම දැන් පැමිණියා","onb.o2":"ලේඛන සකසමින්","onb.o3":"රැකියාවක් සොයමින්/තිබේ","onb.o4":"නිවස සහ පවුල ගැන","onb.o5":"මුදල්, ව්‍යාපාර හෝ පුරවැසිභාවය","onb.saved":"ගමන යාවත්කාලීන විය!",
     "sim.payTitle":"වැටුප් සිමියුලේටරය","sim.paySub":"වාර්ෂික දළ (RAL) සිට ශුද්ධ දක්වා.","sim.mortTitle":"නිවාස ණය සිමියුලේටරය","sim.mortSub":"ඔබට දරාගත හැකි ණය ප්‍රමාණය.","sim.gross":"වාර්ෂික දළ වැටුප · RAL (€)","sim.calc":"ගණනය","sim.net":"ඇස්තමේන්තුගත මාසික ශුද්ධ","sim.netY":"වාර්ෂික ශුද්ධ","sim.irpef":"IRPEF (ඇස්ත.)","sim.inps":"INPS දායකත්ව","sim.income":"මාසික ශුද්ධ ආදායම (€)","sim.rate":"වාර්ෂික පොලී (%)","sim.years":"කාලය (වසර)","sim.maxInstall":"දරාගත හැකි වාරිකය (~1/3)","sim.maxLoan":"ඇස්තමේන්තුගත ණය","sim.note":"⚠️ තොරතුරු සඳහා පමණක් සරල ඇස්තමේන්තුවකි. මුදල් සහ අනුපාත වෙනස් වේ: සැමවිට ගණකාධිකාරියෙකු/patronato හෝ නිල මූලාශ්‍ර සමඟ තහවුරු කරගන්න.",
-    "tool.quiz":"ඉතාලි පරීක්ෂණය","quiz.title":"ඉතාලි පරීක්ෂණය","quiz.sub":"කෙටි ප්‍රායෝගික වචන මාලා ප්‍රශ්නාවලියක්. සුබ පැතුම්!","quiz.next":"ඊළඟ","quiz.retry":"නැවත උත්සාහ කරන්න","quiz.correct":"හරි!","quiz.wrong":"පාහේ! නිවැරදි පිළිතුර:","quiz.scorePre":"ඔබ ලකුණු","quiz.scorePost":"න් නිවැරදි","quiz.q":"ප්‍රශ්නය"}
+    "tool.quiz":"ඉතාලි පරීක්ෂණය","quiz.title":"ඉතාලි පරීක්ෂණය","quiz.sub":"කෙටි ප්‍රායෝගික වචන මාලා ප්‍රශ්නාවලියක්. සුබ පැතුම්!","quiz.next":"ඊළඟ","quiz.retry":"නැවත උත්සාහ කරන්න","quiz.correct":"හරි!","quiz.wrong":"පාහේ! නිවැරදි පිළිතුර:","quiz.scorePre":"ඔබ ලකුණු","quiz.scorePost":"න් නිවැරදි","quiz.q":"ප්‍රශ්නය",
+    "tool.match":"වචනය ගළපන්න","match.title":"වචනය ගළපන්න","match.sub":"පදයේ නිවැරදි අර්ථය තෝරන්න. සුබ පැතුම්!","match.prompt":"මෙහි අර්ථය කුමක්ද…","match.next":"ඊළඟ","match.retry":"නැවත උත්සාහ කරන්න","match.correct":"හරි!","match.wrong":"පාහේ! නිවැරදි අර්ථය:","match.scorePre":"ඔබ ගැළපුවා","match.scorePost":"න් වචන","match.q":"වචනය"}
 };
 const LANG_META={it:{flag:"🇮🇹",code:"IT"},en:{flag:"🇬🇧",code:"EN"},si:{flag:"🇱🇰",code:"SI"}};
 let currentLang=localStorage.getItem('eih-lang')||'it'; if(!I18N[currentLang])currentLang='it';
@@ -780,7 +796,16 @@ const QUIZ=[
   {q:"Cosa significa «scadenza»?",o:["La data entro cui fare qualcosa","Un tipo di permesso","Un ufficio comunale"],a:0},
   {q:"Dove si richiede la «residenza»?",o:["Al Comune (Anagrafe)","Alla Posta","Al supermercato"],a:0},
   {q:"Il «permesso di soggiorno» serve per…",o:["Vivere legalmente in Italia","Guidare l'auto","Viaggiare in aereo"],a:0},
-  {q:"Cos'è la «busta paga»?",o:["Il documento dello stipendio","Una bolletta","Un contratto d'affitto"],a:0}
+  {q:"Cos'è la «busta paga»?",o:["Il documento dello stipendio","Una bolletta","Un contratto d'affitto"],a:0},
+  {q:"Cos'è la «marca da bollo»?",o:["Un bollo che si compra e si applica su documenti","Un francobollo per le lettere","Una multa stradale"],a:0},
+  {q:"A cosa serve la «ricevuta»?",o:["Dimostra che hai pagato qualcosa","È un tipo di contratto di lavoro","È un documento di viaggio"],a:0},
+  {q:"Che cos'è l'«ASL»?",o:["L'azienda sanitaria locale","Una banca","Una scuola di lingua"],a:0},
+  {q:"L'«anagrafe» è l'ufficio che gestisce…",o:["I dati di residenza e stato civile","Le tasse sulle imprese","Le multe del traffico"],a:0},
+  {q:"Quale parola indica un appuntamento prenotato online o al telefono?",o:["Prenotazione","Scadenza","Ricevuta"],a:0},
+  {q:"Qual è la moneta usata in Italia?",o:["Euro","Lira","Franco"],a:0},
+  {q:"Qual è la capitale d'Italia?",o:["Roma","Milano","Napoli"],a:0},
+  {q:"Se un ufficio è «chiuso», significa che…",o:["Non è aperto al pubblico","Ha tanti sportelli","È molto grande"],a:0},
+  {q:"Cosa chiedi se vuoi sapere il costo di qualcosa?",o:["«Quanto costa?»","«Dove abiti?»","«Che ore sono?»"],a:0}
 ];
 let quizI=0,quizScore=0,quizLock=false;
 function openQuiz(){quizI=0;quizScore=0;quizLock=false;document.getElementById('quiz-modal').classList.add('open');document.body.style.overflow='hidden';renderQuiz();}
@@ -814,6 +839,54 @@ function answerQuiz(i){
     ?'<span style="color:var(--green);font-weight:600">✓ '+t('quiz.correct')+'</span>'
     :'<span style="color:var(--coral)">'+t('quiz.wrong')+' <b>'+item.o[item.a]+'</b></span>')+
     '<button class="btn-primary" style="width:100%;justify-content:center;margin-top:.7rem" onclick="quizI++;renderQuiz()">'+t('quiz.next')+'</button>';
+}
+
+/* ═══ "Abbina la parola" mini-game — term→meaning (terms in Italian by design) ═══ */
+const MATCH=[
+  {w:"Scadenza",o:["La data entro cui fare qualcosa","Un documento di viaggio","Un ufficio postale"],a:0},
+  {w:"Marca da bollo",o:["Un bollo da applicare sui documenti","Una multa per il traffico","Una carta di credito"],a:0},
+  {w:"Ricevuta",o:["La prova che hai pagato","Un tipo di contratto","Un permesso di lavoro"],a:0},
+  {w:"ASL",o:["L'azienda sanitaria locale","Una banca","Una compagnia aerea"],a:0},
+  {w:"Anagrafe",o:["L'ufficio dei dati di residenza","Un negozio di alimentari","Una scuola superiore"],a:0},
+  {w:"Tessera Sanitaria",o:["La carta per accedere al servizio sanitario","Un biglietto del treno","Una carta fedeltà del supermercato"],a:0},
+  {w:"Bolletta",o:["La fattura di luce, gas o acqua","Un documento d'identità","Un contratto di lavoro"],a:0},
+  {w:"Affitto",o:["Il pagamento mensile per una casa in locazione","Una tassa sull'auto","Un tipo di mutuo"],a:0},
+  {w:"Contratto",o:["Un accordo scritto tra due parti","Una ricevuta di pagamento","Un ufficio comunale"],a:0},
+  {w:"Patronato",o:["Un ente che aiuta con le pratiche","Un ristorante tipico","Un mezzo di trasporto"],a:0}
+];
+let matchI=0,matchScore=0,matchLock=false;
+function openMatch(){matchI=0;matchScore=0;matchLock=false;document.getElementById('match-modal').classList.add('open');document.body.style.overflow='hidden';renderMatch();}
+function closeMatch(){document.getElementById('match-modal').classList.remove('open');document.body.style.overflow='';}
+function renderMatch(){
+  const body=document.getElementById('match-body');
+  if(matchI>=MATCH.length){
+    body.innerHTML='<div class="sim-result" style="text-align:center"><div class="big">'+matchScore+'/'+MATCH.length+'</div>'+
+      '<p class="modal-sub" style="margin-top:.4rem">'+t('match.scorePre')+' <b>'+matchScore+'</b> '+t('match.scorePost')+' '+MATCH.length+'.</p></div>'+
+      '<button class="btn-primary" style="width:100%;justify-content:center;margin-top:var(--sp-2)" onclick="openMatch()">'+t('match.retry')+'</button>';
+    return;
+  }
+  const item=MATCH[matchI];matchLock=false;
+  body.innerHTML='<p style="font-size:var(--text-xs);color:var(--fg-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem">'+t('match.q')+' '+(matchI+1)+'/'+MATCH.length+'</p>'+
+    '<p class="modal-sub" style="margin-bottom:.35rem">'+t('match.prompt')+'</p>'+
+    '<p style="font-family:\'Clash Grotesk\',sans-serif;font-size:var(--text-xl);color:var(--ink);margin-bottom:var(--sp-2);line-height:1.2">«'+item.w+'»</p>'+
+    '<div id="match-opts" style="display:flex;flex-direction:column;gap:.5rem">'+
+      item.o.map((op,i)=>'<button class="tool-btn" style="width:100%;justify-content:flex-start;text-align:left" onclick="answerMatch('+i+')">'+op+'</button>').join('')+
+    '</div><div id="match-fb" style="margin-top:.7rem;font-size:var(--text-sm)"></div>';
+}
+function answerMatch(i){
+  if(matchLock)return;matchLock=true;
+  const item=MATCH[matchI];const correct=(i===item.a);
+  if(correct)matchScore++;
+  document.querySelectorAll('#match-opts .tool-btn').forEach((b,idx)=>{
+    b.disabled=true;
+    if(idx===item.a){b.style.borderColor='var(--green)';b.style.background='var(--green-dim)';}
+    else if(idx===i){b.style.borderColor='var(--coral)';}
+  });
+  const fb=document.getElementById('match-fb');
+  fb.innerHTML=(correct
+    ?'<span style="color:var(--green);font-weight:600">✓ '+t('match.correct')+'</span>'
+    :'<span style="color:var(--coral)">'+t('match.wrong')+' <b>'+item.o[item.a]+'</b></span>')+
+    '<button class="btn-primary" style="width:100%;justify-content:center;margin-top:.7rem" onclick="matchI++;renderMatch()">'+t('match.next')+'</button>';
 }
 
 /* ═══ Chat (Consigliere) — passes journey context to /api/chat ═══ */
