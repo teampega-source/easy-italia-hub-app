@@ -92,6 +92,8 @@ main{position:relative;z-index:1}
 /* ─── TIMELINE ─── */
 .timeline{position:relative;max-width:760px;margin:var(--sp-4) auto var(--sp-6);padding:0 var(--sp-4)}
 .tl-line{position:absolute;left:calc(var(--sp-4) + 23px);top:20px;bottom:20px;width:2px;background:var(--border)}
+.tl-fill{position:absolute;left:calc(var(--sp-4) + 23px);top:20px;width:2px;height:0;background:linear-gradient(var(--taupe),var(--gold));z-index:1;border-radius:2px}
+@media(max-width:600px){.tl-line,.tl-fill{left:calc(var(--sp-2) + 19px)}}
 .phase{position:relative;display:flex;gap:var(--sp-3);padding:0 0 var(--sp-3) 0}
 .phase-node{position:relative;z-index:2;flex-shrink:0;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Clash Grotesk',sans-serif;font-size:1.1rem;font-weight:600;border:2px solid var(--border-bright);background:var(--bg-elevated);color:var(--fg-muted);transition:all var(--dur-std) var(--ease-spring)}
 .phase.done .phase-node{background:var(--green);border-color:var(--green);color:#fff}
@@ -302,6 +304,7 @@ main{position:relative;z-index:1}
   <!-- TIMELINE (rendered by JS) -->
   <section class="timeline" aria-label="Le 9 fasi del percorso">
     <div class="tl-line" aria-hidden="true"></div>
+    <div class="tl-fill" id="tl-fill" aria-hidden="true"></div>
     <div id="phase-list"></div>
   </section>
 
@@ -619,6 +622,24 @@ rs();mk();if(reduce){fr();cancelAnimationFrame(raf);}else fr();let rt;addEventLi
 /* ═══ Init ═══ */
 applyLang(currentLang);
 renderPhases();
+
+/* ═══ Tier-2: timeline draws as you scroll (after phases give it height) ═══ */
+(function(){
+  const tl=document.querySelector('.timeline'),fill=document.getElementById('tl-fill');
+  if(!tl||!fill)return;
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function update(){
+    const r=tl.getBoundingClientRect();
+    const inner=Math.max(0,r.height-40);
+    if(reduce){fill.style.height=inner+'px';return;}
+    let p=(innerHeight*0.55-r.top)/r.height;
+    p=Math.max(0,Math.min(1,p));
+    fill.style.height=(p*inner)+'px';
+  }
+  addEventListener('scroll',update,{passive:true});
+  addEventListener('resize',update,{passive:true});
+  update();
+})();
 </script>
 </body>
 </html>
