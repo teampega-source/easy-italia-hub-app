@@ -8,13 +8,13 @@
 (function(){
   const I18N={
     it:{ "nav.guide":"Guide","nav.community":"Community","nav.journey":"Il Mio Percorso","nav.news":"News","nav.map":"Mappa","nav.login":"Accedi","nav.signup":"Registrati gratis",
-      "f.tag":"La casa digitale della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.",
+      "f.tag":"Il punto di riferimento della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.",
       "f.product":"Prodotto","f.aiAssistant":"Assistente AI","f.mapServices":"Mappa servizi","f.company":"Azienda","f.about":"Chi siamo","f.advertising":"Pubblicità","f.contact":"Contatti","f.account":"Account","f.register":"Registrati","f.subscriptions":"Abbonamenti","f.copy":"© 2026 Easy Italia Hub. Tutti i diritti riservati.","f.privacy":"Privacy Policy","f.cookie":"Cookie Policy","f.terms":"Termini di Servizio","f.legal":"Note legali" },
     en:{ "nav.guide":"Guides","nav.community":"Community","nav.journey":"My Journey","nav.news":"News","nav.map":"Map","nav.login":"Log in","nav.signup":"Sign up free",
-      "f.tag":"The digital home of the Sri Lankan community in Italy. Guides, multilingual AI, community and services — all in one place.",
+      "f.tag":"The reference point for the Sri Lankan community in Italy. Guides, multilingual AI, community and services — all in one place.",
       "f.product":"Product","f.aiAssistant":"AI Assistant","f.mapServices":"Services map","f.company":"Company","f.about":"About us","f.advertising":"Advertising","f.contact":"Contact","f.account":"Account","f.register":"Register","f.subscriptions":"Subscriptions","f.copy":"© 2026 Easy Italia Hub. All rights reserved.","f.privacy":"Privacy Policy","f.cookie":"Cookie Policy","f.terms":"Terms of Service","f.legal":"Legal notice" },
     si:{ "nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.journey":"මගේ ගමන","nav.news":"පුවත්","nav.map":"සිතියම","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
-      "f.tag":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාවේ ඩිජිටල් නිවස. මාර්ගෝපදේශ, බහුභාෂා AI, ප්‍රජාව සහ සේවා — සියල්ල එක තැනක.",
+      "f.tag":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාවේ විශ්වාසනීය මධ්‍යස්ථානය. මාර්ගෝපදේශ, බහුභාෂා AI, ප්‍රජාව සහ සේවා — සියල්ල එක තැනක.",
       "f.product":"නිෂ්පාදනය","f.aiAssistant":"AI සහායක","f.mapServices":"සේවා සිතියම","f.company":"සමාගම","f.about":"අප ගැන","f.advertising":"දැන්වීම්","f.contact":"සම්බන්ධ වන්න","f.account":"ගිණුම","f.register":"ලියාපදිංචි වන්න","f.subscriptions":"දායකත්ව","f.copy":"© 2026 Easy Italia Hub. සියලු හිමිකම් ඇවිරිණි.","f.privacy":"පෞද්ගලිකත්ව ප්‍රතිපත්තිය","f.cookie":"කුකී ප්‍රතිපත්තිය","f.terms":"සේවා කොන්දේසි","f.legal":"නෛතික දැන්වීම" }
   };
   const LANG_META={it:{flag:"🇮🇹",code:"IT"},en:{flag:"🇬🇧",code:"EN"},si:{flag:"🇱🇰",code:"SI"}};
