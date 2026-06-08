@@ -9,7 +9,7 @@
 <meta name="description" content="Guide burocratiche, assistente AI multilingua e community per la comunità srilankese in Italia: permesso di soggiorno, SPID, codice fiscale e altro."/>
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1"/>
 <meta name="author" content="Easy Italia Hub"/>
-<meta name="theme-color" content="#2C6BC4"/>
+<meta name="theme-color" content="#7d7058"/>
 <link rel="canonical" href="https://easyitaliahub.it/"/>
 
 <!-- ─── Open Graph ─── -->
@@ -74,6 +74,64 @@
       "isPartOf": { "@id": "https://easyitaliahub.it/#website" },
       "about": { "@id": "https://easyitaliahub.it/#organization" },
       "inLanguage": "it"
+    }
+  ]
+}
+</script>
+
+<!-- ─── FAQPage (questions/answers match the visible FAQ section) ─── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quanto tempo ci vuole per il permesso di soggiorno?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dipende dalla questura e dal tipo di permesso: i tempi possono variare da alcune settimane a diversi mesi. Dopo la presentazione della domanda ricevi una ricevuta che, insieme al passaporto, vale come documento provvisorio. Per la procedura passo-passo consulta la nostra guida al permesso di soggiorno."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Il servizio è gratuito?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sì. Consultare le guide, usare l'Assistente AI e leggere le news è gratuito. Non è richiesta alcuna carta di credito per registrarti."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "In che lingue posso usare il sito?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "L'interfaccia del sito è disponibile in 3 lingue: italiano, inglese e sinhala (සිංහල). Puoi cambiare lingua dal menu in alto a destra."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Come funziona il Consigliere AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "È un assistente disponibile 24 ore su 24 che risponde alle tue domande sulla burocrazia e sui servizi. Apri la chat dal pulsante in basso a destra (o con Ctrl/⌘+J) e scrivi la tua domanda: ti indica i passaggi e le guide pertinenti."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Devo registrarmi per usare le guide?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Le guide pratiche sono liberamente consultabili senza registrazione. L'account gratuito serve solo per salvare i progressi del tuo percorso personale."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Le informazioni sono ufficiali?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Le nostre guide sono divulgative e ti orientano nei passaggi principali, ma non sostituiscono le fonti ufficiali. Per i dati definitivi verifica sempre sui siti istituzionali (es. Polizia di Stato, Agenzia delle Entrate, INPS) o rivolgiti a un CAF o patronato."
+      }
     }
   ]
 }
@@ -164,14 +222,53 @@ body{
 }
 .skip-link:focus{top:var(--sp-1)}
 
-/* ─── 3D PARTICLE BACKGROUND (autonomous, canvas) ─── */
-#particles{
+/* ─── BACKGROUND WASH (soft ivory field — static, zero-JS) ─── */
+#bg{
   position:fixed;inset:0;z-index:0;pointer-events:none;
-  /* soft ivory wash so particles sit on a light field */
   background:
-    radial-gradient(1100px 700px at 18% 12%, rgba(44,107,196,0.10), transparent 60%),
+    radial-gradient(1100px 700px at 18% 12%, rgba(124,112,89,0.10), transparent 60%),
     radial-gradient(900px 600px at 85% 80%, rgba(176,136,40,0.08), transparent 60%),
     linear-gradient(180deg,#fbf8f2 0%, #f4efe6 100%);
+}
+
+/* ─── SEASONAL BANNER (dismissible, top of page) ─── */
+#season-banner{
+  position:fixed;top:0;left:0;right:0;z-index:260;
+  display:flex;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap;
+  padding:.55rem var(--sp-3);min-height:42px;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue));
+  color:#fff;font-size:var(--text-sm);font-weight:400;text-align:center;
+  box-shadow:0 2px 12px rgba(20,30,48,.12);
+}
+#season-banner.hidden{display:none}
+#season-banner .sb-text{color:#fff}
+#season-banner .sb-cta{
+  display:inline-flex;align-items:center;gap:.3rem;
+  color:#fff;font-weight:600;text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.55);
+  transition:border-color var(--dur-micro),opacity var(--dur-micro);
+}
+#season-banner .sb-cta:hover{opacity:.9;border-color:#fff}
+#season-banner .sb-cta:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:3px}
+#season-banner .sb-x{
+  position:absolute;right:.6rem;top:50%;transform:translateY(-50%);
+  width:30px;height:30px;border-radius:8px;border:none;cursor:pointer;
+  background:rgba(255,255,255,.12);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--dur-micro);
+}
+#season-banner .sb-x:hover{background:rgba(255,255,255,.24)}
+#season-banner .sb-x:focus-visible{outline:2px solid #fff;outline-offset:2px}
+#season-banner .sb-x svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+/* When the banner is visible, push the fixed nav below it and offset anchor scrolling */
+body.has-banner .site-nav{top:42px}
+body.has-banner{scroll-padding-top:96px}
+@media(prefers-reduced-motion:no-preference){
+  #season-banner:not(.hidden){animation:sbDrop var(--dur-std) var(--ease-spring) both}
+}
+@keyframes sbDrop{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+@media(max-width:600px){
+  #season-banner{font-size:var(--text-xs);padding-right:2.6rem;padding-left:.9rem}
 }
 
 /* ─── NAV ─── */
@@ -184,7 +281,18 @@ body{
   backdrop-filter:blur(var(--blur-amount)) saturate(1.5);
   -webkit-backdrop-filter:blur(var(--blur-amount)) saturate(1.5);
   border-bottom:1px solid var(--border);
+  transition:padding var(--dur-std) var(--ease-spring),
+             background var(--dur-std) var(--ease-enter),
+             box-shadow var(--dur-std) var(--ease-enter);
 }
+/* Shrink-on-scroll: subtler padding, denser glass, slight elevation */
+.site-nav.scrolled{
+  padding-top:.55rem;padding-bottom:.55rem;
+  background:rgba(255,253,249,0.86);
+  box-shadow:0 6px 24px rgba(20,30,48,.08);
+}
+.nav-logo{transition:font-size var(--dur-std) var(--ease-spring)}
+.site-nav.scrolled .nav-logo{font-size:var(--text-base)}
 .nav-logo{
   font-family:'Clash Grotesk',sans-serif;
   font-size:var(--text-lg);font-weight:500;
@@ -437,6 +545,23 @@ body{
 }
 .card-sub{font-size:var(--text-xs);color:var(--fg-muted);margin-top:.2rem;font-weight:300;line-height:1.5}
 
+/* ─── FX COMPARATOR (container only; widget built separately) ─── */
+.fx-section{position:relative;z-index:1;max-width:1380px;margin:0 auto;padding:0 var(--sp-5)}
+.fx-wrap{
+  border:1px solid var(--border);border-radius:var(--radius);
+  background:var(--surface);padding:var(--sp-3);
+}
+.fx-wrap .fx-title{
+  font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:500;color:var(--ink);
+  display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem;
+}
+.fx-wrap .fx-title svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.fx-wrap .fx-note{font-size:var(--text-xs);color:var(--fg-muted);font-weight:300;line-height:1.6}
+#fx-comparator{margin-top:var(--sp-2)}
+#fx-comparator noscript{font-size:var(--text-sm);color:var(--fg-secondary)}
+@media(max-width:767px){.fx-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}}
+@media(max-width:480px){.fx-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}}
+
 /* ─── DIVIDER ─── */
 .divider{
   position:relative;z-index:1;height:1px;
@@ -515,6 +640,47 @@ body{
 .member-count{font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--sp-4)}
 .member-count strong{color:var(--ink);font-weight:500}
 
+/* ─── FAQ (accordion, native details/summary, zero-JS) ─── */
+.faq-section{
+  position:relative;z-index:1;
+  padding:var(--sp-5) var(--sp-5) var(--sp-4);max-width:860px;margin:0 auto;
+}
+.faq-head{text-align:center;margin-bottom:var(--sp-4)}
+.faq-list{display:flex;flex-direction:column;gap:var(--sp-1)}
+.faq-item{
+  border:1px solid var(--border);border-radius:var(--radius);
+  background:var(--surface);overflow:hidden;
+  transition:border-color var(--dur-micro) var(--ease-enter),background var(--dur-micro);
+}
+.faq-item[open]{border-color:var(--border-bright);background:var(--surface-hover)}
+.faq-q{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);
+  padding:var(--sp-2) var(--sp-3);min-height:44px;
+  font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:500;color:var(--ink);
+}
+.faq-q::-webkit-details-marker{display:none}
+.faq-q:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;border-radius:var(--radius)}
+.faq-q:hover{color:var(--gold)}
+.faq-ic{
+  flex-shrink:0;width:20px;height:20px;
+  stroke:var(--fg-muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform var(--dur-std) var(--ease-spring);
+}
+.faq-item[open] .faq-ic{transform:rotate(45deg)}
+.faq-a{
+  padding:0 var(--sp-3) var(--sp-3);
+  font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.7;font-weight:300;
+}
+.faq-a a{color:var(--gold);text-decoration:none;border-bottom:1px solid transparent;transition:border-color var(--dur-micro)}
+.faq-a a:hover{border-color:var(--gold)}
+.faq-a a:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:3px}
+@media(prefers-reduced-motion:no-preference){
+  .faq-item[open] .faq-a{animation:faqIn var(--dur-std) var(--ease-enter) both}
+}
+@keyframes faqIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media(max-width:480px){.faq-q{font-size:var(--text-sm);padding:var(--sp-2)}.faq-a{padding:0 var(--sp-2) var(--sp-2)}}
+
 /* ─── CTA SECTION ─── */
 .cta-section{
   position:relative;z-index:1;
@@ -561,6 +727,16 @@ body{
   width:13px;height:13px;border-radius:50%;
   background:#4ade80;border:2px solid var(--bg-base);
 }
+/* Unread-count badge (proactive message while panel closed) */
+.chat-badge{
+  position:absolute;top:-4px;right:-4px;
+  min-width:19px;height:19px;padding:0 4px;border-radius:var(--radius-full);
+  background:var(--coral);color:#fff;border:2px solid var(--bg-base);
+  font-family:'Satoshi',sans-serif;font-size:.62rem;font-weight:700;line-height:1;
+  display:none;align-items:center;justify-content:center;
+  font-variant-numeric:tabular-nums;
+}
+.chat-badge.show{display:flex}
 
 /* Liquid Glass chat panel */
 #chat-panel{
@@ -1049,13 +1225,25 @@ html.returning #preloader{display:none}
 
 <a href="#main-content" class="skip-link">Salta al contenuto</a>
 
+<!-- Seasonal banner (dismissible, once per session) -->
+<div id="season-banner" class="hidden" role="region" aria-label="Avviso stagionale">
+  <span class="sb-text" id="sb-text"></span>
+  <a class="sb-cta" id="sb-cta" href="guide.html">
+    <span id="sb-cta-label">Vai alla guida</span>
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
+  <button class="sb-x" id="sb-x" aria-label="Chiudi avviso">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+</div>
+
 <!-- Preloader (first visit per session) -->
 <div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
 <!-- Page-transition wipe -->
 <div id="wipe" aria-hidden="true"></div>
 
-<!-- 3D autonomous particle background -->
-<canvas id="particles" aria-hidden="true"></canvas>
+<!-- Soft ivory background wash (static, zero-JS) -->
+<div id="bg" aria-hidden="true"></div>
 
 <!-- Film-grain noise texture -->
 <div id="noise" aria-hidden="true"></div>
@@ -1126,10 +1314,10 @@ html.returning #preloader{display:none}
     </div>
 
     <dl class="hero-stats">
-      <div><dt class="stat-l" data-i18n="hero.stat1">Utenti attivi</dt><dd class="stat-n">12K+</dd></div>
-      <div><dt class="stat-l" data-i18n="hero.stat2">Guide pratiche</dt><dd class="stat-n">48+</dd></div>
-      <div><dt class="stat-l" data-i18n="hero.stat3">Lingue</dt><dd class="stat-n">4</dd></div>
-      <div><dt class="stat-l" data-i18n="hero.stat4">Soddisfazione</dt><dd class="stat-n">98%</dd></div>
+      <div><dt class="stat-l" data-i18n="hero.stat1">Fasi del percorso</dt><dd class="stat-n">9</dd></div>
+      <div><dt class="stat-l" data-i18n="hero.stat2">Guide pratiche</dt><dd class="stat-n">10</dd></div>
+      <div><dt class="stat-l" data-i18n="hero.stat3">Città sulla mappa</dt><dd class="stat-n">6</dd></div>
+      <div><dt class="stat-l" data-i18n="hero.stat4">Lingue dell'interfaccia</dt><dd class="stat-n">3</dd></div>
     </dl>
   </div>
 
@@ -1161,7 +1349,7 @@ html.returning #preloader{display:none}
         <div class="card-body">
           <span class="card-tag" style="background:rgba(109,40,217,.5);color:#d8b4fe" data-i18n="card2.tag">AI</span>
           <p class="card-title" data-i18n="card2.title">Assistente AI</p>
-          <p class="card-sub" data-i18n="card2.sub">Risposte in 4 lingue 24/7</p>
+          <p class="card-sub" data-i18n="card2.sub">Risposte multilingua 24/7</p>
         </div>
       </article>
 
@@ -1175,7 +1363,7 @@ html.returning #preloader{display:none}
         <div class="card-body">
           <span class="card-tag" style="background:rgba(0,120,55,.5);color:#86efac" data-i18n="card3.tag">Community</span>
           <p class="card-title" data-i18n="card3.title">Community</p>
-          <p class="card-sub" data-i18n="card3.sub">5.000+ persone attive</p>
+          <p class="card-sub" data-i18n="card3.sub">Confronto e supporto tra pari</p>
         </div>
       </article>
 
@@ -1198,6 +1386,18 @@ html.returning #preloader{display:none}
 
 </section>
 
+<!-- ─── FX COMPARATOR (container only — widget logic loaded from fx-comparator.js) ─── -->
+<section class="fx-section" aria-labelledby="fx-heading">
+  <div class="fx-wrap">
+    <p class="fx-title" id="fx-heading">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Confronta l'invio di denaro in Sri Lanka
+    </p>
+    <p class="fx-note">Le cifre sono indicative e possono variare: verifica sempre l'importo finale sul sito del provider prima di inviare.</p>
+    <div id="fx-comparator" aria-live="polite"><noscript>Attiva JavaScript per il comparatore.</noscript></div>
+  </div>
+</section>
+
 <!-- ─── MARQUEE (keyword strip) ─── -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
@@ -1211,7 +1411,7 @@ html.returning #preloader{display:none}
   <div class="ad-slot ad-leaderboard">
     <span class="ad-label" data-i18n="ad.label">Pubblicità</span>
     <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg></div>
-    <p class="ad-text" data-i18n="ad.lead">Il tuo annuncio qui — raggiungi 12.000+ utenti della community</p>
+    <p class="ad-text" data-i18n="ad.lead">Il tuo annuncio qui — raggiungi la community srilankese in Italia</p>
     <button class="ad-cta" onclick="openPricing()" data-i18n="ad.buy">Acquista questo spazio →</button>
   </div>
 </section>
@@ -1237,7 +1437,7 @@ html.returning #preloader{display:none}
     <div class="feat" tabindex="0">
       <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
       <h3 class="feat-title" data-i18n="feat3.title">Community Attiva</h3>
-      <p class="feat-desc" data-i18n="feat3.desc">5.000+ persone che si supportano ogni giorno. Trova risposte, condividi esperienze, cresci insieme.</p>
+      <p class="feat-desc" data-i18n="feat3.desc">Uno spazio dove srilankesi in Italia si supportano a vicenda. Trova risposte, condividi esperienze, cresci insieme.</p>
     </div>
     <div class="feat" tabindex="0">
       <div class="feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
@@ -1286,10 +1486,69 @@ html.returning #preloader{display:none}
   <div class="member-avatars" aria-hidden="true">
     <div class="avatar">A</div><div class="avatar">K</div><div class="avatar">S</div>
     <div class="avatar">R</div><div class="avatar">P</div>
-    <div class="avatar" style="background:rgba(255,255,255,.08);color:var(--fg-muted);font-family:'Satoshi',sans-serif;font-size:.65rem">+12K</div>
+    <div class="avatar" style="background:rgba(255,255,255,.08);color:var(--fg-muted);font-family:'Satoshi',sans-serif;font-size:.8rem">+</div>
   </div>
-  <p class="member-count" id="members-heading" data-i18n-html="members.count"><strong>12.000+ utenti</strong> già nella community</p>
-  <p class="section-sub" style="margin:0 auto var(--sp-4);text-align:center;max-width:420px" data-i18n="members.sub">Unisciti a migliaia di srilankesi che vivono e lavorano in Italia. Insieme è più facile.</p>
+  <p class="member-count" id="members-heading" data-i18n-html="members.count"><strong>La community srilankese</strong> che si aiuta in Italia</p>
+  <p class="section-sub" style="margin:0 auto var(--sp-4);text-align:center;max-width:420px" data-i18n="members.sub">Unisciti a chi vive e lavora in Italia e affronta gli stessi passaggi. Insieme è più facile.</p>
+</section>
+
+<!-- ─── FAQ (accordion) ─── -->
+<section class="faq-section" aria-labelledby="faq-heading">
+  <div class="faq-head">
+    <p class="section-label" style="margin-bottom:1rem">Domande frequenti</p>
+    <h2 id="faq-heading" class="section-title">Domande <em>frequenti</em></h2>
+  </div>
+  <div class="faq-list">
+
+    <details class="faq-item" open>
+      <summary class="faq-q">
+        Quanto tempo ci vuole per il permesso di soggiorno?
+        <svg class="faq-ic" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </summary>
+      <div class="faq-a">Dipende dalla questura e dal tipo di permesso: i tempi possono variare da alcune settimane a diversi mesi. Dopo la presentazione della domanda ricevi una ricevuta che, insieme al passaporto, vale come documento provvisorio. Per la procedura passo-passo consulta la nostra <a href="guide.html#permesso-soggiorno">guida al permesso di soggiorno</a>.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">
+        Il servizio è gratuito?
+        <svg class="faq-ic" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </summary>
+      <div class="faq-a">Sì. Consultare le guide, usare l'Assistente AI e leggere le news è gratuito. Non è richiesta alcuna carta di credito per registrarti.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">
+        In che lingue posso usare il sito?
+        <svg class="faq-ic" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </summary>
+      <div class="faq-a">L'interfaccia del sito è disponibile in 3 lingue: italiano, inglese e sinhala (සිංහල). Puoi cambiare lingua dal menu in alto a destra.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">
+        Come funziona il Consigliere AI?
+        <svg class="faq-ic" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </summary>
+      <div class="faq-a">È un assistente disponibile 24 ore su 24 che risponde alle tue domande sulla burocrazia e sui servizi. Apri la chat dal pulsante in basso a destra (o con Ctrl/⌘+J) e scrivi la tua domanda: ti indica i passaggi e le guide pertinenti.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">
+        Devo registrarmi per usare le guide?
+        <svg class="faq-ic" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </summary>
+      <div class="faq-a">No. Le guide pratiche sono liberamente consultabili senza registrazione. L'account gratuito serve solo per salvare i progressi del tuo <a href="percorso.html">percorso personale</a>.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">
+        Le informazioni sono ufficiali?
+        <svg class="faq-ic" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </summary>
+      <div class="faq-a">Le nostre guide sono divulgative e ti orientano nei passaggi principali, ma non sostituiscono le fonti ufficiali. Per i dati definitivi verifica sempre sui siti istituzionali (es. Polizia di Stato, Agenzia delle Entrate, INPS) o rivolgiti a un CAF o patronato.</div>
+    </details>
+
+  </div>
 </section>
 
 <!-- ─── CTA ─── -->
@@ -1404,7 +1663,7 @@ html.returning #preloader{display:none}
         3 giorni di prova gratuita
       </span>
       <h2 class="modal-title" id="pricing-title">Pacchetti pubblicitari</h2>
-      <p class="modal-sub">Promuovi la tua attività a 12.000+ utenti della community. Prova 3 giorni gratis, poi scegli il pacchetto più adatto a te.</p>
+      <p class="modal-sub">Promuovi la tua attività presso la community srilankese in Italia. Prova 3 giorni gratis, poi scegli il pacchetto più adatto a te.</p>
     </div>
     <div class="plans">
       <div class="plan">
@@ -1454,8 +1713,9 @@ html.returning #preloader{display:none}
 </button>
 
 <!-- ─── CHATBOT TOGGLE ─── -->
-<button id="chat-btn" onclick="toggleChat()" aria-label="Apri assistente AI" aria-expanded="false" aria-controls="chat-panel">
+<button id="chat-btn" onclick="toggleChat()" title="Apri assistente AI (Ctrl/⌘+J)" aria-label="Apri assistente AI — scorciatoia Ctrl/⌘+J" aria-expanded="false" aria-controls="chat-panel">
   <div class="chat-dot" aria-hidden="true"></div>
+  <span class="chat-badge" id="chat-badge" aria-hidden="true"></span>
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
 </button>
 
@@ -1543,116 +1803,40 @@ if(!mediaQ.matches){
   addEventListener('mouseenter',()=>{dot.classList.remove('cursor-hidden');ring.classList.remove('cursor-hidden');});
 })();
 
-/* ── 3D autonomous particle field ── */
-(function(){
-  const canvas=document.getElementById('particles');
-  const ctx=canvas.getContext('2d');
-  const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-  let W,H,DPR,particles=[],raf;
-  const COLORS=[[44,107,196],[176,136,40],[27,79,140]];
-
-  function resize(){
-    DPR=Math.min(window.devicePixelRatio||1,2);
-    W=canvas.width=Math.floor(innerWidth*DPR);
-    H=canvas.height=Math.floor(innerHeight*DPR);
-    canvas.style.width=innerWidth+'px';
-    canvas.style.height=innerHeight+'px';
-  }
-  function makeParticles(){
-    const count=Math.round((innerWidth*innerHeight)/14000); // density
-    particles=[];
-    for(let i=0;i<count;i++){
-      const z=Math.random();            // depth 0(far)→1(near)
-      const c=COLORS[i%COLORS.length];
-      particles.push({
-        x:Math.random()*W,
-        y:Math.random()*H,
-        z,
-        r:(0.6+z*2.6)*DPR,              // near = bigger
-        vx:(Math.random()-.5)*(0.12+z*0.4)*DPR,
-        vy:(Math.random()-.5)*(0.12+z*0.4)*DPR,
-        a:0.12+z*0.5,                   // near = more opaque
-        c
-      });
-    }
-    // sort once by depth (z is immutable) — avoids per-frame sort
-    particles.sort((a,b)=>a.z-b.z);
-  }
-  const LINK=120;
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    // connection lines (depth-aware)
-    for(let i=0;i<particles.length;i++){
-      const p=particles[i];
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<-20)p.x=W+20;else if(p.x>W+20)p.x=-20;
-      if(p.y<-20)p.y=H+20;else if(p.y>H+20)p.y=-20;
-      for(let j=i+1;j<particles.length;j++){
-        const q=particles[j];
-        const dx=p.x-q.x,dy=p.y-q.y;
-        const d2=dx*dx+dy*dy;
-        const maxd=LINK*DPR;
-        if(d2<maxd*maxd){
-          const t=1-Math.sqrt(d2)/maxd;
-          ctx.strokeStyle=`rgba(44,107,196,${t*0.14*Math.min(p.z+q.z,1)})`;
-          ctx.lineWidth=DPR*0.6;
-          ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();
-        }
-      }
-    }
-    // particles (already depth-sorted; draw near last for layering)
-    for(const p of particles){
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(${p.c[0]},${p.c[1]},${p.c[2]},${p.a})`;
-      ctx.fill();
-    }
-    raf=requestAnimationFrame(frame);
-  }
-  function start(){
-    resize();makeParticles();
-    if(reduce){frame();cancelAnimationFrame(raf);return;} // single static paint
-    frame();
-  }
-  let rt;
-  window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{resize();makeParticles();},150)},{passive:true});
-  start();
-})();
-
 /* ═══ i18n — IT / EN / Sinhala (සිංහල flagged for native review) ═══ */
 const I18N={
   it:{
     "nav.guide":"Guide","nav.community":"Community","nav.ai":"AI Assistant","nav.news":"News","nav.map":"Mappa","nav.journey":"Il Mio Percorso","nav.login":"Accedi","nav.signup":"Registrati gratis",
-    "hero.eyebrow":"La comunità srilankese in Italia","hero.title":"<span class='ln'><span>La tua casa</span></span><span class='ln'><span><em>digitale</em></span></span><span class='ln'><span>in Italia</span></span>","hero.sub":"Guide burocratiche, assistente AI multilingua, community di supporto e news aggiornate — in italiano, inglese, sinhala e tamil.","hero.cta1":"Inizia gratis","hero.cta2":"Esplora le guide","hero.stat1":"Utenti attivi","hero.stat2":"Guide pratiche","hero.stat3":"Lingue","hero.stat4":"Soddisfazione",
-    "card1.tag":"Burocrazia","card1.title":"Permesso di Soggiorno","card1.sub":"Guida completa al rinnovo","card2.tag":"AI","card2.title":"Assistente AI","card2.sub":"Risposte in 4 lingue 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"5.000+ persone attive","card4.tag":"Finanza","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
-    "ad.label":"Pubblicità","ad.lead":"Il tuo annuncio qui — raggiungi 12.000+ utenti della community","ad.buy":"Acquista questo spazio →","ad.sponsor":"Sponsorizzato","ad.slot":"Spazio ad — 300×250","ad.book":"Prenota →",
+    "hero.eyebrow":"La comunità srilankese in Italia","hero.title":"<span class='ln'><span>La tua casa</span></span><span class='ln'><span><em>digitale</em></span></span><span class='ln'><span>in Italia</span></span>","hero.sub":"Guide burocratiche, assistente AI multilingua, community di supporto e news aggiornate — in italiano, inglese, sinhala e tamil.","hero.cta1":"Inizia gratis","hero.cta2":"Esplora le guide","hero.stat1":"Fasi del percorso","hero.stat2":"Guide pratiche","hero.stat3":"Città sulla mappa","hero.stat4":"Lingue dell'interfaccia",
+    "card1.tag":"Burocrazia","card1.title":"Permesso di Soggiorno","card1.sub":"Guida completa al rinnovo","card2.tag":"AI","card2.title":"Assistente AI","card2.sub":"Risposte multilingua 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"Confronto e supporto tra pari","card4.tag":"Finanza","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
+    "ad.label":"Pubblicità","ad.lead":"Il tuo annuncio qui — raggiungi la community srilankese in Italia","ad.buy":"Acquista questo spazio →","ad.sponsor":"Sponsorizzato","ad.slot":"Spazio ad — 300×250","ad.book":"Prenota →",
     "feat.label":"Cosa offriamo","feat.heading":"Tutto ciò di cui hai bisogno,<br/><em>in un unico posto</em>","feat.sub":"Dalla burocrazia all'integrazione quotidiana — ti supportiamo in ogni passo del tuo percorso.",
-    "feat1.title":"Guide Burocratiche","feat1.desc":"Permesso di soggiorno, codice fiscale, SPID, residenza — guide passo-passo con checklist scaricabili.","feat2.title":"Assistente AI Multilingua","feat2.desc":"Risposte immediate in italiano, inglese, sinhala e tamil. Disponibile 24 ore su 24, 7 giorni su 7.","feat3.title":"Community Attiva","feat3.desc":"5.000+ persone che si supportano ogni giorno. Trova risposte, condividi esperienze, cresci insieme.","feat4.title":"Money Transfer","feat4.desc":"Confronta Wise, Western Union e Ria in tempo reale. Risparmia sulle rimesse verso lo Sri Lanka.","feat5.title":"Mappa dei Servizi","feat5.desc":"CAF, patronati, negozi e luoghi di culto srilankesi nelle principali città italiane.","feat6.title":"News Aggiornate","feat6.desc":"Leggi, decreti e opportunità per la comunità srilankese. Aggiornato ogni giorno.",
-    "members.count":"<strong>12.000+ utenti</strong> già nella community","members.sub":"Unisciti a migliaia di srilankesi che vivono e lavorano in Italia. Insieme è più facile.",
+    "feat1.title":"Guide Burocratiche","feat1.desc":"Permesso di soggiorno, codice fiscale, SPID, residenza — guide passo-passo con checklist scaricabili.","feat2.title":"Assistente AI Multilingua","feat2.desc":"Risposte immediate in italiano, inglese, sinhala e tamil. Disponibile 24 ore su 24, 7 giorni su 7.","feat3.title":"Community Attiva","feat3.desc":"Uno spazio dove srilankesi in Italia si supportano a vicenda. Trova risposte, condividi esperienze, cresci insieme.","feat4.title":"Money Transfer","feat4.desc":"Confronta Wise, Western Union e Ria in tempo reale. Risparmia sulle rimesse verso lo Sri Lanka.","feat5.title":"Mappa dei Servizi","feat5.desc":"CAF, patronati, negozi e luoghi di culto srilankesi nelle principali città italiane.","feat6.title":"News Aggiornate","feat6.desc":"Leggi, decreti e opportunità per la comunità srilankese. Aggiornato ogni giorno.",
+    "members.count":"<strong>La community srilankese</strong> che si aiuta in Italia","members.sub":"Unisciti a chi vive e lavora in Italia e affronta gli stessi passaggi. Insieme è più facile.",
     "cta.title":"Pronto a iniziare<br/><em style=\"font-style:italic;color:var(--gold)\">il tuo percorso?</em>","cta.sub":"Registrati gratis. Nessuna carta di credito richiesta.","cta.btn1":"Crea il tuo account gratuito","cta.btn2":"Scopri come funziona",
     "footer.tag":"La casa digitale della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.","footer.product":"Prodotto","footer.aiAssistant":"Assistente AI","footer.mapServices":"Mappa servizi","footer.company":"Azienda","footer.about":"Chi siamo","footer.advertising":"Pubblicità","footer.contact":"Contatti","footer.account":"Account","footer.register":"Registrati","footer.subscriptions":"Abbonamenti","footer.copy":"© 2026 Easy Italia Hub. Tutti i diritti riservati.","footer.privacy":"Privacy Policy","footer.cookie":"Cookie Policy","footer.terms":"Termini di Servizio","footer.legal":"Note legali",
     "chat.name":"Assistente Easy Italia","chat.status":"Online ora","chat.welcome1":"Ciao! Sono l'assistente di Easy Italia Hub. Come posso aiutarti oggi?","chat.welcome2":"Posso risponderti in italiano, inglese, <span lang=\"si\">සිංහල</span> o <span lang=\"ta\">தமிழ்</span>.","chat.now":"Ora","chat.sug1":"Permesso di soggiorno","chat.sug2":"SPID","chat.sug3":"Money transfer","chat.sug4":"Codice fiscale","chat.placeholder":"Scrivi un messaggio…","chat.q1":"Come si rinnova il permesso di soggiorno?","chat.q2":"Come si ottiene lo SPID?","chat.q3":"Come funziona il money transfer verso lo Sri Lanka?","chat.q4":"Come si richiede il codice fiscale?"
   },
   en:{
     "nav.guide":"Guides","nav.community":"Community","nav.ai":"AI Assistant","nav.news":"News","nav.map":"Map","nav.journey":"My Journey","nav.login":"Log in","nav.signup":"Sign up free",
-    "hero.eyebrow":"The Sri Lankan community in Italy","hero.title":"<span class='ln'><span>Your</span></span><span class='ln'><span><em>digital</em> home</span></span><span class='ln'><span>in Italy</span></span>","hero.sub":"Bureaucratic guides, multilingual AI assistant, support community and up-to-date news — in Italian, English, Sinhala and Tamil.","hero.cta1":"Start free","hero.cta2":"Explore the guides","hero.stat1":"Active users","hero.stat2":"Practical guides","hero.stat3":"Languages","hero.stat4":"Satisfaction",
-    "card1.tag":"Bureaucracy","card1.title":"Residence Permit","card1.sub":"Complete renewal guide","card2.tag":"AI","card2.title":"AI Assistant","card2.sub":"Answers in 4 languages 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"5,000+ active people","card4.tag":"Finance","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
-    "ad.label":"Advertising","ad.lead":"Your ad here — reach 12,000+ community users","ad.buy":"Buy this space →","ad.sponsor":"Sponsored","ad.slot":"Ad space — 300×250","ad.book":"Book →",
+    "hero.eyebrow":"The Sri Lankan community in Italy","hero.title":"<span class='ln'><span>Your</span></span><span class='ln'><span><em>digital</em> home</span></span><span class='ln'><span>in Italy</span></span>","hero.sub":"Bureaucratic guides, multilingual AI assistant, support community and up-to-date news — in Italian, English, Sinhala and Tamil.","hero.cta1":"Start free","hero.cta2":"Explore the guides","hero.stat1":"Journey phases","hero.stat2":"Practical guides","hero.stat3":"Cities on the map","hero.stat4":"Interface languages",
+    "card1.tag":"Bureaucracy","card1.title":"Residence Permit","card1.sub":"Complete renewal guide","card2.tag":"AI","card2.title":"AI Assistant","card2.sub":"Multilingual answers 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"Peer-to-peer support","card4.tag":"Finance","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
+    "ad.label":"Advertising","ad.lead":"Your ad here — reach the Sri Lankan community in Italy","ad.buy":"Buy this space →","ad.sponsor":"Sponsored","ad.slot":"Ad space — 300×250","ad.book":"Book →",
     "feat.label":"What we offer","feat.heading":"Everything you need,<br/><em>in one place</em>","feat.sub":"From bureaucracy to daily integration — we support you at every step of your journey.",
-    "feat1.title":"Bureaucratic Guides","feat1.desc":"Residence permit, tax code, SPID, residency — step-by-step guides with downloadable checklists.","feat2.title":"Multilingual AI Assistant","feat2.desc":"Immediate answers in Italian, English, Sinhala and Tamil. Available 24/7.","feat3.title":"Active Community","feat3.desc":"5,000+ people supporting each other every day. Find answers, share experiences, grow together.","feat4.title":"Money Transfer","feat4.desc":"Compare Wise, Western Union and Ria in real time. Save on remittances to Sri Lanka.","feat5.title":"Services Map","feat5.desc":"CAF offices, patronati, Sri Lankan shops and places of worship in major Italian cities.","feat6.title":"Up-to-date News","feat6.desc":"Laws, decrees and opportunities for the Sri Lankan community. Updated every day.",
-    "members.count":"<strong>12,000+ users</strong> already in the community","members.sub":"Join thousands of Sri Lankans living and working in Italy. Together it's easier.",
+    "feat1.title":"Bureaucratic Guides","feat1.desc":"Residence permit, tax code, SPID, residency — step-by-step guides with downloadable checklists.","feat2.title":"Multilingual AI Assistant","feat2.desc":"Immediate answers in Italian, English, Sinhala and Tamil. Available 24/7.","feat3.title":"Active Community","feat3.desc":"A space where Sri Lankans in Italy support one another. Find answers, share experiences, grow together.","feat4.title":"Money Transfer","feat4.desc":"Compare Wise, Western Union and Ria in real time. Save on remittances to Sri Lanka.","feat5.title":"Services Map","feat5.desc":"CAF offices, patronati, Sri Lankan shops and places of worship in major Italian cities.","feat6.title":"Up-to-date News","feat6.desc":"Laws, decrees and opportunities for the Sri Lankan community. Updated every day.",
+    "members.count":"<strong>The Sri Lankan community</strong> helping each other in Italy","members.sub":"Join people living and working in Italy who face the same steps. Together it's easier.",
     "cta.title":"Ready to start<br/><em style=\"font-style:italic;color:var(--gold)\">your journey?</em>","cta.sub":"Sign up free. No credit card required.","cta.btn1":"Create your free account","cta.btn2":"See how it works",
     "footer.tag":"The digital home of the Sri Lankan community in Italy. Guides, multilingual AI, community and services — all in one place.","footer.product":"Product","footer.aiAssistant":"AI Assistant","footer.mapServices":"Services map","footer.company":"Company","footer.about":"About us","footer.advertising":"Advertising","footer.contact":"Contact","footer.account":"Account","footer.register":"Register","footer.subscriptions":"Subscriptions","footer.copy":"© 2026 Easy Italia Hub. All rights reserved.","footer.privacy":"Privacy Policy","footer.cookie":"Cookie Policy","footer.terms":"Terms of Service","footer.legal":"Legal notice",
     "chat.name":"Easy Italia Assistant","chat.status":"Online now","chat.welcome1":"Hi! I'm the Easy Italia Hub assistant. How can I help you today?","chat.welcome2":"I can reply in Italian, English, <span lang=\"si\">සිංහල</span> or <span lang=\"ta\">தமிழ்</span>.","chat.now":"Now","chat.sug1":"Residence permit","chat.sug2":"SPID","chat.sug3":"Money transfer","chat.sug4":"Tax code","chat.placeholder":"Type a message…","chat.q1":"How do I renew the residence permit?","chat.q2":"How do I get a SPID?","chat.q3":"How does money transfer to Sri Lanka work?","chat.q4":"How do I get a tax code (codice fiscale)?"
   },
   si:{
     "nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.ai":"AI සහායක","nav.news":"පුවත්","nav.map":"සිතියම","nav.journey":"මගේ ගමන","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
-    "hero.eyebrow":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව","hero.title":"<span class='ln'><span>ඉතාලියේ ඔබේ</span></span><span class='ln'><span><em>ඩිජිටල්</em></span></span><span class='ln'><span>නිවස</span></span>","hero.sub":"නිලධාරී මාර්ගෝපදේශ, බහුභාෂා AI සහායක, සහාය ප්‍රජාව සහ යාවත්කාලීන පුවත් — ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින්.","hero.cta1":"නොමිලේ අරඹන්න","hero.cta2":"මාර්ගෝපදේශ ගවේෂණය කරන්න","hero.stat1":"සක්‍රිය පරිශීලකයින්","hero.stat2":"ප්‍රායෝගික මාර්ගෝපදේශ","hero.stat3":"භාෂා","hero.stat4":"තෘප්තිය",
-    "card1.tag":"නිලධාරිවාදය","card1.title":"පදිංචි බලපත්‍රය","card1.sub":"සම්පූර්ණ අලුත් කිරීමේ මාර්ගෝපදේශය","card2.tag":"AI","card2.title":"AI සහායක","card2.sub":"භාෂා 4කින් 24/7 පිළිතුරු","card3.tag":"ප්‍රජාව","card3.title":"ප්‍රජාව","card3.sub":"5,000+ සක්‍රිය පුද්ගලයින්","card4.tag":"මුල්‍ය","card4.title":"මුදල් හුවමාරුව","card4.sub":"Wise, Ria, Western Union",
-    "ad.label":"දැන්වීම්","ad.lead":"ඔබේ දැන්වීම මෙහි — ප්‍රජා පරිශීලකයින් 12,000+ දෙනෙකු වෙත ළඟා වන්න","ad.buy":"මෙම අවකාශය මිලදී ගන්න →","ad.sponsor":"අනුග්‍රාහක","ad.slot":"දැන්වීම් අවකාශය — 300×250","ad.book":"වෙන්කරවා ගන්න →",
+    "hero.eyebrow":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව","hero.title":"<span class='ln'><span>ඉතාලියේ ඔබේ</span></span><span class='ln'><span><em>ඩිජිටල්</em></span></span><span class='ln'><span>නිවස</span></span>","hero.sub":"නිලධාරී මාර්ගෝපදේශ, බහුභාෂා AI සහායක, සහාය ප්‍රජාව සහ යාවත්කාලීන පුවත් — ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින්.","hero.cta1":"නොමිලේ අරඹන්න","hero.cta2":"මාර්ගෝපදේශ ගවේෂණය කරන්න","hero.stat1":"ගමනේ අදියර","hero.stat2":"ප්‍රායෝගික මාර්ගෝපදේශ","hero.stat3":"සිතියමේ නගර","hero.stat4":"අතුරුමුහුණත් භාෂා",
+    "card1.tag":"නිලධාරිවාදය","card1.title":"පදිංචි බලපත්‍රය","card1.sub":"සම්පූර්ණ අලුත් කිරීමේ මාර්ගෝපදේශය","card2.tag":"AI","card2.title":"AI සහායක","card2.sub":"බහුභාෂා පිළිතුරු 24/7","card3.tag":"ප්‍රජාව","card3.title":"ප්‍රජාව","card3.sub":"සම වයසේ අයගේ සහාය","card4.tag":"මුල්‍ය","card4.title":"මුදල් හුවමාරුව","card4.sub":"Wise, Ria, Western Union",
+    "ad.label":"දැන්වීම්","ad.lead":"ඔබේ දැන්වීම මෙහි — ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව වෙත ළඟා වන්න","ad.buy":"මෙම අවකාශය මිලදී ගන්න →","ad.sponsor":"අනුග්‍රාහක","ad.slot":"දැන්වීම් අවකාශය — 300×250","ad.book":"වෙන්කරවා ගන්න →",
     "feat.label":"අපි පිරිනමන දේ","feat.heading":"ඔබට අවශ්‍ය සියල්ල,<br/><em>එක තැනකින්</em>","feat.sub":"නිලධාරිවාදයේ සිට දෛනික ඒකාබද්ධතාව දක්වා — ඔබේ ගමනේ සෑම පියවරකදීම අපි ඔබට සහාය වෙමු.",
-    "feat1.title":"නිලධාරී මාර්ගෝපදේශ","feat1.desc":"පදිංචි බලපත්‍රය, බදු කේතය, SPID, පදිංචිය — බාගත හැකි පිරික්සුම් ලැයිස්තු සහිත පියවරෙන් පියවර මාර්ගෝපදේශ.","feat2.title":"බහුභාෂා AI සහායක","feat2.desc":"ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින් ක්ෂණික පිළිතුරු. දිනපතා පැය 24 පුරා ලබා ගත හැක.","feat3.title":"සක්‍රිය ප්‍රජාව","feat3.desc":"සෑම දිනකම එකිනෙකාට සහාය වන 5,000+ දෙනෙක්. පිළිතුරු සොයාගන්න, අත්දැකීම් බෙදාගන්න, එකට වර්ධනය වන්න.","feat4.title":"මුදල් හුවමාරුව","feat4.desc":"Wise, Western Union සහ Ria තත්‍ය කාලීනව සසඳන්න. ශ්‍රී ලංකාවට යවන මුදල් වලින් ඉතිරි කරගන්න.","feat5.title":"සේවා සිතියම","feat5.desc":"ප්‍රධාන ඉතාලි නගරවල CAF, patronati, ශ්‍රී ලාංකික වෙළඳසැල් සහ පූජනීය ස්ථාන.","feat6.title":"යාවත්කාලීන පුවත්","feat6.desc":"ශ්‍රී ලාංකික ප්‍රජාව සඳහා නීති, නියෝග සහ අවස්ථා. දිනපතා යාවත්කාලීන වේ.",
-    "members.count":"<strong>පරිශීලකයින් 12,000+</strong> දැනටමත් ප්‍රජාවේ","members.sub":"ඉතාලියේ ජීවත්වන සහ වැඩකරන දහස් ගණන් ශ්‍රී ලාංකිකයන් හා එක්වන්න. එකට වඩා පහසුයි.",
+    "feat1.title":"නිලධාරී මාර්ගෝපදේශ","feat1.desc":"පදිංචි බලපත්‍රය, බදු කේතය, SPID, පදිංචිය — බාගත හැකි පිරික්සුම් ලැයිස්තු සහිත පියවරෙන් පියවර මාර්ගෝපදේශ.","feat2.title":"බහුභාෂා AI සහායක","feat2.desc":"ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින් ක්ෂණික පිළිතුරු. දිනපතා පැය 24 පුරා ලබා ගත හැක.","feat3.title":"සක්‍රිය ප්‍රජාව","feat3.desc":"ඉතාලියේ ශ්‍රී ලාංකිකයන් එකිනෙකාට සහාය වන අවකාශයක්. පිළිතුරු සොයාගන්න, අත්දැකීම් බෙදාගන්න, එකට වර්ධනය වන්න.","feat4.title":"මුදල් හුවමාරුව","feat4.desc":"Wise, Western Union සහ Ria තත්‍ය කාලීනව සසඳන්න. ශ්‍රී ලංකාවට යවන මුදල් වලින් ඉතිරි කරගන්න.","feat5.title":"සේවා සිතියම","feat5.desc":"ප්‍රධාන ඉතාලි නගරවල CAF, patronati, ශ්‍රී ලාංකික වෙළඳසැල් සහ පූජනීය ස්ථාන.","feat6.title":"යාවත්කාලීන පුවත්","feat6.desc":"ශ්‍රී ලාංකික ප්‍රජාව සඳහා නීති, නියෝග සහ අවස්ථා. දිනපතා යාවත්කාලීන වේ.",
+    "members.count":"<strong>ශ්‍රී ලාංකික ප්‍රජාව</strong> ඉතාලියේ එකිනෙකාට උදව් කරයි","members.sub":"ඉතාලියේ ජීවත්වන සහ වැඩකරන, එම පියවරම මුහුණ දෙන අය හා එක්වන්න. එකට වඩා පහසුයි.",
     "cta.title":"ඔබේ ගමන<br/><em style=\"font-style:italic;color:var(--gold)\">අරඹන්න සූදානම්ද?</em>","cta.sub":"නොමිලේ ලියාපදිංචි වන්න. ණයපතක් අවශ්‍ය නැත.","cta.btn1":"ඔබේ නොමිලේ ගිණුම සාදන්න","cta.btn2":"එය ක්‍රියා කරන ආකාරය බලන්න",
     "footer.tag":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාවේ ඩිජිටල් නිවස. මාර්ගෝපදේශ, බහුභාෂා AI, ප්‍රජාව සහ සේවා — සියල්ල එක තැනක.","footer.product":"නිෂ්පාදනය","footer.aiAssistant":"AI සහායක","footer.mapServices":"සේවා සිතියම","footer.company":"සමාගම","footer.about":"අප ගැන","footer.advertising":"දැන්වීම්","footer.contact":"සම්බන්ධ වන්න","footer.account":"ගිණුම","footer.register":"ලියාපදිංචි වන්න","footer.subscriptions":"දායකත්ව","footer.copy":"© 2026 Easy Italia Hub. සියලු හිමිකම් ඇවිරිණි.","footer.privacy":"පෞද්ගලිකත්ව ප්‍රතිපත්තිය","footer.cookie":"කුකී ප්‍රතිපත්තිය","footer.terms":"සේවා කොන්දේසි","footer.legal":"නෛතික දැන්වීම",
     "chat.name":"Easy Italia සහායක","chat.status":"දැන් සබැඳිව","chat.welcome1":"ආයුබෝවන්! මම Easy Italia Hub සහායකයා. අද මට ඔබට කෙසේ උදව් කළ හැකිද?","chat.welcome2":"මට ඉතාලි, ඉංග්‍රීසි, <span lang=\"si\">සිංහල</span> හෝ <span lang=\"ta\">தமிழ்</span> භාෂාවෙන් පිළිතුරු දිය හැක.","chat.now":"දැන්","chat.sug1":"පදිංචි බලපත්‍රය","chat.sug2":"SPID","chat.sug3":"මුදල් හුවමාරුව","chat.sug4":"බදු කේතය","chat.placeholder":"පණිවිඩයක් ටයිප් කරන්න…","chat.q1":"පදිංචි බලපත්‍රය අලුත් කරන්නේ කෙසේද?","chat.q2":"SPID ලබා ගන්නේ කෙසේද?","chat.q3":"ශ්‍රී ලංකාවට මුදල් යැවීම ක්‍රියා කරන්නේ කෙසේද?","chat.q4":"බදු කේතය (codice fiscale) ලබා ගන්නේ කෙසේද?"
@@ -1785,14 +1969,54 @@ document.getElementById('nav-collapse').addEventListener('click',e=>{
 });
 window.addEventListener('resize',()=>{if(window.innerWidth>=1024)closeMenu();},{passive:true});
 
-/* ── Back to top ── */
+/* ── Seasonal banner (month-conditional, dismissible once per session) ── */
+(function(){
+  const banner=document.getElementById('season-banner');
+  if(!banner)return;
+  let dismissed=false;
+  try{dismissed=sessionStorage.getItem('eih-banner-dismissed')==='1';}catch(e){}
+  if(dismissed)return; // stays .hidden
+
+  const m=new Date().getMonth(); // 0=gennaio … 11=dicembre
+  let text,label='Vai alla guida',href='guide.html';
+  if(m===0||m===1){ // gennaio / febbraio
+    text="È il periodo della dichiarazione di residenza? Ecco la guida.";
+    label='Guida residenza';href='guide.html#residenza';
+  }else if(m===2||m===3){ // marzo / aprile
+    text="Dichiarazione dei redditi (730/IRPEF): cosa sapere.";
+    label='Guida busta paga';href='guide.html#busta-paga';
+  }else if(m===5||m===6){ // giugno / luglio
+    text="Permesso in scadenza d'estate? Come rinnovarlo.";
+    label='Guida permesso';href='guide.html#permesso-soggiorno';
+  }else{
+    text="Hai una scadenza in arrivo? Trova la guida giusta.";
+    label='Esplora le guide';href='guide.html';
+  }
+  document.getElementById('sb-text').textContent=text;
+  document.getElementById('sb-cta-label').textContent=label;
+  document.getElementById('sb-cta').setAttribute('href',href);
+
+  banner.classList.remove('hidden');
+  document.body.classList.add('has-banner');
+
+  document.getElementById('sb-x').addEventListener('click',()=>{
+    banner.classList.add('hidden');
+    document.body.classList.remove('has-banner');
+    try{sessionStorage.setItem('eih-banner-dismissed','1');}catch(e){}
+  });
+})();
+
+/* ── Back to top + header shrink-on-scroll (shared scroll handler) ── */
 const toTopBtn=document.getElementById('to-top');
+const siteNav=document.querySelector('.site-nav');
 function scrollToTop(){
   const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
 }
 window.addEventListener('scroll',()=>{
-  toTopBtn.classList.toggle('show',window.scrollY>400);
+  const y=window.scrollY;
+  toTopBtn.classList.toggle('show',y>400);
+  if(siteNav)siteNav.classList.toggle('scrolled',y>200);
 },{passive:true});
 
 /* ── Shared modal controller (focus-trap + scroll-lock + focus restore) ── */
@@ -1886,14 +2110,39 @@ let open=false;
 const chatHistory=[];   // {role:'user'|'assistant', content}
 let chatBusy=false;
 
+/* Unread badge: counts proactive bot messages shown while the panel is closed.
+   Honest count — derived from the actual welcome messages in the DOM. */
+let chatUnread=0;
+function setChatUnread(n){
+  chatUnread=Math.max(0,n);
+  const badge=document.getElementById('chat-badge');
+  if(!badge)return;
+  badge.textContent=chatUnread>0?String(chatUnread):'';
+  badge.classList.toggle('show',chatUnread>0);
+}
+
 function toggleChat(){
   open=!open;
   const p=document.getElementById('chat-panel');
   const b=document.getElementById('chat-btn');
   p.classList.toggle('open',open);
   b.setAttribute('aria-expanded',open);
-  if(open) setTimeout(()=>document.getElementById('ch-in').focus(),300);
+  if(open){setChatUnread(0);setTimeout(()=>document.getElementById('ch-in').focus(),300);}
 }
+
+/* On load: one proactive welcome thread is waiting while the panel is closed → badge "1". */
+(function(){
+  const hasWelcome=document.querySelector('#ch-msgs .msg.bot .bubble');
+  if(hasWelcome && !open)setChatUnread(1);
+})();
+
+/* Global shortcut: Ctrl/⌘+J toggles the assistant. */
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&!e.altKey&&e.key.toLowerCase()==='j'){
+    e.preventDefault();
+    toggleChat();
+  }
+});
 
 function escapeHtml(s){
   return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1966,5 +2215,8 @@ function sendSug(el){
   sendToAgent((key&&dict[key])||el.textContent);
 }
 </script>
+
+<!-- Money-transfer comparator widget (logic provided separately) -->
+<script src="fx-comparator.js" defer></script>
 </body>
 </html>
