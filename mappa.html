@@ -8,6 +8,7 @@
 <link rel="canonical" href="https://easyitaliahub.it/mappa"/>
 <link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
 <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link rel="stylesheet" href="eih.css"/>
 <script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
 </head>
@@ -20,19 +21,50 @@
 <div id="site-nav"></div>
 
 <main id="main">
-  <div class="page">
+  <div class="page page-wide">
     <p class="eyebrow reveal"><span class="eyebrow-line"></span> Mappa dei servizi</p>
     <h1 class="reveal">I servizi<br/><em>vicino a te.</em></h1>
-    <p class="lead reveal">CAF, patronati, negozi srilankesi, luoghi di culto e professionisti verificati nelle principali città italiane. Trova ciò che ti serve, dove ti serve.</p>
+    <p class="lead reveal">CAF, patronati, negozi srilankesi, luoghi di culto e professionisti nelle principali città italiane. Scegli una categoria, seleziona la tua città e trova subito i contatti utili — o l'ufficio ufficiale più vicino.</p>
 
-    <div class="draft-banner reveal">🗺️ <span>La mappa interattiva è in costruzione. Stiamo raccogliendo e verificando i punti di interesse città per città. Conosci un servizio utile? <a class="inline" href="contatti.html">Segnalacelo</a>.</span></div>
-
-    <div class="card-grid reveal">
-      <div class="icard"><div class="ic">🏛️</div><h3>CAF &amp; patronati</h3><p>Dove fare le pratiche, con orari e contatti verificati.</p></div>
-      <div class="icard"><div class="ic">🛒</div><h3>Negozi srilankesi</h3><p>Alimentari, servizi e attività della comunità.</p></div>
-      <div class="icard"><div class="ic">🛕</div><h3>Luoghi di culto</h3><p>Templi e centri culturali cingalesi e tamil.</p></div>
-      <div class="icard"><div class="ic">👔</div><h3>Professionisti</h3><p>Commercialisti, avvocati e mediatori che parlano la tua lingua.</p></div>
+    <!-- ░░ CATEGORY FILTER ░░ -->
+    <div class="map-filters reveal" role="group" aria-label="Filtra per categoria di servizio">
+      <button type="button" class="filter-btn is-active" data-cat="all" aria-pressed="true">Tutti</button>
+      <button type="button" class="filter-btn" data-cat="caf" aria-pressed="false"><span aria-hidden="true">🏛️</span> CAF &amp; patronati</button>
+      <button type="button" class="filter-btn" data-cat="shop" aria-pressed="false"><span aria-hidden="true">🛒</span> Negozi srilankesi</button>
+      <button type="button" class="filter-btn" data-cat="worship" aria-pressed="false"><span aria-hidden="true">🛕</span> Luoghi di culto</button>
+      <button type="button" class="filter-btn" data-cat="pro" aria-pressed="false"><span aria-hidden="true">👔</span> Professionisti</button>
     </div>
+
+    <!-- ░░ MAP + DIRECTORY LAYOUT ░░ -->
+    <div class="map-layout reveal">
+
+      <!-- LEFT: city list (works without the map) -->
+      <aside class="city-rail" aria-label="Città disponibili">
+        <p class="rail-title">Città</p>
+        <div class="city-list" id="city-list" role="list"><!-- city buttons injected by script --></div>
+        <p class="muted rail-hint">Seleziona una città per centrarla sulla mappa e vedere i servizi.</p>
+      </aside>
+
+      <!-- RIGHT: map + fallback note -->
+      <div class="map-col">
+        <div id="map" role="application" aria-label="Mappa interattiva delle principali città italiane con i servizi per la comunità srilankese"></div>
+        <div id="map-fallback" class="map-fallback" hidden>
+          <strong>Mappa non disponibile al momento.</strong>
+          <span>Nessun problema: usa l'elenco delle città qui accanto e i pulsanti delle categorie per trovare tutti i servizi e i contatti.</span>
+        </div>
+        <p class="muted map-credit">Dati cartografici &copy; <a class="inline" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>. I contatti dei CAF/patronati rimandano ai siti ufficiali nazionali.</p>
+      </div>
+    </div>
+
+    <!-- ░░ DIRECTORY PANEL ░░ -->
+    <section class="directory reveal" aria-labelledby="dir-heading">
+      <h2 id="dir-heading" class="dir-heading">Servizi a <span id="dir-city">Milano</span></h2>
+      <p class="muted dir-sub" id="dir-sub"></p>
+      <div class="dir-results" id="dir-results" aria-live="polite"><!-- service cards injected by script --></div>
+    </section>
+
+    <!-- ░░ HONESTY / CROWDSOURCE BANNER ░░ -->
+    <div class="draft-banner reveal">🙌 <span>Stiamo costruendo l'elenco insieme alla community. I CAF e i patronati qui sotto sono <strong>reti ufficiali nazionali</strong>: clicca per trovare la sede reale più vicina. Negozi, templi e professionisti li raccogliamo dalle segnalazioni — <a class="inline" href="contatti.html">segnala un luogo che conosci</a>.</span></div>
 
     <div class="cta-row reveal">
       <a href="percorso.html" class="btn-primary">Inizia il percorso</a>
@@ -42,6 +74,324 @@
 </main>
 
 <div id="site-footer"></div>
+
+<!-- ░░ PAGE-SCOPED STYLES (map directory) ░░ -->
+<style>
+  /* ── category filter ── */
+  .map-filters{display:flex;flex-wrap:wrap;gap:.5rem;margin:var(--sp-3) 0 var(--sp-3)}
+  .filter-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1.05rem;border-radius:var(--radius-full);
+    font-family:inherit;font-size:var(--text-sm);font-weight:500;color:var(--fg-secondary);
+    background:var(--surface);border:1px solid var(--border);cursor:pointer;min-height:44px;
+    transition:background var(--dur-micro),color var(--dur-micro),border-color var(--dur-micro),transform var(--dur-std) var(--ease-spring)}
+  .filter-btn:hover{background:var(--surface-hover);color:var(--ink);transform:translateY(-2px)}
+  .filter-btn.is-active{background:linear-gradient(135deg,var(--blue-deep),var(--blue));color:#fff;border-color:transparent;box-shadow:0 6px 20px var(--blue-glow)}
+  .filter-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  /* ── map + directory layout ── */
+  .map-layout{display:grid;grid-template-columns:260px 1fr;gap:1.1rem;align-items:start}
+  .city-rail{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;position:sticky;top:90px}
+  .rail-title{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin:0 0 .8rem}
+  .city-list{display:flex;flex-direction:column;gap:.4rem}
+  .city-btn{display:flex;align-items:center;justify-content:space-between;gap:.5rem;width:100%;text-align:left;
+    padding:.7rem .85rem;border-radius:var(--radius-sm);border:1px solid transparent;background:var(--surface);
+    font-family:inherit;font-size:var(--text-sm);font-weight:500;color:var(--ink);cursor:pointer;min-height:44px;
+    transition:background var(--dur-micro),border-color var(--dur-micro),transform var(--dur-micro)}
+  .city-btn:hover{background:var(--surface-hover);transform:translateX(2px)}
+  .city-btn.is-active{background:var(--gold-dim);border-color:rgba(124,112,89,.35);font-weight:600}
+  .city-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .city-btn .city-count{font-size:var(--text-xs);font-weight:500;color:var(--fg-muted);background:rgba(40,36,30,.05);border-radius:var(--radius-full);padding:.1rem .5rem;white-space:nowrap}
+  .rail-hint{margin:.9rem 0 0;line-height:1.5}
+
+  .map-col{display:flex;flex-direction:column}
+  #map{height:60vh;min-height:380px;width:100%;border-radius:var(--radius);border:1px solid var(--border);
+    background:var(--bg-elevated);z-index:1;box-shadow:0 16px 40px rgba(20,30,48,.08)}
+  .leaflet-container{font-family:'Satoshi','Inter',system-ui,sans-serif;background:#e9e6e0}
+  .map-fallback{display:flex;flex-direction:column;gap:.35rem;height:auto;min-height:200px;justify-content:center;
+    padding:1.5rem;border-radius:var(--radius);border:1px dashed var(--border-bright);background:var(--gold-dim);color:var(--ink);font-size:var(--text-sm)}
+  .map-fallback strong{font-size:var(--text-base)}
+  .map-credit{margin:.7rem 0 0;line-height:1.5}
+
+  /* ── leaflet marker + popup (on-brand) ── */
+  .eih-pin{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50% 50% 50% 4px;
+    transform:rotate(45deg);background:linear-gradient(135deg,var(--blue-deep),var(--blue));border:2px solid #fffdf9;
+    box-shadow:0 4px 10px rgba(20,30,48,.3);color:#fff}
+  .eih-pin span{transform:rotate(-45deg);font-size:14px;line-height:1}
+  .leaflet-popup-content-wrapper{border-radius:var(--radius-sm);box-shadow:0 16px 40px rgba(20,30,48,.18)}
+  .leaflet-popup-content{margin:.85rem 1rem;font-size:var(--text-sm);line-height:1.5;color:var(--fg)}
+  .pop-city{font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:var(--text-base);color:var(--ink);margin:0 0 .2rem}
+  .pop-note{color:var(--fg-secondary);margin:0 0 .6rem;font-size:var(--text-xs);line-height:1.45}
+  .pop-btn{display:inline-flex;align-items:center;gap:.3rem;padding:.45rem .9rem;border-radius:var(--radius-full);
+    background:linear-gradient(135deg,var(--blue-deep),var(--blue));color:#fff;border:none;cursor:pointer;
+    font-family:inherit;font-size:var(--text-xs);font-weight:600;min-height:36px}
+  .pop-btn:hover{opacity:.9}
+
+  /* ── directory panel ── */
+  .directory{margin-top:var(--sp-5)}
+  .dir-heading{margin:0 0 .3rem}
+  .dir-heading span{color:var(--taupe)}
+  .dir-sub{margin:0 0 var(--sp-3)}
+  .dir-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.1rem}
+  .svc{padding:1.3rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);display:flex;flex-direction:column}
+  .svc-head{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem}
+  .svc-ic{font-size:1.4rem;line-height:1}
+  .svc-cat{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;color:var(--ink)}
+  .svc p{font-size:var(--text-sm);line-height:1.6;color:var(--fg-secondary);margin:0 0 .8rem}
+  .svc-links{display:flex;flex-direction:column;gap:.45rem;margin:0 0 .2rem}
+  .svc-links a{display:inline-flex;align-items:center;gap:.4rem;font-size:var(--text-sm);font-weight:500;color:var(--gold);text-decoration:none;width:fit-content}
+  .svc-links a:hover{text-decoration:underline;text-underline-offset:2px}
+  .svc-links a .ext{font-size:.7rem;opacity:.7}
+  .svc-empty{margin-top:auto;font-size:var(--text-sm);color:var(--fg-muted)}
+  .svc-note{margin-top:auto}
+  .svc-cta{display:inline-flex;align-items:center;gap:.35rem;margin-top:.5rem;font-size:var(--text-sm);font-weight:600;color:var(--coral);text-decoration:none}
+  .svc-cta:hover{text-decoration:underline;text-underline-offset:2px}
+
+  /* ── responsive ── */
+  @media(max-width:860px){
+    .map-layout{grid-template-columns:1fr}
+    .city-rail{position:static;order:2}
+    .map-col{order:1}
+    .city-list{flex-direction:row;flex-wrap:wrap}
+    .city-btn{width:auto;flex:1 1 calc(50% - .4rem)}
+    #map{height:46vh;min-height:320px}
+  }
+  @media(max-width:480px){
+    .city-btn{flex:1 1 100%}
+  }
+</style>
+
+<!-- ░░ LEAFLET (exact CSP-allowed URLs) ░░ -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- ░░ PAGE INIT ░░ -->
+<script>
+(function(){
+  "use strict";
+  var reduce = false;
+  try { reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches; } catch(e){}
+
+  /* ── DATA ── real cities + real coordinates ── */
+  var CITIES = [
+    { id:'milano',  name:'Milano',  coords:[45.4642, 9.1900],  note:'La più grande comunità srilankese d’Italia: tanti negozi, templi e servizi.' },
+    { id:'roma',    name:'Roma',    coords:[41.9028,12.4964],  note:'Capitale con storica presenza cingalese e tamil, soprattutto nei quartieri est.' },
+    { id:'torino',  name:'Torino',  coords:[45.0703, 7.6869],  note:'Comunità attiva nel nord-ovest, con CAF e patronati ben distribuiti.' },
+    { id:'napoli',  name:'Napoli',  coords:[40.8518,14.2681],  note:'Punto di riferimento per il Sud Italia e per chi arriva via mare.' },
+    { id:'brescia', name:'Brescia', coords:[45.5416,10.2118],  note:'Forte presenza nella zona industriale lombarda, vicino a Milano.' },
+    { id:'palermo', name:'Palermo', coords:[38.1157,13.3613],  note:'Riferimento per la Sicilia e i nuovi arrivi nel Mediterraneo.' }
+  ];
+
+  /* ── Official national CAF & patronato networks (verified locator links) ── */
+  var CAF_NETWORKS = [
+    { name:'Patronato ACLI', url:'https://www.patronato.acli.it/trova-la-sede/', label:'Trova la sede ACLI più vicina' },
+    { name:'INCA CGIL',      url:'https://inca.it/dove-siamo.html',              label:'Trova la sede INCA CGIL' },
+    { name:'INAS CISL',      url:'https://www.inas.it/sede-piu-vicina/',         label:'Trova la sede INAS CISL' },
+    { name:'ITAL UIL',       url:'https://www.italuil.it/',                      label:'Trova la sede ITAL UIL' },
+    { name:'CAF / rete ACLI',url:'https://www.acli.it/dove-siamo/',              label:'Sportelli e sedi ACLI in Italia' }
+  ];
+
+  var CAT_META = {
+    caf:     { icon:'🏛️', label:'CAF & patronati' },
+    shop:    { icon:'🛒',       label:'Negozi srilankesi' },
+    worship: { icon:'🛕',       label:'Luoghi di culto' },
+    pro:     { icon:'👔',       label:'Professionisti' }
+  };
+  var CAT_ORDER = ['caf','shop','worship','pro'];
+
+  /* ── STATE ── */
+  var state = { cat:'all', city:CITIES[0].id };
+  var map = null, markers = {};
+
+  /* ── DOM refs ── */
+  var cityListEl = document.getElementById('city-list');
+  var dirCityEl  = document.getElementById('dir-city');
+  var dirSubEl   = document.getElementById('dir-sub');
+  var dirResEl   = document.getElementById('dir-results');
+  var filterBtns = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
+
+  function cityById(id){ for(var i=0;i<CITIES.length;i++){ if(CITIES[i].id===id) return CITIES[i]; } return CITIES[0]; }
+  function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+
+  /* ── build a single service card for a category ── */
+  function serviceCardHTML(cat, city){
+    var m = CAT_META[cat];
+    var head = '<div class="svc-head"><span class="svc-ic" aria-hidden="true">'+m.icon+'</span><span class="svc-cat">'+esc(m.label)+'</span></div>';
+    if(cat==='caf'){
+      var links = CAF_NETWORKS.map(function(n){
+        return '<a href="'+n.url+'" target="_blank" rel="noopener">'+esc(n.label)+' <span class="ext" aria-hidden="true">↗</span></a>';
+      }).join('');
+      return '<article class="svc">'+head+
+        '<p>A '+esc(city.name)+' (e in tutta Italia) puoi rivolgerti agli sportelli delle reti ufficiali nazionali per ISEE, permesso di soggiorno, pensioni, NASpI e pratiche INPS. Usa i localizzatori ufficiali per la sede più vicina:</p>'+
+        '<div class="svc-links">'+links+'</div>'+
+        '</article>';
+    }
+    // honest "in raccolta" for shop / worship / pro
+    var phrase = {
+      shop:'Stiamo raccogliendo alimentari e attività della comunità',
+      worship:'Stiamo raccogliendo templi e centri culturali cingalesi e tamil',
+      pro:'Stiamo raccogliendo commercialisti, avvocati e mediatori che parlano la tua lingua'
+    }[cat];
+    return '<article class="svc">'+head+
+      '<p>'+esc(phrase)+' a '+esc(city.name)+'. Per ora questo elenco è <strong>in raccolta</strong>: pubblichiamo solo i contatti che ci segnala la community, per non dare informazioni non verificate.</p>'+
+      '<p class="svc-note muted">Conosci un posto affidabile a '+esc(city.name)+'?</p>'+
+      '<a class="svc-cta" href="contatti.html">Segnala il tuo <span aria-hidden="true">→</span></a>'+
+      '</article>';
+  }
+
+  /* ── render the directory panel for current city + category filter ── */
+  function renderDirectory(){
+    var city = cityById(state.city);
+    if(dirCityEl) dirCityEl.textContent = city.name;
+    var cats = state.cat==='all' ? CAT_ORDER : [state.cat];
+    if(dirSubEl){
+      dirSubEl.textContent = state.cat==='all'
+        ? 'Tutte le categorie a '+city.name+'. ' + city.note
+        : CAT_META[state.cat].label + ' a ' + city.name + '.';
+    }
+    if(dirResEl){
+      dirResEl.innerHTML = cats.map(function(c){ return serviceCardHTML(c, city); }).join('');
+    }
+  }
+
+  /* ── select a city (directory + map) ── */
+  function selectCity(id, fromMap){
+    state.city = id;
+    // update city button active state
+    Array.prototype.forEach.call(cityListEl ? cityListEl.children : [], function(btn){
+      var on = btn.getAttribute('data-city')===id;
+      btn.classList.toggle('is-active', on);
+      btn.setAttribute('aria-current', on ? 'true' : 'false');
+    });
+    renderDirectory();
+    // pan/zoom the map if it exists
+    if(map){
+      var city = cityById(id);
+      try{
+        map.setView(city.coords, 11, { animate: !reduce });
+        if(!fromMap && markers[id]) markers[id].openPopup();
+      }catch(e){}
+    }
+  }
+
+  /* ── set the active category filter ── */
+  function setCategory(cat){
+    state.cat = cat;
+    filterBtns.forEach(function(b){
+      var on = b.getAttribute('data-cat')===cat;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    renderDirectory();
+  }
+
+  /* ── build the city rail buttons ── */
+  function buildCityRail(){
+    if(!cityListEl) return;
+    cityListEl.innerHTML = CITIES.map(function(c){
+      return '<button type="button" class="city-btn" role="listitem" data-city="'+c.id+'" aria-current="false">'+
+        '<span>'+esc(c.name)+'</span><span class="city-count" aria-hidden="true">4 categorie</span></button>';
+    }).join('');
+    Array.prototype.forEach.call(cityListEl.children, function(btn){
+      btn.addEventListener('click', function(){ selectCity(btn.getAttribute('data-city'), false); });
+    });
+  }
+
+  /* ── wire up category filter buttons ── */
+  filterBtns.forEach(function(b){
+    b.addEventListener('click', function(){ setCategory(b.getAttribute('data-cat')); });
+  });
+
+  /* ── popup "Vedi servizi" delegation (popups are created lazily by Leaflet) ── */
+  document.addEventListener('click', function(e){
+    var t = e.target.closest ? e.target.closest('.pop-btn') : null;
+    if(t && t.getAttribute('data-city')){
+      e.preventDefault();
+      var id = t.getAttribute('data-city');
+      selectCity(id, true);
+      if(map && markers[id]){ try{ markers[id].closePopup(); }catch(err){} }
+      // bring the directory into view for keyboard/mobile users
+      var dir = document.getElementById('dir-heading');
+      if(dir && dir.scrollIntoView){ dir.scrollIntoView({behavior: reduce?'auto':'smooth', block:'start'}); }
+    }
+  });
+
+  /* ── popup HTML for a city marker ── */
+  function popupHTML(c){
+    return '<div class="pop-city">'+esc(c.name)+'</div>'+
+      '<p class="pop-note">'+esc(c.note)+'</p>'+
+      '<button type="button" class="pop-btn" data-city="'+c.id+'">Vedi servizi</button>';
+  }
+
+  /* ── initialize the Leaflet map (guarded) ── */
+  function initMap(){
+    if(typeof window.L === 'undefined') throw new Error('Leaflet not loaded');
+    var mapEl = document.getElementById('map');
+    if(!mapEl) throw new Error('No map container');
+
+    map = L.map(mapEl, {
+      center: [42.5, 12.5],
+      zoom: reduce ? 6 : 5,
+      scrollWheelZoom: false,
+      zoomControl: true
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 18
+    }).addTo(map);
+
+    CITIES.forEach(function(c){
+      var icon = L.divIcon({
+        className: 'eih-marker',
+        html: '<div class="eih-pin"><span aria-hidden="true">📍</span></div>',
+        iconSize: [30,30],
+        iconAnchor: [15,28],
+        popupAnchor: [0,-26]
+      });
+      var mk = L.marker(c.coords, { icon: icon, title: c.name, keyboard: true, alt: 'Marcatore '+c.name });
+      mk.bindPopup(popupHTML(c));
+      mk.addTo(map);
+      markers[c.id] = mk;
+    });
+
+    // keep the directory in sync when a popup opens from a marker click
+    map.on('popupopen', function(ev){
+      for(var id in markers){ if(markers[id]===ev.popup._source){ selectCity(id, true); break; } }
+    });
+
+    // tiles paint correctly after layout settles
+    setTimeout(function(){ try{ map.invalidateSize(); }catch(e){} }, 200);
+  }
+
+  /* ── graceful fallback: hide map, show note, keep everything else ── */
+  function showFallback(){
+    var mapEl = document.getElementById('map');
+    var fb = document.getElementById('map-fallback');
+    if(mapEl) mapEl.hidden = true;
+    if(fb) fb.hidden = false;
+  }
+
+  /* ── boot ── */
+  function boot(){
+    // directory + filters always work, independent of the map
+    buildCityRail();
+    setCategory('all');
+    selectCity(CITIES[0].id, false);
+    // try the map; any failure falls back without breaking the page
+    try{
+      initMap();
+    }catch(err){
+      try{ if(window.console) console.warn('Mappa non disponibile, uso l’elenco:', err); }catch(e){}
+      showFallback();
+    }
+  }
+
+  if(document.readyState === 'complete'){
+    boot();
+  }else{
+    window.addEventListener('load', boot);
+  }
+})();
+</script>
+
 <script src="eih.js"></script>
 </body>
 </html>

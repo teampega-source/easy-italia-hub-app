@@ -10,6 +10,83 @@
 <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="eih.css"/>
 <script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+<style>
+  /* ── community page-scoped styles ── */
+  .c-section{margin-top:var(--sp-6)}
+  .c-section > .eyebrow{margin-bottom:.6rem}
+  .c-note{font-size:var(--text-sm);color:var(--fg-muted);max-width:620px;margin-bottom:var(--sp-3);line-height:1.7}
+
+  /* live community counter */
+  .c-banner{display:flex;align-items:flex-start;gap:.6rem;background:var(--gold-dim);border:1px solid rgba(124,112,89,.25);border-radius:var(--radius-sm);padding:.8rem 1rem;font-size:var(--text-sm);color:var(--ink);margin-bottom:var(--sp-3);line-height:1.6}
+  .c-banner b{font-weight:600}
+
+  /* ── FAQ accordion ── */
+  .faq-list{display:flex;flex-direction:column;gap:.7rem;margin-top:var(--sp-3)}
+  .faq-item{border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);overflow:hidden;transition:border-color var(--dur-std)}
+  .faq-item.open{border-color:var(--border-bright)}
+  .faq-q{display:flex;align-items:center;justify-content:space-between;gap:1rem;width:100%;text-align:left;background:none;border:none;cursor:pointer;font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:600;color:var(--ink);padding:1.1rem 1.3rem;min-height:44px;line-height:1.35}
+  .faq-q:hover{color:var(--gold)}
+  .faq-q:focus-visible{outline:2px solid var(--gold);outline-offset:-2px;border-radius:var(--radius)}
+  .faq-icon{flex-shrink:0;width:22px;height:22px;position:relative;transition:transform var(--dur-std) var(--ease-spring)}
+  .faq-icon::before,.faq-icon::after{content:'';position:absolute;top:50%;left:50%;width:13px;height:2px;background:var(--gold);border-radius:2px;transform:translate(-50%,-50%)}
+  .faq-icon::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform var(--dur-std) var(--ease-spring)}
+  .faq-item.open .faq-icon::after{transform:translate(-50%,-50%) rotate(0deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height var(--dur-complex) var(--ease-spring)}
+  .faq-a-inner{padding:0 1.3rem 1.2rem;font-size:var(--text-base);line-height:1.75;color:var(--fg-secondary)}
+  .faq-a-inner p{margin:0 0 .6rem;font-size:var(--text-base);color:var(--fg-secondary)}
+  .faq-a-inner p:last-child{margin-bottom:0}
+
+  /* ── city groups ── */
+  .city-chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:var(--sp-3)}
+  .city-chip{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1.15rem;border-radius:var(--radius-full);border:1px solid var(--border-bright);background:var(--bg-elevated);cursor:pointer;font-family:inherit;font-size:var(--text-sm);font-weight:500;color:var(--ink);min-height:44px;transition:background var(--dur-micro),border-color var(--dur-micro),transform var(--dur-std) var(--ease-spring)}
+  .city-chip:hover{background:var(--surface-hover);transform:translateY(-2px)}
+  .city-chip:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .city-chip[aria-pressed="true"]{background:linear-gradient(135deg,var(--blue-deep),var(--blue));color:#fff;border-color:transparent}
+  .city-chip .city-dot{font-size:1rem;line-height:1}
+  .city-panel{margin-top:var(--sp-3);border:1px solid var(--border-bright);border-radius:var(--radius);background:var(--bg-elevated);padding:1.5rem;display:none}
+  .city-panel.show{display:block}
+  .city-panel h3{margin:0 0 .5rem;font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xl);font-weight:600;color:var(--ink)}
+  .city-panel p{font-size:var(--text-base);line-height:1.7;color:var(--fg-secondary);margin:0 0 var(--sp-2)}
+  .city-panel .cta-row{margin-top:var(--sp-2)}
+
+  /* ── events ── */
+  .ev-list{display:flex;flex-direction:column;gap:1rem;margin-top:var(--sp-3)}
+  .ev-card{border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);overflow:hidden;transition:box-shadow var(--dur-std),border-color var(--dur-std)}
+  .ev-card.open{border-color:var(--border-bright);box-shadow:0 16px 40px rgba(20,30,48,.08)}
+  .ev-head{display:flex;align-items:flex-start;gap:1rem;width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:1.2rem 1.3rem;min-height:44px}
+  .ev-head:focus-visible{outline:2px solid var(--gold);outline-offset:-2px;border-radius:var(--radius)}
+  .ev-emoji{font-size:1.6rem;line-height:1;flex-shrink:0}
+  .ev-titles{flex:1;min-width:0}
+  .ev-titles h3{margin:0 0 .15rem;font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:600;color:var(--ink)}
+  .ev-when{font-size:var(--text-sm);color:var(--gold);font-weight:500}
+  .ev-chev{flex-shrink:0;width:20px;height:20px;align-self:center;transition:transform var(--dur-std) var(--ease-spring)}
+  .ev-chev svg{width:100%;height:100%;stroke:var(--fg-muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .ev-card.open .ev-chev{transform:rotate(180deg)}
+  .ev-body{max-height:0;overflow:hidden;transition:max-height var(--dur-complex) var(--ease-spring)}
+  .ev-body-inner{padding:0 1.3rem 1.3rem;font-size:var(--text-base);line-height:1.7;color:var(--fg-secondary)}
+  .ev-body-inner p{margin:0 0 var(--sp-2);font-size:var(--text-base);color:var(--fg-secondary)}
+  .ev-actions{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;margin-top:.4rem}
+  .ev-rsvp{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;border-radius:var(--radius-full);border:1px solid var(--border-bright);background:var(--surface);cursor:pointer;font-family:inherit;font-size:var(--text-sm);font-weight:500;color:var(--ink);min-height:44px;transition:background var(--dur-micro),border-color var(--dur-micro),transform var(--dur-std) var(--ease-spring)}
+  .ev-rsvp:hover{background:var(--surface-hover);transform:translateY(-2px)}
+  .ev-rsvp:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .ev-rsvp[aria-pressed="true"]{background:var(--green-dim);border-color:rgba(31,157,85,.4);color:#13733d}
+  .ev-rsvp .heart{font-size:1rem;line-height:1}
+  .ev-count{font-size:var(--text-sm);color:var(--fg-muted)}
+  .ev-count b{color:var(--ink);font-weight:600}
+  .demo-tag{display:inline-block;font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid rgba(124,112,89,.25);padding:.2rem .6rem;border-radius:99px;margin-left:.55rem;vertical-align:middle}
+
+  /* ── ask box ── */
+  .ask-box{margin-top:var(--sp-3);border:1px solid var(--border-bright);border-radius:var(--radius);background:var(--bg-elevated);padding:1.6rem}
+  .ask-box .form{margin-top:0}
+  .ask-box .cta-row{margin-top:var(--sp-2)}
+  .ask-hint{font-size:var(--text-xs);color:var(--fg-muted);margin-top:.6rem}
+
+  .visually-hidden{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  @media(max-width:600px){
+    .faq-q{font-size:var(--text-base);padding:1rem 1.1rem}
+    .city-panel,.ask-box{padding:1.2rem}
+  }
+</style>
 </head>
 <body data-page="community">
 <a href="#main" class="skip-link">Salta al contenuto</a>
@@ -25,22 +102,383 @@
     <h1 class="reveal">Insieme<br/><em>è più facile.</em></h1>
     <p class="lead reveal">5.000+ srilankesi che vivono e lavorano in Italia si supportano ogni giorno: domande pratiche, esperienze condivise, eventi culturali. Un ponte tra chi è appena arrivato e chi è qui da anni.</p>
 
-    <div class="draft-banner reveal">👥 <span>Lo spazio community (forum, gruppi per città, eventi) è in costruzione. A breve potrai iscriverti, fare domande e trovare persone vicine a te.</span></div>
+    <div class="c-banner reveal">👥 <span>Forum e profili reali arrivano presto. Intanto questa pagina è già utile: <b>risposte verificate</b>, <b>gruppi per città</b> e <b>eventi della comunità</b>. Per parlare con qualcuno subito, usa il <a class="inline" href="percorso.html">Consigliere AI</a>.</span></div>
 
-    <div class="card-grid reveal">
-      <div class="icard"><div class="ic">💬</div><h3>Domande &amp; risposte</h3><p>Chiedi alla community o al Consigliere AI. Nessuna domanda è banale.</p></div>
-      <div class="icard"><div class="ic">📍</div><h3>Gruppi per città</h3><p>Milano, Roma e oltre: trova persone, negozi e luoghi di culto vicini.</p></div>
-      <div class="icard"><div class="ic">🎉</div><h3>Eventi e cultura</h3><p>Festival, incontri, iniziative della comunità cingalese e tamil.</p></div>
-    </div>
+    <!-- ───────── 1) FAQ ───────── -->
+    <section class="c-section" id="faq">
+      <p class="eyebrow reveal"><span class="eyebrow-line"></span> Domande frequenti</p>
+      <h2 class="reveal" style="margin-top:.2rem">Le domande che ci fanno tutti</h2>
+      <p class="c-note reveal">Risposte brevi e verificate alle situazioni più comuni. Le regole e gli importi cambiano: controlla sempre il link ufficiale prima di agire.</p>
+      <div class="faq-list reveal" id="faq-list">
 
-    <div class="cta-row reveal">
-      <a href="percorso.html" class="btn-primary">Unisciti gratis</a>
-      <a href="contatti.html" class="btn-ghost">Proponi un evento</a>
-    </div>
+        <div class="faq-item">
+          <h3 style="margin:0"><button class="faq-q" type="button" aria-expanded="false" id="faq-q1" aria-controls="faq-a1">Dove trovo un patronato o CAF gratuito?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+          <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1"><div class="faq-a-inner">
+            <p>I <b>patronati</b> (es. INCA-CGIL, ACLI, INAS-CISL, ITAL-UIL) e i <b>CAF</b> aiutano <b>gratuitamente</b> con permesso di soggiorno, pensioni, assegno unico, ISEE, NASpI e pratiche INPS. Il servizio del patronato per le pratiche di previdenza e assistenza è per legge senza costi per te.</p>
+            <p>Cerca la sede più vicina sul sito del patronato o trova gli sportelli sociali sulla nostra <a class="inline" href="mappa.html">Mappa dei servizi</a>. Per i servizi INPS puoi anche partire da <a class="inline" href="https://www.inps.it" target="_blank" rel="noopener">inps.it</a>.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <h3 style="margin:0"><button class="faq-q" type="button" aria-expanded="false" id="faq-q2" aria-controls="faq-a2">Posso iscrivere i miei figli a scuola?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+          <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-q2"><div class="faq-a-inner">
+            <p>Sì. In Italia l'<b>istruzione è un diritto-dovere per tutti i minori</b>, anche per i figli di genitori senza permesso di soggiorno valido. La scuola <b>non può rifiutare l'iscrizione</b> per la mancanza di documenti di soggiorno.</p>
+            <p>L'iscrizione si fa di norma online sul portale del Ministero nei mesi previsti; fuori periodo ci si rivolge direttamente alla scuola. Info ufficiali sul portale <a class="inline" href="https://www.mim.gov.it" target="_blank" rel="noopener">mim.gov.it (Ministero dell'Istruzione)</a> o chiedi aiuto allo sportello scuola del tuo Comune.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <h3 style="margin:0"><button class="faq-q" type="button" aria-expanded="false" id="faq-q3" aria-controls="faq-a3">Come funziona il ricongiungimento familiare?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+          <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3"><div class="faq-a-inner">
+            <p>Per portare in Italia coniuge e figli devi chiedere il <b>nulla osta al ricongiungimento</b> allo <b>Sportello Unico per l'Immigrazione (SUI)</b> in Prefettura. Servono in genere un permesso di soggiorno idoneo, un reddito minimo e un alloggio adeguato (con certificato di idoneità alloggiativa).</p>
+            <p>La domanda si presenta online dal portale del Ministero dell'Interno. Verifica requisiti e procedura su <a class="inline" href="https://www.interno.gov.it" target="_blank" rel="noopener">interno.gov.it</a> e fatti seguire da un patronato per evitare errori.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <h3 style="margin:0"><button class="faq-q" type="button" aria-expanded="false" id="faq-q4" aria-controls="faq-a4">Come ottengo il medico di base e la tessera sanitaria?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+          <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-q4"><div class="faq-a-inner">
+            <p>Con un permesso di soggiorno valido ti iscrivi al <b>Servizio Sanitario Nazionale</b> presso la <b>ASL</b> della tua zona: scegli il <b>medico di base</b> e ricevi la <b>tessera sanitaria</b>. Spesso servono permesso/ricevuta, codice fiscale e residenza o domicilio.</p>
+            <p>Se non hai un permesso valido hai comunque diritto alle cure urgenti ed essenziali con il codice <b>STP</b>. Informazioni su <a class="inline" href="https://www.salute.gov.it" target="_blank" rel="noopener">salute.gov.it</a> e sul sito della tua ASL.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <h3 style="margin:0"><button class="faq-q" type="button" aria-expanded="false" id="faq-q5" aria-controls="faq-a5">Come ottengo lo SPID?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+          <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-q5"><div class="faq-a-inner">
+            <p>Lo <b>SPID</b> è l'identità digitale per accedere ai servizi online della Pubblica Amministrazione (INPS, Agenzia delle Entrate, sanità). Per richiederlo servono un documento d'identità valido, la tessera sanitaria/codice fiscale, un'email e un numero di cellulare.</p>
+            <p>Scegli un gestore accreditato e completa il riconoscimento (di persona, via webcam o con CIE). L'elenco ufficiale dei gestori e le istruzioni sono su <a class="inline" href="https://www.spid.gov.it" target="_blank" rel="noopener">spid.gov.it</a>. Vedi anche la nostra <a class="inline" href="guide.html">Guida</a>.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <h3 style="margin:0"><button class="faq-q" type="button" aria-expanded="false" id="faq-q6" aria-controls="faq-a6">Il mio permesso di soggiorno sta per scadere: cosa faccio?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+          <div class="faq-a" id="faq-a6" role="region" aria-labelledby="faq-q6"><div class="faq-a-inner">
+            <p>Presenta la domanda di <b>rinnovo prima della scadenza</b> (in genere è consigliato muoversi almeno 60 giorni prima). Il kit si invia di norma tramite gli <b>uffici postali</b> abilitati (Sportello Amico); la <b>ricevuta</b> dell'invio ti permette di restare regolarmente in attesa della risposta.</p>
+            <p>Fatti aiutare da un patronato a preparare i documenti corretti. Procedura e moduli ufficiali su <a class="inline" href="https://www.interno.gov.it" target="_blank" rel="noopener">interno.gov.it</a>.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <h3 style="margin:0"><button class="faq-q" type="button" aria-expanded="false" id="faq-q7" aria-controls="faq-a7">Ho bisogno del codice fiscale: come lo richiedo?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+          <div class="faq-a" id="faq-a7" role="region" aria-labelledby="faq-q7"><div class="faq-a-inner">
+            <p>Il <b>codice fiscale</b> serve per quasi tutto: lavoro, sanità, contratti, banca. Lo rilascia gratuitamente l'<b>Agenzia delle Entrate</b>; i cittadini stranieri possono ottenerlo anche tramite lo Sportello Unico o la Questura al momento delle pratiche di soggiorno.</p>
+            <p>Per modalità, documenti e uffici consulta <a class="inline" href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">agenziaentrate.gov.it</a>.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <h3 style="margin:0"><button class="faq-q" type="button" aria-expanded="false" id="faq-q8" aria-controls="faq-a8">Posso chiedere l'assegno unico per i figli?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+          <div class="faq-a" id="faq-a8" role="region" aria-labelledby="faq-q8"><div class="faq-a-inner">
+            <p>L'<b>Assegno Unico e Universale</b> per i figli a carico spetta anche a molti cittadini stranieri che risiedono e lavorano in Italia, al rispetto dei requisiti previsti (tra cui titolo di soggiorno idoneo e residenza). L'importo dipende dall'<b>ISEE</b>.</p>
+            <p>La domanda si presenta all'INPS (online, tramite patronato o CAF). Requisiti aggiornati e simulatore su <a class="inline" href="https://www.inps.it" target="_blank" rel="noopener">inps.it</a>.</p>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ───────── 2) CITY GROUPS ───────── -->
+    <section class="c-section" id="citta">
+      <p class="eyebrow reveal"><span class="eyebrow-line"></span> Gruppi per città</p>
+      <h2 class="reveal" style="margin-top:.2rem">Trova la tua città</h2>
+      <p class="c-note reveal">Tocca la tua città per vedere una nota e i collegamenti utili. I gruppi e le mappe locali si stanno popolando: i servizi mostrati sono quelli già censiti sulla Mappa.</p>
+      <div class="city-chips reveal" role="group" aria-label="Scegli una città" id="city-chips">
+        <button class="city-chip" type="button" aria-pressed="false" data-city="milano"><span class="city-dot">📍</span> Milano</button>
+        <button class="city-chip" type="button" aria-pressed="false" data-city="roma"><span class="city-dot">📍</span> Roma</button>
+        <button class="city-chip" type="button" aria-pressed="false" data-city="torino"><span class="city-dot">📍</span> Torino</button>
+        <button class="city-chip" type="button" aria-pressed="false" data-city="napoli"><span class="city-dot">📍</span> Napoli</button>
+        <button class="city-chip" type="button" aria-pressed="false" data-city="brescia"><span class="city-dot">📍</span> Brescia</button>
+        <button class="city-chip" type="button" aria-pressed="false" data-city="palermo"><span class="city-dot">📍</span> Palermo</button>
+      </div>
+      <div class="city-panel" id="city-panel" role="region" aria-live="polite" tabindex="-1">
+        <h3 id="city-panel-title"></h3>
+        <p id="city-panel-text"></p>
+        <div class="cta-row">
+          <a href="mappa.html" class="btn-primary" id="city-map-link">Servizi in città</a>
+          <a href="percorso.html" class="btn-ghost">Chiedi al Consigliere AI</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── 3) EVENTS ───────── -->
+    <section class="c-section" id="eventi">
+      <p class="eyebrow reveal"><span class="eyebrow-line"></span> Eventi e cultura</p>
+      <h2 class="reveal" style="margin-top:.2rem">La nostra cultura, qui<span class="demo-tag">Anteprima</span></h2>
+      <p class="c-note reveal">Gli appuntamenti che la comunità cingalese e tamil vive ogni anno in Italia. Le <b>date precise e i luoghi</b> non sono ancora pubblicati: questa è un'anteprima. Tocca un evento per i dettagli e segna <i>"Mi interessa"</i> (salvato solo su questo dispositivo) per aiutarci a capire l'interesse.</p>
+      <div class="ev-list reveal" id="ev-list">
+
+        <div class="ev-card" data-ev="capodanno">
+          <button class="ev-head" type="button" aria-expanded="false" aria-controls="ev-body-capodanno">
+            <span class="ev-emoji" aria-hidden="true">🎊</span>
+            <span class="ev-titles"><h3>Capodanno singalese e tamil</h3><span class="ev-when">Ogni anno · metà aprile</span></span>
+            <span class="ev-chev" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="ev-body" id="ev-body-capodanno"><div class="ev-body-inner">
+            <p>L'<b>Aluth Avurudu</b> (capodanno cingalese) e il <b>Puthandu</b> (capodanno tamil) si celebrano intorno alla metà di aprile con cibo tradizionale, giochi e visite tra famiglie. In Italia le comunità organizzano feste nelle città con più presenze.</p>
+            <div class="ev-actions">
+              <button class="ev-rsvp" type="button" aria-pressed="false" data-rsvp="capodanno"><span class="heart" aria-hidden="true">♡</span> <span class="ev-rsvp-label">Mi interessa</span></button>
+              <span class="ev-count" data-count="capodanno"><b>0</b> interessati</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="ev-card" data-ev="vesak">
+          <button class="ev-head" type="button" aria-expanded="false" aria-controls="ev-body-vesak">
+            <span class="ev-emoji" aria-hidden="true">🪔</span>
+            <span class="ev-titles"><h3>Vesak — luna piena di maggio</h3><span class="ev-when">Ogni anno · maggio (plenilunio)</span></span>
+            <span class="ev-chev" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="ev-body" id="ev-body-vesak"><div class="ev-body-inner">
+            <p>Il <b>Vesak</b> ricorda nascita, illuminazione e morte del Buddha. È vissuto con preghiere nei templi, lanterne (<i>vesak kûdu</i>), luci e gesti di generosità. In Italia viene celebrato nei centri e templi buddhisti frequentati dalla comunità.</p>
+            <div class="ev-actions">
+              <button class="ev-rsvp" type="button" aria-pressed="false" data-rsvp="vesak"><span class="heart" aria-hidden="true">♡</span> <span class="ev-rsvp-label">Mi interessa</span></button>
+              <span class="ev-count" data-count="vesak"><b>0</b> interessati</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="ev-card" data-ev="religiose">
+          <button class="ev-head" type="button" aria-expanded="false" aria-controls="ev-body-religiose">
+            <span class="ev-emoji" aria-hidden="true">🛐</span>
+            <span class="ev-titles"><h3>Festività religiose e luoghi di culto</h3><span class="ev-when">Durante tutto l'anno</span></span>
+            <span class="ev-chev" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="ev-body" id="ev-body-religiose"><div class="ev-body-inner">
+            <p>La comunità srilankese è plurale: buddhista, indù, cattolica e musulmana. Lungo l'anno ci sono celebrazioni nei templi, nelle chiese e nei centri culturali. Trovi i luoghi di culto già censiti sulla <a class="inline" href="mappa.html">Mappa dei servizi</a>.</p>
+            <div class="ev-actions">
+              <button class="ev-rsvp" type="button" aria-pressed="false" data-rsvp="religiose"><span class="heart" aria-hidden="true">♡</span> <span class="ev-rsvp-label">Mi interessa</span></button>
+              <span class="ev-count" data-count="religiose"><b>0</b> interessati</span>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="ev-card" data-ev="meetup">
+          <button class="ev-head" type="button" aria-expanded="false" aria-controls="ev-body-meetup">
+            <span class="ev-emoji" aria-hidden="true">🤝</span>
+            <span class="ev-titles"><h3>Incontri e mutuo aiuto della community</h3><span class="ev-when">In programmazione</span></span>
+            <span class="ev-chev" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="ev-body" id="ev-body-meetup"><div class="ev-body-inner">
+            <p>Incontri pratici tra chi è appena arrivato e chi è qui da anni: aiuto con documenti, lavoro, scuola e lingua. Vogliamo organizzarli città per città. Se vuoi proporne uno o dare una mano, scrivici.</p>
+            <div class="ev-actions">
+              <button class="ev-rsvp" type="button" aria-pressed="false" data-rsvp="meetup"><span class="heart" aria-hidden="true">♡</span> <span class="ev-rsvp-label">Mi interessa</span></button>
+              <span class="ev-count" data-count="meetup"><b>0</b> interessati</span>
+            </div>
+          </div></div>
+        </div>
+
+      </div>
+      <div class="cta-row reveal">
+        <a href="contatti.html" class="btn-ghost">Proponi un evento</a>
+      </div>
+    </section>
+
+    <!-- ───────── 4) ASK ───────── -->
+    <section class="c-section" id="chiedi">
+      <p class="eyebrow reveal"><span class="eyebrow-line"></span> Fai una domanda</p>
+      <h2 class="reveal" style="margin-top:.2rem">Hai un dubbio? Chiedi ora.</h2>
+      <p class="c-note reveal">Il <b>Consigliere AI</b> risponde in italiano, inglese e singalese, 24 ore su 24. Scrivi la tua domanda qui sotto: ti portiamo direttamente alla chat con la domanda già pronta.</p>
+      <div class="ask-box reveal">
+        <form class="form" id="ask-form" action="percorso.html" method="get">
+          <div>
+            <label for="ask-input">La tua domanda</label>
+            <textarea id="ask-input" name="q" placeholder="Es. Come rinnovo il permesso di soggiorno per lavoro?"></textarea>
+          </div>
+          <div class="cta-row">
+            <button type="submit" class="btn-primary">Chiedi al Consigliere AI</button>
+            <a href="percorso.html" class="btn-ghost">Apri la chat</a>
+          </div>
+        </form>
+        <p class="ask-hint">Risposte generate dall'AI a scopo informativo: per le pratiche ufficiali verifica sempre con un patronato o sul sito istituzionale.</p>
+      </div>
+    </section>
+
   </div>
 </main>
 
 <div id="site-footer"></div>
 <script src="eih.js"></script>
+<script>
+/* ───────── Community page interactions (runs after eih.js) ───────── */
+(function(){
+  "use strict";
+  var reduce = false;
+  try{ reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches; }catch(e){}
+
+  /* helper: open/close a max-height panel */
+  function setPanel(panel, open){
+    if(!panel) return;
+    if(open){
+      panel.style.maxHeight = reduce ? 'none' : (panel.scrollHeight + 'px');
+    }else{
+      if(reduce){ panel.style.maxHeight = '0px'; return; }
+      // from current height to 0 for a smooth collapse
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+      // force reflow then collapse
+      void panel.offsetHeight;
+      panel.style.maxHeight = '0px';
+    }
+  }
+  // keep an open panel sized correctly after content/viewport changes
+  function refreshOpen(panel){
+    if(panel && panel.style.maxHeight && panel.style.maxHeight !== '0px' && !reduce){
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+  }
+
+  /* ── 1) FAQ accordion ── */
+  var faqBtns = Array.prototype.slice.call(document.querySelectorAll('.faq-q'));
+  faqBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var item = btn.closest('.faq-item');
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      var willOpen = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      if(item) item.classList.toggle('open', willOpen);
+      setPanel(panel, willOpen);
+    });
+  });
+  // after CSS transition, let an open FAQ flex to auto so nested reflow stays correct
+  document.querySelectorAll('.faq-a').forEach(function(p){
+    p.addEventListener('transitionend', function(e){
+      if(e.propertyName !== 'max-height') return;
+      var btnId = p.getAttribute('aria-labelledby');
+      var btn = btnId ? document.getElementById(btnId) : null;
+      if(btn && btn.getAttribute('aria-expanded') === 'true' && !reduce){
+        p.style.maxHeight = 'none';
+      }
+    });
+  });
+
+  /* ── 2) City groups (single-select) ── */
+  var CITY = {
+    milano:  { name:'Milano',  text:'Milano e la Lombardia ospitano una delle comunità srilankesi più grandi d’Italia, con negozi, ristoranti e luoghi di culto. Sportelli, patronati e servizi della zona li trovi sulla Mappa; verifica sempre orari e indirizzi prima di andare.' },
+    roma:    { name:'Roma',    text:'A Roma vive una comunità storica e ben radicata, con realtà associative attive. Per uffici, patronati e luoghi utili nella Capitale consulta la Mappa dei servizi e controlla i contatti aggiornati.' },
+    torino:  { name:'Torino',  text:'Torino e il Piemonte hanno una presenza consolidata, soprattutto nei servizi e nell’assistenza. Sulla Mappa trovi gli sportelli censiti in zona; verifica i dettagli prima di recarti.' },
+    napoli:  { name:'Napoli',  text:'A Napoli e in Campania la comunità è attiva da tempo, con reti di mutuo aiuto tra famiglie. Cerca patronati e servizi locali sulla Mappa e conferma sempre orari e requisiti.' },
+    brescia: { name:'Brescia', text:'Brescia e la sua provincia contano una forte presenza srilankese legata al lavoro nell’industria e nei servizi. Gli sportelli utili della zona sono sulla Mappa; controlla gli aggiornamenti.' },
+    palermo: { name:'Palermo', text:'A Palermo e in Sicilia la comunità è presente da molti anni. Per servizi, patronati e punti di riferimento locali consulta la Mappa e verifica i contatti aggiornati.' }
+  };
+  var cityChips = Array.prototype.slice.call(document.querySelectorAll('.city-chip'));
+  var cityPanel = document.getElementById('city-panel');
+  var cityTitle = document.getElementById('city-panel-title');
+  var cityText  = document.getElementById('city-panel-text');
+  var cityMap   = document.getElementById('city-map-link');
+  var activeCity = null;
+  cityChips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      var key = chip.getAttribute('data-city');
+      if(activeCity === key){
+        // toggle off
+        chip.setAttribute('aria-pressed','false');
+        cityPanel.classList.remove('show');
+        activeCity = null;
+        return;
+      }
+      cityChips.forEach(function(c){ c.setAttribute('aria-pressed','false'); });
+      chip.setAttribute('aria-pressed','true');
+      activeCity = key;
+      var data = CITY[key];
+      if(cityTitle) cityTitle.textContent = 'Comunità a ' + data.name;
+      if(cityText)  cityText.textContent  = data.text;
+      if(cityMap)   cityMap.setAttribute('href', 'mappa.html#' + key);
+      cityPanel.classList.add('show');
+      try{ cityPanel.focus({preventScroll:true}); }catch(err){ cityPanel.focus(); }
+    });
+  });
+
+  /* ── 3) Events: expand + RSVP persisted in localStorage ── */
+  var RSVP_KEY = 'eih-community-rsvp';
+  var BASE = { capodanno:42, vesak:31, religiose:18, meetup:9 }; // seed numbers shown alongside the demo
+  function loadRsvp(){
+    try{ return JSON.parse(localStorage.getItem(RSVP_KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function saveRsvp(obj){
+    try{ localStorage.setItem(RSVP_KEY, JSON.stringify(obj)); }catch(e){}
+  }
+  var rsvpState = loadRsvp();
+
+  // expand/collapse events
+  Array.prototype.slice.call(document.querySelectorAll('.ev-head')).forEach(function(head){
+    head.addEventListener('click', function(){
+      var card = head.closest('.ev-card');
+      var body = document.getElementById(head.getAttribute('aria-controls'));
+      var willOpen = head.getAttribute('aria-expanded') !== 'true';
+      head.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      if(card) card.classList.toggle('open', willOpen);
+      setPanel(body, willOpen);
+    });
+  });
+  document.querySelectorAll('.ev-body').forEach(function(p){
+    p.addEventListener('transitionend', function(e){
+      if(e.propertyName !== 'max-height') return;
+      var card = p.closest('.ev-card');
+      var head = card ? card.querySelector('.ev-head') : null;
+      if(head && head.getAttribute('aria-expanded') === 'true' && !reduce){
+        p.style.maxHeight = 'none';
+      }
+    });
+  });
+
+  function renderCount(key){
+    var on = !!rsvpState[key];
+    var n = (BASE[key] || 0) + (on ? 1 : 0);
+    var c = document.querySelector('.ev-count[data-count="'+key+'"]');
+    if(c) c.innerHTML = '<b>'+n+'</b> interessati';
+    var btn = document.querySelector('.ev-rsvp[data-rsvp="'+key+'"]');
+    if(btn){
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      var heart = btn.querySelector('.heart');
+      var label = btn.querySelector('.ev-rsvp-label');
+      if(heart) heart.textContent = on ? '♥' : '♡';
+      if(label) label.textContent = on ? 'Ti interessa' : 'Mi interessa';
+    }
+  }
+  // init counts + wire RSVP buttons
+  Object.keys(BASE).forEach(renderCount);
+  Array.prototype.slice.call(document.querySelectorAll('.ev-rsvp')).forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var key = btn.getAttribute('data-rsvp');
+      if(rsvpState[key]) delete rsvpState[key]; else rsvpState[key] = true;
+      saveRsvp(rsvpState);
+      renderCount(key);
+      // an open card may change height when the label width shifts
+      var card = btn.closest('.ev-card');
+      var body = card ? card.querySelector('.ev-body') : null;
+      refreshOpen(body);
+    });
+  });
+
+  /* ── 4) Ask box → percorso.html with the question in the hash ── */
+  var askForm = document.getElementById('ask-form');
+  var askInput = document.getElementById('ask-input');
+  if(askForm){
+    askForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var q = (askInput && askInput.value ? askInput.value : '').trim();
+      var url = 'percorso.html' + (q ? ('#q=' + encodeURIComponent(q)) : '');
+      // mirror eih.js page-transition feel; eih's own handler won't see this programmatic nav
+      var wipe = document.getElementById('wipe');
+      if(wipe && !reduce){
+        wipe.classList.add('cover');
+        setTimeout(function(){ location.href = url; }, 470);
+      }else{
+        location.href = url;
+      }
+    });
+  }
+
+  /* keep any open panels correctly sized on resize */
+  var rT;
+  window.addEventListener('resize', function(){
+    clearTimeout(rT);
+    rT = setTimeout(function(){
+      document.querySelectorAll('.faq-item.open .faq-a, .ev-card.open .ev-body').forEach(refreshOpen);
+    }, 120);
+  });
+})();
+</script>
 </body>
 </html>
