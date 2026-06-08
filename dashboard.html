@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>La mia Dashboard — Easy Italia Hub</title>
+<meta name="description" content="La tua dashboard personale: un calendario per le scadenze importanti (permesso di soggiorno, appuntamenti, rinnovi) con promemoria nel browser."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/dashboard"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+</head>
+<body data-page="dashboard">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <style>
+    /* ── scoped to the dashboard page — calendar + scadenze, built on eih.css tokens ── */
+    [data-page="dashboard"] .dash-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--sp-3);align-items:start;margin-top:var(--sp-3)}
+    @media(max-width:880px){[data-page="dashboard"] .dash-grid{grid-template-columns:1fr}}
+
+    [data-page="dashboard"] .panel{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem}
+    [data-page="dashboard"] .panel-head{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin-bottom:1rem}
+    [data-page="dashboard"] .panel-head h2{margin:0;font-size:var(--text-xl)}
+    [data-page="dashboard"] .panel-head .panel-sub{margin:.15rem 0 0;font-size:var(--text-xs);color:var(--fg-muted);font-weight:400}
+
+    /* register prompt */
+    [data-page="dashboard"] .reg-prompt{display:flex;align-items:flex-start;gap:.6rem;background:var(--green-dim);border:1px solid rgba(31,157,85,.28);border-radius:var(--radius-sm);padding:.8rem 1rem;font-size:var(--text-sm);color:var(--ink);margin-bottom:var(--sp-3);line-height:1.6}
+    [data-page="dashboard"] .reg-prompt .reg-ic{flex:none;font-size:1.1rem;line-height:1.4}
+    [data-page="dashboard"] .reg-prompt a.inline{font-weight:600}
+
+    /* calendar */
+    [data-page="dashboard"] .cal-nav{display:flex;align-items:center;gap:.4rem}
+    [data-page="dashboard"] .cal-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-sm);border:1px solid var(--border-bright);background:var(--surface);color:var(--ink);cursor:pointer;font-family:inherit;font-size:1.1rem;line-height:1;transition:background var(--dur-micro),transform var(--dur-std) var(--ease-spring)}
+    [data-page="dashboard"] .cal-btn:hover{background:var(--surface-hover);transform:translateY(-1px)}
+    [data-page="dashboard"] .cal-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+    [data-page="dashboard"] .cal-title{font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:var(--text-lg);color:var(--ink);min-width:9.5rem;text-align:center;text-transform:capitalize}
+    [data-page="dashboard"] .cal-today-btn{padding:.45rem .9rem;border-radius:var(--radius-full);border:1px solid var(--border-bright);background:var(--surface);color:var(--ink);cursor:pointer;font-family:inherit;font-size:var(--text-xs);font-weight:500;min-height:38px;transition:background var(--dur-micro)}
+    [data-page="dashboard"] .cal-today-btn:hover{background:var(--surface-hover)}
+
+    [data-page="dashboard"] .cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:.3rem;margin-bottom:.3rem}
+    [data-page="dashboard"] .cal-weekdays span{text-align:center;font-size:.66rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-muted);padding:.2rem 0}
+    [data-page="dashboard"] .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.3rem}
+    [data-page="dashboard"] .cal-cell{position:relative;aspect-ratio:1/1;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--fg);cursor:pointer;font-family:inherit;font-size:var(--text-sm);font-weight:500;display:flex;align-items:flex-start;justify-content:flex-start;padding:.4rem .45rem;transition:background var(--dur-micro),border-color var(--dur-micro),transform var(--dur-std) var(--ease-spring)}
+    [data-page="dashboard"] .cal-cell:hover{background:var(--surface-hover);border-color:var(--border-bright);transform:translateY(-1px)}
+    [data-page="dashboard"] .cal-cell:focus-visible{outline:2px solid var(--gold);outline-offset:2px;z-index:2}
+    [data-page="dashboard"] .cal-cell.empty{visibility:hidden;cursor:default;pointer-events:none}
+    [data-page="dashboard"] .cal-cell.today{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+    [data-page="dashboard"] .cal-cell.selected{background:var(--gold-dim);border-color:var(--gold)}
+    [data-page="dashboard"] .cal-cell.has-dl{font-weight:700}
+    [data-page="dashboard"] .cal-cell.soon{background:rgba(235,89,57,.10);border-color:rgba(235,89,57,.45)}
+    [data-page="dashboard"] .cal-cell .dot-wrap{position:absolute;left:0;right:0;bottom:.32rem;display:flex;gap:3px;justify-content:center;pointer-events:none}
+    [data-page="dashboard"] .cal-cell .dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+    [data-page="dashboard"] .cal-cell.soon .dot{background:var(--coral)}
+    [data-page="dashboard"] .cal-cell .cnt{position:absolute;top:.3rem;right:.35rem;font-size:.58rem;font-weight:700;color:#fff;background:var(--coral);border-radius:99px;min-width:15px;height:15px;display:inline-flex;align-items:center;justify-content:center;padding:0 3px;line-height:1}
+
+    [data-page="dashboard"] .cal-legend{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:.9rem;font-size:var(--text-xs);color:var(--fg-muted)}
+    [data-page="dashboard"] .cal-legend .lg{display:inline-flex;align-items:center;gap:.35rem}
+    [data-page="dashboard"] .cal-legend .sw{width:12px;height:12px;border-radius:4px;border:1px solid var(--border-bright)}
+    [data-page="dashboard"] .cal-legend .sw.dl{background:var(--gold-dim);border-color:var(--gold)}
+    [data-page="dashboard"] .cal-legend .sw.soon{background:rgba(235,89,57,.12);border-color:rgba(235,89,57,.45)}
+    [data-page="dashboard"] .cal-legend .sw.today{background:transparent;border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+
+    /* add form (inline under calendar) */
+    [data-page="dashboard"] .add-form{margin-top:1rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);padding:1rem;display:none}
+    [data-page="dashboard"] .add-form.open{display:block}
+    [data-page="dashboard"] .add-form .af-head{font-family:'Clash Grotesk',sans-serif;font-weight:600;color:var(--ink);font-size:var(--text-base);margin-bottom:.7rem;display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+    [data-page="dashboard"] .add-form label{display:block;font-size:var(--text-xs);color:var(--fg-secondary);font-weight:500;margin:.6rem 0 .3rem}
+    [data-page="dashboard"] .add-form input,[data-page="dashboard"] .add-form textarea{width:100%;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.65rem .8rem;font-size:var(--text-base);color:var(--ink);font-family:inherit;outline:none;min-height:44px}
+    [data-page="dashboard"] .add-form input:focus,[data-page="dashboard"] .add-form textarea:focus{border-color:rgba(125,112,88,.55)}
+    [data-page="dashboard"] .add-form textarea{min-height:64px;resize:vertical}
+    [data-page="dashboard"] .af-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.9rem}
+    [data-page="dashboard"] .af-cancel{background:none;border:none;color:var(--fg-muted);cursor:pointer;font-family:inherit;font-size:var(--text-sm);padding:.4rem;min-height:38px}
+    [data-page="dashboard"] .af-cancel:hover{color:var(--ink)}
+
+    /* quick-add chips */
+    [data-page="dashboard"] .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
+    [data-page="dashboard"] .chip{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem .85rem;border-radius:var(--radius-full);border:1px dashed var(--border-bright);background:var(--surface);color:var(--fg-secondary);cursor:pointer;font-family:inherit;font-size:var(--text-xs);font-weight:500;min-height:36px;transition:background var(--dur-micro),color var(--dur-micro),border-color var(--dur-micro)}
+    [data-page="dashboard"] .chip:hover{background:var(--gold-dim);color:var(--ink);border-color:var(--gold);border-style:solid}
+    [data-page="dashboard"] .chip .chip-plus{font-weight:700;color:var(--gold)}
+    [data-page="dashboard"] .chips-label{font-size:var(--text-xs);color:var(--fg-muted);margin-top:1.1rem;font-weight:500;letter-spacing:.04em}
+
+    /* upcoming list */
+    [data-page="dashboard"] .dl-list{list-style:none;margin:0;display:flex;flex-direction:column;gap:.6rem}
+    [data-page="dashboard"] .dl-item{display:flex;align-items:flex-start;gap:.8rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);padding:.8rem .9rem}
+    [data-page="dashboard"] .dl-item.soon{border-color:rgba(235,89,57,.45);background:rgba(235,89,57,.07)}
+    [data-page="dashboard"] .dl-item.past{opacity:.62}
+    [data-page="dashboard"] .dl-date{flex:none;width:3rem;text-align:center;border-radius:var(--radius-sm);background:var(--bg-elevated);border:1px solid var(--border);padding:.3rem 0;line-height:1.1}
+    [data-page="dashboard"] .dl-date .d{font-family:'Clash Grotesk',sans-serif;font-weight:700;font-size:1.15rem;color:var(--ink);display:block}
+    [data-page="dashboard"] .dl-date .m{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted)}
+    [data-page="dashboard"] .dl-body{flex:1;min-width:0}
+    [data-page="dashboard"] .dl-title{font-weight:600;color:var(--ink);font-size:var(--text-base);margin:0;word-break:break-word}
+    [data-page="dashboard"] .dl-note{font-size:var(--text-sm);color:var(--fg-secondary);margin:.2rem 0 0;line-height:1.5;word-break:break-word}
+    [data-page="dashboard"] .dl-when{display:inline-block;margin-top:.35rem;font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid rgba(124,112,89,.25);padding:.18rem .55rem;border-radius:99px}
+    [data-page="dashboard"] .dl-item.soon .dl-when{color:var(--coral);background:rgba(235,89,57,.12);border-color:rgba(235,89,57,.3)}
+    [data-page="dashboard"] .dl-item.past .dl-when{color:var(--fg-muted);background:var(--surface);border-color:var(--border)}
+    [data-page="dashboard"] .dl-del{flex:none;background:none;border:none;color:var(--fg-muted);cursor:pointer;font-family:inherit;font-size:1.1rem;line-height:1;width:34px;height:34px;border-radius:var(--radius-sm);display:inline-flex;align-items:center;justify-content:center;transition:background var(--dur-micro),color var(--dur-micro)}
+    [data-page="dashboard"] .dl-del:hover{background:rgba(235,89,57,.12);color:var(--coral)}
+    [data-page="dashboard"] .dl-del:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+
+    [data-page="dashboard"] .dl-empty{text-align:center;color:var(--fg-muted);font-size:var(--text-sm);padding:1.4rem .8rem;border:1px dashed var(--border-bright);border-radius:var(--radius-sm);line-height:1.6}
+
+    /* reminders bar */
+    [data-page="dashboard"] .remind-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem;margin-top:1rem;padding:.85rem 1rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface)}
+    [data-page="dashboard"] .remind-bar p{margin:0;font-size:var(--text-sm);color:var(--fg-secondary);flex:1;min-width:200px;line-height:1.5}
+    [data-page="dashboard"] .remind-status{font-size:var(--text-xs);font-weight:600;letter-spacing:.04em}
+    [data-page="dashboard"] .remind-status.ok{color:var(--green)}
+    [data-page="dashboard"] .remind-status.off{color:var(--fg-muted)}
+    [data-page="dashboard"] .remind-status.denied{color:var(--coral)}
+
+    /* quick links */
+    [data-page="dashboard"] .ql-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem;margin-top:var(--sp-3)}
+    [data-page="dashboard"] .ql{display:flex;align-items:center;gap:.7rem;padding:1rem 1.1rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);text-decoration:none;color:var(--ink);transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std)}
+    [data-page="dashboard"] .ql:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(20,30,48,.1)}
+    [data-page="dashboard"] .ql .ql-ic{font-size:1.35rem;line-height:1}
+    [data-page="dashboard"] .ql .ql-tx{display:flex;flex-direction:column;gap:.1rem}
+    [data-page="dashboard"] .ql .ql-tt{font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:var(--text-base)}
+    [data-page="dashboard"] .ql .ql-ds{font-size:var(--text-xs);color:var(--fg-muted)}
+
+    /* live region for screen readers */
+    [data-page="dashboard"] .sr-live{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+
+  <div class="page page-wide">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Dashboard</p>
+    <h1 class="reveal">La mia <em>Dashboard.</em></h1>
+    <p class="lead reveal">Il tuo spazio personale per non perdere mai una <strong>scadenza</strong>: permesso di soggiorno, appuntamenti in Questura, rinnovi e iscrizioni. Segnali le date sul calendario e ricevi un promemoria quando si avvicinano.</p>
+
+    <!-- register prompt (shown only if not registered) -->
+    <div id="reg-prompt" class="reg-prompt reveal" hidden>
+      <span class="reg-ic" aria-hidden="true">👋</span>
+      <span>Stai usando la dashboard in modalità demo: le tue scadenze restano salvate <strong>su questo dispositivo</strong>. <a class="inline" href="percorso.html">Registrati gratis dal tuo Percorso</a> per ritrovarle ovunque quando arriveranno gli account reali.</span>
+    </div>
+
+    <!-- honest banner -->
+    <div class="draft-banner reveal">📧 <span>Le notifiche via email arriveranno con gli account reali (in arrivo). Per ora i promemoria restano nel tuo browser, su questo dispositivo.</span></div>
+
+    <div class="dash-grid">
+      <!-- ── CALENDAR PANEL ── -->
+      <section class="panel reveal" aria-labelledby="cal-h">
+        <div class="panel-head">
+          <div>
+            <h2 id="cal-h">Calendario scadenze</h2>
+            <p class="panel-sub">Clicca un giorno per aggiungere una scadenza.</p>
+          </div>
+          <div class="cal-nav">
+            <button type="button" class="cal-today-btn" id="cal-today" aria-label="Vai al mese corrente">Oggi</button>
+            <button type="button" class="cal-btn" id="cal-prev" aria-label="Mese precedente">‹</button>
+            <button type="button" class="cal-btn" id="cal-next" aria-label="Mese successivo">›</button>
+          </div>
+        </div>
+
+        <div class="cal-title" id="cal-title" aria-live="polite">—</div>
+        <div class="cal-weekdays" aria-hidden="true">
+          <span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span>
+        </div>
+        <div class="cal-grid" id="cal-grid" role="grid" aria-label="Giorni del mese"></div>
+
+        <div class="cal-legend" aria-hidden="true">
+          <span class="lg"><span class="sw today"></span> Oggi</span>
+          <span class="lg"><span class="sw dl"></span> Scadenza</span>
+          <span class="lg"><span class="sw soon"></span> Entro 7 giorni</span>
+        </div>
+
+        <!-- inline add form -->
+        <form class="add-form" id="add-form" aria-label="Aggiungi scadenza">
+          <div class="af-head"><span id="af-title">Nuova scadenza</span></div>
+          <label for="af-input-title">Titolo</label>
+          <input type="text" id="af-input-title" name="title" maxlength="80" autocomplete="off" required placeholder="Es. Scadenza permesso di soggiorno"/>
+          <label for="af-input-note">Nota <span class="muted">(facoltativa)</span></label>
+          <textarea id="af-input-note" name="note" maxlength="240" placeholder="Es. Avviare il rinnovo ~60 giorni prima, portare marche da bollo."></textarea>
+          <div class="af-actions">
+            <button type="submit" class="btn-primary">Salva scadenza</button>
+            <button type="button" class="af-cancel" id="af-cancel">Annulla</button>
+          </div>
+        </form>
+
+        <!-- quick-add chips -->
+        <p class="chips-label">Aggiunte rapide <span class="muted">(esempi — usano la data selezionata, o oggi)</span></p>
+        <div class="chips" id="chips" role="group" aria-label="Suggerimenti scadenze">
+          <button type="button" class="chip" data-title="Permesso di soggiorno"><span class="chip-plus" aria-hidden="true">+</span> Permesso di soggiorno</button>
+          <button type="button" class="chip" data-title="Appuntamento Questura"><span class="chip-plus" aria-hidden="true">+</span> Appuntamento Questura</button>
+          <button type="button" class="chip" data-title="Rinnovo NASpI"><span class="chip-plus" aria-hidden="true">+</span> Rinnovo NASpI</button>
+          <button type="button" class="chip" data-title="Iscrizione corso CPIA"><span class="chip-plus" aria-hidden="true">+</span> Iscrizione corso CPIA</button>
+        </div>
+      </section>
+
+      <!-- ── UPCOMING / REMINDERS PANEL ── -->
+      <section class="panel reveal" aria-labelledby="up-h">
+        <div class="panel-head">
+          <div>
+            <h2 id="up-h">Prossime scadenze</h2>
+            <p class="panel-sub">Ordinate per data, con i giorni mancanti.</p>
+          </div>
+        </div>
+
+        <ul class="dl-list" id="dl-list" aria-live="polite"></ul>
+
+        <!-- reminders -->
+        <div class="remind-bar">
+          <p id="remind-text">Attiva i promemoria del browser per ricevere un avviso quando una scadenza è entro 7 giorni.</p>
+          <button type="button" class="btn-ghost" id="remind-btn">Attiva promemoria nel browser</button>
+        </div>
+        <p class="muted" id="remind-state" style="margin:.6rem 0 0"><span class="remind-status off" id="remind-status">Promemoria non attivi</span></p>
+      </section>
+    </div>
+
+    <!-- quick links -->
+    <h2 class="reveal" style="margin-top:var(--sp-5)">Continua il tuo percorso</h2>
+    <div class="ql-grid reveal">
+      <a class="ql" href="guide.html"><span class="ql-ic" aria-hidden="true">📚</span><span class="ql-tx"><span class="ql-tt">Guide</span><span class="ql-ds">Documenti passo-passo</span></span></a>
+      <a class="ql" href="percorso.html"><span class="ql-ic" aria-hidden="true">🧭</span><span class="ql-tx"><span class="ql-tt">Il Mio Percorso</span><span class="ql-ds">Timeline e simulatori</span></span></a>
+      <a class="ql" href="opportunita.html"><span class="ql-ic" aria-hidden="true">✨</span><span class="ql-tx"><span class="ql-tt">Opportunità</span><span class="ql-ds">Voli, corsi, lavoro e bandi</span></span></a>
+      <a class="ql" href="mappa.html"><span class="ql-ic" aria-hidden="true">📍</span><span class="ql-tx"><span class="ql-tt">Mappa servizi</span><span class="ql-ds">Patronati, CAF e sportelli</span></span></a>
+      <a class="ql" href="community.html"><span class="ql-ic" aria-hidden="true">💬</span><span class="ql-tx"><span class="ql-tt">Community</span><span class="ql-ds">Chiedi e condividi</span></span></a>
+      <a class="ql" href="contatti.html"><span class="ql-ic" aria-hidden="true">✉️</span><span class="ql-tx"><span class="ql-tt">Contatti</span><span class="ql-ds">Suggerimenti e aiuto</span></span></a>
+    </div>
+
+    <div class="cta-row reveal">
+      <a href="percorso.html" class="btn-primary">Apri Il Mio Percorso</a>
+      <a href="guide.html" class="btn-ghost">Sfoglia le guide</a>
+    </div>
+
+    <p class="sr-live" id="sr-live" aria-live="polite"></p>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   Dashboard — calendario scadenze + promemoria (client-side).
+   Nessun backend, nessuna chiamata di rete. Tutto in localStorage.
+   Store key: 'eih-deadlines' → [{id, date:'YYYY-MM-DD', title, note}]
+   ═══════════════════════════════════════════════════════════ */
+(function(){
+  "use strict";
+
+  var STORE_KEY = 'eih-deadlines';
+  var MONTHS = ['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+  var MONTHS_SHORT = ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+
+  // ── helpers ──────────────────────────────────────────────
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  function ymd(d){ return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()); }
+  function todayStart(){ var t = new Date(); t.setHours(0,0,0,0); return t; }
+  function parseYmd(s){
+    // local-midnight parse (avoid timezone shift from new Date('YYYY-MM-DD'))
+    var p = String(s).split('-');
+    return new Date(+p[0], (+p[1]||1)-1, +p[2]||1, 0, 0, 0, 0);
+  }
+  function daysBetween(fromDate, toDate){
+    var MS = 86400000;
+    return Math.round((toDate.getTime() - fromDate.getTime()) / MS);
+  }
+  function escapeHTML(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+  function uid(){ return 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+  // ── store ────────────────────────────────────────────────
+  function load(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      if(!raw) return [];
+      var arr = JSON.parse(raw);
+      if(!Array.isArray(arr)) return [];
+      // keep only well-formed records
+      return arr.filter(function(x){
+        return x && typeof x === 'object' && typeof x.date === 'string' &&
+               /^\d{4}-\d{2}-\d{2}$/.test(x.date) && typeof x.title === 'string';
+      }).map(function(x){
+        return { id: x.id || uid(), date: x.date, title: x.title, note: (x.note || '') };
+      });
+    }catch(e){ return []; }
+  }
+  function save(list){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(list)); }catch(e){}
+  }
+
+  var deadlines = load();
+
+  // ── DOM refs ─────────────────────────────────────────────
+  var elGrid    = document.getElementById('cal-grid');
+  var elTitle   = document.getElementById('cal-title');
+  var elPrev    = document.getElementById('cal-prev');
+  var elNext    = document.getElementById('cal-next');
+  var elToday   = document.getElementById('cal-today');
+  var elForm    = document.getElementById('add-form');
+  var elFormTtl = document.getElementById('af-title');
+  var elInTitle = document.getElementById('af-input-title');
+  var elInNote  = document.getElementById('af-input-note');
+  var elCancel  = document.getElementById('af-cancel');
+  var elList    = document.getElementById('dl-list');
+  var elChips   = document.getElementById('chips');
+  var elRegPmt  = document.getElementById('reg-prompt');
+  var elRemBtn  = document.getElementById('remind-btn');
+  var elRemSt   = document.getElementById('remind-status');
+  var elRemTxt  = document.getElementById('remind-text');
+  var elLive    = document.getElementById('sr-live');
+
+  if(!elGrid){ return; } // safety: page shell not present
+
+  var viewYear, viewMonth;     // currently shown month
+  var selectedDate = null;     // 'YYYY-MM-DD' chosen in calendar
+
+  function announce(msg){ if(elLive){ elLive.textContent = ''; elLive.textContent = msg; } }
+
+  function deadlinesOn(dateStr){
+    return deadlines.filter(function(d){ return d.date === dateStr; });
+  }
+
+  // ── registration prompt (demo gate) ──────────────────────
+  function checkRegistered(){
+    var registered = false;
+    try{ registered = !!localStorage.getItem('eih-registered'); }catch(e){}
+    if(elRegPmt){ elRegPmt.hidden = registered; }
+  }
+
+  // ── CALENDAR render ──────────────────────────────────────
+  function renderCalendar(){
+    elTitle.textContent = MONTHS[viewMonth] + ' ' + viewYear;
+    elGrid.innerHTML = '';
+
+    var first = new Date(viewYear, viewMonth, 1);
+    // JS getDay: 0=Sun..6=Sat → convert to Mon=0..Sun=6
+    var lead = (first.getDay() + 6) % 7;
+    var daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    var today = todayStart();
+    var todayStr = ymd(today);
+
+    // leading blanks
+    for(var b = 0; b < lead; b++){
+      var blank = document.createElement('div');
+      blank.className = 'cal-cell empty';
+      blank.setAttribute('aria-hidden', 'true');
+      elGrid.appendChild(blank);
+    }
+
+    for(var day = 1; day <= daysInMonth; day++){
+      var dStr = viewYear + '-' + pad(viewMonth+1) + '-' + pad(day);
+      var dls  = deadlinesOn(dStr);
+      var cellDate = new Date(viewYear, viewMonth, day, 0,0,0,0);
+      var diff = daysBetween(today, cellDate);
+      var isSoon = dls.length > 0 && diff >= 0 && diff <= 7;
+
+      var cell = document.createElement('button');
+      cell.type = 'button';
+      cell.className = 'cal-cell';
+      cell.setAttribute('role', 'gridcell');
+      cell.dataset.date = dStr;
+      cell.textContent = String(day);
+
+      if(dStr === todayStr) cell.classList.add('today');
+      if(dStr === selectedDate) cell.classList.add('selected');
+      if(dls.length){ cell.classList.add('has-dl'); }
+      if(isSoon){ cell.classList.add('soon'); }
+
+      // accessible label
+      var lbl = day + ' ' + MONTHS[viewMonth] + ' ' + viewYear;
+      if(dStr === todayStr) lbl += ', oggi';
+      if(dls.length){
+        lbl += ', ' + dls.length + (dls.length === 1 ? ' scadenza: ' : ' scadenze: ') +
+               dls.map(function(x){ return x.title; }).join(', ');
+        if(isSoon) lbl += ' (in arrivo)';
+      } else {
+        lbl += ', nessuna scadenza';
+      }
+      cell.setAttribute('aria-label', lbl);
+
+      if(dls.length){
+        if(dls.length > 1){
+          var cnt = document.createElement('span');
+          cnt.className = 'cnt';
+          cnt.textContent = dls.length > 9 ? '9+' : String(dls.length);
+          cnt.setAttribute('aria-hidden','true');
+          cell.appendChild(cnt);
+        }
+        var dw = document.createElement('span');
+        dw.className = 'dot-wrap';
+        dw.setAttribute('aria-hidden','true');
+        var dot = document.createElement('span');
+        dot.className = 'dot';
+        dw.appendChild(dot);
+        cell.appendChild(dw);
+      }
+
+      elGrid.appendChild(cell);
+    }
+  }
+
+  // ── ADD FORM ─────────────────────────────────────────────
+  function openForm(dateStr){
+    selectedDate = dateStr;
+    var d = parseYmd(dateStr);
+    elFormTtl.textContent = 'Nuova scadenza · ' + d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+    elForm.classList.add('open');
+    renderCalendar();
+    // focus title for keyboard users
+    try{ elInTitle.focus(); }catch(e){}
+    elForm.scrollIntoView({ block: 'nearest', behavior: (matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth') });
+  }
+  function closeForm(){
+    elForm.classList.remove('open');
+    elForm.reset();
+  }
+
+  function addDeadline(dateStr, title, note){
+    title = (title || '').trim();
+    if(!title) return false;
+    deadlines.push({ id: uid(), date: dateStr, title: title, note: (note || '').trim() });
+    save(deadlines);
+    renderAll();
+    var d = parseYmd(dateStr);
+    announce('Scadenza "' + title + '" aggiunta per il ' + d.getDate() + ' ' + MONTHS[d.getMonth()] + '.');
+    return true;
+  }
+
+  function removeDeadline(id){
+    var item = deadlines.filter(function(x){ return x.id === id; })[0];
+    deadlines = deadlines.filter(function(x){ return x.id !== id; });
+    save(deadlines);
+    renderAll();
+    announce((item ? 'Scadenza "' + item.title + '" eliminata.' : 'Scadenza eliminata.'));
+  }
+
+  // ── UPCOMING LIST ────────────────────────────────────────
+  function whenLabel(diff){
+    if(diff < 0) return 'Scaduta da ' + Math.abs(diff) + (Math.abs(diff) === 1 ? ' giorno' : ' giorni');
+    if(diff === 0) return 'Oggi';
+    if(diff === 1) return 'Domani';
+    return 'Tra ' + diff + ' giorni';
+  }
+
+  function renderList(){
+    elList.innerHTML = '';
+    if(!deadlines.length){
+      var li = document.createElement('li');
+      li.className = 'dl-empty';
+      li.innerHTML = 'Nessuna scadenza ancora. Clicca un giorno sul calendario, oppure usa le <strong>aggiunte rapide</strong> qui a sinistra per iniziare.';
+      elList.appendChild(li);
+      return;
+    }
+
+    var today = todayStart();
+    var sorted = deadlines.slice().sort(function(a, b){
+      return a.date < b.date ? -1 : (a.date > b.date ? 1 : 0);
+    });
+
+    sorted.forEach(function(d){
+      var dd   = parseYmd(d.date);
+      var diff = daysBetween(today, dd);
+      var isSoon = diff >= 0 && diff <= 7;
+      var isPast = diff < 0;
+
+      var li = document.createElement('li');
+      li.className = 'dl-item' + (isSoon ? ' soon' : '') + (isPast ? ' past' : '');
+
+      var dateBox = document.createElement('div');
+      dateBox.className = 'dl-date';
+      dateBox.setAttribute('aria-hidden','true');
+      dateBox.innerHTML = '<span class="d">' + dd.getDate() + '</span><span class="m">' + MONTHS_SHORT[dd.getMonth()] + '</span>';
+
+      var body = document.createElement('div');
+      body.className = 'dl-body';
+      var html = '<p class="dl-title">' + escapeHTML(d.title) + '</p>';
+      if(d.note) html += '<p class="dl-note">' + escapeHTML(d.note) + '</p>';
+      html += '<span class="dl-when">' + escapeHTML(whenLabel(diff)) + '</span>';
+      body.innerHTML = html;
+
+      var del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'dl-del';
+      del.setAttribute('aria-label', 'Elimina la scadenza "' + d.title + '" del ' + dd.getDate() + ' ' + MONTHS[dd.getMonth()]);
+      del.innerHTML = '<span aria-hidden="true">✕</span>';
+      del.addEventListener('click', function(){ removeDeadline(d.id); });
+
+      li.appendChild(dateBox);
+      li.appendChild(body);
+      li.appendChild(del);
+      elList.appendChild(li);
+    });
+  }
+
+  function renderAll(){
+    renderCalendar();
+    renderList();
+  }
+
+  // ── REMINDERS (Notification API) ─────────────────────────
+  function notifSupported(){ return ('Notification' in window); }
+
+  function reflectPermission(){
+    if(!notifSupported()){
+      elRemSt.textContent = 'Notifiche non supportate da questo browser';
+      elRemSt.className = 'remind-status denied';
+      elRemBtn.disabled = true;
+      elRemBtn.textContent = 'Non disponibile';
+      elRemTxt.textContent = 'Questo browser non supporta le notifiche. Le scadenze restano comunque visibili qui nella dashboard.';
+      return;
+    }
+    var p = Notification.permission;
+    if(p === 'granted'){
+      elRemSt.textContent = '✓ Promemoria attivi su questo dispositivo';
+      elRemSt.className = 'remind-status ok';
+      elRemBtn.textContent = 'Controlla scadenze vicine';
+    } else if(p === 'denied'){
+      elRemSt.textContent = 'Notifiche bloccate dal browser — sbloccale dalle impostazioni del sito';
+      elRemSt.className = 'remind-status denied';
+      elRemBtn.textContent = 'Attiva promemoria nel browser';
+    } else {
+      elRemSt.textContent = 'Promemoria non attivi';
+      elRemSt.className = 'remind-status off';
+      elRemBtn.textContent = 'Attiva promemoria nel browser';
+    }
+  }
+
+  function nearDeadlines(){
+    var today = todayStart();
+    return deadlines.filter(function(d){
+      var diff = daysBetween(today, parseYmd(d.date));
+      return diff >= 0 && diff <= 7;
+    }).sort(function(a,b){ return a.date < b.date ? -1 : 1; });
+  }
+
+  function showNearNotifications(){
+    if(!notifSupported() || Notification.permission !== 'granted') return;
+    var near = nearDeadlines();
+    if(!near.length){
+      announce('Nessuna scadenza nei prossimi 7 giorni.');
+      try{
+        new Notification('Easy Italia Hub — scadenze', {
+          body: 'Nessuna scadenza nei prossimi 7 giorni. Tutto tranquillo!',
+          lang: 'it'
+        });
+      }catch(e){}
+      return;
+    }
+    var today = todayStart();
+    // one summary notification + (gracefully) individual ones, capped
+    near.slice(0, 3).forEach(function(d){
+      var diff = daysBetween(today, parseYmd(d.date));
+      try{
+        new Notification('Scadenza: ' + d.title, {
+          body: whenLabel(diff) + (d.note ? ' — ' + d.note : ''),
+          lang: 'it',
+          tag: 'eih-dl-' + d.id
+        });
+      }catch(e){}
+    });
+    announce(near.length + (near.length === 1 ? ' scadenza' : ' scadenze') + ' nei prossimi 7 giorni.');
+  }
+
+  function requestReminders(){
+    if(!notifSupported()){ reflectPermission(); return; }
+    if(Notification.permission === 'granted'){ showNearNotifications(); return; }
+    if(Notification.permission === 'denied'){ reflectPermission(); return; }
+    try{
+      var p = Notification.requestPermission(function(result){
+        reflectPermission();
+        if(result === 'granted') showNearNotifications();
+      });
+      // some browsers return a Promise instead of using the callback
+      if(p && typeof p.then === 'function'){
+        p.then(function(result){
+          reflectPermission();
+          if(result === 'granted') showNearNotifications();
+        }).catch(function(){ reflectPermission(); });
+      }
+    }catch(e){ reflectPermission(); }
+  }
+
+  // ── EVENTS ───────────────────────────────────────────────
+  elGrid.addEventListener('click', function(e){
+    var cell = e.target.closest('.cal-cell');
+    if(!cell || cell.classList.contains('empty')) return;
+    openForm(cell.dataset.date);
+  });
+
+  elForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var ok = addDeadline(selectedDate || ymd(todayStart()), elInTitle.value, elInNote.value);
+    if(ok){ closeForm(); }
+    else { try{ elInTitle.focus(); }catch(err){} }
+  });
+
+  elCancel.addEventListener('click', function(){ closeForm(); });
+
+  // Esc closes the form
+  elForm.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ closeForm(); }
+  });
+
+  elPrev.addEventListener('click', function(){
+    viewMonth--; if(viewMonth < 0){ viewMonth = 11; viewYear--; }
+    renderCalendar();
+  });
+  elNext.addEventListener('click', function(){
+    viewMonth++; if(viewMonth > 11){ viewMonth = 0; viewYear++; }
+    renderCalendar();
+  });
+  elToday.addEventListener('click', function(){
+    var t = todayStart();
+    viewYear = t.getFullYear(); viewMonth = t.getMonth();
+    selectedDate = ymd(t);
+    renderCalendar();
+  });
+
+  // quick-add chips → open form on selected day (or today) with title prefilled
+  elChips.addEventListener('click', function(e){
+    var chip = e.target.closest('.chip');
+    if(!chip) return;
+    var dateStr = selectedDate || ymd(todayStart());
+    openForm(dateStr);
+    elInTitle.value = chip.dataset.title || '';
+    try{ elInNote.focus(); }catch(err){}
+  });
+
+  elRemBtn.addEventListener('click', requestReminders);
+
+  // ── INIT ─────────────────────────────────────────────────
+  var now = todayStart();
+  viewYear = now.getFullYear();
+  viewMonth = now.getMonth();
+
+  checkRegistered();
+  renderAll();
+  reflectPermission();
+
+  // if reminders already granted, surface near deadlines once on load (no spam)
+  if(notifSupported() && Notification.permission === 'granted'){
+    setTimeout(showNearNotifications, 1200);
+  }
+})();
+</script>
+</body>
+</html>
