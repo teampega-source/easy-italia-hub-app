@@ -20,27 +20,463 @@
 <div id="site-nav"></div>
 
 <main id="main">
-  <div class="page">
+  <div class="page page-wide">
     <p class="eyebrow reveal"><span class="eyebrow-line"></span> News</p>
     <h1 class="reveal">Sempre<br/><em>aggiornato.</em></h1>
     <p class="lead reveal">Leggi, decreti, scadenze e opportunità che riguardano la tua vita in Italia. Sintetizzati in modo chiaro, sempre con il link alla fonte ufficiale.</p>
 
-    <div class="draft-banner reveal">📰 <span>La redazione news è in avvio. Pubblicheremo aggiornamenti verificati su permessi, INPS, lavoro, casa e opportunità per la comunità. Vuoi riceverli? <a class="inline" href="percorso.html">Registrati gratis</a>.</span></div>
+    <div class="draft-banner reveal">📰 <span>Selezione redazionale in versione demo: gli aggiornamenti qui sotto rimandano sempre alla <strong>fonte ufficiale</strong>. Verifica date, importi e requisiti esatti sul sito dell'ente prima di agire. Salvataggi e iscrizione funzionano in locale nel tuo browser (nessun dato viene inviato).</span></div>
 
-    <div class="card-grid reveal">
-      <div class="icard"><div class="ic">📑</div><h3>Leggi e decreti</h3><p>Cambiano spesso: te li spieghiamo in parole semplici, con la fonte.</p></div>
-      <div class="icard"><div class="ic">⏰</div><h3>Scadenze</h3><p>Date importanti per permessi, bandi, domande INPS e contributi.</p></div>
-      <div class="icard"><div class="ic">✈️</div><h3>Opportunità</h3><p>Voli, eventi, corsi e bandi utili per la comunità srilankese.</p></div>
+    <!-- ░░ FILTRI + SALVATI ░░ -->
+    <div class="news-toolbar reveal">
+      <div class="filter-tabs" role="tablist" aria-label="Filtra le news per categoria">
+        <button class="ftab is-active" type="button" role="tab" aria-selected="true" data-filter="all">Tutte</button>
+        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="leggi">Leggi e decreti</button>
+        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="scadenze">Scadenze</button>
+        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="opportunita">Opportunità</button>
+        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="lavoro">Lavoro</button>
+        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="casa">Casa</button>
+      </div>
+      <button class="saved-toggle" id="saved-toggle" type="button" aria-pressed="false">
+        <span class="bk" aria-hidden="true">🔖</span> Salvati <span class="saved-count" id="saved-count">(0)</span>
+      </button>
     </div>
 
-    <div class="cta-row reveal">
-      <a href="percorso.html" class="btn-primary">Ricevi gli aggiornamenti</a>
-      <a href="guide.html" class="btn-ghost">Vai alle guide</a>
-    </div>
+    <!-- ░░ LISTA NEWS (popolata via JS) ░░ -->
+    <div class="news-list reveal" id="news-list" aria-live="polite"></div>
+    <p class="news-empty muted" id="news-empty" hidden></p>
+
+    <!-- ░░ AGGIORNAMENTI / NEWSLETTER (demo) ░░ -->
+    <section class="news-signup reveal" aria-labelledby="signup-h">
+      <div class="signup-card">
+        <h2 id="signup-h">Ricevi gli aggiornamenti</h2>
+        <p class="muted">Lasciaci nome ed email per ricevere permessi, scadenze INPS, bandi casa e opportunità quando la redazione sarà attiva.</p>
+        <form class="form" id="signup-form" novalidate>
+          <div><label for="s-name">Nome</label><input id="s-name" name="name" type="text" autocomplete="name" placeholder="Il tuo nome" required/></div>
+          <div><label for="s-email">Email</label><input id="s-email" name="email" type="email" autocomplete="email" placeholder="nome@email.it" required/></div>
+          <div class="signup-actions">
+            <button type="submit" class="btn-primary">Iscrivimi agli aggiornamenti</button>
+            <a href="percorso.html" class="btn-ghost">Registrati con il tuo percorso</a>
+          </div>
+          <p class="form-err muted" id="signup-err" role="alert" hidden></p>
+          <p class="form-ok" id="signup-ok" role="status" hidden>✓ Fatto, <span id="signup-name">amico</span>! Sei in lista (in locale). <span class="muted">Demo dimostrativa: non c'è ancora una newsletter reale e nessun dato viene inviato. Per accedere subito ai servizi <a class="inline" href="percorso.html">registrati nel tuo percorso</a>.</span></p>
+        </form>
+      </div>
+    </section>
+
+    <p class="muted news-foot">Le sintesi sono a scopo informativo e non sostituiscono la consulenza ufficiale. Hai un dubbio sul tuo caso? Chiedi al <a class="inline" href="percorso.html">Consigliere AI</a> o consulta le <a class="inline" href="guide.html">guide</a>.</p>
   </div>
 </main>
 
 <div id="site-footer"></div>
 <script src="eih.js"></script>
+
+<!-- ════════════ PAGE-SCOPED STYLE (news) ════════════ -->
+<style>
+  .news-toolbar{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);flex-wrap:wrap;margin-top:var(--sp-3)}
+  .filter-tabs{display:flex;gap:.5rem;flex-wrap:wrap}
+  .ftab{font-family:inherit;font-size:var(--text-sm);font-weight:500;color:var(--fg-secondary);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-full);padding:.5rem 1rem;min-height:40px;cursor:pointer;transition:background var(--dur-micro),color var(--dur-micro),border-color var(--dur-micro),transform var(--dur-std) var(--ease-spring)}
+  .ftab:hover{background:var(--surface-hover);color:var(--ink)}
+  .ftab.is-active{background:linear-gradient(135deg,var(--blue-deep),var(--blue));border-color:rgba(125,112,88,.35);color:#fff;box-shadow:0 8px 22px var(--blue-glow)}
+  .ftab:focus-visible,.saved-toggle:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .saved-toggle{display:inline-flex;align-items:center;gap:.4rem;font-family:inherit;font-size:var(--text-sm);font-weight:500;color:var(--ink);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-full);padding:.5rem 1rem;min-height:40px;cursor:pointer;transition:background var(--dur-micro),border-color var(--dur-micro)}
+  .saved-toggle:hover{background:var(--surface-hover)}
+  .saved-toggle[aria-pressed="true"]{background:var(--gold-dim);border-color:rgba(124,112,89,.4);color:var(--gold)}
+  .saved-toggle .bk{font-size:1rem}
+
+  .news-list{display:flex;flex-direction:column;gap:1rem;margin-top:var(--sp-3)}
+  .nitem{border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);overflow:hidden;transition:box-shadow var(--dur-std),border-color var(--dur-micro)}
+  .nitem:hover{box-shadow:0 14px 36px rgba(20,30,48,.09)}
+  .nitem.is-saved{border-color:rgba(124,112,89,.45)}
+  .nitem-head{display:flex;align-items:flex-start;gap:.8rem;padding:1.15rem 1.25rem}
+  .nitem-main{flex:1;min-width:0;background:none;border:none;padding:0;margin:0;font-family:inherit;text-align:left;cursor:pointer;color:inherit}
+  .nitem-meta{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.45rem}
+  .ntag{display:inline-block;font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .55rem;border-radius:99px;border:1px solid transparent}
+  .ntag.leggi{color:#6a5fa0;background:rgba(106,95,160,.12);border-color:rgba(106,95,160,.25)}
+  .ntag.scadenze{color:var(--coral);background:rgba(235,89,57,.1);border-color:rgba(235,89,57,.25)}
+  .ntag.opportunita{color:var(--green);background:var(--green-dim);border-color:rgba(31,157,85,.28)}
+  .ntag.lavoro{color:var(--gold);background:var(--gold-dim);border-color:rgba(124,112,89,.3)}
+  .ntag.casa{color:#b06a2a;background:rgba(176,106,42,.1);border-color:rgba(176,106,42,.28)}
+  .ndate{font-size:var(--text-xs);color:var(--fg-muted);font-weight:500}
+  .nitem-title{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:600;color:var(--ink);line-height:1.25;margin:0}
+  .nitem-main:hover .nitem-title{color:var(--gold)}
+  .nitem-summary{font-size:var(--text-sm);line-height:1.6;color:var(--fg-secondary);margin:.4rem 0 0}
+  .nitem-actions{display:flex;flex-direction:column;align-items:center;gap:.45rem;flex-shrink:0}
+  .nbtn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-full);border:1px solid var(--border);background:var(--surface);cursor:pointer;font-size:1.05rem;line-height:1;transition:background var(--dur-micro),border-color var(--dur-micro),transform var(--dur-std) var(--ease-spring)}
+  .nbtn:hover{background:var(--surface-hover);transform:translateY(-2px)}
+  .nbtn:focus-visible,.nitem-main:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:var(--radius-sm)}
+  .nbtn.bookmark[aria-pressed="true"]{background:var(--gold-dim);border-color:rgba(124,112,89,.4)}
+  .nbtn .chev{display:inline-block;transition:transform var(--dur-std) var(--ease-spring);font-size:.9rem;color:var(--fg-muted)}
+  .nitem.open .nbtn .chev{transform:rotate(180deg)}
+
+  .nitem-body{max-height:0;overflow:hidden;transition:max-height var(--dur-complex) var(--ease-spring)}
+  .nitem-body-inner{padding:0 1.25rem 1.2rem;border-top:1px solid var(--border)}
+  .nitem-body-inner p{font-size:var(--text-sm);line-height:1.7;color:var(--fg-secondary);margin:.9rem 0 0}
+  .nitem-verify{margin-top:.9rem !important;font-size:var(--text-xs) !important;color:var(--fg-muted) !important;background:var(--surface);border:1px dashed var(--border-bright);border-radius:var(--radius-sm);padding:.6rem .75rem}
+  .nitem-source{margin-top:.9rem;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+  .nitem-source .src-label{font-size:var(--text-xs);color:var(--fg-muted)}
+
+  .news-empty{margin-top:var(--sp-4);text-align:center;padding:var(--sp-4) var(--sp-2);border:1px dashed var(--border);border-radius:var(--radius)}
+
+  .news-signup{margin-top:var(--sp-5)}
+  .signup-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:var(--sp-4)}
+  .signup-card h2{margin:0 0 .4rem}
+  .signup-actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:.3rem}
+  .form-ok{font-size:var(--text-sm);line-height:1.6;color:var(--green);background:var(--green-dim);border:1px solid rgba(31,157,85,.28);border-radius:var(--radius-sm);padding:.7rem .9rem}
+  .form-ok .muted,.form-ok .inline{color:var(--fg-secondary)}
+  .form-err{color:var(--coral)}
+  .news-foot{margin-top:var(--sp-4)}
+
+  @media (max-width:600px){
+    .news-toolbar{flex-direction:column;align-items:stretch}
+    .saved-toggle{justify-content:center}
+    .nitem-head{padding:1rem}
+    .nitem-actions{flex-direction:row}
+  }
+</style>
+
+<!-- ════════════ PAGE-SCOPED SCRIPT (news) ════════════ -->
+<script>
+(function(){
+  "use strict";
+  var SAVED_KEY = 'eih-news-saved';
+  var reduce = false;
+  try { reduce = matchMedia('(prefers-reduced-motion:reduce)').matches; } catch(e){}
+
+  // ── Category labels ──
+  var CAT = {
+    leggi:       'Leggi e decreti',
+    scadenze:    'Scadenze',
+    opportunita: 'Opportunità',
+    lavoro:      'Lavoro',
+    casa:        'Casa'
+  };
+
+  // ── REAL news items. Specifics are framed with "verifica sulla fonte ufficiale".
+  //    Every source is a real, official domain. No invented URLs. ──
+  var ITEMS = [
+    {
+      id:'decreto-flussi-2026',
+      cat:'leggi',
+      date:'2026-01-15',
+      title:'Decreto Flussi: quote per il lavoro non stagionale',
+      summary:'La programmazione triennale dei flussi fissa le quote di ingresso per lavoro subordinato e autonomo. Le domande si presentano online con click-day dedicati.',
+      body:'Il Decreto Flussi stabilisce quante persone possono entrare in Italia per motivi di lavoro (stagionale, non stagionale e autonomo). Le domande (modelli di precompilazione e invio) passano dal portale del Ministero dell’Interno, con date di apertura ("click-day") che cambiano ogni anno. Conviene preparare in anticipo i documenti del datore di lavoro e le credenziali SPID. Le quote, le categorie ammesse e i giorni esatti di invio vengono pubblicati con appositi decreti: verifica numeri e scadenze sulla fonte ufficiale prima di presentare domanda.',
+      verify:'Quote, categorie e date dei click-day cambiano ogni anno: verifica i numeri esatti sul portale del Ministero dell’Interno.',
+      src:{label:'Ministero dell’Interno', url:'https://www.interno.gov.it/'}
+    },
+    {
+      id:'permesso-soggiorno-rinnovo',
+      cat:'scadenze',
+      date:'2026-02-03',
+      title:'Rinnovo del permesso di soggiorno: quando e come',
+      summary:'La domanda di rinnovo va presentata prima della scadenza tramite il kit postale di Poste Italiane. Controlla la data sul tuo permesso e raccogli i documenti in anticipo.',
+      body:'Il permesso di soggiorno va rinnovato presentando la domanda in prossimità della scadenza, di norma usando il "kit giallo" disponibile agli sportelli abilitati di Poste Italiane; ricevi poi una ricevuta e un appuntamento in Questura per i rilievi. Lo stato della pratica si segue online sul Portale Immigrazione. Tieni d’occhio la data di scadenza stampata sul permesso, prepara reddito, alloggio e marca da bollo, e non ridurti all’ultimo giorno. Tempistiche, costi e documenti richiesti possono variare per tipo di permesso e per Questura: verifica sempre sulla fonte ufficiale.',
+      verify:'Tempi, costi e documenti variano per tipo di permesso e Questura: verifica su Portale Immigrazione e Polizia di Stato.',
+      src:{label:'Portale Immigrazione', url:'https://www.portaleimmigrazione.it/'}
+    },
+    {
+      id:'permesso-stato-pratica',
+      cat:'scadenze',
+      date:'2026-02-20',
+      title:'Controlla lo stato del tuo permesso di soggiorno online',
+      summary:'Con il numero di assicurata della ricevuta puoi verificare a che punto è la tua pratica direttamente sul sito della Polizia di Stato.',
+      body:'Dopo aver presentato la domanda di rilascio o rinnovo del permesso, puoi controllare online a che punto è la lavorazione: serve il numero della ricevuta dell’assicurata rilasciata da Poste. La verifica si fa nell’area dedicata agli stranieri del sito della Polizia di Stato. Quando il permesso è pronto, vieni convocato in Questura per il ritiro. Conserva con cura ricevuta e cedolino: ti servono come prova del soggiorno regolare in attesa del documento. Le modalità esatte possono cambiare: verifica sulla fonte ufficiale.',
+      verify:'Le modalità di consultazione possono cambiare: usa l’area "stranieri" del sito ufficiale della Polizia di Stato.',
+      src:{label:'Polizia di Stato', url:'https://www.poliziadistato.it/'}
+    },
+    {
+      id:'assegno-unico-2026',
+      cat:'opportunita',
+      date:'2026-02-28',
+      title:'Assegno Unico Universale per i figli a carico',
+      summary:'Sostegno mensile dell’INPS per le famiglie con figli a carico. L’importo dipende dall’ISEE: aggiorna l’ISEE per non ricevere l’importo minimo.',
+      body:'L’Assegno Unico e Universale è un contributo mensile dell’INPS per ogni figlio a carico, dalla gravidanza fino a una certa età (più a lungo per figli con disabilità). Spetta anche a molti cittadini stranieri che lavorano e risiedono regolarmente in Italia. La domanda si fa una volta sul sito INPS (con SPID/CIE) e si rinnova in automatico, ma l’importo dipende dall’ISEE: senza un ISEE valido aggiornato si riceve solo la quota minima. Importi, soglie e requisiti di residenza vengono aggiornati periodicamente: verifica i valori esatti sulla fonte ufficiale.',
+      verify:'Importi e soglie ISEE si aggiornano ogni anno: controlla i valori e i requisiti aggiornati sul sito INPS.',
+      src:{label:'INPS', url:'https://www.inps.it/'}
+    },
+    {
+      id:'isee-2026',
+      cat:'scadenze',
+      date:'2026-01-09',
+      title:'ISEE: rinnova la DSU per bonus e agevolazioni',
+      summary:'L’ISEE serve per Assegno Unico, bonus, mense e bandi casa. La DSU va aggiornata ogni anno: l’ISEE precedente scade e va rifatto.',
+      body:'L’ISEE misura la situazione economica del nucleo familiare e serve per accedere a moltissime agevolazioni: Assegno Unico, bonus sociali, rette di asili e mense, borse di studio e graduatorie per la casa. Si ottiene presentando la DSU (Dichiarazione Sostitutiva Unica) tramite INPS, un CAF o un patronato; molti dati sono ormai precompilati. L’attestazione vale entro l’anno di riferimento e va rinnovata: un ISEE scaduto può bloccare i pagamenti dei bonus. Documenti necessari e scadenze possono cambiare: verifica sulla fonte ufficiale o rivolgiti a un CAF/patronato.',
+      verify:'Validità e documenti della DSU possono cambiare: verifica sul sito INPS o presso un CAF/patronato.',
+      src:{label:'INPS', url:'https://www.inps.it/'}
+    },
+    {
+      id:'730-redditi-2026',
+      cat:'scadenze',
+      date:'2026-04-30',
+      title:'Dichiarazione dei redditi 2026 (modello 730)',
+      summary:'Se hai redditi da lavoro in Italia potresti dover presentare il 730. Il modello precompilato è disponibile online nell’area riservata dell’Agenzia delle Entrate.',
+      body:'Chi ha percepito redditi da lavoro dipendente o assimilati spesso presenta la dichiarazione con il modello 730, che permette di ottenere rimborsi e detrazioni (spese mediche, affitti, figli). L’Agenzia delle Entrate mette a disposizione il 730 precompilato nell’area riservata (accesso con SPID/CIE), che puoi accettare o modificare; in alternativa puoi rivolgerti a un CAF o a un professionista. Esistono scadenze per l’invio e per eventuali versamenti. Date, soglie e detrazioni cambiano ogni anno: verifica i termini esatti sulla fonte ufficiale prima di inviare.',
+      verify:'Scadenze e detrazioni cambiano ogni anno: controlla i termini esatti sul sito dell’Agenzia delle Entrate.',
+      src:{label:'Agenzia delle Entrate', url:'https://www.agenziaentrate.gov.it/'}
+    },
+    {
+      id:'naspi-2026',
+      cat:'lavoro',
+      date:'2026-03-12',
+      title:'NASpI: l’indennità di disoccupazione',
+      summary:'Se perdi involontariamente il lavoro puoi richiedere la NASpI all’INPS. La domanda va presentata entro un termine preciso dalla fine del rapporto.',
+      body:'La NASpI è l’indennità mensile di disoccupazione per chi perde il lavoro in modo involontario (licenziamento e, in alcuni casi, dimissioni per giusta causa). Serve aver maturato i contributi richiesti. La domanda si presenta online sul sito INPS con SPID/CIE, oppure tramite patronato, ed esiste un termine entro cui inviarla dalla cessazione del rapporto: oltre quel limite si perde il diritto. Durata e importo dipendono dalla storia contributiva. Requisiti, termini e importi vengono aggiornati: verifica le condizioni esatte sulla fonte ufficiale o con un patronato.',
+      verify:'Termini di presentazione, durata e importo dipendono dal tuo caso: verifica sul sito INPS o con un patronato.',
+      src:{label:'INPS', url:'https://www.inps.it/'}
+    },
+    {
+      id:'tessera-sanitaria-ssn',
+      cat:'opportunita',
+      date:'2026-01-22',
+      title:'Iscrizione al Servizio Sanitario Nazionale (SSN)',
+      summary:'Con un permesso valido hai diritto all’iscrizione al SSN e al medico di base. L’iscrizione si fa alla ASL del tuo Comune di residenza.',
+      body:'Chi soggiorna regolarmente in Italia ha in molti casi diritto (o obbligo) di iscriversi al Servizio Sanitario Nazionale: dà accesso al medico di base, al pediatra per i figli, alle cure e alla tessera sanitaria. L’iscrizione si effettua allo sportello della ASL competente per il Comune di residenza, portando permesso di soggiorno, codice fiscale e residenza/domicilio. Per alcune categorie l’iscrizione è gratuita, per altre è volontaria con un contributo annuale. Le regole pratiche variano da Regione a Regione: verifica le condizioni per il tuo caso sulla fonte ufficiale o presso la ASL.',
+      verify:'Requisiti e costi variano per categoria e Regione: verifica con la tua ASL o sul portale del Ministero della Salute.',
+      src:{label:'Ministero della Salute', url:'https://www.salute.gov.it/'}
+    },
+    {
+      id:'bandi-casa-comune-2026',
+      cat:'casa',
+      date:'2026-05-05',
+      title:'Bandi casa e contributo affitto del Comune',
+      summary:'Molti Comuni pubblicano bandi per alloggi popolari (ERP) e contributi per l’affitto. Le finestre di domanda sono limitate: controlla l’albo del tuo Comune.',
+      body:'I sostegni per la casa (alloggi di edilizia residenziale pubblica e contributi per il canone di affitto) sono gestiti a livello locale: ogni Comune o Regione pubblica i propri bandi con requisiti di residenza, ISEE e graduatorie. Le finestre per presentare domanda sono aperte solo per periodi limitati e spesso richiedono SPID e ISEE valido. Per non perdere le scadenze, consulta regolarmente l’albo pretorio e il sito del tuo Comune, oppure chiedi a un patronato. Requisiti e tempi cambiano da territorio a territorio: verifica sempre sul bando ufficiale del tuo Comune.',
+      verify:'Ogni Comune ha bandi, requisiti e scadenze propri: verifica sull’albo pretorio e sul sito ufficiale del tuo Comune.',
+      src:{label:'Trova il tuo Comune (IPA)', url:'https://www.indicepa.gov.it/'}
+    },
+    {
+      id:'cittadinanza-residenza',
+      cat:'leggi',
+      date:'2026-03-28',
+      title:'Cittadinanza italiana: domanda online',
+      summary:'La domanda di cittadinanza (per residenza o matrimonio) si presenta sul portale del Ministero dell’Interno. Servono documenti tradotti e legalizzati.',
+      body:'La cittadinanza italiana si può richiedere, tra l’altro, per residenza legale e continuativa o a seguito di matrimonio con cittadino/a italiano/a, in presenza dei requisiti previsti (tra cui spesso un livello di conoscenza della lingua italiana). La domanda si presenta online sul portale dedicato del Ministero dell’Interno, allegando documenti come certificati penali e di nascita tradotti e legalizzati. I tempi di esame possono essere lunghi e lo stato della pratica si segue online. Requisiti, anni di residenza richiesti e documenti possono cambiare: verifica le condizioni aggiornate sulla fonte ufficiale.',
+      verify:'Requisiti, anni di residenza e documenti possono cambiare: verifica sul portale del Ministero dell’Interno.',
+      src:{label:'Ministero dell’Interno', url:'https://www.interno.gov.it/'}
+    }
+  ];
+
+  // ── State ──
+  var state = { filter:'all', savedOnly:false, saved:loadSaved() };
+
+  function loadSaved(){
+    try {
+      var raw = localStorage.getItem(SAVED_KEY);
+      var arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch(e){ return []; }
+  }
+  function persistSaved(){
+    try { localStorage.setItem(SAVED_KEY, JSON.stringify(state.saved)); } catch(e){}
+  }
+  function isSaved(id){ return state.saved.indexOf(id) !== -1; }
+
+  function fmtDate(iso){
+    try {
+      var d = new Date(iso + 'T00:00:00');
+      return d.toLocaleDateString('it-IT', {day:'numeric', month:'long', year:'numeric'});
+    } catch(e){ return iso; }
+  }
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  var listEl = document.getElementById('news-list');
+  var emptyEl = document.getElementById('news-empty');
+  var savedBtn = document.getElementById('saved-toggle');
+  var savedCountEl = document.getElementById('saved-count');
+
+  // ── Render the full list once; filtering toggles visibility ──
+  function render(){
+    if(!listEl) return;
+    var html = '';
+    for(var i=0;i<ITEMS.length;i++){
+      var it = ITEMS[i];
+      var saved = isSaved(it.id);
+      html +=
+        '<article class="nitem'+(saved?' is-saved':'')+'" data-id="'+esc(it.id)+'" data-category="'+esc(it.cat)+'">'+
+          '<div class="nitem-head">'+
+            '<button class="nitem-main" type="button" aria-expanded="false" aria-controls="body-'+esc(it.id)+'">'+
+              '<div class="nitem-meta">'+
+                '<span class="ntag '+esc(it.cat)+'">'+esc(CAT[it.cat]||it.cat)+'</span>'+
+                '<span class="ndate">'+esc(fmtDate(it.date))+'</span>'+
+              '</div>'+
+              '<h3 class="nitem-title">'+esc(it.title)+'</h3>'+
+              '<p class="nitem-summary">'+esc(it.summary)+'</p>'+
+            '</button>'+
+            '<div class="nitem-actions">'+
+              '<button class="nbtn bookmark" type="button" aria-pressed="'+(saved?'true':'false')+'" '+
+                'aria-label="'+(saved?'Rimuovi dai salvati':'Salva per dopo')+'" title="'+(saved?'Rimuovi dai salvati':'Salva per dopo')+'">'+(saved?'🔖':'🏷️')+'</button>'+
+              '<button class="nbtn toggle" type="button" tabindex="-1" aria-hidden="true"><span class="chev">▾</span></button>'+
+            '</div>'+
+          '</div>'+
+          '<div class="nitem-body" id="body-'+esc(it.id)+'" role="region" aria-label="Dettagli: '+esc(it.title)+'">'+
+            '<div class="nitem-body-inner">'+
+              '<p>'+esc(it.body)+'</p>'+
+              '<p class="nitem-verify">⚠️ '+esc(it.verify)+'</p>'+
+              '<div class="nitem-source">'+
+                '<span class="src-label">Fonte ufficiale:</span> '+
+                '<a class="inline" href="'+esc(it.src.url)+'" target="_blank" rel="noopener">'+esc(it.src.label)+' ↗</a>'+
+              '</div>'+
+            '</div>'+
+          '</div>'+
+        '</article>';
+    }
+    listEl.innerHTML = html;
+    applyFilter();
+  }
+
+  // ── Show/hide items by current filter + savedOnly ──
+  function applyFilter(){
+    var nodes = listEl.querySelectorAll('.nitem');
+    var visible = 0;
+    for(var i=0;i<nodes.length;i++){
+      var node = nodes[i];
+      var cat = node.getAttribute('data-category');
+      var id = node.getAttribute('data-id');
+      var matchCat = (state.filter === 'all') || (cat === state.filter);
+      var matchSaved = !state.savedOnly || isSaved(id);
+      var show = matchCat && matchSaved;
+      node.hidden = !show;
+      if(show) visible++;
+    }
+    if(emptyEl){
+      if(visible === 0){
+        emptyEl.hidden = false;
+        emptyEl.textContent = state.savedOnly
+          ? 'Non hai ancora salvato nessuna news in questa categoria. Tocca 🏷️ su un articolo per salvarlo.'
+          : 'Nessuna news in questa categoria al momento.';
+      } else {
+        emptyEl.hidden = true;
+      }
+    }
+  }
+
+  function updateSavedUI(){
+    if(savedCountEl) savedCountEl.textContent = '(' + state.saved.length + ')';
+    if(savedBtn) savedBtn.setAttribute('aria-pressed', state.savedOnly ? 'true' : 'false');
+  }
+
+  // ── Filter tabs ──
+  var tabs = document.querySelectorAll('.ftab');
+  for(var t=0;t<tabs.length;t++){
+    tabs[t].addEventListener('click', function(){
+      state.filter = this.getAttribute('data-filter');
+      for(var k=0;k<tabs.length;k++){
+        var on = tabs[k] === this;
+        tabs[k].classList.toggle('is-active', on);
+        tabs[k].setAttribute('aria-selected', on ? 'true' : 'false');
+      }
+      applyFilter();
+    });
+  }
+
+  // ── Saved-only toggle ──
+  if(savedBtn){
+    savedBtn.addEventListener('click', function(){
+      state.savedOnly = !state.savedOnly;
+      updateSavedUI();
+      applyFilter();
+    });
+  }
+
+  // ── Delegated clicks: accordion + bookmark ──
+  if(listEl){
+    listEl.addEventListener('click', function(e){
+      var bm = e.target.closest('.bookmark');
+      if(bm){
+        var artB = bm.closest('.nitem');
+        var idB = artB.getAttribute('data-id');
+        var idx = state.saved.indexOf(idB);
+        var nowSaved;
+        if(idx === -1){ state.saved.push(idB); nowSaved = true; }
+        else { state.saved.splice(idx,1); nowSaved = false; }
+        persistSaved();
+        bm.setAttribute('aria-pressed', nowSaved ? 'true' : 'false');
+        bm.textContent = nowSaved ? '🔖' : '🏷️';
+        bm.setAttribute('aria-label', nowSaved ? 'Rimuovi dai salvati' : 'Salva per dopo');
+        bm.setAttribute('title', nowSaved ? 'Rimuovi dai salvati' : 'Salva per dopo');
+        artB.classList.toggle('is-saved', nowSaved);
+        updateSavedUI();
+        if(state.savedOnly) applyFilter();
+        return;
+      }
+      var head = e.target.closest('.nitem-main, .toggle');
+      if(head){
+        var art = head.closest('.nitem');
+        toggleItem(art);
+      }
+    });
+  }
+
+  function toggleItem(art){
+    var main = art.querySelector('.nitem-main');
+    var body = art.querySelector('.nitem-body');
+    var isOpen = art.classList.toggle('open');
+    main.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    if(isOpen){
+      if(reduce){ body.style.maxHeight = 'none'; }
+      else {
+        body.style.maxHeight = body.scrollHeight + 'px';
+        // settle to auto so resizing/wrapping stays correct
+        var onEnd = function(){
+          if(art.classList.contains('open')) body.style.maxHeight = 'none';
+          body.removeEventListener('transitionend', onEnd);
+        };
+        body.addEventListener('transitionend', onEnd);
+      }
+    } else {
+      if(reduce){ body.style.maxHeight = '0px'; }
+      else {
+        // from auto -> fixed -> 0 so it can animate closed
+        body.style.maxHeight = body.scrollHeight + 'px';
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){ body.style.maxHeight = '0px'; });
+        });
+      }
+    }
+  }
+
+  // ── Newsletter signup (DEMO, client-side only) ──
+  var form = document.getElementById('signup-form');
+  if(form){
+    var okEl = document.getElementById('signup-ok');
+    var errEl = document.getElementById('signup-err');
+    var nameOut = document.getElementById('signup-name');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var name = (document.getElementById('s-name').value || '').trim();
+      var email = (document.getElementById('s-email').value || '').trim();
+      var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if(!name || !emailOk){
+        if(okEl) okEl.hidden = true;
+        if(errEl){
+          errEl.hidden = false;
+          errEl.textContent = !name
+            ? 'Inserisci il tuo nome per continuare.'
+            : 'Inserisci un indirizzo email valido.';
+        }
+        return;
+      }
+      if(errEl) errEl.hidden = true;
+      if(nameOut) nameOut.textContent = name;
+      // DEMO persistence only — no network request is made anywhere.
+      try {
+        localStorage.setItem('eih-news-signup', JSON.stringify({name:name, email:email, ts:Date.now()}));
+      } catch(err){}
+      if(okEl) okEl.hidden = false;
+      form.reset();
+    });
+  }
+
+  // ── Init ──
+  render();
+  updateSavedUI();
+})();
+</script>
 </body>
 </html>
