@@ -46,11 +46,11 @@
     return '<footer><div class="footer-inner">'+
       '<div class="footer-brand"><a href="index.html" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a><p class="footer-tag" data-i18n="f.tag"></p></div>'+
       '<div class="footer-col"><h4 data-i18n="f.product">Prodotto</h4><ul>'+
-        '<li><a href="guide.html" data-i18n="nav.guide">Guide</a></li><li><a href="percorso.html" data-i18n="f.aiAssistant">Assistente AI</a></li><li><a href="community.html" data-i18n="nav.community">Community</a></li><li><a href="mappa.html" data-i18n="f.mapServices">Mappa servizi</a></li></ul></div>'+
+        '<li><a href="guide.html" data-i18n="nav.guide">Guide</a></li><li><a href="percorso.html" data-i18n="f.aiAssistant">Assistente AI</a></li><li><a href="community.html" data-i18n="nav.community">Community</a></li><li><a href="opportunita.html">Opportunità</a></li><li><a href="mappa.html" data-i18n="f.mapServices">Mappa servizi</a></li></ul></div>'+
       '<div class="footer-col"><h4 data-i18n="f.company">Azienda</h4><ul>'+
         '<li><a href="chi-siamo.html" data-i18n="f.about">Chi siamo</a></li><li><a href="news.html" data-i18n="nav.news">News</a></li><li><a href="contatti.html" data-i18n="f.advertising">Pubblicità</a></li><li><a href="contatti.html" data-i18n="f.contact">Contatti</a></li></ul></div>'+
       '<div class="footer-col"><h4 data-i18n="f.account">Account</h4><ul>'+
-        '<li><a href="percorso.html" data-i18n="nav.login">Accedi</a></li><li><a href="percorso.html" data-i18n="f.register">Registrati</a></li><li><a href="abbonamenti.html" data-i18n="f.subscriptions">Abbonamenti</a></li></ul></div>'+
+        '<li><a href="dashboard.html">La mia Dashboard</a></li><li><a href="percorso.html" data-i18n="nav.login">Accedi</a></li><li><a href="percorso.html" data-i18n="f.register">Registrati</a></li><li><a href="abbonamenti.html" data-i18n="f.subscriptions">Abbonamenti</a></li></ul></div>'+
       '</div><div class="footer-bottom"><p class="footer-copy" data-i18n="f.copy"></p>'+
       '<nav class="footer-legal" aria-label="Note legali"><a href="privacy.html" data-i18n="f.privacy">Privacy Policy</a><a href="cookie.html" data-i18n="f.cookie">Cookie Policy</a><a href="termini.html" data-i18n="f.terms">Termini di Servizio</a><a href="note-legali.html" data-i18n="f.legal">Note legali</a></nav></div></footer>';
   }
