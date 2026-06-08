@@ -710,7 +710,7 @@ body.has-banner{scroll-padding-top:96px}
 
 /* ─── CHATBOT ─── */
 #chat-btn{
-  position:fixed;bottom:1.75rem;right:1.75rem;z-index:400;
+  position:fixed;top:50%;margin-top:-26px;right:1.75rem;z-index:400;
   width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;
   background:linear-gradient(135deg,var(--blue-deep),var(--blue));
   display:flex;align-items:center;justify-content:center;
@@ -740,8 +740,8 @@ body.has-banner{scroll-padding-top:96px}
 
 /* Liquid Glass chat panel */
 #chat-panel{
-  position:fixed;bottom:calc(52px + 1.75rem + .75rem);right:1.75rem;z-index:400;
-  width:356px;height:510px;border-radius:22px;overflow:hidden;
+  position:fixed;top:50%;right:1.75rem;z-index:400;
+  width:356px;height:min(510px,calc(100vh - 3rem));border-radius:22px;overflow:hidden;
   display:flex;flex-direction:column;
   background:rgba(255,253,249,0.97);
   backdrop-filter:blur(32px) saturate(1.6);
@@ -750,15 +750,15 @@ body.has-banner{scroll-padding-top:96px}
   box-shadow:0 32px 80px rgba(20,30,48,.22),
              0 0 0 1px rgba(255,255,255,.04),
              inset 0 1px 0 rgba(255,255,255,.07);
-  /* closed → enter animation (scale from origin bottom-right) */
-  transform-origin:bottom right;
-  transform:scale(0.88) translateY(14px);
+  /* closed → enter animation (scale from origin right-center) */
+  transform-origin:right center;
+  transform:translateY(-50%) scale(0.88);
   opacity:0;pointer-events:none;
   transition:transform var(--dur-std) var(--ease-spring),
              opacity var(--dur-micro) var(--ease-enter);
 }
 #chat-panel.open{
-  transform:scale(1) translateY(0);
+  transform:translateY(-50%) scale(1);
   opacity:1;pointer-events:all;
 }
 /* exit is handled by removing .open class – opacity transitions out faster than scale */
@@ -1075,7 +1075,7 @@ footer{
   .modal{padding:var(--sp-3)}
   .modal-title{font-size:var(--text-xl)}
   /* chat panel fills width on phones */
-  #chat-panel{right:1rem;left:1rem;width:auto;bottom:5rem}
+  #chat-panel{right:1rem;left:1rem;width:auto;top:50%}
   /* keep CTA buttons full-width-friendly */
   .hero-actions{flex-direction:column;align-items:stretch}
   .hero-actions .btn-primary,.hero-actions .btn-ghost{justify-content:center}
@@ -1091,7 +1091,7 @@ footer{
   .hero-stats>div{flex:0 0 45%}
   .cta-card{padding:var(--sp-4) var(--sp-2)}
   #to-top{bottom:1rem;left:1rem;width:44px;height:44px}
-  #chat-btn{bottom:1rem;right:1rem}
+  #chat-btn{top:50%;margin-top:-26px;right:1rem}
 }
 
 /* ── Landscape phones: cap hero height ── */
@@ -1386,6 +1386,27 @@ html.returning #preloader{display:none}
 
 </section>
 
+<!-- ─── IL MIO PERCORSO (spostato in alto per dare prominenza) ─── -->
+<section class="cta-section" aria-labelledby="cta-heading">
+  <div class="cta-card">
+    <a href="percorso.html" class="spin-badge" aria-label="Vai al tuo percorso">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <defs><path id="badge-arc" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
+        <text><textPath href="#badge-arc" startOffset="0%">IL PERCORSO • 9 FASI • </textPath></text>
+      </svg>
+      <span class="badge-core" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </span>
+    </a>
+    <h2 id="cta-heading" class="cta-title" data-i18n-html="cta.title">Pronto a iniziare<br/><em style="font-style:italic;color:var(--gold)">il tuo percorso?</em></h2>
+    <p class="cta-sub" data-i18n="cta.sub">Registrati gratis. Nessuna carta di credito richiesta.</p>
+    <div class="cta-btns">
+      <a href="percorso.html" class="btn-primary" data-i18n="cta.btn1" onclick="if(typeof openAuth==='function'){openAuth('signup');return false;}">Crea il tuo account gratuito</a>
+      <a href="chi-siamo.html" class="btn-ghost" data-i18n="cta.btn2">Scopri come funziona</a>
+    </div>
+  </div>
+</section>
+
 <!-- ─── FX COMPARATOR (container only — widget logic loaded from fx-comparator.js) ─── -->
 <section class="fx-section" aria-labelledby="fx-heading">
   <div class="fx-wrap">
@@ -1548,27 +1569,6 @@ html.returning #preloader{display:none}
       <div class="faq-a">Le nostre guide sono divulgative e ti orientano nei passaggi principali, ma non sostituiscono le fonti ufficiali. Per i dati definitivi verifica sempre sui siti istituzionali (es. Polizia di Stato, Agenzia delle Entrate, INPS) o rivolgiti a un CAF o patronato.</div>
     </details>
 
-  </div>
-</section>
-
-<!-- ─── CTA ─── -->
-<section class="cta-section" aria-labelledby="cta-heading">
-  <div class="cta-card">
-    <a href="percorso.html" class="spin-badge" aria-label="Vai al tuo percorso">
-      <svg viewBox="0 0 100 100" aria-hidden="true">
-        <defs><path id="badge-arc" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
-        <text><textPath href="#badge-arc" startOffset="0%">IL PERCORSO • 9 FASI • </textPath></text>
-      </svg>
-      <span class="badge-core" aria-hidden="true">
-        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </span>
-    </a>
-    <h2 id="cta-heading" class="cta-title" data-i18n-html="cta.title">Pronto a iniziare<br/><em style="font-style:italic;color:var(--gold)">il tuo percorso?</em></h2>
-    <p class="cta-sub" data-i18n="cta.sub">Registrati gratis. Nessuna carta di credito richiesta.</p>
-    <div class="cta-btns">
-      <a href="percorso.html" class="btn-primary" data-i18n="cta.btn1" onclick="if(typeof openAuth==='function'){openAuth('signup');return false;}">Crea il tuo account gratuito</a>
-      <a href="chi-siamo.html" class="btn-ghost" data-i18n="cta.btn2">Scopri come funziona</a>
-    </div>
   </div>
 </section>
 
