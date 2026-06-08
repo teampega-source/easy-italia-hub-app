@@ -38,8 +38,8 @@ const KNOWLEDGE = [
   {
     id: "spid",
     topic: "SPID — Identità Digitale",
-    keywords: ["spid", "identità digitale", "posteid", "namirial", "digital identity", "login", "credenziali"],
-    text: "Lo SPID (Sistema Pubblico di Identità Digitale) serve per accedere ai servizi della Pubblica Amministrazione online. Si ottiene tramite un Identity Provider accreditato (es. PosteID, Namirial, InfoCert, Aruba). Servono: un documento d'identità italiano valido o permesso, la tessera sanitaria/codice fiscale, un'email e un numero di cellulare. Il riconoscimento può essere di persona (es. ufficio postale), via webcam o con CIE/firma digitale. Verifica i provider attivi su spid.gov.it.",
+    keywords: ["spid", "identità digitale", "posteid", "namirial", "digital identity", "login", "credenziali", "spid a pagamento", "costo spid", "cie", "carta identità elettronica", "6 euro"],
+    text: "Lo SPID (Sistema Pubblico di Identità Digitale) serve per accedere ai servizi della Pubblica Amministrazione online. Si ottiene tramite un Identity Provider accreditato (es. PosteID, Namirial, InfoCert, Aruba). Servono: un documento d'identità italiano valido o permesso, la tessera sanitaria/codice fiscale, un'email e un numero di cellulare. Il riconoscimento può essere di persona (es. ufficio postale), via webcam o con CIE/firma digitale. Verifica i provider attivi su spid.gov.it. NOVITÀ 2026: dal 2026 lo SPID di Poste (PosteID) ha un costo di circa 6€ all'anno per il mantenimento (resta gratuito il primo anno, per i minori di 18 anni e per gli iscritti AIRE). Alternativa gratuita: la CIE (Carta d'Identità Elettronica), che dà accesso agli stessi servizi pubblici online.",
     source: "spid.gov.it",
   },
   {
