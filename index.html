@@ -614,8 +614,71 @@ body.has-banner{scroll-padding-top:96px}
   display:flex;align-items:center;justify-content:center;margin-bottom:var(--sp-2);
   background:linear-gradient(135deg,rgba(27,79,140,.28),rgba(58,123,213,.13));
   border:1px solid rgba(58,123,213,.18);flex-shrink:0;
+  position:relative;overflow:hidden;isolation:isolate;
 }
-.feat-icon svg{width:22px;height:22px;stroke:#93c5fd;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.feat-icon svg{width:22px;height:22px;stroke:#93c5fd;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1}
+/* ── Aurora motion background behind feature icons (CSS-only, GPU-friendly) ── */
+.feat-icon::before{
+  content:'';position:absolute;z-index:0;
+  top:-60%;left:-60%;width:220%;height:220%;
+  background:
+    radial-gradient(42% 42% at 28% 32%,rgba(183,171,152,.30),transparent 70%),
+    radial-gradient(46% 46% at 76% 70%,rgba(125,112,88,.26),transparent 72%);
+  background-repeat:no-repeat;
+  filter:blur(2px);
+  transform-origin:center;
+  will-change:transform;
+  animation:auroraDrift 14s var(--ease-morph) infinite alternate;
+  pointer-events:none;
+}
+/* Per-card tint so the 6 topics feel distinct (palette-locked, low opacity) */
+.feat:nth-child(1) .feat-icon::before{ /* Guide — warm taupe + gold */
+  background:
+    radial-gradient(42% 42% at 28% 32%,rgba(183,171,152,.30),transparent 70%),
+    radial-gradient(46% 46% at 76% 70%,rgba(124,112,89,.26),transparent 72%);
+}
+.feat:nth-child(2) .feat-icon::before{ /* Assistente AI — blue-taupe + coral whisper */
+  background:
+    radial-gradient(42% 42% at 30% 30%,rgba(125,112,88,.28),transparent 70%),
+    radial-gradient(46% 46% at 74% 72%,rgba(235,89,57,.18),transparent 72%);
+  animation-duration:13s;
+}
+.feat:nth-child(3) .feat-icon::before{ /* Community — warm taupe + coral */
+  background:
+    radial-gradient(44% 44% at 26% 34%,rgba(183,171,152,.32),transparent 70%),
+    radial-gradient(44% 44% at 78% 68%,rgba(235,89,57,.20),transparent 72%);
+  animation-duration:12s;
+}
+.feat:nth-child(4) .feat-icon::before{ /* Money Transfer — gold + green */
+  background:
+    radial-gradient(42% 42% at 30% 30%,rgba(124,112,89,.30),transparent 70%),
+    radial-gradient(46% 46% at 74% 72%,rgba(31,157,85,.22),transparent 72%);
+  animation-duration:15s;
+}
+.feat:nth-child(5) .feat-icon::before{ /* Mappa — green + taupe */
+  background:
+    radial-gradient(44% 44% at 28% 32%,rgba(31,157,85,.24),transparent 70%),
+    radial-gradient(44% 44% at 76% 70%,rgba(183,171,152,.30),transparent 72%);
+  animation-duration:16s;
+}
+.feat:nth-child(6) .feat-icon::before{ /* News — gold + blue-taupe */
+  background:
+    radial-gradient(42% 42% at 30% 30%,rgba(124,112,89,.28),transparent 70%),
+    radial-gradient(46% 46% at 74% 72%,rgba(125,112,88,.26),transparent 72%);
+  animation-duration:13.5s;
+}
+@keyframes auroraDrift{
+  0%  {transform:translate3d(-6%,-4%,0) rotate(-4deg) scale(1.05)}
+  50% {transform:translate3d(4%,3%,0) rotate(3deg) scale(1.12)}
+  100%{transform:translate3d(6%,5%,0) rotate(5deg) scale(1.06)}
+}
+/* Accessibility: freeze to a static soft gradient when motion is reduced */
+@media(prefers-reduced-motion:reduce){
+  .feat-icon::before{
+    animation:none;
+    transform:translate3d(0,0,0) rotate(0) scale(1.04);
+  }
+}
 .feat-title{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:500;color:var(--ink);margin-bottom:.45rem}
 .feat-desc{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.65;font-weight:300}
 

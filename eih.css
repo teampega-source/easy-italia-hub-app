@@ -110,6 +110,16 @@ main{position:relative;z-index:1}
 .icard{padding:1.4rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std)}
 .icard:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(20,30,48,.1)}
 .icard .ic{font-size:1.5rem;margin-bottom:.6rem}
+/* ── subtle animated "aurora" motion behind card icons (CSS-only, GPU-friendly) ── */
+.icard .ic{position:relative;display:inline-flex;align-items:center;justify-content:center;width:2.6rem;height:2.6rem;border-radius:14px;overflow:hidden;isolation:isolate;line-height:1}
+.icard .ic::before{content:"";position:absolute;z-index:-1;top:-60%;left:-60%;width:220%;height:220%;border-radius:inherit;background:radial-gradient(60% 60% at 30% 30%,rgba(183,171,152,0.30),transparent 70%),radial-gradient(55% 55% at 75% 65%,rgba(124,112,89,0.24),transparent 72%),radial-gradient(50% 50% at 60% 20%,rgba(31,157,85,0.18),transparent 70%);background-repeat:no-repeat;will-change:transform;transform:translate3d(0,0,0) scale(1) rotate(0deg);animation:icAurora 15s ease-in-out infinite alternate;pointer-events:none}
+@keyframes icAurora{from{transform:translate3d(-6%,-4%,0) scale(1.05) rotate(-4deg)}to{transform:translate3d(6%,5%,0) scale(1.18) rotate(4deg)}}
+/* gentle per-card tint variety, staying within the brand palette */
+.card-grid .icard:nth-child(3n+2) .ic::before{background:radial-gradient(60% 60% at 35% 30%,rgba(235,89,57,0.22),transparent 70%),radial-gradient(55% 55% at 70% 70%,rgba(183,171,152,0.28),transparent 72%),radial-gradient(50% 50% at 60% 25%,rgba(124,112,89,0.20),transparent 70%);background-repeat:no-repeat}
+.card-grid .icard:nth-child(3n+3) .ic::before{background:radial-gradient(60% 60% at 30% 35%,rgba(31,157,85,0.20),transparent 70%),radial-gradient(55% 55% at 72% 62%,rgba(124,112,89,0.26),transparent 72%),radial-gradient(50% 50% at 55% 22%,rgba(183,171,152,0.26),transparent 70%);background-repeat:no-repeat}
+.card-grid .icard:nth-child(3n+2) .ic::before{animation-duration:13s}
+.card-grid .icard:nth-child(3n+3) .ic::before{animation-duration:16s;animation-delay:-3s}
+@media (prefers-reduced-motion:reduce){.icard .ic::before{animation:none;transform:translate3d(0,0,0) scale(1.12) rotate(0deg)}}
 .icard h3{margin:0 0 .3rem;font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:600;color:var(--ink)}
 .icard p{margin:0;font-size:var(--text-sm);line-height:1.6}
 
