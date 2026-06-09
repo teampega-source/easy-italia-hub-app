@@ -46,7 +46,7 @@
     return '<footer><div class="footer-inner">'+
       '<div class="footer-brand"><a href="index.html" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a><p class="footer-tag" data-i18n="f.tag"></p></div>'+
       '<div class="footer-col"><h4 data-i18n="f.product">Prodotto</h4><ul>'+
-        '<li><a href="guide.html" data-i18n="nav.guide">Guide</a></li><li><a href="percorso.html" data-i18n="f.aiAssistant">Assistente AI</a></li><li><a href="community.html" data-i18n="nav.community">Community</a></li><li><a href="opportunita.html">Opportunità</a></li><li><a href="mappa.html" data-i18n="f.mapServices">Mappa servizi</a></li></ul></div>'+
+        '<li><a href="guide.html" data-i18n="nav.guide">Guide</a></li><li><a href="percorso.html" data-i18n="f.aiAssistant">Assistente AI</a></li><li><a href="community.html" data-i18n="nav.community">Community</a></li><li><a href="opportunita.html">Opportunità</a></li><li><a href="money-transfer.html">Money Transfer</a></li><li><a href="mappa.html" data-i18n="f.mapServices">Mappa servizi</a></li></ul></div>'+
       '<div class="footer-col"><h4 data-i18n="f.company">Azienda</h4><ul>'+
         '<li><a href="chi-siamo.html" data-i18n="f.about">Chi siamo</a></li><li><a href="news.html" data-i18n="nav.news">News</a></li><li><a href="contatti.html" data-i18n="f.advertising">Pubblicità</a></li><li><a href="contatti.html" data-i18n="f.contact">Contatti</a></li></ul></div>'+
       '<div class="footer-col"><h4 data-i18n="f.account">Account</h4><ul>'+
