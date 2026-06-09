@@ -786,29 +786,58 @@ body.has-banner{scroll-padding-top:96px}
     box-shadow:0 24px 60px rgba(20,30,48,.12);overflow:hidden;
   }
 }
-.nr-opp{flex-shrink:0;display:flex;flex-direction:column;padding:.6rem 0 .55rem;border-bottom:1px solid var(--border)}
-.nr-opp-h{display:flex;align-items:center;gap:.4rem;padding:0 .85rem .5rem;font-family:'Clash Grotesk',sans-serif;font-size:.64rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
-.nr-opp-h::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--coral)}
-.nr-opp-i{display:block;font-size:.74rem;line-height:1.35;color:var(--fg);text-decoration:none;padding:.4rem .85rem}
-.nr-opp-i:hover{background:rgba(124,112,89,.10)}
-.nr-opp-all{display:block;font-size:.66rem;font-weight:600;color:var(--gold);text-decoration:none;padding:.4rem .85rem .15rem}
-.nr-head{flex-shrink:0;display:flex;align-items:center;gap:.5rem;padding:.7rem .85rem;border-bottom:1px solid var(--border);font-family:'Clash Grotesk',sans-serif;font-size:.64rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
-.nr-live{width:7px;height:7px;border-radius:50%;background:var(--coral);animation:nrPulse 2s infinite}
-@keyframes nrPulse{0%{box-shadow:0 0 0 0 rgba(235,89,57,.5)}70%{box-shadow:0 0 0 7px rgba(235,89,57,0)}100%{box-shadow:0 0 0 0 rgba(235,89,57,0)}}
-.nr-viewport{position:relative;flex:1;overflow:hidden;mask-image:linear-gradient(to bottom,transparent,#000 7%,#000 93%,transparent);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 7%,#000 93%,transparent)}
+/* — Featured "In evidenza" rotating widget (top of rail) — */
+.nr-opp{flex-shrink:0;display:flex;flex-direction:column;padding:.7rem .7rem .6rem;border-bottom:1px solid var(--border);
+  background:linear-gradient(150deg,rgba(235,89,57,.07) 0%,rgba(183,171,152,.10) 48%,rgba(124,112,89,.07) 100%)}
+.nr-opp-h{display:flex;align-items:center;gap:.4rem;padding:0 .15rem .55rem;font-family:'Clash Grotesk',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--ink)}
+.nr-opp-h .nr-spark{font-size:.7rem;line-height:1;filter:saturate(.9)}
+.nr-opp-h::after{content:"";flex:1;height:1px;background:linear-gradient(to right,var(--border-bright),transparent)}
+.nr-opp-stage{position:relative;border-radius:13px;overflow:hidden;background:var(--bg-elevated);
+  border:1px solid var(--border-bright);box-shadow:0 8px 22px rgba(20,30,48,.10),inset 0 1px 0 rgba(255,255,255,.5);
+  min-height:148px}
+.nr-opp-card{position:absolute;inset:0;display:flex;flex-direction:column;gap:.32rem;padding:.7rem .75rem .72rem;
+  opacity:0;transform:translateY(8px);transition:opacity .55s ease,transform .55s ease;pointer-events:none;visibility:hidden}
+.nr-opp-card.is-on{position:relative;opacity:1;transform:none;pointer-events:auto;visibility:visible}
+.nr-opp-emoji{font-size:1.45rem;line-height:1}
+.nr-opp-eyebrow{font-family:'Clash Grotesk',sans-serif;font-size:.56rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--coral)}
+.nr-opp-title{font-family:'Clash Grotesk',sans-serif;font-size:.95rem;font-weight:600;line-height:1.15;color:var(--ink);letter-spacing:-.01em}
+.nr-opp-line{font-size:.7rem;line-height:1.4;color:var(--fg-secondary);font-weight:300;margin-bottom:.1rem}
+.nr-opp-cta{align-self:flex-start;margin-top:auto;display:inline-flex;align-items:center;gap:.28rem;
+  font-family:'Clash Grotesk',sans-serif;font-size:.66rem;font-weight:600;letter-spacing:.01em;text-decoration:none;color:#fff;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue));padding:.34rem .62rem;border-radius:var(--radius-full);
+  box-shadow:0 4px 12px var(--blue-glow);transition:transform .2s ease,box-shadow .2s ease}
+.nr-opp-cta:hover{transform:translateY(-1px);box-shadow:0 6px 16px var(--blue-glow)}
+.nr-opp-cta:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+.nr-opp-cta .nr-arr{transition:transform .2s ease}
+.nr-opp-cta:hover .nr-arr{transform:translateX(2px)}
+.nr-opp-dots{display:flex;gap:.34rem;justify-content:center;padding:.55rem 0 .2rem}
+.nr-opp-dot{width:7px;height:7px;padding:0;border:none;border-radius:50%;cursor:pointer;
+  background:rgba(124,112,89,.30);transition:background .25s ease,transform .25s ease}
+.nr-opp-dot:hover{background:rgba(124,112,89,.55)}
+.nr-opp-dot[aria-current="true"]{background:var(--coral);transform:scale(1.25)}
+.nr-opp-dot:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.nr-opp-all{display:block;text-align:center;font-family:'Clash Grotesk',sans-serif;font-size:.66rem;font-weight:600;
+  letter-spacing:.01em;color:var(--gold);text-decoration:none;padding:.32rem 0 .1rem}
+.nr-opp-all:hover{color:var(--coral)}
+.nr-opp-all:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+/* — News section (now SECONDARY, below the featured widget) — */
+.nr-head{flex-shrink:0;display:flex;align-items:center;gap:.45rem;padding:.55rem .85rem;border-bottom:1px solid var(--border);font-family:'Clash Grotesk',sans-serif;font-size:.58rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-muted)}
+.nr-live{width:6px;height:6px;border-radius:50%;background:var(--coral);animation:nrPulse 2s infinite}
+@keyframes nrPulse{0%{box-shadow:0 0 0 0 rgba(235,89,57,.5)}70%{box-shadow:0 0 0 6px rgba(235,89,57,0)}100%{box-shadow:0 0 0 0 rgba(235,89,57,0)}}
+.nr-viewport{position:relative;flex:1;min-height:96px;overflow:hidden;mask-image:linear-gradient(to bottom,transparent,#000 7%,#000 93%,transparent);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 7%,#000 93%,transparent)}
 .nr-track{display:flex;flex-direction:column;will-change:transform}
 .nr-track.nr-animate{animation:nrScroll linear infinite}
 .nr-viewport:hover .nr-track.nr-animate{animation-play-state:paused}
 @keyframes nrScroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
-.nr-item{display:block;padding:.62rem .85rem;border-bottom:1px solid rgba(118,118,118,.10);text-decoration:none}
+.nr-item{display:block;padding:.5rem .85rem;border-bottom:1px solid rgba(118,118,118,.10);text-decoration:none}
 .nr-item:hover{background:rgba(124,112,89,.10)}
-.nr-src{display:block;font-size:.57rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);margin-bottom:.18rem}
-.nr-title{display:block;font-size:.76rem;line-height:1.36;color:var(--fg);font-weight:400}
+.nr-src{display:block;font-size:.54rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);margin-bottom:.15rem}
+.nr-title{display:block;font-size:.71rem;line-height:1.34;color:var(--fg-secondary);font-weight:400}
 .nr-foot{flex-shrink:0;padding:.5rem .85rem;border-top:1px solid var(--border);font-size:.62rem;color:var(--fg-muted)}
 .nr-foot a{color:var(--gold);text-decoration:none;font-weight:600}
 .nr-empty{padding:.85rem;font-size:.74rem;color:var(--fg-muted);line-height:1.5}
 .nr-empty a{color:var(--gold);text-decoration:none;font-weight:600}
-@media(prefers-reduced-motion:reduce){.nr-viewport{overflow-y:auto}.nr-track.nr-animate{animation:none}}
+@media(prefers-reduced-motion:reduce){.nr-viewport{overflow-y:auto}.nr-track.nr-animate{animation:none}.nr-opp-card{transition:none}}
 
 /* ─── CHATBOT ─── */
 #chat-btn{
@@ -1388,12 +1417,92 @@ html.returning #preloader{display:none}
 </nav>
 
 <!-- ─── LIVE NEWS RAIL (titoli Sri Lanka via RSS, caricati da news-ticker.js) ─── -->
-<aside id="news-rail" aria-label="Ultime notizie dallo Sri Lanka">
-  <div class="nr-opp"><div class="nr-opp-h">✨ Opportunità</div><a class="nr-opp-i" href="opportunita.html">✈️ Voli Colombo–Italia</a><a class="nr-opp-i" href="opportunita.html">📚 Corsi d'italiano gratuiti</a><a class="nr-opp-i" href="opportunita.html">💼 Lavoro &amp; bandi</a><a class="nr-opp-all" href="opportunita.html">Scopri tutte →</a></div>
-  <div class="nr-head"><span class="nr-live" aria-hidden="true"></span> Live · Sri Lanka</div>
+<aside id="news-rail" aria-label="Opportunità in evidenza e ultime notizie dallo Sri Lanka">
+  <!-- Featured rotating widget: "Opportunità in evidenza" (real, sourced opportunities) -->
+  <div class="nr-opp">
+    <div class="nr-opp-h"><span class="nr-spark" aria-hidden="true">✨</span> In evidenza</div>
+    <div class="nr-opp-stage" id="nr-opp-stage" aria-live="polite" aria-atomic="true">
+      <article class="nr-opp-card is-on">
+        <span class="nr-opp-emoji" aria-hidden="true">📚</span>
+        <span class="nr-opp-eyebrow">Corsi gratuiti</span>
+        <h3 class="nr-opp-title">Italiano gratis al CPIA</h3>
+        <p class="nr-opp-line">Corsi statali per adulti, certificazione A2. Verifica la finestra di iscrizione sulla fonte.</p>
+        <a class="nr-opp-cta" href="https://www.mim.gov.it/en/i-centri-provinciali-per-l-istruzione-degli-adulti" target="_blank" rel="noopener noreferrer">Scopri come <span class="nr-arr" aria-hidden="true">→</span></a>
+      </article>
+      <article class="nr-opp-card">
+        <span class="nr-opp-emoji" aria-hidden="true">🎓</span>
+        <span class="nr-opp-eyebrow">Diritto allo studio</span>
+        <h3 class="nr-opp-title">Borse di studio DSU</h3>
+        <p class="nr-opp-line">Esonero tasse e sostegno per studenti universitari. Controlla il bando della tua regione.</p>
+        <a class="nr-opp-cta" href="https://www.mur.gov.it/it/aree-tematiche/universita/studenti-diritto-allo-studio-e-residenze/diritto-allo-studio" target="_blank" rel="noopener noreferrer">Vai al portale <span class="nr-arr" aria-hidden="true">→</span></a>
+      </article>
+      <article class="nr-opp-card">
+        <span class="nr-opp-emoji" aria-hidden="true">🇮🇹</span>
+        <span class="nr-opp-eyebrow">Governo italiano</span>
+        <h3 class="nr-opp-title">Borse MAECI</h3>
+        <p class="nr-opp-line">Borse statali per studiare in Italia. Bando e candidatura sul portale Study in Italy.</p>
+        <a class="nr-opp-cta" href="https://studyinitaly.esteri.it/" target="_blank" rel="noopener noreferrer">Apri il bando <span class="nr-arr" aria-hidden="true">→</span></a>
+      </article>
+      <article class="nr-opp-card">
+        <span class="nr-opp-emoji" aria-hidden="true">✈️</span>
+        <span class="nr-opp-eyebrow">Voli smart</span>
+        <h3 class="nr-opp-title">Colombo–Italia al meglio</h3>
+        <p class="nr-opp-line">Confronta date e tariffe in tempo reale: spesso conviene la bassa stagione.</p>
+        <a class="nr-opp-cta" href="https://www.google.com/travel/flights/flights-from-colombo.html" target="_blank" rel="noopener noreferrer">Confronta voli <span class="nr-arr" aria-hidden="true">→</span></a>
+      </article>
+    </div>
+    <div class="nr-opp-dots" id="nr-opp-dots" role="tablist" aria-label="Scegli opportunità"></div>
+    <a class="nr-opp-all" href="opportunita.html">Tutte le opportunità →</a>
+  </div>
+  <!-- Secondary: live news ticker (loaded by news-ticker.js into .nr-track) -->
+  <div class="nr-head"><span class="nr-live" aria-hidden="true"></span> Ultime news · Sri Lanka</div>
   <div class="nr-viewport"><div class="nr-track"></div></div>
   <div class="nr-foot"><a href="news.html">Tutte le news &rarr;</a></div>
 </aside>
+<script>
+/* Featured "In evidenza" rotator — vanilla, accessible, reduced-motion aware.
+   Crossfades through the .nr-opp-card items every ~5s, pauses on hover/focus,
+   builds real <button> dots, and stays static (no auto-rotate) under
+   prefers-reduced-motion while keeping the dots fully clickable. */
+(function(){
+  var stage=document.getElementById('nr-opp-stage');
+  var dotsWrap=document.getElementById('nr-opp-dots');
+  if(!stage||!dotsWrap)return;
+  var cards=Array.prototype.slice.call(stage.querySelectorAll('.nr-opp-card'));
+  if(cards.length<2){return;}
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DELAY=5000,i=0,timer=null;
+
+  var dots=cards.map(function(_,n){
+    var b=document.createElement('button');
+    b.type='button';b.className='nr-opp-dot';b.setAttribute('role','tab');
+    b.setAttribute('aria-label','Opportunità '+(n+1)+' di '+cards.length);
+    b.addEventListener('click',function(){show(n);restart();});
+    dotsWrap.appendChild(b);return b;
+  });
+
+  function show(n){
+    i=(n+cards.length)%cards.length;
+    cards.forEach(function(c,k){c.classList.toggle('is-on',k===i);});
+    dots.forEach(function(d,k){
+      var on=k===i;d.setAttribute('aria-current',on?'true':'false');d.setAttribute('aria-selected',on?'true':'false');
+    });
+  }
+  function next(){show(i+1);}
+  function start(){if(reduce||timer)return;timer=setInterval(next,DELAY);}
+  function stop(){if(timer){clearInterval(timer);timer=null;}}
+  function restart(){stop();start();}
+
+  show(0);
+  if(!reduce){
+    stage.addEventListener('mouseenter',stop);
+    stage.addEventListener('mouseleave',start);
+    stage.addEventListener('focusin',stop);
+    stage.addEventListener('focusout',start);
+    start();
+  }
+})();
+</script>
 
 <main id="main-content">
 
