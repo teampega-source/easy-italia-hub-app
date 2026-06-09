@@ -3,12 +3,37 @@
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Chi siamo — Easy Italia Hub</title>
-<meta name="description" content="Easy Italia Hub: la piattaforma di percorso che accompagna la comunità srilankese e gli immigrati a costruire la propria vita in Italia."/>
+<meta name="description" content="Easy Italia Hub: la piattaforma di percorso che accompagna la comunità srilankese e gli immigrati a costruire la propria vita in Italia. Tutto ciò che offriamo oggi e cosa stiamo costruendo."/>
 <meta name="theme-color" content="#7d7058"/>
 <link rel="canonical" href="https://easyitaliahub.it/chi-siamo"/>
 <link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
 <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="eih.css"/>
+<style>
+/* ── status pills + offering rows (scoped to Chi siamo) ── */
+.st{display:inline-flex;align-items:center;gap:.35rem;font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;border-radius:99px;vertical-align:middle;white-space:nowrap;line-height:1}
+.st::before{content:"";width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.st-live{color:#15663a;background:var(--green-dim);border:1px solid rgba(31,157,85,.30)}
+.st-live::before{background:var(--green)}
+.st-soon{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(124,112,89,.28)}
+.st-soon::before{background:var(--taupe)}
+/* legend under each section heading */
+.sec-note{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-size:var(--text-sm);color:var(--fg-muted);margin:-.4rem 0 var(--sp-2)}
+/* offering list: title + pill on one line, then description */
+.offer-list{list-style:none;margin:var(--sp-2) 0 var(--sp-2) 0;padding:0;display:flex;flex-direction:column;gap:.9rem}
+.offer-list li{padding-left:1.1rem;position:relative}
+.offer-list li::before{content:"";position:absolute;left:0;top:.62rem;width:6px;height:6px;border-radius:50%;background:var(--taupe)}
+.offer-list .ohead{display:flex;align-items:baseline;gap:.55rem;flex-wrap:wrap;margin-bottom:.15rem}
+.offer-list .oname{font-family:'Clash Grotesk',sans-serif;font-weight:600;color:var(--ink);font-size:var(--text-base)}
+.offer-list .odesc{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.6}
+.offer-list a.inline{font-weight:500}
+/* freemium tier mini-grid */
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem;margin-top:var(--sp-2)}
+.tier{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);padding:.9rem 1rem}
+.tier .tname{font-family:'Clash Grotesk',sans-serif;font-weight:600;color:var(--ink);font-size:var(--text-base);display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.tier .tprice{font-size:var(--text-sm);color:var(--gold);font-weight:600;white-space:nowrap}
+.tier .tdesc{font-size:var(--text-xs);color:var(--fg-muted);line-height:1.55;margin-top:.35rem}
+</style>
 <script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
 </head>
 <body data-page="chi-siamo">
@@ -50,11 +75,147 @@
     </div>
 
     <div class="reveal">
+      <h2>Tutto quello che offriamo</h2>
+      <p>Vogliamo essere trasparenti su <strong>cosa puoi usare già oggi</strong> e <strong>cosa stiamo ancora costruendo</strong>. Per questo ogni voce qui sotto è etichettata onestamente:</p>
+      <p class="sec-note"><span class="st st-live">Ora</span> già disponibile e gratuito sul sito <span style="opacity:.5">·</span> <span class="st st-soon">In arrivo</span> sulla nostra roadmap, non ancora attivo</p>
+    </div>
+
+    <div class="reveal">
+      <h3>📄 Documenti &amp; burocrazia</h3>
+      <ul class="offer-list">
+        <li>
+          <div class="ohead"><span class="oname">Guide burocratiche</span> <span class="st st-live">Ora</span></div>
+          <div class="odesc">Permesso di soggiorno, codice fiscale, SPID, residenza: guide passo-passo da fonti ufficiali, con checklist. <a class="inline" href="guide.html">Vai alle guide</a>.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Dashboard personale &amp; calendario scadenze</span> <span class="st st-live">Ora</span></div>
+          <div class="odesc">La tua home con i prossimi adempimenti e promemoria (per ora salvati nel browser, su questo dispositivo). <a class="inline" href="dashboard.html">Apri la dashboard</a>.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Reminder e tracker del permesso di soggiorno</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Inserimento pratica, monitoraggio dello stato e promemoria via email — disponibile con gli account reali.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Archivio documenti</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Carica PDF e foto, categorizzazione, scadenze e backup cloud, con ricerca intelligente.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Traduzione &amp; analisi documenti</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Carica lettere e comunicazioni ufficiali: traduzione, spiegazione semplificata e riepilogo automatico.</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal">
+      <h3>🗣️ Lingua &amp; formazione</h3>
+      <ul class="offer-list">
+        <li>
+          <div class="ohead"><span class="oname">Il Mio Percorso — 9 fasi</span> <span class="st st-live">Ora</span></div>
+          <div class="odesc">Dall'arrivo alla cittadinanza, con gli strumenti giusti a ogni fase, inclusi simulatori busta paga e mutuo e un quiz di italiano. <a class="inline" href="percorso.html">Scopri il percorso</a>.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Easy Italia Academy</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Corsi modulari: Italiano per la burocrazia (CAF, INPS, Questura, Sanità) e Italiano per il lavoro (camerieri, badanti, operai, magazzinieri…).</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Preparazione certificazioni</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Percorsi A2, B1 e B2 e preparazione al test di cittadinanza italiana.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">AI Teacher</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Correzione grammaticale, conversazioni realistiche e simulazioni di colloquio con valutazione.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Language Score &amp; certificati digitali</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Un punteggio linguistico proprietario con test periodici e progress tracking, più certificati PDF al completamento dei corsi.</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal">
+      <h3>🤖 AI &amp; assistenza</h3>
+      <ul class="offer-list">
+        <li>
+          <div class="ohead"><span class="oname">Consigliere AI (chat multilingua)</span> <span class="st st-live">Ora</span></div>
+          <div class="odesc">Risposte su burocrazia e servizi in italiano, inglese, sinhala e tamil, 24 ore su 24. Apri la chat dal pulsante in basso a destra su tutto il sito.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">AI illimitata &amp; Advisor specializzato</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Assistente esperto di immigrazione, lavoro, sanità, fisco, INPS, Agenzia delle Entrate e Questura, senza limiti d'uso.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">CV Builder</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Generazione e traduzione del curriculum, suggerimenti AI e preparazione ai colloqui.</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal">
+      <h3>👥 Community &amp; servizi</h3>
+      <ul class="offer-list">
+        <li>
+          <div class="ohead"><span class="oname">News in tempo reale</span> <span class="st st-live">Ora</span></div>
+          <div class="odesc">Leggi, decreti e opportunità per la comunità, da feed RSS aggiornati. <a class="inline" href="news.html">Leggi le news</a>.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Mappa dei servizi</span> <span class="st st-live">Ora</span></div>
+          <div class="odesc">CAF, patronati, negozi e luoghi di culto srilankesi sulla mappa interattiva. <a class="inline" href="mappa.html">Apri la mappa</a>.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Opportunità</span> <span class="st st-live">Ora</span></div>
+          <div class="odesc">Voli, corsi e borse di studio: una lista curata con link ufficiali. <a class="inline" href="opportunita.html">Vedi le opportunità</a>.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Comparatore money transfer</span> <span class="st st-live">Ora</span></div>
+          <div class="odesc">Confronta Wise, Western Union e Ria per risparmiare sulle rimesse verso lo Sri Lanka. <a class="inline" href="money-transfer.html">Confronta ora</a>.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Community</span> <span class="st st-live">Ora</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Oggi trovi la presentazione e le FAQ; forum, mentorship, badge e reputazione arriveranno con gli account reali. <a class="inline" href="community.html">Scopri la community</a>.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Gruppi città &amp; marketplace</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Gruppi locali per città e un marketplace interno per lavoro, stanze in affitto, auto usate e servizi.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">App mobile</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Notifiche push, accesso rapido ai documenti e community integrata, in un'app dedicata.</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal">
+      <h3>💼 Per i professionisti</h3>
+      <ul class="offer-list">
+        <li>
+          <div class="ohead"><span class="oname">Directory professionisti verificati (B2B)</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Un elenco di professionisti verificati con lead generation e visibilità per chi offre servizi alla comunità.</div>
+        </li>
+        <li>
+          <div class="ohead"><span class="oname">Partnership strategiche</span> <span class="st st-soon">In arrivo</span></div>
+          <div class="odesc">Collaborazioni con money transfer, CAF, patronati, assicurazioni, scuole guida, consulenti e avvocati.</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal">
+      <h2>Come si sostiene la piattaforma</h2>
+      <p>La parte informativa — guide, news, community di base — resta <strong>gratis per sempre</strong>. Per gli strumenti avanzati stiamo progettando un modello freemium: queste fasce sono <strong>in arrivo</strong>, non ancora attive.</p>
+      <div class="tiers">
+        <div class="tier"><div class="tname">Free <span class="st st-live">Ora</span></div><div class="tdesc">Guide, news, mappa, opportunità, Consigliere AI e community di base.</div></div>
+        <div class="tier"><div class="tname">Premium <span class="tprice">4,99€</span></div><div class="tdesc">AI illimitata, reminder e archivio documenti, checklist personalizzata. <span class="st st-soon">In arrivo</span></div></div>
+        <div class="tier"><div class="tname">Premium Plus <span class="tprice">9,99€</span></div><div class="tdesc">AI Teacher, traduzione documenti, gruppi città e consulenza. <span class="st st-soon">In arrivo</span></div></div>
+        <div class="tier"><div class="tname">Business</div><div class="tdesc">Directory professionisti, lead generation e visibilità. <span class="st st-soon">In arrivo</span></div></div>
+      </div>
+      <p class="muted" style="margin-top:var(--sp-2)">I dettagli e i prezzi definitivi sono nella pagina dedicata — <a class="inline" href="abbonamenti.html">vedi gli abbonamenti</a>.</p>
+    </div>
+
+    <div class="reveal">
       <h2>Il percorso in 9 fasi</h2>
       <p>Dalla prima settimana in Italia fino alla cittadinanza: Arrivo, Regolarizzazione, Lavoro, Casa, Famiglia, Educazione finanziaria, Imprenditoria, Patrimonio, Integrazione definitiva. Ad ogni fase, gli strumenti e i consigli giusti.</p>
       <div class="cta-row">
-        <a href="percorso.html" class="btn-primary">Scopri il tuo percorso</a>
-        <a href="contatti.html" class="btn-ghost">Contattaci</a>
+        <a href="percorso.html" class="btn-primary">Inizia il tuo percorso</a>
+        <a href="abbonamenti.html" class="btn-ghost">Abbonamenti</a>
       </div>
     </div>
   </div>
