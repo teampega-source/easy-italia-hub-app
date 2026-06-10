@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Archivio Documenti — Easy Italia Hub</title>
+<meta name="description" content="Il tuo archivio documenti personale: salva permesso di soggiorno, passaporto, contratti e buste paga in modo sicuro nel tuo browser, su questo dispositivo, con promemoria sulle scadenze."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/documenti"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+</head>
+<body data-page="documenti">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <style>
+    /* ── scoped to the documenti page — archivio documenti, built on eih.css tokens ── */
+    [data-page="documenti"] .doc-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:var(--sp-3);align-items:start;margin-top:var(--sp-3)}
+    @media(max-width:920px){[data-page="documenti"] .doc-grid{grid-template-columns:1fr}}
+
+    [data-page="documenti"] .panel{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem}
+    [data-page="documenti"] .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap}
+    [data-page="documenti"] .panel-head h2{margin:0;font-size:var(--text-xl)}
+    [data-page="documenti"] .panel-head .panel-sub{margin:.15rem 0 0;font-size:var(--text-xs);color:var(--fg-muted);font-weight:400}
+
+    /* register / demo prompt */
+    [data-page="documenti"] .reg-prompt{display:flex;align-items:flex-start;gap:.6rem;background:var(--green-dim);border:1px solid rgba(31,157,85,.28);border-radius:var(--radius-sm);padding:.8rem 1rem;font-size:var(--text-sm);color:var(--ink);margin-bottom:var(--sp-3);line-height:1.6}
+    [data-page="documenti"] .reg-prompt .reg-ic{flex:none;font-size:1.1rem;line-height:1.4}
+    [data-page="documenti"] .reg-prompt a.inline{font-weight:600}
+
+    /* unsupported notice */
+    [data-page="documenti"] .unsupported{display:none;align-items:flex-start;gap:.6rem;background:rgba(235,89,57,.08);border:1px solid rgba(235,89,57,.4);border-radius:var(--radius-sm);padding:1rem 1.1rem;font-size:var(--text-sm);color:var(--ink);margin-bottom:var(--sp-3);line-height:1.65}
+    [data-page="documenti"] .unsupported.show{display:flex}
+    [data-page="documenti"] .unsupported .un-ic{flex:none;font-size:1.2rem;line-height:1.3}
+
+    /* ── ADD FORM ── */
+    [data-page="documenti"] .doc-form label{display:block;font-size:var(--text-xs);color:var(--fg-secondary);font-weight:500;margin:.85rem 0 .3rem}
+    [data-page="documenti"] .doc-form label:first-of-type{margin-top:0}
+    [data-page="documenti"] .doc-form input[type="text"],
+    [data-page="documenti"] .doc-form input[type="date"],
+    [data-page="documenti"] .doc-form select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.7rem .85rem;font-size:var(--text-base);color:var(--ink);font-family:inherit;outline:none;min-height:44px}
+    [data-page="documenti"] .doc-form input:focus,
+    [data-page="documenti"] .doc-form select:focus{border-color:rgba(125,112,88,.55)}
+    [data-page="documenti"] .doc-form select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23857e72' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .85rem center;padding-right:2.3rem}
+
+    /* file drop zone */
+    [data-page="documenti"] .file-zone{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.35rem;padding:1.4rem 1rem;border:1.5px dashed var(--border-bright);border-radius:var(--radius-sm);background:var(--surface);cursor:pointer;transition:background var(--dur-micro),border-color var(--dur-micro)}
+    [data-page="documenti"] .file-zone:hover,[data-page="documenti"] .file-zone.drag{background:var(--gold-dim);border-color:var(--gold)}
+    [data-page="documenti"] .file-zone:focus-within{outline:2px solid var(--gold);outline-offset:2px}
+    [data-page="documenti"] .file-zone .fz-ic{font-size:1.6rem;line-height:1}
+    [data-page="documenti"] .file-zone .fz-main{font-weight:600;color:var(--ink);font-size:var(--text-sm)}
+    [data-page="documenti"] .file-zone .fz-sub{font-size:var(--text-xs);color:var(--fg-muted)}
+    [data-page="documenti"] .file-zone input[type="file"]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+    [data-page="documenti"] .file-zone.has-file{border-style:solid;border-color:var(--gold);background:var(--gold-dim)}
+    [data-page="documenti"] .file-zone .fz-file{display:none;font-weight:600;color:var(--ink);font-size:var(--text-sm);word-break:break-word}
+    [data-page="documenti"] .file-zone.has-file .fz-file{display:block}
+    [data-page="documenti"] .file-zone.has-file .fz-main,[data-page="documenti"] .file-zone.has-file .fz-sub{display:none}
+
+    [data-page="documenti"] .doc-form .form-err{display:none;margin-top:.6rem;font-size:var(--text-xs);color:var(--coral);font-weight:600}
+    [data-page="documenti"] .doc-form .form-err.show{display:block}
+    [data-page="documenti"] .df-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.1rem;align-items:center}
+    [data-page="documenti"] .df-reset{background:none;border:none;color:var(--fg-muted);cursor:pointer;font-family:inherit;font-size:var(--text-sm);padding:.4rem;min-height:38px}
+    [data-page="documenti"] .df-reset:hover{color:var(--ink)}
+
+    /* ── TOOLBAR (search + filter) ── */
+    [data-page="documenti"] .doc-toolbar{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:1rem}
+    [data-page="documenti"] .doc-search{flex:1;min-width:180px;position:relative}
+    [data-page="documenti"] .doc-search input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-full);padding:.65rem 1rem .65rem 2.4rem;font-size:var(--text-sm);color:var(--ink);font-family:inherit;outline:none;min-height:44px}
+    [data-page="documenti"] .doc-search input:focus{border-color:rgba(125,112,88,.55)}
+    [data-page="documenti"] .doc-search .s-ic{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);color:var(--fg-muted);font-size:.95rem;pointer-events:none}
+    [data-page="documenti"] .doc-filter{position:relative;min-width:170px}
+    [data-page="documenti"] .doc-filter select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-full);padding:.65rem 2.3rem .65rem 1rem;font-size:var(--text-sm);color:var(--ink);font-family:inherit;outline:none;min-height:44px;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23857e72' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;cursor:pointer}
+    [data-page="documenti"] .doc-filter select:focus{border-color:rgba(125,112,88,.55)}
+
+    [data-page="documenti"] .doc-count{font-size:var(--text-xs);color:var(--fg-muted);margin:-.3rem 0 .9rem;font-weight:500}
+
+    /* ── DOCUMENT CARDS ── */
+    [data-page="documenti"] .doc-list{list-style:none;margin:0;display:flex;flex-direction:column;gap:.75rem}
+    [data-page="documenti"] .doc-card{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);padding:.95rem 1rem;display:flex;gap:.85rem;align-items:flex-start}
+    [data-page="documenti"] .doc-card.expired{border-color:rgba(235,89,57,.5);background:rgba(235,89,57,.06)}
+    [data-page="documenti"] .doc-card.soon{border-color:rgba(124,112,89,.45);background:var(--gold-dim)}
+    [data-page="documenti"] .dc-thumb{flex:none;width:46px;height:46px;border-radius:var(--radius-sm);background:var(--bg-elevated);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.4rem;line-height:1;overflow:hidden}
+    [data-page="documenti"] .dc-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    [data-page="documenti"] .dc-body{flex:1;min-width:0}
+    [data-page="documenti"] .dc-name{font-family:'Clash Grotesk',sans-serif;font-weight:600;color:var(--ink);font-size:var(--text-base);margin:0;word-break:break-word;line-height:1.3}
+    [data-page="documenti"] .dc-cat{display:inline-block;margin:.35rem .4rem 0 0;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid rgba(124,112,89,.25);padding:.18rem .55rem;border-radius:99px;vertical-align:middle}
+    [data-page="documenti"] .dc-meta{font-size:var(--text-xs);color:var(--fg-muted);margin:.5rem 0 0;line-height:1.55;word-break:break-word}
+    [data-page="documenti"] .dc-meta .sep{opacity:.5;margin:0 .35rem}
+    [data-page="documenti"] .dc-expiry{display:inline-block;margin-top:.45rem;font-size:.7rem;font-weight:600;letter-spacing:.03em;color:var(--fg-secondary);background:var(--bg-elevated);border:1px solid var(--border);padding:.2rem .55rem;border-radius:99px}
+    [data-page="documenti"] .doc-card.soon .dc-expiry{color:var(--gold);background:#fff;border-color:rgba(124,112,89,.4)}
+    [data-page="documenti"] .doc-card.expired .dc-expiry{color:var(--coral);background:rgba(235,89,57,.1);border-color:rgba(235,89,57,.35)}
+
+    [data-page="documenti"] .dc-actions{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem}
+    [data-page="documenti"] .dc-btn{display:inline-flex;align-items:center;gap:.3rem;padding:.4rem .8rem;border-radius:var(--radius-full);border:1px solid var(--border-bright);background:var(--bg-elevated);color:var(--ink);cursor:pointer;font-family:inherit;font-size:var(--text-xs);font-weight:500;min-height:36px;text-decoration:none;transition:background var(--dur-micro),border-color var(--dur-micro),transform var(--dur-std) var(--ease-spring)}
+    [data-page="documenti"] .dc-btn:hover{background:var(--surface-hover);transform:translateY(-1px)}
+    [data-page="documenti"] .dc-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+    [data-page="documenti"] .dc-btn.danger:hover{background:rgba(235,89,57,.1);border-color:rgba(235,89,57,.4);color:var(--coral)}
+
+    [data-page="documenti"] .doc-empty{text-align:center;color:var(--fg-muted);font-size:var(--text-sm);padding:1.8rem 1rem;border:1px dashed var(--border-bright);border-radius:var(--radius-sm);line-height:1.65}
+    [data-page="documenti"] .doc-empty strong{color:var(--fg-secondary)}
+
+    /* reminders bar */
+    [data-page="documenti"] .remind-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem;margin-top:1.1rem;padding:.85rem 1rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface)}
+    [data-page="documenti"] .remind-bar p{margin:0;font-size:var(--text-sm);color:var(--fg-secondary);flex:1;min-width:200px;line-height:1.5}
+    [data-page="documenti"] .remind-status{font-size:var(--text-xs);font-weight:600;letter-spacing:.04em}
+    [data-page="documenti"] .remind-status.ok{color:var(--green)}
+    [data-page="documenti"] .remind-status.off{color:var(--fg-muted)}
+    [data-page="documenti"] .remind-status.denied{color:var(--coral)}
+
+    /* quick links */
+    [data-page="documenti"] .ql-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem;margin-top:var(--sp-3)}
+    [data-page="documenti"] .ql{display:flex;align-items:center;gap:.7rem;padding:1rem 1.1rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);text-decoration:none;color:var(--ink);transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std)}
+    [data-page="documenti"] .ql:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(20,30,48,.1)}
+    [data-page="documenti"] .ql .ql-ic{font-size:1.35rem;line-height:1}
+    [data-page="documenti"] .ql .ql-tx{display:flex;flex-direction:column;gap:.1rem}
+    [data-page="documenti"] .ql .ql-tt{font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:var(--text-base)}
+    [data-page="documenti"] .ql .ql-ds{font-size:var(--text-xs);color:var(--fg-muted)}
+
+    /* live region for screen readers */
+    [data-page="documenti"] .sr-live{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+
+  <div class="page page-wide">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Archivio Documenti</p>
+    <h1 class="reveal">I tuoi documenti,<br/><em>sempre con te.</em></h1>
+    <p class="lead reveal">Un posto unico per tenere in ordine i documenti che contano: permesso di soggiorno, passaporto, codice fiscale, contratti e buste paga. Salvali una volta e ritrovali in un attimo, con un <strong>promemoria quando una scadenza si avvicina</strong>.</p>
+
+    <!-- demo / device prompt -->
+    <div id="reg-prompt" class="reg-prompt reveal" hidden>
+      <span class="reg-ic" aria-hidden="true">👋</span>
+      <span>Stai usando l'archivio in modalità demo: i tuoi documenti restano salvati <strong>solo su questo dispositivo</strong>. <a class="inline" href="percorso.html">Registrati gratis dal tuo Percorso</a> per ritrovarli ovunque, con backup cifrato, quando arriveranno gli account reali.</span>
+    </div>
+
+    <!-- HONEST privacy banner -->
+    <div class="draft-banner reveal">🔒 <span><strong>Privacy:</strong> i tuoi documenti restano salvati <strong>SOLO nel tuo browser, su questo dispositivo</strong> — non vengono caricati su nessun server. Svuotando i dati del browser si perdono. Backup cloud cifrato e accesso multi-dispositivo arriveranno con gli account reali.</span></div>
+
+    <!-- IndexedDB unsupported notice (shown by JS only when needed) -->
+    <div id="unsupported" class="unsupported reveal" role="alert">
+      <span class="un-ic" aria-hidden="true">⚠️</span>
+      <span>Il tuo browser non supporta l'archiviazione locale dei file (<strong>IndexedDB</strong>), oppure è disattivata (per esempio in navigazione privata). Non è possibile salvare documenti su questo dispositivo. Prova con un browser aggiornato come Chrome, Firefox, Edge o Safari, fuori dalla modalità privata.</span>
+    </div>
+
+    <div class="doc-grid">
+      <!-- ── ADD PANEL ── -->
+      <section class="panel reveal" aria-labelledby="add-h">
+        <div class="panel-head">
+          <div>
+            <h2 id="add-h">Aggiungi documento</h2>
+            <p class="panel-sub">Il file resta sul tuo dispositivo, non viene caricato.</p>
+          </div>
+        </div>
+
+        <form class="doc-form" id="doc-form" aria-label="Aggiungi un documento">
+          <label id="file-label" for="doc-file">File <span class="muted">(PDF o immagine, max 20 MB)</span></label>
+          <div class="file-zone" id="file-zone">
+            <span class="fz-ic" aria-hidden="true">📄</span>
+            <span class="fz-main">Scegli un file o trascinalo qui</span>
+            <span class="fz-sub">PDF, JPG, PNG, HEIC…</span>
+            <span class="fz-file" id="fz-file"></span>
+            <input type="file" id="doc-file" name="file" accept="application/pdf,image/*" aria-labelledby="file-label"/>
+          </div>
+
+          <label for="doc-name">Nome / etichetta</label>
+          <input type="text" id="doc-name" name="name" maxlength="120" autocomplete="off" placeholder="Es. Permesso di soggiorno 2026"/>
+
+          <label for="doc-cat">Categoria</label>
+          <select id="doc-cat" name="categoria">
+            <option value="Permesso di soggiorno">Permesso di soggiorno</option>
+            <option value="Passaporto">Passaporto</option>
+            <option value="Codice fiscale">Codice fiscale</option>
+            <option value="Contratto di lavoro">Contratto di lavoro</option>
+            <option value="Busta paga">Busta paga</option>
+            <option value="Contratto d'affitto">Contratto d'affitto</option>
+            <option value="Tessera sanitaria">Tessera sanitaria</option>
+            <option value="Altro">Altro</option>
+          </select>
+
+          <label for="doc-expiry">Data di scadenza <span class="muted">(facoltativa)</span></label>
+          <input type="date" id="doc-expiry" name="scadenza"/>
+
+          <p class="form-err" id="form-err" role="alert"></p>
+
+          <div class="df-actions">
+            <button type="submit" class="btn-primary" id="doc-submit">Salva documento</button>
+            <button type="button" class="df-reset" id="doc-reset">Svuota campi</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ── LIST PANEL ── -->
+      <section class="panel reveal" aria-labelledby="list-h">
+        <div class="panel-head">
+          <div>
+            <h2 id="list-h">I miei documenti</h2>
+            <p class="panel-sub">Apri, scarica o elimina. Tutto in locale.</p>
+          </div>
+        </div>
+
+        <div class="doc-toolbar">
+          <div class="doc-search">
+            <span class="s-ic" aria-hidden="true">🔎</span>
+            <input type="search" id="doc-q" placeholder="Cerca per nome o categoria…" aria-label="Cerca tra i documenti" autocomplete="off"/>
+          </div>
+          <div class="doc-filter">
+            <select id="doc-fcat" aria-label="Filtra per categoria">
+              <option value="">Tutte le categorie</option>
+              <option value="Permesso di soggiorno">Permesso di soggiorno</option>
+              <option value="Passaporto">Passaporto</option>
+              <option value="Codice fiscale">Codice fiscale</option>
+              <option value="Contratto di lavoro">Contratto di lavoro</option>
+              <option value="Busta paga">Busta paga</option>
+              <option value="Contratto d'affitto">Contratto d'affitto</option>
+              <option value="Tessera sanitaria">Tessera sanitaria</option>
+              <option value="Altro">Altro</option>
+            </select>
+          </div>
+        </div>
+
+        <p class="doc-count" id="doc-count" aria-live="polite"></p>
+
+        <ul class="doc-list" id="doc-list"></ul>
+
+        <!-- reminders -->
+        <div class="remind-bar">
+          <p id="remind-text">Attiva i promemoria del browser per ricevere un avviso quando un documento sta per scadere (entro ~30 giorni).</p>
+          <button type="button" class="btn-ghost" id="remind-btn">Attiva promemoria nel browser</button>
+        </div>
+        <p class="muted" id="remind-state" style="margin:.6rem 0 0"><span class="remind-status off" id="remind-status">Promemoria non attivi</span></p>
+      </section>
+    </div>
+
+    <!-- quick links -->
+    <h2 class="reveal" style="margin-top:var(--sp-5)">Collegamenti utili</h2>
+    <div class="ql-grid reveal">
+      <a class="ql" href="permesso-tracker.html"><span class="ql-ic" aria-hidden="true">🪪</span><span class="ql-tx"><span class="ql-tt">Tracker Permesso</span><span class="ql-ds">Segui la pratica passo-passo</span></span></a>
+      <a class="ql" href="dashboard.html"><span class="ql-ic" aria-hidden="true">📅</span><span class="ql-tx"><span class="ql-tt">La mia Dashboard</span><span class="ql-ds">Calendario e scadenze</span></span></a>
+      <a class="ql" href="guide.html"><span class="ql-ic" aria-hidden="true">📚</span><span class="ql-tx"><span class="ql-tt">Guide</span><span class="ql-ds">Documenti passo-passo</span></span></a>
+    </div>
+
+    <div class="cta-row reveal">
+      <a href="dashboard.html" class="btn-primary">Apri la Dashboard</a>
+      <a href="guide.html" class="btn-ghost">Sfoglia le guide</a>
+    </div>
+
+    <p class="sr-live" id="sr-live" aria-live="polite"></p>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   Archivio Documenti — storage 100% client-side.
+   Nessun backend, nessuna chiamata di rete: i FILE (Blob) e i
+   metadati vivono in IndexedDB nel browser, su questo dispositivo.
+   DB:    'eih-docs'  (v1)
+   Store: 'documents' keyPath 'id', autoIncrement
+          index 'categoria', index 'createdAt'
+   Record: { id, name, categoria, size, type, createdAt, expiry, blob }
+   ═══════════════════════════════════════════════════════════ */
+(function(){
+  "use strict";
+
+  var DB_NAME = 'eih-docs';
+  var DB_VERSION = 1;
+  var STORE = 'documents';
+  var MAX_BYTES = 20 * 1024 * 1024; // 20 MB cap to keep things sane
+  var SOON_DAYS = 30;               // "scade tra X giorni" threshold
+
+  var MONTHS_SHORT = ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+
+  // categoria → emoji (small visual aid only)
+  var CAT_ICON = {
+    'Permesso di soggiorno':'🪪',
+    'Passaporto':'🛂',
+    'Codice fiscale':'🧾',
+    'Contratto di lavoro':'💼',
+    'Busta paga':'💶',
+    "Contratto d'affitto":'🏠',
+    'Tessera sanitaria':'⚕️',
+    'Altro':'📄'
+  };
+
+  // ── DOM refs ─────────────────────────────────────────────
+  var elForm     = document.getElementById('doc-form');
+  var elFile     = document.getElementById('doc-file');
+  var elFileZone = document.getElementById('file-zone');
+  var elFileName = document.getElementById('fz-file');
+  var elName     = document.getElementById('doc-name');
+  var elCat      = document.getElementById('doc-cat');
+  var elExpiry   = document.getElementById('doc-expiry');
+  var elErr      = document.getElementById('form-err');
+  var elSubmit   = document.getElementById('doc-submit');
+  var elReset    = document.getElementById('doc-reset');
+  var elList     = document.getElementById('doc-list');
+  var elCount    = document.getElementById('doc-count');
+  var elQ        = document.getElementById('doc-q');
+  var elFCat     = document.getElementById('doc-fcat');
+  var elUnsup    = document.getElementById('unsupported');
+  var elRegPmt   = document.getElementById('reg-prompt');
+  var elRemBtn   = document.getElementById('remind-btn');
+  var elRemSt    = document.getElementById('remind-status');
+  var elRemTxt   = document.getElementById('remind-text');
+  var elLive     = document.getElementById('sr-live');
+
+  if(!elForm || !elList){ return; } // page shell not present
+
+  var db = null;
+  var docs = [];                    // in-memory metadata cache (no blobs)
+  var liveURLs = [];                // object URLs to revoke on unload
+
+  function announce(msg){ if(elLive){ elLive.textContent=''; elLive.textContent = msg; } }
+
+  // ── helpers ──────────────────────────────────────────────
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  function todayStart(){ var t = new Date(); t.setHours(0,0,0,0); return t; }
+  function parseYmd(s){
+    var p = String(s).split('-');
+    return new Date(+p[0], (+p[1]||1)-1, +p[2]||1, 0,0,0,0);
+  }
+  function daysBetween(fromDate, toDate){
+    return Math.round((toDate.getTime() - fromDate.getTime()) / 86400000);
+  }
+  function fmtDate(d){ return d.getDate() + ' ' + MONTHS_SHORT[d.getMonth()] + ' ' + d.getFullYear(); }
+  function fmtSize(bytes){
+    if(bytes == null) return '';
+    if(bytes < 1024) return bytes + ' B';
+    if(bytes < 1024*1024) return (bytes/1024).toFixed(0) + ' KB';
+    return (bytes/(1024*1024)).toFixed(1) + ' MB';
+  }
+  function escapeHTML(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+  function isImage(type){ return typeof type === 'string' && type.indexOf('image/') === 0; }
+
+  function expiryInfo(expiry){
+    // → { state:'none'|'expired'|'soon'|'ok', diff, label }
+    if(!expiry) return { state:'none' };
+    var d = parseYmd(expiry);
+    var diff = daysBetween(todayStart(), d);
+    var label;
+    if(diff < 0) label = 'Scaduto da ' + Math.abs(diff) + (Math.abs(diff)===1?' giorno':' giorni');
+    else if(diff === 0) label = 'Scade oggi';
+    else if(diff === 1) label = 'Scade domani';
+    else label = 'Scade tra ' + diff + ' giorni';
+    var state = diff < 0 ? 'expired' : (diff <= SOON_DAYS ? 'soon' : 'ok');
+    return { state:state, diff:diff, label:label, date:d };
+  }
+
+  // ── IndexedDB layer ──────────────────────────────────────
+  function idbSupported(){
+    try{ return ('indexedDB' in window) && window.indexedDB !== null; }
+    catch(e){ return false; }
+  }
+
+  function openDB(){
+    return new Promise(function(resolve, reject){
+      var req;
+      try{ req = indexedDB.open(DB_NAME, DB_VERSION); }
+      catch(e){ reject(e); return; }
+
+      req.onupgradeneeded = function(e){
+        var database = e.target.result;
+        if(!database.objectStoreNames.contains(STORE)){
+          var os = database.createObjectStore(STORE, { keyPath:'id', autoIncrement:true });
+          os.createIndex('categoria', 'categoria', { unique:false });
+          os.createIndex('createdAt', 'createdAt', { unique:false });
+        }
+      };
+      req.onsuccess = function(e){ resolve(e.target.result); };
+      req.onerror   = function(){ reject(req.error || new Error('IndexedDB open failed')); };
+      req.onblocked = function(){ /* another tab holds an older version open */ };
+    });
+  }
+
+  function tx(mode){ return db.transaction(STORE, mode).objectStore(STORE); }
+
+  // add a record (with blob); resolves with the generated key
+  function dbAdd(record){
+    return new Promise(function(resolve, reject){
+      var req = tx('readwrite').add(record);
+      req.onsuccess = function(){ resolve(req.result); };
+      req.onerror   = function(){ reject(req.error || new Error('add failed')); };
+    });
+  }
+
+  // fetch a single full record (incl. blob) by id
+  function dbGet(id){
+    return new Promise(function(resolve, reject){
+      var req = tx('readonly').get(id);
+      req.onsuccess = function(){ resolve(req.result || null); };
+      req.onerror   = function(){ reject(req.error || new Error('get failed')); };
+    });
+  }
+
+  // load ALL metadata (strip blob from cache to save memory)
+  function dbGetAllMeta(){
+    return new Promise(function(resolve, reject){
+      var out = [];
+      var store = tx('readonly');
+      // openCursor lets us drop the heavy blob field from each record
+      var req = store.openCursor();
+      req.onsuccess = function(e){
+        var cur = e.target.result;
+        if(cur){
+          var v = cur.value;
+          out.push({
+            id: v.id, name: v.name, categoria: v.categoria,
+            size: v.size, type: v.type, createdAt: v.createdAt, expiry: v.expiry || ''
+          });
+          cur.continue();
+        } else {
+          resolve(out);
+        }
+      };
+      req.onerror = function(){ reject(req.error || new Error('getAll failed')); };
+    });
+  }
+
+  function dbDelete(id){
+    return new Promise(function(resolve, reject){
+      var req = tx('readwrite').delete(id);
+      req.onsuccess = function(){ resolve(); };
+      req.onerror   = function(){ reject(req.error || new Error('delete failed')); };
+    });
+  }
+
+  // ── object-URL helpers (revoke to avoid leaks) ───────────
+  function makeURL(blob){
+    var url = URL.createObjectURL(blob);
+    liveURLs.push(url);
+    return url;
+  }
+  function revokeAll(){
+    liveURLs.forEach(function(u){ try{ URL.revokeObjectURL(u); }catch(e){} });
+    liveURLs = [];
+  }
+  window.addEventListener('pagehide', revokeAll);
+  window.addEventListener('beforeunload', revokeAll);
+
+  // ── registration prompt (demo gate) ──────────────────────
+  function checkRegistered(){
+    var registered = false;
+    try{ registered = !!localStorage.getItem('eih-registered'); }catch(e){}
+    if(elRegPmt){ elRegPmt.hidden = registered; }
+  }
+
+  // ── form: file selection feedback ────────────────────────
+  function showFile(file){
+    if(file){
+      elFileZone.classList.add('has-file');
+      elFileName.textContent = '📎 ' + file.name + '  ·  ' + fmtSize(file.size);
+      // auto-suggest a name from the filename if name is empty
+      if(!elName.value.trim()){
+        var base = file.name.replace(/\.[^.]+$/, '');
+        elName.value = base.slice(0, 120);
+      }
+    } else {
+      elFileZone.classList.remove('has-file');
+      elFileName.textContent = '';
+    }
+  }
+
+  function setErr(msg){
+    if(msg){ elErr.textContent = msg; elErr.classList.add('show'); }
+    else { elErr.textContent = ''; elErr.classList.remove('show'); }
+  }
+
+  // ── filtering + render ───────────────────────────────────
+  function currentFiltered(){
+    var q = (elQ.value || '').trim().toLowerCase();
+    var cat = elFCat.value || '';
+    return docs.filter(function(d){
+      if(cat && d.categoria !== cat) return false;
+      if(q){
+        var hay = ((d.name||'') + ' ' + (d.categoria||'')).toLowerCase();
+        if(hay.indexOf(q) === -1) return false;
+      }
+      return true;
+    }).sort(function(a, b){
+      // soonest-expiring first, then newest added
+      var ea = a.expiry ? parseYmd(a.expiry).getTime() : Infinity;
+      var eb = b.expiry ? parseYmd(b.expiry).getTime() : Infinity;
+      if(ea !== eb) return ea - eb;
+      return (b.createdAt||0) - (a.createdAt||0);
+    });
+  }
+
+  function renderCount(shown, total){
+    if(total === 0){ elCount.textContent = ''; return; }
+    if(shown === total){
+      elCount.textContent = total + (total===1 ? ' documento salvato' : ' documenti salvati');
+    } else {
+      elCount.textContent = shown + ' di ' + total + ' documenti';
+    }
+  }
+
+  function buildCard(d){
+    var li = document.createElement('li');
+    li.className = 'doc-card';
+    li.dataset.id = d.id;
+
+    var exp = expiryInfo(d.expiry);
+    if(exp.state === 'expired') li.classList.add('expired');
+    else if(exp.state === 'soon') li.classList.add('soon');
+
+    // thumb (emoji by default; images get a tiny preview lazily)
+    var thumb = document.createElement('div');
+    thumb.className = 'dc-thumb';
+    thumb.setAttribute('aria-hidden','true');
+    thumb.textContent = CAT_ICON[d.categoria] || '📄';
+
+    var body = document.createElement('div');
+    body.className = 'dc-body';
+
+    var created = d.createdAt ? new Date(d.createdAt) : null;
+    var metaBits = [];
+    if(d.size != null) metaBits.push(fmtSize(d.size));
+    if(created) metaBits.push('aggiunto il ' + fmtDate(created));
+
+    var html = '';
+    html += '<p class="dc-name">' + escapeHTML(d.name || '(senza nome)') + '</p>';
+    html += '<span class="dc-cat">' + escapeHTML(d.categoria || 'Altro') + '</span>';
+    html += '<p class="dc-meta">' + metaBits.map(escapeHTML).join('<span class="sep">·</span>') + '</p>';
+    if(exp.state !== 'none'){
+      html += '<span class="dc-expiry">' + (exp.state==='soon' ? '⏳ ' : (exp.state==='expired' ? '⚠️ ' : '')) +
+              escapeHTML(exp.label) + ' <span style="opacity:.6">(' + escapeHTML(fmtDate(exp.date)) + ')</span></span>';
+    }
+    body.innerHTML = html;
+
+    // actions
+    var actions = document.createElement('div');
+    actions.className = 'dc-actions';
+
+    var bOpen = document.createElement('button');
+    bOpen.type = 'button'; bOpen.className = 'dc-btn';
+    bOpen.innerHTML = '<span aria-hidden="true">↗</span> Apri';
+    bOpen.setAttribute('aria-label', 'Apri il documento ' + (d.name||'') + ' in una nuova scheda');
+    bOpen.addEventListener('click', function(){ openDoc(d.id); });
+
+    var bDown = document.createElement('button');
+    bDown.type = 'button'; bDown.className = 'dc-btn';
+    bDown.innerHTML = '<span aria-hidden="true">⬇</span> Scarica';
+    bDown.setAttribute('aria-label', 'Scarica il documento ' + (d.name||''));
+    bDown.addEventListener('click', function(){ downloadDoc(d.id); });
+
+    var bDel = document.createElement('button');
+    bDel.type = 'button'; bDel.className = 'dc-btn danger';
+    bDel.innerHTML = '<span aria-hidden="true">🗑</span> Elimina';
+    bDel.setAttribute('aria-label', 'Elimina il documento ' + (d.name||''));
+    bDel.addEventListener('click', function(){ deleteDoc(d.id, d.name); });
+
+    actions.appendChild(bOpen);
+    actions.appendChild(bDown);
+    actions.appendChild(bDel);
+    body.appendChild(actions);
+
+    li.appendChild(thumb);
+    li.appendChild(body);
+
+    // lazy image thumbnail (kept cheap; revoked on unload)
+    if(isImage(d.type)){
+      dbGet(d.id).then(function(full){
+        if(full && full.blob){
+          var img = document.createElement('img');
+          img.alt = '';
+          img.src = makeURL(full.blob);
+          thumb.textContent = '';
+          thumb.appendChild(img);
+        }
+      }).catch(function(){ /* keep emoji fallback */ });
+    }
+
+    return li;
+  }
+
+  function renderList(){
+    elList.innerHTML = '';
+    var total = docs.length;
+
+    if(total === 0){
+      var li = document.createElement('li');
+      li.className = 'doc-empty';
+      li.innerHTML = 'Nessun documento ancora. Usa <strong>“Aggiungi documento”</strong> qui a sinistra: scegli un file, dai un nome e una categoria, e resterà al sicuro su questo dispositivo.';
+      elList.appendChild(li);
+      renderCount(0, 0);
+      return;
+    }
+
+    var filtered = currentFiltered();
+    renderCount(filtered.length, total);
+
+    if(filtered.length === 0){
+      var li2 = document.createElement('li');
+      li2.className = 'doc-empty';
+      li2.textContent = 'Nessun documento corrisponde alla ricerca o al filtro.';
+      elList.appendChild(li2);
+      return;
+    }
+
+    var frag = document.createDocumentFragment();
+    filtered.forEach(function(d){ frag.appendChild(buildCard(d)); });
+    elList.appendChild(frag);
+  }
+
+  // ── actions: open / download / delete ────────────────────
+  function openDoc(id){
+    dbGet(id).then(function(rec){
+      if(!rec || !rec.blob){ announce('Documento non trovato.'); return; }
+      var url = makeURL(rec.blob);
+      var w = window.open(url, '_blank', 'noopener');
+      // if popup blocked, fall back to navigating via a temporary link
+      if(!w){
+        var a = document.createElement('a');
+        a.href = url; a.target = '_blank'; a.rel = 'noopener';
+        document.body.appendChild(a); a.click(); a.remove();
+      }
+      // revoke shortly after — the new tab has already loaded the resource
+      setTimeout(function(){ try{ URL.revokeObjectURL(url); }catch(e){}
+        liveURLs = liveURLs.filter(function(u){ return u !== url; });
+      }, 60000);
+      announce('Documento aperto in una nuova scheda.');
+    }).catch(function(){ announce('Impossibile aprire il documento.'); });
+  }
+
+  function downloadDoc(id){
+    dbGet(id).then(function(rec){
+      if(!rec || !rec.blob){ announce('Documento non trovato.'); return; }
+      var url = URL.createObjectURL(rec.blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = suggestFilename(rec);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function(){ try{ URL.revokeObjectURL(url); }catch(e){} }, 2000);
+      announce('Download avviato.');
+    }).catch(function(){ announce('Impossibile scaricare il documento.'); });
+  }
+
+  function suggestFilename(rec){
+    var base = (rec.name || rec.categoria || 'documento').replace(/[\\/:*?"<>|]+/g, '_').slice(0,100).trim() || 'documento';
+    var ext = '';
+    if(rec.type === 'application/pdf') ext = '.pdf';
+    else if(rec.type === 'image/jpeg') ext = '.jpg';
+    else if(rec.type === 'image/png') ext = '.png';
+    else if(rec.type === 'image/webp') ext = '.webp';
+    else if(rec.type === 'image/heic') ext = '.heic';
+    else if(rec.type === 'image/gif') ext = '.gif';
+    // avoid doubling an extension already in the name
+    if(ext && base.toLowerCase().slice(-ext.length) === ext) ext = '';
+    return base + ext;
+  }
+
+  function deleteDoc(id, name){
+    var label = name ? '“' + name + '”' : 'questo documento';
+    if(!window.confirm('Eliminare ' + label + ' da questo dispositivo?\n\nL\'operazione non può essere annullata.')) return;
+    dbDelete(id).then(function(){
+      docs = docs.filter(function(d){ return d.id !== id; });
+      renderList();
+      reflectPermission(); // keep reminder copy honest about count
+      announce('Documento eliminato.');
+    }).catch(function(){ announce('Eliminazione non riuscita.'); });
+  }
+
+  // ── add submit ───────────────────────────────────────────
+  function handleSubmit(e){
+    e.preventDefault();
+    setErr('');
+
+    var file = elFile.files && elFile.files[0];
+    if(!file){ setErr('Scegli un file (PDF o immagine) da salvare.'); elFileZone.focus && elFileZone.focus(); return; }
+
+    var okType = (file.type === 'application/pdf') || isImage(file.type) ||
+                 /\.(pdf|jpe?g|png|webp|gif|heic|heif|bmp|tiff?)$/i.test(file.name);
+    if(!okType){ setErr('Formato non supportato. Usa un PDF o un\'immagine.'); return; }
+    if(file.size > MAX_BYTES){ setErr('File troppo grande (max 20 MB). Comprimi o scegli un file più piccolo.'); return; }
+    if(file.size === 0){ setErr('Il file sembra vuoto. Scegli un altro file.'); return; }
+
+    var name = (elName.value || '').trim();
+    if(!name){ name = file.name.replace(/\.[^.]+$/, '').slice(0,120) || 'Documento'; }
+
+    var record = {
+      name: name,
+      categoria: elCat.value || 'Altro',
+      size: file.size,
+      type: file.type || '',
+      createdAt: Date.now(),
+      expiry: elExpiry.value || '',   // 'YYYY-MM-DD' or ''
+      blob: file                       // File is a Blob — stored as-is
+    };
+
+    elSubmit.disabled = true;
+    dbAdd(record).then(function(newId){
+      record.id = newId;
+      // push lightweight meta into cache (no blob)
+      docs.push({
+        id:newId, name:record.name, categoria:record.categoria,
+        size:record.size, type:record.type, createdAt:record.createdAt, expiry:record.expiry
+      });
+      elForm.reset();
+      showFile(null);
+      setErr('');
+      renderList();
+      reflectPermission();
+      announce('Documento “' + record.name + '” salvato su questo dispositivo.');
+      // gentle notify if it expires soon and reminders are on
+      maybeNotifyOne(record);
+    }).catch(function(err){
+      setErr('Salvataggio non riuscito. Lo spazio del browser potrebbe essere pieno.');
+    }).then(function(){
+      elSubmit.disabled = false;
+    });
+  }
+
+  // ── REMINDERS (Notification API) ─────────────────────────
+  function notifSupported(){ return ('Notification' in window); }
+
+  function expiringSoon(){
+    var today = todayStart();
+    return docs.filter(function(d){
+      if(!d.expiry) return false;
+      var diff = daysBetween(today, parseYmd(d.expiry));
+      return diff >= 0 && diff <= SOON_DAYS;
+    }).sort(function(a,b){ return parseYmd(a.expiry) - parseYmd(b.expiry); });
+  }
+
+  function reflectPermission(){
+    var soonCount = expiringSoon().length;
+    var soonNote = soonCount ? (' ' + soonCount + (soonCount===1?' documento è in scadenza':' documenti sono in scadenza') + ' entro ' + SOON_DAYS + ' giorni.') : '';
+    if(!notifSupported()){
+      elRemSt.textContent = 'Notifiche non supportate da questo browser';
+      elRemSt.className = 'remind-status denied';
+      elRemBtn.disabled = true;
+      elRemBtn.textContent = 'Non disponibile';
+      elRemTxt.textContent = 'Questo browser non supporta le notifiche. Le scadenze restano comunque evidenziate qui nell\'elenco.' + soonNote;
+      return;
+    }
+    var p = Notification.permission;
+    if(p === 'granted'){
+      elRemSt.textContent = '✓ Promemoria attivi su questo dispositivo';
+      elRemSt.className = 'remind-status ok';
+      elRemBtn.textContent = 'Controlla documenti in scadenza';
+      elRemTxt.textContent = 'Ti avvisiamo quando un documento sta per scadere (entro ~' + SOON_DAYS + ' giorni).' + soonNote;
+    } else if(p === 'denied'){
+      elRemSt.textContent = 'Notifiche bloccate dal browser — sbloccale dalle impostazioni del sito';
+      elRemSt.className = 'remind-status denied';
+      elRemBtn.textContent = 'Attiva promemoria nel browser';
+      elRemTxt.textContent = 'Le scadenze restano evidenziate qui nell\'elenco.' + soonNote;
+    } else {
+      elRemSt.textContent = 'Promemoria non attivi';
+      elRemSt.className = 'remind-status off';
+      elRemBtn.textContent = 'Attiva promemoria nel browser';
+      elRemTxt.textContent = 'Attiva i promemoria del browser per ricevere un avviso quando un documento sta per scadere (entro ~' + SOON_DAYS + ' giorni).' + soonNote;
+    }
+  }
+
+  function showSoonNotifications(){
+    if(!notifSupported() || Notification.permission !== 'granted') return;
+    var soon = expiringSoon();
+    if(!soon.length){
+      announce('Nessun documento in scadenza nei prossimi ' + SOON_DAYS + ' giorni.');
+      try{ new Notification('Easy Italia Hub — documenti', {
+        body:'Nessun documento in scadenza nei prossimi ' + SOON_DAYS + ' giorni. Tutto in ordine!', lang:'it'
+      }); }catch(e){}
+      return;
+    }
+    var today = todayStart();
+    soon.slice(0, 4).forEach(function(d){
+      var info = expiryInfo(d.expiry);
+      try{ new Notification('Documento in scadenza: ' + d.name, {
+        body: info.label + ' (' + (d.categoria||'') + ')', lang:'it', tag:'eih-doc-' + d.id
+      }); }catch(e){}
+    });
+    announce(soon.length + (soon.length===1?' documento in scadenza':' documenti in scadenza') + ' nei prossimi ' + SOON_DAYS + ' giorni.');
+  }
+
+  function maybeNotifyOne(rec){
+    if(!notifSupported() || Notification.permission !== 'granted') return;
+    var info = expiryInfo(rec.expiry);
+    if(info.state === 'soon' || info.state === 'expired'){
+      try{ new Notification('Documento in scadenza: ' + rec.name, {
+        body: info.label + ' (' + (rec.categoria||'') + ')', lang:'it', tag:'eih-doc-new'
+      }); }catch(e){}
+    }
+  }
+
+  function requestReminders(){
+    if(!notifSupported()){ reflectPermission(); return; }
+    if(Notification.permission === 'granted'){ showSoonNotifications(); return; }
+    if(Notification.permission === 'denied'){ reflectPermission(); return; }
+    try{
+      var p = Notification.requestPermission(function(result){
+        reflectPermission();
+        if(result === 'granted') showSoonNotifications();
+      });
+      if(p && typeof p.then === 'function'){
+        p.then(function(result){
+          reflectPermission();
+          if(result === 'granted') showSoonNotifications();
+        }).catch(function(){ reflectPermission(); });
+      }
+    }catch(e){ reflectPermission(); }
+  }
+
+  // ── EVENTS ───────────────────────────────────────────────
+  elFile.addEventListener('change', function(){
+    showFile(elFile.files && elFile.files[0]);
+    setErr('');
+  });
+
+  // drag & drop onto the file zone
+  ['dragenter','dragover'].forEach(function(ev){
+    elFileZone.addEventListener(ev, function(e){ e.preventDefault(); elFileZone.classList.add('drag'); });
+  });
+  ['dragleave','dragend','drop'].forEach(function(ev){
+    elFileZone.addEventListener(ev, function(e){ e.preventDefault(); elFileZone.classList.remove('drag'); });
+  });
+  elFileZone.addEventListener('drop', function(e){
+    var dt = e.dataTransfer;
+    if(dt && dt.files && dt.files.length){
+      try{ elFile.files = dt.files; }catch(err){}
+      showFile(dt.files[0]);
+      setErr('');
+    }
+  });
+
+  elForm.addEventListener('submit', handleSubmit);
+
+  elReset.addEventListener('click', function(){
+    elForm.reset(); showFile(null); setErr('');
+    try{ elName.focus(); }catch(e){}
+  });
+
+  elQ.addEventListener('input', renderList);
+  elFCat.addEventListener('change', renderList);
+  elRemBtn.addEventListener('click', requestReminders);
+
+  // ── INIT ─────────────────────────────────────────────────
+  checkRegistered();
+
+  if(!idbSupported()){
+    elUnsup.classList.add('show');
+    // disable the form gracefully
+    elSubmit.disabled = true;
+    elFile.disabled = true;
+    elList.innerHTML = '';
+    var li = document.createElement('li');
+    li.className = 'doc-empty';
+    li.textContent = 'Archiviazione locale non disponibile su questo browser.';
+    elList.appendChild(li);
+    reflectPermission();
+    return;
+  }
+
+  openDB().then(function(database){
+    db = database;
+    // older tab opened a newer version, etc. — handle version change
+    db.onversionchange = function(){ try{ db.close(); }catch(e){} };
+    return dbGetAllMeta();
+  }).then(function(meta){
+    docs = meta || [];
+    renderList();
+    reflectPermission();
+    // surface near-expiry docs once on load if reminders already granted (no spam)
+    if(notifSupported() && Notification.permission === 'granted'){
+      setTimeout(showSoonNotifications, 1400);
+    }
+  }).catch(function(err){
+    // open failed (e.g. private mode blocking IDB) → treat as unsupported
+    elUnsup.classList.add('show');
+    elSubmit.disabled = true;
+    elFile.disabled = true;
+    renderCount(0,0);
+    reflectPermission();
+  });
+})();
+</script>
+</body>
+</html>

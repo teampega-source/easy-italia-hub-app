@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CV Builder — Easy Italia Hub</title>
+<meta name="description" content="Crea un curriculum vitae professionale in stile italiano/europeo, pulito e pronto per la stampa in PDF. Funziona nel tuo browser, senza account."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/cv-builder"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+</head>
+<body data-page="cv-builder">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <style>
+    /* ── scoped to the CV builder page — keeps builder UI tidy without touching eih.css ── */
+    [data-page="cv-builder"] .builder{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--sp-3);align-items:start;margin-top:var(--sp-3)}
+    @media(min-width:1024px){
+      [data-page="cv-builder"] .cv-preview-pane{position:sticky;top:6rem;max-height:calc(100vh - 7rem);overflow:auto}
+    }
+    /* ── FORM column ── */
+    [data-page="cv-builder"] .cv-form{display:flex;flex-direction:column;gap:var(--sp-2)}
+    [data-page="cv-builder"] .fset{padding:1.2rem 1.3rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border)}
+    [data-page="cv-builder"] .fset>legend,[data-page="cv-builder"] .fset>.fset-title{padding:0;margin:0 0 .9rem;font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+    [data-page="cv-builder"] .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+    @media(max-width:520px){[data-page="cv-builder"] .grid2{grid-template-columns:1fr}}
+    [data-page="cv-builder"] .field{display:flex;flex-direction:column}
+    [data-page="cv-builder"] .field.full{grid-column:1/-1}
+    [data-page="cv-builder"] .cv-form label{font-size:var(--text-xs);color:var(--fg-secondary);font-weight:500;margin-bottom:.3rem;display:block}
+    [data-page="cv-builder"] .cv-form input[type=text],[data-page="cv-builder"] .cv-form input[type=email],[data-page="cv-builder"] .cv-form input[type=tel],[data-page="cv-builder"] .cv-form textarea,[data-page="cv-builder"] .cv-form select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.6rem .8rem;font-size:var(--text-base);color:var(--ink);font-family:inherit;outline:none;min-height:44px}
+    [data-page="cv-builder"] .cv-form textarea{min-height:90px;resize:vertical;line-height:1.55}
+    [data-page="cv-builder"] .cv-form input:focus,[data-page="cv-builder"] .cv-form textarea:focus,[data-page="cv-builder"] .cv-form select:focus{border-color:rgba(125,112,88,.55)}
+    [data-page="cv-builder"] .hint{font-size:var(--text-xs);color:var(--fg-muted);margin-top:.35rem;line-height:1.5}
+    /* repeatable entries */
+    [data-page="cv-builder"] .entry{position:relative;padding:1rem 1rem .9rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);margin-bottom:.8rem}
+    [data-page="cv-builder"] .entry .entry-del{position:absolute;top:.55rem;right:.55rem;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--fg-muted);cursor:pointer;font-size:1rem;line-height:1;transition:color var(--dur-micro),border-color var(--dur-micro)}
+    [data-page="cv-builder"] .entry .entry-del:hover{color:var(--coral);border-color:rgba(235,89,57,.45)}
+    [data-page="cv-builder"] .btn-add{display:inline-flex;align-items:center;gap:.4rem;align-self:flex-start;padding:.55rem 1rem;border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:500;color:var(--ink);background:var(--gold-dim);border:1px solid rgba(124,112,89,.28);cursor:pointer;font-family:inherit;min-height:40px;transition:background var(--dur-micro)}
+    [data-page="cv-builder"] .btn-add:hover{background:var(--surface-hover)}
+    /* photo control */
+    [data-page="cv-builder"] .photo-row{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap}
+    [data-page="cv-builder"] .photo-prev{width:64px;height:64px;border-radius:12px;object-fit:cover;border:1px solid var(--border);background:var(--surface);display:none}
+    [data-page="cv-builder"] .photo-prev.show{display:block}
+    [data-page="cv-builder"] .file-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1rem;border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:500;color:var(--ink);background:var(--gold-dim);border:1px solid rgba(124,112,89,.28);cursor:pointer;min-height:40px}
+    [data-page="cv-builder"] .file-btn:hover{background:var(--surface-hover)}
+    [data-page="cv-builder"] input[type=file].sr-file{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    [data-page="cv-builder"] .link-btn{background:none;border:none;color:var(--gold);text-decoration:underline;text-underline-offset:2px;cursor:pointer;font-family:inherit;font-size:var(--text-sm);padding:0}
+    [data-page="cv-builder"] .checkrow{display:flex;align-items:center;gap:.55rem}
+    [data-page="cv-builder"] .checkrow input[type=checkbox]{width:18px;height:18px;min-height:18px;accent-color:var(--gold);cursor:pointer}
+    [data-page="cv-builder"] .checkrow label{margin:0;font-size:var(--text-base);color:var(--ink)}
+    [data-page="cv-builder"] .lang-line{display:grid;grid-template-columns:1fr 150px 34px;gap:.6rem;align-items:end;margin-bottom:.6rem}
+    @media(max-width:520px){[data-page="cv-builder"] .lang-line{grid-template-columns:1fr 1fr 34px}}
+    [data-page="cv-builder"] .lang-line .entry-del{position:static;width:34px;height:44px}
+
+    /* ── ACTION BAR ── */
+    [data-page="cv-builder"] .cv-actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:var(--sp-2)}
+    [data-page="cv-builder"] .preview-head{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-bottom:.7rem}
+    [data-page="cv-builder"] .preview-head .plabel{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+    [data-page="cv-builder"] .preview-head .pcount{font-size:var(--text-xs);color:var(--fg-muted)}
+
+    /* ── THE CV DOCUMENT (also the print target) ── */
+    [data-page="cv-builder"] .cv-doc{background:#fff;color:#1c1a17;border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 16px 40px rgba(20,30,48,.08);padding:2.4rem 2.4rem 2.6rem;font-size:.9rem;line-height:1.55}
+    [data-page="cv-builder"] .cv-doc *{margin:0}
+    [data-page="cv-builder"] .cv-head{display:flex;gap:1.4rem;align-items:flex-start;border-bottom:2px solid #1c1a17;padding-bottom:1rem;margin-bottom:1.1rem}
+    [data-page="cv-builder"] .cv-photo{width:84px;height:104px;object-fit:cover;border:1px solid #d8d2c6;border-radius:4px;flex:none;display:none}
+    [data-page="cv-builder"] .cv-photo.show{display:block}
+    [data-page="cv-builder"] .cv-head-main{flex:1;min-width:0}
+    [data-page="cv-builder"] .cv-name{font-family:'Clash Grotesk',sans-serif;font-size:1.7rem;font-weight:600;letter-spacing:-.02em;line-height:1.05;color:#161412}
+    [data-page="cv-builder"] .cv-role-line{font-size:.95rem;color:#565049;margin-top:.2rem;font-weight:500}
+    [data-page="cv-builder"] .cv-contacts{display:flex;flex-wrap:wrap;gap:.3rem 1rem;margin-top:.55rem;font-size:.82rem;color:#565049}
+    [data-page="cv-builder"] .cv-contacts span{display:inline-flex;align-items:center;gap:.3rem}
+    [data-page="cv-builder"] .cv-sec{margin-top:1.15rem}
+    [data-page="cv-builder"] .cv-sec h3{font-family:'Clash Grotesk',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#7c7059;border-bottom:1px solid #e2ddd2;padding-bottom:.3rem;margin-bottom:.6rem}
+    [data-page="cv-builder"] .cv-summary{color:#3a352e}
+    [data-page="cv-builder"] .cv-item{margin-bottom:.8rem}
+    [data-page="cv-builder"] .cv-item:last-child{margin-bottom:0}
+    [data-page="cv-builder"] .cv-item-top{display:flex;justify-content:space-between;gap:1rem;align-items:baseline}
+    [data-page="cv-builder"] .cv-item-title{font-weight:600;color:#161412;font-size:.95rem}
+    [data-page="cv-builder"] .cv-item-org{color:#565049;font-size:.88rem}
+    [data-page="cv-builder"] .cv-item-period{color:#857e72;font-size:.8rem;white-space:nowrap;font-weight:500}
+    [data-page="cv-builder"] .cv-item-desc{color:#3a352e;font-size:.86rem;margin-top:.25rem;white-space:pre-line}
+    [data-page="cv-builder"] .cv-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+    [data-page="cv-builder"] .cv-tag{font-size:.78rem;padding:.2rem .65rem;border-radius:99px;background:#f1eee9;border:1px solid #e2ddd2;color:#3a352e}
+    [data-page="cv-builder"] .cv-langs{display:flex;flex-direction:column;gap:.25rem}
+    [data-page="cv-builder"] .cv-lang-row{display:flex;justify-content:space-between;gap:1rem;font-size:.86rem}
+    [data-page="cv-builder"] .cv-lang-row .ll-name{color:#161412;font-weight:500}
+    [data-page="cv-builder"] .cv-lang-row .ll-lvl{color:#565049}
+    [data-page="cv-builder"] .cv-consent{margin-top:1.3rem;padding-top:.7rem;border-top:1px solid #e2ddd2;font-size:.72rem;color:#857e72;line-height:1.5;font-style:italic}
+    [data-page="cv-builder"] .cv-empty{color:#a9a294;font-style:italic}
+
+    [data-page="cv-builder"] .quick-links{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:var(--sp-2)}
+    [data-page="cv-builder"] .quick-links a{font-size:var(--text-sm);color:var(--gold);text-decoration:underline;text-underline-offset:2px}
+
+    /* ── stack on mobile ── */
+    @media(max-width:1023px){
+      [data-page="cv-builder"] .builder{grid-template-columns:1fr}
+      [data-page="cv-builder"] .cv-doc{padding:1.6rem 1.4rem 1.8rem}
+      [data-page="cv-builder"] .cv-head{flex-direction:column;gap:.9rem}
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       PRINT — show ONLY the CV document, hide the whole app shell.
+       Browser "Stampa → Salva come PDF" produces a clean A4 résumé.
+       ══════════════════════════════════════════════════════════════ */
+    @media print{
+      /* hide everything by default, then reveal just the document path */
+      body * {visibility:hidden !important}
+      #cv-doc, #cv-doc * {visibility:visible !important}
+      /* kill the decorative shell + chrome entirely */
+      #site-nav,#site-footer,#preloader,#wipe,#bg,#noise,
+      .cursor-ring,.cursor-dot,.skip-link,
+      [data-page="cv-builder"] .cv-form,
+      [data-page="cv-builder"] .cv-actions,
+      [data-page="cv-builder"] .preview-head,
+      [data-page="cv-builder"] .quick-links,
+      [data-page="cv-builder"] .eyebrow,
+      [data-page="cv-builder"] .page>h1,
+      [data-page="cv-builder"] .page>.lead,
+      [data-page="cv-builder"] .draft-banner,
+      [data-page="cv-builder"] .cv-tips{display:none !important}
+      html,body{background:#fff !important;overflow:visible !important}
+      main,.page,.page-wide,.builder,.cv-preview-pane{display:block !important;position:static !important;max-width:none !important;width:auto !important;margin:0 !important;padding:0 !important;overflow:visible !important;max-height:none !important}
+      /* the document fills the printable page, no card chrome */
+      #cv-doc{position:static !important;border:none !important;border-radius:0 !important;box-shadow:none !important;padding:0 !important;max-width:none !important;width:100% !important;font-size:10.5pt !important}
+      #cv-doc .cv-head{border-bottom-color:#000 !important}
+      a{color:inherit !important;text-decoration:none !important}
+      @page{size:A4;margin:14mm 15mm}
+    }
+  </style>
+
+  <div class="page page-wide">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Strumento · CV Builder</p>
+    <h1 class="reveal">Il tuo CV italiano,<br/><em>pronto in pochi minuti.</em></h1>
+    <p class="lead reveal">Compila il modulo a sinistra e vedi il tuo curriculum prendere forma a destra in tempo reale. Uno stile sobrio ed europeo, leggibile dai software di selezione (ATS). Quando sei pronto, scarica il PDF con la stampa del browser.</p>
+
+    <div class="draft-banner reveal">🔒 <span>Tutto resta nel tuo browser. La traduzione automatica del CV e la preparazione ai colloqui con l'AI arriveranno con gli account.</span></div>
+
+    <div class="cv-actions reveal">
+      <button type="button" class="btn-primary" id="btn-print">🖨️ Scarica PDF / Stampa</button>
+      <button type="button" class="btn-ghost" id="btn-reset">↺ Ricomincia</button>
+    </div>
+
+    <div class="builder reveal">
+      <!-- ───────────── LEFT: FORM ───────────── -->
+      <form class="cv-form" id="cv-form" autocomplete="on" novalidate>
+        <fieldset class="fset">
+          <legend>Dati personali</legend>
+          <div class="grid2">
+            <div class="field full"><label for="f-nome">Nome e cognome</label><input type="text" id="f-nome" name="nome" placeholder="Es. Nimal Perera"/></div>
+            <div class="field"><label for="f-ruolo">Ruolo / qualifica</label><input type="text" id="f-ruolo" name="ruolo" placeholder="Es. Magazziniere"/></div>
+            <div class="field"><label for="f-citta">Città</label><input type="text" id="f-citta" name="citta" placeholder="Es. Milano (MI)"/></div>
+            <div class="field"><label for="f-email">Email</label><input type="email" id="f-email" name="email" placeholder="nome@email.it" inputmode="email"/></div>
+            <div class="field"><label for="f-tel">Telefono</label><input type="tel" id="f-tel" name="tel" placeholder="+39 ..." inputmode="tel"/></div>
+            <div class="field full">
+              <label for="f-foto">Foto (opzionale)</label>
+              <div class="photo-row">
+                <img id="photo-prev" class="photo-prev" alt="Anteprima foto del CV"/>
+                <label class="file-btn" for="f-foto">📷 Carica foto</label>
+                <input type="file" id="f-foto" name="foto" accept="image/*" class="sr-file"/>
+                <button type="button" class="link-btn" id="photo-clear" hidden>Rimuovi foto</button>
+              </div>
+              <p class="hint">La foto resta solo nel tuo browser. In Italia è facoltativa: molte aziende preferiscono un CV senza foto.</p>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="fset">
+          <legend>Profilo / sommario</legend>
+          <div class="field full">
+            <label for="f-profilo">Breve presentazione</label>
+            <textarea id="f-profilo" name="profilo" placeholder="2-3 righe: chi sei, cosa sai fare, cosa cerchi. Es. Lavoratore affidabile con 3 anni di esperienza in logistica, disponibile su turni..."></textarea>
+            <p class="hint">Tieni il sommario breve e concreto. Evita frasi generiche.</p>
+          </div>
+        </fieldset>
+
+        <fieldset class="fset">
+          <legend>Esperienze professionali</legend>
+          <div id="exp-list"></div>
+          <button type="button" class="btn-add" id="exp-add">＋ Aggiungi esperienza</button>
+        </fieldset>
+
+        <fieldset class="fset">
+          <legend>Istruzione e formazione</legend>
+          <div id="edu-list"></div>
+          <button type="button" class="btn-add" id="edu-add">＋ Aggiungi titolo di studio</button>
+        </fieldset>
+
+        <fieldset class="fset">
+          <legend>Competenze</legend>
+          <div class="field full">
+            <label for="f-skills">Competenze (separate da virgola)</label>
+            <input type="text" id="f-skills" name="skills" placeholder="Es. Patente muletto, Italiano, Excel, Cucina"/>
+            <p class="hint">Inserisci le tue competenze separate da una virgola: diventeranno delle etichette nel CV.</p>
+          </div>
+        </fieldset>
+
+        <fieldset class="fset">
+          <legend>Lingue</legend>
+          <div id="lang-list"></div>
+          <button type="button" class="btn-add" id="lang-add">＋ Aggiungi lingua</button>
+          <p class="hint" style="margin-top:.7rem">Livelli secondo il Quadro Europeo (QCER): A1-A2 base, B1-B2 intermedio, C1-C2 avanzato.</p>
+        </fieldset>
+
+        <fieldset class="fset">
+          <legend>Patente</legend>
+          <div class="checkrow">
+            <input type="checkbox" id="f-patente" name="patente"/>
+            <label for="f-patente">Patente di guida B (automunito/a)</label>
+          </div>
+        </fieldset>
+      </form>
+
+      <!-- ───────────── RIGHT: LIVE PREVIEW ───────────── -->
+      <div class="cv-preview-pane">
+        <div class="preview-head">
+          <span class="plabel">Anteprima dal vivo</span>
+          <span class="pcount" id="autosave-note">Salvataggio automatico attivo</span>
+        </div>
+        <article class="cv-doc" id="cv-doc" aria-label="Anteprima del curriculum" aria-live="polite">
+          <!-- filled by JS -->
+        </article>
+      </div>
+    </div>
+
+    <!-- ───────────── TIPS ───────────── -->
+    <section class="cv-tips reveal" aria-labelledby="tips-title">
+      <h2 id="tips-title">Consigli per il mercato del lavoro italiano</h2>
+      <ul>
+        <li><strong>Scrivi il CV in italiano.</strong> Salvo annunci che chiedono l'inglese, un CV in italiano corretto dà un'ottima impressione. Fai rileggere il testo a chi padroneggia bene la lingua.</li>
+        <li><strong>Conciso: 1-2 pagine.</strong> I selezionatori dedicano pochi secondi a ogni CV. Vai dritto al punto, con le esperienze più recenti e rilevanti in alto.</li>
+        <li><strong>Consenso GDPR al trattamento dei dati.</strong> In Italia è prassi inserire in fondo al CV l'autorizzazione al trattamento dei dati personali. La trovi già pronta nell'anteprima.</li>
+        <li><strong>Niente bugie, dati verificabili.</strong> Periodi di lavoro, titoli e competenze devono essere veri: spesso vengono verificati al colloquio.</li>
+        <li><strong>Contatti chiari.</strong> Usa un'email seria (nome.cognome) e un numero di telefono attivo con WhatsApp, se possibile.</li>
+        <li><strong>Foto solo se aggiunge valore.</strong> In Italia è facoltativa. Se la metti, scegline una sobria e professionale.</li>
+      </ul>
+    </section>
+
+    <nav class="quick-links reveal" aria-label="Collegamenti rapidi">
+      <a href="percorso.html">← Il Mio Percorso</a>
+      <a href="opportunita.html">Opportunità di lavoro</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   CV Builder — vanilla JS. State persisted in localStorage 'eih-cv'.
+   No backend, no libraries: PDF export = browser print (window.print).
+   ══════════════════════════════════════════════════════════════════ */
+(function(){
+  "use strict";
+  var STORAGE_KEY = 'eih-cv';
+
+  /* ---- default state ---- */
+  function blankState(){
+    return {
+      nome:'', ruolo:'', citta:'', email:'', tel:'', foto:'',
+      profilo:'', skills:'', patente:false,
+      exp:[ {ruolo:'', azienda:'', periodo:'', desc:''} ],
+      edu:[ {titolo:'', istituto:'', anno:''} ],
+      langs:[ {lingua:'', livello:'B1 — Intermedio'} ]
+    };
+  }
+
+  var LEVELS = ['A1 — Base','A2 — Base','B1 — Intermedio','B2 — Intermedio','C1 — Avanzato','C2 — Avanzato','Madrelingua'];
+
+  /* ---- load / save ---- */
+  function load(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return blankState();
+      var data = JSON.parse(raw);
+      var base = blankState();
+      // merge shallow + ensure arrays exist & non-empty
+      for(var k in base){ if(Object.prototype.hasOwnProperty.call(data,k)) base[k] = data[k]; }
+      if(!Array.isArray(base.exp) || !base.exp.length) base.exp = [{ruolo:'',azienda:'',periodo:'',desc:''}];
+      if(!Array.isArray(base.edu) || !base.edu.length) base.edu = [{titolo:'',istituto:'',anno:''}];
+      if(!Array.isArray(base.langs) || !base.langs.length) base.langs = [{lingua:'',livello:'B1 — Intermedio'}];
+      return base;
+    }catch(e){ return blankState(); }
+  }
+  var saveTimer = null;
+  function save(){
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      var note = document.getElementById('autosave-note');
+      if(note){ note.textContent = 'Salvato ✓'; clearTimeout(saveTimer); saveTimer = setTimeout(function(){ note.textContent = 'Salvataggio automatico attivo'; }, 1400); }
+    }catch(e){ /* storage may be full/blocked — preview still works */ }
+  }
+
+  var state = load();
+
+  /* ---- helpers ---- */
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+  function val(id){ var el = document.getElementById(id); return el ? el.value : ''; }
+
+  /* =====================  RENDER FORM (repeatable lists)  ===================== */
+  function renderExp(){
+    var box = document.getElementById('exp-list');
+    box.innerHTML = state.exp.map(function(e,i){
+      return '<div class="entry" data-i="'+i+'">'+
+        (state.exp.length>1 ? '<button type="button" class="entry-del" data-act="exp-del" data-i="'+i+'" aria-label="Rimuovi esperienza">✕</button>' : '')+
+        '<div class="grid2">'+
+          '<div class="field"><label>Ruolo / mansione</label><input type="text" data-f="exp" data-k="ruolo" data-i="'+i+'" value="'+esc(e.ruolo)+'" placeholder="Es. Magazziniere"/></div>'+
+          '<div class="field"><label>Azienda</label><input type="text" data-f="exp" data-k="azienda" data-i="'+i+'" value="'+esc(e.azienda)+'" placeholder="Es. Logistica SRL"/></div>'+
+          '<div class="field full"><label>Periodo</label><input type="text" data-f="exp" data-k="periodo" data-i="'+i+'" value="'+esc(e.periodo)+'" placeholder="Es. Mar 2022 – oggi"/></div>'+
+          '<div class="field full"><label>Descrizione / risultati</label><textarea data-f="exp" data-k="desc" data-i="'+i+'" placeholder="Cosa facevi, con che risultati. Una riga per punto.">'+esc(e.desc)+'</textarea></div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+  }
+  function renderEdu(){
+    var box = document.getElementById('edu-list');
+    box.innerHTML = state.edu.map(function(e,i){
+      return '<div class="entry" data-i="'+i+'">'+
+        (state.edu.length>1 ? '<button type="button" class="entry-del" data-act="edu-del" data-i="'+i+'" aria-label="Rimuovi titolo di studio">✕</button>' : '')+
+        '<div class="grid2">'+
+          '<div class="field full"><label>Titolo di studio</label><input type="text" data-f="edu" data-k="titolo" data-i="'+i+'" value="'+esc(e.titolo)+'" placeholder="Es. Diploma di scuola superiore"/></div>'+
+          '<div class="field"><label>Istituto</label><input type="text" data-f="edu" data-k="istituto" data-i="'+i+'" value="'+esc(e.istituto)+'" placeholder="Es. Istituto Tecnico ..."/></div>'+
+          '<div class="field"><label>Anno</label><input type="text" data-f="edu" data-k="anno" data-i="'+i+'" value="'+esc(e.anno)+'" placeholder="Es. 2018"/></div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+  }
+  function renderLangs(){
+    var box = document.getElementById('lang-list');
+    box.innerHTML = state.langs.map(function(e,i){
+      var opts = LEVELS.map(function(lv){ return '<option value="'+esc(lv)+'"'+(e.livello===lv?' selected':'')+'>'+esc(lv)+'</option>'; }).join('');
+      return '<div class="lang-line" data-i="'+i+'">'+
+        '<div class="field"><label>Lingua</label><input type="text" data-f="langs" data-k="lingua" data-i="'+i+'" value="'+esc(e.lingua)+'" placeholder="Es. Italiano"/></div>'+
+        '<div class="field"><label>Livello</label><select data-f="langs" data-k="livello" data-i="'+i+'">'+opts+'</select></div>'+
+        (state.langs.length>1 ? '<button type="button" class="entry-del" data-act="lang-del" data-i="'+i+'" aria-label="Rimuovi lingua">✕</button>' : '<span aria-hidden="true"></span>')+
+      '</div>';
+    }).join('');
+  }
+
+  /* sync the fixed (non-repeatable) inputs from state */
+  function syncFixedInputs(){
+    document.getElementById('f-nome').value = state.nome;
+    document.getElementById('f-ruolo').value = state.ruolo;
+    document.getElementById('f-citta').value = state.citta;
+    document.getElementById('f-email').value = state.email;
+    document.getElementById('f-tel').value = state.tel;
+    document.getElementById('f-profilo').value = state.profilo;
+    document.getElementById('f-skills').value = state.skills;
+    document.getElementById('f-patente').checked = !!state.patente;
+    var prev = document.getElementById('photo-prev');
+    var clr = document.getElementById('photo-clear');
+    if(state.foto){ prev.src = state.foto; prev.classList.add('show'); clr.hidden = false; }
+    else{ prev.removeAttribute('src'); prev.classList.remove('show'); clr.hidden = true; }
+  }
+
+  /* =====================  RENDER THE CV DOCUMENT  ===================== */
+  function renderCV(){
+    var doc = document.getElementById('cv-doc');
+    var html = '';
+
+    /* header */
+    var nameTxt = state.nome.trim() ? esc(state.nome) : '<span class="cv-empty">Il tuo nome</span>';
+    html += '<header class="cv-head">';
+    if(state.foto){ html += '<img class="cv-photo show" src="'+esc(state.foto)+'" alt="Foto di '+esc(state.nome)+'"/>'; }
+    html += '<div class="cv-head-main">';
+    html += '<h2 class="cv-name">'+nameTxt+'</h2>';
+    if(state.ruolo.trim()) html += '<p class="cv-role-line">'+esc(state.ruolo)+'</p>';
+    var contacts = [];
+    if(state.citta.trim()) contacts.push('<span>📍 '+esc(state.citta)+'</span>');
+    if(state.email.trim()) contacts.push('<span>✉️ '+esc(state.email)+'</span>');
+    if(state.tel.trim())   contacts.push('<span>📞 '+esc(state.tel)+'</span>');
+    if(state.patente)      contacts.push('<span>🚗 Patente B</span>');
+    if(contacts.length) html += '<div class="cv-contacts">'+contacts.join('')+'</div>';
+    html += '</div></header>';
+
+    /* summary */
+    if(state.profilo.trim()){
+      html += '<section class="cv-sec"><h3>Profilo</h3><p class="cv-summary">'+esc(state.profilo)+'</p></section>';
+    }
+
+    /* experience */
+    var expFilled = state.exp.filter(function(e){ return (e.ruolo||e.azienda||e.periodo||e.desc).trim(); });
+    if(expFilled.length){
+      html += '<section class="cv-sec"><h3>Esperienze professionali</h3>';
+      html += expFilled.map(function(e){
+        var title = e.ruolo.trim() ? esc(e.ruolo) : '';
+        var org = e.azienda.trim() ? esc(e.azienda) : '';
+        var head = '<div class="cv-item-top"><div><span class="cv-item-title">'+title+'</span>'+
+          (org ? ' <span class="cv-item-org">· '+org+'</span>' : '')+'</div>'+
+          (e.periodo.trim() ? '<span class="cv-item-period">'+esc(e.periodo)+'</span>' : '')+'</div>';
+        var desc = e.desc.trim() ? '<div class="cv-item-desc">'+esc(e.desc)+'</div>' : '';
+        return '<div class="cv-item">'+head+desc+'</div>';
+      }).join('');
+      html += '</section>';
+    }
+
+    /* education */
+    var eduFilled = state.edu.filter(function(e){ return (e.titolo||e.istituto||e.anno).trim(); });
+    if(eduFilled.length){
+      html += '<section class="cv-sec"><h3>Istruzione e formazione</h3>';
+      html += eduFilled.map(function(e){
+        var title = e.titolo.trim() ? esc(e.titolo) : '';
+        var org = e.istituto.trim() ? esc(e.istituto) : '';
+        return '<div class="cv-item"><div class="cv-item-top"><div><span class="cv-item-title">'+title+'</span>'+
+          (org ? ' <span class="cv-item-org">· '+org+'</span>' : '')+'</div>'+
+          (e.anno.trim() ? '<span class="cv-item-period">'+esc(e.anno)+'</span>' : '')+'</div></div>';
+      }).join('');
+      html += '</section>';
+    }
+
+    /* skills */
+    var skills = state.skills.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+    if(skills.length){
+      html += '<section class="cv-sec"><h3>Competenze</h3><div class="cv-tags">'+
+        skills.map(function(s){ return '<span class="cv-tag">'+esc(s)+'</span>'; }).join('')+'</div></section>';
+    }
+
+    /* languages */
+    var langFilled = state.langs.filter(function(e){ return e.lingua.trim(); });
+    if(langFilled.length){
+      html += '<section class="cv-sec"><h3>Lingue</h3><div class="cv-langs">'+
+        langFilled.map(function(e){
+          return '<div class="cv-lang-row"><span class="ll-name">'+esc(e.lingua)+'</span><span class="ll-lvl">'+esc(e.livello)+'</span></div>';
+        }).join('')+'</div></section>';
+    }
+
+    /* empty-state hint when nothing meaningful yet */
+    if(!state.nome.trim() && !state.profilo.trim() && !expFilled.length && !eduFilled.length && !skills.length && !langFilled.length){
+      html += '<p class="cv-empty" style="margin-top:1rem">Inizia a compilare il modulo: il tuo curriculum apparirà qui.</p>';
+    }
+
+    /* GDPR consent line (Italian practice) */
+    html += '<p class="cv-consent">Autorizzo il trattamento dei miei dati personali presenti nel CV ai sensi del Regolamento UE 2016/679 (GDPR) e del D.Lgs. 196/2003.</p>';
+
+    doc.innerHTML = html;
+  }
+
+  function renderAll(){ renderCV(); save(); }
+
+  /* =====================  EVENTS  ===================== */
+
+  /* fixed inputs */
+  function bindFixed(id, key, isCheck){
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('input', function(){
+      state[key] = isCheck ? el.checked : el.value;
+      renderAll();
+    });
+    if(isCheck){ el.addEventListener('change', function(){ state[key] = el.checked; renderAll(); }); }
+  }
+  bindFixed('f-nome','nome'); bindFixed('f-ruolo','ruolo'); bindFixed('f-citta','citta');
+  bindFixed('f-email','email'); bindFixed('f-tel','tel');
+  bindFixed('f-profilo','profilo'); bindFixed('f-skills','skills');
+  bindFixed('f-patente','patente', true);
+
+  /* delegated input for repeatable fields (text/textarea/select) */
+  var form = document.getElementById('cv-form');
+  form.addEventListener('input', function(ev){
+    var t = ev.target;
+    var f = t.getAttribute('data-f');
+    if(!f) return;
+    var k = t.getAttribute('data-k');
+    var i = parseInt(t.getAttribute('data-i'), 10);
+    if(state[f] && state[f][i]){ state[f][i][k] = t.value; renderAll(); }
+  });
+  form.addEventListener('change', function(ev){
+    var t = ev.target;
+    if(t.tagName === 'SELECT' && t.getAttribute('data-f')){
+      var f = t.getAttribute('data-f'), k = t.getAttribute('data-k'), i = parseInt(t.getAttribute('data-i'),10);
+      if(state[f] && state[f][i]){ state[f][i][k] = t.value; renderAll(); }
+    }
+  });
+
+  /* delegated click for add/remove buttons */
+  form.addEventListener('click', function(ev){
+    var btn = ev.target.closest('[data-act]');
+    if(!btn) return;
+    var act = btn.getAttribute('data-act');
+    var i = parseInt(btn.getAttribute('data-i'), 10);
+    if(act === 'exp-del'){ state.exp.splice(i,1); renderExp(); renderAll(); }
+    else if(act === 'edu-del'){ state.edu.splice(i,1); renderEdu(); renderAll(); }
+    else if(act === 'lang-del'){ state.langs.splice(i,1); renderLangs(); renderAll(); }
+  });
+
+  document.getElementById('exp-add').addEventListener('click', function(){
+    state.exp.push({ruolo:'',azienda:'',periodo:'',desc:''}); renderExp(); renderAll();
+  });
+  document.getElementById('edu-add').addEventListener('click', function(){
+    state.edu.push({titolo:'',istituto:'',anno:''}); renderEdu(); renderAll();
+  });
+  document.getElementById('lang-add').addEventListener('click', function(){
+    state.langs.push({lingua:'',livello:'B1 — Intermedio'}); renderLangs(); renderAll();
+  });
+
+  /* photo → dataURL (kept local) */
+  var fileInput = document.getElementById('f-foto');
+  fileInput.addEventListener('change', function(){
+    var file = fileInput.files && fileInput.files[0];
+    if(!file){ return; }
+    if(!/^image\//.test(file.type)){ alert('Seleziona un file immagine.'); fileInput.value=''; return; }
+    if(file.size > 3 * 1024 * 1024){ alert('Immagine troppo grande (max 3 MB). Scegli una foto più leggera.'); fileInput.value=''; return; }
+    var reader = new FileReader();
+    reader.onload = function(){
+      state.foto = String(reader.result);
+      syncFixedInputs();
+      renderAll();
+    };
+    reader.onerror = function(){ alert('Impossibile leggere il file.'); };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('photo-clear').addEventListener('click', function(){
+    state.foto = '';
+    fileInput.value = '';
+    syncFixedInputs();
+    renderAll();
+  });
+
+  /* print → PDF (browser native) */
+  document.getElementById('btn-print').addEventListener('click', function(){ window.print(); });
+
+  /* reset everything */
+  document.getElementById('btn-reset').addEventListener('click', function(){
+    if(!confirm('Vuoi davvero ricominciare da capo? Tutti i dati del CV salvati in questo browser verranno cancellati.')) return;
+    try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+    state = blankState();
+    fileInput.value = '';
+    renderExp(); renderEdu(); renderLangs();
+    syncFixedInputs();
+    renderCV();
+    var note = document.getElementById('autosave-note');
+    if(note) note.textContent = 'Salvataggio automatico attivo';
+  });
+
+  /* =====================  INIT  ===================== */
+  renderExp(); renderEdu(); renderLangs();
+  syncFixedInputs();
+  renderCV();
+})();
+</script>
+</body>
+</html>
