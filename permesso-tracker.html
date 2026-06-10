@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tracker Permesso di Soggiorno — Easy Italia Hub</title>
+<meta name="description" content="Tieni traccia della tua pratica di permesso di soggiorno: stato passo-passo, cronologia, giorni alla scadenza e promemoria nel browser. Tutto salvato sul tuo dispositivo."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/permesso-tracker"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+</head>
+<body data-page="permesso-tracker">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <style>
+    /* ── scoped to the permesso-tracker page — pratica + stato + promemoria, built on eih.css tokens ── */
+    [data-page="permesso-tracker"] .pt-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:var(--sp-3);align-items:start;margin-top:var(--sp-3)}
+    @media(max-width:920px){[data-page="permesso-tracker"] .pt-grid{grid-template-columns:1fr}}
+
+    [data-page="permesso-tracker"] .panel{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem}
+    [data-page="permesso-tracker"] .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.8rem;margin-bottom:1rem}
+    [data-page="permesso-tracker"] .panel-head h2{margin:0;font-size:var(--text-xl)}
+    [data-page="permesso-tracker"] .panel-head .panel-sub{margin:.15rem 0 0;font-size:var(--text-xs);color:var(--fg-muted);font-weight:400;line-height:1.5}
+
+    /* register / demo prompt */
+    [data-page="permesso-tracker"] .reg-prompt{display:flex;align-items:flex-start;gap:.6rem;background:var(--green-dim);border:1px solid rgba(31,157,85,.28);border-radius:var(--radius-sm);padding:.8rem 1rem;font-size:var(--text-sm);color:var(--ink);margin-bottom:var(--sp-3);line-height:1.6}
+    [data-page="permesso-tracker"] .reg-prompt .reg-ic{flex:none;font-size:1.1rem;line-height:1.4}
+    [data-page="permesso-tracker"] .reg-prompt a.inline{font-weight:600}
+
+    /* form */
+    [data-page="permesso-tracker"] .pt-form label{display:block;font-size:var(--text-xs);color:var(--fg-secondary);font-weight:500;margin:.85rem 0 .3rem}
+    [data-page="permesso-tracker"] .pt-form label:first-of-type{margin-top:0}
+    [data-page="permesso-tracker"] .pt-form input,
+    [data-page="permesso-tracker"] .pt-form select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.7rem .85rem;font-size:var(--text-base);color:var(--ink);font-family:inherit;outline:none;min-height:44px}
+    [data-page="permesso-tracker"] .pt-form input:focus,
+    [data-page="permesso-tracker"] .pt-form select:focus{border-color:rgba(125,112,88,.55)}
+    [data-page="permesso-tracker"] .pt-form .field-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+    @media(max-width:520px){[data-page="permesso-tracker"] .pt-form .field-row{grid-template-columns:1fr}}
+    [data-page="permesso-tracker"] .pt-form .opt{color:var(--fg-muted);font-weight:400}
+    [data-page="permesso-tracker"] .pt-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.1rem}
+    [data-page="permesso-tracker"] .pt-reset{background:none;border:none;color:var(--fg-muted);cursor:pointer;font-family:inherit;font-size:var(--text-sm);padding:.4rem;min-height:38px}
+    [data-page="permesso-tracker"] .pt-reset:hover{color:var(--coral)}
+
+    /* summary chips of the saved pratica */
+    [data-page="permesso-tracker"] .pt-summary{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 1.1rem}
+    [data-page="permesso-tracker"] .pt-chip{display:inline-flex;flex-direction:column;gap:.1rem;padding:.5rem .8rem;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--border)}
+    [data-page="permesso-tracker"] .pt-chip .k{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--fg-muted);font-weight:600}
+    [data-page="permesso-tracker"] .pt-chip .v{font-size:var(--text-sm);color:var(--ink);font-weight:500;word-break:break-word}
+
+    /* status timeline */
+    [data-page="permesso-tracker"] .timeline{list-style:none;margin:0;padding:0;position:relative}
+    [data-page="permesso-tracker"] .timeline li{position:relative;padding:0 0 1.15rem 2.4rem;min-height:2.2rem}
+    [data-page="permesso-tracker"] .timeline li:last-child{padding-bottom:0}
+    [data-page="permesso-tracker"] .timeline li::before{content:"";position:absolute;left:.65rem;top:1.55rem;bottom:-.15rem;width:2px;background:var(--border-bright)}
+    [data-page="permesso-tracker"] .timeline li:last-child::before{display:none}
+    [data-page="permesso-tracker"] .tl-dot{position:absolute;left:0;top:.1rem;width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--border-bright);background:var(--bg-elevated);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--fg-muted);line-height:1}
+    [data-page="permesso-tracker"] .timeline li.done .tl-dot{background:var(--green);border-color:var(--green);color:#fff}
+    [data-page="permesso-tracker"] .timeline li.done::before{background:var(--green)}
+    [data-page="permesso-tracker"] .timeline li.current .tl-dot{background:var(--gold);border-color:var(--gold);color:#fff;box-shadow:0 0 0 4px var(--gold-dim)}
+    [data-page="permesso-tracker"] .tl-label{font-family:'Clash Grotesk',sans-serif;font-weight:600;color:var(--fg-muted);font-size:var(--text-base);line-height:1.35}
+    [data-page="permesso-tracker"] .timeline li.done .tl-label,
+    [data-page="permesso-tracker"] .timeline li.current .tl-label{color:var(--ink)}
+    [data-page="permesso-tracker"] .tl-meta{display:block;font-size:var(--text-xs);color:var(--fg-muted);font-weight:400;margin-top:.15rem;font-family:'Satoshi',sans-serif}
+    [data-page="permesso-tracker"] .tl-badge{display:inline-block;margin-left:.5rem;font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid rgba(124,112,89,.25);padding:.12rem .45rem;border-radius:99px;vertical-align:middle}
+
+    [data-page="permesso-tracker"] .tl-controls{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+    [data-page="permesso-tracker"] .tl-back{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.2rem;border-radius:var(--radius-full);background:var(--surface);border:1px solid var(--border-bright);color:var(--ink);cursor:pointer;font-family:inherit;font-size:var(--text-sm);font-weight:500;min-height:44px;transition:background var(--dur-micro)}
+    [data-page="permesso-tracker"] .tl-back:hover{background:var(--surface-hover)}
+    [data-page="permesso-tracker"] .tl-back:disabled{opacity:.45;cursor:not-allowed}
+    [data-page="permesso-tracker"] .tl-done-msg{display:flex;align-items:center;gap:.5rem;font-size:var(--text-sm);color:var(--green);font-weight:600;margin-top:1.2rem}
+
+    /* deadline / reminder box */
+    [data-page="permesso-tracker"] .scad-box{margin-top:1rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);padding:1rem 1.1rem}
+    [data-page="permesso-tracker"] .scad-box.soon{border-color:rgba(235,89,57,.45);background:rgba(235,89,57,.07)}
+    [data-page="permesso-tracker"] .scad-box.ok{border-color:rgba(31,157,85,.35);background:var(--green-dim)}
+    [data-page="permesso-tracker"] .scad-head{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+    [data-page="permesso-tracker"] .scad-days{font-family:'Clash Grotesk',sans-serif;font-weight:700;font-size:var(--text-2xl);line-height:1;color:var(--ink)}
+    [data-page="permesso-tracker"] .scad-box.soon .scad-days{color:var(--coral)}
+    [data-page="permesso-tracker"] .scad-box.ok .scad-days{color:var(--green)}
+    [data-page="permesso-tracker"] .scad-cap{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.4}
+    [data-page="permesso-tracker"] .scad-note{margin:.7rem 0 0;font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.6}
+
+    /* reminders bar */
+    [data-page="permesso-tracker"] .remind-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem;margin-top:.9rem}
+    [data-page="permesso-tracker"] .remind-bar p{margin:0;font-size:var(--text-sm);color:var(--fg-secondary);flex:1;min-width:200px;line-height:1.5}
+    [data-page="permesso-tracker"] .remind-status{font-size:var(--text-xs);font-weight:600;letter-spacing:.04em;display:inline-block;margin-top:.5rem}
+    [data-page="permesso-tracker"] .remind-status.ok{color:var(--green)}
+    [data-page="permesso-tracker"] .remind-status.off{color:var(--fg-muted)}
+    [data-page="permesso-tracker"] .remind-status.denied{color:var(--coral)}
+
+    /* cronologia (history log) */
+    [data-page="permesso-tracker"] .hist-list{list-style:none;margin:.4rem 0 0;padding:0;display:flex;flex-direction:column;gap:.55rem}
+    [data-page="permesso-tracker"] .hist-item{display:flex;align-items:flex-start;gap:.7rem;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);padding:.65rem .85rem}
+    [data-page="permesso-tracker"] .hist-dot{flex:none;width:.6rem;height:.6rem;border-radius:50%;background:var(--gold);margin-top:.45rem}
+    [data-page="permesso-tracker"] .hist-body{flex:1;min-width:0}
+    [data-page="permesso-tracker"] .hist-title{margin:0;font-weight:600;color:var(--ink);font-size:var(--text-sm)}
+    [data-page="permesso-tracker"] .hist-when{font-size:var(--text-xs);color:var(--fg-muted);margin:.1rem 0 0}
+    [data-page="permesso-tracker"] .hist-empty,
+    [data-page="permesso-tracker"] .pt-empty{text-align:center;color:var(--fg-muted);font-size:var(--text-sm);padding:1.4rem .8rem;border:1px dashed var(--border-bright);border-radius:var(--radius-sm);line-height:1.6}
+
+    /* official links */
+    [data-page="permesso-tracker"] .link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.8rem;margin-top:var(--sp-2)}
+    [data-page="permesso-tracker"] .lk{display:flex;align-items:flex-start;gap:.7rem;padding:1rem 1.1rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);text-decoration:none;color:var(--ink);transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std)}
+    [data-page="permesso-tracker"] .lk:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(20,30,48,.1)}
+    [data-page="permesso-tracker"] .lk .lk-ic{font-size:1.35rem;line-height:1.2;flex:none}
+    [data-page="permesso-tracker"] .lk .lk-tx{display:flex;flex-direction:column;gap:.15rem}
+    [data-page="permesso-tracker"] .lk .lk-tt{font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:var(--text-base)}
+    [data-page="permesso-tracker"] .lk .lk-ds{font-size:var(--text-xs);color:var(--fg-muted);line-height:1.5}
+
+    /* quick links (internal) */
+    [data-page="permesso-tracker"] .ql-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem;margin-top:var(--sp-3)}
+    [data-page="permesso-tracker"] .ql{display:flex;align-items:center;gap:.7rem;padding:1rem 1.1rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);text-decoration:none;color:var(--ink);transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std)}
+    [data-page="permesso-tracker"] .ql:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(20,30,48,.1)}
+    [data-page="permesso-tracker"] .ql .ql-ic{font-size:1.35rem;line-height:1}
+    [data-page="permesso-tracker"] .ql .ql-tx{display:flex;flex-direction:column;gap:.1rem}
+    [data-page="permesso-tracker"] .ql .ql-tt{font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:var(--text-base)}
+    [data-page="permesso-tracker"] .ql .ql-ds{font-size:var(--text-xs);color:var(--fg-muted)}
+
+    /* live region for screen readers */
+    [data-page="permesso-tracker"] .sr-live{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+
+  <div class="page page-wide">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Tracker</p>
+    <h1 class="reveal">Tracker <em>Permesso di Soggiorno.</em></h1>
+    <p class="lead reveal">Tieni sotto controllo la tua pratica: registra i dati, segui lo <strong>stato passo-passo</strong> (presentata, in lavorazione, pronta per il ritiro, ritirata) e ricevi un promemoria quando si avvicina la <strong>scadenza</strong> da rinnovare. Trovi anche i link ufficiali per controllare lo stato online.</p>
+
+    <!-- register / demo prompt (shown only if not registered) -->
+    <div id="reg-prompt" class="reg-prompt reveal" hidden>
+      <span class="reg-ic" aria-hidden="true">👋</span>
+      <span>Stai usando il tracker in modalità demo: i dati della tua pratica restano <strong>su questo dispositivo</strong>. <a class="inline" href="percorso.html">Registrati gratis dal tuo Percorso</a> per ritrovarli ovunque quando arriveranno gli account reali.</span>
+    </div>
+
+    <!-- honest local-data banner -->
+    <div class="draft-banner reveal">🔒 <span>I dati restano salvati solo nel tuo browser, su questo dispositivo (nessun invio a server). Con gli account reali (in arrivo) avrai sync su più dispositivi e promemoria via email.</span></div>
+
+    <div class="pt-grid">
+      <!-- ── PRATICA FORM PANEL ── -->
+      <section class="panel reveal" aria-labelledby="form-h">
+        <div class="panel-head">
+          <div>
+            <h2 id="form-h">Inserisci la tua pratica</h2>
+            <p class="panel-sub">I dati restano sul tuo dispositivo. Puoi modificarli quando vuoi.</p>
+          </div>
+        </div>
+
+        <form class="pt-form" id="pt-form" aria-label="Dati della pratica di permesso di soggiorno">
+          <label for="f-tipo">Tipo di permesso</label>
+          <select id="f-tipo" name="tipo" required>
+            <option value="">Seleziona…</option>
+            <option value="Lavoro subordinato">Lavoro subordinato</option>
+            <option value="Lavoro autonomo">Lavoro autonomo</option>
+            <option value="Attesa occupazione">Attesa occupazione</option>
+            <option value="Motivi familiari">Motivi familiari</option>
+            <option value="Studio">Studio</option>
+            <option value="Protezione">Protezione</option>
+            <option value="Lungo soggiorno UE">Lungo soggiorno UE</option>
+            <option value="Altro">Altro</option>
+          </select>
+
+          <label for="f-presentazione">Data di presentazione della domanda</label>
+          <input type="date" id="f-presentazione" name="presentazione" required/>
+
+          <label for="f-questura">Questura / Provincia</label>
+          <input type="text" id="f-questura" name="questura" maxlength="80" autocomplete="off" placeholder="Es. Questura di Milano" required/>
+
+          <label for="f-ricevuta">Numero assicurata / ricevuta <span class="opt">(facoltativo)</span></label>
+          <input type="text" id="f-ricevuta" name="ricevuta" maxlength="60" autocomplete="off" placeholder="Es. 123 4567 8901 2"/>
+
+          <label for="f-scadenza">Data di scadenza del permesso attuale <span class="opt">(facoltativo)</span></label>
+          <input type="date" id="f-scadenza" name="scadenza"/>
+
+          <div class="pt-actions">
+            <button type="submit" class="btn-primary" id="pt-save">Salva pratica</button>
+            <button type="button" class="pt-reset" id="pt-reset" hidden>Cancella pratica</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ── STATUS + REMINDERS PANEL ── -->
+      <section class="panel reveal" aria-labelledby="stato-h">
+        <div class="panel-head">
+          <div>
+            <h2 id="stato-h">Stato della pratica</h2>
+            <p class="panel-sub">Avanza lo stato man mano che procede. Ogni passaggio viene registrato in cronologia.</p>
+          </div>
+        </div>
+
+        <!-- summary chips of saved pratica -->
+        <div class="pt-summary" id="pt-summary"></div>
+
+        <!-- empty state (no pratica yet) -->
+        <p class="pt-empty" id="pt-empty">Nessuna pratica registrata. Compila il modulo qui a fianco per iniziare a seguire il tuo permesso.</p>
+
+        <!-- status timeline -->
+        <ol class="timeline" id="timeline" aria-label="Stato della pratica" hidden></ol>
+
+        <div class="tl-controls" id="tl-controls" hidden>
+          <button type="button" class="btn-primary" id="tl-advance">Avanza allo stato successivo</button>
+          <button type="button" class="tl-back" id="tl-back">‹ Indietro</button>
+        </div>
+        <p class="tl-done-msg" id="tl-done" hidden><span aria-hidden="true">✓</span> Permesso ritirato. Procedura completata.</p>
+
+        <!-- deadline / countdown -->
+        <div class="scad-box" id="scad-box" hidden>
+          <div class="scad-head">
+            <span class="scad-days" id="scad-days">—</span>
+            <span class="scad-cap" id="scad-cap"></span>
+          </div>
+          <p class="scad-note" id="scad-note"></p>
+          <div class="remind-bar">
+            <p id="remind-text">Attiva i promemoria del browser per ricevere un avviso quando manca poco alla scadenza del permesso.</p>
+            <button type="button" class="btn-ghost" id="remind-btn">Attiva promemoria nel browser</button>
+          </div>
+          <span class="remind-status off" id="remind-status">Promemoria non attivi</span>
+        </div>
+      </section>
+    </div>
+
+    <!-- ── CRONOLOGIA ── -->
+    <section class="panel reveal" aria-labelledby="cron-h" style="margin-top:var(--sp-3)">
+      <div class="panel-head">
+        <div>
+          <h2 id="cron-h">Cronologia</h2>
+          <p class="panel-sub">Lo storico dei cambi di stato della tua pratica, dal più recente.</p>
+        </div>
+      </div>
+      <ul class="hist-list" id="hist-list" aria-live="polite"></ul>
+      <p class="hist-empty" id="hist-empty">Nessun aggiornamento di stato ancora. Quando avanzerai lo stato della pratica, comparirà qui la cronologia.</p>
+    </section>
+
+    <!-- ── OFFICIAL LINKS ── -->
+    <h2 class="reveal" style="margin-top:var(--sp-5)">Controlla lo stato online (fonti ufficiali)</h2>
+    <p class="reveal" style="max-width:640px">Per lo stato reale della tua pratica fai sempre riferimento ai portali ufficiali della <strong>Polizia di Stato</strong>. Il <strong>rinnovo</strong> si avvia con il <strong>kit giallo</strong> disponibile gratuitamente agli uffici postali con <strong>Sportello Amico</strong>.</p>
+    <div class="link-grid reveal">
+      <a class="lk" href="https://www.portaleimmigrazione.it" rel="noopener noreferrer" target="_blank">
+        <span class="lk-ic" aria-hidden="true">🔎</span>
+        <span class="lk-tx">
+          <span class="lk-tt">Portale Immigrazione</span>
+          <span class="lk-ds">Stato della pratica online con il numero della ricevuta — portaleimmigrazione.it</span>
+        </span>
+      </a>
+      <a class="lk" href="https://questure.poliziadistato.it/stranieri" rel="noopener noreferrer" target="_blank">
+        <span class="lk-ic" aria-hidden="true">🏛️</span>
+        <span class="lk-tx">
+          <span class="lk-tt">Questure — area stranieri</span>
+          <span class="lk-ds">Informazioni e appuntamenti della tua Questura — questure.poliziadistato.it</span>
+        </span>
+      </a>
+      <a class="lk" href="guide.html#permesso-soggiorno">
+        <span class="lk-ic" aria-hidden="true">📚</span>
+        <span class="lk-tx">
+          <span class="lk-tt">Guida al permesso</span>
+          <span class="lk-ds">Come funziona il kit giallo, il rinnovo e i documenti — passo-passo</span>
+        </span>
+      </a>
+    </div>
+
+    <!-- ── INTERNAL QUICK LINKS ── -->
+    <h2 class="reveal" style="margin-top:var(--sp-5)">Continua il tuo percorso</h2>
+    <div class="ql-grid reveal">
+      <a class="ql" href="guide.html#permesso-soggiorno"><span class="ql-ic" aria-hidden="true">📖</span><span class="ql-tx"><span class="ql-tt">Guida: Permesso</span><span class="ql-ds">Spiegazione passo-passo</span></span></a>
+      <a class="ql" href="dashboard.html"><span class="ql-ic" aria-hidden="true">🗓️</span><span class="ql-tx"><span class="ql-tt">Dashboard</span><span class="ql-ds">Calendario di tutte le scadenze</span></span></a>
+      <a class="ql" href="percorso.html"><span class="ql-ic" aria-hidden="true">🧭</span><span class="ql-tx"><span class="ql-tt">Il Mio Percorso</span><span class="ql-ds">Timeline e simulatori</span></span></a>
+    </div>
+
+    <div class="cta-row reveal">
+      <a href="dashboard.html" class="btn-primary">Apri la Dashboard</a>
+      <a href="guide.html#permesso-soggiorno" class="btn-ghost">Leggi la guida</a>
+    </div>
+
+    <p class="sr-live" id="sr-live" aria-live="polite"></p>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   Tracker Permesso di Soggiorno — pratica + stato + promemoria.
+   100% client-side. Nessun backend, nessuna chiamata di rete.
+   Tutto salvato in localStorage.
+   Store key: 'eih-permesso' → {
+     tipo, presentazione:'YYYY-MM-DD', questura, ricevuta,
+     scadenza:'YYYY-MM-DD'|'', status:0..3,
+     history:[{status:Int, label:String, at:ISOString}],
+     updatedAt:ISOString
+   }
+   ═══════════════════════════════════════════════════════════ */
+(function(){
+  "use strict";
+
+  var STORE_KEY = 'eih-permesso';
+  var SOON_DAYS = 60; // avvio rinnovo ~60 giorni prima della scadenza
+  var MONTHS = ['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+  var STEPS = ['Presentata','In lavorazione','Pronto per il ritiro','Ritirato'];
+
+  // ── helpers ──────────────────────────────────────────────
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  function todayStart(){ var t = new Date(); t.setHours(0,0,0,0); return t; }
+  function parseYmd(s){
+    // local-midnight parse (avoid timezone shift from new Date('YYYY-MM-DD'))
+    var p = String(s).split('-');
+    return new Date(+p[0], (+p[1]||1)-1, +p[2]||1, 0, 0, 0, 0);
+  }
+  function daysBetween(fromDate, toDate){
+    var MS = 86400000;
+    return Math.round((toDate.getTime() - fromDate.getTime()) / MS);
+  }
+  function fmtDate(s){
+    if(!s) return '';
+    var d = parseYmd(s);
+    return d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+  }
+  function fmtDateTime(iso){
+    var d = new Date(iso);
+    if(isNaN(d.getTime())) return '';
+    return d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear() +
+           ', ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+  function escapeHTML(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+
+  // ── store ────────────────────────────────────────────────
+  function load(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      if(!raw) return null;
+      var o = JSON.parse(raw);
+      if(!o || typeof o !== 'object' || typeof o.tipo !== 'string') return null;
+      // normalise / clamp
+      var st = parseInt(o.status, 10);
+      if(isNaN(st) || st < 0) st = 0;
+      if(st > STEPS.length - 1) st = STEPS.length - 1;
+      return {
+        tipo: o.tipo,
+        presentazione: (typeof o.presentazione === 'string' ? o.presentazione : ''),
+        questura: (typeof o.questura === 'string' ? o.questura : ''),
+        ricevuta: (typeof o.ricevuta === 'string' ? o.ricevuta : ''),
+        scadenza: (typeof o.scadenza === 'string' ? o.scadenza : ''),
+        status: st,
+        history: (Array.isArray(o.history) ? o.history.filter(function(h){
+          return h && typeof h === 'object' && typeof h.label === 'string' && typeof h.at === 'string';
+        }) : []),
+        updatedAt: (typeof o.updatedAt === 'string' ? o.updatedAt : new Date().toISOString())
+      };
+    }catch(e){ return null; }
+  }
+  function save(){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(pratica)); }catch(e){}
+  }
+
+  var pratica = load();
+
+  // ── DOM refs ─────────────────────────────────────────────
+  var elForm     = document.getElementById('pt-form');
+  var elTipo     = document.getElementById('f-tipo');
+  var elPres     = document.getElementById('f-presentazione');
+  var elQuest    = document.getElementById('f-questura');
+  var elRic      = document.getElementById('f-ricevuta');
+  var elScad     = document.getElementById('f-scadenza');
+  var elReset    = document.getElementById('pt-reset');
+  var elSummary  = document.getElementById('pt-summary');
+  var elEmpty    = document.getElementById('pt-empty');
+  var elTimeline = document.getElementById('timeline');
+  var elTlCtrl   = document.getElementById('tl-controls');
+  var elAdvance  = document.getElementById('tl-advance');
+  var elBack     = document.getElementById('tl-back');
+  var elTlDone   = document.getElementById('tl-done');
+  var elScadBox  = document.getElementById('scad-box');
+  var elScadDays = document.getElementById('scad-days');
+  var elScadCap  = document.getElementById('scad-cap');
+  var elScadNote = document.getElementById('scad-note');
+  var elRemBtn   = document.getElementById('remind-btn');
+  var elRemSt    = document.getElementById('remind-status');
+  var elRemTxt   = document.getElementById('remind-text');
+  var elHist     = document.getElementById('hist-list');
+  var elHistMt   = document.getElementById('hist-empty');
+  var elRegPmt   = document.getElementById('reg-prompt');
+  var elLive     = document.getElementById('sr-live');
+
+  if(!elForm){ return; } // safety: page shell not present
+
+  function announce(msg){ if(elLive){ elLive.textContent = ''; elLive.textContent = msg; } }
+
+  // ── registration prompt (demo gate) ──────────────────────
+  function checkRegistered(){
+    var registered = false;
+    try{ registered = !!localStorage.getItem('eih-registered'); }catch(e){}
+    if(elRegPmt){ elRegPmt.hidden = registered; }
+  }
+
+  // ── FORM ─────────────────────────────────────────────────
+  function fillFormFromPratica(){
+    if(!pratica) return;
+    elTipo.value  = pratica.tipo || '';
+    elPres.value  = pratica.presentazione || '';
+    elQuest.value = pratica.questura || '';
+    elRic.value   = pratica.ricevuta || '';
+    elScad.value  = pratica.scadenza || '';
+  }
+
+  function saveForm(e){
+    e.preventDefault();
+    var tipo = elTipo.value;
+    var pres = elPres.value;
+    var quest = (elQuest.value || '').trim();
+    if(!tipo || !pres || !quest){
+      // browser required-validation normally catches this; guard anyway
+      announce('Compila tipo permesso, data di presentazione e Questura.');
+      return;
+    }
+    var existed = !!pratica;
+    if(!pratica){
+      pratica = { status: 0, history: [] };
+      // first save logs the initial "Presentata" status
+      pratica.history = [{ status: 0, label: STEPS[0], at: new Date().toISOString() }];
+    }
+    pratica.tipo = tipo;
+    pratica.presentazione = pres;
+    pratica.questura = quest;
+    pratica.ricevuta = (elRic.value || '').trim();
+    pratica.scadenza = elScad.value || '';
+    pratica.updatedAt = new Date().toISOString();
+    save();
+    renderAll();
+    announce(existed ? 'Dati della pratica aggiornati.' : 'Pratica registrata. Stato iniziale: ' + STEPS[0] + '.');
+  }
+
+  function resetPratica(){
+    if(!pratica) return;
+    var ok = window.confirm('Vuoi cancellare la pratica e tutta la cronologia da questo dispositivo? L’azione non si può annullare.');
+    if(!ok) return;
+    pratica = null;
+    try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+    elForm.reset();
+    renderAll();
+    announce('Pratica cancellata.');
+    try{ elTipo.focus(); }catch(e){}
+  }
+
+  // ── STATUS ───────────────────────────────────────────────
+  function logStatus(idx){
+    pratica.history = pratica.history || [];
+    pratica.history.push({ status: idx, label: STEPS[idx], at: new Date().toISOString() });
+  }
+
+  function advanceStatus(dir){
+    if(!pratica) return;
+    var next = pratica.status + dir;
+    if(next < 0 || next > STEPS.length - 1) return;
+    pratica.status = next;
+    if(dir > 0){ logStatus(next); } // log forward moves into cronologia
+    pratica.updatedAt = new Date().toISOString();
+    save();
+    renderAll();
+    if(dir > 0){
+      announce('Stato aggiornato a: ' + STEPS[next] + '.');
+    } else {
+      announce('Stato riportato a: ' + STEPS[next] + '.');
+    }
+  }
+
+  function renderSummary(){
+    if(!pratica){ elSummary.innerHTML = ''; return; }
+    var chips = [
+      { k: 'Tipo', v: pratica.tipo },
+      { k: 'Presentata il', v: fmtDate(pratica.presentazione) || '—' },
+      { k: 'Questura', v: pratica.questura || '—' }
+    ];
+    if(pratica.ricevuta){ chips.push({ k: 'Ricevuta', v: pratica.ricevuta }); }
+    if(pratica.scadenza){ chips.push({ k: 'Scadenza attuale', v: fmtDate(pratica.scadenza) }); }
+    elSummary.innerHTML = chips.map(function(c){
+      return '<span class="pt-chip"><span class="k">' + escapeHTML(c.k) + '</span>' +
+             '<span class="v">' + escapeHTML(c.v) + '</span></span>';
+    }).join('');
+  }
+
+  function renderTimeline(){
+    if(!pratica){
+      elTimeline.hidden = true;
+      elTlCtrl.hidden = true;
+      elTlDone.hidden = true;
+      elEmpty.hidden = false;
+      elSummary.style.display = 'none';
+      return;
+    }
+    elEmpty.hidden = true;
+    elSummary.style.display = '';
+    elTimeline.hidden = false;
+
+    // last forward-time logged per status, to show "raggiunto il…"
+    var reachedAt = {};
+    (pratica.history || []).forEach(function(h){
+      reachedAt[h.status] = h.at;
+    });
+
+    elTimeline.innerHTML = STEPS.map(function(label, i){
+      var cls = (i < pratica.status ? 'done' : (i === pratica.status ? 'current' : ''));
+      var icon = (i < pratica.status ? '✓' : (i === pratica.status ? '●' : (i + 1)));
+      var badge = (i === pratica.status ? '<span class="tl-badge">Stato attuale</span>' : '');
+      var meta = '';
+      if(reachedAt[i] && i <= pratica.status){
+        meta = '<span class="tl-meta">Raggiunto il ' + escapeHTML(fmtDateTime(reachedAt[i])) + '</span>';
+      }
+      return '<li class="' + cls + '">' +
+               '<span class="tl-dot" aria-hidden="true">' + icon + '</span>' +
+               '<span class="tl-label">' + escapeHTML(label) + badge + '</span>' +
+               meta +
+             '</li>';
+    }).join('');
+
+    // controls
+    var isLast = pratica.status >= STEPS.length - 1;
+    elTlCtrl.hidden = false;
+    elBack.disabled = (pratica.status <= 0);
+    if(isLast){
+      elAdvance.hidden = true;
+      elTlDone.hidden = false;
+    } else {
+      elAdvance.hidden = false;
+      elTlDone.hidden = true;
+      elAdvance.textContent = 'Avanza a: ' + STEPS[pratica.status + 1];
+    }
+  }
+
+  // ── DEADLINE / COUNTDOWN ─────────────────────────────────
+  function renderDeadline(){
+    if(!pratica || !pratica.scadenza){
+      elScadBox.hidden = true;
+      return;
+    }
+    elScadBox.hidden = false;
+    var today = todayStart();
+    var due = parseYmd(pratica.scadenza);
+    var diff = daysBetween(today, due);
+
+    elScadBox.classList.remove('soon','ok');
+
+    if(diff < 0){
+      elScadDays.textContent = Math.abs(diff);
+      elScadCap.textContent = (Math.abs(diff) === 1 ? 'giorno fa il permesso è scaduto' : 'giorni fa il permesso è scaduto');
+      elScadBox.classList.add('soon');
+      elScadNote.innerHTML = '⚠️ Il permesso risulta <strong>scaduto</strong>. Se non hai ancora avviato il rinnovo, rivolgiti subito a un <strong>patronato o CAF gratuito</strong> e verifica la tua posizione sul Portale Immigrazione.';
+    } else if(diff <= SOON_DAYS){
+      elScadDays.textContent = diff;
+      elScadCap.textContent = (diff === 0 ? 'Scade oggi' : (diff === 1 ? 'giorno alla scadenza' : 'giorni alla scadenza'));
+      elScadBox.classList.add('soon');
+      elScadNote.innerHTML = '⏰ Sei nella finestra utile per il <strong>rinnovo</strong> (di norma si avvia intorno ai ' + SOON_DAYS + ' giorni prima). Ritira il <strong>kit giallo</strong> alle Poste con Sportello Amico e prepara i documenti.';
+    } else {
+      elScadDays.textContent = diff;
+      elScadCap.textContent = 'giorni alla scadenza';
+      elScadBox.classList.add('ok');
+      elScadNote.innerHTML = 'Tutto tranquillo per ora. Ti conviene avviare il rinnovo intorno ai <strong>' + SOON_DAYS + ' giorni prima</strong> della scadenza: torna qui per il promemoria.';
+    }
+  }
+
+  function isDeadlineSoon(){
+    if(!pratica || !pratica.scadenza) return false;
+    var diff = daysBetween(todayStart(), parseYmd(pratica.scadenza));
+    return diff <= SOON_DAYS; // include scaduti e in arrivo
+  }
+
+  // ── CRONOLOGIA ───────────────────────────────────────────
+  function renderHistory(){
+    var hist = (pratica && pratica.history) ? pratica.history : [];
+    if(!hist.length){
+      elHist.innerHTML = '';
+      elHistMt.hidden = false;
+      return;
+    }
+    elHistMt.hidden = true;
+    // newest first
+    var rows = hist.slice().reverse();
+    elHist.innerHTML = rows.map(function(h){
+      return '<li class="hist-item">' +
+               '<span class="hist-dot" aria-hidden="true"></span>' +
+               '<span class="hist-body">' +
+                 '<p class="hist-title">Stato: ' + escapeHTML(h.label) + '</p>' +
+                 '<p class="hist-when">' + escapeHTML(fmtDateTime(h.at)) + '</p>' +
+               '</span>' +
+             '</li>';
+    }).join('');
+  }
+
+  // ── REMINDERS (Notification API) ─────────────────────────
+  function notifSupported(){ return ('Notification' in window); }
+
+  function reflectPermission(){
+    if(!notifSupported()){
+      elRemSt.textContent = 'Notifiche non supportate da questo browser';
+      elRemSt.className = 'remind-status denied';
+      elRemBtn.disabled = true;
+      elRemBtn.textContent = 'Non disponibile';
+      elRemTxt.textContent = 'Questo browser non supporta le notifiche. Il conteggio dei giorni resta comunque visibile qui.';
+      return;
+    }
+    var p = Notification.permission;
+    if(p === 'granted'){
+      elRemSt.textContent = '✓ Promemoria attivi su questo dispositivo';
+      elRemSt.className = 'remind-status ok';
+      elRemBtn.textContent = 'Controlla la scadenza';
+    } else if(p === 'denied'){
+      elRemSt.textContent = 'Notifiche bloccate dal browser — sbloccale dalle impostazioni del sito';
+      elRemSt.className = 'remind-status denied';
+      elRemBtn.textContent = 'Attiva promemoria nel browser';
+    } else {
+      elRemSt.textContent = 'Promemoria non attivi';
+      elRemSt.className = 'remind-status off';
+      elRemBtn.textContent = 'Attiva promemoria nel browser';
+    }
+  }
+
+  function showDeadlineNotification(){
+    if(!notifSupported() || Notification.permission !== 'granted') return;
+    if(!pratica || !pratica.scadenza){
+      announce('Nessuna data di scadenza impostata.');
+      try{
+        new Notification('Easy Italia Hub — permesso', {
+          body: 'Non hai impostato una data di scadenza. Aggiungila per ricevere il promemoria del rinnovo.',
+          lang: 'it'
+        });
+      }catch(e){}
+      return;
+    }
+    var diff = daysBetween(todayStart(), parseYmd(pratica.scadenza));
+    var body;
+    if(diff < 0){
+      body = 'Il permesso è scaduto da ' + Math.abs(diff) + (Math.abs(diff) === 1 ? ' giorno' : ' giorni') + '. Verifica la tua posizione e avvia il rinnovo.';
+    } else if(diff === 0){
+      body = 'Il permesso scade oggi. Avvia subito il rinnovo se non l’hai già fatto.';
+    } else if(diff <= SOON_DAYS){
+      body = 'Mancano ' + diff + ' giorni alla scadenza del permesso: è il momento di avviare il rinnovo (kit giallo alle Poste).';
+    } else {
+      body = 'Mancano ' + diff + ' giorni alla scadenza. Avvia il rinnovo intorno ai ' + SOON_DAYS + ' giorni prima.';
+    }
+    try{
+      new Notification('Permesso di soggiorno — ' + pratica.tipo, {
+        body: body,
+        lang: 'it',
+        tag: 'eih-permesso-scadenza'
+      });
+    }catch(e){}
+    announce(body);
+  }
+
+  function requestReminders(){
+    if(!notifSupported()){ reflectPermission(); return; }
+    if(Notification.permission === 'granted'){ showDeadlineNotification(); return; }
+    if(Notification.permission === 'denied'){ reflectPermission(); return; }
+    try{
+      var p = Notification.requestPermission(function(result){
+        reflectPermission();
+        if(result === 'granted') showDeadlineNotification();
+      });
+      // some browsers return a Promise instead of using the callback
+      if(p && typeof p.then === 'function'){
+        p.then(function(result){
+          reflectPermission();
+          if(result === 'granted') showDeadlineNotification();
+        }).catch(function(){ reflectPermission(); });
+      }
+    }catch(e){ reflectPermission(); }
+  }
+
+  // ── RENDER ALL ───────────────────────────────────────────
+  function renderAll(){
+    elReset.hidden = !pratica;
+    if(pratica){ document.getElementById('pt-save').textContent = 'Aggiorna pratica'; }
+    else { document.getElementById('pt-save').textContent = 'Salva pratica'; }
+    renderSummary();
+    renderTimeline();
+    renderDeadline();
+    renderHistory();
+  }
+
+  // ── EVENTS ───────────────────────────────────────────────
+  elForm.addEventListener('submit', saveForm);
+  elReset.addEventListener('click', resetPratica);
+  elAdvance.addEventListener('click', function(){ advanceStatus(1); });
+  elBack.addEventListener('click', function(){ advanceStatus(-1); });
+  elRemBtn.addEventListener('click', requestReminders);
+
+  // ── INIT ─────────────────────────────────────────────────
+  checkRegistered();
+  fillFormFromPratica();
+  renderAll();
+  reflectPermission();
+
+  // if reminders already granted and a deadline is near, surface it once on load (no spam)
+  if(notifSupported() && Notification.permission === 'granted' && isDeadlineSoon()){
+    setTimeout(showDeadlineNotification, 1200);
+  }
+})();
+</script>
+</body>
+</html>
