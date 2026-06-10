@@ -233,6 +233,7 @@
 
 <div id="site-footer"></div>
 <script src="eih.js"></script>
+<script src="eih-auth.js" defer></script>
 <script>
 /* ═══════════════════════════════════════════════════════════
    Dashboard — calendario scadenze + promemoria (client-side).
@@ -267,26 +268,58 @@
   function uid(){ return 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
   // ── store ────────────────────────────────────────────────
+  // Sanitize any source array down to well-formed deadline records. Used for
+  // BOTH the localStorage fallback and whatever EIH_DB returns, so the calendar
+  // and list always receive the exact shape they did before.
+  function normalize(arr){
+    if(!Array.isArray(arr)) return [];
+    return arr.filter(function(x){
+      return x && typeof x === 'object' && typeof x.date === 'string' &&
+             /^\d{4}-\d{2}-\d{2}$/.test(x.date) && typeof x.title === 'string';
+    }).map(function(x){
+      return { id: x.id || uid(), date: x.date, title: x.title, note: (x.note || '') };
+    });
+  }
   function load(){
     try{
       var raw = localStorage.getItem(STORE_KEY);
       if(!raw) return [];
-      var arr = JSON.parse(raw);
-      if(!Array.isArray(arr)) return [];
-      // keep only well-formed records
-      return arr.filter(function(x){
-        return x && typeof x === 'object' && typeof x.date === 'string' &&
-               /^\d{4}-\d{2}-\d{2}$/.test(x.date) && typeof x.title === 'string';
-      }).map(function(x){
-        return { id: x.id || uid(), date: x.date, title: x.title, note: (x.note || '') };
-      });
+      return normalize(JSON.parse(raw));
     }catch(e){ return []; }
   }
   function save(list){
     try{ localStorage.setItem(STORE_KEY, JSON.stringify(list)); }catch(e){}
   }
 
-  var deadlines = load();
+  // ── async storage shim ───────────────────────────────────
+  // Routes deadline read/add/delete through the EIH_DB data layer when present
+  // (REAL = Supabase, DEMO = same localStorage key+shape used below). If the
+  // script isn't loaded or a call fails, we fall back to the ORIGINAL
+  // localStorage behavior verbatim, so the demo works exactly as before.
+  async function dlLoad(){
+    if(window.EIH_DB){
+      try{ return normalize(await window.EIH_DB.listDeadlines()); }catch(e){}
+    }
+    return load(); // ORIGINAL localStorage read, unchanged
+  }
+  async function dlAdd(obj){
+    if(window.EIH_DB){
+      try{ await window.EIH_DB.addDeadline(obj); return; }catch(e){}
+    }
+    // ORIGINAL localStorage write
+    deadlines.push(obj);
+    save(deadlines);
+  }
+  async function dlDelete(id){
+    if(window.EIH_DB){
+      try{ await window.EIH_DB.deleteDeadline(id); return; }catch(e){}
+    }
+    // ORIGINAL localStorage delete
+    deadlines = deadlines.filter(function(x){ return x.id !== id; });
+    save(deadlines);
+  }
+
+  var deadlines = [];
 
   // ── DOM refs ─────────────────────────────────────────────
   var elGrid    = document.getElementById('cal-grid');
@@ -413,21 +446,21 @@
     elForm.reset();
   }
 
-  function addDeadline(dateStr, title, note){
+  async function addDeadline(dateStr, title, note){
     title = (title || '').trim();
     if(!title) return false;
-    deadlines.push({ id: uid(), date: dateStr, title: title, note: (note || '').trim() });
-    save(deadlines);
+    await dlAdd({ id: uid(), date: dateStr, title: title, note: (note || '').trim() });
+    deadlines = await dlLoad();
     renderAll();
     var d = parseYmd(dateStr);
     announce('Scadenza "' + title + '" aggiunta per il ' + d.getDate() + ' ' + MONTHS[d.getMonth()] + '.');
     return true;
   }
 
-  function removeDeadline(id){
+  async function removeDeadline(id){
     var item = deadlines.filter(function(x){ return x.id === id; })[0];
-    deadlines = deadlines.filter(function(x){ return x.id !== id; });
-    save(deadlines);
+    await dlDelete(id);
+    deadlines = await dlLoad();
     renderAll();
     announce((item ? 'Scadenza "' + item.title + '" eliminata.' : 'Scadenza eliminata.'));
   }
@@ -585,9 +618,9 @@
     openForm(cell.dataset.date);
   });
 
-  elForm.addEventListener('submit', function(e){
+  elForm.addEventListener('submit', async function(e){
     e.preventDefault();
-    var ok = addDeadline(selectedDate || ymd(todayStart()), elInTitle.value, elInNote.value);
+    var ok = await addDeadline(selectedDate || ymd(todayStart()), elInTitle.value, elInNote.value);
     if(ok){ closeForm(); }
     else { try{ elInTitle.focus(); }catch(err){} }
   });
@@ -626,19 +659,56 @@
 
   elRemBtn.addEventListener('click', requestReminders);
 
+  // ── optional: personalize the greeting from the signed-in user ───────────
+  // Defensive: only runs if EIH_AUTH is present and returns a user with a
+  // name/email. In demo (today) getUser() is null unless 'eih-registered' is
+  // set, so the original heading is left untouched.
+  function greetUser(user){
+    if(!user) return;
+    var name = '';
+    try{
+      name = (user.name || (user.user_metadata && (user.user_metadata.name || user.user_metadata.full_name)) || user.email || '').toString().trim();
+    }catch(e){ return; }
+    if(!name) return;
+    try{
+      var h1 = document.querySelector('[data-page="dashboard"] h1');
+      if(h1 && !h1.querySelector('.dash-greet')){
+        var span = document.createElement('span');
+        span.className = 'dash-greet';
+        span.style.cssText = 'display:block;font-size:var(--text-base);font-weight:500;color:var(--fg-secondary);margin-top:.4rem';
+        span.textContent = 'Bentornato/a, ' + name + '.';
+        h1.appendChild(span);
+      }
+    }catch(e){}
+  }
+
   // ── INIT ─────────────────────────────────────────────────
   var now = todayStart();
   viewYear = now.getFullYear();
   viewMonth = now.getMonth();
 
   checkRegistered();
-  renderAll();
+  renderCalendar();   // render the (empty) calendar shell immediately
   reflectPermission();
 
-  // if reminders already granted, surface near deadlines once on load (no spam)
-  if(notifSupported() && Notification.permission === 'granted'){
-    setTimeout(showNearNotifications, 1200);
-  }
+  (async function init(){
+    // Initialize REAL mode if configured; in demo this resolves instantly.
+    try{ await (window.EIH_AUTH && window.EIH_AUTH.ready); }catch(e){}
+
+    // optional greeting nicety (defensive, no-op in demo when not registered)
+    if(window.EIH_AUTH && typeof window.EIH_AUTH.getUser === 'function'){
+      try{ greetUser(await window.EIH_AUTH.getUser()); }catch(e){}
+    }
+
+    // load deadlines through the shim, then render calendar + upcoming list
+    deadlines = await dlLoad();
+    renderAll();
+
+    // if reminders already granted, surface near deadlines once on load (no spam)
+    if(notifSupported() && Notification.permission === 'granted'){
+      setTimeout(showNearNotifications, 1200);
+    }
+  })();
 })();
 </script>
 </body>

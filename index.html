@@ -1978,7 +1978,7 @@ html.returning #preloader{display:none}
       <h2 class="modal-title" id="auth-title" style="font-size:var(--text-xl)">Bentornato</h2>
       <p class="modal-sub" id="auth-sub">Accedi al tuo account Easy Italia Hub</p>
     </div>
-    <form onsubmit="event.preventDefault();try{localStorage.setItem('eih-registered','1');}catch(e){}location.href='dashboard.html'" style="display:flex;flex-direction:column;gap:var(--sp-2)">
+    <form onsubmit="event.preventDefault();eihSubmitAuth();return false;" style="display:flex;flex-direction:column;gap:var(--sp-2)">
       <div id="name-field" style="display:none;flex-direction:column;gap:.4rem">
         <label for="auth-name" style="font-size:var(--text-xs);color:var(--fg-secondary);font-weight:500">Nome completo</label>
         <input id="auth-name" type="text" class="ch-in" style="min-height:42px" placeholder="Mario Rossi" autocomplete="name"/>
@@ -2429,6 +2429,23 @@ function applyAuthMode(){
   document.getElementById('auth-switch-text').textContent=signup?'Hai già un account?':'Non hai un account?';
   document.getElementById('auth-switch').textContent=signup?'Accedi':'Registrati';
 }
+// REAL-mode UX (error messages, email confirmation) to be finalized when Supabase keys are live and testable.
+async function eihSubmitAuth(){
+  const email=(document.getElementById('auth-email')||{}).value||'';
+  const pass=(document.getElementById('auth-pass')||{}).value||'';
+  const name=(document.getElementById('auth-name')||{}).value||'';
+  if(window.EIH_AUTH){
+    try{
+      await window.EIH_AUTH.ready;
+      if(authMode==='signup'){await window.EIH_AUTH.signUp(email,pass,{name:name});}
+      else{await window.EIH_AUTH.signIn(email,pass);}
+    }catch(e){}
+  }else{
+    // Fallback: auth script failed to load — preserve the original demo behavior.
+    try{localStorage.setItem('eih-registered','1');}catch(e){}
+  }
+  location.href='dashboard.html';
+}
 
 /* ── Pricing / packages modal ── */
 function openPricing(){openModal('pricing-modal')}
@@ -2567,5 +2584,6 @@ function sendSug(el){
 
 <!-- Money-transfer comparator now lives on money-transfer.html -->
 <script src="news-ticker.js" defer></script>
+<script src="eih-auth.js" defer></script>
 </body>
 </html>
