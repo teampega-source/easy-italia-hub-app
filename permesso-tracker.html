@@ -283,6 +283,7 @@
 
 <div id="site-footer"></div>
 <script src="eih.js"></script>
+<script src="eih-auth.js" defer></script>
 <script>
 /* ═══════════════════════════════════════════════════════════
    Tracker Permesso di Soggiorno — pratica + stato + promemoria.
@@ -333,35 +334,59 @@
   }
 
   // ── store ────────────────────────────────────────────────
-  function load(){
+  // Normalise/clamp a raw stored object into the shape this page expects.
+  function normalise(o){
+    if(!o || typeof o !== 'object' || typeof o.tipo !== 'string') return null;
+    // normalise / clamp
+    var st = parseInt(o.status, 10);
+    if(isNaN(st) || st < 0) st = 0;
+    if(st > STEPS.length - 1) st = STEPS.length - 1;
+    return {
+      tipo: o.tipo,
+      presentazione: (typeof o.presentazione === 'string' ? o.presentazione : ''),
+      questura: (typeof o.questura === 'string' ? o.questura : ''),
+      ricevuta: (typeof o.ricevuta === 'string' ? o.ricevuta : ''),
+      scadenza: (typeof o.scadenza === 'string' ? o.scadenza : ''),
+      status: st,
+      history: (Array.isArray(o.history) ? o.history.filter(function(h){
+        return h && typeof h === 'object' && typeof h.label === 'string' && typeof h.at === 'string';
+      }) : []),
+      updatedAt: (typeof o.updatedAt === 'string' ? o.updatedAt : new Date().toISOString())
+    };
+  }
+
+  // ORIGINAL localStorage 'eih-permesso' read (used as fallback).
+  function loadLocal(){
     try{
       var raw = localStorage.getItem(STORE_KEY);
       if(!raw) return null;
-      var o = JSON.parse(raw);
-      if(!o || typeof o !== 'object' || typeof o.tipo !== 'string') return null;
-      // normalise / clamp
-      var st = parseInt(o.status, 10);
-      if(isNaN(st) || st < 0) st = 0;
-      if(st > STEPS.length - 1) st = STEPS.length - 1;
-      return {
-        tipo: o.tipo,
-        presentazione: (typeof o.presentazione === 'string' ? o.presentazione : ''),
-        questura: (typeof o.questura === 'string' ? o.questura : ''),
-        ricevuta: (typeof o.ricevuta === 'string' ? o.ricevuta : ''),
-        scadenza: (typeof o.scadenza === 'string' ? o.scadenza : ''),
-        status: st,
-        history: (Array.isArray(o.history) ? o.history.filter(function(h){
-          return h && typeof h === 'object' && typeof h.label === 'string' && typeof h.at === 'string';
-        }) : []),
-        updatedAt: (typeof o.updatedAt === 'string' ? o.updatedAt : new Date().toISOString())
-      };
+      return normalise(JSON.parse(raw));
     }catch(e){ return null; }
   }
-  function save(){
+  // ORIGINAL localStorage write (used as fallback).
+  function saveLocal(){
     try{ localStorage.setItem(STORE_KEY, JSON.stringify(pratica)); }catch(e){}
   }
 
-  var pratica = load();
+  // Async store shims: prefer the EIH_DB data layer, fall back to localStorage.
+  // In demo mode EIH_DB uses the SAME 'eih-permesso' key, so behaviour is transparent.
+  async function pmLoad(){
+    if(window.EIH_DB){
+      try{
+        var r = await window.EIH_DB.getPermesso();
+        if(r != null) return normalise(r);
+      }catch(e){}
+    }
+    return loadLocal();
+  }
+  async function pmSave(obj){
+    if(window.EIH_DB){
+      try{ await window.EIH_DB.savePermesso(obj); return; }catch(e){}
+    }
+    saveLocal();
+  }
+
+  var pratica = null; // loaded asynchronously in init()
 
   // ── DOM refs ─────────────────────────────────────────────
   var elForm     = document.getElementById('pt-form');
@@ -411,7 +436,7 @@
     elScad.value  = pratica.scadenza || '';
   }
 
-  function saveForm(e){
+  async function saveForm(e){
     e.preventDefault();
     var tipo = elTipo.value;
     var pres = elPres.value;
@@ -433,7 +458,7 @@
     pratica.ricevuta = (elRic.value || '').trim();
     pratica.scadenza = elScad.value || '';
     pratica.updatedAt = new Date().toISOString();
-    save();
+    await pmSave(pratica);
     renderAll();
     announce(existed ? 'Dati della pratica aggiornati.' : 'Pratica registrata. Stato iniziale: ' + STEPS[0] + '.');
   }
@@ -456,14 +481,14 @@
     pratica.history.push({ status: idx, label: STEPS[idx], at: new Date().toISOString() });
   }
 
-  function advanceStatus(dir){
+  async function advanceStatus(dir){
     if(!pratica) return;
     var next = pratica.status + dir;
     if(next < 0 || next > STEPS.length - 1) return;
     pratica.status = next;
     if(dir > 0){ logStatus(next); } // log forward moves into cronologia
     pratica.updatedAt = new Date().toISOString();
-    save();
+    await pmSave(pratica);
     renderAll();
     if(dir > 0){
       announce('Stato aggiornato a: ' + STEPS[next] + '.');
@@ -693,15 +718,23 @@
   elRemBtn.addEventListener('click', requestReminders);
 
   // ── INIT ─────────────────────────────────────────────────
-  checkRegistered();
-  fillFormFromPratica();
-  renderAll();
-  reflectPermission();
+  async function init(){
+    // wait for the auth/data layer to settle (no-op in demo / if script absent)
+    try{ if(window.EIH_AUTH && window.EIH_AUTH.ready){ await window.EIH_AUTH.ready; } }catch(e){}
+    // load the pratica via the data-layer shim (falls back to localStorage)
+    pratica = await pmLoad();
 
-  // if reminders already granted and a deadline is near, surface it once on load (no spam)
-  if(notifSupported() && Notification.permission === 'granted' && isDeadlineSoon()){
-    setTimeout(showDeadlineNotification, 1200);
+    checkRegistered();
+    fillFormFromPratica();
+    renderAll();
+    reflectPermission();
+
+    // if reminders already granted and a deadline is near, surface it once on load (no spam)
+    if(notifSupported() && Notification.permission === 'granted' && isDeadlineSoon()){
+      setTimeout(showDeadlineNotification, 1200);
+    }
   }
+  init();
 })();
 </script>
 </body>
