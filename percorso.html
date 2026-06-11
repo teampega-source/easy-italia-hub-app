@@ -2,6 +2,9 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Il Mio Percorso — Easy Italia Hub</title>
 <meta name="description" content="Il Mio Percorso: la mappa delle 9 fasi per costruire la tua vita in Italia. Sai sempre dove sei e qual è il prossimo passo, con il Consigliere AI al tuo fianco."/>
@@ -993,5 +996,6 @@ renderPhases();
   }
 })();
 </script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
 </body>
 </html>
