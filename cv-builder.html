@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>CV Builder — Easy Italia Hub</title>
 <meta name="description" content="Crea un curriculum vitae professionale in stile italiano/europeo, pulito e pronto per la stampa in PDF. Funziona nel tuo browser, senza account."/>
 <meta name="theme-color" content="#7d7058"/>
@@ -551,5 +554,6 @@
   renderCV();
 })();
 </script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
 </body>
 </html>

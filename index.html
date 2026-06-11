@@ -2,6 +2,9 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <!-- ─── Primary SEO ─── -->
@@ -18,7 +21,7 @@
 <meta property="og:title" content="Easy Italia Hub — Guide e Community Srilankese in Italia"/>
 <meta property="og:description" content="Guide burocratiche, assistente AI multilingua e community per la comunità srilankese in Italia: permesso di soggiorno, SPID, codice fiscale e altro."/>
 <meta property="og:url" content="https://easyitaliahub.it/"/>
-<meta property="og:image" content="https://easyitaliahub.it/og-image.jpg"/>
+<meta property="og:image" content="https://deploy-pi-green.vercel.app/og-image.jpg"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <meta property="og:locale" content="it_IT"/>
@@ -30,7 +33,7 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Easy Italia Hub — Guide e Community Srilankese in Italia"/>
 <meta name="twitter:description" content="Guide burocratiche, assistente AI multilingua e community per la comunità srilankese in Italia."/>
-<meta name="twitter:image" content="https://easyitaliahub.it/og-image.jpg"/>
+<meta name="twitter:image" content="https://deploy-pi-green.vercel.app/og-image.jpg"/>
 
 <!-- ─── Hreflang (4 lingue) ─── -->
 <link rel="alternate" hreflang="it" href="https://easyitaliahub.it/"/>
@@ -2609,5 +2612,10 @@ function sendSug(el){
 <!-- Money-transfer comparator now lives on money-transfer.html -->
 <script src="news-ticker.js" defer></script>
 <script src="eih-auth.js" defer></script>
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script src="assets/vendor/gsap.min.js" defer></script>
+<script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/eih-motion.js" defer></script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
 </body>
 </html>
