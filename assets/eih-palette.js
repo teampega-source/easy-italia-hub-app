@@ -10,6 +10,7 @@
     { href: '/permesso-tracker', it: 'Tracker Permesso di Soggiorno', en: 'Residence permit tracker', k: 'questura kit postale rinnovo pratica soggiorno' },
     { href: '/documenti', it: 'Archivio Documenti', en: 'Documents archive', k: 'file pdf passaporto scadenze upload' },
     { href: '/cv-builder', it: 'CV Builder', en: 'CV Builder', k: 'curriculum lavoro europass resume' },
+    { href: '/moduli', it: 'Moduli e Lettere', en: 'Letters & forms', k: 'delega disdetta ospitalita sollecito lettera pdf stampa' },
     { href: '/dashboard', it: 'La mia Dashboard', en: 'My Dashboard', k: 'scadenze calendario promemoria' },
     { href: '/community', it: 'Community', en: 'Community', k: 'forum domande persone annunci' },
     { href: '/news', it: 'News', en: 'News', k: 'notizie sri lanka aggiornamenti' },
