@@ -15,6 +15,7 @@
 <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="eih.css"/>
 <script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+<script>window.EIH_I18N_EXTRA={"en": {"page.h1": "My <em>Dashboard.</em>", "page.lead": "Your personal space so you never miss a <strong>deadline</strong>: residence permit, Questura appointments, renewals and registrations. Mark the dates on the calendar and get a reminder when they approach."}, "si": {"page.h1": "මගේ <em>Dashboard.</em>", "page.lead": "<strong>කල් ඉකුත්වීමක්</strong> කිසිදා මග නොහැරීමට ඔබේ පෞද්ගලික ඉඩ: පදිංචි බලපත්‍රය, Questura හමුවීම්, අලුත් කිරීම් සහ ලියාපදිංචි කිරීම්. දින දර්ශනයේ දින සටහන් කර, ළං වන විට මතක් කිරීමක් ලබාගන්න."}, "ta": {"page.h1": "என் <em>Dashboard.</em>", "page.lead": "<strong>காலக்கெடுவை</strong> ஒருபோதும் தவறவிடாமல் இருக்க உங்கள் தனிப்பட்ட இடம்: தங்கும் அனுமதி, Questura சந்திப்புகள், புதுப்பித்தல்கள் மற்றும் பதிவுகள். நாட்காட்டியில் தேதிகளைக் குறித்து, நெருங்கும்போது நினைவூட்டலைப் பெறுங்கள்."}};</script>
 </head>
 <body data-page="dashboard">
 <a href="#main" class="skip-link">Salta al contenuto</a>
@@ -134,8 +135,8 @@
 
   <div class="page page-wide">
     <p class="eyebrow reveal"><span class="eyebrow-line"></span> Dashboard</p>
-    <h1 class="reveal">La mia <em>Dashboard.</em></h1>
-    <p class="lead reveal">Il tuo spazio personale per non perdere mai una <strong>scadenza</strong>: permesso di soggiorno, appuntamenti in Questura, rinnovi e iscrizioni. Segnali le date sul calendario e ricevi un promemoria quando si avvicinano.</p>
+    <h1 class="reveal" data-i18n-html="page.h1">La mia <em>Dashboard.</em></h1>
+    <p class="lead reveal" data-i18n-html="page.lead">Il tuo spazio personale per non perdere mai una <strong>scadenza</strong>: permesso di soggiorno, appuntamenti in Questura, rinnovi e iscrizioni. Segnali le date sul calendario e ricevi un promemoria quando si avvicinano.</p>
 
     <!-- register prompt (shown only if not registered) -->
     <div id="reg-prompt" class="reg-prompt reveal" hidden>
