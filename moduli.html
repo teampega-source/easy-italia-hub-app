@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Moduli e Lettere pronte — Easy Italia Hub</title>
+<meta name="description" content="Genera in un minuto lettere e moduli per la burocrazia italiana: delega al ritiro, disdetta di un contratto, dichiarazione di ospitalità, sollecito permesso di soggiorno. Compili, vedi l'anteprima e stampi il PDF."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/moduli"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+<script>window.EIH_I18N_EXTRA={
+"en":{"page.h1":"Letters and forms,<br/><em>ready in one minute.</em>","page.lead":"Answer a few questions and get a <strong>formal letter ready to print or send</strong>: pick-up proxy, contract cancellation, hospitality declaration, residence permit follow-up. The letter is generated in Italian — the language Italian offices require — while the guided form helps you in your language."},
+"si":{"page.h1":"ලිපි සහ පෝරම,<br/><em>මිනිත්තුවකින් සූදානම්.</em>","page.lead":"ප්‍රශ්න කිහිපයකට පිළිතුරු දී <strong>මුද්‍රණයට හෝ යැවීමට සූදානම් විධිමත් ලිපියක්</strong> ලබාගන්න: ලබාගැනීමේ බලය පැවරීම, ගිවිසුම අවලංගු කිරීම, සත්කාරක ප්‍රකාශය, පදිංචි බලපත්‍ර තත්ත්ව විමසීම. ලිපිය ඉතාලි භාෂාවෙන් සැකසේ — ඉතාලි කාර්යාලවලට අවශ්‍ය භාෂාව.","tpl.title":"ආකෘතිය තෝරන්න"},
+"ta":{"page.h1":"கடிதங்களும் படிவங்களும்,<br/><em>ஒரு நிமிடத்தில் தயார்.</em>","page.lead":"சில கேள்விகளுக்கு பதிலளித்து <strong>அச்சிட அல்லது அனுப்பத் தயாரான முறையான கடிதத்தைப்</strong> பெறுங்கள்: பெறுவதற்கான பிரதிநிதித்துவம், ஒப்பந்த ரத்து, விருந்தோம்பல் அறிவிப்பு, தங்கும் அனுமதி நிலை விசாரணை. கடிதம் இத்தாலிய மொழியில் உருவாக்கப்படுகிறது — இத்தாலிய அலுவலகங்களுக்குத் தேவையான மொழி.","tpl.title":"மாதிரியைத் தேர்ந்தெடுக்கவும்"}
+};</script>
+</head>
+<body data-page="moduli">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+<style>
+  [data-page="moduli"] .page-hero{max-width:1100px;margin:0 auto;padding:calc(var(--sp-6) + 2.5rem) var(--sp-3) var(--sp-3)}
+  [data-page="moduli"] .section-label{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem}
+  [data-page="moduli"] h1{font-family:'Clash Grotesk',sans-serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:600;letter-spacing:-.02em;line-height:1.05;margin:0 0 1rem}
+  [data-page="moduli"] h1 em{font-style:italic;color:var(--gold)}
+  [data-page="moduli"] .lead{max-width:62ch;color:var(--fg-secondary);font-size:var(--text-lg);line-height:1.65}
+  [data-page="moduli"] .wrap{max-width:1100px;margin:0 auto;padding:0 var(--sp-3) var(--sp-6)}
+  [data-page="moduli"] .tpl-pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--sp-2);margin:var(--sp-3) 0}
+  [data-page="moduli"] .tpl-btn{text-align:left;cursor:pointer;padding:1.1rem 1.2rem;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg-elevated);transition:transform var(--dur-std) var(--ease-spring),border-color var(--dur-std),box-shadow var(--dur-std)}
+  [data-page="moduli"] .tpl-btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(22,20,18,.10)}
+  [data-page="moduli"] .tpl-btn[aria-pressed="true"]{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+  [data-page="moduli"] .tpl-btn b{display:block;font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:1.02rem;margin-bottom:.3rem}
+  [data-page="moduli"] .tpl-btn span{font-size:var(--text-sm);color:var(--fg-muted);line-height:1.45}
+  [data-page="moduli"] .builder{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:var(--sp-3);align-items:start}
+  @media(max-width:1023px){[data-page="moduli"] .builder{grid-template-columns:1fr}}
+  [data-page="moduli"] .m-form{display:flex;flex-direction:column;gap:1rem;padding:1.2rem 1.3rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border)}
+  [data-page="moduli"] .m-form h3{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:0}
+  [data-page="moduli"] .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  @media(max-width:520px){[data-page="moduli"] .grid2{grid-template-columns:1fr}}
+  [data-page="moduli"] .field{display:flex;flex-direction:column;gap:.3rem}
+  [data-page="moduli"] .field label{font-size:var(--text-xs);font-weight:600;color:var(--fg-secondary)}
+  [data-page="moduli"] .field input,[data-page="moduli"] .field textarea{padding:.6rem .75rem;border-radius:var(--radius-sm);border:1px solid var(--border-bright);background:var(--bg-deep);color:var(--fg);font:inherit;font-size:var(--text-sm)}
+  [data-page="moduli"] .field input:focus,[data-page="moduli"] .field textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+  [data-page="moduli"] .m-actions{display:flex;gap:.7rem;flex-wrap:wrap}
+  [data-page="moduli"] .m-actions .btn-primary{cursor:pointer;border:0;font:inherit;font-weight:700;display:inline-flex;align-items:center;gap:.45rem;padding:.75rem 1.4rem;border-radius:var(--radius-full);background:var(--ink);color:var(--bg-deep)}
+  [data-page="moduli"] .m-note{font-size:var(--text-xs);color:var(--fg-muted);line-height:1.5}
+  /* anteprima lettera */
+  [data-page="moduli"] .sheet-pane{position:sticky;top:6rem}
+  @media(max-width:1023px){[data-page="moduli"] .sheet-pane{position:static}}
+  [data-page="moduli"] .sheet{background:#fff;color:#111;border-radius:6px;box-shadow:0 18px 50px rgba(22,20,18,.18);padding:clamp(1.4rem,4vw,3rem);min-height:540px;font-family:Georgia,'Times New Roman',serif;font-size:.92rem;line-height:1.65}
+  [data-page="moduli"] .sheet .s-sender{margin-bottom:1.6rem;white-space:pre-line}
+  [data-page="moduli"] .sheet .s-dest{text-align:right;margin-bottom:1.8rem;white-space:pre-line}
+  [data-page="moduli"] .sheet .s-obj{font-weight:bold;margin-bottom:1.3rem}
+  [data-page="moduli"] .sheet .s-body{white-space:pre-line;margin-bottom:2.2rem;text-align:justify}
+  [data-page="moduli"] .sheet .s-close{display:flex;justify-content:space-between;gap:1rem;margin-top:2.5rem}
+  [data-page="moduli"] .sheet .s-sign{text-align:center}
+  [data-page="moduli"] .sheet .s-sign .line{display:block;margin-top:2.6rem;border-top:1px solid #555;padding-top:.3rem;font-size:.8rem;color:#555;min-width:180px}
+  @media print{
+    #site-nav,#site-footer,#preloader,#wipe,#bg,#noise,#season-banner,.cursor-dot,.cursor-ring,
+    .page-hero,.tpl-pick,.m-form-pane,.m-actions,#eihp-fab,#eiht-fab,#eih-progress{display:none!important}
+    [data-page="moduli"] .builder{display:block}
+    [data-page="moduli"] .sheet-pane{position:static}
+    [data-page="moduli"] .sheet{box-shadow:none;border-radius:0;min-height:auto;padding:0;font-size:12pt}
+    body{background:#fff!important}
+  }
+</style>
+
+<section class="page-hero">
+  <p class="section-label">— STRUMENTI</p>
+  <h1 class="reveal" data-i18n-html="page.h1">Lettere e moduli,<br/><em>pronti in un minuto.</em></h1>
+  <p class="lead reveal" data-i18n-html="page.lead">Rispondi a poche domande e ottieni una <strong>lettera formale pronta da stampare o inviare</strong>: delega al ritiro, disdetta di un contratto, dichiarazione di ospitalità, sollecito del permesso di soggiorno. Tutto resta nel tuo browser: nessun dato viene inviato a un server.</p>
+</section>
+
+<div class="wrap">
+  <div class="tpl-pick" id="tpl-pick" role="group" aria-label="Scegli il modello"></div>
+
+  <div class="builder">
+    <div class="m-form-pane">
+      <form class="m-form" id="m-form" autocomplete="on"></form>
+      <div class="m-actions" style="margin-top:1rem">
+        <button type="button" class="btn-primary" onclick="window.print()">⬇ Scarica PDF / Stampa</button>
+      </div>
+      <p class="m-note" style="margin-top:.8rem">⚠️ Modello a scopo informativo: controlla sempre i dati prima dell'invio. Per casi complessi rivolgiti a un CAF o patronato (li trovi sulla <a href="mappa.html">mappa</a>). I tuoi dati restano solo su questo dispositivo.</p>
+    </div>
+    <div class="sheet-pane">
+      <div class="sheet" id="sheet" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script>
+(function(){
+'use strict';
+var F={ // campi riusabili
+  nome:{k:'nome',l:'Nome e cognome',ph:'Nimal Perera'},
+  nato:{k:'nato',l:'Nato/a a',ph:'Colombo (Sri Lanka)'},
+  natoIl:{k:'natoIl',l:'Il (data di nascita)',ph:'01/01/1990',t:'text'},
+  cf:{k:'cf',l:'Codice fiscale',ph:'PRRNML90A01Z209X'},
+  doc:{k:'doc',l:'Documento d’identità n.',ph:'Passaporto N1234567'},
+  via:{k:'via',l:'Indirizzo (via, città)',ph:'Via Roma 1, 20100 Milano'},
+  tel:{k:'tel',l:'Telefono',ph:'+39 333 1234567'},
+  luogo:{k:'luogo',l:'Luogo (città della firma)',ph:'Milano'},
+  data:{k:'data',l:'Data',ph:'',t:'date'}
+};
+function oggi(){var d=new Date();return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();}
+function fmtData(v){if(!v)return oggi();var p=v.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:v;}
+var TPL=[
+ {id:'delega',tit:'Delega al ritiro',sub:'Autorizza una persona di fiducia a ritirare un documento al posto tuo.',
+  fields:[{h:'Chi delega (tu)'},F.nome,F.nato,F.natoIl,F.cf,F.doc,
+          {h:'Chi ritira (persona di fiducia)'},{k:'dNome',l:'Nome e cognome',ph:'Sunil Fernando'},{k:'dNato',l:'Nato/a a',ph:'Kandy (Sri Lanka)'},{k:'dNatoIl',l:'Il',ph:'05/05/1985'},{k:'dDoc',l:'Documento d’identità n.',ph:'CI AB1234567'},
+          {h:'Cosa e dove'},{k:'cosa',l:'Cosa deve ritirare',ph:'il mio permesso di soggiorno'},{k:'dove',l:'Presso (ufficio)',ph:'Questura di Milano — Ufficio Immigrazione'},F.luogo,F.data],
+  dest:function(v){return (v.dove||'Ufficio competente');},
+  obj:function(){return 'Oggetto: Delega al ritiro di documenti';},
+  body:function(v){return 'Io sottoscritto/a '+(v.nome||'____________')+', nato/a a '+(v.nato||'____________')+' il '+(v.natoIl||'____')+', codice fiscale '+(v.cf||'____________')+', documento d’identità '+(v.doc||'____________')+',\n\nDELEGO\n\nil/la Sig./Sig.ra '+(v.dNome||'____________')+', nato/a a '+(v.dNato||'____________')+' il '+(v.dNatoIl||'____')+', documento d’identità '+(v.dDoc||'____________')+', a ritirare in mia vece '+(v.cosa||'____________')+' presso '+(v.dove||'____________')+'.\n\nAllego copia del mio documento d’identità e di quello del delegato.';}},
+ {id:'disdetta',tit:'Disdetta contratto',sub:'Recesso da palestra, telefono, internet o altro abbonamento.',
+  fields:[{h:'I tuoi dati'},F.nome,F.cf,F.via,F.tel,
+          {h:'Il contratto'},{k:'azienda',l:'Azienda destinataria',ph:'Telecom Italia S.p.A.'},{k:'aVia',l:'Indirizzo azienda',ph:'Casella Postale 111, 00054 Fiumicino (RM)'},{k:'contratto',l:'Contratto / n. cliente',ph:'Contratto n. 12345678'},{k:'dal',l:'Disdetta a partire dal',ph:'31/12/2026'},F.luogo,F.data],
+  dest:function(v){return (v.azienda||'Spett.le Azienda')+'\n'+(v.aVia||'');},
+  obj:function(v){return 'Oggetto: Disdetta '+(v.contratto||'del contratto')+' — recesso ai sensi di legge';},
+  body:function(v){return 'Io sottoscritto/a '+(v.nome||'____________')+', codice fiscale '+(v.cf||'____________')+', residente in '+(v.via||'____________')+',\n\ncomunico con la presente la mia volontà di recedere dal contratto in oggetto ('+(v.contratto||'____________')+') a partire dal '+(v.dal||'____________')+', ai sensi della normativa vigente.\n\nChiedo conferma scritta dell’avvenuta disdetta e l’interruzione di ogni addebito successivo alla data indicata.\nRecapito per comunicazioni: '+(v.tel||'____________')+'.';}},
+ {id:'ospitalita',tit:'Dichiarazione di ospitalità',sub:'Comunichi che ospiti un cittadino straniero (art. 7 D.Lgs. 286/98).',
+  fields:[{h:'Chi ospita'},F.nome,F.nato,F.natoIl,F.cf,F.via,
+          {h:'Chi è ospitato'},{k:'oNome',l:'Nome e cognome',ph:'Kumari Silva'},{k:'oNato',l:'Nato/a a',ph:'Galle (Sri Lanka)'},{k:'oNatoIl',l:'Il',ph:'10/10/1995'},{k:'oPass',l:'Passaporto n.',ph:'N7654321'},{k:'dal',l:'Ospitato/a dal',ph:'01/07/2026'},F.luogo,F.data],
+  dest:function(v){return 'All’Autorità di Pubblica Sicurezza\n'+(v.luogo?'di '+v.luogo:'');},
+  obj:function(){return 'Oggetto: Comunicazione di ospitalità ai sensi dell’art. 7 D.Lgs. 286/1998';},
+  body:function(v){return 'Io sottoscritto/a '+(v.nome||'____________')+', nato/a a '+(v.nato||'____________')+' il '+(v.natoIl||'____')+', codice fiscale '+(v.cf||'____________')+', residente in '+(v.via||'____________')+',\n\nCOMUNICO\n\ndi ospitare presso la mia abitazione, a partire dal '+(v.dal||'____________')+', il/la cittadino/a straniero/a '+(v.oNome||'____________')+', nato/a a '+(v.oNato||'____________')+' il '+(v.oNatoIl||'____')+', titolare di passaporto n. '+(v.oPass||'____________')+'.\n\nLa presente comunicazione viene resa entro 48 ore dall’inizio dell’ospitalità, come previsto dalla legge.';}},
+ {id:'sollecito',tit:'Sollecito permesso',sub:'Chiedi alla Questura informazioni sulla tua pratica in attesa.',
+  fields:[{h:'I tuoi dati'},F.nome,F.nato,F.natoIl,F.cf,F.via,F.tel,
+          {h:'La pratica'},{k:'questura',l:'Questura di',ph:'Milano'},{k:'pratica',l:'N. pratica / assicurata',ph:'Assicurata n. 123456789012'},{k:'presentata',l:'Domanda presentata il',ph:'15/01/2026'},F.luogo,F.data],
+  dest:function(v){return 'Alla Questura di '+(v.questura||'____________')+'\nUfficio Immigrazione';},
+  obj:function(v){return 'Oggetto: Richiesta informazioni sullo stato della pratica '+(v.pratica||'di rilascio/rinnovo del permesso di soggiorno');},
+  body:function(v){return 'Io sottoscritto/a '+(v.nome||'____________')+', nato/a a '+(v.nato||'____________')+' il '+(v.natoIl||'____')+', codice fiscale '+(v.cf||'____________')+', residente in '+(v.via||'____________')+',\n\npremesso che in data '+(v.presentata||'____________')+' ho presentato domanda di rilascio/rinnovo del permesso di soggiorno ('+(v.pratica||'____________')+'),\n\nconsiderato che ad oggi non ho ricevuto alcuna comunicazione in merito,\n\nCHIEDO\n\ncortesemente di conoscere lo stato di avanzamento della pratica e i tempi previsti per la sua definizione.\nResto a disposizione per ogni integrazione documentale. Recapito: '+(v.tel||'____________')+'.';}}
+];
+var cur=TPL[0],vals={};
+var pick=document.getElementById('tpl-pick'),form=document.getElementById('m-form'),sheet=document.getElementById('sheet');
+function save(){try{localStorage.setItem('eih-moduli',JSON.stringify({t:cur.id,v:vals}))}catch(e){}}
+function load(){try{var s=JSON.parse(localStorage.getItem('eih-moduli'));if(s){vals=s.v||{};var t=TPL.filter(function(x){return x.id===s.t})[0];if(t)cur=t;}}catch(e){}}
+function renderPick(){
+  pick.innerHTML='';
+  TPL.forEach(function(t){
+    var b=document.createElement('button');b.type='button';b.className='tpl-btn';
+    b.setAttribute('aria-pressed',t===cur);
+    b.innerHTML='<b>'+t.tit+'</b><span>'+t.sub+'</span>';
+    b.onclick=function(){cur=t;renderPick();renderForm();renderSheet();save();};
+    pick.appendChild(b);
+  });
+}
+function renderForm(){
+  form.innerHTML='';
+  cur.fields.forEach(function(f){
+    if(f.h){var h=document.createElement('h3');h.textContent=f.h;form.appendChild(h);return;}
+    var w=document.createElement('div');w.className='field';
+    var id='mf-'+f.k;
+    w.innerHTML='<label for="'+id+'">'+f.l+'</label>';
+    var inp=document.createElement('input');
+    inp.id=id;inp.type=f.t||'text';inp.placeholder=f.ph||'';inp.value=vals[f.k]||'';
+    inp.addEventListener('input',function(){vals[f.k]=inp.value;renderSheet();save();});
+    w.appendChild(inp);form.appendChild(w);
+  });
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function renderSheet(){
+  var v={};Object.keys(vals).forEach(function(k){v[k]=esc(vals[k]||'')});
+  v.data=fmtData(vals.data);
+  var mitt=(v.nome||'____________')+(v.via?'\n'+v.via:'')+(v.tel?'\nTel. '+v.tel:'');
+  sheet.innerHTML=
+    '<div class="s-sender">'+mitt+'</div>'+
+    '<div class="s-dest">'+cur.dest(v)+'</div>'+
+    '<div class="s-obj">'+cur.obj(v)+'</div>'+
+    '<div class="s-body">'+cur.body(v)+'</div>'+
+    '<div class="s-close"><div>'+(v.luogo||'____________')+', '+v.data+'</div>'+
+    '<div class="s-sign">Firma<span class="line">'+(v.nome||'')+'</span></div></div>';
+}
+load();renderPick();renderForm();renderSheet();
+})();
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="assets/eih-palette.js" defer></script>
+<script src="assets/eih-theme.js" defer></script>
+</body>
+</html>
