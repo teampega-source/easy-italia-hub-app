@@ -1,0 +1,46 @@
+/* Easy Italia Hub — tema scuro (override delle variabili di palette).
+   Attivato da html[data-theme="dark"]; il toggle vive in eih-theme.js. */
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --bg-deep:#161412;
+  --bg-base:#1a1815;
+  --bg-elevated:#211e1a;
+  --surface:rgba(243,241,236,0.05);
+  --surface-hover:rgba(243,241,236,0.09);
+  --border:rgba(180,172,158,0.16);
+  --border-bright:rgba(180,172,158,0.32);
+  --taupe:#a99c89;
+  --coral:#ff6a47;
+  --gold:#b9aa8d;--gold-dim:rgba(185,170,141,0.16);
+  --blue:#b9aa8d;--blue-deep:#d6c9ab;--blue-glow:rgba(185,170,141,0.20);
+  --green:#3fcf7c;--green-dim:rgba(63,207,124,0.14);
+  --ink:#f3f1ec;
+  --fg:#eceae4;--fg-secondary:#b6afa4;--fg-muted:#8e877b;
+}
+/* unici colori chiari non variabilizzati */
+html[data-theme="dark"] #bg,html[data-theme="dark"] #particles{background:
+  radial-gradient(1100px 700px at 18% 12%, rgba(185,170,141,0.07), transparent 60%),
+  radial-gradient(900px 600px at 85% 80%, rgba(255,106,71,0.05), transparent 60%),
+  linear-gradient(180deg,#1c1916 0%, #161412 100%)}
+html[data-theme="dark"] .lang-menu{background:#211e1a}
+html[data-theme="dark"] .modal{background:#211e1a}
+html[data-theme="dark"] #eihp-box{background:#211e1a}
+html[data-theme="dark"] #eihp-in{color:#eceae4}
+html[data-theme="dark"] #eihp-fab,html[data-theme="dark"] #eiht-fab{background:rgba(33,30,26,.92)}
+html[data-theme="dark"] #eihp-fab svg,html[data-theme="dark"] #eiht-fab svg{stroke:#f3f1ec}
+html[data-theme="dark"] .eihp-it{color:#eceae4}
+
+/* pulsante toggle (sopra il pulsante ricerca) */
+#eiht-fab{position:fixed;left:18px;bottom:74px;width:46px;height:46px;border-radius:50%;
+  border:1px solid rgba(118,118,118,.3);background:rgba(243,241,236,.92);backdrop-filter:blur(10px);
+  cursor:pointer;z-index:9000;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 18px rgba(22,20,18,.14);transition:transform .25s cubic-bezier(.16,1,.3,1)}
+#eiht-fab:hover{transform:scale(1.08)}
+#eiht-fab svg{width:19px;height:19px;stroke:#161412;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#eiht-fab .sun{display:none}
+html[data-theme="dark"] #eiht-fab .sun{display:block}
+html[data-theme="dark"] #eiht-fab .moon{display:none}
+@media(max-width:640px){#eiht-fab{bottom:140px}}
+
+/* transizione morbida durante lo switch (classe momentanea) */
+html.theme-anim,html.theme-anim *{transition:background-color .3s ease,color .3s ease,border-color .3s ease!important}
