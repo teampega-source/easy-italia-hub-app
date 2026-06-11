@@ -1,6 +1,16 @@
 # 📌 RESUME — Dove siamo arrivati
 
-> Ultimo aggiornamento: 11 giugno 2026
+> Ultimo aggiornamento: 11 giugno 2026 (sera)
+
+## 🆕 Ondata "qualità award" (tutta in produzione)
+- **Brand**: favicon/icone app, og-image 1200×630 (anteprime WhatsApp OK), illustrazioni SVG per le card hero.
+- **Motion**: smooth scroll Lenis + GSAP, parallasse hero, tipografia cinetica, marquee reattivo, progress bar.
+- **PWA**: manifest + service worker (offline) + pagina 404 brand.
+- **Command palette** Ctrl/Cmd+K su tutte le pagine.
+- **Dark mode** con toggle persistente su tutte le pagine.
+- **i18n**: tamil aggiunto al layer condiviso (nav/footer ora IT/EN/SI/TA);
+  titolo+intro tradotti in EN/SI/TA sulle 10 pagine principali via `EIH_I18N_EXTRA`.
+  **Resta da fare**: corpo completo delle pagine interne nelle 4 lingue.
 
 ## Stato attuale
 Il sito **Easy Italia Hub** è LIVE su Vercel con **deploy automatico da GitHub**
