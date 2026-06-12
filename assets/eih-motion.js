@@ -64,7 +64,7 @@
   // Tipografia cinetica: titoli sezione spezzati in parole rivelate in cascata.
   // I titoli usano data-i18n-html (il cambio lingua riscrive l'innerHTML):
   // un MutationObserver ri-spezza il testo dopo ogni traduzione.
-  var KIN_SEL = '.features .section-title, #faq-heading, .cta-title';
+  var KIN_SEL = '.features .section-title, #faq-heading, .cta-title, #how-heading, #preview-heading, #testimonials-heading, #mission-heading, #roadmap-heading';
 
   function splitWords(el) {
     var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
