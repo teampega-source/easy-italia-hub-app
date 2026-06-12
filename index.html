@@ -1928,7 +1928,17 @@ html.returning #preloader{display:none}
 }
 .btn-donate:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(184,92,40,.32)}
 .btn-donate:active{transform:scale(.97)}
-.donate-note{font-size:.68rem;color:var(--fg-muted);margin-top:.65rem}
+.donate-amounts{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.25rem}
+.donate-amt{
+  padding:.42rem 1.1rem;border-radius:var(--radius-full);
+  font-size:var(--text-sm);font-weight:500;font-family:inherit;
+  border:1.5px solid var(--border-bright);background:transparent;
+  color:var(--fg-secondary);cursor:pointer;
+  transition:border-color var(--dur-micro),background var(--dur-micro),color var(--dur-micro);
+}
+.donate-amt:hover{border-color:var(--gold);color:var(--ink)}
+.donate-amt--active{border-color:#b85c28;background:rgba(184,92,40,.08);color:#b85c28;font-weight:600}
+.donate-note{font-size:.68rem;color:var(--fg-muted);margin-top:.65rem;min-height:1rem}
 @media(max-width:600px){.donate-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}.donate-card{padding:var(--sp-4) var(--sp-3)}}
 
 /* ─── NEWSLETTER ─── */
@@ -2808,10 +2818,16 @@ function voteRoadmap(btn,key){
     <span class="donate-icon" aria-hidden="true">♥</span>
     <h2 id="donate-heading" class="donate-title">Supporta il progetto</h2>
     <p class="donate-sub">Easy Italia Hub è completamente gratuito per tutti. Se ti è stato utile, una piccola donazione ci aiuta a mantenere le guide aggiornate, i server attivi e i servizi accessibili a tutta la community srilankese in Italia.</p>
-    <a href="https://paypal.me/easyitaliahub" class="btn-donate" target="_blank" rel="noopener noreferrer">
-      ♥ &nbsp;Fai una donazione
-    </a>
-    <p class="donate-note">Sicuro via PayPal · Qualsiasi importo è prezioso per noi</p>
+    <div class="donate-amounts" role="group" aria-label="Scegli importo donazione">
+      <button class="donate-amt" data-amount="200" type="button">€2</button>
+      <button class="donate-amt donate-amt--active" data-amount="500" type="button">€5</button>
+      <button class="donate-amt" data-amount="1000" type="button">€10</button>
+      <button class="donate-amt" data-amount="2000" type="button">€20</button>
+    </div>
+    <button class="btn-donate" id="donate-btn" type="button">
+      ♥ &nbsp;Dona ora
+    </button>
+    <p class="donate-note" id="donate-msg">Sicuro via Stripe · Qualsiasi importo è prezioso per noi</p>
   </div>
 </section>
 
@@ -3549,6 +3565,40 @@ function sendSug(el){
   const dict=I18N[currentLang]||I18N.it;
   sendToAgent((key&&dict[key])||el.textContent);
 }
+</script>
+
+<!-- Donazione Stripe -->
+<script>
+(function(){
+  var selected=500;
+  document.querySelectorAll('.donate-amt').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.donate-amt').forEach(function(b){b.classList.remove('donate-amt--active');});
+      btn.classList.add('donate-amt--active');
+      selected=parseInt(btn.dataset.amount,10);
+    });
+  });
+  var donateBtn=document.getElementById('donate-btn');
+  var donateMsg=document.getElementById('donate-msg');
+  if(!donateBtn)return;
+  donateBtn.addEventListener('click',async function(){
+    donateBtn.disabled=true;
+    donateBtn.textContent='…';
+    donateMsg.textContent='Connessione a Stripe…';
+    try{
+      var r=await fetch('/api/stripe-donate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:selected})});
+      var d=await r.json();
+      if(d.demo){donateMsg.textContent='Donazioni disponibili a breve — grazie per il supporto!';donateBtn.disabled=false;donateBtn.innerHTML='♥ &nbsp;Dona ora';return;}
+      if(d.url){window.location.href=d.url;return;}
+      throw new Error(d.error||'Errore sconosciuto');
+    }catch(e){
+      donateMsg.textContent='Errore: '+e.message+'. Riprova.';
+      donateBtn.disabled=false;donateBtn.innerHTML='♥ &nbsp;Dona ora';
+    }
+  });
+  var params=new URLSearchParams(location.search);
+  if(params.get('donated')==='1'){donateMsg.textContent='Grazie di cuore per la donazione! ♥';donateBtn.innerHTML='♥ &nbsp;Dona ancora';}
+})();
 </script>
 
 <!-- Community counter animation -->
