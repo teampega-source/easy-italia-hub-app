@@ -127,12 +127,12 @@
     var lkT = seg(p, 0, 0.40);
     setT(R.lankaCam, 'translate3d(0,' + lerp(0, -8, lkT) + '%,0) scale(' + lerp(1.06, 1.34, ease(lkT)) + ')');
 
-    /* ── Scena 2: Globo — zoom dal pianeta verso il Mediterraneo ── */
+    /* ── Scena 2: Globo — zoom verso l'Italia (transform-origin: 36% 35%) ── */
     var globeA = ramp(p, 0.30, 0.74, 0.10);
     setOpac(R.globe, globeA);
     var gT = seg(p, 0.30, 0.74);
-    var gScale = lerp(0.78, 2.15, ease(gT));
-    setT(R.globeCam, 'translate3d(0,' + lerp(2, -4, gT) + '%,0) scale(' + gScale + ')');
+    var gScale = lerp(0.82, 1.85, ease(gT));
+    setT(R.globeCam, 'translate3d(0,' + lerp(1, 0, ease(gT)) + '%,0) scale(' + gScale + ')');
 
     /* ── Scena 3: Italia — discesa sulle colline ─────────────── */
     var italyA = ramp(p, 0.68, 0.985, 0.09);
