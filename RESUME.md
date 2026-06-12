@@ -1,6 +1,14 @@
 # 📌 RESUME — Dove siamo arrivati
 
-> Ultimo aggiornamento: 11 giugno 2026 (sera)
+> Ultimo aggiornamento: 12 giugno 2026
+
+## 🆕 Oggi: Supabase LIVE
+
+- **Supabase attivato** — schema SQL (12 tabelle + trigger + RLS) eseguito, bucket `documents` privato creato.
+- **Vercel** — `SUPABASE_URL` e `SUPABASE_ANON_KEY` impostati su tutti gli ambienti (production + preview + development).
+- **eih-auth.js** — REAL mode completato: sincronizza `eih-registered` con la sessione Supabase (login/logout/reload). Gestione errori e conferma email nel modal login.
+- **documenti.html** — aggiunto `eih-auth.js`.
+- **PR #12 mergiata su main** → Vercel ha ridistribuito in produzione con tutto il codice aggiornato.
 
 ## 🆕 Ondata "qualità award" (tutta in produzione)
 - **Brand**: favicon/icone app, og-image 1200×630 (anteprime WhatsApp OK), illustrazioni SVG per le card hero.
