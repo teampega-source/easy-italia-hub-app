@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Riconoscimento Titoli Stranieri in Italia — Easy Italia Hub</title>
+<meta name="description" content="Guida completa per il riconoscimento dei titoli di studio srilankesi in Italia: CIMEA, dichiarazione di valore, MUR, checklist documenti e stima dei costi."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/riconoscimento-titoli"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+</head>
+<body data-page="riconoscimento-titoli">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <style>
+    /* path cards */
+    [data-page="riconoscimento-titoli"] .path-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);margin:var(--sp-3) 0}
+    @media(max-width:600px){[data-page="riconoscimento-titoli"] .path-grid{grid-template-columns:1fr}}
+    [data-page="riconoscimento-titoli"] .path-card{background:rgba(255,253,249,0.6);backdrop-filter:blur(18px);border:1.5px solid var(--border-bright);border-radius:calc(var(--radius)*1.5);padding:var(--sp-4)}
+    [data-page="riconoscimento-titoli"] .path-card.path-highlight{border-color:rgba(185,170,141,.5);background:rgba(185,170,141,.07)}
+    [data-page="riconoscimento-titoli"] .path-badge{display:inline-block;font-size:var(--text-xs);font-weight:600;padding:.22rem .6rem;border-radius:var(--radius-full);margin-bottom:.65rem}
+    [data-page="riconoscimento-titoli"] .badge-acc{background:rgba(34,197,94,.1);color:#16a34a}
+    [data-page="riconoscimento-titoli"] .badge-mur{background:rgba(99,102,241,.1);color:#4f46e5}
+    [data-page="riconoscimento-titoli"] .path-title{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:600;color:var(--ink);margin-bottom:.4rem}
+    [data-page="riconoscimento-titoli"] .path-for{font-size:var(--text-xs);font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem}
+    [data-page="riconoscimento-titoli"] .path-desc{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.6}
+    [data-page="riconoscimento-titoli"] .path-pros{margin:.7rem 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.3rem;font-size:var(--text-xs);color:var(--fg-secondary)}
+    [data-page="riconoscimento-titoli"] .path-pros li::before{content:'✓ ';color:#16a34a;font-weight:700}
+    [data-page="riconoscimento-titoli"] .path-cons{margin:.4rem 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.3rem;font-size:var(--text-xs);color:var(--fg-secondary)}
+    [data-page="riconoscimento-titoli"] .path-cons li::before{content:'⚠ ';color:#b45309}
+    /* steps */
+    [data-page="riconoscimento-titoli"] .steps{display:flex;flex-direction:column;gap:0;margin:var(--sp-3) 0;counter-reset:step-counter}
+    [data-page="riconoscimento-titoli"] .step{display:grid;grid-template-columns:3rem 1fr;gap:var(--sp-2);padding:var(--sp-3) 0;border-bottom:1px solid var(--border)}
+    [data-page="riconoscimento-titoli"] .step:last-child{border-bottom:none}
+    [data-page="riconoscimento-titoli"] .step-num{width:2.4rem;height:2.4rem;border-radius:50%;background:var(--gold);color:#fff;font-family:'Clash Grotesk',sans-serif;font-weight:700;font-size:var(--text-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;counter-increment:step-counter}
+    [data-page="riconoscimento-titoli"] .step-body{padding-top:.2rem}
+    [data-page="riconoscimento-titoli"] .step-title{font-family:'Clash Grotesk',sans-serif;font-weight:500;color:var(--ink);margin-bottom:.25rem}
+    [data-page="riconoscimento-titoli"] .step-desc{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.6}
+    [data-page="riconoscimento-titoli"] .step-tip{display:inline-block;margin-top:.4rem;font-size:var(--text-xs);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.25rem .6rem;color:var(--fg-muted)}
+    /* checklist */
+    [data-page="riconoscimento-titoli"] .checklist-wrap{margin:var(--sp-3) 0}
+    [data-page="riconoscimento-titoli"] .checklist{display:flex;flex-direction:column;gap:.5rem;padding:0;list-style:none}
+    [data-page="riconoscimento-titoli"] .checklist li{display:flex;align-items:flex-start;gap:.7rem;padding:.6rem .8rem;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);font-size:var(--text-sm);color:var(--fg-secondary);cursor:pointer;user-select:none;transition:background var(--dur-micro)}
+    [data-page="riconoscimento-titoli"] .checklist li:hover{background:var(--surface-hover)}
+    [data-page="riconoscimento-titoli"] .checklist li.checked{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.04)}
+    [data-page="riconoscimento-titoli"] .checklist li.checked .chk{background:#16a34a;border-color:#16a34a;color:#fff}
+    [data-page="riconoscimento-titoli"] .chk{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border-bright);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;margin-top:.05rem;transition:background var(--dur-micro),border-color var(--dur-micro)}
+    [data-page="riconoscimento-titoli"] .checklist-note{font-size:var(--text-xs);color:var(--fg-muted);margin-top:.5rem}
+    /* cost estimator */
+    [data-page="riconoscimento-titoli"] .cost-card{background:rgba(255,253,249,0.6);backdrop-filter:blur(18px);border:1px solid var(--border-bright);border-radius:calc(var(--radius)*1.5);padding:var(--sp-4);margin:var(--sp-3) 0}
+    [data-page="riconoscimento-titoli"] .cost-field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:var(--sp-2)}
+    [data-page="riconoscimento-titoli"] .cost-label{font-size:var(--text-sm);font-weight:500;color:var(--fg)}
+    [data-page="riconoscimento-titoli"] .cost-select{padding:.45rem .75rem;border-radius:var(--radius-sm);border:1px solid var(--border-bright);background:var(--surface);color:var(--fg);font-family:inherit;font-size:var(--text-sm);width:auto}
+    [data-page="riconoscimento-titoli"] .cost-result{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:var(--sp-3);margin-top:var(--sp-2)}
+    [data-page="riconoscimento-titoli"] .cost-rows{display:flex;flex-direction:column;gap:.45rem;font-size:var(--text-sm)}
+    [data-page="riconoscimento-titoli"] .cost-row{display:flex;justify-content:space-between;align-items:center;padding:.35rem 0;border-bottom:1px solid var(--border)}
+    [data-page="riconoscimento-titoli"] .cost-row:last-child{border-bottom:none}
+    [data-page="riconoscimento-titoli"] .cost-row.total{font-weight:600;color:var(--ink);padding-top:.55rem;border-top:1.5px solid var(--border-bright);border-bottom:none;margin-top:.2rem}
+    [data-page="riconoscimento-titoli"] .cost-lbl{color:var(--fg-secondary)}
+    [data-page="riconoscimento-titoli"] .cost-val{color:var(--ink);font-weight:500;white-space:nowrap}
+    /* link-utili */
+    [data-page="riconoscimento-titoli"] .link-utili{margin-top:var(--sp-3);padding:1rem 1.2rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border)}
+    [data-page="riconoscimento-titoli"] .link-utili-title{margin:0 0 .65rem;font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+    [data-page="riconoscimento-titoli"] .link-utili-grid{display:flex;flex-wrap:wrap;gap:.4rem}
+    [data-page="riconoscimento-titoli"] .lu-link{display:inline-flex;align-items:center;gap:.38rem;padding:.3rem .72rem;border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:500;color:var(--fg-secondary);background:var(--surface);border:1px solid var(--border);text-decoration:none;transition:background var(--dur-micro),color var(--dur-micro),border-color var(--dur-micro)}
+    [data-page="riconoscimento-titoli"] .lu-link:hover{background:var(--surface-hover);color:var(--fg);border-color:var(--border-bright)}
+    [data-page="riconoscimento-titoli"] .lu-link svg{width:11px;height:11px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+    [data-page="riconoscimento-titoli"] .lu-link--in svg{stroke:var(--blue-deep)}
+    html[data-theme="dark"] [data-page="riconoscimento-titoli"] .path-card{background:rgba(33,30,26,.72)}
+    html[data-theme="dark"] [data-page="riconoscimento-titoli"] .cost-card{background:rgba(33,30,26,.72)}
+    html[data-theme="dark"] [data-page="riconoscimento-titoli"] .cost-select{background:var(--bg-elevated)}
+  </style>
+
+  <div class="page page-wide">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Strumenti</p>
+    <h1 class="reveal">Riconoscimento titoli<br/><em>stranieri</em> in Italia</h1>
+    <p class="lead reveal">Hai una laurea, un diploma o una qualifica professionale conseguita in Sri Lanka? Ecco come farla riconoscere in Italia per lavorare, iscriverti all'università o esercitare una professione regolamentata.</p>
+
+    <!-- Intro: two paths -->
+    <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-4);">Due percorsi distinti</h2>
+    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--sp-1)">Scegli il percorso in base al tuo obiettivo:</p>
+
+    <div class="path-grid reveal">
+      <div class="path-card path-highlight">
+        <span class="path-badge badge-acc">CIMEA / Dichiarazione di Valore</span>
+        <p class="path-for">Per lavoro e vita quotidiana</p>
+        <p class="path-title">Riconoscimento accademico informale</p>
+        <p class="path-desc">Ottieni un attestato che certifica il livello del tuo titolo nel sistema europeo (EQF). Non è un atto amministrativo, ma è accettato da molti datori di lavoro e da alcune università.</p>
+        <ul class="path-pros">
+          <li>Più veloce (2–4 mesi)</li>
+          <li>Costo contenuto (~€200)</li>
+          <li>Utile per curriculum e colloqui</li>
+        </ul>
+        <ul class="path-cons">
+          <li>Non abilita le professioni regolamentate (medico, ingegnere, avvocato…)</li>
+        </ul>
+      </div>
+      <div class="path-card">
+        <span class="path-badge badge-mur">Ministero dell'Università (MUR)</span>
+        <p class="path-for">Per professioni regolamentate</p>
+        <p class="path-title">Riconoscimento professionale ufficiale</p>
+        <p class="path-desc">Procedura ministeriale obbligatoria per chi vuole esercitare professioni regolamentate (medico, ingegnere, architetto, infermiere, avvocato) con titolo straniero.</p>
+        <ul class="path-pros">
+          <li>Equiparazione legale al titolo italiano</li>
+          <li>Abilita all'esercizio della professione</li>
+          <li>Iscrizione agli albi professionali</li>
+        </ul>
+        <ul class="path-cons">
+          <li>Procedura lunga (6–18 mesi)</li>
+          <li>Possibili prove compensative (esami, tirocini)</li>
+          <li>Costo più elevato</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Step-by-step CIMEA -->
+    <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5);">Percorso CIMEA passo per passo</h2>
+    <p style="font-size:var(--text-sm);color:var(--fg-secondary);">Il percorso più comune per chi cerca lavoro o vuole continuare gli studi in Italia.</p>
+
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Dichiarazione di Valore (DDV)</div>
+          <div class="step-desc">Richiedi la Dichiarazione di Valore all'<strong>Ambasciata italiana in Sri Lanka</strong> (Colombo). È il documento base che attesta l'autenticità del tuo titolo nel paese di origine. Tempi: 4–8 settimane. Costo: variabile, di solito €50–100 più le marche da bollo locali.</div>
+          <span class="step-tip">💡 Se sei già in Italia, puoi richiederla tramite procura a un familiare o avvocato in Sri Lanka.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Traduzione giurata in italiano</div>
+          <div class="step-desc">Tutti i documenti originali (diploma, transcripts, certificati) devono essere tradotti in italiano da un traduttore giurato iscritto all'albo (tribunale italiano) o autenticati dalla Prefettura. Costo: €50–120 per documento.</div>
+          <span class="step-tip">💡 Evita le traduzioni fai-da-te: devono essere certificate da un pubblico ufficiale italiano.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Legalizzazione / Apostille</div>
+          <div class="step-desc">Lo Sri Lanka non ha aderito alla Convenzione dell'Aia sull'apostille, quindi i documenti srilankesi devono essere legalizzati dal <strong>Ministero degli Affari Esteri sri lankese</strong> e poi dall'<strong>Ambasciata italiana</strong>. L'Italia accetta questa procedura alternativa all'apostille.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Richiesta attestato CIMEA</div>
+          <div class="step-desc">Vai su <a class="inline" href="https://cimea.it" target="_blank" rel="noopener noreferrer">cimea.it</a> e crea un account. Carica tutti i documenti: diploma originale (scansione + traduzione), DDV, transcripts. CIMEA rilascia un <strong>Attestato di Comparabilità e Verifica (ACV)</strong> che indica il livello EQF del titolo.</div>
+          <span class="step-tip">💡 CIMEA offre anche la valutazione rapida (CIMEA Express) in 5 giorni lavorativi con costo extra.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Utilizzo del riconoscimento</div>
+          <div class="step-desc">Con l'attestato CIMEA puoi: allegarlo al curriculum, mostrarlo ai datori di lavoro, usarlo per l'accesso a concorsi pubblici non regolamentati, e presentarlo per l'iscrizione universitaria come studente internazionale.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checklist documenti -->
+    <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5);">Checklist documenti</h2>
+    <p style="font-size:var(--text-sm);color:var(--fg-secondary);">Spunta i documenti che hai già raccolto. I dati vengono salvati nel browser.</p>
+    <div class="checklist-wrap reveal">
+      <ul class="checklist" id="doc-checklist">
+        <li data-id="ddv"><span class="chk"></span><span>Dichiarazione di Valore (DDV) dell'Ambasciata italiana in Sri Lanka</span></li>
+        <li data-id="diploma"><span class="chk"></span><span>Diploma / Degree Certificate originale (scansione a colori ad alta risoluzione)</span></li>
+        <li data-id="transcripts"><span class="chk"></span><span>Transcripts ufficiali (foglio voti / mark sheets) di tutti gli anni</span></li>
+        <li data-id="trad-diploma"><span class="chk"></span><span>Traduzione giurata italiana del diploma</span></li>
+        <li data-id="trad-transcripts"><span class="chk"></span><span>Traduzione giurata italiana dei transcripts</span></li>
+        <li data-id="legal"><span class="chk"></span><span>Legalizzazione documenti (MFA Sri Lanka + Ambasciata italiana)</span></li>
+        <li data-id="passport"><span class="chk"></span><span>Passaporto valido (copia fronte-retro) + permesso di soggiorno</span></li>
+        <li data-id="cf"><span class="chk"></span><span>Codice Fiscale italiano</span></li>
+        <li data-id="account"><span class="chk"></span><span>Account creato su cimea.it / portale MUR</span></li>
+        <li data-id="payment"><span class="chk"></span><span>Pagamento quota CIMEA completato</span></li>
+      </ul>
+      <p class="checklist-note" id="checklist-count">0 / 10 documenti raccolti</p>
+    </div>
+
+    <!-- Cost estimator -->
+    <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5);">Stima dei costi</h2>
+    <p style="font-size:var(--text-sm);color:var(--fg-secondary);">Calcola una stima orientativa delle spese per il riconoscimento del tuo titolo.</p>
+
+    <div class="cost-card reveal">
+      <div class="cost-field">
+        <label class="cost-label" for="cost-path">Percorso scelto</label>
+        <select class="cost-select" id="cost-path">
+          <option value="cimea">CIMEA — Riconoscimento accademico</option>
+          <option value="mur">MUR — Professione regolamentata</option>
+        </select>
+      </div>
+      <div class="cost-field">
+        <label class="cost-label" for="cost-docs">Numero di documenti da tradurre</label>
+        <select class="cost-select" id="cost-docs">
+          <option value="2">2 (diploma + transcripts)</option>
+          <option value="3" selected>3 (diploma + transcripts + altri)</option>
+          <option value="5">5 o più</option>
+        </select>
+      </div>
+      <div class="cost-field">
+        <label class="cost-label" for="cost-express">Valutazione express?</label>
+        <select class="cost-select" id="cost-express">
+          <option value="no">No — tempistica standard</option>
+          <option value="yes">Sì — CIMEA Express (5 gg lavorativi)</option>
+        </select>
+      </div>
+
+      <div class="cost-result" id="cost-result">
+        <div class="cost-rows" id="cost-rows"></div>
+      </div>
+    </div>
+
+    <!-- Note professions -->
+    <div class="warn-box reveal" style="margin-top:var(--sp-3)">
+      👩‍⚕️ <strong>Professioni sanitarie (medico, infermiere, OSS)</strong> — Percorso MUR con tempi più lunghi. Per medici e infermieri stranieri con titolo extra-UE è spesso richiesta una <strong>prova attitudinale</strong> o un tirocinio integrativo. Rivolgiti direttamente all'Ordine professionale competente (FNOMCEO per medici, OPI per infermieri).
+    </div>
+
+    <div class="warn-box reveal" style="background:rgba(185,170,141,.07);border-color:rgba(185,170,141,.25)">
+      📌 <strong>Sri Lanka University Grants Commission (UGC)</strong> — Le lauree rilasciate da università riconosciute dall'UGC (University of Colombo, University of Moratuwa, ecc.) sono generalmente accettate dalla CIMEA. Le qualifiche ottenute da istituti privati non accreditati possono incontrare difficoltà: verifica in anticipo.
+    </div>
+
+    <div class="link-utili reveal" style="margin-top:var(--sp-4)">
+      <p class="link-utili-title">Link e contatti utili</p>
+      <div class="link-utili-grid">
+        <a class="lu-link" href="https://www.cimea.it" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>CIMEA — Portale ufficiale</a>
+        <a class="lu-link" href="https://universitaly.it/index.php/cercaCorsi/index" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Universitaly — iscriversi in Italia</a>
+        <a class="lu-link" href="https://www.mur.gov.it/it/atti-e-normativa/normativa/riconoscimento-titoli-stranieri" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>MUR — professioni regolamentate</a>
+        <a class="lu-link" href="https://www.esteri.it/it/ambasciate-e-consolati/lka/ambasciatacolombo/" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Ambasciata IT a Colombo (DDV)</a>
+        <a class="lu-link" href="https://www.fnomceo.it" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>FNOMCEO (Ordine Medici)</a>
+        <a class="lu-link" href="https://ugc.ac.lk" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>UGC Sri Lanka</a>
+        <a class="lu-link lu-link--in" href="guide.html#sezione-lavoro"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>Guida lavoro e contributi →</a>
+        <a class="lu-link lu-link--in" href="diritti-inps.html"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>Verifica diritti INPS →</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    /* ---- checklist ---- */
+    var items=document.querySelectorAll('#doc-checklist li');
+    var saved;
+    try{saved=JSON.parse(localStorage.getItem('eih-rt-checklist')||'{}');}catch(e){saved={};}
+
+    function updateCount(){
+      var done=0;
+      items.forEach(function(li){if(li.classList.contains('checked'))done++;});
+      document.getElementById('checklist-count').textContent=done+' / '+items.length+' documenti raccolti';
+    }
+
+    items.forEach(function(li){
+      var id=li.dataset.id;
+      if(saved[id]) li.classList.add('checked');
+      if(li.querySelector('.chk')&&li.classList.contains('checked')) li.querySelector('.chk').textContent='✓';
+      li.addEventListener('click',function(){
+        this.classList.toggle('checked');
+        var chk=this.querySelector('.chk');
+        chk.textContent=this.classList.contains('checked')?'✓':'';
+        try{
+          var s={};
+          items.forEach(function(l){if(l.classList.contains('checked'))s[l.dataset.id]=true;});
+          localStorage.setItem('eih-rt-checklist',JSON.stringify(s));
+        }catch(e){}
+        updateCount();
+      });
+    });
+    updateCount();
+
+    /* ---- cost estimator ---- */
+    var CIMEA_BASE=205, CIMEA_EXPRESS_EXTRA=90;
+    var MUR_BASE=300;
+    var DDV=80;
+    var TRAD_PER_DOC=80;
+    var LEGAL=60;
+    var BOLLO=32;
+
+    function calcCosts(){
+      var path=document.getElementById('cost-path').value;
+      var nDocs=parseInt(document.getElementById('cost-docs').value)||2;
+      var express=document.getElementById('cost-express').value==='yes';
+
+      var rows=[];
+      var total=0;
+
+      var tradCost=TRAD_PER_DOC*nDocs;
+      rows.push({lbl:'Traduzioni giurate ('+nDocs+' doc × €'+TRAD_PER_DOC+')',val:'~€'+tradCost});
+      total+=tradCost;
+
+      rows.push({lbl:'Legalizzazione documenti',val:'~€'+LEGAL});
+      total+=LEGAL;
+
+      rows.push({lbl:'Dichiarazione di Valore (DDV)',val:'~€'+DDV});
+      total+=DDV;
+
+      if(path==='cimea'){
+        var cimea=CIMEA_BASE+(express?CIMEA_EXPRESS_EXTRA:0);
+        rows.push({lbl:'Quota CIMEA'+(express?' (Express)':''),val:'~€'+cimea});
+        total+=cimea;
+      } else {
+        rows.push({lbl:'Quota MUR + marche da bollo',val:'~€'+(MUR_BASE+BOLLO)});
+        total+=MUR_BASE+BOLLO;
+        rows.push({lbl:'Eventuale prova compensativa (esame/tirocinio)',val:'variabile'});
+      }
+
+      rows.push({lbl:'Spedizione documenti',val:'~€20–40'});
+      total+=30;
+
+      var html='<div class="cost-rows">';
+      rows.forEach(function(r){
+        html+='<div class="cost-row"><span class="cost-lbl">'+r.lbl+'</span><span class="cost-val">'+r.val+'</span></div>';
+      });
+      html+='<div class="cost-row total"><span class="cost-lbl">Stima totale</span><span class="cost-val">~€'+total+'–'+(total+100)+'</span></div>';
+      html+='</div>';
+      document.getElementById('cost-rows').innerHTML=html;
+    }
+
+    ['cost-path','cost-docs','cost-express'].forEach(function(id){
+      document.getElementById(id).addEventListener('change',calcCosts);
+    });
+    calcCosts();
+  })();
+  </script>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="assets/eih-atmosphere.js" defer></script>
+<script src="assets/eih-palette.js" defer></script>
+<script src="assets/eih-theme.js" defer></script>
+</body>
+</html>

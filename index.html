@@ -475,37 +475,29 @@ body.has-banner{scroll-padding-top:96px}
 .cards-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2);
 }
-/* Iridescent border technique: gradient border-box */
+/* ─── CARD: premium frosted-glass with coloured icon area ─── */
 .card{
-  position:relative;border-radius:var(--radius);overflow:hidden;
+  position:relative;border-radius:20px;overflow:hidden;
   cursor:pointer;
-  /* Glass surface (light) */
-  background:rgba(255,253,249,0.72);
-  backdrop-filter:blur(16px) saturate(1.4);
-  -webkit-backdrop-filter:blur(16px) saturate(1.4);
-  /* Soft border + elevation */
+  background:rgba(255,253,250,0.82);
+  backdrop-filter:blur(24px) saturate(1.6);
+  -webkit-backdrop-filter:blur(24px) saturate(1.6);
+  border:1px solid rgba(255,255,255,0.7);
   box-shadow:
-    0 0 0 1px rgba(20,30,48,0.06),
-    0 18px 40px rgba(20,30,48,.14);
-  /* Stagger entrance */
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 8px 24px rgba(20,30,48,.08),
+    0 2px 6px rgba(20,30,48,.05);
   animation:cardIn var(--dur-complex) var(--ease-spring) var(--d,.28s) both;
   transition:transform var(--dur-std) var(--ease-spring),
              box-shadow var(--dur-std) var(--ease-spring);
   will-change:transform;
-  min-height:44px; /* a11y */
+  min-height:44px;
 }
-/* Iridescent shimmer on hover via ::before */
+/* Top-edge gloss line */
 .card::before{
-  content:'';position:absolute;inset:0;border-radius:var(--radius);z-index:0;
-  background:linear-gradient(135deg,
-    rgba(58,123,213,0) 0%,
-    rgba(58,123,213,0.07) 40%,
-    rgba(201,162,74,0.07) 60%,
-    rgba(201,162,74,0) 100%);
-  opacity:0;
-  transition:opacity var(--dur-micro) var(--ease-enter);
+  content:'';position:absolute;inset:0;border-radius:20px;z-index:0;pointer-events:none;
+  background:linear-gradient(160deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 45%);
 }
-.card:hover::before{opacity:1}
 .card:nth-child(1){--d:.28s}
 .card:nth-child(2){--d:.32s}
 .card:nth-child(3){--d:.36s}
@@ -515,41 +507,49 @@ body.has-banner{scroll-padding-top:96px}
   to{opacity:1;transform:translateY(0) scale(1)}
 }
 .card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 0 0 1px rgba(44,107,196,0.25),0 28px 56px rgba(20,30,48,.2);
+  transform:translateY(-9px) scale(1.018);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 0 0 1.5px rgba(44,107,196,0.18),
+    0 28px 52px rgba(20,30,48,.16);
 }
 .card:active{transform:scale(0.97);transition-duration:var(--dur-micro)}
 .card:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
-/* Card image wrapper */
+
+/* Coloured icon area per card */
 .card-img{
-  position:relative;height:138px;overflow:hidden;
+  position:relative;height:110px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  padding:.9rem;
 }
+.card:nth-child(1) .card-img{background:linear-gradient(145deg,#dbeafe 0%,#bfdbfe 100%)}
+.card:nth-child(2) .card-img{background:linear-gradient(145deg,#ede9fe 0%,#ddd6fe 100%)}
+.card:nth-child(3) .card-img{background:linear-gradient(145deg,#dcfce7 0%,#bbf7d0 100%)}
+.card:nth-child(4) .card-img{background:linear-gradient(145deg,#fef9c3 0%,#fde68a 100%)}
 .card-img img{
-  width:100%;height:100%;object-fit:cover;display:block;
-  transition:transform 600ms var(--ease-enter);
-  image-rendering:auto;
+  width:auto;height:80px;max-width:calc(100% - 1rem);
+  object-fit:contain;display:block;
+  transition:transform 480ms var(--ease-spring);
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.10));
 }
-.card:hover .card-img img{transform:scale(1.06)}
-.card-img-fade{
-  position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(5,5,7,.9) 0%,transparent 55%);
-  /* blend-mode screen for Liquid Glass iridescence */
-}
+.card:hover .card-img img{transform:scale(1.08) translateY(-3px)}
+.card-img-fade{display:none}
+
 /* Gradient placeholder (fallback when img fails) */
 .card-img-placeholder{
   width:100%;height:100%;display:flex;align-items:center;justify-content:center;
 }
-.card-body{position:relative;z-index:1;padding:.85rem var(--sp-2) var(--sp-2)}
+.card-body{position:relative;z-index:1;padding:.7rem .9rem .9rem}
 .card-tag{
-  display:inline-block;padding:.18rem .6rem;border-radius:var(--radius-full);
-  font-size:var(--text-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  margin-bottom:.45rem;border:1px solid rgba(255,255,255,.12);
+  display:inline-block;padding:.16rem .58rem;border-radius:100px;
+  font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  margin-bottom:.38rem;border:none;
 }
 .card-title{
   font-family:'Clash Grotesk',sans-serif;
-  font-size:var(--text-base);font-weight:500;color:var(--ink);line-height:1.3;
+  font-size:.875rem;font-weight:600;color:var(--ink);line-height:1.28;
 }
-.card-sub{font-size:var(--text-xs);color:var(--fg-muted);margin-top:.2rem;font-weight:300;line-height:1.5}
+.card-sub{font-size:.7rem;color:var(--fg-muted);margin-top:.16rem;font-weight:400;line-height:1.45}
 
 /* ─── FX TEASER (compact editorial card → comparator lives on money-transfer.html) ─── */
 .fx-section{position:relative;z-index:1;max-width:1380px;margin:0 auto;padding:0 var(--sp-5)}
@@ -607,7 +607,7 @@ body.has-banner{scroll-padding-top:96px}
 .section-title em{font-style:normal;font-weight:600;color:var(--taupe)}
 .section-sub{
   font-size:var(--text-base);color:var(--fg-secondary);font-weight:300;
-  max-width:500px;line-height:1.7;margin-bottom:var(--sp-4);
+  max-width:500px;line-height:1.7;margin:0 auto var(--sp-4);text-align:center;
 }
 .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2)}
 /* Liquid Glass feature card */
@@ -690,6 +690,12 @@ body.has-banner{scroll-padding-top:96px}
     radial-gradient(42% 42% at 30% 30%,rgba(124,112,89,.28),transparent 70%),
     radial-gradient(46% 46% at 74% 72%,rgba(125,112,88,.26),transparent 72%);
   animation-duration:13.5s;
+}
+.feat:nth-child(7) .feat-icon::before{ /* Compilazione Pratiche — violet + taupe */
+  background:
+    radial-gradient(44% 44% at 32% 30%,rgba(139,92,246,.28),transparent 70%),
+    radial-gradient(44% 44% at 72% 72%,rgba(109,40,217,.18),transparent 72%);
+  animation-duration:14s;
 }
 @keyframes auroraDrift{
   0%  {transform:translate3d(-6%,-4%,0) rotate(-4deg) scale(1.05)}
@@ -811,6 +817,111 @@ body.has-banner{scroll-padding-top:96px}
 
 .feat-title{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:500;color:var(--ink);margin-bottom:.45rem}
 .feat-desc{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.65;font-weight:300}
+/* coming-soon badge on feature card */
+.feat-badge{
+  position:absolute;top:var(--sp-1);right:var(--sp-1);
+  padding:.18rem .55rem;border-radius:var(--radius-full);
+  font-size:.58rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  background:var(--gold-dim);color:var(--gold);border:1px solid rgba(201,162,74,.28);
+  z-index:2;
+}
+.feat--soon{opacity:.72;cursor:default}
+.feat--soon:hover{transform:none;background:var(--surface);box-shadow:none}
+.feat--soon::after{display:none}
+
+/* ─── PARTNER SECTION ─── */
+.partner-section{
+  position:relative;z-index:1;
+  max-width:1380px;margin:0 auto;
+  padding:var(--sp-7) var(--sp-5);
+}
+.partner-inner{
+  background:rgba(255,253,249,0.62);
+  backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);
+  border:1px solid var(--border-bright);
+  border-radius:calc(var(--radius)*2);
+  padding:var(--sp-6);
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-6);align-items:center;
+  position:relative;overflow:hidden;
+}
+.partner-inner::before{
+  content:'';position:absolute;top:-40%;right:-10%;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(185,170,141,.1) 0%,transparent 65%);
+  pointer-events:none;
+}
+.partner-label{
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.28rem .8rem;border-radius:var(--radius-full);
+  font-size:var(--text-xs);font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--blue-deep);background:var(--blue-glow);
+  border:1px solid rgba(185,170,141,.28);margin-bottom:var(--sp-2);
+}
+.partner-label svg{width:13px;height:13px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.partner-title{
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:clamp(1.6rem,2.8vw,2.3rem);
+  font-weight:500;color:var(--ink);line-height:1.2;
+  margin-bottom:var(--sp-2);
+}
+.partner-title em{font-style:normal;color:var(--gold)}
+.partner-desc{
+  font-size:var(--text-sm);color:var(--fg-secondary);
+  line-height:1.72;font-weight:300;
+  max-width:460px;margin-bottom:var(--sp-3);
+}
+.partner-professions{
+  display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:var(--sp-4);
+}
+.partner-tag{
+  display:inline-flex;align-items:center;gap:.35rem;
+  padding:.28rem .7rem;border-radius:var(--radius-full);
+  font-size:.71rem;font-weight:500;
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--fg-secondary);
+}
+.partner-tag svg{width:11px;height:11px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.btn-partner{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.75rem 1.75rem;border-radius:var(--radius-full);
+  font-family:inherit;font-size:var(--text-sm);font-weight:500;
+  background:linear-gradient(135deg,var(--gold),var(--taupe));
+  color:#fff;border:none;cursor:pointer;
+  text-decoration:none;
+  transition:transform var(--dur-std) var(--ease-spring),opacity var(--dur-micro);
+  box-shadow:0 8px 24px rgba(185,170,141,.28);
+}
+.btn-partner:hover{transform:translateY(-2px);opacity:.9}
+.btn-partner:active{transform:scale(.97)}
+.btn-partner svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.btn-partner:hover svg{transform:translateX(3px)}
+.partner-showcase{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2);
+}
+.pcard{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:var(--sp-3);
+  display:flex;flex-direction:column;gap:.5rem;
+  transition:transform var(--dur-std) var(--ease-spring),background var(--dur-micro);
+}
+.pcard:hover{transform:translateY(-3px);background:var(--surface-hover)}
+.pcard-icon{
+  width:38px;height:38px;border-radius:var(--radius-sm);
+  background:var(--gold-dim);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.pcard-icon svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.pcard-name{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:500;color:var(--ink)}
+.pcard-note{font-size:.7rem;color:var(--fg-muted);line-height:1.45}
+@media(max-width:1023px){
+  .partner-inner{grid-template-columns:1fr;gap:var(--sp-4)}
+  .partner-showcase{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:640px){
+  .partner-section{padding:var(--sp-5) var(--sp-3)}
+  .partner-inner{padding:var(--sp-4) var(--sp-3)}
+  .partner-showcase{grid-template-columns:1fr 1fr}
+}
 
 /* ─── MEMBERS SECTION ─── */
 .members{
@@ -900,6 +1011,28 @@ body.has-banner{scroll-padding-top:96px}
 }
 .cta-sub{font-size:var(--text-base);color:var(--fg-secondary);font-weight:300;margin-bottom:var(--sp-3)}
 .cta-btns{display:flex;gap:var(--sp-1);justify-content:center;flex-wrap:wrap}
+/* Percorso intro block inside CTA card */
+.percorso-intro-tag{
+  font-size:.62rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.65rem;
+}
+.percorso-intro-desc{
+  font-size:.975rem;line-height:1.72;color:var(--fg-secondary);font-weight:300;
+  max-width:560px;margin:0 auto 1.35rem;
+}
+.percorso-intro-pills{
+  display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.85rem;
+}
+.percorso-pill{
+  display:inline-flex;align-items:center;
+  padding:.3rem .8rem;border-radius:99px;
+  font-size:.7rem;font-weight:500;letter-spacing:.02em;
+  background:rgba(255,255,255,0.65);
+  border:1px solid var(--border-bright);
+  color:var(--fg-secondary);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
 
 /* ─── LIVE NEWS RAIL (sidebar) ─── */
 #news-rail{display:none}
@@ -1135,35 +1268,32 @@ body.has-banner{scroll-padding-top:96px}
 .nav-login:hover{color:var(--ink)}
 .nav-login:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:3px}
 
-/* ─── AD SLOTS ─── */
+/* ─── AD MINI BAR (non-invasive) ─── */
 .ad-section{position:relative;z-index:1;max-width:1380px;margin:0 auto;padding:0 var(--sp-5)}
-.ad-slot{
-  position:relative;border-radius:var(--radius);overflow:hidden;
-  border:1px dashed var(--border-bright);
-  background:var(--surface);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:var(--sp-3);gap:.5rem;
-  transition:background var(--dur-micro) var(--ease-enter),border-color var(--dur-micro);
+.ad-mini-bar{
+  display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;
+  padding:.6rem 1.1rem;border-radius:var(--radius-sm);
+  border:1px solid var(--border);background:transparent;
 }
-.ad-slot:hover{background:var(--surface-hover);border-color:rgba(58,123,213,.4)}
-.ad-leaderboard{min-height:118px}
-.ad-label{
-  position:absolute;top:.5rem;left:.65rem;
-  font-size:.58rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--fg-muted);
+.ad-mini-label{
+  font-size:.54rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--fg-muted);flex-shrink:0;
 }
-.ad-icon{width:26px;height:26px;opacity:.5}
-.ad-icon svg{width:100%;height:100%;stroke:var(--fg-muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.ad-text{font-size:var(--text-sm);color:var(--fg-secondary);font-weight:400}
-.ad-cta{
-  font-size:var(--text-xs);color:var(--gold);text-decoration:none;font-weight:500;
-  letter-spacing:.02em;cursor:pointer;background:none;border:none;font-family:inherit;
-  border-bottom:1px solid transparent;transition:border-color var(--dur-micro);
+.ad-mini-sep{width:1px;height:11px;background:var(--border-bright);flex-shrink:0}
+.ad-mini-text{
+  flex:1;font-size:.8rem;color:var(--fg-secondary);font-weight:300;line-height:1.4;
+  min-width:140px;
 }
-.ad-cta:hover{border-color:var(--gold)}
-.ad-cta:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
-.ad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);margin-top:var(--sp-2)}
-.ad-rect{min-height:200px}
+.ad-mini-cta{
+  font-size:.78rem;font-weight:500;color:var(--gold);
+  background:none;border:none;cursor:pointer;font-family:inherit;
+  letter-spacing:.02em;white-space:nowrap;
+  text-decoration:underline;text-underline-offset:3px;
+  transition:opacity var(--dur-micro);padding:0;
+}
+.ad-mini-cta:hover{opacity:.7}
+.ad-mini-cta:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.ad-mini-wrap{margin-top:var(--sp-2)}
 
 /* ─── PRICING / PACKAGES MODAL ─── */
 .modal-overlay{
@@ -1436,14 +1566,13 @@ footer{
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:1023px){.spin-badge{display:none}}
 
-/* 4) Card image grayscale → colour + hover affordance */
-.card-img img{filter:grayscale(.55) contrast(1.02);transition:transform .7s var(--ease-spring),filter .6s var(--ease-enter)}
-.card:hover .card-img img,.card:focus-within .card-img img{transform:scale(1.06);filter:grayscale(0)}
+/* 4) Card hover arrow badge */
 .card-img::after{
-  content:'↗';position:absolute;top:.6rem;right:.7rem;z-index:3;
-  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  background:var(--taupe);color:var(--ink);font-size:1rem;font-weight:600;
-  opacity:0;transform:translateY(-6px) scale(.8);
+  content:'↗';position:absolute;top:.55rem;right:.65rem;z-index:3;
+  width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.85);color:var(--ink);font-size:.8rem;font-weight:700;
+  box-shadow:0 2px 8px rgba(20,30,48,.12);
+  opacity:0;transform:translateY(-4px) scale(.75);
   transition:opacity var(--dur-std) var(--ease-spring),transform var(--dur-std) var(--ease-spring)}
 .card:hover .card-img::after,.card:focus-within .card-img::after{opacity:1;transform:translateY(0) scale(1)}
 
@@ -1679,35 +1808,77 @@ html.returning #preloader{display:none}
   .screenshots-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}
 }
 
-/* ─── TESTIMONIALS ─── */
-.testimonials-section{
+/* ─── COMMUNITY FOUNDING MEMBERS ─── */
+.community-teaser-section{
   position:relative;z-index:1;
-  padding:var(--sp-6) var(--sp-5) var(--sp-5);max-width:1380px;margin:0 auto;
+  padding:var(--sp-6) var(--sp-5);max-width:1380px;margin:0 auto;
 }
-.testimonials-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-3);
-  margin-top:var(--sp-5);
+.ct-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5);align-items:center;
+  background:linear-gradient(135deg,rgba(44,107,196,.045) 0%,rgba(176,136,40,.04) 100%);
+  border:1px solid var(--border);border-radius:24px;
+  padding:var(--sp-5);
 }
-.testimonial{
-  background:rgba(255,253,249,.72);border:1px solid var(--border);
-  border-radius:var(--radius);padding:var(--sp-3);
-  display:flex;flex-direction:column;gap:var(--sp-2);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  transition:transform var(--dur-std) var(--ease-spring),
-             border-color var(--dur-micro),
-             box-shadow var(--dur-std) var(--ease-spring);
+.ct-title{
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:clamp(2rem,3.5vw,3rem);font-weight:600;line-height:1.05;
+  letter-spacing:-.03em;color:var(--ink);margin-bottom:var(--sp-2);
 }
-.testimonial:hover{
-  transform:translateY(-5px);border-color:var(--border-bright);
-  box-shadow:0 16px 40px rgba(20,30,48,.10);
+.ct-title em{font-style:normal;color:var(--taupe)}
+.ct-desc{
+  font-size:var(--text-base);color:var(--fg-secondary);
+  line-height:1.72;font-weight:300;margin-bottom:var(--sp-3);max-width:420px;
 }
-.t-stars{display:flex;gap:.2rem}
-.t-stars span{color:#f59e0b;font-size:.95rem;line-height:1}
-.t-text{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.7;font-weight:300;font-style:italic;flex:1}
-.t-author{
-  display:flex;align-items:center;gap:.75rem;
-  padding-top:var(--sp-2);border-top:1px solid var(--border);
+.ct-benefits{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:var(--sp-4)}
+.ct-benefits li{
+  display:flex;align-items:flex-start;gap:.6rem;
+  font-size:var(--text-sm);color:var(--fg-secondary);font-weight:300;
 }
+.ct-benefits li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:.05rem}
+/* Right visual */
+.ct-visual{display:flex;flex-direction:column;gap:var(--sp-3);align-items:center;text-align:center}
+.ct-counter{display:flex;flex-direction:column;align-items:center;gap:.25rem}
+.ct-num{
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:clamp(3.5rem,6vw,5.5rem);font-weight:700;color:var(--ink);
+  line-height:1;letter-spacing:-.04em;
+}
+.ct-count-label{font-size:var(--text-sm);color:var(--fg-muted);font-weight:300}
+.ct-avatars{display:flex;align-items:center;justify-content:center}
+.ct-av-wrap{
+  width:44px;height:44px;border-radius:50%;border:2.5px solid var(--bg-base);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:.88rem;color:#fff;
+  margin-left:-10px;
+  animation:avatarPop .55s var(--ease-spring) var(--avd,0s) both;
+}
+.ct-av-wrap:first-child{margin-left:0}
+.ct-av-more{background:var(--surface-hover);color:var(--fg-secondary);font-size:.7rem;border:2px solid var(--border-bright)}
+@keyframes avatarPop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+.ct-cities{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;max-width:280px}
+.ct-cities span{
+  padding:.18rem .65rem;border-radius:99px;border:1px solid var(--border);
+  font-size:.68rem;color:var(--fg-muted);font-weight:400;
+}
+.ct-milestone{width:100%;max-width:280px}
+.ct-milestone-top{
+  display:flex;justify-content:space-between;
+  font-size:.68rem;color:var(--fg-secondary);font-weight:400;margin-bottom:.45rem;
+}
+.ct-milestone-bar{height:6px;border-radius:99px;background:var(--border);overflow:hidden}
+.ct-milestone-fill{
+  height:100%;border-radius:99px;width:0;
+  background:linear-gradient(90deg,var(--blue),var(--gold));
+  transition:width 1.4s var(--ease-spring);
+}
+@media(max-width:900px){
+  .ct-inner{grid-template-columns:1fr;gap:var(--sp-4)}
+  .ct-title{font-size:clamp(1.8rem,5vw,2.5rem)}
+  .community-teaser-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}
+}
+
+/* ─── TESTIMONIALS (kept for SEO / future) — hidden for now ─── */
+.testimonials-section{display:none}
 .t-av{
   width:38px;height:38px;border-radius:50%;flex-shrink:0;
   background:linear-gradient(135deg,var(--blue-deep),var(--blue));
@@ -1745,26 +1916,38 @@ html.returning #preloader{display:none}
 .mission-visual{
   border-radius:24px;overflow:hidden;position:relative;
   background:linear-gradient(135deg,#2d4a7a 0%,#3a6090 45%,#66512e 100%);
-  min-height:360px;display:flex;align-items:center;justify-content:center;
+  min-height:380px;display:flex;align-items:center;justify-content:center;
   padding:var(--sp-5);text-align:center;
-  box-shadow:0 32px 80px rgba(20,30,48,.18);
+  box-shadow:0 32px 80px rgba(20,30,48,.22);
+}
+.mission-visual-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;display:block;
+  animation:kenBurns 16s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes kenBurns{
+  from{transform:scale(1) translate(0,0)}
+  to{transform:scale(1.1) translate(-2%,-1.5%)}
 }
 .mission-visual::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(160deg,rgba(22,20,18,.12) 0%,rgba(22,20,18,.52) 100%);
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(160deg,rgba(12,10,8,.1) 0%,rgba(12,10,8,.68) 100%);
 }
 .mission-visual-text{
-  position:relative;z-index:1;
+  position:relative;z-index:2;
   font-family:'Clash Grotesk',sans-serif;
   font-size:clamp(1.55rem,2.8vw,2.2rem);font-weight:500;
   color:#fff;line-height:1.2;letter-spacing:-.02em;
+  text-shadow:0 2px 16px rgba(0,0,0,.25);
 }
-.mission-visual-text em{font-style:normal;color:rgba(255,210,100,.9)}
+.mission-visual-text em{font-style:normal;color:rgba(255,210,100,.95)}
 @media(max-width:767px){
   .mission-inner{grid-template-columns:1fr;gap:var(--sp-4)}
-  .mission-visual{min-height:220px}
+  .mission-visual{min-height:240px}
   .mission-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}
 }
+@media(prefers-reduced-motion:reduce){.mission-visual-img{animation:none}}
 
 /* ─── ROADMAP ─── */
 .roadmap-section{
@@ -1822,6 +2005,52 @@ html.returning #preloader{display:none}
   .roadmap-quarter{font-size:.58rem;padding-right:var(--sp-1)}
   .roadmap-section,.testimonials-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
 }
+
+/* ─── DONATE ─── */
+.donate-section{
+  position:relative;z-index:1;
+  padding:var(--sp-4) var(--sp-5);max-width:860px;margin:0 auto;
+}
+.donate-card{
+  text-align:center;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:var(--sp-5);
+}
+.donate-icon{font-size:2rem;line-height:1;margin-bottom:.7rem;display:block}
+.donate-title{
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:clamp(1.4rem,2.5vw,1.85rem);font-weight:500;
+  color:var(--ink);margin-bottom:.6rem;
+}
+.donate-sub{
+  font-size:var(--text-sm);color:var(--fg-secondary);font-weight:300;
+  max-width:480px;margin:0 auto 1.6rem;line-height:1.72;
+}
+.btn-donate{
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.8rem 2rem;border-radius:var(--radius-full);
+  font-size:var(--text-sm);font-weight:600;color:#fff;
+  border:none;cursor:pointer;text-decoration:none;
+  background:linear-gradient(135deg,#b85c28,#c97c14);
+  box-shadow:0 8px 24px rgba(184,92,40,.22);
+  transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std);
+}
+.btn-donate:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(184,92,40,.32)}
+.btn-donate:active{transform:scale(.97)}
+.donate-amounts{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.25rem}
+.donate-amt{
+  padding:.42rem 1.1rem;border-radius:var(--radius-full);
+  font-size:var(--text-sm);font-weight:500;font-family:inherit;
+  border:1.5px solid var(--border-bright);background:transparent;
+  color:var(--fg-secondary);cursor:pointer;
+  transition:border-color var(--dur-micro),background var(--dur-micro),color var(--dur-micro);
+}
+.donate-amt:hover{border-color:var(--gold);color:var(--ink)}
+.donate-amt--active{border-color:#b85c28;background:rgba(184,92,40,.08);color:#b85c28;font-weight:600}
+.donate-note{font-size:.68rem;color:var(--fg-muted);margin-top:.65rem;min-height:1rem}
+@media(max-width:600px){.donate-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}.donate-card{padding:var(--sp-4) var(--sp-3)}}
 
 /* ─── NEWSLETTER ─── */
 .newsletter-section{
@@ -2136,6 +2365,51 @@ html.returning #preloader{display:none}
 
 </section>
 
+<!-- ─── CHI SIAMO — MISSION (spostata in alto: 2a sezione dopo hero) ─── -->
+<section class="mission-section" id="chi-siamo-teaser" aria-labelledby="mission-heading">
+  <div class="mission-inner">
+    <div>
+      <p class="section-label" style="text-align:left">Chi siamo</p>
+      <h2 id="mission-heading" class="section-title" style="text-align:left">Costruiamo il ponte<br><em>tra due mondi.</em></h2>
+      <p class="section-sub" style="text-align:left;margin:0 0 var(--sp-2)">Easy Italia Hub nasce dalla necessità concreta di centinaia di migliaia di srilankesi che ogni anno si trovano a navigare il sistema burocratico italiano senza strumenti adatti.</p>
+      <p style="font-size:var(--text-sm);color:var(--fg-muted);line-height:1.7;font-weight:300;margin-bottom:var(--sp-4)">La nostra missione è semplice: rendere l'integrazione più rapida, meno stressante e più dignitosa. Perché ogni persona merita di capire i propri diritti nella propria lingua.</p>
+      <div class="mission-values">
+        <div class="mission-value">
+          <span class="mission-value-icon" aria-hidden="true">🌐</span>
+          <h4>Multilingua</h4>
+          <p>Italiano, inglese, sinhala e tamil</p>
+        </div>
+        <div class="mission-value">
+          <span class="mission-value-icon" aria-hidden="true">🔓</span>
+          <h4>Accessibile</h4>
+          <p>Gratuito, senza barriere d'accesso</p>
+        </div>
+        <div class="mission-value">
+          <span class="mission-value-icon" aria-hidden="true">🤝</span>
+          <h4>Community</h4>
+          <p>Costruito insieme alla comunità</p>
+        </div>
+        <div class="mission-value">
+          <span class="mission-value-icon" aria-hidden="true">🛡️</span>
+          <h4>Affidabile</h4>
+          <p>Fonti ufficiali sempre verificate</p>
+        </div>
+      </div>
+      <a href="chi-siamo.html" class="btn-ghost" style="margin-top:var(--sp-3);display:inline-flex">Scopri il team →</a>
+    </div>
+    <div class="mission-visual">
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3EeaOppzppfYiZU22fyGRIqU1ot/hf_20260612_161246_51cca7f5-e69b-48d7-b3f2-2b1922bdac7f.png"
+           class="mission-visual-img"
+           alt="Donna srilankese in una piazza italiana con documenti, luce calda del sole"
+           loading="lazy"
+           onerror="this.style.display='none'"/>
+      <p class="mission-visual-text">Ogni persona<br>merita di<br><em>capire i propri diritti</em></p>
+    </div>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
 <!-- ─── PERCHÉ ESISTIAMO — PROBLEMA / SOLUZIONE ─── -->
 <section class="problem-section" id="problema" aria-labelledby="problem-heading">
   <div class="problem-inner">
@@ -2203,6 +2477,13 @@ html.returning #preloader{display:none}
         <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </span>
     </a>
+    <p class="percorso-intro-tag" data-i18n="cta.intro.tag">Il Mio Percorso</p>
+    <p class="percorso-intro-desc" data-i18n="cta.intro.desc">La mappa delle 9 fasi per costruire la tua vita in Italia — dalla burocrazia all'integrazione quotidiana. Sai sempre dove sei e qual è il prossimo passo, con il Consigliere AI al tuo fianco.</p>
+    <div class="percorso-intro-pills" aria-hidden="true">
+      <span class="percorso-pill" data-i18n="cta.intro.pill1">9 fasi strutturate</span>
+      <span class="percorso-pill" data-i18n="cta.intro.pill2">Consigliere AI incluso</span>
+      <span class="percorso-pill" data-i18n="cta.intro.pill3">Progressi salvati</span>
+    </div>
     <h2 id="cta-heading" class="cta-title" data-i18n-html="cta.title">Pronto a iniziare<br/><em style="font-style:italic;color:var(--gold)">il tuo percorso?</em></h2>
     <p class="cta-sub" data-i18n="cta.sub">Registrati gratis. Nessuna carta di credito richiesta.</p>
     <div class="cta-btns">
@@ -2243,20 +2524,6 @@ html.returning #preloader{display:none}
   </div>
 </section>
 
-<!-- ─── FX TEASER (compact card — full comparator now lives on money-transfer.html) ─── -->
-<section class="fx-section" aria-labelledby="fx-heading">
-  <div class="fx-teaser">
-    <div class="fx-teaser-copy">
-      <p class="fx-title" id="fx-heading">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        <span data-i18n="fx.teaserTitle">💸 Confronta l'invio di denaro in Sri Lanka</span>
-      </p>
-      <p class="fx-note" data-i18n="fx.teaserNote">Tasso indicativo aggiornato e confronto provider.</p>
-    </div>
-    <a class="fx-teaser-cta" href="money-transfer.html" data-i18n="fx.teaserCta">Apri il comparatore →</a>
-  </div>
-</section>
-
 <!-- ─── MARQUEE (keyword strip) ─── -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
@@ -2265,13 +2532,13 @@ html.returning #preloader{display:none}
   </div>
 </div>
 
-<!-- ─── AD SLOT: Leaderboard ─── -->
+<!-- ─── AD BAR ─── -->
 <section class="ad-section" aria-label="Spazio pubblicitario">
-  <div class="ad-slot ad-leaderboard">
-    <span class="ad-label" data-i18n="ad.label">Pubblicità</span>
-    <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg></div>
-    <p class="ad-text" data-i18n="ad.lead">Il tuo annuncio qui — raggiungi la community srilankese in Italia</p>
-    <button class="ad-cta" onclick="openPricing()" data-i18n="ad.buy">Acquista questo spazio →</button>
+  <div class="ad-mini-bar">
+    <span class="ad-mini-label" data-i18n="ad.label">Pubblicità</span>
+    <span class="ad-mini-sep" aria-hidden="true"></span>
+    <p class="ad-mini-text" data-i18n="ad.lead">Il tuo annuncio qui — raggiungi la community srilankese in Italia</p>
+    <button class="ad-mini-cta" onclick="openPricing()" data-i18n="ad.buy">Richiedi il tuo spazio →</button>
   </div>
 </section>
 
@@ -2317,30 +2584,42 @@ html.returning #preloader{display:none}
       <h3 class="feat-title" data-i18n="feat6.title">News Aggiornate</h3>
       <p class="feat-desc" data-i18n="feat6.desc">Leggi, decreti e opportunità per la comunità srilankese. Aggiornato ogni giorno.</p>
     </a>
+    <div class="feat feat--soon" role="article" tabindex="-1" aria-label="Compilazione Pratiche — in arrivo">
+      <span class="feat-badge">Prossimamente</span>
+      <div class="feat-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <h3 class="feat-title">Compilazione Pratiche</h3>
+      <p class="feat-desc">Lasciaci fare la burocrazia per te. I nostri esperti compilano i moduli ufficiali al posto tuo — correttamente, al primo tentativo.</p>
+    </div>
   </div>
 
-  <!-- ─── AD SLOTS: Rectangles ─── -->
-  <div class="ad-grid">
-    <div class="ad-slot ad-rect">
-      <span class="ad-label" data-i18n="ad.sponsor">Sponsorizzato</span>
-      <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-      <p class="ad-text" data-i18n="ad.slot">Spazio ad — 300×250</p>
-      <button class="ad-cta" onclick="openPricing()" data-i18n="ad.book">Prenota →</button>
-    </div>
-    <div class="ad-slot ad-rect">
-      <span class="ad-label" data-i18n="ad.sponsor">Sponsorizzato</span>
-      <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-      <p class="ad-text" data-i18n="ad.slot">Spazio ad — 300×250</p>
-      <button class="ad-cta" onclick="openPricing()" data-i18n="ad.book">Prenota →</button>
-    </div>
-    <div class="ad-slot ad-rect">
-      <span class="ad-label" data-i18n="ad.sponsor">Sponsorizzato</span>
-      <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-      <p class="ad-text" data-i18n="ad.slot">Spazio ad — 300×250</p>
-      <button class="ad-cta" onclick="openPricing()" data-i18n="ad.book">Prenota →</button>
+  <!-- ─── AD MINI BAR: inline ─── -->
+  <div class="ad-mini-wrap">
+    <div class="ad-mini-bar">
+      <span class="ad-mini-label" data-i18n="ad.sponsor">Sponsorizzato</span>
+      <span class="ad-mini-sep" aria-hidden="true"></span>
+      <p class="ad-mini-text" data-i18n="ad.lead">Il tuo brand qui — raggiungi migliaia di srilankesi in Italia ogni giorno</p>
+      <button class="ad-mini-cta" onclick="openPricing()" data-i18n="ad.buy">Richiedi il tuo spazio →</button>
     </div>
   </div>
 </section>
+
+<!-- ─── FX TEASER — Money Transfer comparator ─── -->
+<div class="divider" aria-hidden="true"></div>
+<section class="fx-section" aria-labelledby="fx-heading">
+  <div class="fx-teaser">
+    <div class="fx-teaser-copy">
+      <p class="fx-title" id="fx-heading">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span data-i18n="fx.teaserTitle">💸 Confronta l'invio di denaro in Sri Lanka</span>
+      </p>
+      <p class="fx-note" data-i18n="fx.teaserNote">Tasso indicativo aggiornato e confronto provider.</p>
+    </div>
+    <a class="fx-teaser-cta" href="money-transfer.html" data-i18n="fx.teaserCta">Apri il comparatore →</a>
+  </div>
+</section>
+<div class="divider" aria-hidden="true"></div>
 
 <!-- ─── PLATFORM PREVIEW ─── -->
 <section class="screenshots-section" aria-labelledby="preview-heading">
@@ -2399,15 +2678,54 @@ html.returning #preloader{display:none}
 
 <div class="divider" aria-hidden="true"></div>
 
-<!-- ─── MEMBERS (social proof) ─── -->
-<section class="members" aria-labelledby="members-heading">
-  <div class="member-avatars" aria-hidden="true">
-    <div class="avatar">A</div><div class="avatar">K</div><div class="avatar">S</div>
-    <div class="avatar">R</div><div class="avatar">P</div>
-    <div class="avatar" style="background:rgba(255,255,255,.08);color:var(--fg-muted);font-family:'Satoshi',sans-serif;font-size:.8rem">+</div>
+<!-- ─── COMMUNITY FOUNDING MEMBERS ─── -->
+<section class="community-teaser-section" aria-labelledby="ct-heading">
+  <div class="ct-inner">
+
+    <!-- Left: copy -->
+    <div class="ct-content">
+      <p class="section-label">Community</p>
+      <h2 id="ct-heading" class="ct-title">Sii tra i <em>primi</em><br>a unirti</h2>
+      <p class="ct-desc">La nostra community srilankese in Italia sta prendendo forma. Unisciti ora: condividi esperienze, trova supporto e connettiti con chi affronta gli stessi passi.</p>
+      <ul class="ct-benefits">
+        <li>Supporto su burocrazia e vita quotidiana in Italia</li>
+        <li>Connessione con srilankesi nella tua città</li>
+        <li>Accesso anticipato alle nuove funzionalità</li>
+      </ul>
+      <a href="community.html" class="btn-primary" style="display:inline-flex">Unisciti alla community →</a>
+    </div>
+
+    <!-- Right: social proof visual -->
+    <div class="ct-visual" aria-hidden="true">
+      <div class="ct-counter">
+        <span class="ct-num" id="ct-count">0</span>
+        <span class="ct-count-label">persone già unite</span>
+      </div>
+      <div class="ct-avatars">
+        <div class="ct-av-wrap" style="background:#4f76c7;--avd:.05s">A</div>
+        <div class="ct-av-wrap" style="background:#7c5cbf;--avd:.12s">K</div>
+        <div class="ct-av-wrap" style="background:#2a9d72;--avd:.19s">S</div>
+        <div class="ct-av-wrap" style="background:#c4622d;--avd:.26s">R</div>
+        <div class="ct-av-wrap" style="background:#b5860d;--avd:.33s">P</div>
+        <div class="ct-av-wrap" style="background:#3a8fa8;--avd:.40s">M</div>
+        <div class="ct-av-wrap ct-av-more" style="--avd:.47s">+40</div>
+      </div>
+      <div class="ct-cities">
+        <span>Roma</span><span>Milano</span><span>Torino</span>
+        <span>Firenze</span><span>Bologna</span><span>Napoli</span>
+      </div>
+      <div class="ct-milestone">
+        <div class="ct-milestone-top">
+          <span>Membri fondatori</span>
+          <span id="ct-milestone-label">0 / 100</span>
+        </div>
+        <div class="ct-milestone-bar">
+          <div class="ct-milestone-fill" id="ct-fill"></div>
+        </div>
+      </div>
+    </div>
+
   </div>
-  <p class="member-count" id="members-heading" data-i18n-html="members.count"><strong>La community srilankese</strong> che si aiuta in Italia</p>
-  <p class="section-sub" style="margin:0 auto var(--sp-4);text-align:center;max-width:420px" data-i18n="members.sub">Unisciti a chi vive e lavora in Italia e affronta gli stessi passaggi. Insieme è più facile.</p>
 </section>
 
 <!-- ─── TESTIMONIANZE ─── -->
@@ -2445,48 +2763,6 @@ html.returning #preloader{display:none}
 
   </div>
 </section>
-
-<div class="divider" aria-hidden="true"></div>
-
-<!-- ─── CHI SIAMO — MISSION TEASER ─── -->
-<section class="mission-section" id="chi-siamo-teaser" aria-labelledby="mission-heading">
-  <div class="mission-inner">
-    <div>
-      <p class="section-label" style="text-align:left">Chi siamo</p>
-      <h2 id="mission-heading" class="section-title" style="text-align:left">Costruiamo il ponte<br><em>tra due mondi.</em></h2>
-      <p class="section-sub" style="text-align:left;margin:0 0 var(--sp-2)">Easy Italia Hub nasce dalla necessità concreta di centinaia di migliaia di srilankesi che ogni anno si trovano a navigare il sistema burocratico italiano senza strumenti adatti.</p>
-      <p style="font-size:var(--text-sm);color:var(--fg-muted);line-height:1.7;font-weight:300;margin-bottom:var(--sp-4)">La nostra missione è semplice: rendere l'integrazione più rapida, meno stressante e più dignitosa. Perché ogni persona merita di capire i propri diritti nella propria lingua.</p>
-      <div class="mission-values">
-        <div class="mission-value">
-          <span class="mission-value-icon" aria-hidden="true">🌐</span>
-          <h4>Multilingua</h4>
-          <p>Italiano, inglese, sinhala e tamil</p>
-        </div>
-        <div class="mission-value">
-          <span class="mission-value-icon" aria-hidden="true">🔓</span>
-          <h4>Accessibile</h4>
-          <p>Gratuito, senza barriere d'accesso</p>
-        </div>
-        <div class="mission-value">
-          <span class="mission-value-icon" aria-hidden="true">🤝</span>
-          <h4>Community</h4>
-          <p>Costruito insieme alla comunità</p>
-        </div>
-        <div class="mission-value">
-          <span class="mission-value-icon" aria-hidden="true">🛡️</span>
-          <h4>Affidabile</h4>
-          <p>Fonti ufficiali sempre verificate</p>
-        </div>
-      </div>
-      <a href="chi-siamo.html" class="btn-ghost" style="margin-top:var(--sp-3);display:inline-flex">Scopri il team →</a>
-    </div>
-    <div class="mission-visual" aria-hidden="true">
-      <p class="mission-visual-text">Ogni persona<br>merita di<br><em>capire i propri diritti</em></p>
-    </div>
-  </div>
-</section>
-
-<div class="divider" aria-hidden="true"></div>
 
 <!-- ─── ROADMAP ─── -->
 <section class="roadmap-section" id="roadmap" aria-labelledby="roadmap-heading">
@@ -2655,6 +2931,108 @@ function voteRoadmap(btn,key){
   </div>
 </section>
 
+<!-- ─── DIVENTA PARTNER ─── -->
+<section class="partner-section" aria-labelledby="partner-heading">
+  <div class="partner-inner">
+
+    <!-- Left: copy -->
+    <div class="partner-copy">
+      <span class="partner-label">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Sei un professionista?
+      </span>
+      <h2 id="partner-heading" class="partner-title">Porta la tua expertise<br><em>alla community.</em></h2>
+      <p class="partner-desc">Avvocati, consulenti fiscali, interpreti, mediatori culturali, impiegati di consolato: se lavori con la comunità srilankese in Italia puoi offrire i tuoi servizi tramite la nostra piattaforma. Il programma di partnership è in fase di definizione — registra il tuo interesse ora e sarai tra i primi contattati.</p>
+      <div class="partner-professions" aria-label="Profili ricercati">
+        <span class="partner-tag">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>
+          Avvocati
+        </span>
+        <span class="partner-tag">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Consulenti fiscali
+        </span>
+        <span class="partner-tag">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Interpreti
+        </span>
+        <span class="partner-tag">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Mediatori culturali
+        </span>
+        <span class="partner-tag">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          CAF &amp; Patronati
+        </span>
+        <span class="partner-tag">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Consolati
+        </span>
+      </div>
+      <a href="mailto:partner@easyitaliahub.it" class="btn-partner">
+        Voglio diventare partner
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <!-- Right: showcase cards -->
+    <div class="partner-showcase" aria-hidden="true">
+      <div class="pcard">
+        <div class="pcard-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/></svg>
+        </div>
+        <div class="pcard-name">Consulenza Legale</div>
+        <div class="pcard-note">Permessi, ricorsi, diritto del lavoro e famiglia</div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-icon" style="background:rgba(63,207,124,.12)">
+          <svg viewBox="0 0 24 24" style="stroke:var(--green)"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="pcard-name">Consulenza Fiscale</div>
+        <div class="pcard-note">730, partita IVA, ISEE e pratiche CAF</div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-icon" style="background:rgba(255,106,71,.1)">
+          <svg viewBox="0 0 24 24" style="stroke:var(--coral)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="pcard-name">Interpretariato</div>
+        <div class="pcard-note">IT ↔ SI · EN per uffici, ospedali e scuole</div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-icon" style="background:rgba(139,92,246,.1)">
+          <svg viewBox="0 0 24 24" style="stroke:#8b5cf6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="pcard-name">Mediazione</div>
+        <div class="pcard-note">Supporto culturale e integrazione sociale</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
+<!-- ─── DONAZIONE ─── -->
+<section class="donate-section" aria-labelledby="donate-heading">
+  <div class="donate-card">
+    <span class="donate-icon" aria-hidden="true">♥</span>
+    <h2 id="donate-heading" class="donate-title">Supporta il progetto</h2>
+    <p class="donate-sub">Easy Italia Hub è completamente gratuito per tutti. Se ti è stato utile, una piccola donazione ci aiuta a mantenere le guide aggiornate, i server attivi e i servizi accessibili a tutta la community srilankese in Italia.</p>
+    <div class="donate-amounts" role="group" aria-label="Scegli importo donazione">
+      <button class="donate-amt" data-amount="200" type="button">€2</button>
+      <button class="donate-amt donate-amt--active" data-amount="500" type="button">€5</button>
+      <button class="donate-amt" data-amount="1000" type="button">€10</button>
+      <button class="donate-amt" data-amount="2000" type="button">€20</button>
+    </div>
+    <button class="btn-donate" id="donate-btn" type="button">
+      ♥ &nbsp;Dona ora
+    </button>
+    <p class="donate-note" id="donate-msg">Sicuro via Stripe · Qualsiasi importo è prezioso per noi</p>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
 <!-- ─── NEWSLETTER ─── -->
 <section class="newsletter-section" aria-labelledby="newsletter-heading">
   <div class="newsletter-card">
@@ -2672,15 +3050,31 @@ function voteRoadmap(btn,key){
   </div>
 </section>
 <script>
-function subscribeNewsletter(){
+async function subscribeNewsletter(){
   var el=document.getElementById('nl-email');
   if(!el||!el.value||!el.value.includes('@')){el&&el.focus();return;}
   var btn=document.querySelector('.newsletter-btn');
-  btn.textContent='Iscritto! ✓';
-  btn.style.background='rgba(255,255,255,.92)';
-  btn.style.color='#15803d';
-  btn.disabled=true;
-  el.value='';
+  var orig=btn.textContent;
+  btn.disabled=true;btn.textContent='…';
+  try{
+    var r=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({type:'newsletter',email:el.value})});
+    var data=await r.json().catch(function(){return{}});
+    if(r.ok&&!data.error){
+      btn.textContent='Iscritto! ✓';
+      btn.style.background='rgba(255,255,255,.92)';
+      btn.style.color='#15803d';
+      el.value='';
+    }else{
+      btn.textContent='Errore — riprova';
+      btn.disabled=false;
+      setTimeout(function(){btn.textContent=orig;},3000);
+    }
+  }catch(e){
+    btn.textContent='Errore — riprova';
+    btn.disabled=false;
+    setTimeout(function(){btn.textContent=orig;},3000);
+  }
 }
 </script>
 
@@ -2922,10 +3316,11 @@ const I18N={
     "nav.guide":"Guide","nav.community":"Community","nav.ai":"AI Assistant","nav.news":"News","nav.map":"Mappa","nav.journey":"Il Mio Percorso","nav.login":"Accedi","nav.signup":"Registrati gratis",
     "hero.eyebrow":"Guide · Assistente AI · Community","hero.title":"<span class='ln'><span>La comunità</span></span><span class='ln'><span><em>srilankese</em></span></span><span class='ln'><span>in Italia</span></span>","hero.sub":"Guide burocratiche, assistente AI multilingua, community di supporto e news aggiornate — in italiano, inglese, sinhala e tamil.","hero.cta1":"Inizia gratis","hero.cta2":"Esplora le guide","hero.stat1":"Fasi del percorso","hero.stat2":"Guide pratiche","hero.stat3":"Città sulla mappa","hero.stat4":"Lingue dell'interfaccia",
     "card1.tag":"Burocrazia","card1.title":"Permesso di Soggiorno","card1.sub":"Guida completa al rinnovo","card2.tag":"AI","card2.title":"Assistente AI","card2.sub":"Risposte multilingua 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"Confronto e supporto tra pari","card4.tag":"Finanza","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
-    "ad.label":"Pubblicità","ad.lead":"Il tuo annuncio qui — raggiungi la community srilankese in Italia","ad.buy":"Acquista questo spazio →","ad.sponsor":"Sponsorizzato","ad.slot":"Spazio ad — 300×250","ad.book":"Prenota →",
+    "ad.label":"Pubblicità","ad.lead":"Il tuo annuncio qui — raggiungi la community srilankese in Italia","ad.buy":"Richiedi il tuo spazio →","ad.sponsor":"Sponsorizzato","ad.slot":"Spazio ad — 300×250","ad.book":"Prenota →",
     "feat.label":"Cosa offriamo","feat.heading":"Tutto ciò di cui hai bisogno,<br/><em>in un unico posto</em>","feat.sub":"Dalla burocrazia all'integrazione quotidiana — ti supportiamo in ogni passo del tuo percorso.",
     "feat1.title":"Guide Burocratiche","feat1.desc":"Permesso di soggiorno, codice fiscale, SPID, residenza — guide passo-passo con checklist scaricabili.","feat2.title":"Assistente AI Multilingua","feat2.desc":"Risposte immediate in italiano, inglese, sinhala e tamil. Disponibile 24 ore su 24, 7 giorni su 7.","feat3.title":"Community Attiva","feat3.desc":"Uno spazio dove srilankesi in Italia si supportano a vicenda. Trova risposte, condividi esperienze, cresci insieme.","feat4.title":"Money Transfer","feat4.desc":"Confronta Wise, Western Union e Ria in tempo reale. Risparmia sulle rimesse verso lo Sri Lanka.","feat5.title":"Mappa dei Servizi","feat5.desc":"CAF, patronati, negozi e luoghi di culto srilankesi nelle principali città italiane.","feat6.title":"News Aggiornate","feat6.desc":"Leggi, decreti e opportunità per la comunità srilankese. Aggiornato ogni giorno.",
     "members.count":"<strong>La community srilankese</strong> che si aiuta in Italia","members.sub":"Unisciti a chi vive e lavora in Italia e affronta gli stessi passaggi. Insieme è più facile.",
+    "cta.intro.tag":"Il Mio Percorso","cta.intro.desc":"La mappa delle 9 fasi per costruire la tua vita in Italia — dalla burocrazia all'integrazione quotidiana. Sai sempre dove sei e qual è il prossimo passo, con il Consigliere AI al tuo fianco.","cta.intro.pill1":"9 fasi strutturate","cta.intro.pill2":"Consigliere AI incluso","cta.intro.pill3":"Progressi salvati",
     "cta.title":"Pronto a iniziare<br/><em style=\"font-style:italic;color:var(--gold)\">il tuo percorso?</em>","cta.sub":"Registrati gratis. Nessuna carta di credito richiesta.","cta.btn1":"Crea il tuo account gratuito","cta.btn2":"Scopri come funziona",
     "footer.tag":"Il punto di riferimento della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.","footer.product":"Prodotto","footer.aiAssistant":"Assistente AI","footer.mapServices":"Mappa servizi","footer.company":"Azienda","footer.about":"Chi siamo","footer.advertising":"Pubblicità","footer.contact":"Contatti","footer.account":"Account","footer.register":"Registrati","footer.subscriptions":"Abbonamenti","footer.copy":"© 2026 Easy Italia Hub. Tutti i diritti riservati.","footer.privacy":"Privacy Policy","footer.cookie":"Cookie Policy","footer.terms":"Termini di Servizio","footer.legal":"Note legali",
     "chat.name":"Assistente Easy Italia","chat.status":"Online ora","chat.welcome1":"Ciao! Sono l'assistente di Easy Italia Hub. Come posso aiutarti oggi?","chat.welcome2":"Posso risponderti in italiano, inglese, <span lang=\"si\">සිංහල</span> o <span lang=\"ta\">தமிழ்</span>.","chat.now":"Ora","chat.sug1":"Permesso di soggiorno","chat.sug2":"SPID","chat.sug3":"Money transfer","chat.sug4":"Codice fiscale","chat.placeholder":"Scrivi un messaggio…","chat.q1":"Come si rinnova il permesso di soggiorno?","chat.q2":"Come si ottiene lo SPID?","chat.q3":"Come funziona il money transfer verso lo Sri Lanka?","chat.q4":"Come si richiede il codice fiscale?",
@@ -2942,10 +3337,11 @@ const I18N={
     "nav.guide":"Guides","nav.community":"Community","nav.ai":"AI Assistant","nav.news":"News","nav.map":"Map","nav.journey":"My Journey","nav.login":"Log in","nav.signup":"Sign up free",
     "hero.eyebrow":"Guides · AI Assistant · Community","hero.title":"<span class='ln'><span>The Sri Lankan</span></span><span class='ln'><span><em>community</em></span></span><span class='ln'><span>in Italy</span></span>","hero.sub":"Bureaucratic guides, multilingual AI assistant, support community and up-to-date news — in Italian, English, Sinhala and Tamil.","hero.cta1":"Start free","hero.cta2":"Explore the guides","hero.stat1":"Journey phases","hero.stat2":"Practical guides","hero.stat3":"Cities on the map","hero.stat4":"Interface languages",
     "card1.tag":"Bureaucracy","card1.title":"Residence Permit","card1.sub":"Complete renewal guide","card2.tag":"AI","card2.title":"AI Assistant","card2.sub":"Multilingual answers 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"Peer-to-peer support","card4.tag":"Finance","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
-    "ad.label":"Advertising","ad.lead":"Your ad here — reach the Sri Lankan community in Italy","ad.buy":"Buy this space →","ad.sponsor":"Sponsored","ad.slot":"Ad space — 300×250","ad.book":"Book →",
+    "ad.label":"Advertising","ad.lead":"Your ad here — reach the Sri Lankan community in Italy","ad.buy":"Request your ad space →","ad.sponsor":"Sponsored","ad.slot":"Ad space — 300×250","ad.book":"Book →",
     "feat.label":"What we offer","feat.heading":"Everything you need,<br/><em>in one place</em>","feat.sub":"From bureaucracy to daily integration — we support you at every step of your journey.",
     "feat1.title":"Bureaucratic Guides","feat1.desc":"Residence permit, tax code, SPID, residency — step-by-step guides with downloadable checklists.","feat2.title":"Multilingual AI Assistant","feat2.desc":"Immediate answers in Italian, English, Sinhala and Tamil. Available 24/7.","feat3.title":"Active Community","feat3.desc":"A space where Sri Lankans in Italy support one another. Find answers, share experiences, grow together.","feat4.title":"Money Transfer","feat4.desc":"Compare Wise, Western Union and Ria in real time. Save on remittances to Sri Lanka.","feat5.title":"Services Map","feat5.desc":"CAF offices, patronati, Sri Lankan shops and places of worship in major Italian cities.","feat6.title":"Up-to-date News","feat6.desc":"Laws, decrees and opportunities for the Sri Lankan community. Updated every day.",
     "members.count":"<strong>The Sri Lankan community</strong> helping each other in Italy","members.sub":"Join people living and working in Italy who face the same steps. Together it's easier.",
+    "cta.intro.tag":"My Journey","cta.intro.desc":"The map of 9 phases to build your life in Italy — from bureaucracy to daily integration. You always know where you are and what comes next, with the AI Advisor by your side.","cta.intro.pill1":"9 structured phases","cta.intro.pill2":"AI Advisor included","cta.intro.pill3":"Progress always saved",
     "cta.title":"Ready to start<br/><em style=\"font-style:italic;color:var(--gold)\">your journey?</em>","cta.sub":"Sign up free. No credit card required.","cta.btn1":"Create your free account","cta.btn2":"See how it works",
     "footer.tag":"The reference point for the Sri Lankan community in Italy. Guides, multilingual AI, community and services — all in one place.","footer.product":"Product","footer.aiAssistant":"AI Assistant","footer.mapServices":"Services map","footer.company":"Company","footer.about":"About us","footer.advertising":"Advertising","footer.contact":"Contact","footer.account":"Account","footer.register":"Register","footer.subscriptions":"Subscriptions","footer.copy":"© 2026 Easy Italia Hub. All rights reserved.","footer.privacy":"Privacy Policy","footer.cookie":"Cookie Policy","footer.terms":"Terms of Service","footer.legal":"Legal notice",
     "chat.name":"Easy Italia Assistant","chat.status":"Online now","chat.welcome1":"Hi! I'm the Easy Italia Hub assistant. How can I help you today?","chat.welcome2":"I can reply in Italian, English, <span lang=\"si\">සිංහල</span> or <span lang=\"ta\">தமிழ்</span>.","chat.now":"Now","chat.sug1":"Residence permit","chat.sug2":"SPID","chat.sug3":"Money transfer","chat.sug4":"Tax code","chat.placeholder":"Type a message…","chat.q1":"How do I renew the residence permit?","chat.q2":"How do I get a SPID?","chat.q3":"How does money transfer to Sri Lanka work?","chat.q4":"How do I get a tax code (codice fiscale)?",
@@ -2962,10 +3358,11 @@ const I18N={
     "nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.ai":"AI සහායක","nav.news":"පුවත්","nav.map":"සිතියම","nav.journey":"මගේ ගමන","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
     "hero.eyebrow":"මාර්ගෝපදේශ · AI සහායක · ප්‍රජාව","hero.title":"<span class='ln'><span>ඉතාලියේ</span></span><span class='ln'><span><em>ශ්‍රී ලාංකික</em></span></span><span class='ln'><span>ප්‍රජාව</span></span>","hero.sub":"නිලධාරී මාර්ගෝපදේශ, බහුභාෂා AI සහායක, සහාය ප්‍රජාව සහ යාවත්කාලීන පුවත් — ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින්.","hero.cta1":"නොමිලේ අරඹන්න","hero.cta2":"මාර්ගෝපදේශ ගවේෂණය කරන්න","hero.stat1":"ගමනේ අදියර","hero.stat2":"ප්‍රායෝගික මාර්ගෝපදේශ","hero.stat3":"සිතියමේ නගර","hero.stat4":"අතුරුමුහුණත් භාෂා",
     "card1.tag":"නිලධාරිවාදය","card1.title":"පදිංචි බලපත්‍රය","card1.sub":"සම්පූර්ණ අලුත් කිරීමේ මාර්ගෝපදේශය","card2.tag":"AI","card2.title":"AI සහායක","card2.sub":"බහුභාෂා පිළිතුරු 24/7","card3.tag":"ප්‍රජාව","card3.title":"ප්‍රජාව","card3.sub":"සම වයසේ අයගේ සහාය","card4.tag":"මුල්‍ය","card4.title":"මුදල් හුවමාරුව","card4.sub":"Wise, Ria, Western Union",
-    "ad.label":"දැන්වීම්","ad.lead":"ඔබේ දැන්වීම මෙහි — ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව වෙත ළඟා වන්න","ad.buy":"මෙම අවකාශය මිලදී ගන්න →","ad.sponsor":"අනුග්‍රාහක","ad.slot":"දැන්වීම් අවකාශය — 300×250","ad.book":"වෙන්කරවා ගන්න →",
+    "ad.label":"දැන්වීම්","ad.lead":"ඔබේ දැන්වීම මෙහි — ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව වෙත ළඟා වන්න","ad.buy":"ඔබේ දැන්වීම් අවකාශය ඉල්ලන්න →","ad.sponsor":"අනුග්‍රාහක","ad.slot":"දැන්වීම් අවකාශය — 300×250","ad.book":"වෙන්කරවා ගන්න →",
     "feat.label":"අපි පිරිනමන දේ","feat.heading":"ඔබට අවශ්‍ය සියල්ල,<br/><em>එක තැනකින්</em>","feat.sub":"නිලධාරිවාදයේ සිට දෛනික ඒකාබද්ධතාව දක්වා — ඔබේ ගමනේ සෑම පියවරකදීම අපි ඔබට සහාය වෙමු.",
     "feat1.title":"නිලධාරී මාර්ගෝපදේශ","feat1.desc":"පදිංචි බලපත්‍රය, බදු කේතය, SPID, පදිංචිය — බාගත හැකි පිරික්සුම් ලැයිස්තු සහිත පියවරෙන් පියවර මාර්ගෝපදේශ.","feat2.title":"බහුභාෂා AI සහායක","feat2.desc":"ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින් ක්ෂණික පිළිතුරු. දිනපතා පැය 24 පුරා ලබා ගත හැක.","feat3.title":"සක්‍රිය ප්‍රජාව","feat3.desc":"ඉතාලියේ ශ්‍රී ලාංකිකයන් එකිනෙකාට සහාය වන අවකාශයක්. පිළිතුරු සොයාගන්න, අත්දැකීම් බෙදාගන්න, එකට වර්ධනය වන්න.","feat4.title":"මුදල් හුවමාරුව","feat4.desc":"Wise, Western Union සහ Ria තත්‍ය කාලීනව සසඳන්න. ශ්‍රී ලංකාවට යවන මුදල් වලින් ඉතිරි කරගන්න.","feat5.title":"සේවා සිතියම","feat5.desc":"ප්‍රධාන ඉතාලි නගරවල CAF, patronati, ශ්‍රී ලාංකික වෙළඳසැල් සහ පූජනීය ස්ථාන.","feat6.title":"යාවත්කාලීන පුවත්","feat6.desc":"ශ්‍රී ලාංකික ප්‍රජාව සඳහා නීති, නියෝග සහ අවස්ථා. දිනපතා යාවත්කාලීන වේ.",
     "members.count":"<strong>ශ්‍රී ලාංකික ප්‍රජාව</strong> ඉතාලියේ එකිනෙකාට උදව් කරයි","members.sub":"ඉතාලියේ ජීවත්වන සහ වැඩකරන, එම පියවරම මුහුණ දෙන අය හා එක්වන්න. එකට වඩා පහසුයි.",
+    "cta.intro.tag":"මගේ ගමන","cta.intro.desc":"ඉතාලියේ ඔබේ ජීවිතය ගොඩනැගීමට අදියර 9 ක් — නිලධාරිවාදයේ සිට දෛනික ඒකාබද්ධතාව දක්වා. ඔබ කොතැනද, ඊළඟ පියවර කුමක්දැයි සැමවිටම දැනගන්න, AI උපදේශකයා ඔබ අසල.","cta.intro.pill1":"ව්‍යුහගත අදියර 9","cta.intro.pill2":"AI උපදේශකයා ඇතුළත්","cta.intro.pill3":"ප්‍රගතිය සුරකිනු ලැබේ",
     "cta.title":"ඔබේ ගමන<br/><em style=\"font-style:italic;color:var(--gold)\">අරඹන්න සූදානම්ද?</em>","cta.sub":"නොමිලේ ලියාපදිංචි වන්න. ණයපතක් අවශ්‍ය නැත.","cta.btn1":"ඔබේ නොමිලේ ගිණුම සාදන්න","cta.btn2":"එය ක්‍රියා කරන ආකාරය බලන්න",
     "footer.tag":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාවේ විශ්වාසනීය මධ්‍යස්ථානය. මාර්ගෝපදේශ, බහුභාෂා AI, ප්‍රජාව සහ සේවා — සියල්ල එක තැනක.","footer.product":"නිෂ්පාදනය","footer.aiAssistant":"AI සහායක","footer.mapServices":"සේවා සිතියම","footer.company":"සමාගම","footer.about":"අප ගැන","footer.advertising":"දැන්වීම්","footer.contact":"සම්බන්ධ වන්න","footer.account":"ගිණුම","footer.register":"ලියාපදිංචි වන්න","footer.subscriptions":"දායකත්ව","footer.copy":"© 2026 Easy Italia Hub. සියලු හිමිකම් ඇවිරිණි.","footer.privacy":"පෞද්ගලිකත්ව ප්‍රතිපත්තිය","footer.cookie":"කුකී ප්‍රතිපත්තිය","footer.terms":"සේවා කොන්දේසි","footer.legal":"නෛතික දැන්වීම",
     "chat.name":"Easy Italia සහායක","chat.status":"දැන් සබැඳිව","chat.welcome1":"ආයුබෝවන්! මම Easy Italia Hub සහායකයා. අද මට ඔබට කෙසේ උදව් කළ හැකිද?","chat.welcome2":"මට ඉතාලි, ඉංග්‍රීසි, <span lang=\"si\">සිංහල</span> හෝ <span lang=\"ta\">தமிழ்</span> භාෂාවෙන් පිළිතුරු දිය හැක.","chat.now":"දැන්","chat.sug1":"පදිංචි බලපත්‍රය","chat.sug2":"SPID","chat.sug3":"මුදල් හුවමාරුව","chat.sug4":"බදු කේතය","chat.placeholder":"පණිවිඩයක් ටයිප් කරන්න…","chat.q1":"පදිංචි බලපත්‍රය අලුත් කරන්නේ කෙසේද?","chat.q2":"SPID ලබා ගන්නේ කෙසේද?","chat.q3":"ශ්‍රී ලංකාවට මුදල් යැවීම ක්‍රියා කරන්නේ කෙසේද?","chat.q4":"බදු කේතය (codice fiscale) ලබා ගන්නේ කෙසේද?",
@@ -3007,8 +3404,8 @@ applyLang(currentLang);
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   // Hero headline reveals via CSS keyframe (lineUp) automatically on load.
   // Scroll-reveal targets (below the fold)
-  const targets=[...document.querySelectorAll('.features .section-label,.features .section-title,.features .section-sub,.feat,.ad-slot,.members .member-avatars,.members .member-count,.members .section-sub,.cta-card,.footer-brand,.footer-col')];
-  document.querySelectorAll('.feat-grid,.ad-grid').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--ri',i));});
+  const targets=[...document.querySelectorAll('.features .section-label,.features .section-title,.features .section-sub,.feat,.ad-mini-bar,.donate-card,.cta-card,.footer-brand,.footer-col')];
+  document.querySelectorAll('.feat-grid').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--ri',i));});
   targets.forEach(el=>el.classList.add('reveal'));
   if(reduce){targets.forEach(el=>el.classList.add('in'));return;}
   const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
@@ -3384,6 +3781,64 @@ function sendSug(el){
   const dict=I18N[currentLang]||I18N.it;
   sendToAgent((key&&dict[key])||el.textContent);
 }
+</script>
+
+<!-- Donazione Stripe -->
+<script>
+(function(){
+  var selected=500;
+  document.querySelectorAll('.donate-amt').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.donate-amt').forEach(function(b){b.classList.remove('donate-amt--active');});
+      btn.classList.add('donate-amt--active');
+      selected=parseInt(btn.dataset.amount,10);
+    });
+  });
+  var donateBtn=document.getElementById('donate-btn');
+  var donateMsg=document.getElementById('donate-msg');
+  if(!donateBtn)return;
+  donateBtn.addEventListener('click',async function(){
+    donateBtn.disabled=true;
+    donateBtn.textContent='…';
+    donateMsg.textContent='Connessione a Stripe…';
+    try{
+      var r=await fetch('/api/stripe-donate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:selected})});
+      var d=await r.json();
+      if(d.demo){donateMsg.textContent='Donazioni disponibili a breve — grazie per il supporto!';donateBtn.disabled=false;donateBtn.innerHTML='♥ &nbsp;Dona ora';return;}
+      if(d.url){window.location.href=d.url;return;}
+      throw new Error(d.error||'Errore sconosciuto');
+    }catch(e){
+      donateMsg.textContent='Errore: '+e.message+'. Riprova.';
+      donateBtn.disabled=false;donateBtn.innerHTML='♥ &nbsp;Dona ora';
+    }
+  });
+  var params=new URLSearchParams(location.search);
+  if(params.get('donated')==='1'){donateMsg.textContent='Grazie di cuore per la donazione! ♥';donateBtn.innerHTML='♥ &nbsp;Dona ancora';}
+})();
+</script>
+
+<!-- Community counter animation -->
+<script>
+(function(){
+  const el=document.getElementById('ct-count');
+  const lbl=document.getElementById('ct-milestone-label');
+  const fill=document.getElementById('ct-fill');
+  if(!el)return;
+  const TARGET=47,TOTAL=100;
+  function run(){
+    let v=0;
+    const tick=()=>{
+      v=Math.min(v+Math.ceil((TARGET-v)/7+.5),TARGET);
+      el.textContent=v;
+      if(lbl)lbl.textContent=v+' / '+TOTAL;
+      if(fill)fill.style.width=Math.round(v/TOTAL*100)+'%';
+      if(v<TARGET)requestAnimationFrame(tick);
+    };
+    tick();
+  }
+  const io=new IntersectionObserver(([e])=>{if(e.isIntersecting){run();io.disconnect();}},{threshold:.4});
+  io.observe(el);
+})();
 </script>
 
 <!-- Money-transfer comparator now lives on money-transfer.html -->
