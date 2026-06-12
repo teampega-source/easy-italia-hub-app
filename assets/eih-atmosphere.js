@@ -75,6 +75,19 @@
     }
     requestAnimationFrame(frame);
 
+    // governatore qualità: misura gli FPS reali per ~2s; sotto soglia
+    // attiva la modalità lite (meno layer, niente float, niente mouse)
+    var pf = 0, pt0 = performance.now();
+    (function probe() {
+      pf++;
+      var dt = performance.now() - pt0;
+      if (dt < 2000) { requestAnimationFrame(probe); return; }
+      if (pf / (dt / 1000) < 40) {
+        document.documentElement.classList.add('atmo-lite');
+        layers.forEach(function (L) { L.mouse = 0; L.depth *= 0.5; });
+      }
+    })();
+
     // crossfade cromatico cinematico: l'orb "caldo" si accende verso la CTA (home)
     if (window.gsap && window.ScrollTrigger && document.querySelector('.hero')) {
       var warm = document.getElementById('atmo-warm');

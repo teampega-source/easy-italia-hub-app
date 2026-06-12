@@ -4,23 +4,23 @@
    → L4 pulviscolo → #noise (esistente). Solo transform/opacity: GPU-friendly. */
 
 .atmo{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.atmo *{position:absolute;will-change:transform}
-.atmo-l{inset:0}
+.atmo *{position:absolute}
+.atmo-l{inset:0;will-change:transform}
 
 /* ── L1: orbs aurora (mesh gradient morbido) ── */
-.atmo-orb{border-radius:50%;filter:blur(64px)}
+.atmo-orb{border-radius:50%;max-width:880px;max-height:880px}
 .atmo-o1{width:56vw;height:56vw;min-width:520px;min-height:520px;top:-18vw;right:-14vw;
-  background:radial-gradient(circle at 38% 38%,rgba(124,112,89,.34),rgba(124,112,89,.10) 45%,transparent 70%);
+  background:radial-gradient(circle at 38% 38%,rgba(124,112,89,.30),rgba(124,112,89,.12) 40%,rgba(124,112,89,.04) 62%,transparent 78%);
   animation:atmoFloat1 26s ease-in-out infinite alternate}
 .atmo-o2{width:44vw;height:44vw;min-width:420px;min-height:420px;bottom:-16vw;left:-12vw;
-  background:radial-gradient(circle at 60% 40%,rgba(31,157,85,.16),rgba(31,157,85,.05) 50%,transparent 72%);
+  background:radial-gradient(circle at 60% 40%,rgba(31,157,85,.14),rgba(31,157,85,.05) 45%,rgba(31,157,85,.02) 62%,transparent 78%);
   animation:atmoFloat2 32s ease-in-out infinite alternate}
 .atmo-o3{width:34vw;height:34vw;min-width:340px;min-height:340px;top:34%;left:54%;
-  background:radial-gradient(circle,rgba(235,89,57,.13),rgba(235,89,57,.04) 50%,transparent 70%);
+  background:radial-gradient(circle,rgba(235,89,57,.11),rgba(235,89,57,.04) 45%,rgba(235,89,57,.015) 60%,transparent 76%);
   animation:atmoFloat3 22s ease-in-out infinite alternate}
 /* set "caldo": si accende nelle sezioni CTA/FX (crossfade via opacity) */
 .atmo-warm{width:60vw;height:60vw;min-width:540px;min-height:540px;top:20%;right:-18vw;opacity:0;
-  background:radial-gradient(circle,rgba(235,89,57,.20),rgba(201,162,74,.10) 48%,transparent 72%)}
+  background:radial-gradient(circle,rgba(235,89,57,.17),rgba(201,162,74,.09) 45%,rgba(201,162,74,.03) 62%,transparent 78%)}
 @keyframes atmoFloat1{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-4vw,3vw,0) scale(1.08)}}
 @keyframes atmoFloat2{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(3vw,-3vw,0) scale(1.10)}}
 @keyframes atmoFloat3{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-2.5vw,-2vw,0) scale(.94)}}
@@ -39,8 +39,8 @@
   transform:perspective(900px) rotateX(38deg) scale(1.4);transform-origin:bottom center}
 
 /* ── L3: luce volumetrica diagonale ── */
-.atmo-beam{top:-30%;left:8%;width:34vw;min-width:280px;height:160%;filter:blur(46px);
-  background:linear-gradient(115deg,transparent 30%,rgba(252,248,240,.5) 50%,transparent 70%);
+.atmo-beam{top:-30%;left:8%;width:34vw;min-width:280px;max-width:620px;height:160%;
+  background:linear-gradient(115deg,transparent 18%,rgba(252,248,240,.30) 50%,transparent 82%);
   transform:rotate(16deg);opacity:.5;animation:atmoBeam 18s ease-in-out infinite alternate}
 @keyframes atmoBeam{from{transform:rotate(16deg) translateX(0)}to{transform:rotate(13deg) translateX(7vw)}}
 
@@ -58,11 +58,11 @@
 @keyframes atmoTwinkle{from{opacity:.35}55%{opacity:.9}to{opacity:.5}}
 
 /* ── dark mode: stessa architettura, luci più profonde ── */
-html[data-theme="dark"] .atmo-o1{background:radial-gradient(circle at 38% 38%,rgba(185,170,141,.20),rgba(185,170,141,.06) 45%,transparent 70%)}
+html[data-theme="dark"] .atmo-o1{background:radial-gradient(circle at 38% 38%,rgba(185,170,141,.18),rgba(185,170,141,.07) 42%,rgba(185,170,141,.02) 62%,transparent 78%)}
 html[data-theme="dark"] .atmo-o2{background:radial-gradient(circle at 60% 40%,rgba(63,207,124,.10),transparent 70%)}
 html[data-theme="dark"] .atmo-o3{background:radial-gradient(circle,rgba(255,106,71,.12),transparent 68%)}
 html[data-theme="dark"] .atmo-warm{background:radial-gradient(circle,rgba(255,106,71,.16),rgba(185,170,141,.07) 48%,transparent 72%)}
-html[data-theme="dark"] .atmo-beam{background:linear-gradient(115deg,transparent 30%,rgba(243,241,236,.10) 50%,transparent 70%);opacity:.6}
+html[data-theme="dark"] .atmo-beam{background:linear-gradient(115deg,transparent 18%,rgba(243,241,236,.08) 50%,transparent 82%);opacity:.6}
 html[data-theme="dark"] .atmo-ring{border-color:rgba(185,170,141,.14)}
 html[data-theme="dark"] .atmo-r2{border-color:rgba(255,106,71,.12)}
 html[data-theme="dark"] .atmo-grid{background:linear-gradient(rgba(185,170,141,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(185,170,141,.06) 1px,transparent 1px);background-size:64px 64px}
@@ -70,9 +70,16 @@ html[data-theme="dark"] .atmo-grid{background:linear-gradient(rgba(185,170,141,.
 /* ── responsive & accessibilità ── */
 @media(max-width:768px){
   .atmo-beam,.atmo-r2,.atmo-dust2{display:none}     /* meno layer su mobile */
-  .atmo-orb{filter:blur(44px)}                       /* blur più economico */
   .atmo-grid{height:30vh}
 }
 @media(prefers-reduced-motion:reduce){
   .atmo *{animation:none!important}
 }
+
+/* ── noise: blend normale a bassa opacità (multiply ricompone tutta la pagina) ── */
+#noise{mix-blend-mode:normal!important;opacity:.028!important}
+
+/* ── modalità lite: attivata dal governatore FPS sui dispositivi lenti ── */
+html.atmo-lite .atmo-beam,html.atmo-lite .atmo-ring,
+html.atmo-lite .atmo-dust,html.atmo-lite .atmo-dust2,html.atmo-lite .atmo-grid{display:none}
+html.atmo-lite .atmo-orb{animation:none}
