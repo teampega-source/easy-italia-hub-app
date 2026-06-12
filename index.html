@@ -1895,6 +1895,42 @@ html.returning #preloader{display:none}
   .roadmap-section,.testimonials-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
 }
 
+/* ─── DONATE ─── */
+.donate-section{
+  position:relative;z-index:1;
+  padding:var(--sp-4) var(--sp-5);max-width:860px;margin:0 auto;
+}
+.donate-card{
+  text-align:center;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:var(--sp-5);
+}
+.donate-icon{font-size:2rem;line-height:1;margin-bottom:.7rem;display:block}
+.donate-title{
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:clamp(1.4rem,2.5vw,1.85rem);font-weight:500;
+  color:var(--ink);margin-bottom:.6rem;
+}
+.donate-sub{
+  font-size:var(--text-sm);color:var(--fg-secondary);font-weight:300;
+  max-width:480px;margin:0 auto 1.6rem;line-height:1.72;
+}
+.btn-donate{
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.8rem 2rem;border-radius:var(--radius-full);
+  font-size:var(--text-sm);font-weight:600;color:#fff;
+  border:none;cursor:pointer;text-decoration:none;
+  background:linear-gradient(135deg,#b85c28,#c97c14);
+  box-shadow:0 8px 24px rgba(184,92,40,.22);
+  transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std);
+}
+.btn-donate:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(184,92,40,.32)}
+.btn-donate:active{transform:scale(.97)}
+.donate-note{font-size:.68rem;color:var(--fg-muted);margin-top:.65rem}
+@media(max-width:600px){.donate-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}.donate-card{padding:var(--sp-4) var(--sp-3)}}
+
 /* ─── NEWSLETTER ─── */
 .newsletter-section{
   position:relative;z-index:1;
@@ -2513,17 +2549,6 @@ html.returning #preloader{display:none}
 
 <div class="divider" aria-hidden="true"></div>
 
-<!-- ─── MEMBERS (social proof) ─── -->
-<section class="members" aria-labelledby="members-heading">
-  <div class="member-avatars" aria-hidden="true">
-    <div class="avatar">A</div><div class="avatar">K</div><div class="avatar">S</div>
-    <div class="avatar">R</div><div class="avatar">P</div>
-    <div class="avatar" style="background:rgba(255,255,255,.08);color:var(--fg-muted);font-family:'Satoshi',sans-serif;font-size:.8rem">+</div>
-  </div>
-  <p class="member-count" id="members-heading" data-i18n-html="members.count"><strong>La community srilankese</strong> che si aiuta in Italia</p>
-  <p class="section-sub" style="margin:0 auto var(--sp-4);text-align:center;max-width:420px" data-i18n="members.sub">Unisciti a chi vive e lavora in Italia e affronta gli stessi passaggi. Insieme è più facile.</p>
-</section>
-
 <!-- ─── COMMUNITY FOUNDING MEMBERS ─── -->
 <section class="community-teaser-section" aria-labelledby="ct-heading">
   <div class="ct-inner">
@@ -2776,6 +2801,21 @@ function voteRoadmap(btn,key){
 
   </div>
 </section>
+
+<!-- ─── DONAZIONE ─── -->
+<section class="donate-section" aria-labelledby="donate-heading">
+  <div class="donate-card">
+    <span class="donate-icon" aria-hidden="true">♥</span>
+    <h2 id="donate-heading" class="donate-title">Supporta il progetto</h2>
+    <p class="donate-sub">Easy Italia Hub è completamente gratuito per tutti. Se ti è stato utile, una piccola donazione ci aiuta a mantenere le guide aggiornate, i server attivi e i servizi accessibili a tutta la community srilankese in Italia.</p>
+    <a href="https://paypal.me/easyitaliahub" class="btn-donate" target="_blank" rel="noopener noreferrer">
+      ♥ &nbsp;Fai una donazione
+    </a>
+    <p class="donate-note">Sicuro via PayPal · Qualsiasi importo è prezioso per noi</p>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
 
 <!-- ─── NEWSLETTER ─── -->
 <section class="newsletter-section" aria-labelledby="newsletter-heading">
@@ -3132,7 +3172,7 @@ applyLang(currentLang);
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   // Hero headline reveals via CSS keyframe (lineUp) automatically on load.
   // Scroll-reveal targets (below the fold)
-  const targets=[...document.querySelectorAll('.features .section-label,.features .section-title,.features .section-sub,.feat,.ad-mini-bar,.members .member-avatars,.members .member-count,.members .section-sub,.cta-card,.footer-brand,.footer-col')];
+  const targets=[...document.querySelectorAll('.features .section-label,.features .section-title,.features .section-sub,.feat,.ad-mini-bar,.donate-card,.cta-card,.footer-brand,.footer-col')];
   document.querySelectorAll('.feat-grid').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--ri',i));});
   targets.forEach(el=>el.classList.add('reveal'));
   if(reduce){targets.forEach(el=>el.classList.add('in'));return;}
