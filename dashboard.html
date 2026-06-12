@@ -215,6 +215,15 @@
           <button type="button" class="btn-ghost" id="remind-btn">Attiva promemoria nel browser</button>
         </div>
         <p class="muted" id="remind-state" style="margin:.6rem 0 0"><span class="remind-status off" id="remind-status">Promemoria non attivi</span></p>
+        <div class="remind-bar" id="email-remind-bar" style="margin-top:.9rem;border-top:1px solid var(--border);padding-top:.9rem">
+          <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin:0 0 .5rem">Ricevi le scadenze via <strong>email</strong> quando vuoi.</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+            <input type="email" id="remind-email" placeholder="tua@email.com" autocomplete="email"
+              style="flex:1;min-width:180px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.6rem .85rem;font-size:var(--text-sm);color:var(--ink);font-family:inherit;outline:none;min-height:42px"/>
+            <button type="button" class="btn-ghost" id="remind-email-btn" style="white-space:nowrap">Invia via email</button>
+          </div>
+          <p id="remind-email-status" style="font-size:var(--text-xs);color:var(--fg-muted);min-height:1.2em;margin:.35rem 0 0"></p>
+        </div>
       </section>
     </div>
 
@@ -716,6 +725,52 @@
       setTimeout(showNearNotifications, 1200);
     }
   })();
+
+  // ── EMAIL REMINDERS ──────────────────────────────────────
+  var elEmailInput  = document.getElementById('remind-email');
+  var elEmailBtn    = document.getElementById('remind-email-btn');
+  var elEmailStatus = document.getElementById('remind-email-status');
+
+  // Pre-fill email from session if available
+  (function prefillEmail(){
+    try {
+      var u = JSON.parse(localStorage.getItem('eih-user') || 'null');
+      if (u && u.email && elEmailInput) elEmailInput.value = u.email;
+    } catch(e) {}
+  })();
+
+  if (elEmailBtn) {
+    elEmailBtn.addEventListener('click', async function() {
+      var email = (elEmailInput ? elEmailInput.value : '').trim();
+      if (!email) {
+        if (elEmailStatus) elEmailStatus.textContent = 'Inserisci la tua email.';
+        return;
+      }
+      elEmailBtn.disabled = true;
+      elEmailBtn.textContent = 'Invio…';
+      if (elEmailStatus) elEmailStatus.textContent = '';
+      try {
+        var dls = deadlines.slice();
+        var resp = await fetch('/api/remind', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, deadlines: dls }),
+        });
+        var data = await resp.json();
+        if (data.ok) {
+          if (elEmailStatus) { elEmailStatus.textContent = '✓ Email inviata a ' + email; elEmailStatus.style.color = 'var(--green)'; }
+        } else if (data.demo) {
+          if (elEmailStatus) { elEmailStatus.textContent = 'Demo: funzionalità email in arrivo.'; elEmailStatus.style.color = 'var(--fg-muted)'; }
+        } else {
+          if (elEmailStatus) { elEmailStatus.textContent = data.error || 'Errore. Riprova.'; elEmailStatus.style.color = 'var(--coral)'; }
+        }
+      } catch(e) {
+        if (elEmailStatus) { elEmailStatus.textContent = 'Errore di rete. Riprova.'; elEmailStatus.style.color = 'var(--coral)'; }
+      }
+      elEmailBtn.disabled = false;
+      elEmailBtn.textContent = 'Invia via email';
+    });
+  }
 })();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
