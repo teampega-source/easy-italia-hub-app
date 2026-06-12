@@ -8,9 +8,12 @@
 - **PWA**: manifest + service worker (offline) + pagina 404 brand.
 - **Command palette** Ctrl/Cmd+K su tutte le pagine.
 - **Dark mode** con toggle persistente su tutte le pagine.
-- **i18n**: tamil aggiunto al layer condiviso (nav/footer ora IT/EN/SI/TA);
-  titolo+intro tradotti in EN/SI/TA sulle 10 pagine principali via `EIH_I18N_EXTRA`.
-  **Resta da fare**: corpo completo delle pagine interne nelle 4 lingue.
+- **i18n COMPLETO**: tutte le pagine contenuto (guide, opportunità, community,
+  news, mappa, chi-siamo, contatti, abbonamenti, money-transfer) tradotte
+  integralmente in EN/SI/TA via `EIH_I18N_EXTRA`; termini burocratici in italiano.
+- **Generatore Moduli e Lettere** (`/moduli`): 4 modelli precompilabili → PDF.
+- **Atmosphere v2**: sfondo immersivo multi-layer con parallasse e mouse.
+- **Dominio**: guida `DOMINIO.md` + `scripts/set-domain.sh` (switch in 1 comando).
 
 ## Stato attuale
 Il sito **Easy Italia Hub** è LIVE su Vercel con **deploy automatico da GitHub**
