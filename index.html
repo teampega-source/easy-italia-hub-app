@@ -1479,6 +1479,407 @@ html.returning #preloader{display:none}
 
 /* sr-only utility */
 .sr{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ══════════════════════════════════════════════════════════
+   NUOVE SEZIONI — UX IMPROVEMENTS
+   ══════════════════════════════════════════════════════════ */
+
+/* ─── PROBLEMA / SOLUZIONE (dark contrast) ─── */
+.problem-section{
+  position:relative;z-index:1;
+  background:#161412;
+  padding:var(--sp-6) var(--sp-5);
+  overflow:hidden;
+}
+.problem-section::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(900px 500px at 15% 60%,rgba(235,89,57,.10),transparent 60%),
+    radial-gradient(700px 400px at 85% 20%,rgba(124,112,89,.08),transparent 55%);
+}
+.problem-inner{
+  max-width:1380px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-6);
+  align-items:center;position:relative;
+}
+.problem-eyebrow{
+  font-size:.66rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--coral);display:block;margin-bottom:var(--sp-2);
+}
+.problem-heading{
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:clamp(1.9rem,3.5vw,var(--text-2xl));
+  font-weight:500;line-height:1.1;color:#f3f1ec;
+  margin-bottom:var(--sp-2);letter-spacing:-.02em;
+}
+.problem-heading em{font-style:normal;color:var(--taupe)}
+.problem-sub{
+  font-size:var(--text-base);color:rgba(243,241,236,.60);
+  font-weight:300;line-height:1.65;margin-bottom:var(--sp-4);max-width:420px;
+}
+.prob-list{list-style:none;display:flex;flex-direction:column;gap:.85rem}
+.prob-list li{
+  display:flex;align-items:flex-start;gap:.9rem;
+  font-size:var(--text-sm);color:rgba(243,241,236,.55);
+  line-height:1.55;font-weight:300;
+}
+.prob-dot{
+  flex-shrink:0;width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;margin-top:2px;
+}
+.prob-dot--bad{background:rgba(235,89,57,.18)}
+.prob-dot--bad svg{width:11px;height:11px;stroke:#ff6a6a;fill:none;stroke-width:2.5;stroke-linecap:round}
+.sol-card{
+  background:rgba(255,253,249,.06);border:1px solid rgba(255,255,255,.10);
+  border-radius:24px;padding:var(--sp-4);position:relative;overflow:hidden;
+}
+.sol-card::before{
+  content:'';position:absolute;inset:0;border-radius:24px;pointer-events:none;
+  background:linear-gradient(135deg,rgba(235,89,57,.04),rgba(124,112,89,.03));
+}
+.sol-eyebrow{
+  font-size:.66rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;
+  color:#4ade80;display:block;margin-bottom:var(--sp-2);
+}
+.sol-heading{
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:var(--text-xl);font-weight:500;line-height:1.2;
+  color:#f3f1ec;margin-bottom:var(--sp-3);
+}
+.sol-list{list-style:none;display:flex;flex-direction:column;gap:.85rem}
+.sol-list li{
+  display:flex;align-items:flex-start;gap:.9rem;
+  font-size:var(--text-sm);color:rgba(243,241,236,.75);
+  line-height:1.55;font-weight:300;
+}
+.sol-dot{
+  flex-shrink:0;width:22px;height:22px;border-radius:50%;
+  background:rgba(74,222,128,.15);
+  display:flex;align-items:center;justify-content:center;margin-top:2px;
+}
+.sol-dot svg{width:11px;height:11px;stroke:#4ade80;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:767px){
+  .problem-inner{grid-template-columns:1fr;gap:var(--sp-4)}
+  .problem-sub{max-width:100%}
+  .problem-section{padding:var(--sp-5) var(--sp-3)}
+}
+
+/* ─── COME FUNZIONA — 3 STEP ─── */
+.how-section{
+  position:relative;z-index:1;
+  padding:var(--sp-6) var(--sp-5);max-width:1380px;margin:0 auto;
+  text-align:center;
+}
+.steps-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-4);
+  margin-top:var(--sp-5);position:relative;
+}
+.steps-row::before{
+  content:'';position:absolute;top:30px;
+  left:calc(16.66% + 1.5rem);right:calc(16.66% + 1.5rem);
+  height:1px;background:linear-gradient(90deg,var(--border),var(--border-bright),var(--border));
+  pointer-events:none;z-index:0;
+}
+.step{
+  display:flex;flex-direction:column;align-items:center;gap:var(--sp-2);
+  padding:var(--sp-4) var(--sp-3);border-radius:var(--radius);
+  background:rgba(255,253,249,.72);border:1px solid var(--border);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  position:relative;z-index:1;
+  transition:transform var(--dur-std) var(--ease-spring),
+             border-color var(--dur-micro),
+             box-shadow var(--dur-std) var(--ease-spring);
+}
+.step:hover{
+  transform:translateY(-6px);
+  border-color:var(--border-bright);
+  box-shadow:0 20px 48px rgba(20,30,48,.12);
+}
+.step-num{
+  width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue));
+  color:#fff;font-family:'Clash Grotesk',sans-serif;
+  font-size:var(--text-xl);font-weight:500;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 24px var(--blue-glow);flex-shrink:0;
+}
+.step h3{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:500;color:var(--ink);margin:0}
+.step p{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.6;font-weight:300;margin:0}
+@media(max-width:767px){
+  .steps-row{grid-template-columns:1fr;gap:var(--sp-2)}
+  .steps-row::before{display:none}
+  .how-section{padding:var(--sp-5) var(--sp-3)}
+}
+
+/* ─── PLATFORM SCREENSHOTS ─── */
+.screenshots-section{
+  position:relative;z-index:1;
+  padding:var(--sp-5) var(--sp-5) var(--sp-6);max-width:1380px;margin:0 auto;
+}
+.screenshots-grid{
+  display:grid;grid-template-columns:1fr 1.3fr;gap:var(--sp-3);
+  margin-top:var(--sp-5);align-items:stretch;
+}
+.screenshot-card{
+  border-radius:var(--radius);overflow:hidden;
+  border:1px solid var(--border-bright);
+  background:var(--bg-elevated);
+  box-shadow:0 20px 50px rgba(20,30,48,.10);
+  display:flex;flex-direction:column;
+}
+.sc-bar{
+  background:var(--bg-deep);border-bottom:1px solid var(--border);
+  padding:.55rem .85rem;display:flex;align-items:center;gap:.35rem;flex-shrink:0;
+}
+.sc-dot{width:10px;height:10px;border-radius:50%;background:var(--border-bright);flex-shrink:0}
+.sc-dot:nth-child(1){background:#ff5f57}
+.sc-dot:nth-child(2){background:#ffbd2e}
+.sc-dot:nth-child(3){background:#28c840}
+.sc-url{
+  flex:1;background:var(--surface);border:1px solid var(--border);
+  border-radius:6px;padding:.22rem .65rem;
+  font-size:.62rem;color:var(--fg-muted);font-family:monospace;margin-left:.35rem;
+}
+.sc-content{padding:var(--sp-2) var(--sp-3);display:flex;flex-direction:column;gap:var(--sp-2);flex:1}
+.sc-header-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.sc-title{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:500;color:var(--ink)}
+.sc-badge{
+  font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:.2rem .6rem;border-radius:var(--radius-full);
+  background:var(--gold-dim);color:var(--gold);white-space:nowrap;
+}
+.sc-rows{display:flex;flex-direction:column;gap:.55rem}
+.sc-row{height:9px;border-radius:5px;background:var(--border)}
+.sc-stat-row{display:flex;gap:var(--sp-2);margin-top:.2rem}
+.sc-stat{
+  flex:1;background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:.55rem;text-align:center;
+}
+.sc-stat-n{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:500;color:var(--ink);line-height:1}
+.sc-stat-l{font-size:.58rem;color:var(--fg-muted);margin-top:.2rem;line-height:1}
+.sc-chat{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:.85rem;
+  display:flex;flex-direction:column;gap:.55rem;flex:1;
+}
+.sc-msg{
+  padding:.45rem .75rem;border-radius:10px;
+  font-size:.72rem;line-height:1.45;font-weight:300;max-width:88%;
+}
+.sc-msg.bot{
+  background:var(--surface-hover);border:1px solid var(--border);
+  border-bottom-left-radius:3px;align-self:flex-start;color:var(--fg-secondary);
+}
+.sc-msg.usr{
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue));
+  color:#fff;border-bottom-right-radius:3px;align-self:flex-end;
+}
+@media(max-width:767px){
+  .screenshots-grid{grid-template-columns:1fr}
+  .screenshots-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}
+}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials-section{
+  position:relative;z-index:1;
+  padding:var(--sp-6) var(--sp-5) var(--sp-5);max-width:1380px;margin:0 auto;
+}
+.testimonials-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-3);
+  margin-top:var(--sp-5);
+}
+.testimonial{
+  background:rgba(255,253,249,.72);border:1px solid var(--border);
+  border-radius:var(--radius);padding:var(--sp-3);
+  display:flex;flex-direction:column;gap:var(--sp-2);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:transform var(--dur-std) var(--ease-spring),
+             border-color var(--dur-micro),
+             box-shadow var(--dur-std) var(--ease-spring);
+}
+.testimonial:hover{
+  transform:translateY(-5px);border-color:var(--border-bright);
+  box-shadow:0 16px 40px rgba(20,30,48,.10);
+}
+.t-stars{display:flex;gap:.2rem}
+.t-stars span{color:#f59e0b;font-size:.95rem;line-height:1}
+.t-text{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.7;font-weight:300;font-style:italic;flex:1}
+.t-author{
+  display:flex;align-items:center;gap:.75rem;
+  padding-top:var(--sp-2);border-top:1px solid var(--border);
+}
+.t-av{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);color:#fff;font-weight:500;
+}
+.t-name{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:500;color:var(--ink)}
+.t-loc{font-size:var(--text-xs);color:var(--fg-muted);margin-top:.1rem}
+@media(max-width:767px){
+  .testimonials-grid{grid-template-columns:1fr}
+  .testimonials-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}
+}
+@media(min-width:520px) and (max-width:767px){
+  .testimonials-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ─── MISSION TEASER ─── */
+.mission-section{
+  position:relative;z-index:1;
+  padding:var(--sp-6) var(--sp-5);max-width:1380px;margin:0 auto;
+}
+.mission-inner{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-6);align-items:center}
+.mission-values{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2);margin-top:var(--sp-4);
+}
+.mission-value{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:var(--sp-2);
+  transition:border-color var(--dur-micro),background var(--dur-micro);
+}
+.mission-value:hover{background:var(--surface-hover);border-color:var(--border-bright)}
+.mission-value-icon{font-size:1.2rem;margin-bottom:.4rem;line-height:1;display:block}
+.mission-value h4{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:500;color:var(--ink);margin-bottom:.2rem}
+.mission-value p{font-size:var(--text-xs);color:var(--fg-muted);line-height:1.5;font-weight:300}
+.mission-visual{
+  border-radius:24px;overflow:hidden;position:relative;
+  background:linear-gradient(135deg,#2d4a7a 0%,#3a6090 45%,#66512e 100%);
+  min-height:360px;display:flex;align-items:center;justify-content:center;
+  padding:var(--sp-5);text-align:center;
+  box-shadow:0 32px 80px rgba(20,30,48,.18);
+}
+.mission-visual::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(22,20,18,.12) 0%,rgba(22,20,18,.52) 100%);
+}
+.mission-visual-text{
+  position:relative;z-index:1;
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:clamp(1.55rem,2.8vw,2.2rem);font-weight:500;
+  color:#fff;line-height:1.2;letter-spacing:-.02em;
+}
+.mission-visual-text em{font-style:normal;color:rgba(255,210,100,.9)}
+@media(max-width:767px){
+  .mission-inner{grid-template-columns:1fr;gap:var(--sp-4)}
+  .mission-visual{min-height:220px}
+  .mission-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}
+}
+
+/* ─── ROADMAP ─── */
+.roadmap-section{
+  position:relative;z-index:1;
+  padding:var(--sp-5) var(--sp-5) var(--sp-6);max-width:1380px;margin:0 auto;
+}
+.roadmap-track{
+  display:flex;flex-direction:column;gap:var(--sp-2);
+  margin-top:var(--sp-5);max-width:740px;margin-left:auto;margin-right:auto;
+}
+.roadmap-item{
+  display:grid;grid-template-columns:80px 1fr;gap:var(--sp-2);
+  align-items:flex-start;
+}
+.roadmap-quarter{
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:var(--text-xs);font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--fg-muted);padding-top:.68rem;text-align:right;
+  padding-right:var(--sp-2);border-right:2px solid var(--border);line-height:1.2;
+}
+.roadmap-item.done .roadmap-quarter{color:var(--gold);border-right-color:var(--gold)}
+.roadmap-item.now .roadmap-quarter{color:var(--coral);border-right-color:var(--coral)}
+.roadmap-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:var(--sp-2) var(--sp-3);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);
+  transition:border-color var(--dur-micro),background var(--dur-micro);
+}
+.roadmap-item.done .roadmap-card{border-left:3px solid var(--gold);padding-left:calc(var(--sp-3) - 2px)}
+.roadmap-item.now .roadmap-card{border-left:3px solid var(--coral);padding-left:calc(var(--sp-3) - 2px);background:var(--surface-hover)}
+.roadmap-card:hover{background:var(--surface-hover)}
+.roadmap-card-text{flex:1;min-width:0}
+.roadmap-card h4{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:500;color:var(--ink);margin-bottom:.2rem}
+.roadmap-card p{font-size:var(--text-xs);color:var(--fg-muted);line-height:1.5;font-weight:300}
+.roadmap-badge{
+  flex-shrink:0;padding:.24rem .65rem;border-radius:var(--radius-full);
+  font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;
+}
+.roadmap-badge--done{background:rgba(124,112,89,.12);color:var(--gold)}
+.roadmap-badge--now{background:rgba(235,89,57,.12);color:var(--coral)}
+.roadmap-vote{
+  flex-shrink:0;display:flex;align-items:center;gap:.4rem;
+  padding:.3rem .65rem;border-radius:var(--radius-full);
+  border:1px solid var(--border);background:none;cursor:pointer;
+  font-family:'Satoshi',sans-serif;font-size:var(--text-xs);font-weight:500;
+  color:var(--fg-secondary);white-space:nowrap;
+  transition:border-color var(--dur-micro),background var(--dur-micro),color var(--dur-micro);
+}
+.roadmap-vote:hover{border-color:var(--border-bright);background:var(--surface-hover);color:var(--ink)}
+.roadmap-vote.voted{border-color:var(--coral);color:var(--coral);background:rgba(235,89,57,.06)}
+.roadmap-vote:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:var(--radius-full)}
+.roadmap-vote svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+@media(max-width:600px){
+  .roadmap-item{grid-template-columns:56px 1fr}
+  .roadmap-quarter{font-size:.58rem;padding-right:var(--sp-1)}
+  .roadmap-section,.testimonials-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
+}
+
+/* ─── NEWSLETTER ─── */
+.newsletter-section{
+  position:relative;z-index:1;
+  padding:var(--sp-4) var(--sp-5) var(--sp-6);max-width:1380px;margin:0 auto;
+}
+.newsletter-card{
+  border-radius:24px;padding:var(--sp-5) var(--sp-6);
+  display:flex;align-items:center;gap:var(--sp-5);flex-wrap:wrap;
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#4a3e28 0%,#c44730 100%);
+  box-shadow:0 24px 60px rgba(74,62,40,.30);
+}
+.newsletter-card::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(700px 400px at 85% 50%,rgba(255,255,255,.07),transparent 60%);
+}
+.newsletter-copy{flex:1 1 300px;min-width:0;position:relative;z-index:1}
+.newsletter-copy h2{
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:clamp(1.35rem,2.5vw,var(--text-xl));font-weight:500;
+  color:#fff;margin-bottom:.5rem;line-height:1.2;
+}
+.newsletter-copy p{font-size:var(--text-sm);color:rgba(255,255,255,.72);font-weight:300;line-height:1.6}
+.newsletter-form{
+  flex:0 1 380px;display:flex;flex-direction:column;gap:.65rem;
+  position:relative;z-index:1;
+}
+.newsletter-row{display:flex;gap:.6rem}
+.newsletter-input{
+  flex:1;min-width:0;
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);
+  border-radius:var(--radius-full);padding:.75rem 1.25rem;
+  font-size:var(--text-sm);color:#fff;font-family:'Satoshi',sans-serif;
+  outline:none;min-height:44px;
+  transition:border-color var(--dur-micro),background var(--dur-micro);
+}
+.newsletter-input::placeholder{color:rgba(255,255,255,.52)}
+.newsletter-input:focus{border-color:rgba(255,255,255,.65);background:rgba(255,255,255,.25)}
+.newsletter-btn{
+  flex-shrink:0;background:#fff;color:#4a3e28;
+  border:none;border-radius:var(--radius-full);
+  padding:.75rem 1.4rem;font-size:var(--text-sm);font-weight:600;
+  cursor:pointer;min-height:44px;white-space:nowrap;
+  font-family:'Satoshi',sans-serif;letter-spacing:.02em;
+  transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std) var(--ease-spring);
+}
+.newsletter-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.newsletter-btn:active{transform:scale(.97)}
+.newsletter-btn:focus-visible{outline:2px solid rgba(255,255,255,.65);outline-offset:3px;border-radius:var(--radius-full)}
+.newsletter-note{font-size:var(--text-xs);color:rgba(255,255,255,.42);padding:0 .15rem}
+@media(max-width:767px){
+  .newsletter-card{padding:var(--sp-4) var(--sp-3);gap:var(--sp-3);flex-direction:column}
+  .newsletter-form{width:100%}
+  .newsletter-row{flex-direction:column}
+  .newsletter-input,.newsletter-btn{width:100%}
+  .newsletter-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
+}
 </style>
 <script>/* enable reveal/intro states only when JS runs (no-JS shows content) */document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
 </head>
@@ -1646,10 +2047,10 @@ html.returning #preloader{display:none}
     </p>
 
     <h1 id="hero-heading" data-i18n-html="hero.title">
-      <span class='ln'><span>La comunità</span></span><span class='ln'><span><em>srilankese</em></span></span><span class='ln'><span>in Italia</span></span>
+      <span class='ln'><span>Burocrazia</span></span><span class='ln'><span>italiana,</span></span><span class='ln'><span><em>finalmente chiara.</em></span></span>
     </h1>
 
-    <p class="hero-sub" data-i18n="hero.sub">Guide burocratiche, assistente AI multilingua, community di supporto e news aggiornate — in italiano, inglese, sinhala e tamil.</p>
+    <p class="hero-sub" data-i18n="hero.sub">La piattaforma della comunità srilankese in Italia. Guide passo-passo, assistente AI in 4 lingue e community attiva. Gratis, da subito.</p>
 
     <div class="hero-actions">
       <a href="percorso.html" class="btn-primary">
@@ -1735,6 +2136,61 @@ html.returning #preloader{display:none}
 
 </section>
 
+<!-- ─── PERCHÉ ESISTIAMO — PROBLEMA / SOLUZIONE ─── -->
+<section class="problem-section" id="problema" aria-labelledby="problem-heading">
+  <div class="problem-inner">
+    <div>
+      <span class="problem-eyebrow">Perché esistiamo</span>
+      <h2 id="problem-heading" class="problem-heading">
+        Burocrazia italiana —<br><em>un labirinto da soli.</em>
+      </h2>
+      <p class="problem-sub">Ogni anno migliaia di srilankesi in Italia perdono ore su moduli sbagliati, code inutili e informazioni sparse. Senza una guida nella propria lingua, ogni passo è un ostacolo.</p>
+      <ul class="prob-list" aria-label="Problemi senza Easy Italia Hub">
+        <li>
+          <span class="prob-dot prob-dot--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+          Informazioni burocratiche sparse e difficili da trovare
+        </li>
+        <li>
+          <span class="prob-dot prob-dot--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+          Scadenze nascoste e documenti dimenticati all'ultimo momento
+        </li>
+        <li>
+          <span class="prob-dot prob-dot--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+          Nessun supporto nella propria lingua — tutto solo in italiano
+        </li>
+        <li>
+          <span class="prob-dot prob-dot--bad" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+          Community dispersa, difficile trovare chi ha già vissuto la stessa situazione
+        </li>
+      </ul>
+    </div>
+    <div>
+      <div class="sol-card">
+        <span class="sol-eyebrow">Con Easy Italia Hub</span>
+        <h3 class="sol-heading">Ogni passo del tuo<br>percorso è chiaro.</h3>
+        <ul class="sol-list" aria-label="Soluzioni di Easy Italia Hub">
+          <li>
+            <span class="sol-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></span>
+            Guide pratiche passo-passo per ogni procedura burocratica
+          </li>
+          <li>
+            <span class="sol-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></span>
+            Tracker scadenze e documenti — non dimentichi mai nulla
+          </li>
+          <li>
+            <span class="sol-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></span>
+            Assistente AI in italiano, inglese, sinhala e tamil — sempre disponibile
+          </li>
+          <li>
+            <span class="sol-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></span>
+            Community attiva di srilankesi in Italia — condividi esperienze reali
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ─── IL MIO PERCORSO (spostato in alto per dare prominenza) ─── -->
 <section class="cta-section" aria-labelledby="cta-heading">
   <div class="cta-card">
@@ -1753,6 +2209,37 @@ html.returning #preloader{display:none}
       <a href="percorso.html" class="btn-primary" data-i18n="cta.btn1" onclick="if(typeof openAuth==='function'){openAuth('signup');return false;}">Crea il tuo account gratuito</a>
       <a href="chi-siamo.html" class="btn-ghost" data-i18n="cta.btn2">Scopri come funziona</a>
     </div>
+  </div>
+</section>
+
+<!-- ─── COME FUNZIONA — 3 STEP ─── -->
+<section class="how-section" id="come-funziona" aria-labelledby="how-heading">
+  <p class="section-label">Come funziona</p>
+  <h2 id="how-heading" class="section-title">Inizia in <em>tre semplici passi</em></h2>
+  <p class="section-sub">Nessuna carta di credito. Nessun abbonamento obbligatorio. Solo tu e le risorse di cui hai bisogno.</p>
+  <div class="steps-row">
+
+    <div class="step reveal" style="--ri:0">
+      <div class="step-num" aria-hidden="true">01</div>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <h3>Crea il profilo</h3>
+      <p>Registrati gratis in 30 secondi. Inserisci la tua situazione e il sistema crea un percorso personalizzato per te.</p>
+    </div>
+
+    <div class="step reveal" style="--ri:1">
+      <div class="step-num" aria-hidden="true">02</div>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <h3>Scegli la guida</h3>
+      <p>Permesso di soggiorno, SPID, codice fiscale, lavoro: trovi la guida giusta con checklist scaricabili e link ufficiali.</p>
+    </div>
+
+    <div class="step reveal" style="--ri:2">
+      <div class="step-num" aria-hidden="true">03</div>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+      <h3>Chiedi all'AI</h3>
+      <p>Hai dubbi? L'assistente risponde in 4 lingue, 24 ore su 24. Oppure confrontati con la community — trovi sempre chi ha vissuto la tua stessa situazione.</p>
+    </div>
+
   </div>
 </section>
 
@@ -1855,6 +2342,61 @@ html.returning #preloader{display:none}
   </div>
 </section>
 
+<!-- ─── PLATFORM PREVIEW ─── -->
+<section class="screenshots-section" aria-labelledby="preview-heading">
+  <p class="section-label">La piattaforma</p>
+  <h2 id="preview-heading" class="section-title">Progettata per <em>semplificare</em></h2>
+  <p class="section-sub">Un'interfaccia chiara, multilingua, accessibile da ogni dispositivo. Tutto in un unico posto.</p>
+  <div class="screenshots-grid">
+
+    <!-- Dashboard mockup -->
+    <div class="screenshot-card">
+      <div class="sc-bar">
+        <span class="sc-dot"></span><span class="sc-dot"></span><span class="sc-dot"></span>
+        <span class="sc-url">easyitaliahub.it/percorso</span>
+      </div>
+      <div class="sc-content">
+        <div class="sc-header-row">
+          <span class="sc-title">Il mio percorso</span>
+          <span class="sc-badge">9 fasi</span>
+        </div>
+        <div class="sc-stat-row">
+          <div class="sc-stat"><div class="sc-stat-n">3/9</div><div class="sc-stat-l">Completate</div></div>
+          <div class="sc-stat"><div class="sc-stat-n">12</div><div class="sc-stat-l">Documenti ok</div></div>
+          <div class="sc-stat"><div class="sc-stat-n">2</div><div class="sc-stat-l">Scadenze</div></div>
+        </div>
+        <div class="sc-rows">
+          <div class="sc-row" style="background:linear-gradient(90deg,var(--blue) 33%,var(--border) 33%)"></div>
+          <div class="sc-row" style="background:linear-gradient(90deg,var(--gold) 58%,var(--border) 58%)"></div>
+          <div class="sc-row" style="background:linear-gradient(90deg,var(--coral) 15%,var(--border) 15%)"></div>
+          <div class="sc-row"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI chat mockup -->
+    <div class="screenshot-card">
+      <div class="sc-bar">
+        <span class="sc-dot"></span><span class="sc-dot"></span><span class="sc-dot"></span>
+        <span class="sc-url">easyitaliahub.it — Assistente AI</span>
+      </div>
+      <div class="sc-content">
+        <div class="sc-header-row">
+          <span class="sc-title">Assistente Easy Italia</span>
+          <span class="sc-badge" style="background:rgba(74,222,128,.12);color:#15803d">● Online</span>
+        </div>
+        <div class="sc-chat">
+          <div class="sc-msg bot">Ciao! Come posso aiutarti oggi?</div>
+          <div class="sc-msg usr">Come rinnovo il permesso di soggiorno?</div>
+          <div class="sc-msg bot">Per rinnovare il permesso devi presentare domanda 60 giorni prima della scadenza. Ecco cosa serve:</div>
+          <div class="sc-msg bot">📋 Passaporto valido · 📋 Fototessera recente · 📋 Marca da bollo €16 · 📋 Modulo kit postale</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <div class="divider" aria-hidden="true"></div>
 
 <!-- ─── MEMBERS (social proof) ─── -->
@@ -1867,6 +2409,192 @@ html.returning #preloader{display:none}
   <p class="member-count" id="members-heading" data-i18n-html="members.count"><strong>La community srilankese</strong> che si aiuta in Italia</p>
   <p class="section-sub" style="margin:0 auto var(--sp-4);text-align:center;max-width:420px" data-i18n="members.sub">Unisciti a chi vive e lavora in Italia e affronta gli stessi passaggi. Insieme è più facile.</p>
 </section>
+
+<!-- ─── TESTIMONIANZE ─── -->
+<section class="testimonials-section" aria-labelledby="testimonials-heading">
+  <p class="section-label">Cosa dicono</p>
+  <h2 id="testimonials-heading" class="section-title">La community <em>parla</em></h2>
+  <div class="testimonials-grid">
+
+    <article class="testimonial reveal" style="--ri:0">
+      <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="t-text">"Finalmente una guida chiara per il permesso di soggiorno. Ho seguito i passaggi passo-passo e in 30 minuti sapevo esattamente cosa fare. L'assistente AI mi ha risposto anche in sinhala!"</p>
+      <div class="t-author">
+        <div class="t-av" aria-hidden="true">A</div>
+        <div><div class="t-name">Amara S.</div><div class="t-loc">Milano · in Italia dal 2019</div></div>
+      </div>
+    </article>
+
+    <article class="testimonial reveal" style="--ri:1">
+      <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="t-text">"Pensavo che ottenere lo SPID fosse complicatissimo. Grazie alla guida dettagliata l'ho fatto in 20 minuti. La sezione passo-passo con checklist è davvero ben fatta, consiglio a tutti."</p>
+      <div class="t-author">
+        <div class="t-av" aria-hidden="true">K</div>
+        <div><div class="t-name">Kasun P.</div><div class="t-loc">Roma · in Italia dal 2021</div></div>
+      </div>
+    </article>
+
+    <article class="testimonial reveal" style="--ri:2">
+      <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="t-text">"Il comparatore di money transfer mi ha fatto risparmiare quasi €15 a transazione. Non sapevo che ci fossero così tante differenze tra i provider. Uno strumento indispensabile!"</p>
+      <div class="t-author">
+        <div class="t-av" aria-hidden="true">R</div>
+        <div><div class="t-name">Ruvini F.</div><div class="t-loc">Torino · in Italia dal 2018</div></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
+<!-- ─── CHI SIAMO — MISSION TEASER ─── -->
+<section class="mission-section" id="chi-siamo-teaser" aria-labelledby="mission-heading">
+  <div class="mission-inner">
+    <div>
+      <p class="section-label" style="text-align:left">Chi siamo</p>
+      <h2 id="mission-heading" class="section-title" style="text-align:left">Costruiamo il ponte<br><em>tra due mondi.</em></h2>
+      <p class="section-sub" style="text-align:left;margin:0 0 var(--sp-2)">Easy Italia Hub nasce dalla necessità concreta di centinaia di migliaia di srilankesi che ogni anno si trovano a navigare il sistema burocratico italiano senza strumenti adatti.</p>
+      <p style="font-size:var(--text-sm);color:var(--fg-muted);line-height:1.7;font-weight:300;margin-bottom:var(--sp-4)">La nostra missione è semplice: rendere l'integrazione più rapida, meno stressante e più dignitosa. Perché ogni persona merita di capire i propri diritti nella propria lingua.</p>
+      <div class="mission-values">
+        <div class="mission-value">
+          <span class="mission-value-icon" aria-hidden="true">🌐</span>
+          <h4>Multilingua</h4>
+          <p>Italiano, inglese, sinhala e tamil</p>
+        </div>
+        <div class="mission-value">
+          <span class="mission-value-icon" aria-hidden="true">🔓</span>
+          <h4>Accessibile</h4>
+          <p>Gratuito, senza barriere d'accesso</p>
+        </div>
+        <div class="mission-value">
+          <span class="mission-value-icon" aria-hidden="true">🤝</span>
+          <h4>Community</h4>
+          <p>Costruito insieme alla comunità</p>
+        </div>
+        <div class="mission-value">
+          <span class="mission-value-icon" aria-hidden="true">🛡️</span>
+          <h4>Affidabile</h4>
+          <p>Fonti ufficiali sempre verificate</p>
+        </div>
+      </div>
+      <a href="chi-siamo.html" class="btn-ghost" style="margin-top:var(--sp-3);display:inline-flex">Scopri il team →</a>
+    </div>
+    <div class="mission-visual" aria-hidden="true">
+      <p class="mission-visual-text">Ogni persona<br>merita di<br><em>capire i propri diritti</em></p>
+    </div>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
+<!-- ─── ROADMAP ─── -->
+<section class="roadmap-section" id="roadmap" aria-labelledby="roadmap-heading">
+  <div style="text-align:center">
+    <p class="section-label">Trasparenza</p>
+    <h2 id="roadmap-heading" class="section-title">Cosa stiamo <em>costruendo</em></h2>
+    <p class="section-sub">La nostra roadmap è pubblica. Vota le funzionalità che vuoi vedere prima — il tuo voto conta davvero.</p>
+  </div>
+  <div class="roadmap-track" role="list">
+
+    <div class="roadmap-item done" role="listitem">
+      <span class="roadmap-quarter">2025 Q1</span>
+      <div class="roadmap-card">
+        <div class="roadmap-card-text">
+          <h4>Guide burocratiche essenziali</h4>
+          <p>Permesso di soggiorno, SPID, codice fiscale, residenza</p>
+        </div>
+        <span class="roadmap-badge roadmap-badge--done">Completato</span>
+      </div>
+    </div>
+
+    <div class="roadmap-item done" role="listitem">
+      <span class="roadmap-quarter">2025 Q2</span>
+      <div class="roadmap-card">
+        <div class="roadmap-card-text">
+          <h4>Assistente AI multilingua</h4>
+          <p>Risposte in italiano, inglese, sinhala e tamil</p>
+        </div>
+        <span class="roadmap-badge roadmap-badge--done">Completato</span>
+      </div>
+    </div>
+
+    <div class="roadmap-item now" role="listitem">
+      <span class="roadmap-quarter">2025 Q3</span>
+      <div class="roadmap-card">
+        <div class="roadmap-card-text">
+          <h4>Tracker scadenze e documenti</h4>
+          <p>Dashboard personale con promemoria automatici</p>
+        </div>
+        <span class="roadmap-badge roadmap-badge--now">In corso</span>
+      </div>
+    </div>
+
+    <div class="roadmap-item" role="listitem">
+      <span class="roadmap-quarter">2025 Q4</span>
+      <div class="roadmap-card">
+        <div class="roadmap-card-text">
+          <h4>Forum community avanzato</h4>
+          <p>Discussioni verificate, esperti della community, badge reputazione</p>
+        </div>
+        <button class="roadmap-vote" onclick="voteRoadmap(this,'forum')" aria-label="Vota: Forum community">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+          <span class="rv-label">Vota</span>
+          <span class="rv-count">47</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="roadmap-item" role="listitem">
+      <span class="roadmap-quarter">2026 Q1</span>
+      <div class="roadmap-card">
+        <div class="roadmap-card-text">
+          <h4>CV Builder avanzato + lettere di presentazione</h4>
+          <p>Modelli italiani con export PDF, supporto in sinhala e tamil</p>
+        </div>
+        <button class="roadmap-vote" onclick="voteRoadmap(this,'cv')" aria-label="Vota: CV Builder">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+          <span class="rv-label">Vota</span>
+          <span class="rv-count">31</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="roadmap-item" role="listitem">
+      <span class="roadmap-quarter">2026 Q2</span>
+      <div class="roadmap-card">
+        <div class="roadmap-card-text">
+          <h4>App mobile iOS &amp; Android</h4>
+          <p>Notifiche push per scadenze, accesso offline alle guide</p>
+        </div>
+        <button class="roadmap-vote" onclick="voteRoadmap(this,'app')" aria-label="Vota: App mobile">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+          <span class="rv-label">Vota</span>
+          <span class="rv-count">89</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+<script>
+(function(){
+  var saved=JSON.parse(localStorage.getItem('eih-votes')||'{}');
+  document.querySelectorAll('.roadmap-vote').forEach(function(btn){
+    var m=btn.getAttribute('onclick').match(/'([^']+)'\)/);
+    if(m&&saved[m[1]]){btn.classList.add('voted');btn.querySelector('.rv-label').textContent='Votato!';}
+  });
+})();
+function voteRoadmap(btn,key){
+  var saved=JSON.parse(localStorage.getItem('eih-votes')||'{}');
+  if(saved[key])return;
+  saved[key]=true;localStorage.setItem('eih-votes',JSON.stringify(saved));
+  btn.classList.add('voted');
+  btn.querySelector('.rv-label').textContent='Votato!';
+  var c=btn.querySelector('.rv-count');
+  if(c)c.textContent=parseInt(c.textContent,10)+1;
+}
+</script>
 
 <!-- ─── FAQ (accordion) ─── -->
 <section class="faq-section" aria-labelledby="faq-heading">
@@ -1926,6 +2654,35 @@ html.returning #preloader{display:none}
 
   </div>
 </section>
+
+<!-- ─── NEWSLETTER ─── -->
+<section class="newsletter-section" aria-labelledby="newsletter-heading">
+  <div class="newsletter-card">
+    <div class="newsletter-copy">
+      <h2 id="newsletter-heading">Resta aggiornato.<br>Senza spam, promesso.</h2>
+      <p>Ogni settimana: novità burocratiche che ti riguardano, opportunità selezionate e aggiornamenti della piattaforma. In italiano e sinhala.</p>
+    </div>
+    <div class="newsletter-form">
+      <div class="newsletter-row">
+        <input type="email" class="newsletter-input" id="nl-email" placeholder="nome@email.com" aria-label="Il tuo indirizzo email" autocomplete="email"/>
+        <button class="newsletter-btn" onclick="subscribeNewsletter()" type="button">Iscriviti gratis</button>
+      </div>
+      <p class="newsletter-note">Disdici in qualsiasi momento. Nessuna carta richiesta.</p>
+    </div>
+  </div>
+</section>
+<script>
+function subscribeNewsletter(){
+  var el=document.getElementById('nl-email');
+  if(!el||!el.value||!el.value.includes('@')){el&&el.focus();return;}
+  var btn=document.querySelector('.newsletter-btn');
+  btn.textContent='Iscritto! ✓';
+  btn.style.background='rgba(255,255,255,.92)';
+  btn.style.color='#15803d';
+  btn.disabled=true;
+  el.value='';
+}
+</script>
 
 </main>
 

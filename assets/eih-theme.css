@@ -42,5 +42,13 @@ html[data-theme="dark"] #eiht-fab .sun{display:block}
 html[data-theme="dark"] #eiht-fab .moon{display:none}
 @media(max-width:640px){#eiht-fab{bottom:140px}}
 
+/* ─── nuove sezioni: dark mode overrides ─── */
+html[data-theme="dark"] .problem-section{background:#0d0c0a}
+html[data-theme="dark"] .step{background:rgba(243,241,236,.04)}
+html[data-theme="dark"] .testimonial{background:rgba(243,241,236,.04)}
+html[data-theme="dark"] .screenshot-card{background:var(--bg-elevated)}
+html[data-theme="dark"] .sol-card{background:rgba(243,241,236,.05)}
+html[data-theme="dark"] .mission-visual{box-shadow:0 32px 80px rgba(0,0,0,.4)}
+
 /* transizione morbida durante lo switch (classe momentanea) */
 html.theme-anim,html.theme-anim *{transition:background-color .3s ease,color .3s ease,border-color .3s ease!important}
