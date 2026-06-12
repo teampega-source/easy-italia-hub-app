@@ -1697,35 +1697,77 @@ html.returning #preloader{display:none}
   .screenshots-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}
 }
 
-/* ─── TESTIMONIALS ─── */
-.testimonials-section{
+/* ─── COMMUNITY FOUNDING MEMBERS ─── */
+.community-teaser-section{
   position:relative;z-index:1;
-  padding:var(--sp-6) var(--sp-5) var(--sp-5);max-width:1380px;margin:0 auto;
+  padding:var(--sp-6) var(--sp-5);max-width:1380px;margin:0 auto;
 }
-.testimonials-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-3);
-  margin-top:var(--sp-5);
+.ct-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5);align-items:center;
+  background:linear-gradient(135deg,rgba(44,107,196,.045) 0%,rgba(176,136,40,.04) 100%);
+  border:1px solid var(--border);border-radius:24px;
+  padding:var(--sp-5);
 }
-.testimonial{
-  background:rgba(255,253,249,.72);border:1px solid var(--border);
-  border-radius:var(--radius);padding:var(--sp-3);
-  display:flex;flex-direction:column;gap:var(--sp-2);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  transition:transform var(--dur-std) var(--ease-spring),
-             border-color var(--dur-micro),
-             box-shadow var(--dur-std) var(--ease-spring);
+.ct-title{
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:clamp(2rem,3.5vw,3rem);font-weight:600;line-height:1.05;
+  letter-spacing:-.03em;color:var(--ink);margin-bottom:var(--sp-2);
 }
-.testimonial:hover{
-  transform:translateY(-5px);border-color:var(--border-bright);
-  box-shadow:0 16px 40px rgba(20,30,48,.10);
+.ct-title em{font-style:normal;color:var(--taupe)}
+.ct-desc{
+  font-size:var(--text-base);color:var(--fg-secondary);
+  line-height:1.72;font-weight:300;margin-bottom:var(--sp-3);max-width:420px;
 }
-.t-stars{display:flex;gap:.2rem}
-.t-stars span{color:#f59e0b;font-size:.95rem;line-height:1}
-.t-text{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.7;font-weight:300;font-style:italic;flex:1}
-.t-author{
-  display:flex;align-items:center;gap:.75rem;
-  padding-top:var(--sp-2);border-top:1px solid var(--border);
+.ct-benefits{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:var(--sp-4)}
+.ct-benefits li{
+  display:flex;align-items:flex-start;gap:.6rem;
+  font-size:var(--text-sm);color:var(--fg-secondary);font-weight:300;
 }
+.ct-benefits li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:.05rem}
+/* Right visual */
+.ct-visual{display:flex;flex-direction:column;gap:var(--sp-3);align-items:center;text-align:center}
+.ct-counter{display:flex;flex-direction:column;align-items:center;gap:.25rem}
+.ct-num{
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:clamp(3.5rem,6vw,5.5rem);font-weight:700;color:var(--ink);
+  line-height:1;letter-spacing:-.04em;
+}
+.ct-count-label{font-size:var(--text-sm);color:var(--fg-muted);font-weight:300}
+.ct-avatars{display:flex;align-items:center;justify-content:center}
+.ct-av-wrap{
+  width:44px;height:44px;border-radius:50%;border:2.5px solid var(--bg-base);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:.88rem;color:#fff;
+  margin-left:-10px;
+  animation:avatarPop .55s var(--ease-spring) var(--avd,0s) both;
+}
+.ct-av-wrap:first-child{margin-left:0}
+.ct-av-more{background:var(--surface-hover);color:var(--fg-secondary);font-size:.7rem;border:2px solid var(--border-bright)}
+@keyframes avatarPop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+.ct-cities{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;max-width:280px}
+.ct-cities span{
+  padding:.18rem .65rem;border-radius:99px;border:1px solid var(--border);
+  font-size:.68rem;color:var(--fg-muted);font-weight:400;
+}
+.ct-milestone{width:100%;max-width:280px}
+.ct-milestone-top{
+  display:flex;justify-content:space-between;
+  font-size:.68rem;color:var(--fg-secondary);font-weight:400;margin-bottom:.45rem;
+}
+.ct-milestone-bar{height:6px;border-radius:99px;background:var(--border);overflow:hidden}
+.ct-milestone-fill{
+  height:100%;border-radius:99px;width:0;
+  background:linear-gradient(90deg,var(--blue),var(--gold));
+  transition:width 1.4s var(--ease-spring);
+}
+@media(max-width:900px){
+  .ct-inner{grid-template-columns:1fr;gap:var(--sp-4)}
+  .ct-title{font-size:clamp(1.8rem,5vw,2.5rem)}
+  .community-teaser-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}
+}
+
+/* ─── TESTIMONIALS (kept for SEO / future) — hidden for now ─── */
+.testimonials-section{display:none}
 .t-av{
   width:38px;height:38px;border-radius:50%;flex-shrink:0;
   background:linear-gradient(135deg,var(--blue-deep),var(--blue));
@@ -2423,6 +2465,56 @@ html.returning #preloader{display:none}
   </div>
   <p class="member-count" id="members-heading" data-i18n-html="members.count"><strong>La community srilankese</strong> che si aiuta in Italia</p>
   <p class="section-sub" style="margin:0 auto var(--sp-4);text-align:center;max-width:420px" data-i18n="members.sub">Unisciti a chi vive e lavora in Italia e affronta gli stessi passaggi. Insieme è più facile.</p>
+</section>
+
+<!-- ─── COMMUNITY FOUNDING MEMBERS ─── -->
+<section class="community-teaser-section" aria-labelledby="ct-heading">
+  <div class="ct-inner">
+
+    <!-- Left: copy -->
+    <div class="ct-content">
+      <p class="section-label">Community</p>
+      <h2 id="ct-heading" class="ct-title">Sii tra i <em>primi</em><br>a unirti</h2>
+      <p class="ct-desc">La nostra community srilankese in Italia sta prendendo forma. Unisciti ora: condividi esperienze, trova supporto e connettiti con chi affronta gli stessi passi.</p>
+      <ul class="ct-benefits">
+        <li>Supporto su burocrazia e vita quotidiana in Italia</li>
+        <li>Connessione con srilankesi nella tua città</li>
+        <li>Accesso anticipato alle nuove funzionalità</li>
+      </ul>
+      <a href="community.html" class="btn-primary" style="display:inline-flex">Unisciti alla community →</a>
+    </div>
+
+    <!-- Right: social proof visual -->
+    <div class="ct-visual" aria-hidden="true">
+      <div class="ct-counter">
+        <span class="ct-num" id="ct-count">0</span>
+        <span class="ct-count-label">persone già unite</span>
+      </div>
+      <div class="ct-avatars">
+        <div class="ct-av-wrap" style="background:#4f76c7;--avd:.05s">A</div>
+        <div class="ct-av-wrap" style="background:#7c5cbf;--avd:.12s">K</div>
+        <div class="ct-av-wrap" style="background:#2a9d72;--avd:.19s">S</div>
+        <div class="ct-av-wrap" style="background:#c4622d;--avd:.26s">R</div>
+        <div class="ct-av-wrap" style="background:#b5860d;--avd:.33s">P</div>
+        <div class="ct-av-wrap" style="background:#3a8fa8;--avd:.40s">M</div>
+        <div class="ct-av-wrap ct-av-more" style="--avd:.47s">+40</div>
+      </div>
+      <div class="ct-cities">
+        <span>Roma</span><span>Milano</span><span>Torino</span>
+        <span>Firenze</span><span>Bologna</span><span>Napoli</span>
+      </div>
+      <div class="ct-milestone">
+        <div class="ct-milestone-top">
+          <span>Membri fondatori</span>
+          <span id="ct-milestone-label">0 / 100</span>
+        </div>
+        <div class="ct-milestone-bar">
+          <div class="ct-milestone-fill" id="ct-fill"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <!-- ─── TESTIMONIANZE ─── -->
@@ -3402,6 +3494,30 @@ function sendSug(el){
   const dict=I18N[currentLang]||I18N.it;
   sendToAgent((key&&dict[key])||el.textContent);
 }
+</script>
+
+<!-- Community counter animation -->
+<script>
+(function(){
+  const el=document.getElementById('ct-count');
+  const lbl=document.getElementById('ct-milestone-label');
+  const fill=document.getElementById('ct-fill');
+  if(!el)return;
+  const TARGET=47,TOTAL=100;
+  function run(){
+    let v=0;
+    const tick=()=>{
+      v=Math.min(v+Math.ceil((TARGET-v)/7+.5),TARGET);
+      el.textContent=v;
+      if(lbl)lbl.textContent=v+' / '+TOTAL;
+      if(fill)fill.style.width=Math.round(v/TOTAL*100)+'%';
+      if(v<TARGET)requestAnimationFrame(tick);
+    };
+    tick();
+  }
+  const io=new IntersectionObserver(([e])=>{if(e.isIntersecting){run();io.disconnect();}},{threshold:.4});
+  io.observe(el);
+})();
 </script>
 
 <!-- Money-transfer comparator now lives on money-transfer.html -->
