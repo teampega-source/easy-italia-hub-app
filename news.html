@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
 <script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
@@ -15,10 +16,74 @@
 <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="eih.css"/>
 <script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
-<script>window.EIH_I18N_EXTRA={"en": {"page.h1": "Always<br/><em>up to date.</em>", "page.lead": "Laws, decrees, deadlines and opportunities that affect your life in Italy. Summarised clearly, always with the link to the official source."}, "si": {"page.h1": "හැමවිටම<br/><em>යාවත්කාලීනව.</em>", "page.lead": "ඉතාලියේ ඔබේ ජීවිතයට බලපාන නීති, නියෝග, කල් ඉකුත්වීම් සහ අවස්ථා. පැහැදිලිව සාරාංශ කර ඇත, හැමවිටම නිල මූලාශ්‍රයට සබැඳිය සමඟ."}, "ta": {"page.h1": "எப்போதும்<br/><em>புதுப்பிப்புடன்.</em>", "page.lead": "இத்தாலியில் உங்கள் வாழ்க்கையை பாதிக்கும் சட்டங்கள், ஆணைகள், காலக்கெடுக்கள் மற்றும் வாய்ப்புகள். தெளிவாக சுருக்கப்பட்டுள்ளது, எப்போதும் அதிகாரப்பூர்வ மூலத்திற்கான இணைப்புடன்."}};</script>
+<script>window.EIH_I18N_EXTRA={
+"en": {
+"page.h1": "Always<br/><em>up to date.</em>",
+"page.lead": "Laws, decrees, deadlines and opportunities that affect your life in Italy. Summarised clearly, always with the link to the official source.",
+"n.1": "Skip to content",
+"n.2": "Editorial selection in demo version: the updates below always link back to the <strong>official source</strong>. Check exact dates, amounts and requirements on the institution's website before acting. Saving and sign-up work locally in your browser (no data is sent).",
+"n.3": "All",
+"n.4": "Laws and decrees",
+"n.5": "Deadlines",
+"n.6": "Opportunities",
+"n.7": "Work",
+"n.8": "Housing",
+"n.9": "Saved",
+"n.10": "Get the updates",
+"n.11": "Leave your name and email to receive updates on permits, INPS deadlines, housing calls and opportunities once our editorial team is up and running.",
+"n.12": "Name",
+"n.13": "Email",
+"n.14": "Sign me up for updates",
+"n.15": "Register with your journey",
+"n.16": "✓ Done, <span id=\"signup-name\">friend</span>! You're on the list (locally). <span class=\"muted\">Demo only: there is no real newsletter yet and no data is sent. To access the services right away, <a class=\"inline\" href=\"percorso.html\">register in your journey</a>.</span>",
+"n.17": "These summaries are for information purposes only and do not replace official advice. Unsure about your case? Ask the <a class=\"inline\" href=\"percorso.html\">AI Advisor</a> or check the <a class=\"inline\" href=\"guide.html\">guides</a>."
+},
+"si": {
+"page.h1": "හැමවිටම<br/><em>යාවත්කාලීනව.</em>",
+"page.lead": "ඉතාලියේ ඔබේ ජීවිතයට බලපාන නීති, නියෝග, කල් ඉකුත්වීම් සහ අවස්ථා. පැහැදිලිව සාරාංශ කර ඇත, හැමවිටම නිල මූලාශ්‍රයට සබැඳිය සමඟ.",
+"n.1": "අන්තර්ගතය වෙත පනින්න",
+"n.2": "ආදර්ශන (demo) අනුවාදයේ කර්තෘ තේරීමකි: පහත යාවත්කාලීන සැමවිටම <strong>නිල මූලාශ්‍රයට</strong> යොමු කරයි. ක්‍රියා කිරීමට පෙර නිශ්චිත දින, මුදල් සහ අවශ්‍යතා ආයතනයේ වෙබ් අඩවියෙන් තහවුරු කරගන්න. සුරැකීම් සහ ලියාපදිංචිය ඔබේ බ්‍රව්සරයේ දේශීයව ක්‍රියා කරයි (කිසිදු දත්තයක් යවනු නොලැබේ).",
+"n.3": "සියල්ල",
+"n.4": "නීති සහ නියෝග",
+"n.5": "කල් ඉකුත්වීම්",
+"n.6": "අවස්ථා",
+"n.7": "රැකියා",
+"n.8": "නිවාස",
+"n.9": "සුරැකි",
+"n.10": "යාවත්කාලීන ලබාගන්න",
+"n.11": "කර්තෘ මණ්ඩලය ක්‍රියාත්මක වූ විට බලපත්‍ර, INPS කල් ඉකුත්වීම්, නිවාස නිවේදන සහ අවස්ථා පිළිබඳ දැනුම් ලැබීමට ඔබේ නම සහ විද්‍යුත් තැපෑල ලබා දෙන්න.",
+"n.12": "නම",
+"n.13": "විද්‍යුත් තැපෑල",
+"n.14": "යාවත්කාලීන සඳහා මාව ලියාපදිංචි කරන්න",
+"n.15": "ඔබේ ගමන් මග සමඟ ලියාපදිංචි වන්න",
+"n.16": "✓ සිදු විය, <span id=\"signup-name\">මිත්‍රයා</span>! ඔබ ලැයිස්තුවේ සිටී (දේශීයව). <span class=\"muted\">ආදර්ශනයක් පමණි: තවම සැබෑ පුවත් ලිපියක් නැත, කිසිදු දත්තයක් යවනු නොලැබේ. සේවාවලට දැන්ම පිවිසීමට <a class=\"inline\" href=\"percorso.html\">ඔබේ ගමන් මගෙහි ලියාපදිංචි වන්න</a>.</span>",
+"n.17": "මෙම සාරාංශ තොරතුරු සඳහා පමණි, නිල උපදේශනය ආදේශ නොකරයි. ඔබේ සිද්ධිය ගැන සැකයක්ද? <a class=\"inline\" href=\"percorso.html\">AI උපදේශකගෙන්</a> අසන්න, නැතහොත් <a class=\"inline\" href=\"guide.html\">මාර්ගෝපදේශ</a> බලන්න."
+},
+"ta": {
+"page.h1": "எப்போதும்<br/><em>புதுப்பிப்புடன்.</em>",
+"page.lead": "இத்தாலியில் உங்கள் வாழ்க்கையை பாதிக்கும் சட்டங்கள், ஆணைகள், காலக்கெடுக்கள் மற்றும் வாய்ப்புகள். தெளிவாக சுருக்கப்பட்டுள்ளது, எப்போதும் அதிகாரப்பூர்வ மூலத்திற்கான இணைப்புடன்.",
+"n.1": "உள்ளடக்கத்திற்குச் செல்",
+"n.2": "டெமோ பதிப்பில் ஆசிரியர் தேர்வு: கீழே உள்ள புதுப்பிப்புகள் எப்போதும் <strong>அதிகாரப்பூர்வ மூலத்திற்கு</strong> இணைக்கின்றன. செயல்படும் முன் சரியான தேதிகள், தொகைகள் மற்றும் தேவைகளை நிறுவனத்தின் இணையதளத்தில் சரிபார்க்கவும். சேமிப்பும் பதிவும் உங்கள் உலாவியில் உள்ளூராகவே செயல்படுகின்றன (எந்தத் தரவும் அனுப்பப்படுவதில்லை).",
+"n.3": "அனைத்தும்",
+"n.4": "சட்டங்களும் ஆணைகளும்",
+"n.5": "காலக்கெடுக்கள்",
+"n.6": "வாய்ப்புகள்",
+"n.7": "வேலை",
+"n.8": "வீடு",
+"n.9": "சேமித்தவை",
+"n.10": "புதுப்பிப்புகளைப் பெறுங்கள்",
+"n.11": "ஆசிரியர் குழு செயல்படத் தொடங்கியதும் அனுமதிகள், INPS காலக்கெடுக்கள், வீட்டு அறிவிப்புகள் மற்றும் வாய்ப்புகள் பற்றிய தகவல்களைப் பெற உங்கள் பெயரையும் மின்னஞ்சலையும் விடுங்கள்.",
+"n.12": "பெயர்",
+"n.13": "மின்னஞ்சல்",
+"n.14": "புதுப்பிப்புகளுக்கு என்னைப் பதிவு செய்யுங்கள்",
+"n.15": "உங்கள் பயணத்துடன் பதிவு செய்யுங்கள்",
+"n.16": "✓ முடிந்தது, <span id=\"signup-name\">நண்பரே</span>! நீங்கள் பட்டியலில் உள்ளீர்கள் (உள்ளூராக). <span class=\"muted\">இது டெமோ மட்டுமே: இன்னும் உண்மையான செய்திமடல் இல்லை, எந்தத் தரவும் அனுப்பப்படுவதில்லை. சேவைகளை உடனே அணுக <a class=\"inline\" href=\"percorso.html\">உங்கள் பயணத்தில் பதிவு செய்யுங்கள்</a>.</span>",
+"n.17": "இந்தச் சுருக்கங்கள் தகவல் நோக்கத்திற்கு மட்டுமே, அதிகாரப்பூர்வ ஆலோசனைக்கு மாற்றாகாது. உங்கள் விஷயத்தில் சந்தேகமா? <a class=\"inline\" href=\"percorso.html\">AI ஆலோசகரிடம்</a> கேளுங்கள் அல்லது <a class=\"inline\" href=\"guide.html\">வழிகாட்டிகளைப்</a> பார்க்கவும்."
+}
+};</script>
 </head>
 <body data-page="news">
-<a href="#main" class="skip-link">Salta al contenuto</a>
+<a href="#main" class="skip-link" data-i18n="n.1">Salta al contenuto</a>
 <div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
 <div id="wipe" aria-hidden="true"></div>
 <div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
@@ -31,20 +96,20 @@
     <h1 class="reveal" data-i18n-html="page.h1">Sempre<br/><em>aggiornato.</em></h1>
     <p class="lead reveal" data-i18n-html="page.lead">Leggi, decreti, scadenze e opportunità che riguardano la tua vita in Italia. Sintetizzati in modo chiaro, sempre con il link alla fonte ufficiale.</p>
 
-    <div class="draft-banner reveal">📰 <span>Selezione redazionale in versione demo: gli aggiornamenti qui sotto rimandano sempre alla <strong>fonte ufficiale</strong>. Verifica date, importi e requisiti esatti sul sito dell'ente prima di agire. Salvataggi e iscrizione funzionano in locale nel tuo browser (nessun dato viene inviato).</span></div>
+    <div class="draft-banner reveal">📰 <span data-i18n-html="n.2">Selezione redazionale in versione demo: gli aggiornamenti qui sotto rimandano sempre alla <strong>fonte ufficiale</strong>. Verifica date, importi e requisiti esatti sul sito dell'ente prima di agire. Salvataggi e iscrizione funzionano in locale nel tuo browser (nessun dato viene inviato).</span></div>
 
     <!-- ░░ FILTRI + SALVATI ░░ -->
     <div class="news-toolbar reveal">
       <div class="filter-tabs" role="tablist" aria-label="Filtra le news per categoria">
-        <button class="ftab is-active" type="button" role="tab" aria-selected="true" data-filter="all">Tutte</button>
-        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="leggi">Leggi e decreti</button>
-        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="scadenze">Scadenze</button>
-        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="opportunita">Opportunità</button>
-        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="lavoro">Lavoro</button>
-        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="casa">Casa</button>
+        <button class="ftab is-active" type="button" role="tab" aria-selected="true" data-filter="all" data-i18n="n.3">Tutte</button>
+        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="leggi" data-i18n="n.4">Leggi e decreti</button>
+        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="scadenze" data-i18n="n.5">Scadenze</button>
+        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="opportunita" data-i18n="n.6">Opportunità</button>
+        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="lavoro" data-i18n="n.7">Lavoro</button>
+        <button class="ftab" type="button" role="tab" aria-selected="false" data-filter="casa" data-i18n="n.8">Casa</button>
       </div>
       <button class="saved-toggle" id="saved-toggle" type="button" aria-pressed="false">
-        <span class="bk" aria-hidden="true">🔖</span> Salvati <span class="saved-count" id="saved-count">(0)</span>
+        <span class="bk" aria-hidden="true">🔖</span> <span data-i18n="n.9">Salvati</span> <span class="saved-count" id="saved-count">(0)</span>
       </button>
     </div>
 
@@ -55,22 +120,22 @@
     <!-- ░░ AGGIORNAMENTI / NEWSLETTER (demo) ░░ -->
     <section class="news-signup reveal" aria-labelledby="signup-h">
       <div class="signup-card">
-        <h2 id="signup-h">Ricevi gli aggiornamenti</h2>
-        <p class="muted">Lasciaci nome ed email per ricevere permessi, scadenze INPS, bandi casa e opportunità quando la redazione sarà attiva.</p>
+        <h2 id="signup-h" data-i18n="n.10">Ricevi gli aggiornamenti</h2>
+        <p class="muted" data-i18n="n.11">Lasciaci nome ed email per ricevere permessi, scadenze INPS, bandi casa e opportunità quando la redazione sarà attiva.</p>
         <form class="form" id="signup-form" novalidate>
-          <div><label for="s-name">Nome</label><input id="s-name" name="name" type="text" autocomplete="name" placeholder="Il tuo nome" required/></div>
-          <div><label for="s-email">Email</label><input id="s-email" name="email" type="email" autocomplete="email" placeholder="nome@email.it" required/></div>
+          <div><label for="s-name" data-i18n="n.12">Nome</label><input id="s-name" name="name" type="text" autocomplete="name" placeholder="Il tuo nome" required/></div>
+          <div><label for="s-email" data-i18n="n.13">Email</label><input id="s-email" name="email" type="email" autocomplete="email" placeholder="nome@email.it" required/></div>
           <div class="signup-actions">
-            <button type="submit" class="btn-primary">Iscrivimi agli aggiornamenti</button>
-            <a href="percorso.html" class="btn-ghost">Registrati con il tuo percorso</a>
+            <button type="submit" class="btn-primary" data-i18n="n.14">Iscrivimi agli aggiornamenti</button>
+            <a href="percorso.html" class="btn-ghost" data-i18n="n.15">Registrati con il tuo percorso</a>
           </div>
           <p class="form-err muted" id="signup-err" role="alert" hidden></p>
-          <p class="form-ok" id="signup-ok" role="status" hidden>✓ Fatto, <span id="signup-name">amico</span>! Sei in lista (in locale). <span class="muted">Demo dimostrativa: non c'è ancora una newsletter reale e nessun dato viene inviato. Per accedere subito ai servizi <a class="inline" href="percorso.html">registrati nel tuo percorso</a>.</span></p>
+          <p class="form-ok" id="signup-ok" role="status" hidden data-i18n-html="n.16">✓ Fatto, <span id="signup-name">amico</span>! Sei in lista (in locale). <span class="muted">Demo dimostrativa: non c'è ancora una newsletter reale e nessun dato viene inviato. Per accedere subito ai servizi <a class="inline" href="percorso.html">registrati nel tuo percorso</a>.</span></p>
         </form>
       </div>
     </section>
 
-    <p class="muted news-foot">Le sintesi sono a scopo informativo e non sostituiscono la consulenza ufficiale. Hai un dubbio sul tuo caso? Chiedi al <a class="inline" href="percorso.html">Consigliere AI</a> o consulta le <a class="inline" href="guide.html">guide</a>.</p>
+    <p class="muted news-foot" data-i18n-html="n.17">Le sintesi sono a scopo informativo e non sostituiscono la consulenza ufficiale. Hai un dubbio sul tuo caso? Chiedi al <a class="inline" href="percorso.html">Consigliere AI</a> o consulta le <a class="inline" href="guide.html">guide</a>.</p>
   </div>
 </main>
 
@@ -485,6 +550,7 @@
 })();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="assets/eih-atmosphere.js" defer></script>
 <script src="assets/eih-palette.js" defer></script>
 <script src="assets/eih-theme.js" defer></script>
 </body>
