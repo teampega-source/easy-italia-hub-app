@@ -133,8 +133,34 @@
             });
             configured = true;
             demo = false;
-            console.info("[EIH] Supabase backend active.");
-            return true;
+
+            // Keep eih-registered in sync so gated pages work in REAL mode.
+            supabase.auth.onAuthStateChange(function (event, session) {
+              if ((event === "SIGNED_IN" || event === "TOKEN_REFRESHED") && session && session.user) {
+                lsSet(LS_REGISTERED, "1");
+                lsSetJSON(LS_DEMO_USER, {
+                  email: session.user.email || "",
+                  name: (session.user.user_metadata && session.user.user_metadata.name) || "",
+                });
+              } else if (event === "SIGNED_OUT") {
+                lsRemove(LS_REGISTERED);
+                lsRemove(LS_DEMO_USER);
+              }
+            });
+
+            // Sync on load: user may already have a persisted valid session.
+            return supabase.auth.getSession().then(function (res) {
+              var session = res && res.data && res.data.session;
+              if (session && session.user) {
+                lsSet(LS_REGISTERED, "1");
+                lsSetJSON(LS_DEMO_USER, {
+                  email: session.user.email || "",
+                  name: (session.user.user_metadata && session.user.user_metadata.name) || "",
+                });
+              }
+              console.info("[EIH] Supabase backend active.");
+              return true;
+            });
           })
           .catch(function (err) {
             // CDN/import failure → fall back to demo silently (info, not error).
@@ -233,6 +259,8 @@
       return ready.then(function () {
         if (configured && supabase) {
           return supabase.auth.signOut().then(function (res) {
+            lsRemove(LS_REGISTERED);
+            lsRemove(LS_DEMO_USER);
             return { error: (res && res.error) || null };
           });
         }
