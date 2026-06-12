@@ -1157,35 +1157,32 @@ body.has-banner{scroll-padding-top:96px}
 .nav-login:hover{color:var(--ink)}
 .nav-login:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:3px}
 
-/* ─── AD SLOTS ─── */
+/* ─── AD MINI BAR (non-invasive) ─── */
 .ad-section{position:relative;z-index:1;max-width:1380px;margin:0 auto;padding:0 var(--sp-5)}
-.ad-slot{
-  position:relative;border-radius:var(--radius);overflow:hidden;
-  border:1px dashed var(--border-bright);
-  background:var(--surface);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:var(--sp-3);gap:.5rem;
-  transition:background var(--dur-micro) var(--ease-enter),border-color var(--dur-micro);
+.ad-mini-bar{
+  display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;
+  padding:.6rem 1.1rem;border-radius:var(--radius-sm);
+  border:1px solid var(--border);background:transparent;
 }
-.ad-slot:hover{background:var(--surface-hover);border-color:rgba(58,123,213,.4)}
-.ad-leaderboard{min-height:118px}
-.ad-label{
-  position:absolute;top:.5rem;left:.65rem;
-  font-size:.58rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--fg-muted);
+.ad-mini-label{
+  font-size:.54rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--fg-muted);flex-shrink:0;
 }
-.ad-icon{width:26px;height:26px;opacity:.5}
-.ad-icon svg{width:100%;height:100%;stroke:var(--fg-muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.ad-text{font-size:var(--text-sm);color:var(--fg-secondary);font-weight:400}
-.ad-cta{
-  font-size:var(--text-xs);color:var(--gold);text-decoration:none;font-weight:500;
-  letter-spacing:.02em;cursor:pointer;background:none;border:none;font-family:inherit;
-  border-bottom:1px solid transparent;transition:border-color var(--dur-micro);
+.ad-mini-sep{width:1px;height:11px;background:var(--border-bright);flex-shrink:0}
+.ad-mini-text{
+  flex:1;font-size:.8rem;color:var(--fg-secondary);font-weight:300;line-height:1.4;
+  min-width:140px;
 }
-.ad-cta:hover{border-color:var(--gold)}
-.ad-cta:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
-.ad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);margin-top:var(--sp-2)}
-.ad-rect{min-height:200px}
+.ad-mini-cta{
+  font-size:.78rem;font-weight:500;color:var(--gold);
+  background:none;border:none;cursor:pointer;font-family:inherit;
+  letter-spacing:.02em;white-space:nowrap;
+  text-decoration:underline;text-underline-offset:3px;
+  transition:opacity var(--dur-micro);padding:0;
+}
+.ad-mini-cta:hover{opacity:.7}
+.ad-mini-cta:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.ad-mini-wrap{margin-top:var(--sp-2)}
 
 /* ─── PRICING / PACKAGES MODAL ─── */
 .modal-overlay{
@@ -2279,13 +2276,13 @@ html.returning #preloader{display:none}
   </div>
 </div>
 
-<!-- ─── AD SLOT: Leaderboard ─── -->
+<!-- ─── AD BAR ─── -->
 <section class="ad-section" aria-label="Spazio pubblicitario">
-  <div class="ad-slot ad-leaderboard">
-    <span class="ad-label" data-i18n="ad.label">Pubblicità</span>
-    <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg></div>
-    <p class="ad-text" data-i18n="ad.lead">Il tuo annuncio qui — raggiungi la community srilankese in Italia</p>
-    <button class="ad-cta" onclick="openPricing()" data-i18n="ad.buy">Acquista questo spazio →</button>
+  <div class="ad-mini-bar">
+    <span class="ad-mini-label" data-i18n="ad.label">Pubblicità</span>
+    <span class="ad-mini-sep" aria-hidden="true"></span>
+    <p class="ad-mini-text" data-i18n="ad.lead">Il tuo annuncio qui — raggiungi la community srilankese in Italia</p>
+    <button class="ad-mini-cta" onclick="openPricing()" data-i18n="ad.buy">Richiedi il tuo spazio →</button>
   </div>
 </section>
 
@@ -2333,25 +2330,13 @@ html.returning #preloader{display:none}
     </a>
   </div>
 
-  <!-- ─── AD SLOTS: Rectangles ─── -->
-  <div class="ad-grid">
-    <div class="ad-slot ad-rect">
-      <span class="ad-label" data-i18n="ad.sponsor">Sponsorizzato</span>
-      <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-      <p class="ad-text" data-i18n="ad.slot">Spazio ad — 300×250</p>
-      <button class="ad-cta" onclick="openPricing()" data-i18n="ad.book">Prenota →</button>
-    </div>
-    <div class="ad-slot ad-rect">
-      <span class="ad-label" data-i18n="ad.sponsor">Sponsorizzato</span>
-      <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-      <p class="ad-text" data-i18n="ad.slot">Spazio ad — 300×250</p>
-      <button class="ad-cta" onclick="openPricing()" data-i18n="ad.book">Prenota →</button>
-    </div>
-    <div class="ad-slot ad-rect">
-      <span class="ad-label" data-i18n="ad.sponsor">Sponsorizzato</span>
-      <div class="ad-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-      <p class="ad-text" data-i18n="ad.slot">Spazio ad — 300×250</p>
-      <button class="ad-cta" onclick="openPricing()" data-i18n="ad.book">Prenota →</button>
+  <!-- ─── AD MINI BAR: inline ─── -->
+  <div class="ad-mini-wrap">
+    <div class="ad-mini-bar">
+      <span class="ad-mini-label" data-i18n="ad.sponsor">Sponsorizzato</span>
+      <span class="ad-mini-sep" aria-hidden="true"></span>
+      <p class="ad-mini-text" data-i18n="ad.lead">Il tuo brand qui — raggiungi migliaia di srilankesi in Italia ogni giorno</p>
+      <button class="ad-mini-cta" onclick="openPricing()" data-i18n="ad.buy">Richiedi il tuo spazio →</button>
     </div>
   </div>
 </section>
@@ -2952,7 +2937,7 @@ const I18N={
     "nav.guide":"Guide","nav.community":"Community","nav.ai":"AI Assistant","nav.news":"News","nav.map":"Mappa","nav.journey":"Il Mio Percorso","nav.login":"Accedi","nav.signup":"Registrati gratis",
     "hero.eyebrow":"Guide · Assistente AI · Community","hero.title":"<span class='ln'><span>La comunità</span></span><span class='ln'><span><em>srilankese</em></span></span><span class='ln'><span>in Italia</span></span>","hero.sub":"Guide burocratiche, assistente AI multilingua, community di supporto e news aggiornate — in italiano, inglese, sinhala e tamil.","hero.cta1":"Inizia gratis","hero.cta2":"Esplora le guide","hero.stat1":"Fasi del percorso","hero.stat2":"Guide pratiche","hero.stat3":"Città sulla mappa","hero.stat4":"Lingue dell'interfaccia",
     "card1.tag":"Burocrazia","card1.title":"Permesso di Soggiorno","card1.sub":"Guida completa al rinnovo","card2.tag":"AI","card2.title":"Assistente AI","card2.sub":"Risposte multilingua 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"Confronto e supporto tra pari","card4.tag":"Finanza","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
-    "ad.label":"Pubblicità","ad.lead":"Il tuo annuncio qui — raggiungi la community srilankese in Italia","ad.buy":"Acquista questo spazio →","ad.sponsor":"Sponsorizzato","ad.slot":"Spazio ad — 300×250","ad.book":"Prenota →",
+    "ad.label":"Pubblicità","ad.lead":"Il tuo annuncio qui — raggiungi la community srilankese in Italia","ad.buy":"Richiedi il tuo spazio →","ad.sponsor":"Sponsorizzato","ad.slot":"Spazio ad — 300×250","ad.book":"Prenota →",
     "feat.label":"Cosa offriamo","feat.heading":"Tutto ciò di cui hai bisogno,<br/><em>in un unico posto</em>","feat.sub":"Dalla burocrazia all'integrazione quotidiana — ti supportiamo in ogni passo del tuo percorso.",
     "feat1.title":"Guide Burocratiche","feat1.desc":"Permesso di soggiorno, codice fiscale, SPID, residenza — guide passo-passo con checklist scaricabili.","feat2.title":"Assistente AI Multilingua","feat2.desc":"Risposte immediate in italiano, inglese, sinhala e tamil. Disponibile 24 ore su 24, 7 giorni su 7.","feat3.title":"Community Attiva","feat3.desc":"Uno spazio dove srilankesi in Italia si supportano a vicenda. Trova risposte, condividi esperienze, cresci insieme.","feat4.title":"Money Transfer","feat4.desc":"Confronta Wise, Western Union e Ria in tempo reale. Risparmia sulle rimesse verso lo Sri Lanka.","feat5.title":"Mappa dei Servizi","feat5.desc":"CAF, patronati, negozi e luoghi di culto srilankesi nelle principali città italiane.","feat6.title":"News Aggiornate","feat6.desc":"Leggi, decreti e opportunità per la comunità srilankese. Aggiornato ogni giorno.",
     "members.count":"<strong>La community srilankese</strong> che si aiuta in Italia","members.sub":"Unisciti a chi vive e lavora in Italia e affronta gli stessi passaggi. Insieme è più facile.",
@@ -2973,7 +2958,7 @@ const I18N={
     "nav.guide":"Guides","nav.community":"Community","nav.ai":"AI Assistant","nav.news":"News","nav.map":"Map","nav.journey":"My Journey","nav.login":"Log in","nav.signup":"Sign up free",
     "hero.eyebrow":"Guides · AI Assistant · Community","hero.title":"<span class='ln'><span>The Sri Lankan</span></span><span class='ln'><span><em>community</em></span></span><span class='ln'><span>in Italy</span></span>","hero.sub":"Bureaucratic guides, multilingual AI assistant, support community and up-to-date news — in Italian, English, Sinhala and Tamil.","hero.cta1":"Start free","hero.cta2":"Explore the guides","hero.stat1":"Journey phases","hero.stat2":"Practical guides","hero.stat3":"Cities on the map","hero.stat4":"Interface languages",
     "card1.tag":"Bureaucracy","card1.title":"Residence Permit","card1.sub":"Complete renewal guide","card2.tag":"AI","card2.title":"AI Assistant","card2.sub":"Multilingual answers 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"Peer-to-peer support","card4.tag":"Finance","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
-    "ad.label":"Advertising","ad.lead":"Your ad here — reach the Sri Lankan community in Italy","ad.buy":"Buy this space →","ad.sponsor":"Sponsored","ad.slot":"Ad space — 300×250","ad.book":"Book →",
+    "ad.label":"Advertising","ad.lead":"Your ad here — reach the Sri Lankan community in Italy","ad.buy":"Request your ad space →","ad.sponsor":"Sponsored","ad.slot":"Ad space — 300×250","ad.book":"Book →",
     "feat.label":"What we offer","feat.heading":"Everything you need,<br/><em>in one place</em>","feat.sub":"From bureaucracy to daily integration — we support you at every step of your journey.",
     "feat1.title":"Bureaucratic Guides","feat1.desc":"Residence permit, tax code, SPID, residency — step-by-step guides with downloadable checklists.","feat2.title":"Multilingual AI Assistant","feat2.desc":"Immediate answers in Italian, English, Sinhala and Tamil. Available 24/7.","feat3.title":"Active Community","feat3.desc":"A space where Sri Lankans in Italy support one another. Find answers, share experiences, grow together.","feat4.title":"Money Transfer","feat4.desc":"Compare Wise, Western Union and Ria in real time. Save on remittances to Sri Lanka.","feat5.title":"Services Map","feat5.desc":"CAF offices, patronati, Sri Lankan shops and places of worship in major Italian cities.","feat6.title":"Up-to-date News","feat6.desc":"Laws, decrees and opportunities for the Sri Lankan community. Updated every day.",
     "members.count":"<strong>The Sri Lankan community</strong> helping each other in Italy","members.sub":"Join people living and working in Italy who face the same steps. Together it's easier.",
@@ -2994,7 +2979,7 @@ const I18N={
     "nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.ai":"AI සහායක","nav.news":"පුවත්","nav.map":"සිතියම","nav.journey":"මගේ ගමන","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
     "hero.eyebrow":"මාර්ගෝපදේශ · AI සහායක · ප්‍රජාව","hero.title":"<span class='ln'><span>ඉතාලියේ</span></span><span class='ln'><span><em>ශ්‍රී ලාංකික</em></span></span><span class='ln'><span>ප්‍රජාව</span></span>","hero.sub":"නිලධාරී මාර්ගෝපදේශ, බහුභාෂා AI සහායක, සහාය ප්‍රජාව සහ යාවත්කාලීන පුවත් — ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින්.","hero.cta1":"නොමිලේ අරඹන්න","hero.cta2":"මාර්ගෝපදේශ ගවේෂණය කරන්න","hero.stat1":"ගමනේ අදියර","hero.stat2":"ප්‍රායෝගික මාර්ගෝපදේශ","hero.stat3":"සිතියමේ නගර","hero.stat4":"අතුරුමුහුණත් භාෂා",
     "card1.tag":"නිලධාරිවාදය","card1.title":"පදිංචි බලපත්‍රය","card1.sub":"සම්පූර්ණ අලුත් කිරීමේ මාර්ගෝපදේශය","card2.tag":"AI","card2.title":"AI සහායක","card2.sub":"බහුභාෂා පිළිතුරු 24/7","card3.tag":"ප්‍රජාව","card3.title":"ප්‍රජාව","card3.sub":"සම වයසේ අයගේ සහාය","card4.tag":"මුල්‍ය","card4.title":"මුදල් හුවමාරුව","card4.sub":"Wise, Ria, Western Union",
-    "ad.label":"දැන්වීම්","ad.lead":"ඔබේ දැන්වීම මෙහි — ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව වෙත ළඟා වන්න","ad.buy":"මෙම අවකාශය මිලදී ගන්න →","ad.sponsor":"අනුග්‍රාහක","ad.slot":"දැන්වීම් අවකාශය — 300×250","ad.book":"වෙන්කරවා ගන්න →",
+    "ad.label":"දැන්වීම්","ad.lead":"ඔබේ දැන්වීම මෙහි — ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව වෙත ළඟා වන්න","ad.buy":"ඔබේ දැන්වීම් අවකාශය ඉල්ලන්න →","ad.sponsor":"අනුග්‍රාහක","ad.slot":"දැන්වීම් අවකාශය — 300×250","ad.book":"වෙන්කරවා ගන්න →",
     "feat.label":"අපි පිරිනමන දේ","feat.heading":"ඔබට අවශ්‍ය සියල්ල,<br/><em>එක තැනකින්</em>","feat.sub":"නිලධාරිවාදයේ සිට දෛනික ඒකාබද්ධතාව දක්වා — ඔබේ ගමනේ සෑම පියවරකදීම අපි ඔබට සහාය වෙමු.",
     "feat1.title":"නිලධාරී මාර්ගෝපදේශ","feat1.desc":"පදිංචි බලපත්‍රය, බදු කේතය, SPID, පදිංචිය — බාගත හැකි පිරික්සුම් ලැයිස්තු සහිත පියවරෙන් පියවර මාර්ගෝපදේශ.","feat2.title":"බහුභාෂා AI සහායක","feat2.desc":"ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින් ක්ෂණික පිළිතුරු. දිනපතා පැය 24 පුරා ලබා ගත හැක.","feat3.title":"සක්‍රිය ප්‍රජාව","feat3.desc":"ඉතාලියේ ශ්‍රී ලාංකිකයන් එකිනෙකාට සහාය වන අවකාශයක්. පිළිතුරු සොයාගන්න, අත්දැකීම් බෙදාගන්න, එකට වර්ධනය වන්න.","feat4.title":"මුදල් හුවමාරුව","feat4.desc":"Wise, Western Union සහ Ria තත්‍ය කාලීනව සසඳන්න. ශ්‍රී ලංකාවට යවන මුදල් වලින් ඉතිරි කරගන්න.","feat5.title":"සේවා සිතියම","feat5.desc":"ප්‍රධාන ඉතාලි නගරවල CAF, patronati, ශ්‍රී ලාංකික වෙළඳසැල් සහ පූජනීය ස්ථාන.","feat6.title":"යාවත්කාලීන පුවත්","feat6.desc":"ශ්‍රී ලාංකික ප්‍රජාව සඳහා නීති, නියෝග සහ අවස්ථා. දිනපතා යාවත්කාලීන වේ.",
     "members.count":"<strong>ශ්‍රී ලාංකික ප්‍රජාව</strong> ඉතාලියේ එකිනෙකාට උදව් කරයි","members.sub":"ඉතාලියේ ජීවත්වන සහ වැඩකරන, එම පියවරම මුහුණ දෙන අය හා එක්වන්න. එකට වඩා පහසුයි.",
@@ -3040,8 +3025,8 @@ applyLang(currentLang);
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   // Hero headline reveals via CSS keyframe (lineUp) automatically on load.
   // Scroll-reveal targets (below the fold)
-  const targets=[...document.querySelectorAll('.features .section-label,.features .section-title,.features .section-sub,.feat,.ad-slot,.members .member-avatars,.members .member-count,.members .section-sub,.cta-card,.footer-brand,.footer-col')];
-  document.querySelectorAll('.feat-grid,.ad-grid').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--ri',i));});
+  const targets=[...document.querySelectorAll('.features .section-label,.features .section-title,.features .section-sub,.feat,.ad-mini-bar,.members .member-avatars,.members .member-count,.members .section-sub,.cta-card,.footer-brand,.footer-col')];
+  document.querySelectorAll('.feat-grid').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--ri',i));});
   targets.forEach(el=>el.classList.add('reveal'));
   if(reduce){targets.forEach(el=>el.classList.add('in'));return;}
   const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
