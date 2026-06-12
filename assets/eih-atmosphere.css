@@ -1,0 +1,78 @@
+/* Easy Italia Hub — Atmosphere v2: sfondo immersivo multi-layer.
+   Gerarchia (dal più lontano al più vicino, tutti fixed + pointer-events:none):
+   L0 #bg (wash esistente) → L1 orbs aurora → L2 geometrie → L3 luce volumetrica
+   → L4 pulviscolo → #noise (esistente). Solo transform/opacity: GPU-friendly. */
+
+.atmo{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.atmo *{position:absolute;will-change:transform}
+.atmo-l{inset:0}
+
+/* ── L1: orbs aurora (mesh gradient morbido) ── */
+.atmo-orb{border-radius:50%;filter:blur(64px)}
+.atmo-o1{width:56vw;height:56vw;min-width:520px;min-height:520px;top:-18vw;right:-14vw;
+  background:radial-gradient(circle at 38% 38%,rgba(124,112,89,.34),rgba(124,112,89,.10) 45%,transparent 70%);
+  animation:atmoFloat1 26s ease-in-out infinite alternate}
+.atmo-o2{width:44vw;height:44vw;min-width:420px;min-height:420px;bottom:-16vw;left:-12vw;
+  background:radial-gradient(circle at 60% 40%,rgba(31,157,85,.16),rgba(31,157,85,.05) 50%,transparent 72%);
+  animation:atmoFloat2 32s ease-in-out infinite alternate}
+.atmo-o3{width:34vw;height:34vw;min-width:340px;min-height:340px;top:34%;left:54%;
+  background:radial-gradient(circle,rgba(235,89,57,.13),rgba(235,89,57,.04) 50%,transparent 70%);
+  animation:atmoFloat3 22s ease-in-out infinite alternate}
+/* set "caldo": si accende nelle sezioni CTA/FX (crossfade via opacity) */
+.atmo-warm{width:60vw;height:60vw;min-width:540px;min-height:540px;top:20%;right:-18vw;opacity:0;
+  background:radial-gradient(circle,rgba(235,89,57,.20),rgba(201,162,74,.10) 48%,transparent 72%)}
+@keyframes atmoFloat1{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-4vw,3vw,0) scale(1.08)}}
+@keyframes atmoFloat2{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(3vw,-3vw,0) scale(1.10)}}
+@keyframes atmoFloat3{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-2.5vw,-2vw,0) scale(.94)}}
+
+/* ── L2: geometrie sospese (anelli + griglia prospettica) ── */
+.atmo-ring{border-radius:50%;border:1px solid rgba(124,112,89,.16)}
+.atmo-r1{width:42vw;height:42vw;min-width:380px;min-height:380px;top:6%;right:4%}
+.atmo-r2{width:26vw;height:26vw;min-width:240px;min-height:240px;top:14%;right:12%;border-color:rgba(235,89,57,.12);border-style:dashed}
+.atmo-r3{width:34vw;height:34vw;min-width:300px;min-height:300px;bottom:-8%;left:2%;border-color:rgba(118,118,118,.13)}
+.atmo-grid{inset:auto 0 0 0;height:42vh;
+  background:linear-gradient(rgba(124,112,89,.05) 1px,transparent 1px),
+             linear-gradient(90deg,rgba(124,112,89,.05) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:linear-gradient(to top,rgba(0,0,0,.5),transparent 75%);
+  mask-image:linear-gradient(to top,rgba(0,0,0,.5),transparent 75%);
+  transform:perspective(900px) rotateX(38deg) scale(1.4);transform-origin:bottom center}
+
+/* ── L3: luce volumetrica diagonale ── */
+.atmo-beam{top:-30%;left:8%;width:34vw;min-width:280px;height:160%;filter:blur(46px);
+  background:linear-gradient(115deg,transparent 30%,rgba(252,248,240,.5) 50%,transparent 70%);
+  transform:rotate(16deg);opacity:.5;animation:atmoBeam 18s ease-in-out infinite alternate}
+@keyframes atmoBeam{from{transform:rotate(16deg) translateX(0)}to{transform:rotate(13deg) translateX(7vw)}}
+
+/* ── L4: pulviscolo luminoso (punti via box-shadow, twinkle in opacity) ── */
+.atmo-dust,.atmo-dust2{width:3px;height:3px;border-radius:50%;background:transparent}
+.atmo-dust{top:0;left:0;
+  box-shadow:12vw 18vh 0 rgba(124,112,89,.5),28vw 64vh 0 rgba(124,112,89,.38),46vw 26vh 0 rgba(235,89,57,.42),
+    63vw 72vh 0 rgba(124,112,89,.45),78vw 38vh 0 rgba(124,112,89,.34),88vw 80vh 0 rgba(235,89,57,.32),
+    8vw 86vh 0 rgba(124,112,89,.36),55vw 8vh 0 rgba(124,112,89,.30);
+  animation:atmoTwinkle 7s ease-in-out infinite alternate}
+.atmo-dust2{top:0;left:0;width:2px;height:2px;
+  box-shadow:20vw 40vh 0 rgba(31,157,85,.36),38vw 84vh 0 rgba(124,112,89,.32),70vw 16vh 0 rgba(124,112,89,.38),
+    92vw 52vh 0 rgba(31,157,85,.30),5vw 56vh 0 rgba(235,89,57,.30),50vw 50vh 0 rgba(124,112,89,.26);
+  animation:atmoTwinkle 9s ease-in-out infinite alternate-reverse}
+@keyframes atmoTwinkle{from{opacity:.35}55%{opacity:.9}to{opacity:.5}}
+
+/* ── dark mode: stessa architettura, luci più profonde ── */
+html[data-theme="dark"] .atmo-o1{background:radial-gradient(circle at 38% 38%,rgba(185,170,141,.20),rgba(185,170,141,.06) 45%,transparent 70%)}
+html[data-theme="dark"] .atmo-o2{background:radial-gradient(circle at 60% 40%,rgba(63,207,124,.10),transparent 70%)}
+html[data-theme="dark"] .atmo-o3{background:radial-gradient(circle,rgba(255,106,71,.12),transparent 68%)}
+html[data-theme="dark"] .atmo-warm{background:radial-gradient(circle,rgba(255,106,71,.16),rgba(185,170,141,.07) 48%,transparent 72%)}
+html[data-theme="dark"] .atmo-beam{background:linear-gradient(115deg,transparent 30%,rgba(243,241,236,.10) 50%,transparent 70%);opacity:.6}
+html[data-theme="dark"] .atmo-ring{border-color:rgba(185,170,141,.14)}
+html[data-theme="dark"] .atmo-r2{border-color:rgba(255,106,71,.12)}
+html[data-theme="dark"] .atmo-grid{background:linear-gradient(rgba(185,170,141,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(185,170,141,.06) 1px,transparent 1px);background-size:64px 64px}
+
+/* ── responsive & accessibilità ── */
+@media(max-width:768px){
+  .atmo-beam,.atmo-r2,.atmo-dust2{display:none}     /* meno layer su mobile */
+  .atmo-orb{filter:blur(44px)}                       /* blur più economico */
+  .atmo-grid{height:30vh}
+}
+@media(prefers-reduced-motion:reduce){
+  .atmo *{animation:none!important}
+}
