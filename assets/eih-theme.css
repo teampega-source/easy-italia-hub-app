@@ -55,5 +55,9 @@ html[data-theme="dark"] .card:nth-child(2) .card-img{background:linear-gradient(
 html[data-theme="dark"] .card:nth-child(3) .card-img{background:linear-gradient(145deg,rgba(20,83,45,.55) 0%,rgba(22,163,74,.30) 100%)}
 html[data-theme="dark"] .card:nth-child(4) .card-img{background:linear-gradient(145deg,rgba(120,53,15,.55) 0%,rgba(217,119,6,.30) 100%)}
 
+html[data-theme="dark"] .partner-inner{background:rgba(33,30,26,.72)}
+html[data-theme="dark"] .pcard{background:rgba(243,241,236,.04)}
+html[data-theme="dark"] .pcard:hover{background:rgba(243,241,236,.07)}
+
 /* transizione morbida durante lo switch (classe momentanea) */
 html.theme-anim,html.theme-anim *{transition:background-color .3s ease,color .3s ease,border-color .3s ease!important}
