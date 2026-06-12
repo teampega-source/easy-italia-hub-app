@@ -83,9 +83,18 @@ il prossimo blocco di lavoro è l'**attivazione di Supabase** (account reali).
 Sblocca a cascata: account reali → email promemoria → pagamenti.
 
 ## ℹ️ In sospeso (dopo Supabase / opzionali)
+- **Contatti/link utili negli articoli** — in ogni guida/articolo che tratta un
+  argomento (permesso, codice fiscale, SPID, …) aggiungere una sezione con i
+  contatti e i link utili pertinenti (uffici, siti ufficiali, numeri, patronati).
 - **Dominio reale** — canonical/OG/hreflang puntano ancora al placeholder `easyitaliahub.it`.
 - **Immagine OG 1200×630** — `og-image.jpg` ancora placeholder (anteprime WhatsApp/social).
-- **Email transazionali (Resend)** — promemoria scadenze; env futura `RESEND_API_KEY` (solo server).
+- **Email (Resend)** — `api/contact.js` ora inoltra form contatti + newsletter
+  al proprietario; `api/remind.js` invia i promemoria. Per attivarle servono su
+  Vercel: `RESEND_API_KEY` (dominio verificato su Resend) e `CONTACT_TO_EMAIL`
+  (casella dove ricevere le notifiche). Senza chiavi → demo mode.
+- **Inoltro caselle dominio** — creare/inoltrare `info@`, `partner@`, `ads@`,
+  `privacy@easyitaliahub.it` verso la casella personale (es. Cloudflare Email
+  Routing), altrimenti i mailto del sito rimbalzano.
 - **Pagamenti (Stripe)** — flusso reale per il freemium (`abbonamenti.html` è solo vetrina);
   env future `STRIPE_SECRET_KEY` + `STRIPE_WEBHOOK_SECRET` (solo server).
 

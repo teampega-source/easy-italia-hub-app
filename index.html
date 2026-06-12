@@ -3050,15 +3050,31 @@ function voteRoadmap(btn,key){
   </div>
 </section>
 <script>
-function subscribeNewsletter(){
+async function subscribeNewsletter(){
   var el=document.getElementById('nl-email');
   if(!el||!el.value||!el.value.includes('@')){el&&el.focus();return;}
   var btn=document.querySelector('.newsletter-btn');
-  btn.textContent='Iscritto! ✓';
-  btn.style.background='rgba(255,255,255,.92)';
-  btn.style.color='#15803d';
-  btn.disabled=true;
-  el.value='';
+  var orig=btn.textContent;
+  btn.disabled=true;btn.textContent='…';
+  try{
+    var r=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({type:'newsletter',email:el.value})});
+    var data=await r.json().catch(function(){return{}});
+    if(r.ok&&!data.error){
+      btn.textContent='Iscritto! ✓';
+      btn.style.background='rgba(255,255,255,.92)';
+      btn.style.color='#15803d';
+      el.value='';
+    }else{
+      btn.textContent='Errore — riprova';
+      btn.disabled=false;
+      setTimeout(function(){btn.textContent=orig;},3000);
+    }
+  }catch(e){
+    btn.textContent='Errore — riprova';
+    btn.disabled=false;
+    setTimeout(function(){btn.textContent=orig;},3000);
+  }
 }
 </script>
 
