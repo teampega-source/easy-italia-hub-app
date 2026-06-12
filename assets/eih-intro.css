@@ -1,0 +1,125 @@
+/* ═══════════════════════════════════════════════════════════
+   Easy Italia Hub — Intro cinematografica "Dallo Sri Lanka all'Italia"
+   Overlay full-screen scroll-driven. Solo transform/opacity (GPU).
+   Si monta solo alla prima visita di sessione (vedi eih-intro.js).
+   ═══════════════════════════════════════════════════════════ */
+
+/* Mentre l'intro è attiva: nascondiamo nav, banner e wash di sfondo
+   per non sovrapporli alla scena. */
+html.eih-intro-on{scroll-behavior:auto}
+html.eih-intro-on .site-nav,
+html.eih-intro-on #season-banner,
+html.eih-intro-on #eih-progress{opacity:0!important;pointer-events:none!important}
+html.eih-intro-on #bg,html.eih-intro-on #noise{opacity:0!important}
+html.eih-intro-on body{background:#05070d}
+
+/* Spacer che genera la lunghezza di scroll del viaggio */
+#eih-intro-spacer{height:560vh;width:100%;pointer-events:none;position:relative;z-index:0}
+
+/* Overlay fisso che copre il viewport durante il viaggio */
+.eih-intro{
+  position:fixed;inset:0;z-index:1200;overflow:hidden;
+  background:#05070d;
+  -webkit-user-select:none;user-select:none;
+  contain:strict;
+}
+.eih-intro *{pointer-events:none}
+.eih-intro .intro-skip,.eih-intro .intro-hint{pointer-events:auto}
+
+/* Layer base condiviso (full-bleed) */
+.eih-intro .scene{position:absolute;inset:0;will-change:opacity,transform}
+.eih-intro .scene-stage{position:absolute;inset:-6% ;display:flex;align-items:center;justify-content:center;will-change:transform}
+.eih-intro svg{width:100%;height:100%;display:block}
+
+/* ─── Cielo / spazio di base ─── */
+.intro-space{position:absolute;inset:0;background:
+  radial-gradient(120% 90% at 50% 18%, #0c1b34 0%, #070d1c 46%, #03050c 100%)}
+.intro-stars{position:absolute;inset:0;opacity:0;
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, #fff8 0, transparent 2px),
+    radial-gradient(1px 1px at 28% 64%, #fff6 0, transparent 2px),
+    radial-gradient(1.4px 1.4px at 47% 14%, #fff9 0, transparent 2px),
+    radial-gradient(1px 1px at 63% 48%, #fff5 0, transparent 2px),
+    radial-gradient(1.2px 1.2px at 78% 30%, #fff8 0, transparent 2px),
+    radial-gradient(1px 1px at 88% 70%, #fff6 0, transparent 2px),
+    radial-gradient(1px 1px at 38% 82%, #fff5 0, transparent 2px),
+    radial-gradient(1.3px 1.3px at 70% 86%, #fff7 0, transparent 2px);
+  background-repeat:no-repeat}
+
+/* ─── Nuvole che attraversano (transizioni) ─── */
+.intro-clouds{position:absolute;inset:0;opacity:0;will-change:opacity}
+.intro-clouds .puff{position:absolute;border-radius:50%;
+  background:radial-gradient(circle at 40% 38%, #ffffff 0%, #f3eee6cc 36%, #f3eee600 70%);
+  filter:blur(8px);will-change:transform}
+
+/* ─── Didascalie ─── */
+.intro-cap{position:absolute;left:0;right:0;text-align:center;padding:0 8vw;
+  bottom:16vh;opacity:0;will-change:opacity,transform}
+.intro-cap .cap-kicker{font-family:'Satoshi',system-ui,sans-serif;font-weight:500;
+  font-size:clamp(.7rem,1.6vw,.9rem);letter-spacing:.28em;text-transform:uppercase;
+  color:#e8c98a;margin:0 0 .6rem}
+.intro-cap .cap-line{font-family:'Clash Grotesk','Satoshi',system-ui,sans-serif;
+  font-weight:600;line-height:1.04;margin:0;color:#fbf7ef;
+  font-size:clamp(2rem,6.4vw,4.6rem);text-shadow:0 2px 40px rgba(0,0,0,.55)}
+.intro-cap .cap-line em{font-style:normal;
+  background:linear-gradient(100deg,#f3c97a,#eb7a45);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ─── Scena finale: il marchio si accende ─── */
+.scene-ignite{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;opacity:0;will-change:opacity;
+  background:radial-gradient(60% 60% at 50% 46%, rgba(20,12,4,.0), rgba(3,4,9,.86) 78%)}
+.scene-ignite .ig-glow{position:absolute;width:62vmax;height:62vmax;border-radius:50%;
+  background:radial-gradient(circle, rgba(243,201,122,.34) 0%, rgba(235,122,69,.16) 30%, transparent 62%);
+  filter:blur(14px);opacity:0;will-change:opacity,transform}
+.scene-ignite .ig-mark{position:relative;font-family:'Clash Grotesk','Satoshi',sans-serif;
+  font-weight:600;font-size:clamp(2.4rem,8vw,6rem);letter-spacing:-.01em;color:#fdfaf3;
+  text-shadow:0 0 60px rgba(243,201,122,.0);transform:scale(.86);will-change:transform}
+.scene-ignite .ig-mark .accent{
+  background:linear-gradient(100deg,#f6cf86,#eb5939);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.scene-ignite .ig-tag{font-family:'Satoshi',system-ui,sans-serif;font-weight:400;
+  font-size:clamp(.85rem,2.2vw,1.15rem);color:#d8cbb4;margin-top:1.1rem;opacity:0;
+  letter-spacing:.02em;text-align:center;padding:0 8vw}
+.scene-ignite .ig-enter{margin-top:2.2rem;display:inline-flex;align-items:center;gap:.5rem;
+  font-family:'Satoshi',sans-serif;font-weight:500;font-size:.82rem;letter-spacing:.22em;
+  text-transform:uppercase;color:#e8c98a;opacity:0}
+.scene-ignite .ig-enter svg{width:14px;height:22px;stroke:#e8c98a;fill:none;stroke-width:2;
+  animation:igBounce 1.6s ease-in-out infinite}
+@keyframes igBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ─── Controlli ─── */
+.intro-skip{position:fixed;top:max(18px,env(safe-area-inset-top));right:20px;z-index:1300;
+  font-family:'Satoshi',system-ui,sans-serif;font-size:.78rem;font-weight:500;
+  letter-spacing:.04em;color:#e9e0cf;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:.5rem 1rem;
+  cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:background .2s,color .2s,opacity .4s}
+.intro-skip:hover{background:rgba(255,255,255,.16);color:#fff}
+.intro-hint{position:absolute;left:0;right:0;bottom:5vh;text-align:center;
+  font-family:'Satoshi',system-ui,sans-serif;font-size:.74rem;letter-spacing:.26em;
+  text-transform:uppercase;color:#cdbfa6;opacity:0;will-change:opacity}
+.intro-hint .hint-wheel{display:block;margin:.7rem auto 0;width:22px;height:34px;
+  border:1.5px solid #cdbfa688;border-radius:12px;position:relative}
+.intro-hint .hint-wheel::after{content:"";position:absolute;left:50%;top:6px;
+  width:3px;height:7px;border-radius:2px;background:#e8c98a;transform:translateX(-50%);
+  animation:hintScroll 1.7s ease-in-out infinite}
+@keyframes hintScroll{0%{opacity:0;transform:translate(-50%,0)}
+  40%{opacity:1}100%{opacity:0;transform:translate(-50%,12px)}}
+
+/* Vignettatura cinematografica costante */
+.eih-intro .intro-vignette{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 100% at 50% 50%, transparent 56%, rgba(0,0,0,.5) 100%)}
+
+/* Riduci il carico su mobile */
+@media (max-width:640px){
+  #eih-intro-spacer{height:500vh}
+  .intro-clouds .puff:nth-child(n+5){display:none}
+}
+
+/* Fail-safe: se l'utente preferisce meno movimento, l'intro non viene
+   nemmeno montata da JS; questa regola è una rete di sicurezza. */
+@media (prefers-reduced-motion:reduce){
+  .eih-intro,#eih-intro-spacer{display:none!important}
+  html.eih-intro-on .site-nav,html.eih-intro-on #bg{opacity:1!important}
+}

@@ -71,7 +71,21 @@ il prossimo blocco di lavoro è l'**attivazione di Supabase** (account reali).
 
 ## ⏭️ PROSSIMO STEP (riprendere da qui)
 
-**Attivare Supabase** — richiede l'UTENTE (account + chiavi), guida completa in
+**Attivare email: Resend + Cloudflare** — account GIÀ CREATI dall'utente,
+manca solo la configurazione. Da fare appena si riprende:
+1. **Cloudflare Email Routing**: dominio `easyitaliahub.it` → creare gli
+   inoltri `info@`, `partner@`, `ads@`, `privacy@` verso la casella personale
+   (wasapeiris@gmail.com). Aggiungere i record MX/TXT che Cloudflare propone.
+2. **Resend**: verificare il dominio `easyitaliahub.it` (record DKIM/SPF da
+   aggiungere sempre in Cloudflare DNS) e generare la API key.
+3. **Vercel env**: impostare `RESEND_API_KEY` + `CONTACT_TO_EMAIL` su tutti
+   gli ambienti + Redeploy. Da quel momento form contatti e newsletter
+   (`api/contact.js`) escono dalla demo mode e arrivano email reali.
+4. Test finale: inviare un messaggio dal form di `/contatti` e una iscrizione
+   newsletter dal footer, verificare la ricezione.
+
+### Step successivo: attivare Supabase
+Richiede l'UTENTE (account + chiavi), guida completa in
 `SUPABASE-SETUP.md`:
 1. Creare il progetto Supabase (piano Free) e salvare la password DB.
 2. Eseguire `supabase/schema.sql` nel SQL Editor.
