@@ -1805,26 +1805,38 @@ html.returning #preloader{display:none}
 .mission-visual{
   border-radius:24px;overflow:hidden;position:relative;
   background:linear-gradient(135deg,#2d4a7a 0%,#3a6090 45%,#66512e 100%);
-  min-height:360px;display:flex;align-items:center;justify-content:center;
+  min-height:380px;display:flex;align-items:center;justify-content:center;
   padding:var(--sp-5);text-align:center;
-  box-shadow:0 32px 80px rgba(20,30,48,.18);
+  box-shadow:0 32px 80px rgba(20,30,48,.22);
+}
+.mission-visual-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;display:block;
+  animation:kenBurns 16s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes kenBurns{
+  from{transform:scale(1) translate(0,0)}
+  to{transform:scale(1.1) translate(-2%,-1.5%)}
 }
 .mission-visual::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(160deg,rgba(22,20,18,.12) 0%,rgba(22,20,18,.52) 100%);
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(160deg,rgba(12,10,8,.1) 0%,rgba(12,10,8,.68) 100%);
 }
 .mission-visual-text{
-  position:relative;z-index:1;
+  position:relative;z-index:2;
   font-family:'Clash Grotesk',sans-serif;
   font-size:clamp(1.55rem,2.8vw,2.2rem);font-weight:500;
   color:#fff;line-height:1.2;letter-spacing:-.02em;
+  text-shadow:0 2px 16px rgba(0,0,0,.25);
 }
-.mission-visual-text em{font-style:normal;color:rgba(255,210,100,.9)}
+.mission-visual-text em{font-style:normal;color:rgba(255,210,100,.95)}
 @media(max-width:767px){
   .mission-inner{grid-template-columns:1fr;gap:var(--sp-4)}
-  .mission-visual{min-height:220px}
+  .mission-visual{min-height:240px}
   .mission-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}
 }
+@media(prefers-reduced-motion:reduce){.mission-visual-img{animation:none}}
 
 /* ─── ROADMAP ─── */
 .roadmap-section{
@@ -2196,6 +2208,51 @@ html.returning #preloader{display:none}
 
 </section>
 
+<!-- ─── CHI SIAMO — MISSION (spostata in alto: 2a sezione dopo hero) ─── -->
+<section class="mission-section" id="chi-siamo-teaser" aria-labelledby="mission-heading">
+  <div class="mission-inner">
+    <div>
+      <p class="section-label" style="text-align:left">Chi siamo</p>
+      <h2 id="mission-heading" class="section-title" style="text-align:left">Costruiamo il ponte<br><em>tra due mondi.</em></h2>
+      <p class="section-sub" style="text-align:left;margin:0 0 var(--sp-2)">Easy Italia Hub nasce dalla necessità concreta di centinaia di migliaia di srilankesi che ogni anno si trovano a navigare il sistema burocratico italiano senza strumenti adatti.</p>
+      <p style="font-size:var(--text-sm);color:var(--fg-muted);line-height:1.7;font-weight:300;margin-bottom:var(--sp-4)">La nostra missione è semplice: rendere l'integrazione più rapida, meno stressante e più dignitosa. Perché ogni persona merita di capire i propri diritti nella propria lingua.</p>
+      <div class="mission-values">
+        <div class="mission-value">
+          <span class="mission-value-icon" aria-hidden="true">🌐</span>
+          <h4>Multilingua</h4>
+          <p>Italiano, inglese, sinhala e tamil</p>
+        </div>
+        <div class="mission-value">
+          <span class="mission-value-icon" aria-hidden="true">🔓</span>
+          <h4>Accessibile</h4>
+          <p>Gratuito, senza barriere d'accesso</p>
+        </div>
+        <div class="mission-value">
+          <span class="mission-value-icon" aria-hidden="true">🤝</span>
+          <h4>Community</h4>
+          <p>Costruito insieme alla comunità</p>
+        </div>
+        <div class="mission-value">
+          <span class="mission-value-icon" aria-hidden="true">🛡️</span>
+          <h4>Affidabile</h4>
+          <p>Fonti ufficiali sempre verificate</p>
+        </div>
+      </div>
+      <a href="chi-siamo.html" class="btn-ghost" style="margin-top:var(--sp-3);display:inline-flex">Scopri il team →</a>
+    </div>
+    <div class="mission-visual">
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3EeaOppzppfYiZU22fyGRIqU1ot/hf_20260612_161246_51cca7f5-e69b-48d7-b3f2-2b1922bdac7f.png"
+           class="mission-visual-img"
+           alt="Donna srilankese in una piazza italiana con documenti, luce calda del sole"
+           loading="lazy"
+           onerror="this.style.display='none'"/>
+      <p class="mission-visual-text">Ogni persona<br>merita di<br><em>capire i propri diritti</em></p>
+    </div>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
 <!-- ─── PERCHÉ ESISTIAMO — PROBLEMA / SOLUZIONE ─── -->
 <section class="problem-section" id="problema" aria-labelledby="problem-heading">
   <div class="problem-inner">
@@ -2552,48 +2609,6 @@ html.returning #preloader{display:none}
 
   </div>
 </section>
-
-<div class="divider" aria-hidden="true"></div>
-
-<!-- ─── CHI SIAMO — MISSION TEASER ─── -->
-<section class="mission-section" id="chi-siamo-teaser" aria-labelledby="mission-heading">
-  <div class="mission-inner">
-    <div>
-      <p class="section-label" style="text-align:left">Chi siamo</p>
-      <h2 id="mission-heading" class="section-title" style="text-align:left">Costruiamo il ponte<br><em>tra due mondi.</em></h2>
-      <p class="section-sub" style="text-align:left;margin:0 0 var(--sp-2)">Easy Italia Hub nasce dalla necessità concreta di centinaia di migliaia di srilankesi che ogni anno si trovano a navigare il sistema burocratico italiano senza strumenti adatti.</p>
-      <p style="font-size:var(--text-sm);color:var(--fg-muted);line-height:1.7;font-weight:300;margin-bottom:var(--sp-4)">La nostra missione è semplice: rendere l'integrazione più rapida, meno stressante e più dignitosa. Perché ogni persona merita di capire i propri diritti nella propria lingua.</p>
-      <div class="mission-values">
-        <div class="mission-value">
-          <span class="mission-value-icon" aria-hidden="true">🌐</span>
-          <h4>Multilingua</h4>
-          <p>Italiano, inglese, sinhala e tamil</p>
-        </div>
-        <div class="mission-value">
-          <span class="mission-value-icon" aria-hidden="true">🔓</span>
-          <h4>Accessibile</h4>
-          <p>Gratuito, senza barriere d'accesso</p>
-        </div>
-        <div class="mission-value">
-          <span class="mission-value-icon" aria-hidden="true">🤝</span>
-          <h4>Community</h4>
-          <p>Costruito insieme alla comunità</p>
-        </div>
-        <div class="mission-value">
-          <span class="mission-value-icon" aria-hidden="true">🛡️</span>
-          <h4>Affidabile</h4>
-          <p>Fonti ufficiali sempre verificate</p>
-        </div>
-      </div>
-      <a href="chi-siamo.html" class="btn-ghost" style="margin-top:var(--sp-3);display:inline-flex">Scopri il team →</a>
-    </div>
-    <div class="mission-visual" aria-hidden="true">
-      <p class="mission-visual-text">Ogni persona<br>merita di<br><em>capire i propri diritti</em></p>
-    </div>
-  </div>
-</section>
-
-<div class="divider" aria-hidden="true"></div>
 
 <!-- ─── ROADMAP ─── -->
 <section class="roadmap-section" id="roadmap" aria-labelledby="roadmap-heading">
