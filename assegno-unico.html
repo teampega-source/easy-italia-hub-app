@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Calcolatore Assegno Unico — Easy Italia Hub</title>
+<meta name="description" content="Calcola l'importo dell'Assegno Unico e Universale per i tuoi figli: inserisci ISEE e composizione familiare, il simulatore EIH mostra l'importo mensile stimato per il 2026."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/assegno-unico"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+</head>
+<body data-page="assegno-unico">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <style>
+    [data-page="assegno-unico"] .calc-card{background:rgba(255,253,249,0.6);backdrop-filter:blur(20px);border:1px solid var(--border-bright);border-radius:calc(var(--radius)*2);padding:var(--sp-5);margin:var(--sp-4) 0}
+    [data-page="assegno-unico"] .calc-field{display:flex;flex-direction:column;gap:.5rem;margin-bottom:var(--sp-3)}
+    [data-page="assegno-unico"] .calc-label{font-size:var(--text-sm);font-weight:500;color:var(--fg)}
+    [data-page="assegno-unico"] .calc-note{font-size:var(--text-xs);color:var(--fg-muted)}
+    [data-page="assegno-unico"] .calc-range{width:100%;accent-color:var(--gold)}
+    [data-page="assegno-unico"] .calc-row{display:flex;gap:var(--sp-2);align-items:center;flex-wrap:wrap}
+    [data-page="assegno-unico"] .calc-num{width:110px;padding:.45rem .75rem;border-radius:var(--radius-sm);border:1px solid var(--border-bright);background:var(--surface);color:var(--fg);font-family:inherit;font-size:var(--text-sm)}
+    [data-page="assegno-unico"] .calc-select{width:auto;padding:.45rem .75rem;border-radius:var(--radius-sm);border:1px solid var(--border-bright);background:var(--surface);color:var(--fg);font-family:inherit;font-size:var(--text-sm)}
+    [data-page="assegno-unico"] .calc-euro{font-size:var(--text-sm);color:var(--fg-muted)}
+    [data-page="assegno-unico"] .result-box{background:linear-gradient(135deg,rgba(185,170,141,.12),rgba(185,170,141,.06));border:1px solid rgba(185,170,141,.3);border-radius:var(--radius);padding:var(--sp-4);margin-top:var(--sp-3);text-align:center}
+    [data-page="assegno-unico"] .result-total{font-family:'Clash Grotesk',sans-serif;font-size:clamp(2.4rem,5vw,3.5rem);font-weight:500;color:var(--gold);line-height:1}
+    [data-page="assegno-unico"] .result-label{font-size:var(--text-sm);color:var(--fg-secondary);margin-top:.35rem}
+    [data-page="assegno-unico"] .result-breakdown{margin-top:var(--sp-2);font-size:var(--text-xs);color:var(--fg-muted);line-height:1.7}
+    [data-page="assegno-unico"] .warn-box{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1.1rem;font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.6;margin:var(--sp-3) 0}
+    [data-page="assegno-unico"] .req-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--sp-2);margin-top:var(--sp-3)}
+    [data-page="assegno-unico"] .req-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:var(--sp-3)}
+    [data-page="assegno-unico"] .req-icon{font-size:1.4rem;margin-bottom:.4rem;display:block}
+    [data-page="assegno-unico"] .req-title{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:500;color:var(--ink);margin-bottom:.25rem}
+    [data-page="assegno-unico"] .req-desc{font-size:var(--text-xs);color:var(--fg-muted);line-height:1.55}
+    /* link-utili box */
+    [data-page="assegno-unico"] .link-utili{margin-top:var(--sp-3);padding:1rem 1.2rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border)}
+    [data-page="assegno-unico"] .link-utili-title{margin:0 0 .65rem;font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+    [data-page="assegno-unico"] .link-utili-grid{display:flex;flex-wrap:wrap;gap:.4rem}
+    [data-page="assegno-unico"] .lu-link{display:inline-flex;align-items:center;gap:.38rem;padding:.3rem .72rem;border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:500;color:var(--fg-secondary);background:var(--surface);border:1px solid var(--border);text-decoration:none;transition:background var(--dur-micro),color var(--dur-micro),border-color var(--dur-micro)}
+    [data-page="assegno-unico"] .lu-link:hover{background:var(--surface-hover);color:var(--fg);border-color:var(--border-bright)}
+    [data-page="assegno-unico"] .lu-link svg{width:11px;height:11px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+    [data-page="assegno-unico"] .lu-link--in svg{stroke:var(--blue-deep)}
+    html[data-theme="dark"] [data-page="assegno-unico"] .calc-card{background:rgba(33,30,26,.72)}
+    html[data-theme="dark"] [data-page="assegno-unico"] .calc-num,html[data-theme="dark"] [data-page="assegno-unico"] .calc-select{background:var(--bg-elevated);border-color:var(--border-bright)}
+  </style>
+  <div class="page page-wide">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Strumenti</p>
+    <h1 class="reveal">Calcola il tuo<br/><em>Assegno Unico</em></h1>
+    <p class="lead reveal">L'Assegno Unico e Universale è un sostegno mensile per chi ha figli a carico fino a 21 anni. Inserisci la tua situazione e ottieni una stima immediata dell'importo 2026.</p>
+    <div class="warn-box reveal">⚠️ <strong>Simulazione indicativa</strong> basata sulle tabelle INPS 2026. L'importo reale dipende dalla tua DSU/ISEE certificata e dalla tua situazione specifica. <strong>Verifica sempre su <a class="inline" href="https://www.inps.it" target="_blank" rel="noopener noreferrer">inps.it</a></strong> e rivolgiti a un patronato per la domanda ufficiale.</div>
+
+    <div class="calc-card reveal">
+      <h2 style="font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xl);margin-bottom:var(--sp-3);">Simulatore importo 2026</h2>
+
+      <!-- ISEE field -->
+      <div class="calc-field">
+        <label class="calc-label" for="au-isee">ISEE del nucleo familiare</label>
+        <div class="calc-row">
+          <input type="range" class="calc-range" id="au-isee-range" min="0" max="50000" step="100" value="20000"/>
+          <input type="number" class="calc-num" id="au-isee" min="0" max="200000" value="20000" placeholder="es. 20000"/>
+          <span class="calc-euro">€/anno</span>
+        </div>
+        <span class="calc-note">Se non hai ISEE o supera €43.240, viene applicato l'importo minimo di €57,00/mese per figlio.</span>
+      </div>
+
+      <!-- Number of children -->
+      <div class="calc-field">
+        <label class="calc-label" for="au-figli">Numero di figli a carico (0–21 anni)</label>
+        <div class="calc-row">
+          <select class="calc-select" id="au-figli">
+            <option value="1">1 figlio</option>
+            <option value="2" selected>2 figli</option>
+            <option value="3">3 figli</option>
+            <option value="4">4 figli</option>
+            <option value="5">5 figli</option>
+            <option value="6">6 o più figli</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Under 1 year -->
+      <div class="calc-field">
+        <label class="calc-label">Figli di età inferiore a 1 anno</label>
+        <div class="calc-row">
+          <select class="calc-select" id="au-under1">
+            <option value="0">Nessuno</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3+</option>
+          </select>
+          <span class="calc-note">+50% sull'importo base per ogni figlio sotto 1 anno</span>
+        </div>
+      </div>
+
+      <!-- Disability -->
+      <div class="calc-field">
+        <label class="calc-label">Figli con disabilità riconosciuta</label>
+        <div class="calc-row">
+          <select class="calc-select" id="au-disab">
+            <option value="0">Nessuno</option>
+            <option value="mild1">1 — disabilità lieve/media</option>
+            <option value="severe1">1 — disabilità grave</option>
+            <option value="mild2">2 — disabilità lieve/media</option>
+            <option value="severe2">2 — disabilità grave</option>
+          </select>
+          <span class="calc-note">Maggiorazione aggiuntiva di €105,53 (lieve) o €176,11 (grave) per figlio</span>
+        </div>
+      </div>
+
+      <!-- Result box -->
+      <div class="result-box" id="au-result">
+        <div class="result-total" id="au-total">—</div>
+        <div class="result-label">importo mensile stimato totale</div>
+        <div class="result-breakdown" id="au-breakdown"></div>
+      </div>
+    </div>
+
+    <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5);">Chi può richiederlo</h2>
+    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--sp-2);">Per ricevere l'Assegno Unico devi soddisfare <strong>tutti</strong> questi requisiti:</p>
+    <div class="req-grid reveal">
+      <div class="req-card">
+        <span class="req-icon">📄</span>
+        <div class="req-title">Permesso di soggiorno</div>
+        <div class="req-desc">Permesso UE per soggiornanti di lungo periodo, permesso per motivi di lavoro/studio/famiglia valido, o protezione internazionale. Anche titolari di "attesa occupazione" (per sentenza tribunale).</div>
+      </div>
+      <div class="req-card">
+        <span class="req-icon">🏠</span>
+        <div class="req-title">Residenza in Italia</div>
+        <div class="req-desc">Domicilio in Italia da almeno 2 anni (anche non continuativi) oppure contratto di lavoro a tempo indeterminato o determinato di almeno 6 mesi.</div>
+      </div>
+      <div class="req-card">
+        <span class="req-icon">👶</span>
+        <div class="req-title">Figli a carico</div>
+        <div class="req-desc">Figli minorenni oppure figli tra 18 e 21 anni che frequentano scuola/università, fanno tirocini o sono disoccupati e cercano lavoro.</div>
+      </div>
+      <div class="req-card">
+        <span class="req-icon">📊</span>
+        <div class="req-title">ISEE (consigliato)</div>
+        <div class="req-desc">Non è obbligatorio presentare l'ISEE, ma senza di esso ricevi solo l'importo minimo (€57/mese per figlio). Con ISEE puoi ricevere fino a €203,81.</div>
+      </div>
+    </div>
+
+    <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5);">Come fare domanda</h2>
+    <ol style="font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.9;padding-left:1.4rem;">
+      <li>Calcola il tuo <strong>ISEE</strong> recandoti a un CAF o patronato (gratuito) oppure compilando la DSU precompilata su inps.it con SPID.</li>
+      <li>Accedi a <strong>inps.it</strong> con SPID o CIE e cerca "Assegno Unico e Universale".</li>
+      <li>Compila la domanda inserendo ISEE, dati figli e coordinate bancarie (IBAN).</li>
+      <li>In alternativa, vai a un <strong>CAF o patronato</strong>: presentano la domanda per te gratuitamente.</li>
+      <li>Il pagamento arriva sul conto entro il mese successivo alla domanda approvata.</li>
+    </ol>
+
+    <div class="link-utili reveal" style="margin-top:var(--sp-4)">
+      <p class="link-utili-title">Link e contatti utili</p>
+      <div class="link-utili-grid">
+        <a class="lu-link" href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-unico-e-universale-per-i-figli-a-carico-55984.assegno-unico-e-universale-per-i-figli-a-carico.html" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>INPS — domanda ufficiale</a>
+        <a class="lu-link" href="https://servizi2.inps.it/servizi/ISEEPrecompilato/WfSimHome.aspx" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>INPS — Simulatore ISEE</a>
+        <a class="lu-link" href="https://www.cafacli.it/it/servizi-fiscali/modello-isee/" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>CAF ACLI — ISEE gratuito</a>
+        <a class="lu-link" href="https://www.patronato.acli.it" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Patronato ACLI</a>
+        <a class="lu-link" href="https://www.asgi.it/servizio-antidiscriminazione/assegno-unico-universale/" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>ASGI — diritti stranieri AUU</a>
+        <a class="lu-link lu-link--in" href="mappa.html"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>CAF e patronati vicino a te</a>
+        <a class="lu-link lu-link--in" href="diritti-inps.html"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>Verifica tutti i tuoi diritti INPS →</a>
+      </div>
+    </div>
+
+    <script>
+    (function(){
+      var SOGLIA_MIN=17468.51,SOGLIA_MAX=43240,IMP_MAX=203.81,IMP_MIN=57.00;
+      function calcBase(isee){
+        if(isee<=SOGLIA_MIN)return IMP_MAX;
+        if(isee>=SOGLIA_MAX)return IMP_MIN;
+        return IMP_MAX-(isee-SOGLIA_MIN)/(SOGLIA_MAX-SOGLIA_MIN)*(IMP_MAX-IMP_MIN);
+      }
+      function fmt(n){return n.toLocaleString('it-IT',{style:'currency',currency:'EUR',minimumFractionDigits:2});}
+      function calc(){
+        var isee=Math.max(0,parseFloat(document.getElementById('au-isee').value)||0);
+        var nFigli=parseInt(document.getElementById('au-figli').value)||1;
+        var nUnder1=parseInt(document.getElementById('au-under1').value)||0;
+        var disab=document.getElementById('au-disab').value;
+        var base=calcBase(isee);
+        var totale=0,breakdown=[];
+        // base per tutti i figli
+        totale+=base*nFigli;
+        breakdown.push(fmt(base)+' × '+nFigli+' figl'+(nFigli===1?'io':'i')+' (importo base)');
+        // under 1 supplement
+        if(nUnder1>0){
+          var sup1=base*0.5*Math.min(nUnder1,nFigli);
+          totale+=sup1;
+          breakdown.push('+ '+fmt(base*0.5)+' × '+Math.min(nUnder1,nFigli)+' (figlio/i sotto 1 anno)');
+        }
+        // disability supplement
+        var disabN=0,disabAmt=0;
+        if(disab==='mild1'){disabN=1;disabAmt=105.53;}
+        else if(disab==='severe1'){disabN=1;disabAmt=176.11;}
+        else if(disab==='mild2'){disabN=2;disabAmt=105.53;}
+        else if(disab==='severe2'){disabN=2;disabAmt=176.11;}
+        if(disabN>0){totale+=disabAmt*disabN;breakdown.push('+ '+fmt(disabAmt)+' × '+disabN+' (maggiorazione disabilità)');}
+        document.getElementById('au-total').textContent=fmt(totale)+'/mese';
+        document.getElementById('au-breakdown').innerHTML=breakdown.join('<br/>');
+      }
+      // sync range and number input
+      document.getElementById('au-isee-range').addEventListener('input',function(){
+        document.getElementById('au-isee').value=this.value;calc();
+      });
+      document.getElementById('au-isee').addEventListener('input',function(){
+        var v=Math.min(50000,Math.max(0,parseInt(this.value)||0));
+        document.getElementById('au-isee-range').value=v;calc();
+      });
+      ['au-figli','au-under1','au-disab'].forEach(function(id){
+        document.getElementById(id).addEventListener('change',calc);
+      });
+      calc();
+    })();
+    </script>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="assets/eih-atmosphere.js" defer></script>
+<script src="assets/eih-palette.js" defer></script>
+<script src="assets/eih-theme.js" defer></script>
+</body>
+</html>
