@@ -37,6 +37,9 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
+  // Le richieste con Range (es. <video>) le gestisce il browser: evitiamo
+  // di servire un 200 completo dalla cache al posto di un 206 parziale.
+  if (req.headers.has('range')) return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
   if (url.pathname.startsWith('/api/')) return;

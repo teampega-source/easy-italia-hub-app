@@ -39,6 +39,8 @@ html.eih-intro-on body{background:#05070d}
 .eih-intro .scene-photo{background-size:cover;background-position:center;background-repeat:no-repeat;
   opacity:0;transition:opacity 1s ease}
 .eih-intro .scene-photo.photo-on{opacity:1}
+/* Video reale a tutto schermo per la scena Sri Lanka */
+.eih-intro .scene-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 /* Globe: punto di zoom spostato verso l'Italia (ovest del centro immagine) */
 .eih-intro .scene-globe .scene-photo{transform-origin:36% 35%}
 
