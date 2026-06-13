@@ -79,14 +79,22 @@
       '</div>' +
     '</div>' +
 
-    // ░░ SCENA 2 — Terra dallo spazio (il viaggio) ░░
+    // ░░ SCENA 2 — Terra dallo spazio (il viaggio) — video reale (Veo) ░░
     '<div class="scene scene-globe" id="ix-globe">' +
-      '<div class="scene-stage scene-photo" id="ix-globe-cam" style="background-image:url(\'' + IMG_GLOBE + '\')"></div>' +
+      '<div class="scene-stage scene-photo" id="ix-globe-cam">' +
+        '<video class="scene-video" id="ix-globe-vid" muted loop playsinline preload="auto" poster="' + IMG_GLOBE + '">' +
+          '<source src="/assets/intro/globe.mp4" type="video/mp4"/>' +
+        '</video>' +
+      '</div>' +
     '</div>' +
 
-    // ░░ SCENA 3 — Colline toscane (l'arrivo) ░░
+    // ░░ SCENA 3 — Colline toscane (l'arrivo) — video reale (Veo) ░░
     '<div class="scene scene-italy" id="ix-italy">' +
-      '<div class="scene-stage scene-photo" id="ix-italy-cam" style="background-image:url(\'' + IMG_ITALY + '\')"></div>' +
+      '<div class="scene-stage scene-photo" id="ix-italy-cam">' +
+        '<video class="scene-video" id="ix-italy-vid" muted loop playsinline preload="auto" poster="' + IMG_ITALY + '">' +
+          '<source src="/assets/intro/italy.mp4" type="video/mp4"/>' +
+        '</video>' +
+      '</div>' +
     '</div>' +
 
     // ░░ Nuvole di transizione ░░
@@ -123,32 +131,28 @@
   document.body.insertBefore(intro, first);
   document.body.insertBefore(spacer, intro.nextSibling);
 
-  // Anti-flash: carica gli sfondi e rivela ciascuna scena con un fade quando è pronta
-  // (evita il lampo scuro prima che lo sfondo sia disponibile).
-  // Scene 2 e 3: foto. Scena 1: video reale (poster come fallback immediato).
-  [[IMG_GLOBE, 'ix-globe-cam'], [IMG_ITALY, 'ix-italy-cam']]
-    .forEach(function (pair) {
-      var el = intro.querySelector('#' + pair[1]);
-      var im = new Image();
-      im.onload = function () { if (el) el.classList.add('photo-on'); };
-      im.src = pair[0];
-      if (im.complete && el) el.classList.add('photo-on'); // già in cache
-    });
-  var lvid = intro.querySelector('#ix-lanka-vid'), lcam = intro.querySelector('#ix-lanka-cam');
-  if (lvid && lcam) {
-    var revealLanka = function () { lcam.classList.add('photo-on'); };
-    lvid.addEventListener('loadeddata', revealLanka);
-    lvid.addEventListener('canplay', revealLanka);
-    if (lvid.readyState >= 2) revealLanka();
-    var pp = lvid.play(); if (pp && pp.catch) pp.catch(function () {}); // autoplay best-effort
-  } else { new Image().src = IMG_LANKA; } // fallback: precarica almeno il poster
+  // Anti-flash + autoplay: ogni scena è un video reale (poster = foto come fallback).
+  // Rivela la scena al primo frame pronto. La scena 1 parte subito; globo e Italia
+  // partono quando entrano in scena (vedi render → playVid), per non decodificare
+  // tre video insieme e alleggerire mobile e batteria.
+  ['ix-lanka', 'ix-globe', 'ix-italy'].forEach(function (base) {
+    var cam = intro.querySelector('#' + base + '-cam');
+    var vid = intro.querySelector('#' + base + '-vid');
+    if (!cam || !vid) return;
+    var reveal = function () { cam.classList.add('photo-on'); };
+    vid.addEventListener('loadeddata', reveal);
+    vid.addEventListener('canplay', reveal);
+    if (vid.readyState >= 2) reveal();
+    if (base === 'ix-lanka') { var pp = vid.play(); if (pp && pp.catch) pp.catch(function () {}); }
+  });
+  function playVid(v) { if (v && v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } }
 
   // ── Riferimenti ────────────────────────────────────────────
   function g(id) { return intro.querySelector('#' + id); }
   var R = {
     lanka: g('ix-lanka'), lankaCam: g('ix-lanka-cam'),
-    globe: g('ix-globe'), globeCam: g('ix-globe-cam'),
-    italy: g('ix-italy'), italyCam: g('ix-italy-cam'),
+    globe: g('ix-globe'), globeCam: g('ix-globe-cam'), globeVid: g('ix-globe-vid'),
+    italy: g('ix-italy'), italyCam: g('ix-italy-cam'), italyVid: g('ix-italy-vid'),
     clouds: g('ix-clouds'), puffs: intro.querySelectorAll('.intro-clouds .puff'),
     cap1: g('ix-cap1'), cap2: g('ix-cap2'), cap3: g('ix-cap3'),
     ignite: g('ix-ignite'), glow: g('ix-glow'), mark: intro.querySelector('.ig-mark'),
@@ -177,6 +181,7 @@
     /* ── Scena 2: Globo — zoom verso l'Italia (transform-origin: 36% 35%) ── */
     var globeA = ramp(p, 0.30, 0.74, 0.10);
     setOpac(R.globe, globeA);
+    if (globeA > 0.02) playVid(R.globeVid);
     var gT = seg(p, 0.30, 0.74);
     var gScale = lerp(0.82, 1.85, ease(gT));
     setT(R.globeCam, 'translate3d(0,' + lerp(1, 0, ease(gT)) + '%,0) scale(' + gScale + ')');
@@ -184,6 +189,7 @@
     /* ── Scena 3: Italia — discesa sulle colline ─────────────── */
     var italyA = ramp(p, 0.68, 0.985, 0.09);
     setOpac(R.italy, italyA);
+    if (italyA > 0.02) playVid(R.italyVid);
     var itT = seg(p, 0.68, 0.96);
     setT(R.italyCam, 'translate3d(0,' + lerp(-6, 0, ease(itT)) + '%,0) scale(' + lerp(1.5, 1.0, ease(itT)) + ')');
 
