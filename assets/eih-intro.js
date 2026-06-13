@@ -98,9 +98,11 @@
   }
   function onTime() {
     var ct = clip.currentTime || 0;
-    capAt(ct, R.cap1, 0.5, 3.4);
-    capAt(ct, R.cap2, 4.9, 7.6);
-    capAt(ct, R.cap3, 8.2, 13.8);
+    // Finestre agganciate alle scene del clip (~6.9s, fade-out a 6.23s):
+    // spiaggia 0-3.6s · stacco nero ~3.8-4.2s · Terra dallo spazio ~4.4-5.2s · arrivo ~5.3-6.5s.
+    capAt(ct, R.cap1, 0.4, 3.3);
+    capAt(ct, R.cap2, 4.3, 5.4);
+    capAt(ct, R.cap3, 5.5, 6.4);
   }
   clip.addEventListener('timeupdate', onTime);
 
