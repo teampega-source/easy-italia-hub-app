@@ -70,9 +70,13 @@
   intro.setAttribute('aria-hidden', 'true');
 
   intro.innerHTML =
-    // ░░ SCENA 1 — Sri Lanka (alba sull'oceano) ░░
+    // ░░ SCENA 1 — Sri Lanka (alba sull'oceano) — video reale (Veo), poster come fallback ░░
     '<div class="scene scene-lanka" id="ix-lanka">' +
-      '<div class="scene-stage scene-photo" id="ix-lanka-cam" style="background-image:url(\'' + IMG_LANKA + '\')"></div>' +
+      '<div class="scene-stage scene-photo" id="ix-lanka-cam">' +
+        '<video class="scene-video" id="ix-lanka-vid" autoplay muted loop playsinline preload="auto" poster="' + IMG_LANKA + '">' +
+          '<source src="/assets/intro/lanka.mp4" type="video/mp4"/>' +
+        '</video>' +
+      '</div>' +
     '</div>' +
 
     // ░░ SCENA 2 — Terra dallo spazio (il viaggio) ░░
@@ -119,9 +123,10 @@
   document.body.insertBefore(intro, first);
   document.body.insertBefore(spacer, intro.nextSibling);
 
-  // Anti-flash: carica le foto e rivela ciascuna scena con un fade quando è pronta
+  // Anti-flash: carica gli sfondi e rivela ciascuna scena con un fade quando è pronta
   // (evita il lampo scuro prima che lo sfondo sia disponibile).
-  [[IMG_LANKA, 'ix-lanka-cam'], [IMG_GLOBE, 'ix-globe-cam'], [IMG_ITALY, 'ix-italy-cam']]
+  // Scene 2 e 3: foto. Scena 1: video reale (poster come fallback immediato).
+  [[IMG_GLOBE, 'ix-globe-cam'], [IMG_ITALY, 'ix-italy-cam']]
     .forEach(function (pair) {
       var el = intro.querySelector('#' + pair[1]);
       var im = new Image();
@@ -129,6 +134,14 @@
       im.src = pair[0];
       if (im.complete && el) el.classList.add('photo-on'); // già in cache
     });
+  var lvid = intro.querySelector('#ix-lanka-vid'), lcam = intro.querySelector('#ix-lanka-cam');
+  if (lvid && lcam) {
+    var revealLanka = function () { lcam.classList.add('photo-on'); };
+    lvid.addEventListener('loadeddata', revealLanka);
+    lvid.addEventListener('canplay', revealLanka);
+    if (lvid.readyState >= 2) revealLanka();
+    var pp = lvid.play(); if (pp && pp.catch) pp.catch(function () {}); // autoplay best-effort
+  } else { new Image().src = IMG_LANKA; } // fallback: precarica almeno il poster
 
   // ── Riferimenti ────────────────────────────────────────────
   function g(id) { return intro.querySelector('#' + id); }
