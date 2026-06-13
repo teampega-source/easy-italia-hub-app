@@ -48,7 +48,7 @@ html.eih-intro-on body{background:#05070d}
 .intro-clouds{position:absolute;inset:0;opacity:0;will-change:opacity}
 .intro-clouds .puff{position:absolute;border-radius:50%;
   background:radial-gradient(circle at 40% 38%, #ffffff 0%, #f3eee6cc 36%, #f3eee600 70%);
-  filter:blur(8px);will-change:transform}
+  filter:blur(6px);will-change:transform}
 
 /* ─── Didascalie ─── */
 .intro-cap{position:absolute;left:0;right:0;text-align:center;padding:0 8vw;
