@@ -74,9 +74,6 @@
       '<div class="ig-glow"></div>' +
       '<div class="ig-mark">Easy <span class="accent">Italia</span> Hub</div>' +
       '<p class="ig-tag">' + T.tag + '</p>' +
-      '<button class="ig-enter" id="ix-enter" type="button">' + T.go +
-        '<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>' +
-      '</button>' +
     '</div>' +
 
     '<button class="intro-skip" id="ix-skip" type="button">' + T.skip + ' ✕</button>';
@@ -101,9 +98,9 @@
   }
   function onTime() {
     var ct = clip.currentTime || 0;
-    capAt(ct, R.cap1, 0.5, 4.0);
-    capAt(ct, R.cap2, 5.2, 8.2);
-    capAt(ct, R.cap3, 9.4, 13.6);
+    capAt(ct, R.cap1, 0.5, 3.4);
+    capAt(ct, R.cap2, 4.9, 7.6);
+    capAt(ct, R.cap3, 8.2, 13.8);
   }
   clip.addEventListener('timeupdate', onTime);
 
@@ -113,7 +110,7 @@
     if (ended) return;
     ended = true;
     intro.classList.add('is-end');
-    var e = g('ix-enter'); if (e) try { e.focus(); } catch (x) {}
+    setTimeout(enter, 2800); // dopo l'accensione del marchio si entra in home da soli
   }
   clip.addEventListener('ended', showIgnite);
 
@@ -135,7 +132,6 @@
   }
 
   g('ix-skip').addEventListener('click', enter);
-  g('ix-enter').addEventListener('click', enter);
   document.addEventListener('keydown', function (e) { if (!locked && e.key === 'Escape') enter(); });
 
   // ── Avvio + reti di sicurezza ──────────────────────────────
