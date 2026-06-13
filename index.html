@@ -479,7 +479,7 @@ body.has-banner{scroll-padding-top:96px}
 /* ─── CARD: premium frosted-glass with coloured icon area ─── */
 .card{
   position:relative;border-radius:20px;overflow:hidden;
-  cursor:pointer;
+  cursor:pointer;display:block;text-decoration:none;color:inherit;
   background:rgba(255,253,250,0.82);
   backdrop-filter:blur(24px) saturate(1.6);
   -webkit-backdrop-filter:blur(24px) saturate(1.6);
@@ -2305,7 +2305,7 @@ html.returning #preloader{display:none}
   <div class="hero-right" aria-label="Sezioni del sito">
     <div class="cards-grid">
 
-      <article class="card" tabindex="0" aria-label="Permesso di Soggiorno – guida burocrazia">
+      <a class="card" href="guide.html" aria-label="Permesso di Soggiorno – guida burocrazia">
         <div class="card-img">
           <img src="/assets/img/card-permesso.svg"
                alt="Permesso di Soggiorno" loading="lazy" width="240" height="138"
@@ -2317,9 +2317,9 @@ html.returning #preloader{display:none}
           <p class="card-title" data-i18n="card1.title">Permesso di Soggiorno</p>
           <p class="card-sub" data-i18n="card1.sub">Guida completa al rinnovo</p>
         </div>
-      </article>
+      </a>
 
-      <article class="card" tabindex="0" aria-label="Assistente AI multilingua 24/7">
+      <a class="card" href="percorso.html" aria-label="Assistente AI multilingua 24/7">
         <div class="card-img">
           <img src="/assets/img/card-ai.svg"
                alt="Assistente AI" loading="lazy" width="240" height="138"
@@ -2331,9 +2331,9 @@ html.returning #preloader{display:none}
           <p class="card-title" data-i18n="card2.title">Assistente AI</p>
           <p class="card-sub" data-i18n="card2.sub">Risposte multilingua 24/7</p>
         </div>
-      </article>
+      </a>
 
-      <article class="card" tabindex="0" aria-label="Community srilankese in Italia">
+      <a class="card" href="community.html" aria-label="Community srilankese in Italia">
         <div class="card-img">
           <img src="/assets/img/card-community.svg"
                alt="Community Srilankese" loading="lazy" width="240" height="138"
@@ -2345,9 +2345,9 @@ html.returning #preloader{display:none}
           <p class="card-title" data-i18n="card3.title">Community</p>
           <p class="card-sub" data-i18n="card3.sub">Confronto e supporto tra pari</p>
         </div>
-      </article>
+      </a>
 
-      <article class="card" tabindex="0" aria-label="Money Transfer verso Sri Lanka">
+      <a class="card" href="money-transfer.html" aria-label="Money Transfer verso Sri Lanka">
         <div class="card-img">
           <img src="/assets/img/card-money.svg"
                alt="Money Transfer" loading="lazy" width="240" height="138"
@@ -2359,7 +2359,7 @@ html.returning #preloader{display:none}
           <p class="card-title" data-i18n="card4.title">Money Transfer</p>
           <p class="card-sub" data-i18n="card4.sub">Wise, Ria, Western Union</p>
         </div>
-      </article>
+      </a>
 
     </div>
   </div>
