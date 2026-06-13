@@ -20,7 +20,7 @@ html.eih-intro-on body{background:#05070d}
   -webkit-user-select:none;user-select:none;
   contain:strict;
 }
-.eih-intro .intro-skip,.eih-intro .ig-enter{pointer-events:auto}
+.eih-intro .intro-skip,.eih-intro .intro-unmute,.eih-intro .ig-enter{pointer-events:auto}
 
 /* ─── Clip a tutto schermo ─── */
 .eih-intro .ix-clip{position:absolute;inset:0;width:100%;height:100%;
@@ -79,6 +79,13 @@ html.eih-intro-on body{background:#05070d}
   cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   transition:background .2s,color .2s,opacity .4s}
 .intro-skip:hover{background:rgba(255,255,255,.16);color:#fff}
+.intro-unmute{position:fixed;bottom:max(24px,env(safe-area-inset-bottom));right:20px;z-index:1300;
+  display:flex;align-items:center;justify-content:center;
+  width:2.6rem;height:2.6rem;border-radius:50%;font-size:1.25rem;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:background .2s,transform .15s}
+.intro-unmute:hover{background:rgba(255,255,255,.2);transform:scale(1.08)}
 
 /* Vignettatura cinematografica costante (oltre a quella nel clip) */
 .eih-intro .intro-vignette{position:absolute;inset:0;pointer-events:none;

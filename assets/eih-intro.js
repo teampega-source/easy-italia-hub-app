@@ -59,6 +59,7 @@
     '<video class="ix-clip" id="ix-clip" autoplay muted playsinline preload="auto" poster="/assets/intro/journey-poster.jpg">' +
       '<source src="/assets/intro/journey.mp4" type="video/mp4"/>' +
     '</video>' +
+    '<audio id="ix-audio" preload="auto" src="/assets/intro/intro-music.mp3"></audio>' +
     '<div class="intro-vignette"></div>' +
 
     // ░░ Didascalie multilingua (temporizzate sul clip) ░░
@@ -76,7 +77,8 @@
       '<p class="ig-tag">' + T.tag + '</p>' +
     '</div>' +
 
-    '<button class="intro-skip" id="ix-skip" type="button">' + T.skip + ' ✕</button>';
+    '<button class="intro-skip" id="ix-skip" type="button">' + T.skip + ' ✕</button>' +
+    '<button class="intro-unmute" id="ix-unmute" type="button" aria-label="Attiva audio" style="display:none">🔇</button>';
 
   document.documentElement.classList.add('eih-intro-on');
   document.body.insertBefore(intro, document.body.firstChild);
@@ -84,7 +86,31 @@
 
   function g(id) { return intro.querySelector('#' + id); }
   var clip = g('ix-clip');
+  var aud  = g('ix-audio');
   var R = { cap1: g('ix-cap1'), cap2: g('ix-cap2'), cap3: g('ix-cap3'), ignite: g('ix-ignite') };
+
+  // ── Audio: tenta autoplay, mostra 🔇 se bloccato ──────────
+  var audPlaying = false;
+  function tryPlayAudio() {
+    if (audPlaying) return;
+    aud.volume = 0.55;
+    var p = aud.play();
+    if (p && p.then) {
+      p.then(function () { audPlaying = true; }).catch(function () {
+        g('ix-unmute').style.display = 'flex';
+      });
+    } else {
+      audPlaying = true;
+    }
+  }
+  clip.addEventListener('playing', tryPlayAudio);
+  var unmuteBtn = g('ix-unmute');
+  unmuteBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    audPlaying = false;
+    tryPlayAudio();
+    unmuteBtn.style.display = 'none';
+  });
 
   // ── Didascalie sincronizzate col tempo del clip ────────────
   // Finestre scelte per stare dentro le scene (evitano le transizioni nere).
@@ -117,11 +143,21 @@
   clip.addEventListener('ended', showIgnite);
 
   // ── Conclusione: entra in home ─────────────────────────────
+  function fadeAudio(ms) {
+    if (!audPlaying) return;
+    var steps = 20, step = 0;
+    var iv = setInterval(function () {
+      step++;
+      aud.volume = Math.max(0, 0.55 * (1 - step / steps));
+      if (step >= steps) { clearInterval(iv); try { aud.pause(); } catch(e) {} }
+    }, ms / steps);
+  }
   function enter() {
     if (locked) return;
     locked = true;
     try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
     try { clip.pause(); } catch (e) {}
+    fadeAudio(600);
     intro.style.transition = 'opacity .6s ease';
     intro.style.opacity = '0';
     intro.style.pointerEvents = 'none';
