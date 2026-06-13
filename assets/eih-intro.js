@@ -161,16 +161,15 @@
   };
 
   // ── Loop di rendering ──────────────────────────────────────
-  var ticking = false, locked = false;
-  function calcP() {
+  // Loop continuo a rAF con smorzamento: il progresso "insegue" lo scroll con
+  // easing, così il movimento resta fluido anche se qualche frame salta.
+  var locked = false, cur = 0, raf = 0;
+  function targetP() {
     var denom = spacer.offsetHeight - window.innerHeight;
     return clamp(window.scrollY / (denom > 1 ? denom : 1), 0, 1);
   }
 
-  function render() {
-    ticking = false;
-    if (locked) return;
-    var p = calcP();
+  function render(p) {
 
     /* ── Scena 1: Sri Lanka — si solleva, la terra si allontana ── */
     var lankaA = 1 - seg(p, 0.26, 0.40);
@@ -183,7 +182,7 @@
     setOpac(R.globe, globeA);
     if (globeA > 0.02) playVid(R.globeVid);
     var gT = seg(p, 0.30, 0.74);
-    var gScale = lerp(0.82, 1.85, ease(gT));
+    var gScale = lerp(0.9, 1.55, ease(gT));
     setT(R.globeCam, 'translate3d(0,' + lerp(1, 0, ease(gT)) + '%,0) scale(' + gScale + ')');
 
     /* ── Scena 3: Italia — discesa sulle colline ─────────────── */
@@ -191,7 +190,7 @@
     setOpac(R.italy, italyA);
     if (italyA > 0.02) playVid(R.italyVid);
     var itT = seg(p, 0.68, 0.96);
-    setT(R.italyCam, 'translate3d(0,' + lerp(-6, 0, ease(itT)) + '%,0) scale(' + lerp(1.5, 1.0, ease(itT)) + ')');
+    setT(R.italyCam, 'translate3d(0,' + lerp(-6, 0, ease(itT)) + '%,0) scale(' + lerp(1.28, 1.0, ease(itT)) + ')');
 
     /* ── Nuvole nelle due transizioni ─────────────────────────── */
     var cloudA = Math.max(ramp(p, 0.24, 0.46, 0.06), ramp(p, 0.62, 0.84, 0.06));
@@ -221,9 +220,6 @@
 
     /* ── Hint scroll iniziale ─────────────────────────────────── */
     setOpac(R.hint, p < 0.08 ? 1 - seg(p, 0.02, 0.08) : 0);
-
-    /* ── Fine del viaggio: entra in home ─────────────────────── */
-    if (p >= 0.995) complete();
   }
 
   function setOpac(el, v) { if (el) el.style.opacity = v; }
@@ -234,15 +230,22 @@
     el.style.transform = 'translate3d(0,' + lerp(26, 0, Math.min(1, a * 1.4)) + 'px,0)';
   }
 
-  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(render); } }
+  function loop() {
+    if (locked) return;
+    var t = targetP();
+    cur += (t - cur) * 0.18;
+    if (Math.abs(t - cur) < 0.0005) cur = t;
+    render(cur);
+    if (t >= 0.999) { complete(); return; }
+    raf = requestAnimationFrame(loop);
+  }
 
   // ── Conclusione: dissolvi overlay ed entra in home ─────────
   function complete() {
     if (locked) return;
     locked = true;
     try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
-    window.removeEventListener('scroll', onScroll);
-    window.removeEventListener('resize', onScroll);
+    if (raf) cancelAnimationFrame(raf);
     intro.style.transition = 'opacity .6s ease';
     intro.style.opacity = '0';
     intro.style.pointerEvents = 'none';
@@ -262,9 +265,7 @@
 
   // ── Avvio ──────────────────────────────────────────────────
   window.scrollTo(0, 0);
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-  setTimeout(function () { window.scrollTo(0, 0); render(); }, 60);
+  setTimeout(function () { window.scrollTo(0, 0); cur = 0; raf = requestAnimationFrame(loop); }, 60);
   setTimeout(function () { if (!locked) setOpac(R.hint, 1); }, 900);
 
   function cloud(x, y, s) {
