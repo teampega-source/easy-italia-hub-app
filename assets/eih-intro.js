@@ -98,9 +98,9 @@
   }
   function onTime() {
     var ct = clip.currentTime || 0;
-    capAt(ct, R.cap1, 0.5, 3.4);
-    capAt(ct, R.cap2, 4.9, 7.6);
-    capAt(ct, R.cap3, 8.2, 13.8);
+    capAt(ct, R.cap1, 0.4, 2.2);
+    capAt(ct, R.cap2, 2.9, 5.6);
+    capAt(ct, R.cap3, 6.3, 7.9);
   }
   clip.addEventListener('timeupdate', onTime);
 
