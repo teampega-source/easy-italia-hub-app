@@ -13,13 +13,18 @@ html.eih-intro-on #eih-progress{opacity:0!important;pointer-events:none!importan
 html.eih-intro-on #bg,html.eih-intro-on #noise{opacity:0!important}
 html.eih-intro-on body{background:#05070d}
 
-/* Spacer che genera la lunghezza di scroll del viaggio */
-#eih-intro-spacer{height:560vh;width:100%;pointer-events:none;position:relative;z-index:0}
+/* Spacer che genera la lunghezza di scroll del viaggio.
+   Più corto che in passato per un ritmo più scorrevole (vedi media query mobile). */
+#eih-intro-spacer{height:520vh;width:100%;pointer-events:none;position:relative;z-index:0}
 
-/* Overlay fisso che copre il viewport durante il viaggio */
+/* Overlay fisso che copre il viewport durante il viaggio.
+   Il gradiente "alba" fa da base anti-flash finché la prima foto non carica
+   (così il primo frame non è un nero pieno ma un cielo all'alba). */
 .eih-intro{
   position:fixed;inset:0;z-index:1200;overflow:hidden;
-  background:#05070d;
+  background:
+    radial-gradient(120% 90% at 50% 110%, #f0a35e22 0%, transparent 55%),
+    linear-gradient(180deg, #060912 0%, #0a1020 42%, #1a1c24 78%, #2a2018 100%);
   -webkit-user-select:none;user-select:none;
   contain:strict;
 }
@@ -29,8 +34,11 @@ html.eih-intro-on body{background:#05070d}
 /* Layer base condiviso (full-bleed) */
 .eih-intro .scene{position:absolute;inset:0;will-change:opacity,transform}
 .eih-intro .scene-stage{position:absolute;inset:-6%;display:flex;align-items:center;justify-content:center;will-change:transform}
-/* Foto fotorealistiche come sfondo delle scene */
-.eih-intro .scene-photo{background-size:cover;background-position:center;background-repeat:no-repeat}
+/* Foto fotorealistiche come sfondo delle scene.
+   Partono trasparenti e fanno fade-in quando l'immagine è pronta (anti-flash). */
+.eih-intro .scene-photo{background-size:cover;background-position:center;background-repeat:no-repeat;
+  opacity:0;transition:opacity 1s ease}
+.eih-intro .scene-photo.photo-on{opacity:1}
 /* Globe: punto di zoom spostato verso l'Italia (ovest del centro immagine) */
 .eih-intro .scene-globe .scene-photo{transform-origin:36% 35%}
 
@@ -99,9 +107,13 @@ html.eih-intro-on body{background:#05070d}
 .eih-intro .intro-vignette{position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(120% 100% at 50% 50%, transparent 56%, rgba(0,0,0,.5) 100%)}
 
-/* Riduci il carico su mobile */
+/* Ritmo più rapido su tablet */
+@media (max-width:900px){
+  #eih-intro-spacer{height:470vh}
+}
+/* Riduci il carico e accorcia ancora lo scroll su mobile */
 @media (max-width:640px){
-  #eih-intro-spacer{height:500vh}
+  #eih-intro-spacer{height:400vh}
   .intro-clouds .puff:nth-child(n+5){display:none}
 }
 

@@ -23,6 +23,32 @@
   var IMG_GLOBE = 'https://d8j0ntlcm91z4.cloudfront.net/user_3EeaOppzppfYiZU22fyGRIqU1ot/hf_20260612_214658_726fa8cf-c5c8-4b0f-ab28-de84435b4a30.png';
   var IMG_ITALY = 'https://d8j0ntlcm91z4.cloudfront.net/user_3EeaOppzppfYiZU22fyGRIqU1ot/hf_20260612_214700_f1fffb04-b1dc-4f5f-b9c8-95e57b4c63ea.png';
 
+  // ── Localizzazione (stessa chiave del resto del sito: localStorage 'eih-lang') ──
+  var lang = (function () { try { return localStorage.getItem('eih-lang'); } catch (e) { return null; } }) ();
+  var DICT = {
+    it: { k1: 'Il viaggio',            l1: 'Da una casa<br/><em>lontana.</em>',
+          k2: 'Migliaia di chilometri', l2: 'Oltre l’oceano,<br/>oltre il <em>cielo.</em>',
+          k3: 'Una nuova terra',        l3: 'Arrivi in <em>Italia.</em>',
+          tag: 'La tua bussola nella vita italiana. Guide, AI multilingua e community — tutto in un posto.',
+          enter: 'Scorri per entrare', hint: 'Scorri', skip: 'Salta intro' },
+    en: { k1: 'The journey',           l1: 'From a home<br/><em>far away.</em>',
+          k2: 'Thousands of kilometres', l2: 'Across the ocean,<br/>across the <em>sky.</em>',
+          k3: 'A new land',            l3: 'You arrive in <em>Italy.</em>',
+          tag: 'Your compass for life in Italy. Guides, multilingual AI and community — all in one place.',
+          enter: 'Scroll to enter', hint: 'Scroll', skip: 'Skip intro' },
+    si: { k1: 'ගමන',                   l1: 'දුර ඈත<br/><em>නිවසකින්.</em>',
+          k2: 'කිලෝමීටර් දහස් ගණනක්',  l2: 'සාගරය තරණය කර,<br/>අහස <em>තරණය කර.</em>',
+          k3: 'නව දේශයක්',             l3: 'ඔබ <em>ඉතාලියට</em> පැමිණේ.',
+          tag: 'ඉතාලියේ ඔබේ ජීවිතයේ මාර්ගෝපදේශකය. මාර්ගෝපදේශ, බහුභාෂා AI සහ ප්‍රජාව — සියල්ල එක තැනක.',
+          enter: 'ඇතුළු වීමට අනුචලනය කරන්න', hint: 'අනුචලනය කරන්න', skip: 'හැඳින්වීම මඟ හරින්න' },
+    ta: { k1: 'பயணம்',                 l1: 'வெகு தொலைவில் உள்ள<br/><em>வீட்டிலிருந்து.</em>',
+          k2: 'ஆயிரக்கணக்கான கிலோமீட்டர்கள்', l2: 'கடலைக் கடந்து,<br/>வானத்தைக் <em>கடந்து.</em>',
+          k3: 'ஒரு புதிய நாடு',        l3: 'நீங்கள் <em>இத்தாலிக்கு</em> வந்தடைகிறீர்கள்.',
+          tag: 'இத்தாலியில் உங்கள் வாழ்க்கையின் திசைகாட்டி. வழிகாட்டிகள், பன்மொழி AI மற்றும் சமூகம் — அனைத்தும் ஒரே இடத்தில்.',
+          enter: 'நுழைய உருட்டவும்', hint: 'உருட்டவும்', skip: 'அறிமுகத்தைத் தவிர்க்கவும்' }
+  };
+  var T = DICT[lang] || DICT.it;
+
   // ── Utility ────────────────────────────────────────────────
   function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
   function seg(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
@@ -68,33 +94,41 @@
     '<div class="intro-vignette"></div>' +
 
     // ░░ Didascalie ░░
-    '<div class="intro-cap" id="ix-cap1"><p class="cap-kicker">Il viaggio</p>' +
-      '<p class="cap-line">Da una casa<br/><em>lontana.</em></p></div>' +
-    '<div class="intro-cap" id="ix-cap2"><p class="cap-kicker">Migliaia di chilometri</p>' +
-      '<p class="cap-line">Oltre l’oceano,<br/>oltre il <em>cielo.</em></p></div>' +
-    '<div class="intro-cap" id="ix-cap3"><p class="cap-kicker">Una nuova terra</p>' +
-      '<p class="cap-line">Arrivi in <em>Italia.</em></p></div>' +
+    '<div class="intro-cap" id="ix-cap1"><p class="cap-kicker">' + T.k1 + '</p>' +
+      '<p class="cap-line">' + T.l1 + '</p></div>' +
+    '<div class="intro-cap" id="ix-cap2"><p class="cap-kicker">' + T.k2 + '</p>' +
+      '<p class="cap-line">' + T.l2 + '</p></div>' +
+    '<div class="intro-cap" id="ix-cap3"><p class="cap-kicker">' + T.k3 + '</p>' +
+      '<p class="cap-line">' + T.l3 + '</p></div>' +
 
     // ░░ SCENA 4 — accensione del marchio ░░
     '<div class="scene-ignite" id="ix-ignite">' +
       '<div class="ig-glow" id="ix-glow"></div>' +
       '<div class="ig-mark">Easy <span class="accent">Italia</span> Hub</div>' +
-      '<p class="ig-tag">La tua bussola nella vita italiana. Guide, AI multilingua e community — tutto in un posto.</p>' +
-      '<span class="ig-enter">Scorri per entrare ' +
+      '<p class="ig-tag">' + T.tag + '</p>' +
+      '<span class="ig-enter">' + T.enter + ' ' +
         '<svg viewBox="0 0 24 24"><line x1="12" y1="3" x2="12" y2="19"/><polyline points="6 13 12 19 18 13"/></svg>' +
       '</span>' +
     '</div>' +
 
-    '<div class="intro-hint" id="ix-hint">Scorri<span class="hint-wheel"></span></div>' +
-    '<button class="intro-skip" id="ix-skip" type="button">Salta intro ✕</button>';
+    '<div class="intro-hint" id="ix-hint">' + T.hint + '<span class="hint-wheel"></span></div>' +
+    '<button class="intro-skip" id="ix-skip" type="button">' + T.skip + ' ✕</button>';
 
   document.documentElement.classList.add('eih-intro-on');
   var first = document.body.firstChild;
   document.body.insertBefore(intro, first);
   document.body.insertBefore(spacer, intro.nextSibling);
 
-  // Precarica le immagini delle scene successive in background
-  [IMG_GLOBE, IMG_ITALY].forEach(function (src) { new Image().src = src; });
+  // Anti-flash: carica le foto e rivela ciascuna scena con un fade quando è pronta
+  // (evita il lampo scuro prima che lo sfondo sia disponibile).
+  [[IMG_LANKA, 'ix-lanka-cam'], [IMG_GLOBE, 'ix-globe-cam'], [IMG_ITALY, 'ix-italy-cam']]
+    .forEach(function (pair) {
+      var el = intro.querySelector('#' + pair[1]);
+      var im = new Image();
+      im.onload = function () { if (el) el.classList.add('photo-on'); };
+      im.src = pair[0];
+      if (im.complete && el) el.classList.add('photo-on'); // già in cache
+    });
 
   // ── Riferimenti ────────────────────────────────────────────
   function g(id) { return intro.querySelector('#' + id); }
