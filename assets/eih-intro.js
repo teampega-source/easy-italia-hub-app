@@ -98,9 +98,10 @@
   }
   function onTime() {
     var ct = clip.currentTime || 0;
-    capAt(ct, R.cap1, 0.4, 2.2);
-    capAt(ct, R.cap2, 2.9, 5.6);
-    capAt(ct, R.cap3, 6.3, 7.9);
+    // Finestre ritarate sul clip cinematografico da ~6.9s (fade-out a 6.23s).
+    capAt(ct, R.cap1, 0.3, 2.0);
+    capAt(ct, R.cap2, 2.4, 4.3);
+    capAt(ct, R.cap3, 4.7, 6.5);
   }
   clip.addEventListener('timeupdate', onTime);
 
