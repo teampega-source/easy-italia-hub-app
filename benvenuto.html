@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Easy Italia Hub — Benvenuto</title>
+  <style>
+    /* ─── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── Design tokens ─────────────────────────────────────── */
+    :root {
+      --sage:       #7A9E7E;
+      --sage-light: #9DBEA1;
+      --cream:      #EDE7DB;
+      --cream-dim:  #B8B0A4;
+      --charcoal:   #171A21;
+      --panel:      #1D2030;
+      --gold:       #C9A96E;
+      --gold-dim:   rgba(201, 169, 110, .32);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+                   'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      background: var(--charcoal);
+      color: var(--cream);
+    }
+
+    /* ─── Page: horizontal split ─────────────────────────────── */
+    .page {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ════ LEFT PANEL ════════════════════════════════════════════ */
+    .panel-left {
+      flex: 1 1 56%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 3rem;
+      position: relative;
+      background: linear-gradient(148deg, #171A21 0%, #1C2132 55%, #141820 100%);
+      overflow: hidden;
+    }
+
+    /* Ambient glow blobs */
+    .panel-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 48% at 38% 46%, rgba(122,158,126,.07) 0%, transparent 100%),
+        radial-gradient(ellipse 42% 36% at 68% 66%, rgba(201,169,110,.05) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* Vertical gold separator */
+    .panel-left::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 8%; height: 84%;
+      width: 1px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        var(--gold-dim) 22%,
+        rgba(201,169,110,.52) 50%,
+        var(--gold-dim) 78%,
+        transparent 100%);
+    }
+
+    /* ── Brand mark ── */
+    .brand {
+      font-size: .62rem;
+      font-weight: 500;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4rem;
+      opacity: 0;
+      animation: fadeUp .7s cubic-bezier(.22,1,.36,1) forwards .1s;
+    }
+
+    /* ── Three words ── */
+    .words {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .35rem;
+      margin-bottom: 3.2rem;
+    }
+
+    .word {
+      display: block;
+      font-size: clamp(2.6rem, 4.2vw, 5rem);
+      font-weight: 200;
+      letter-spacing: .05em;
+      line-height: 1.18;
+      opacity: 0;
+      animation: fadeUp .95s cubic-bezier(.22,1,.36,1) forwards;
+    }
+
+    .w1 { color: var(--cream);      animation-delay: .35s; }
+    .w2 { color: var(--sage-light); animation-delay: .65s; }
+    .w3 { color: var(--gold);       animation-delay: .95s; font-weight: 300; }
+
+    /* ── Gold rule ── */
+    .rule {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 0 auto 3.2rem;
+      opacity: 0;
+      animation: fadeIn .55s ease forwards 1.35s;
+    }
+
+    /* ── CTA button ── */
+    .btn-enter {
+      position: relative;
+      padding: .88rem 3.8rem;
+      font-family: inherit;
+      font-size: .7rem;
+      font-weight: 500;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: transparent;
+      border: 1px solid rgba(201,169,110,.48);
+      border-radius: 2px;
+      cursor: pointer;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeIn .65s ease forwards 1.55s;
+      transition: color .32s ease, transform .22s ease,
+                  box-shadow .32s ease, border-color .32s ease;
+    }
+
+    /* Fill sweep on hover */
+    .btn-enter::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform .34s cubic-bezier(.76,0,.24,1);
+      z-index: 0;
+    }
+
+    .btn-enter span { position: relative; z-index: 1; }
+
+    .btn-enter:hover {
+      color: #1B1E26;
+      border-color: var(--gold);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px rgba(201,169,110,.22);
+    }
+
+    .btn-enter:hover::after { transform: scaleX(1); }
+    .btn-enter:active       { transform: translateY(-1px); }
+
+    /* ── Tagline ── */
+    .tagline {
+      margin-top: 2.4rem;
+      font-size: .68rem;
+      letter-spacing: .14em;
+      color: var(--cream-dim);
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn .6s ease forwards 1.8s;
+    }
+
+    /* ════ RIGHT PANEL ═══════════════════════════════════════════ */
+    .panel-right {
+      flex: 0 0 44%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 2.4rem 2.2rem 2.4rem 2.8rem;
+      background: var(--panel);
+    }
+
+    /* ── Image cards ── */
+    .card {
+      flex: 1;
+      position: relative;
+      border-radius: 9px;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeSlideIn .8s cubic-bezier(.22,1,.36,1) forwards;
+    }
+
+    .card:nth-child(1) { animation-delay: .50s; }
+    .card:nth-child(2) { animation-delay: .75s; }
+    .card:nth-child(3) { animation-delay: 1.00s; }
+
+    .card-img {
+      position: absolute;
+      inset: 0;
+      transition: transform .65s cubic-bezier(.25,.46,.45,.94);
+    }
+
+    .card:hover .card-img { transform: scale(1.07); }
+
+    /* Italy: Mediterranean warmth — sky · hills · terracotta */
+    .card-img.italy {
+      background:
+        radial-gradient(ellipse at 50% -4%, rgba(255,210,110,.18) 0%, transparent 52%),
+        radial-gradient(circle  at 12% 88%, rgba(0,70,130,.28)    0%, transparent 44%),
+        linear-gradient(172deg,
+          #7DB3D8 0%,
+          #90BA9C 16%,
+          #6E9E6E 30%,
+          #A87E56 50%,
+          #C04E2C 66%,
+          #8B2A0E 83%,
+          #5A1808 100%
+        );
+    }
+
+    /* Sri Lanka: tropical island — sun · jungle · ocean */
+    .card-img.srilanka {
+      background:
+        radial-gradient(circle  at 80%  7%, rgba(255,205,60,.68) 0%, transparent 30%),
+        radial-gradient(ellipse at 22% 96%, rgba(0,100,160,.48)  0%, transparent 44%),
+        linear-gradient(165deg,
+          #E47830 0%,
+          #B85418 10%,
+          #38804E 26%,
+          #1C5E36 48%,
+          #144E2C 64%,
+          #006898 81%,
+          #004880 100%
+        );
+    }
+
+    /* Fusion: harmony of two worlds */
+    .card-img.fusion {
+      background:
+        radial-gradient(circle  at 50% 44%, rgba(201,169,110,.48) 0%, transparent 50%),
+        radial-gradient(circle  at  6% 38%, rgba(78,138,90,.52)   0%, transparent 40%),
+        radial-gradient(circle  at 94% 62%, rgba(168,56,18,.36)   0%, transparent 40%),
+        linear-gradient(148deg,
+          #28392A 0%,
+          #4A6848 22%,
+          #887050 40%,
+          #C9A96E 58%,
+          #784826 75%,
+          #283060 100%
+        );
+    }
+
+    /* ── Card label ── */
+    .card-label {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 2.8rem 1.1rem .8rem;
+      background: linear-gradient(to top, rgba(0,0,0,.72) 0%, transparent 100%);
+    }
+
+    .card-label-text {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      font-size: .6rem;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.88);
+    }
+
+    .card-label-text::before {
+      content: '';
+      display: block;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ════ @keyframes ════════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateX(18px); }
+      to   { opacity: 1; transform: translateX(0);    }
+    }
+
+    /* ════ Responsive ════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .page { flex-direction: column; }
+
+      .panel-left {
+        flex: none;
+        padding: 4.5rem 1.6rem 3.5rem;
+      }
+      .panel-left::after { display: none; }
+
+      .panel-right {
+        flex: none;
+        flex-direction: row;
+        padding: 1.2rem;
+        gap: .8rem;
+        height: 45vw;
+        min-height: 170px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .panel-right::-webkit-scrollbar { display: none; }
+
+      .card {
+        flex: 0 0 52vw;
+        min-height: 150px;
+      }
+
+      .word       { font-size: clamp(2rem, 9vw, 3.2rem); }
+      .brand      { margin-bottom: 2.4rem; }
+      .btn-enter  { padding: .82rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ── Left: words + CTA ────────────────────────────── -->
+    <div class="panel-left">
+      <p class="brand">Easy Italia Hub</p>
+
+      <div class="words">
+        <span class="word w1">Benvenuto</span>
+        <span class="word w2">Welcome</span>
+        <span class="word w3">ආයුබෝවන්</span>
+      </div>
+
+      <div class="rule"></div>
+
+      <button class="btn-enter" onclick="window.location.href='index.html'">
+        <span>Entra</span>
+      </button>
+
+      <p class="tagline">La tua bussola nella vita italiana</p>
+    </div>
+
+    <!-- ── Right: image cards ────────────────────────────── -->
+    <div class="panel-right">
+
+      <div class="card">
+        <div class="card-img italy"></div>
+        <div class="card-label">
+          <p class="card-label-text">Italia</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img srilanka"></div>
+        <div class="card-label">
+          <p class="card-label-text">Sri Lanka</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img fusion"></div>
+        <div class="card-label">
+          <p class="card-label-text">Insieme</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
