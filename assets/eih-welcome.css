@@ -1,10 +1,8 @@
 /* ═══════════════════════════════════════════════════════════
    Easy Italia Hub — Welcome overlay
-   Shown once per session (sessionStorage). Clicking "Entra"
-   fades it away, revealing the site underneath.
+   Mostra l'immagine di benvenuto; click su "Entra" la chiude.
    ═══════════════════════════════════════════════════════════ */
 
-/* While overlay is active: freeze body scroll */
 html.eih-wlc-on { overflow: hidden; }
 
 /* ── Overlay ────────────────────────────────────────────── */
@@ -15,269 +13,58 @@ html.eih-wlc-on { overflow: hidden; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background:
-    radial-gradient(ellipse 75% 55% at 50% 105%, rgba(195,175,135,.22) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 15% 15%,  rgba(215,200,165,.18) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 40% at 85% 10%,  rgba(195,215,195,.14) 0%, transparent 60%),
-    linear-gradient(158deg, #F9F4EC 0%, #EDE5D4 55%, #F4EDE3 100%);
-  opacity: 0;
-  animation: wlcFadeIn .5s ease .05s forwards;
-  transition: opacity .65s cubic-bezier(.4,0,.2,1),
-              transform .65s cubic-bezier(.4,0,.2,1);
+  background: rgba(0, 0, 0, .55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: wlcIn .4s ease forwards;
+  transition: opacity .55s ease;
 }
 
-@keyframes wlcFadeIn {
-  to { opacity: 1; }
+@keyframes wlcIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 .eih-welcome.is-leaving {
   opacity: 0 !important;
-  transform: scale(1.025);
   pointer-events: none;
 }
 
-/* ── Soft ambient blobs ────────────────────────────────── */
-.wlc-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(72px);
-  pointer-events: none;
-}
-.wlc-blob-1 {
-  width: 68vw; height: 58vh;
-  top: -18%; left: -12%;
-  background: rgba(215,198,160,.28);
-}
-.wlc-blob-2 {
-  width: 52vw; height: 52vh;
-  bottom: -14%; right: -8%;
-  background: rgba(175,205,180,.22);
-}
-.wlc-blob-3 {
-  width: 40vw; height: 40vh;
-  top: 28%; left: 28%;
-  background: rgba(225,210,175,.14);
-}
-
-/* ── Inner container ───────────────────────────────────── */
-.wlc-inner {
+/* ── Image container ────────────────────────────────────── */
+.wlc-img-wrap {
   position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.8rem;
-  width: 100%;
-  max-width: 920px;
-  padding: 2rem 1.5rem;
-}
-
-/* ── Globe icon ────────────────────────────────────────── */
-.wlc-globe {
-  font-size: 2.4rem;
-  line-height: 1;
-  filter: drop-shadow(0 4px 14px rgba(0,0,0,.14));
-  animation: wlcGlobe 5s ease-in-out infinite;
-}
-@keyframes wlcGlobe {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-4px); }
-}
-
-/* ── Cards row ─────────────────────────────────────────── */
-.wlc-cards {
-  display: flex;
-  gap: 1.2rem;
-  width: 100%;
-  align-items: stretch;
-}
-
-/* ── Single card ───────────────────────────────────────── */
-.wlc-card {
-  position: relative;
-  flex: 1;
-  overflow: hidden;
+  /* Max size: fill viewport minus padding, keep 3:2 ratio */
+  width:  min(92vw, calc(92vh * 3 / 2));
+  aspect-ratio: 3 / 2;
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,.88);
-  box-shadow:
-    0 16px 48px rgba(0,0,0,.11),
-    0  2px 10px rgba(0,0,0,.06),
-    inset 0 1px 0 rgba(255,255,255,.9);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 2.2rem 1.5rem 2rem;
-  min-height: 290px;
-  opacity: 0;
-  animation: wlcCardIn .65s cubic-bezier(.22,1,.36,1) forwards;
-}
-.wlc-card:nth-child(1) { animation-delay: .2s; }
-.wlc-card:nth-child(2) { animation-delay: .35s; }
-.wlc-card:nth-child(3) { animation-delay: .5s; }
-
-@keyframes wlcCardIn {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,.55), 0 4px 16px rgba(0,0,0,.3);
+  animation: wlcSlideUp .45s cubic-bezier(.22,1,.36,1) .05s both;
 }
 
-/* Landscape CSS art background */
-.wlc-card-bg {
-  position: absolute;
-  inset: 0;
+@keyframes wlcSlideUp {
+  from { opacity: 0; transform: translateY(24px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
 }
 
-/* Frosted white overlay for readability */
-.wlc-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(249,244,236,.76);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 0;
-}
-
-/* Card content */
-.wlc-card-body {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.wlc-img-wrap img {
+  display: block;
+  width: 100%;
   height: 100%;
-  gap: .75rem;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-.wlc-flag {
-  font-size: 2.2rem;
-  line-height: 1;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,.12));
-}
-
-.wlc-card-title {
-  font-family: 'Satoshi', system-ui, sans-serif;
-  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
-  font-weight: 400;
-  color: #252018;
-  letter-spacing: .02em;
-  line-height: 1.18;
-  margin: 0;
-}
-
-.wlc-card-sub {
-  font-family: 'Satoshi', system-ui, sans-serif;
-  font-size: .78rem;
-  font-weight: 300;
-  color: #6A6050;
-  letter-spacing: .03em;
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* ── Card landscape gradients ─────────────────────────── */
-
-/* Italy — Mediterranean warmth */
-.wlc-bg-it {
-  background:
-    radial-gradient(circle at 72% 18%, rgba(255,205,105,.75) 0%, transparent 40%),
-    radial-gradient(circle at 10% 80%, rgba(100,155,200,.35) 0%, transparent 40%),
-    linear-gradient(162deg,
-      #90BCE8 0%,
-      #A8C898 15%,
-      #88A870 30%,
-      #C8A062 50%,
-      #B87840 66%,
-      #986040 82%,
-      #705040 100%
-    );
-}
-
-/* Sri Lanka / center — tropical spirituality */
-.wlc-bg-en {
-  background:
-    radial-gradient(circle at 65% 12%, rgba(255,220,100,.65) 0%, transparent 44%),
-    radial-gradient(circle at 30% 88%, rgba(60,140,180,.38) 0%, transparent 44%),
-    linear-gradient(168deg,
-      #98C4E0 0%,
-      #90C0A0 18%,
-      #D8C090 42%,
-      #90B898 60%,
-      #6898B8 78%,
-      #508090 100%
-    );
-}
-
-/* Sri Lanka — tropical island */
-.wlc-bg-si {
-  background:
-    radial-gradient(circle at 78%  8%, rgba(255,208,68,.88) 0%, transparent 36%),
-    radial-gradient(ellipse at 22% 95%, rgba(10,110,168,.45) 0%, transparent 42%),
-    linear-gradient(164deg,
-      #D88038  0%,
-      #50985A 18%,
-      #28845A 40%,
-      #207888 60%,
-      #0A6088 78%,
-      #1C4870 100%
-    );
-}
-
-/* ── ENTRA button ──────────────────────────────────────── */
-.wlc-btn {
-  font-family: 'Satoshi', system-ui, sans-serif;
-  font-size: .9rem;
-  font-weight: 500;
-  letter-spacing: .04em;
-  color: #fff;
-  background: linear-gradient(135deg, #C8A258 0%, #D8B870 50%, #C8A258 100%);
-  border: none;
-  border-radius: 50px;
-  padding: .95rem 3rem;
+/* ── Clickable "Entra" button area ──────────────────────── */
+/* The image already shows the button visually; we overlay an
+   invisible hot-spot exactly where the button appears (roughly
+   bottom-centre, ~78-88% down, 28-72% wide). */
+.wlc-btn-hit {
+  position: absolute;
+  left: 25%; right: 25%;
+  top: 74%; bottom: 14%;
   cursor: pointer;
-  box-shadow:
-    0 6px 24px rgba(175,140,72,.38),
-    0 1px 4px  rgba(0,0,0,.08);
-  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
-  opacity: 0;
-  animation: wlcFadeIn .5s ease .7s forwards;
-}
-.wlc-btn:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 10px 32px rgba(175,140,72,.48),
-    0 2px 8px rgba(0,0,0,.1);
-  filter: brightness(1.06);
-}
-.wlc-btn:active { transform: translateY(0); }
-
-/* ── Tagline ───────────────────────────────────────────── */
-.wlc-tagline {
-  font-family: 'Satoshi', system-ui, sans-serif;
-  font-size: .6rem;
-  font-weight: 400;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: #9A9080;
-  opacity: 0;
-  animation: wlcFadeIn .5s ease .9s forwards;
-}
-
-/* ── Responsive ────────────────────────────────────────── */
-@media (max-width: 680px) {
-  .wlc-inner     { gap: 1.4rem; padding: 1.2rem 1rem; }
-  .wlc-cards     { gap: .7rem; }
-  .wlc-card      { padding: 1.5rem 1rem 1.4rem; min-height: 220px; border-radius: 14px; }
-  .wlc-card-title { font-size: clamp(1.2rem, 5vw, 1.6rem); }
-  .wlc-card-sub  { font-size: .68rem; }
-  .wlc-flag      { font-size: 1.6rem; }
-  .wlc-globe     { font-size: 1.8rem; }
-  .wlc-btn       { font-size: .8rem; padding: .8rem 2.2rem; }
-}
-
-@media (max-width: 440px) {
-  .wlc-cards { flex-direction: column; gap: .6rem; }
-  .wlc-card  { min-height: 130px; flex-direction: row; text-align: left; padding: 1rem 1.2rem; }
-  .wlc-card-body { flex-direction: row; align-items: center; gap: 1rem; }
-  .wlc-card-title { font-size: 1.3rem; }
+  border-radius: 50px;
+  /* Uncomment to debug: background: rgba(255,0,0,.3); */
 }
