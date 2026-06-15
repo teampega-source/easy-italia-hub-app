@@ -1868,7 +1868,13 @@ footer{
 }
 
 /* ─── TESTIMONIALS (kept for SEO / future) — hidden for now ─── */
-.testimonials-section{display:none}
+.testimonials-section{position:relative;z-index:1;padding:var(--sp-5) var(--sp-5);max-width:1380px;margin:0 auto}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-3);margin-top:var(--sp-4)}
+.testimonial{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:var(--sp-3);transition:border-color var(--dur-micro),box-shadow var(--dur-micro)}
+.testimonial:hover{border-color:var(--border-bright);box-shadow:0 8px 32px rgba(20,30,48,.08)}
+.t-stars{color:var(--gold);font-size:.85rem;letter-spacing:.12em;margin-bottom:.6rem;display:block}
+.t-text{font-size:var(--text-sm);line-height:1.75;color:var(--fg-secondary);font-weight:300;font-style:italic;margin-bottom:var(--sp-2)}
+.t-author{display:flex;align-items:center;gap:.75rem}
 .t-av{
   width:38px;height:38px;border-radius:50%;flex-shrink:0;
   background:linear-gradient(135deg,var(--blue-deep),var(--blue));
@@ -2098,6 +2104,90 @@ footer{
   .newsletter-row{flex-direction:column}
   .newsletter-input,.newsletter-btn{width:100%}
   .newsletter-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
+  .testimonials-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
+  .testimonials-grid{grid-template-columns:1fr}
+}
+/* ─── AI LIVE DEMO WIDGET ─── */
+.ai-demo-wrap{
+  background:rgba(8,6,4,.88);
+  border:1px solid rgba(200,169,110,.15);
+  border-radius:24px;
+  backdrop-filter:blur(20px) saturate(1.4);
+  -webkit-backdrop-filter:blur(20px) saturate(1.4);
+  box-shadow:0 24px 72px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07),0 0 60px rgba(58,123,213,.06);
+  overflow:hidden;width:100%;
+}
+.ai-demo-hdr{
+  display:flex;align-items:center;gap:.7rem;
+  padding:.9rem 1.2rem;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.02);
+}
+.ai-demo-avatar{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue));
+  display:flex;align-items:center;justify-content:center;
+}
+.ai-demo-avatar svg{stroke:#fff;fill:none;stroke-width:1.8}
+.ai-demo-hdr-info{flex:1;min-width:0}
+.ai-demo-hdr-name{display:block;font-family:'Clash Grotesk',sans-serif;font-size:.8rem;font-weight:600;color:#e8dcc8;letter-spacing:.03em}
+.ai-demo-hdr-status{display:flex;align-items:center;gap:.3rem;font-size:.63rem;color:#7d7058;letter-spacing:.04em;margin-top:.1rem}
+.ai-demo-status-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:statusPulse 2s ease infinite}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.35}}
+.ai-demo-lang-badge{
+  font-family:'Clash Grotesk',sans-serif;font-size:.63rem;font-weight:600;letter-spacing:.12em;
+  color:var(--gold);background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.22);
+  border-radius:var(--radius-full);padding:.2rem .6rem;flex-shrink:0;transition:opacity .3s;
+}
+.ai-demo-msgs{
+  padding:.85rem 1rem;min-height:220px;max-height:300px;overflow-y:auto;
+  display:flex;flex-direction:column;gap:.6rem;scrollbar-width:none;
+}
+.ai-demo-msgs::-webkit-scrollbar{display:none}
+.ai-demo-msg{display:flex}
+.ai-demo-msg--user{justify-content:flex-end}
+.ai-demo-msg--ai{justify-content:flex-start}
+.ai-demo-bubble{
+  max-width:84%;font-size:.77rem;line-height:1.6;
+  border-radius:16px;padding:.5rem .85rem;
+}
+.ai-demo-msg--user .ai-demo-bubble{
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue));
+  color:#fff;border-bottom-right-radius:4px;
+}
+.ai-demo-msg--ai .ai-demo-bubble{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+  color:#e8dcc8;border-bottom-left-radius:4px;
+}
+.ai-demo-dots-anim{display:flex;align-items:center;gap:.32rem;padding:.65rem .8rem;min-width:52px}
+.ai-demo-dots-anim span{width:6px;height:6px;border-radius:50%;background:#7d7058;animation:dotBounce 1.2s ease-in-out infinite}
+.ai-demo-dots-anim span:nth-child(2){animation-delay:.2s}
+.ai-demo-dots-anim span:nth-child(3){animation-delay:.4s}
+@keyframes dotBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.ai-demo-footer{padding:.7rem 1rem;border-top:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02)}
+.ai-demo-input-row{display:flex;align-items:center;gap:.5rem}
+.ai-demo-input-box{
+  flex:1;min-height:36px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius-full);padding:.45rem .9rem;
+  font-size:.75rem;color:#a89070;display:flex;align-items:center;
+  font-family:'Satoshi',sans-serif;overflow:hidden;
+}
+.ai-demo-cursor{display:inline-block;animation:cursorBlink .85s step-end infinite;color:var(--gold);margin-left:1px}
+@keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
+.ai-demo-send{
+  width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px var(--blue-glow);cursor:default;
+}
+.ai-demo-send svg{stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+/* Trust pills */
+.hero-trust-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.9rem;justify-content:center}
+.trust-pill{
+  font-size:.63rem;font-weight:500;letter-spacing:.07em;color:var(--fg-muted);
+  border:1px solid var(--border);border-radius:var(--radius-full);
+  padding:.28rem .72rem;background:rgba(255,255,255,.03);
 }
 </style>
 <script>/* enable reveal/intro states only when JS runs (no-JS shows content) */document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
@@ -2288,66 +2378,38 @@ footer{
     </dl>
   </div>
 
-  <!-- 3D cards with Liquid Glass iridescent borders -->
-  <div class="hero-right" aria-label="Sezioni del sito">
-    <div class="cards-grid">
-
-      <a class="card" href="guide.html" aria-label="Permesso di Soggiorno – guida burocrazia">
-        <div class="card-img">
-          <img src="/assets/img/card-permesso.svg"
-               alt="Permesso di Soggiorno" loading="lazy" width="240" height="138"
-               onerror="this.parentElement.style.background='linear-gradient(135deg,#1B4F8C,#3A7BD5)';this.remove()"/>
-          <div class="card-img-fade" aria-hidden="true"></div>
+  <!-- AI Live Demo -->
+  <div class="hero-right" aria-label="Demo Consigliere AI">
+    <div class="ai-demo-wrap">
+      <div class="ai-demo-hdr">
+        <div class="ai-demo-avatar" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z" stroke-linejoin="round" stroke-linecap="round"/></svg>
         </div>
-        <div class="card-body">
-          <span class="card-tag" style="background:rgba(27,79,140,.55);color:#93c5fd" data-i18n="card1.tag">Burocrazia</span>
-          <p class="card-title" data-i18n="card1.title">Permesso di Soggiorno</p>
-          <p class="card-sub" data-i18n="card1.sub">Guida completa al rinnovo</p>
+        <div class="ai-demo-hdr-info">
+          <span class="ai-demo-hdr-name">Consigliere AI</span>
+          <span class="ai-demo-hdr-status">
+            <span class="ai-demo-status-dot" aria-hidden="true"></span>Risponde in 4 lingue
+          </span>
         </div>
-      </a>
-
-      <a class="card" href="percorso.html" aria-label="Assistente AI multilingua 24/7">
-        <div class="card-img">
-          <img src="/assets/img/card-ai.svg"
-               alt="Assistente AI" loading="lazy" width="240" height="138"
-               onerror="this.parentElement.style.background='linear-gradient(135deg,#3b0764,#7c3aed)';this.remove()"/>
-          <div class="card-img-fade" aria-hidden="true"></div>
+        <span class="ai-demo-lang-badge" id="ai-demo-lang" aria-label="Lingua corrente">IT</span>
+      </div>
+      <div class="ai-demo-msgs" id="ai-demo-msgs" role="log" aria-label="Conversazione dimostrativa" aria-live="polite"></div>
+      <div class="ai-demo-footer">
+        <div class="ai-demo-input-row">
+          <div class="ai-demo-input-box" aria-hidden="true">
+            <span id="ai-demo-typing-text"></span><span class="ai-demo-cursor">|</span>
+          </div>
+          <div class="ai-demo-send" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </div>
         </div>
-        <div class="card-body">
-          <span class="card-tag" style="background:rgba(109,40,217,.5);color:#d8b4fe" data-i18n="card2.tag">AI</span>
-          <p class="card-title" data-i18n="card2.title">Assistente AI</p>
-          <p class="card-sub" data-i18n="card2.sub">Risposte multilingua 24/7</p>
-        </div>
-      </a>
-
-      <a class="card" href="community.html" aria-label="Community srilankese in Italia">
-        <div class="card-img">
-          <img src="/assets/img/card-community.svg"
-               alt="Community Srilankese" loading="lazy" width="240" height="138"
-               onerror="this.parentElement.style.background='linear-gradient(135deg,#14532d,#16a34a)';this.remove()"/>
-          <div class="card-img-fade" aria-hidden="true"></div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag" style="background:rgba(0,120,55,.5);color:#86efac" data-i18n="card3.tag">Community</span>
-          <p class="card-title" data-i18n="card3.title">Community</p>
-          <p class="card-sub" data-i18n="card3.sub">Confronto e supporto tra pari</p>
-        </div>
-      </a>
-
-      <a class="card" href="money-transfer.html" aria-label="Money Transfer verso Sri Lanka">
-        <div class="card-img">
-          <img src="/assets/img/card-money.svg"
-               alt="Money Transfer" loading="lazy" width="240" height="138"
-               onerror="this.parentElement.style.background='linear-gradient(135deg,#78350f,#d97706)';this.remove()"/>
-          <div class="card-img-fade" aria-hidden="true"></div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag" style="background:rgba(161,98,7,.55);color:#fde68a" data-i18n="card4.tag">Finanza</span>
-          <p class="card-title" data-i18n="card4.title">Money Transfer</p>
-          <p class="card-sub" data-i18n="card4.sub">Wise, Ria, Western Union</p>
-        </div>
-      </a>
-
+      </div>
+    </div>
+    <div class="hero-trust-row" aria-label="Garanzie">
+      <span class="trust-pill">✓ 100% Gratuito</span>
+      <span class="trust-pill">✓ No carta di credito</span>
+      <span class="trust-pill">✓ 4 Lingue</span>
+      <span class="trust-pill">✓ Dati al sicuro</span>
     </div>
   </div>
 
@@ -3839,5 +3901,109 @@ function sendSug(el){
 <script src="assets/eih-palette.js" defer></script>
 <script src="assets/eih-theme.js" defer></script>
 <script src="assets/eih-welcome.js" defer></script>
+
+<!-- AI Live Demo Animation -->
+<script>
+(function(){
+  const msgsEl=document.getElementById('ai-demo-msgs');
+  const typingEl=document.getElementById('ai-demo-typing-text');
+  const langBadgeEl=document.getElementById('ai-demo-lang');
+  if(!msgsEl||!typingEl)return;
+
+  const CONVS=[
+    {
+      lang:'IT',
+      user:'Come rinnovo il permesso di soggiorno?',
+      ai:'Devi presentare domanda almeno 60 giorni prima della scadenza tramite kit postale negli uffici postali. Porta: passaporto, foto, marca da bollo €16 e il permesso attuale. Ricevi subito la ricevuta come documento provvisorio. 📄'
+    },
+    {
+      lang:'සිං',
+      user:'SPID ගන්නේ කොහොමද?',
+      ai:'SPID ලබා ගැනීමට Poste Italiane හෝ Aruba වෙත යන්න. Passaporto, codice fiscale සහ ජංගම දුරකථනය ගෙන යන්න. ක්‍රියාවලිය විනාඩි 20ක් ගනී. ✅'
+    },
+    {
+      lang:'EN',
+      user:'How do I get the codice fiscale?',
+      ai:'Visit any Agenzia delle Entrate office with your passport. It\'s free and issued on the spot in minutes. You can also apply online via the official website or at the Italian consulate abroad. 🆔'
+    }
+  ];
+
+  let idx=0,busy=false;
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+  function addMsg(text,role){
+    const wrap=document.createElement('div');
+    wrap.className='ai-demo-msg ai-demo-msg--'+role;
+    const bubble=document.createElement('div');
+    bubble.className='ai-demo-bubble';
+    bubble.textContent=text;
+    wrap.appendChild(bubble);
+    msgsEl.appendChild(wrap);
+    msgsEl.scrollTop=msgsEl.scrollHeight;
+    return bubble;
+  }
+
+  function showDots(){
+    const wrap=document.createElement('div');
+    wrap.className='ai-demo-msg ai-demo-msg--ai';
+    wrap.id='ai-demo-dots';
+    wrap.innerHTML='<div class="ai-demo-bubble ai-demo-dots-anim"><span></span><span></span><span></span></div>';
+    msgsEl.appendChild(wrap);
+    msgsEl.scrollTop=msgsEl.scrollHeight;
+  }
+  function hideDots(){const d=document.getElementById('ai-demo-dots');if(d)d.remove();}
+
+  async function typeIn(el,text,ms){
+    el.textContent='';
+    for(let i=0;i<text.length;i++){
+      el.textContent+=text[i];
+      await sleep(ms+Math.random()*25);
+    }
+  }
+
+  async function typeWrite(bubble,text){
+    bubble.textContent='';
+    for(let i=0;i<text.length;i++){
+      bubble.textContent+=text[i];
+      msgsEl.scrollTop=msgsEl.scrollHeight;
+      await sleep(13+Math.random()*14);
+    }
+  }
+
+  async function runConv(){
+    if(busy)return;
+    busy=true;
+    const conv=CONVS[idx%CONVS.length];
+    idx++;
+    msgsEl.innerHTML='';
+    if(langBadgeEl){
+      langBadgeEl.style.opacity='0';
+      setTimeout(()=>{langBadgeEl.textContent=conv.lang;langBadgeEl.style.opacity='1';},200);
+    }
+    await sleep(500);
+    await typeIn(typingEl,conv.user,52);
+    await sleep(320);
+    addMsg(conv.user,'user');
+    typingEl.textContent='';
+    await sleep(650);
+    showDots();
+    await sleep(1600);
+    hideDots();
+    const bubble=addMsg('','ai');
+    await typeWrite(bubble,conv.ai);
+    await sleep(3800);
+    busy=false;
+  }
+
+  const io=new IntersectionObserver(([e])=>{
+    if(e.isIntersecting){
+      io.disconnect();
+      runConv();
+      setInterval(()=>{if(!busy)runConv();},9500);
+    }
+  },{threshold:0.2});
+  io.observe(msgsEl);
+})();
+</script>
 </body>
 </html>
