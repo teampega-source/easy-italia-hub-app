@@ -1,10 +1,17 @@
 // api/stripe-donate.js — Crea sessione Stripe Checkout per donazione una-tantum
 'use strict';
 
+const { isRateLimited, clientIp } = require('./_ratelimit');
+
 const ALLOWED_AMOUNTS = [200, 500, 1000, 2000, 5000]; // centesimi di euro
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  // Throttle Checkout-session creation per IP (prevents scripted session spam).
+  if (isRateLimited(clientIp(req), { name: 'donate', max: 10 })) {
+    return res.status(429).json({ error: 'Troppe richieste. Attendi un minuto e riprova.' });
+  }
 
   const SK = process.env.STRIPE_SECRET_KEY;
 
@@ -22,9 +29,11 @@ module.exports = async function handler(req, res) {
     body = {};
   }
 
+  // Amount is fully client-controlled → accept ONLY the preset values, never a
+  // free-form range (blocks arbitrary/penny amounts and price tampering).
   const amount = parseInt(body.amount, 10);
-  if (!amount || amount < 100 || amount > 50000) {
-    return res.status(400).json({ error: 'Importo non valido (min €1, max €500).' });
+  if (!ALLOWED_AMOUNTS.includes(amount)) {
+    return res.status(400).json({ error: 'Importo non valido.' });
   }
 
   const origin =

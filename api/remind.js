@@ -2,8 +2,16 @@
 // Demo mode se RESEND_API_KEY non è impostato.
 'use strict';
 
+const { isRateLimited, clientIp } = require('./_ratelimit');
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  // Sends real email (Resend) to an attacker-supplied address → throttle hard to
+  // stop the endpoint being used as a free mailer / quota drain. 6 req/min/IP.
+  if (isRateLimited(clientIp(req), { name: 'remind', max: 6 })) {
+    return res.status(429).json({ error: 'Troppe richieste. Attendi un minuto e riprova.' });
+  }
 
   const RESEND_KEY = process.env.RESEND_API_KEY;
 

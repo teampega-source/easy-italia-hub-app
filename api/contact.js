@@ -3,11 +3,19 @@
 // Destinatario: env CONTACT_TO_EMAIL (fallback info@easyitaliahub.it).
 'use strict';
 
+const { isRateLimited, clientIp } = require('./_ratelimit');
+
 const MAX_NAME = 120;
 const MAX_MSG = 5000;
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  // Rate limit BEFORE any work: this endpoint sends real email (Resend cost) and
+  // notifies the owner, so a scripted flood is spam + quota burn. 8 req/min/IP.
+  if (isRateLimited(clientIp(req), { name: 'contact', max: 8 })) {
+    return res.status(429).json({ error: 'Troppe richieste. Attendi un minuto e riprova.' });
+  }
 
   const RESEND_KEY = process.env.RESEND_API_KEY;
   const TO = process.env.CONTACT_TO_EMAIL || 'info@easyitaliahub.it';
