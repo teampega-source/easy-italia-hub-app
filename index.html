@@ -332,6 +332,7 @@ body.has-banner{scroll-padding-top:96px}
 /* Desktop: collapse is transparent (children act as direct nav flex items) */
 .nav-collapse{display:contents}
 /* Hamburger toggle (hidden on desktop) */
+.nav-mobile-extra{display:none}
 .nav-toggle{
   display:none;flex-direction:column;justify-content:center;gap:5px;
   width:44px;height:44px;padding:0 10px;border:none;background:none;cursor:pointer;
@@ -1437,6 +1438,14 @@ footer{
   .nav-links a{display:block;padding:.85rem .25rem;font-size:var(--text-base)}
   .nav-right{flex-direction:column;align-items:stretch;gap:var(--sp-1);margin-top:var(--sp-1)}
   .nav-login,.nav-cta{width:100%;text-align:center;padding:.75rem 1rem;min-height:44px}
+  .nav-collapse{max-height:calc(100vh - 64px);overflow-y:auto}
+  .nav-mobile-extra{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2) var(--sp-3);padding-top:var(--sp-2);border-top:1px solid var(--border);margin-top:var(--sp-1)}
+  .nav-m-sect:first-child{grid-column:1/-1}
+  .nav-m-sect:first-child ul{column-count:2;column-gap:var(--sp-3)}
+  .nav-m-head{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-muted);margin:0 0 .45rem}
+  .nav-m-sect ul{list-style:none;padding:0;margin:0}
+  .nav-mobile-extra a{font-size:var(--text-sm);color:var(--fg-secondary);text-decoration:none;display:block;padding:.28rem 0;transition:color var(--dur-micro)}
+  .nav-mobile-extra a:hover{color:var(--ink)}
 }
 
 /* ── TABLET (768-1023): hero stacks, grids shrink ── */
@@ -2331,6 +2340,43 @@ footer{
       </div>
       <button class="nav-login" onclick="openAuth('login')" data-i18n="nav.login">Accedi</button>
       <button class="nav-cta" onclick="openAuth('signup')" data-i18n="nav.signup">Registrati gratis</button>
+    </div>
+    <div class="nav-mobile-extra">
+      <div class="nav-m-sect">
+        <p class="nav-m-head">Prodotto</p>
+        <ul>
+          <li><a href="guide.html">Guide</a></li>
+          <li><a href="percorso.html">Assistente AI</a></li>
+          <li><a href="community.html">Community</a></li>
+          <li><a href="corsi.html">Corsi di Lingue</a></li>
+          <li><a href="opportunita.html">Opportunità</a></li>
+          <li><a href="money-transfer.html">Money Transfer</a></li>
+          <li><a href="moduli.html">Moduli e Lettere</a></li>
+          <li><a href="assegno-unico.html">Assegno Unico</a></li>
+          <li><a href="diritti-inps.html">Diritti INPS</a></li>
+          <li><a href="riconoscimento-titoli.html">Riconosc. Titoli</a></li>
+          <li><a href="mappa.html">Mappa servizi</a></li>
+        </ul>
+      </div>
+      <div class="nav-m-sect">
+        <p class="nav-m-head">Azienda</p>
+        <ul>
+          <li><a href="chi-siamo.html">Chi siamo</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="contatti.html">Pubblicità</a></li>
+          <li><a href="contatti.html">Contatti</a></li>
+        </ul>
+      </div>
+      <div class="nav-m-sect">
+        <p class="nav-m-head">Account</p>
+        <ul>
+          <li><a href="dashboard.html">La mia Dashboard</a></li>
+          <li><a href="permesso-tracker.html">Tracker Permesso</a></li>
+          <li><a href="cv-builder.html">CV Builder</a></li>
+          <li><a href="documenti.html">Archivio Documenti</a></li>
+          <li><a href="abbonamenti.html">Abbonamenti</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>
