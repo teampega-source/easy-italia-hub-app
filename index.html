@@ -1583,6 +1583,8 @@ footer{
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .marquee-track{display:inline-flex;white-space:nowrap;will-change:transform;animation:marquee 30s linear infinite}
 .marquee-track .item{font-family:'Clash Grotesk',sans-serif;font-size:1.6rem;font-weight:500;color:var(--ink);text-transform:uppercase;letter-spacing:-.01em;padding:0 1.4rem;display:inline-flex;align-items:center;gap:1.4rem}
+.marquee-track .item a{color:inherit;text-decoration:none;cursor:pointer}
+.marquee-track .item a:hover{color:var(--blue)}
 .marquee-track .dot{color:var(--coral);font-size:.9rem}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .marquee:hover .marquee-track{animation-play-state:paused}
@@ -2719,10 +2721,10 @@ footer{
 </section>
 
 <!-- ─── MARQUEE (keyword strip) ─── -->
-<div class="marquee" aria-hidden="true">
+<div class="marquee">
   <div class="marquee-track">
-    <span class="item">Permesso di soggiorno<span class="dot">✦</span>SPID<span class="dot">✦</span>Codice fiscale<span class="dot">✦</span>Lavoro<span class="dot">✦</span>Casa<span class="dot">✦</span>Famiglia<span class="dot">✦</span>Cittadinanza<span class="dot">✦</span>Money transfer<span class="dot">✦</span>Community<span class="dot">✦</span></span>
-    <span class="item">Permesso di soggiorno<span class="dot">✦</span>SPID<span class="dot">✦</span>Codice fiscale<span class="dot">✦</span>Lavoro<span class="dot">✦</span>Casa<span class="dot">✦</span>Famiglia<span class="dot">✦</span>Cittadinanza<span class="dot">✦</span>Money transfer<span class="dot">✦</span>Community<span class="dot">✦</span></span>
+    <span class="item"><a href="guide.html#permesso-soggiorno">Permesso di soggiorno</a><span class="dot" aria-hidden="true">✦</span><a href="guide.html#spid">SPID</a><span class="dot" aria-hidden="true">✦</span><a href="guide.html#codice-fiscale">Codice fiscale</a><span class="dot" aria-hidden="true">✦</span><a href="opportunita.html">Lavoro</a><span class="dot" aria-hidden="true">✦</span><a href="percorso.html">Casa</a><span class="dot" aria-hidden="true">✦</span><a href="assegno-unico.html">Famiglia</a><span class="dot" aria-hidden="true">✦</span><a href="guide.html#cittadinanza">Cittadinanza</a><span class="dot" aria-hidden="true">✦</span><a href="money-transfer.html">Money transfer</a><span class="dot" aria-hidden="true">✦</span><a href="community.html">Community</a><span class="dot" aria-hidden="true">✦</span></span>
+    <span class="item" aria-hidden="true">Permesso di soggiorno<span class="dot">✦</span>SPID<span class="dot">✦</span>Codice fiscale<span class="dot">✦</span>Lavoro<span class="dot">✦</span>Casa<span class="dot">✦</span>Famiglia<span class="dot">✦</span>Cittadinanza<span class="dot">✦</span>Money transfer<span class="dot">✦</span>Community<span class="dot">✦</span></span>
   </div>
 </div>
 
