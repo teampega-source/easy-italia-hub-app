@@ -3660,10 +3660,11 @@ applyLang(currentLang);
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const wipe=document.getElementById('wipe');
   if(wipe){
-    // Enter reveal on returning loads (first visit is covered by the cinematic intro)
+    // Enter reveal: timeout fallback in case rAF is delayed by heavy JS
     if(!firstVisit && !reduce){
       wipe.classList.add('cover');
       requestAnimationFrame(()=>requestAnimationFrame(()=>wipe.classList.remove('cover')));
+      setTimeout(()=>wipe.classList.remove('cover'), 900);
     }
     // Cover on internal page navigation
     document.addEventListener('click',e=>{
@@ -3678,6 +3679,10 @@ applyLang(currentLang);
         setTimeout(()=>{location.href=href;}, 470);
       }
     });
+    // Bfcache restore (browser back/forward): force-clear wipe
+    const _resetWipe=()=>{wipe.style.transition='none';wipe.classList.remove('cover');requestAnimationFrame(()=>{wipe.style.transition='';});};
+    addEventListener('pageshow',e=>{if(e.persisted)_resetWipe();});
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden&&wipe.classList.contains('cover'))setTimeout(_resetWipe,80);});
   }
 })();
 

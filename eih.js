@@ -153,20 +153,23 @@
   if(pre){ if(firstVisit){setTimeout(()=>pre.classList.add('done'),reduce?150:1450);}else{pre.classList.add('done');} }
   const wipe=document.getElementById('wipe');
   if(wipe){
-    if(!firstVisit && !reduce){wipe.classList.add('cover');requestAnimationFrame(()=>requestAnimationFrame(()=>wipe.classList.remove('cover')));}
+    if(!firstVisit && !reduce){
+      wipe.classList.add('cover');
+      requestAnimationFrame(()=>requestAnimationFrame(()=>wipe.classList.remove('cover')));
+      setTimeout(()=>wipe.classList.remove('cover'),900);
+    }
     document.addEventListener('click',e=>{
       const a=e.target.closest('a');if(!a)return;
       const href=a.getAttribute('href')||'';
       if(a.target==='_blank'||a.hasAttribute('download')||href===''||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
       if(/\.html(\?|#|$)/.test(href)){e.preventDefault();if(reduce){location.href=href;return;}wipe.classList.add('cover');setTimeout(()=>{location.href=href;},470);}
     });
+    const _resetWipe=()=>{wipe.style.transition='none';wipe.classList.remove('cover');requestAnimationFrame(()=>{wipe.style.transition='';});};
+    addEventListener('pageshow',e=>{
+      if(!e.persisted)return;
+      if(pre)pre.classList.add('done');
+      _resetWipe();
+    });
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden&&wipe.classList.contains('cover'))setTimeout(_resetWipe,80);});
   }
-  // Back/forward navigation can restore the page from the browser's bfcache
-  // with the DOM frozen mid-transition (wipe still covering, black screen).
-  // No scripts re-run on a bfcache restore, so force-reset it here.
-  addEventListener('pageshow',e=>{
-    if(!e.persisted)return;
-    if(pre)pre.classList.add('done');
-    if(wipe){wipe.style.transition='none';wipe.classList.remove('cover');requestAnimationFrame(()=>{wipe.style.transition='';});}
-  });
 })();
