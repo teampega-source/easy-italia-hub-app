@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Corsi di Italiano — Easy Italia Hub</title>
+<meta name="description" content="Impara l'italiano gratis: alfabeto, saluti, numeri, verbi essenziali e frasi utili per la vita quotidiana. Corso Base gratuito iscrivendoti, Corso Avanzato con Premium."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/corsi-italiano"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<style>
+  [data-page="corsi-italiano"] .crs-section{margin-top:var(--sp-5)}
+  [data-page="corsi-italiano"] .crs-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.3rem}
+  [data-page="corsi-italiano"] .crs-head h2{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xl);font-weight:600;color:var(--ink);margin:0}
+  [data-page="corsi-italiano"] .progress-tag{font-size:var(--text-xs);color:var(--fg-muted)}
+  [data-page="corsi-italiano"] .lock-ico{width:14px;height:14px;vertical-align:-2px;stroke:currentColor;fill:none;stroke-width:2}
+  [data-page="corsi-italiano"] .lesson{padding:1.1rem 1.3rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);margin-bottom:.7rem}
+  [data-page="corsi-italiano"] .lesson summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:'Clash Grotesk',sans-serif;font-weight:600;color:var(--ink)}
+  [data-page="corsi-italiano"] .lesson summary::-webkit-details-marker{display:none}
+  [data-page="corsi-italiano"] .lesson summary .chev{transition:transform var(--dur-std) var(--ease-spring);flex:none}
+  [data-page="corsi-italiano"] .lesson[open] summary .chev{transform:rotate(90deg)}
+  [data-page="corsi-italiano"] .lesson-body{margin-top:.9rem;font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.65}
+  [data-page="corsi-italiano"] .lesson-body table{width:100%;border-collapse:collapse;margin:.6rem 0}
+  [data-page="corsi-italiano"] .lesson-body td{padding:.35rem .5rem;border-bottom:1px solid var(--border)}
+  [data-page="corsi-italiano"] .lesson-body ul{margin:.4rem 0;padding-left:1.2rem}
+  [data-page="corsi-italiano"] .lesson-done-badge{font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--green);padding:.18rem .55rem;border-radius:99px;flex:none}
+  [data-page="corsi-italiano"] .lesson-mark{margin-top:.9rem;border:1px solid var(--border-bright);background:var(--surface);border-radius:var(--radius-sm);padding:.5rem 1rem;font-size:var(--text-sm);font-weight:500;cursor:pointer;color:var(--ink)}
+  [data-page="corsi-italiano"] .lesson-mark[disabled]{opacity:.55;cursor:default}
+  [data-page="corsi-italiano"] .lesson.locked{opacity:.6}
+  [data-page="corsi-italiano"] .lesson.locked summary{cursor:default}
+  [data-page="corsi-italiano"] .adv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.1rem;margin-top:var(--sp-3)}
+  [data-page="corsi-italiano"] .adv-card{padding:1.3rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);display:flex;flex-direction:column;gap:.5rem;text-decoration:none;color:inherit;transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std)}
+  [data-page="corsi-italiano"] .adv-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(22,20,18,.10)}
+  [data-page="corsi-italiano"] .adv-card .premium-flag{align-self:flex-start;font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid rgba(124,112,89,.25);padding:.2rem .6rem;border-radius:99px;display:inline-flex;align-items:center;gap:.35rem}
+  [data-page="corsi-italiano"] .adv-card h3{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;color:var(--ink);margin:0}
+  [data-page="corsi-italiano"] .adv-card p{margin:0;font-size:var(--text-sm);color:var(--fg-muted);line-height:1.55}
+</style>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+<script>window.EIH_I18N_EXTRA={
+"en":{"page.h1":"Italian courses,<br/><em>step by step.</em>","page.lead":"Learn the Italian you need for everyday life: alphabet, greetings, numbers, essential verbs and useful phrases. The <strong>Base course is free</strong> once you sign up; the <strong>Advanced course</strong> unlocks with an affordable Premium subscription."},
+"si":{"page.h1":"ඉතාලි භාෂා පාඩම්,<br/><em>පියවරෙන් පියවර.</em>","page.lead":"දිනපතා ජීවිතයට අවශ්‍ය ඉතාලි භාෂාව ඉගෙන ගන්න: අකුරු, ආචාර, අංක, අවශ්‍ය ක්‍රියාපද සහ ප්‍රයෝජනවත් වාක්‍ය. ලියාපදිංචි වූ පසු <strong>මූලික පාඩම් මාලාව නොමිලේ</strong>; <strong>උසස් පාඩම් මාලාව</strong> සහනදායී Premium දායකත්වයකින් විවෘත වේ."},
+"ta":{"page.h1":"இத்தாலிய மொழி வகுப்புகள்,<br/><em>படிப்படியாக.</em>","page.lead":"அன்றாட வாழ்க்கைக்குத் தேவையான இத்தாலிய மொழியைக் கற்றுக்கொள்ளுங்கள்: எழுத்துகள், வணக்கங்கள், எண்கள், அடிப்படை வினைச்சொற்கள் மற்றும் பயனுள்ள சொற்றொடர்கள். பதிவு செய்தபின் <strong>அடிப்படை வகுப்பு இலவசம்</strong>; <strong>மேம்பட்ட வகுப்பு</strong> மலிவான Premium சந்தாவுடன் திறக்கப்படும்."}
+};</script>
+</head>
+<body data-page="corsi-italiano">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+<div class="page">
+  <p class="eyebrow reveal"><span class="eyebrow-line"></span> Crescita personale</p>
+  <h1 class="reveal" data-i18n-html="page.h1">Corsi di <em>Italiano.</em></h1>
+  <p class="lead reveal" data-i18n-html="page.lead">Impara l'italiano che ti serve nella vita di tutti i giorni: alfabeto, saluti, numeri, verbi essenziali e frasi utili. Il <strong>Corso Base è gratis</strong> iscrivendoti; il <strong>Corso Avanzato</strong> si sblocca con un abbonamento Premium accessibile.</p>
+
+  <!-- register prompt (shown only if not registered) -->
+  <div id="reg-prompt" class="reg-prompt reveal" hidden style="display:flex;align-items:flex-start;gap:.6rem;background:var(--green-dim);border:1px solid rgba(31,157,85,.28);border-radius:var(--radius-sm);padding:.8rem 1rem;font-size:var(--text-sm);color:var(--ink);margin-bottom:var(--sp-3);line-height:1.6">
+    <span aria-hidden="true">👋</span>
+    <span>Il Corso Base è gratuito ma riservato a chi si iscrive: i tuoi progressi restano salvati <strong>su questo dispositivo</strong>. <a class="inline" href="percorso.html">Registrati gratis dal tuo Percorso</a> per sbloccare tutte le lezioni.</span>
+  </div>
+
+  <section class="crs-section reveal" aria-labelledby="base-h">
+    <div class="crs-head">
+      <h2 id="base-h">Corso Base <span class="soon" style="background:var(--green-dim);color:var(--green);border-color:rgba(31,157,85,.28)">Gratis</span></h2>
+      <span class="progress-tag" id="base-progress"></span>
+    </div>
+    <p class="muted">6 lezioni essenziali per cavarsela nella vita quotidiana in Italia.</p>
+    <div id="base-list"></div>
+  </section>
+
+  <section class="crs-section reveal" aria-labelledby="adv-h">
+    <div class="crs-head">
+      <h2 id="adv-h">Corso Avanzato <span class="soon">Premium</span></h2>
+    </div>
+    <p class="muted">Verbi, conversazione e italiano per il lavoro e la burocrazia. Si sblocca con un <a class="inline" href="abbonamenti.html">abbonamento Premium</a>.</p>
+    <div class="adv-grid" id="adv-list"></div>
+  </section>
+</div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script>
+(function(){
+'use strict';
+
+var LESSONS_BASE = [
+  { id:'b1', title:"L'alfabeto e la pronuncia", body:
+    "<ul>"+
+    "<li><b>c</b> + e/i = suono \"ce/ci\" (come in <i>cena</i>, <i>cibo</i>); <b>c</b> + a/o/u = suono \"k\" (<i>casa</i>, <i>cosa</i>)</li>"+
+    "<li><b>ch</b> = sempre suono \"k\" (<i>chiave</i>, <i>chiesa</i>)</li>"+
+    "<li><b>gn</b> = suono \"ny\" (<i>gnocchi</i>, <i>bagno</i>)</li>"+
+    "<li><b>gli</b> = suono \"ly\" (<i>famiglia</i>, <i>figlio</i>)</li>"+
+    "<li>Le doppie consonanti si pronunciano più a lungo: <i>nonno</i> (grandfather) vs <i>nono</i> (ninth)</li>"+
+    "</ul>" },
+  { id:'b2', title:"Saluti e presentazioni", body:
+    "<table>"+
+    "<tr><td>Ciao!</td><td>Hi / Bye <span class='muted'>(informale)</span></td></tr>"+
+    "<tr><td>Buongiorno</td><td>Good morning/day <span class='muted'>(formale)</span></td></tr>"+
+    "<tr><td>Buonasera</td><td>Good evening</td></tr>"+
+    "<tr><td>Mi chiamo…</td><td>My name is…</td></tr>"+
+    "<tr><td>Piacere!</td><td>Nice to meet you</td></tr>"+
+    "<tr><td>Come stai? / Come sta?</td><td>How are you? <span class='muted'>(informale/formale)</span></td></tr>"+
+    "<tr><td>Tutto bene, grazie</td><td>All good, thanks</td></tr>"+
+    "</table>" },
+  { id:'b3', title:"I numeri da 0 a 20", body:
+    "<p>0 zero · 1 uno · 2 due · 3 tre · 4 quattro · 5 cinque · 6 sei · 7 sette · 8 otto · 9 nove · 10 dieci · 11 undici · 12 dodici · 13 tredici · 14 quattordici · 15 quindici · 16 sedici · 17 diciassette · 18 diciotto · 19 diciannove · 20 venti</p>" },
+  { id:'b4', title:"I verbi ESSERE e AVERE (presente)", body:
+    "<table>"+
+    "<tr><td>io</td><td>sono</td><td>ho</td></tr>"+
+    "<tr><td>tu</td><td>sei</td><td>hai</td></tr>"+
+    "<tr><td>lui / lei</td><td>è</td><td>ha</td></tr>"+
+    "<tr><td>noi</td><td>siamo</td><td>abbiamo</td></tr>"+
+    "<tr><td>voi</td><td>siete</td><td>avete</td></tr>"+
+    "<tr><td>loro</td><td>sono</td><td>hanno</td></tr>"+
+    "</table>" },
+  { id:'b5', title:"Frasi utili per la vita quotidiana", body:
+    "<ul>"+
+    "<li>Quanto costa? — How much is it?</li>"+
+    "<li>Dov'è la farmacia? — Where is the pharmacy?</li>"+
+    "<li>Posso avere un biglietto per…? — Can I have a ticket for…?</li>"+
+    "<li>Ho bisogno di aiuto — I need help</li>"+
+    "<li>Non capisco, può ripetere? — I don't understand, can you repeat?</li>"+
+    "<li>Parla inglese? — Do you speak English?</li>"+
+    "</ul>" },
+  { id:'b6', title:"Giorni della settimana e orari", body:
+    "<p>lunedì · martedì · mercoledì · giovedì · venerdì · sabato · domenica</p>"+
+    "<p>Che ore sono? (What time is it?) — Sono le… (It's…) <br>mattina (morning) · pomeriggio (afternoon) · sera (evening) · notte (night)</p>" }
+];
+
+var LESSONS_ADV = [
+  { title:"Verbi regolari al presente (-are, -ere, -ire)", desc:"Le tre coniugazioni regolari con esempi pratici." },
+  { title:"Passato e futuro: le basi", desc:"Passato prossimo e futuro semplice per raccontare la tua storia." },
+  { title:"Italiano per il lavoro", desc:"Colloqui, CV e email professionali in italiano." },
+  { title:"Capire le lettere della burocrazia", desc:"Leggere comunicazioni di Questura, INPS e Comune senza ansia." },
+  { title:"Conversazione pratica", desc:"Al bar, dal medico, all'ufficio postale: dialoghi reali." },
+  { title:"Preparazione esame CILS/CELI A2", desc:"Schema di studio e simulazioni per l'esame di livello A2." }
+];
+
+var lockIco = '<svg class="lock-ico" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+var chevIco = '<svg class="chev" width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>';
+
+function isRegistered(){
+  try{ return !!localStorage.getItem('eih-registered'); }catch(e){ return false; }
+}
+
+function renderAdv(){
+  var el = document.getElementById('adv-list');
+  el.innerHTML = LESSONS_ADV.map(function(l){
+    return '<a class="adv-card" href="abbonamenti.html">'+
+      '<span class="premium-flag">'+lockIco+' Richiede Premium</span>'+
+      '<h3>'+l.title+'</h3><p>'+l.desc+'</p></a>';
+  }).join('');
+}
+
+function renderBaseLocked(){
+  document.getElementById('base-progress').textContent = '';
+  var el = document.getElementById('base-list');
+  el.innerHTML = LESSONS_BASE.map(function(l){
+    return '<details class="lesson locked"><summary>'+lockIco+' '+l.title+'</summary></details>';
+  }).join('');
+}
+
+function renderBaseUnlocked(done){
+  var doneSet = {};
+  done.forEach(function(d){ doneSet[d.lesson] = true; });
+  document.getElementById('base-progress').textContent = Object.keys(doneSet).length + '/' + LESSONS_BASE.length + ' lezioni completate';
+  var el = document.getElementById('base-list');
+  el.innerHTML = LESSONS_BASE.map(function(l){
+    var isDone = !!doneSet[l.id];
+    return '<details class="lesson" data-lesson="'+l.id+'">'+
+      '<summary><span>'+l.title+'</span>'+
+        (isDone ? '<span class="lesson-done-badge">✓ Completata</span>' : chevIco) +
+      '</summary>'+
+      '<div class="lesson-body">'+l.body+
+        '<button type="button" class="lesson-mark" '+(isDone?'disabled':'')+'>'+(isDone?'✓ Completata':'Segna come completata')+'</button>'+
+      '</div>'+
+    '</details>';
+  }).join('');
+
+  el.querySelectorAll('.lesson-mark').forEach(function(btn){
+    btn.addEventListener('click', async function(){
+      var details = btn.closest('.lesson');
+      var lessonId = details.getAttribute('data-lesson');
+      btn.disabled = true;
+      btn.textContent = '…';
+      try{
+        await window.EIH_DB.table('course-progress').insert({ lesson: lessonId, course: 'base' });
+        var fresh = await window.EIH_DB.table('course-progress').list();
+        renderBaseUnlocked(fresh);
+        var again = document.querySelector('.lesson[data-lesson="'+lessonId+'"]');
+        if(again) again.open = true;
+      }catch(e){
+        btn.disabled = false;
+        btn.textContent = 'Segna come completata';
+      }
+    });
+  });
+}
+
+(async function init(){
+  try{ await (window.EIH_AUTH && window.EIH_AUTH.ready); }catch(e){}
+  var regPrompt = document.getElementById('reg-prompt');
+  var registered = isRegistered();
+  if(regPrompt) regPrompt.hidden = registered;
+
+  renderAdv();
+  if(registered && window.EIH_DB){
+    var done = [];
+    try{ done = await window.EIH_DB.table('course-progress').list(); }catch(e){}
+    renderBaseUnlocked(done.filter(function(d){ return d && d.course === 'base'; }));
+  } else {
+    renderBaseLocked();
+  }
+})();
+})();
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="assets/eih-atmosphere.js" defer></script>
+<script src="assets/eih-palette.js" defer></script>
+<script src="assets/eih-theme.js" defer></script>
+</body>
+</html>
