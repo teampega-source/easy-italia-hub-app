@@ -444,6 +444,9 @@ body.has-banner{scroll-padding-top:96px}
 .btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(58,123,213,.38)}
 .btn-primary:active{transform:scale(0.97);transition-duration:var(--dur-micro)}
 .btn-primary:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:var(--radius-full)}
+.btn-accent{background:linear-gradient(135deg,var(--coral),#ff7c5c);box-shadow:0 8px 28px rgba(235,89,57,.32)}
+.btn-accent:hover{box-shadow:0 16px 44px rgba(235,89,57,.4)}
+.btn-accent:focus-visible{outline-color:var(--coral)}
 .btn-ghost{
   display:inline-flex;align-items:center;gap:.45rem;
   padding:.8rem 1.75rem;border-radius:var(--radius-full);
@@ -2438,7 +2441,7 @@ footer{
     <p class="hero-sub" data-i18n="hero.sub">La piattaforma della comunità srilankese in Italia. Guide passo-passo, assistente AI in 4 lingue e community attiva. Gratis, da subito.</p>
 
     <div class="hero-actions">
-      <a href="percorso.html" class="btn-primary">
+      <a href="percorso.html" class="btn-primary btn-accent">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         <span data-i18n="hero.cta1">Inizia gratis</span>
       </a>
@@ -2683,7 +2686,7 @@ footer{
     <h2 id="cta-heading" class="cta-title" data-i18n-html="cta.title">Pronto a iniziare<br/><em style="font-style:italic;color:var(--gold)">il tuo percorso?</em></h2>
     <p class="cta-sub" data-i18n="cta.sub">Registrati gratis. Nessuna carta di credito richiesta.</p>
     <div class="cta-btns">
-      <a href="percorso.html" class="btn-primary" data-i18n="cta.btn1" onclick="if(typeof openAuth==='function'){openAuth('signup');return false;}">Crea il tuo account gratuito</a>
+      <a href="percorso.html" class="btn-primary btn-accent" data-i18n="cta.btn1" onclick="if(typeof openAuth==='function'){openAuth('signup');return false;}">Crea il tuo account gratuito</a>
       <a href="chi-siamo.html" class="btn-ghost" data-i18n="cta.btn2">Scopri come funziona</a>
     </div>
   </div>
