@@ -124,4 +124,12 @@
       if(/\.html(\?|#|$)/.test(href)){e.preventDefault();if(reduce){location.href=href;return;}wipe.classList.add('cover');setTimeout(()=>{location.href=href;},470);}
     });
   }
+  // Back/forward navigation can restore the page from the browser's bfcache
+  // with the DOM frozen mid-transition (wipe still covering, black screen).
+  // No scripts re-run on a bfcache restore, so force-reset it here.
+  addEventListener('pageshow',e=>{
+    if(!e.persisted)return;
+    if(pre)pre.classList.add('done');
+    if(wipe){wipe.style.transition='none';wipe.classList.remove('cover');requestAnimationFrame(()=>{wipe.style.transition='';});}
+  });
 })();
