@@ -96,12 +96,17 @@ Richiede l'UTENTE (account + chiavi), guida completa in
 
 Sblocca a cascata: account reali → email promemoria → pagamenti.
 
+## ✅ Chiusi di recente
+- **Contatti/link utili negli articoli** — FATTO: box "Link e contatti utili"
+  in tutte le 10 sezioni di `guide.html` (+ `assegno-unico`, `diritti-inps`,
+  `riconoscimento-titoli`), con link a uffici e siti ufficiali.
+- **Meta Open Graph/Twitter** — FATTO: prima solo `index.html` li aveva; ora
+  tutte le 25 sottopagine hanno tag OG/Twitter completi con immagine OG
+  dinamica per-pagina via `/api/og?t=…&s=…`. `og-image.jpg` è un'immagine
+  brandizzata reale (non placeholder).
+
 ## ℹ️ In sospeso (dopo Supabase / opzionali)
-- **Contatti/link utili negli articoli** — in ogni guida/articolo che tratta un
-  argomento (permesso, codice fiscale, SPID, …) aggiungere una sezione con i
-  contatti e i link utili pertinenti (uffici, siti ufficiali, numeri, patronati).
 - **Dominio reale** — canonical/OG/hreflang puntano ancora al placeholder `easyitaliahub.it`.
-- **Immagine OG 1200×630** — `og-image.jpg` ancora placeholder (anteprime WhatsApp/social).
 - **Email (Resend)** — `api/contact.js` ora inoltra form contatti + newsletter
   al proprietario; `api/remind.js` invia i promemoria. Per attivarle servono su
   Vercel: `RESEND_API_KEY` (dominio verificato su Resend) e `CONTACT_TO_EMAIL`
