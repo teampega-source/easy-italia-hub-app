@@ -271,6 +271,26 @@
     },
 
     /**
+     * Password reset — sends email if account exists, silently succeeds otherwise.
+     * NEVER reveals whether the email is registered (anti-enumeration).
+     * Returns { error: null } always from the caller's perspective.
+     */
+    resetPassword: function (email, redirectTo) {
+      return ready.then(function () {
+        if (configured && supabase) {
+          return supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: redirectTo || (window.location.origin + '/dashboard')
+          }).then(function () {
+            return { error: null };
+          }).catch(function () {
+            return { error: null };
+          });
+        }
+        return { error: null, demo: true };
+      });
+    },
+
+    /**
      * Current user, or null if not signed in.
      *  REAL: supabase.auth.getUser → user | null.
      *  DEMO: the stored demo user object iff 'eih-registered' is set, else null.
