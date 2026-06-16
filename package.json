@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "@vercel/og": "^0.6.3"
+  },
+  "devDependencies": {
+    "shadcn": "^4.11.0"
   }
 }
