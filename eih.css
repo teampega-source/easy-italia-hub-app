@@ -69,6 +69,7 @@ html.returning #preloader{display:none}
 .nav-login:hover{color:var(--ink)}
 .nav-cta{padding:.55rem 1.4rem;border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:500;letter-spacing:.03em;color:#fff;text-decoration:none;border:1px solid rgba(125,112,88,0.35);cursor:pointer;background:linear-gradient(135deg,var(--blue-deep),var(--blue));transition:opacity var(--dur-micro),transform var(--dur-std) var(--ease-spring)}
 .nav-cta:hover{opacity:.88;transform:translateY(-2px)}
+.nav-mobile-extra{display:none}
 .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;padding:0 10px;border:none;background:none;cursor:pointer;border-radius:var(--radius-sm)}
 .nav-toggle span{display:block;height:2px;width:100%;border-radius:2px;background:var(--ink);transition:transform var(--dur-std) var(--ease-spring),opacity var(--dur-micro)}
 .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -170,6 +171,14 @@ footer{position:relative;z-index:1;margin-top:var(--sp-6);border-top:1px solid v
   .nav-right{flex-direction:column;align-items:stretch;gap:var(--sp-1);margin-top:var(--sp-1)}
   .nav-login,.nav-cta{width:100%;text-align:center;padding:.75rem 1rem;min-height:44px}
   .lang-switch{width:100%}.lang-btn{width:100%;justify-content:center}
+  .nav-collapse{max-height:calc(100vh - 64px);overflow-y:auto}
+  .nav-mobile-extra{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2) var(--sp-3);padding-top:var(--sp-2);border-top:1px solid var(--border);margin-top:var(--sp-1)}
+  .nav-m-sect:first-child{grid-column:1/-1}
+  .nav-m-sect:first-child ul{column-count:2;column-gap:var(--sp-3)}
+  .nav-m-head{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-muted);margin:0 0 .45rem}
+  .nav-m-sect ul{list-style:none;padding:0;margin:0}
+  .nav-mobile-extra a{font-size:var(--text-sm);color:var(--fg-secondary);text-decoration:none;display:block;padding:.28rem 0;transition:color var(--dur-micro)}
+  .nav-mobile-extra a:hover{color:var(--ink)}
   .footer-inner{grid-template-columns:1fr 1fr}
 }
 @media(max-width:600px){.footer-inner{grid-template-columns:1fr}.page{padding-top:calc(var(--sp-6) + 1rem)}}

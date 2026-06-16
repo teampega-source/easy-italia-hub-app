@@ -43,6 +43,43 @@
           '<a href="percorso.html" class="nav-login" data-i18n="nav.login">Accedi</a>'+
           '<a href="percorso.html" class="nav-cta" data-i18n="nav.signup">Registrati gratis</a>'+
         '</div>'+
+        '<div class="nav-mobile-extra">'+
+          '<div class="nav-m-sect">'+
+            '<p class="nav-m-head">Prodotto</p>'+
+            '<ul>'+
+              '<li><a href="guide.html">Guide</a></li>'+
+              '<li><a href="percorso.html">Assistente AI</a></li>'+
+              '<li><a href="community.html">Community</a></li>'+
+              '<li><a href="corsi.html">Corsi di Lingue</a></li>'+
+              '<li><a href="opportunita.html">Opportunità</a></li>'+
+              '<li><a href="money-transfer.html">Money Transfer</a></li>'+
+              '<li><a href="moduli.html">Moduli e Lettere</a></li>'+
+              '<li><a href="assegno-unico.html">Assegno Unico</a></li>'+
+              '<li><a href="diritti-inps.html">Diritti INPS</a></li>'+
+              '<li><a href="riconoscimento-titoli.html">Riconosc. Titoli</a></li>'+
+              '<li><a href="mappa.html">Mappa servizi</a></li>'+
+            '</ul>'+
+          '</div>'+
+          '<div class="nav-m-sect">'+
+            '<p class="nav-m-head">Azienda</p>'+
+            '<ul>'+
+              '<li><a href="chi-siamo.html">Chi siamo</a></li>'+
+              '<li><a href="news.html">News</a></li>'+
+              '<li><a href="contatti.html">Pubblicità</a></li>'+
+              '<li><a href="contatti.html">Contatti</a></li>'+
+            '</ul>'+
+          '</div>'+
+          '<div class="nav-m-sect">'+
+            '<p class="nav-m-head">Account</p>'+
+            '<ul>'+
+              '<li><a href="dashboard.html">La mia Dashboard</a></li>'+
+              '<li><a href="permesso-tracker.html">Tracker Permesso</a></li>'+
+              '<li><a href="cv-builder.html">CV Builder</a></li>'+
+              '<li><a href="documenti.html">Archivio Documenti</a></li>'+
+              '<li><a href="abbonamenti.html">Abbonamenti</a></li>'+
+            '</ul>'+
+          '</div>'+
+        '</div>'+
       '</div></nav>';
   }
   function footHTML(){
