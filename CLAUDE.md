@@ -17,6 +17,14 @@
 - Usare `/plan` per analizzare il codebase prima di scrivere modifiche complesse
 - Usare `/compact` per condensare la cronologia quando il contesto diventa lungo
 
+## Riferimento servizi gratuiti — free-for-dev
+
+**Repo:** `.references/free-for-dev/README.md` (git submodule da `https://github.com/ripienaar/free-for-dev`)
+
+**Regola:** ogni volta che serve scegliere un servizio esterno (email, DB, storage, AI, monitoring, CI/CD, ecc.) consultare PRIMA questo file per trovare alternative gratuite. Aggiornare il submodule periodicamente con `git submodule update --remote .references/free-for-dev`.
+
+Categorie principali disponibili: Cloud, Email, AI/ML, Database, Storage, Auth, Monitoring, DNS, CDN, CI/CD, Testing, Security, CMS, Maps, Search.
+
 ## Skill disponibili (Claude Code on the web)
 
 All'avvio di ogni sessione verificare che queste skill siano caricate e usarle proattivamente:
