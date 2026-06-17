@@ -117,6 +117,13 @@
   // inject nav + footer
   const navHost=document.getElementById('site-nav'); if(navHost)navHost.innerHTML=navHTML();
   const footHost=document.getElementById('site-footer'); if(footHost)footHost.innerHTML=footHTML();
+
+  // Vercel Speed Insights
+  if(!document.querySelector('script[src*="speed-insights"]')){
+    const si=document.createElement('script');
+    si.defer=true;si.src='/_vercel/speed-insights/script.js';
+    document.head.appendChild(si);
+  }
   applyLang(lang);
   document.addEventListener('click',e=>{if(!e.target.closest('.lang-switch'))EIH.closeLang();});
   document.getElementById('nav-collapse')&&document.getElementById('nav-collapse').addEventListener('click',e=>{if(e.target.closest('a'))document.getElementById('nav-collapse').classList.remove('open');});
