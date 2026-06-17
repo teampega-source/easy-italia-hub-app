@@ -17,6 +17,25 @@
 - Usare `/plan` per analizzare il codebase prima di scrivere modifiche complesse
 - Usare `/compact` per condensare la cronologia quando il contesto diventa lungo
 
+## Skill disponibili (Claude Code on the web)
+
+All'avvio di ogni sessione verificare che queste skill siano caricate e usarle proattivamente:
+
+| Skill | Quando usarla |
+|-------|--------------|
+| `deep-research` | Ricerca multi-fonte su librerie, standard, best practice |
+| `verify` | Dopo ogni modifica visiva o funzionale — testare nel browser reale |
+| `run` | Avviare il server locale (`npx serve . -l 3000`) per vedere le modifiche |
+| `code-review` | Prima di ogni push su feature complesse |
+| `security-review` | Su qualsiasi modifica che tocchi auth, API, input utente |
+| `simplify` | Dopo refactoring o aggiunta di codice ridondante |
+| `plan` | Prima di modifiche che toccano più file o l'architettura |
+| `session-start-hook` | Per configurare hook di avvio sessione nel repo |
+| `update-config` | Per modificare settings.json / permessi / env vars |
+| `init` | Se CLAUDE.md va ricreato da zero |
+
+**Regola:** non completare un task visivo senza prima chiamare `/verify` o `/run`. Il type-check non sostituisce il test nel browser.
+
 ---
 
 # Codebase: Easy Italia Hub
