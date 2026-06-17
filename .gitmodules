@@ -1,0 +1,3 @@
+[submodule ".references/free-for-dev"]
+	path = .references/free-for-dev
+	url = https://github.com/ripienaar/free-for-dev.git
