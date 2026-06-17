@@ -7,16 +7,16 @@
    ═══════════════════════════════════════════════════════════ */
 (function(){
   const I18N={
-    it:{ "nav.guide":"Guide","nav.community":"Community","nav.journey":"Il Mio Percorso","nav.news":"News","nav.map":"Mappa","nav.login":"Accedi","nav.signup":"Registrati gratis",
+    it:{ "nav.guide":"Guide","nav.community":"Community","nav.journey":"Il Mio Percorso","nav.news":"News","nav.map":"Mappa","nav.contact":"Contattaci","nav.login":"Accedi","nav.signup":"Registrati gratis",
       "f.tag":"Il punto di riferimento della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.",
       "f.product":"Prodotto","f.aiAssistant":"Assistente AI","f.mapServices":"Mappa servizi","f.company":"Azienda","f.about":"Chi siamo","f.advertising":"Pubblicità","f.contact":"Contatti","f.account":"Account","f.register":"Registrati","f.subscriptions":"Abbonamenti","f.copy":"© 2026 Easy Italia Hub. Tutti i diritti riservati.","f.privacy":"Privacy Policy","f.cookie":"Cookie Policy","f.terms":"Termini di Servizio","f.legal":"Note legali" },
-    en:{ "nav.guide":"Guides","nav.community":"Community","nav.journey":"My Journey","nav.news":"News","nav.map":"Map","nav.login":"Log in","nav.signup":"Sign up free",
+    en:{ "nav.guide":"Guides","nav.community":"Community","nav.journey":"My Journey","nav.news":"News","nav.map":"Map","nav.contact":"Contact us","nav.login":"Log in","nav.signup":"Sign up free",
       "f.tag":"The reference point for the Sri Lankan community in Italy. Guides, multilingual AI, community and services — all in one place.",
       "f.product":"Product","f.aiAssistant":"AI Assistant","f.mapServices":"Services map","f.company":"Company","f.about":"About us","f.advertising":"Advertising","f.contact":"Contact","f.account":"Account","f.register":"Register","f.subscriptions":"Subscriptions","f.copy":"© 2026 Easy Italia Hub. All rights reserved.","f.privacy":"Privacy Policy","f.cookie":"Cookie Policy","f.terms":"Terms of Service","f.legal":"Legal notice" },
-    si:{ "nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.journey":"මගේ ගමන","nav.news":"පුවත්","nav.map":"සිතියම","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
+    si:{ "nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.journey":"මගේ ගමන","nav.news":"පුවත්","nav.map":"සිතියම","nav.contact":"අපව අමතන්න","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
       "f.tag":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාවේ විශ්වාසනීය මධ්‍යස්ථානය. මාර්ගෝපදේශ, බහුභාෂා AI, ප්‍රජාව සහ සේවා — සියල්ල එක තැනක.",
       "f.product":"නිෂ්පාදනය","f.aiAssistant":"AI සහායක","f.mapServices":"සේවා සිතියම","f.company":"සමාගම","f.about":"අප ගැන","f.advertising":"දැන්වීම්","f.contact":"සම්බන්ධ වන්න","f.account":"ගිණුම","f.register":"ලියාපදිංචි වන්න","f.subscriptions":"දායකත්ව","f.copy":"© 2026 Easy Italia Hub. සියලු හිමිකම් ඇවිරිණි.","f.privacy":"පෞද්ගලිකත්ව ප්‍රතිපත්තිය","f.cookie":"කුකී ප්‍රතිපත්තිය","f.terms":"සේවා කොන්දේසි","f.legal":"නෛතික දැන්වීම" },
-    ta:{ "nav.guide":"வழிகாட்டிகள்","nav.community":"சமூகம்","nav.journey":"என் பயணம்","nav.news":"செய்திகள்","nav.map":"வரைபடம்","nav.login":"உள்நுழைய","nav.signup":"இலவசமாக பதிவு",
+    ta:{ "nav.guide":"வழிகாட்டிகள்","nav.community":"சமூகம்","nav.journey":"என் பயணம்","nav.news":"செய்திகள்","nav.map":"வரைபடம்","nav.contact":"தொடர்பு கொள்ளுங்கள்","nav.login":"உள்நுழைய","nav.signup":"இலவசமாக பதிவு",
       "f.tag":"இத்தாலியில் இலங்கை சமூகத்தின் நம்பகமான மையம். வழிகாட்டிகள், பன்மொழி AI, சமூகம் மற்றும் சேவைகள் — அனைத்தும் ஒரே இடத்தில்.",
       "f.product":"தயாரிப்பு","f.aiAssistant":"AI உதவியாளர்","f.mapServices":"சேவை வரைபடம்","f.company":"நிறுவனம்","f.about":"எங்களைப் பற்றி","f.advertising":"விளம்பரம்","f.contact":"தொடர்பு","f.account":"கணக்கு","f.register":"பதிவு செய்ய","f.subscriptions":"சந்தாக்கள்","f.copy":"© 2026 Easy Italia Hub. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.","f.privacy":"தனியுரிமைக் கொள்கை","f.cookie":"குக்கீ கொள்கை","f.terms":"சேவை விதிமுறைகள்","f.legal":"சட்டக் குறிப்பு" }
   };
@@ -36,6 +36,7 @@
           '<li><a href="percorso.html" data-i18n="nav.journey"'+(active==='percorso'?' class="active"':'')+'>Il Mio Percorso</a></li>'+
           '<li><a href="news.html" data-i18n="nav.news"'+(active==='news'?' class="active"':'')+'>News</a></li>'+
           '<li><a href="mappa.html" data-i18n="nav.map"'+(active==='mappa'?' class="active"':'')+'>Mappa</a></li>'+
+          '<li><a href="contatti.html" data-i18n="nav.contact"'+(active==='contatti'?' class="active"':'')+'>Contattaci</a></li>'+
         '</ul>'+
         '<div class="nav-right">'+
           '<div class="lang-switch"><button class="lang-btn" id="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Lingua" onclick="EIH.toggleLang(event)"><span class="lang-flag" id="lang-flag">🇮🇹</span><span class="lang-code" id="lang-code">IT</span><svg class="lang-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>'+

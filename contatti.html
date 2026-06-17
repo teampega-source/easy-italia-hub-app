@@ -68,13 +68,14 @@
         <input type="text" name="website" id="c-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0"/>
         <button type="submit" class="btn-primary" id="c-submit" data-i18n="ct.8">Invia messaggio</button>
         <p class="form-ok muted" hidden data-i18n-html="ct.9">✓ Grazie! Ti risponderemo presto.</p>
+        <p class="form-demo muted" hidden style="color:#b45309;background:#fef3c7;border-radius:8px;padding:.6rem .9rem;font-size:.85rem">⚠️ Messaggio NON inviato — modalità demo attiva. Contatta direttamente <a class="inline" href="mailto:info@easyitaliahub.it">info@easyitaliahub.it</a></p>
         <p class="form-err muted" hidden style="color:#dc2626" data-i18n-html="ct.11">Errore di invio. Riprova tra poco o scrivi a <a class="inline" href="mailto:info@easyitaliahub.it">info@easyitaliahub.it</a>.</p>
       </form>
       <script>
       document.getElementById('contact-form').addEventListener('submit',async function(ev){
         ev.preventDefault();
-        var ok=this.querySelector('.form-ok'),err=this.querySelector('.form-err'),btn=document.getElementById('c-submit');
-        ok.hidden=true;err.hidden=true;btn.disabled=true;
+        var ok=this.querySelector('.form-ok'),demo=this.querySelector('.form-demo'),err=this.querySelector('.form-err'),btn=document.getElementById('c-submit');
+        ok.hidden=true;demo.hidden=true;err.hidden=true;btn.disabled=true;
         try{
           var r=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},
             body:JSON.stringify({type:'contact',
@@ -84,9 +85,9 @@
               website:document.getElementById('c-website').value})});
           var data=await r.json().catch(function(){return{}});
           if(r.ok&&!data.error){
-            ok.hidden=false;this.reset();
-            if(data.demo)ok.insertAdjacentHTML('beforeend',' <span style="opacity:.7">('+data.message+')</span>');
-          }else{err.hidden=false;btn.disabled=false;}
+            if(data.demo){demo.hidden=false;}else{ok.hidden=false;this.reset();}
+          }else{err.hidden=false;}
+          btn.disabled=false;
         }catch(e){err.hidden=false;btn.disabled=false;}
       });
       </script>
