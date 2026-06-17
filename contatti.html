@@ -86,7 +86,10 @@
           var data=await r.json().catch(function(){return{}});
           if(r.ok&&!data.error){
             if(data.demo){demo.hidden=false;}else{ok.hidden=false;this.reset();}
-          }else{err.hidden=false;}
+          }else{
+            if(data._resend)console.error('[EIH contact] Resend error:',data._resend);
+            err.hidden=false;
+          }
           btn.disabled=false;
         }catch(e){err.hidden=false;btn.disabled=false;}
       });

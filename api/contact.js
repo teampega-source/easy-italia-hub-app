@@ -78,7 +78,9 @@ module.exports = async function handler(req, res) {
   if (!resp.ok) {
     const errBody = await resp.text();
     console.error('[contact] Resend error', resp.status, errBody);
-    return res.status(500).json({ error: 'Errore invio. Riprova più tardi.' });
+    let reason = 'unknown';
+    try { reason = JSON.parse(errBody).message || errBody.slice(0, 120); } catch {}
+    return res.status(500).json({ error: 'Errore invio. Riprova più tardi.', _resend: reason });
   }
 
   res.status(200).json({ ok: true });
