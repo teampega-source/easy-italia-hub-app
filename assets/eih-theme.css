@@ -31,7 +31,7 @@ html[data-theme="dark"] #eihp-fab svg,html[data-theme="dark"] #eiht-fab svg{stro
 html[data-theme="dark"] .eihp-it{color:#eceae4}
 
 /* pulsante toggle (sopra il pulsante ricerca) */
-#eiht-fab{position:fixed;left:18px;bottom:74px;width:46px;height:46px;border-radius:50%;
+#eiht-fab{position:fixed;right:18px;bottom:134px;width:46px;height:46px;border-radius:50%;
   border:1px solid rgba(118,118,118,.3);background:rgba(243,241,236,.92);backdrop-filter:blur(10px);
   cursor:pointer;z-index:9000;display:flex;align-items:center;justify-content:center;
   box-shadow:0 4px 18px rgba(22,20,18,.14);transition:transform .25s cubic-bezier(.16,1,.3,1)}
@@ -40,7 +40,7 @@ html[data-theme="dark"] .eihp-it{color:#eceae4}
 #eiht-fab .sun{display:none}
 html[data-theme="dark"] #eiht-fab .sun{display:block}
 html[data-theme="dark"] #eiht-fab .moon{display:none}
-@media(max-width:640px){#eiht-fab{bottom:140px}}
+@media(max-width:640px){#eiht-fab{right:14px;bottom:136px}}
 
 /* ─── nuove sezioni: dark mode overrides ─── */
 html[data-theme="dark"] .problem-section{background:#0d0c0a}
