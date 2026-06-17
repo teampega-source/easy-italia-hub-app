@@ -36,6 +36,24 @@ All'avvio di ogni sessione verificare che queste skill siano caricate e usarle p
 
 **Regola:** non completare un task visivo senza prima chiamare `/verify` o `/run`. Il type-check non sostituisce il test nel browser.
 
+## Vercel Agent Skills (installate in `.agents/skills/`)
+
+Installate via `npx skills add vercel-labs/agent-skills`. Usarle proattivamente:
+
+| Skill | Quando usarla |
+|-------|--------------|
+| `web-design-guidelines` | Su ogni modifica CSS/HTML — valida accessibilità e UX (100+ regole) |
+| `vercel-optimize` | Periodicamente — audita costi, performance e ottimizzazioni Vercel |
+| `deploy-to-vercel` | Per deploy manuali o configurazione avanzata |
+| `vercel-cli-with-tokens` | Se serve autenticazione Vercel da CLI |
+| `vercel-react-best-practices` | Se in futuro si migra a React/Next.js |
+| `vercel-composition-patterns` | Se in futuro si migra a React/Next.js |
+| `vercel-react-view-transitions` | Se in futuro si implementano animazioni View Transition API |
+| `vercel-react-native-skills` | Non rilevante per questo progetto |
+| `writing-guidelines` | Su testi UX, messaggi di errore, copy interfaccia (80+ regole) |
+
+Per aggiornare le skill: `npx skills add vercel-labs/agent-skills`
+
 ---
 
 # Codebase: Easy Italia Hub
