@@ -4,7 +4,7 @@
    Same design language as the landing & journey pages.
    ═══════════════════════════════════════════════════════════ */
 :root{
-  --bg-deep:#ffffff;--bg-base:#f5f5f5;--bg-elevated:#ffffff;
+  --bg-deep:#ffffff;--bg-base:#ffffff;--bg-elevated:#ffffff;
   --surface:rgba(40,36,30,0.025);--surface-hover:rgba(40,36,30,0.052);
   --border:rgba(118,118,118,0.14);--border-bright:rgba(118,118,118,0.26);
   --taupe:#c4a882;--coral:#eb5939;
