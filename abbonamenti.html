@@ -73,7 +73,7 @@
         <div class="price"><span class="amt" data-i18n="ab.1">Gratis</span></div>
         <p class="muted" style="margin-bottom:var(--sp-2)" data-i18n="ab.2">Per tutti, sempre.</p>
         <ul><li data-i18n="ab.3">Guide burocratiche da fonti ufficiali</li><li data-i18n="ab.4">Consigliere AI (24/7, 4 lingue)</li><li>Community</li><li data-i18n="ab.5">Il Mio Percorso (9 fasi)</li><li data-i18n="ab.6">Test di italiano</li></ul>
-        <a href="percorso.html" class="btn-ghost" data-i18n="ab.7">Inizia gratis</a>
+        <a href="/percorso" class="btn-ghost" data-i18n="ab.7">Inizia gratis</a>
       </div>
       <div class="plan featured">
         <span class="flag" data-i18n="ab.8">Più popolare</span>
@@ -88,7 +88,7 @@
         <div class="price"><span class="amt" data-i18n="ab.17">Su misura</span></div>
         <p class="muted" style="margin-bottom:var(--sp-2)" data-i18n="ab.18">Commercialisti, avvocati, agenzie.</p>
         <ul><li data-i18n="ab.19">Profilo verificato nel marketplace</li><li data-i18n="ab.20">Contatti qualificati dalla community</li><li data-i18n="ab.21">Spazi e visibilità dedicati</li><li data-i18n="ab.22">Supporto multilingua</li></ul>
-        <a href="contatti.html" class="btn-ghost" data-i18n="ab.23">Contattaci</a>
+        <a href="/contatti" class="btn-ghost" data-i18n="ab.23">Contattaci</a>
       </div>
     </div>
 
@@ -128,7 +128,7 @@ async function startCheckout(){
       location.href = data.url;
       return;
     } else if(data.demo){
-      if(msg){ msg.innerHTML = '<span class="checkout-notice"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>I pagamenti arrivano a breve. <a class="inline" href="contatti.html">Scrivici</a> per essere avvisato.</span>'; }
+      if(msg){ msg.innerHTML = '<span class="checkout-notice"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>I pagamenti arrivano a breve. <a class="inline" href="/contatti">Scrivici</a> per essere avvisato.</span>'; }
       if(btn){ btn.disabled = true; btn.style.opacity = '.5'; btn.textContent = 'Prossimamente'; }
       return;
     } else {

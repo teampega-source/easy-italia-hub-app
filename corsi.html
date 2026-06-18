@@ -92,7 +92,7 @@
   <!-- register prompt (shown only if not registered) -->
   <div id="reg-prompt" class="reg-prompt reveal" hidden style="display:flex;align-items:flex-start;gap:.6rem;background:var(--green-dim);border:1px solid rgba(31,157,85,.28);border-radius:var(--radius-sm);padding:.8rem 1rem;font-size:var(--text-sm);color:var(--ink);margin-bottom:var(--sp-3);line-height:1.6">
     <span aria-hidden="true">👋</span>
-    <span>I Corsi Base sono gratuiti ma riservati a chi si iscrive: i tuoi progressi restano salvati <strong>su questo dispositivo</strong>. <a class="inline" href="percorso.html">Registrati gratis dal tuo Percorso</a> per sbloccare tutte le lezioni.</span>
+    <span>I Corsi Base sono gratuiti ma riservati a chi si iscrive: i tuoi progressi restano salvati <strong>su questo dispositivo</strong>. <a class="inline" href="/percorso">Registrati gratis dal tuo Percorso</a> per sbloccare tutte le lezioni.</span>
   </div>
 
   <div class="lang-tabs" role="tablist" aria-label="Scegli la lingua del corso">
@@ -111,7 +111,7 @@
     </section>
     <section class="crs-section reveal" aria-labelledby="adv-h-it">
       <div class="crs-head"><h2 id="adv-h-it">Corso Avanzato <span class="soon">Premium</span></h2></div>
-      <p class="muted">Verbi, conversazione e italiano per il lavoro e la burocrazia. Si sblocca con un <a class="inline" href="abbonamenti.html">abbonamento Premium</a>.</p>
+      <p class="muted">Verbi, conversazione e italiano per il lavoro e la burocrazia. Si sblocca con un <a class="inline" href="/abbonamenti">abbonamento Premium</a>.</p>
       <div class="adv-grid" id="it-adv-list"></div>
     </section>
   </div>
@@ -127,7 +127,7 @@
     </section>
     <section class="crs-section reveal" aria-labelledby="adv-h-en">
       <div class="crs-head"><h2 id="adv-h-en">Corso Avanzato <span class="soon">Premium</span></h2></div>
-      <p class="muted">Verbi, conversazione e inglese professionale per colloqui ed esami. Si sblocca con un <a class="inline" href="abbonamenti.html">abbonamento Premium</a>.</p>
+      <p class="muted">Verbi, conversazione e inglese professionale per colloqui ed esami. Si sblocca con un <a class="inline" href="/abbonamenti">abbonamento Premium</a>.</p>
       <div class="adv-grid" id="en-adv-list"></div>
     </section>
   </div>
@@ -136,6 +136,7 @@
 
 <div id="site-footer"></div>
 <script src="eih.js"></script>
+<script src="eih-auth.js" defer></script>
 <script>
 (function(){
 'use strict';
@@ -258,7 +259,7 @@ function isRegistered(){
 function renderAdv(key){
   var el = document.getElementById(key+'-adv-list');
   el.innerHTML = COURSES[key].adv.map(function(l){
-    return '<a class="adv-card" href="abbonamenti.html">'+
+    return '<a class="adv-card" href="/abbonamenti">'+
       '<span class="premium-flag">'+lockIco+' Richiede Premium</span>'+
       '<h3>'+l.title+'</h3><p>'+l.desc+'</p></a>';
   }).join('');

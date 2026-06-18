@@ -27,57 +27,57 @@
 
   function navHTML(){
     return '<nav class="site-nav" aria-label="Navigazione principale">'+
-      '<a href="index.html" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a>'+
+      '<a href="/" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a>'+
       '<button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" onclick="EIH.toggleMenu()"><span></span><span></span><span></span></button>'+
       '<div class="nav-collapse" id="nav-collapse">'+
         '<ul class="nav-links">'+
-          '<li><a href="guide.html" data-i18n="nav.guide"'+(active==='guide'?' class="active"':'')+'>Guide</a></li>'+
-          '<li><a href="community.html" data-i18n="nav.community"'+(active==='community'?' class="active"':'')+'>Community</a></li>'+
-          '<li><a href="percorso.html" data-i18n="nav.journey"'+(active==='percorso'?' class="active"':'')+'>Il Mio Percorso</a></li>'+
-          '<li><a href="news.html" data-i18n="nav.news"'+(active==='news'?' class="active"':'')+'>News</a></li>'+
-          '<li><a href="mappa.html" data-i18n="nav.map"'+(active==='mappa'?' class="active"':'')+'>Mappa</a></li>'+
-          '<li><a href="contatti.html" data-i18n="nav.contact"'+(active==='contatti'?' class="active"':'')+'>Contattaci</a></li>'+
+          '<li><a href="/guide" data-i18n="nav.guide"'+(active==='guide'?' class="active"':'')+'>Guide</a></li>'+
+          '<li><a href="/community" data-i18n="nav.community"'+(active==='community'?' class="active"':'')+'>Community</a></li>'+
+          '<li><a href="/percorso" data-i18n="nav.journey"'+(active==='percorso'?' class="active"':'')+'>Il Mio Percorso</a></li>'+
+          '<li><a href="/news" data-i18n="nav.news"'+(active==='news'?' class="active"':'')+'>News</a></li>'+
+          '<li><a href="/mappa" data-i18n="nav.map"'+(active==='mappa'?' class="active"':'')+'>Mappa</a></li>'+
+          '<li><a href="/contatti" data-i18n="nav.contact"'+(active==='contatti'?' class="active"':'')+'>Contattaci</a></li>'+
         '</ul>'+
         '<div class="nav-right">'+
           '<div class="lang-switch"><button class="lang-btn" id="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Lingua" onclick="EIH.toggleLang(event)"><span class="lang-flag" id="lang-flag">🇮🇹</span><span class="lang-code" id="lang-code">IT</span><svg class="lang-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>'+
             '<ul class="lang-menu" id="lang-menu" role="menu"><li><button role="menuitem" onclick="EIH.setLang(\'it\')"><span>🇮🇹</span> Italiano</button></li><li><button role="menuitem" onclick="EIH.setLang(\'en\')"><span>🇬🇧</span> English</button></li><li><button role="menuitem" onclick="EIH.setLang(\'si\')"><span>🇱🇰</span> සිංහල</button></li><li><button role="menuitem" onclick="EIH.setLang(\'ta\')"><span>🇱🇰</span> தமிழ்</button></li></ul></div>'+
-          '<a href="percorso.html" class="nav-login" data-i18n="nav.login">Accedi</a>'+
-          '<a href="percorso.html" class="nav-cta" data-i18n="nav.signup">Registrati gratis</a>'+
+          '<a href="/percorso" class="nav-login" data-i18n="nav.login">Accedi</a>'+
+          '<a href="/percorso" class="nav-cta" data-i18n="nav.signup">Registrati gratis</a>'+
         '</div>'+
         '<div class="nav-mobile-extra">'+
           '<div class="nav-m-sect">'+
             '<p class="nav-m-head">Prodotto</p>'+
             '<ul>'+
-              '<li><a href="guide.html">Guide</a></li>'+
-              '<li><a href="percorso.html">Assistente AI</a></li>'+
-              '<li><a href="community.html">Community</a></li>'+
-              '<li><a href="corsi.html">Corsi di Lingue</a></li>'+
-              '<li><a href="opportunita.html">Opportunità</a></li>'+
-              '<li><a href="money-transfer.html">Money Transfer</a></li>'+
-              '<li><a href="moduli.html">Moduli e Lettere</a></li>'+
-              '<li><a href="assegno-unico.html">Assegno Unico</a></li>'+
-              '<li><a href="diritti-inps.html">Diritti INPS</a></li>'+
-              '<li><a href="riconoscimento-titoli.html">Riconosc. Titoli</a></li>'+
-              '<li><a href="mappa.html">Mappa servizi</a></li>'+
+              '<li><a href="/guide">Guide</a></li>'+
+              '<li><a href="/percorso">Assistente AI</a></li>'+
+              '<li><a href="/community">Community</a></li>'+
+              '<li><a href="/corsi">Corsi di Lingue</a></li>'+
+              '<li><a href="/opportunita">Opportunità</a></li>'+
+              '<li><a href="/money-transfer">Money Transfer</a></li>'+
+              '<li><a href="/moduli">Moduli e Lettere</a></li>'+
+              '<li><a href="/assegno-unico">Assegno Unico</a></li>'+
+              '<li><a href="/diritti-inps">Diritti INPS</a></li>'+
+              '<li><a href="/riconoscimento-titoli">Riconosc. Titoli</a></li>'+
+              '<li><a href="/mappa">Mappa servizi</a></li>'+
             '</ul>'+
           '</div>'+
           '<div class="nav-m-sect">'+
             '<p class="nav-m-head">Azienda</p>'+
             '<ul>'+
-              '<li><a href="chi-siamo.html">Chi siamo</a></li>'+
-              '<li><a href="news.html">News</a></li>'+
-              '<li><a href="contatti.html">Pubblicità</a></li>'+
-              '<li><a href="contatti.html">Contatti</a></li>'+
+              '<li><a href="/chi-siamo">Chi siamo</a></li>'+
+              '<li><a href="/news">News</a></li>'+
+              '<li><a href="/contatti">Pubblicità</a></li>'+
+              '<li><a href="/contatti">Contatti</a></li>'+
             '</ul>'+
           '</div>'+
           '<div class="nav-m-sect">'+
             '<p class="nav-m-head">Account</p>'+
             '<ul>'+
-              '<li><a href="dashboard.html">La mia Dashboard</a></li>'+
-              '<li><a href="permesso-tracker.html">Tracker Permesso</a></li>'+
-              '<li><a href="cv-builder.html">CV Builder</a></li>'+
-              '<li><a href="documenti.html">Archivio Documenti</a></li>'+
-              '<li><a href="abbonamenti.html">Abbonamenti</a></li>'+
+              '<li><a href="/dashboard">La mia Dashboard</a></li>'+
+              '<li><a href="/permesso-tracker">Tracker Permesso</a></li>'+
+              '<li><a href="/cv-builder">CV Builder</a></li>'+
+              '<li><a href="/documenti">Archivio Documenti</a></li>'+
+              '<li><a href="/abbonamenti">Abbonamenti</a></li>'+
             '</ul>'+
           '</div>'+
         '</div>'+
@@ -85,15 +85,15 @@
   }
   function footHTML(){
     return '<footer><div class="footer-inner">'+
-      '<div class="footer-brand"><a href="index.html" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a><p class="footer-tag" data-i18n="f.tag"></p></div>'+
+      '<div class="footer-brand"><a href="/" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a><p class="footer-tag" data-i18n="f.tag"></p></div>'+
       '<div class="footer-col"><h4 data-i18n="f.product">Prodotto</h4><ul>'+
-        '<li><a href="guide.html" data-i18n="nav.guide">Guide</a></li><li><a href="percorso.html" data-i18n="f.aiAssistant">Assistente AI</a></li><li><a href="community.html" data-i18n="nav.community">Community</a></li><li><a href="corsi.html">Corsi di Lingue</a></li><li><a href="opportunita.html">Opportunità</a></li><li><a href="money-transfer.html">Money Transfer</a></li><li><a href="moduli.html">Moduli e Lettere</a></li><li><a href="assegno-unico.html">Calcolatore Assegno Unico</a></li><li><a href="diritti-inps.html">Verifica Diritti INPS</a></li><li><a href="riconoscimento-titoli.html">Riconoscimento Titoli</a></li><li><a href="mappa.html" data-i18n="f.mapServices">Mappa servizi</a></li></ul></div>'+
+        '<li><a href="/guide" data-i18n="nav.guide">Guide</a></li><li><a href="/percorso" data-i18n="f.aiAssistant">Assistente AI</a></li><li><a href="/community" data-i18n="nav.community">Community</a></li><li><a href="/corsi">Corsi di Lingue</a></li><li><a href="/opportunita">Opportunità</a></li><li><a href="/money-transfer">Money Transfer</a></li><li><a href="/moduli">Moduli e Lettere</a></li><li><a href="/assegno-unico">Calcolatore Assegno Unico</a></li><li><a href="/diritti-inps">Verifica Diritti INPS</a></li><li><a href="/riconoscimento-titoli">Riconoscimento Titoli</a></li><li><a href="/mappa" data-i18n="f.mapServices">Mappa servizi</a></li></ul></div>'+
       '<div class="footer-col"><h4 data-i18n="f.company">Azienda</h4><ul>'+
-        '<li><a href="chi-siamo.html" data-i18n="f.about">Chi siamo</a></li><li><a href="news.html" data-i18n="nav.news">News</a></li><li><a href="contatti.html" data-i18n="f.advertising">Pubblicità</a></li><li><a href="contatti.html" data-i18n="f.contact">Contatti</a></li></ul></div>'+
+        '<li><a href="/chi-siamo" data-i18n="f.about">Chi siamo</a></li><li><a href="/news" data-i18n="nav.news">News</a></li><li><a href="/contatti" data-i18n="f.advertising">Pubblicità</a></li><li><a href="/contatti" data-i18n="f.contact">Contatti</a></li></ul></div>'+
       '<div class="footer-col"><h4 data-i18n="f.account">Account</h4><ul>'+
-        '<li><a href="dashboard.html">La mia Dashboard</a></li><li><a href="permesso-tracker.html">Tracker Permesso</a></li><li><a href="cv-builder.html">CV Builder</a></li><li><a href="documenti.html">Archivio Documenti</a></li><li><a href="percorso.html" data-i18n="nav.login">Accedi</a></li><li><a href="percorso.html" data-i18n="f.register">Registrati</a></li><li><a href="abbonamenti.html" data-i18n="f.subscriptions">Abbonamenti</a></li></ul></div>'+
+        '<li><a href="/dashboard">La mia Dashboard</a></li><li><a href="/permesso-tracker">Tracker Permesso</a></li><li><a href="/cv-builder">CV Builder</a></li><li><a href="/documenti">Archivio Documenti</a></li><li><a href="/percorso" data-i18n="nav.login">Accedi</a></li><li><a href="/percorso" data-i18n="f.register">Registrati</a></li><li><a href="/abbonamenti" data-i18n="f.subscriptions">Abbonamenti</a></li></ul></div>'+
       '</div><div class="footer-bottom"><p class="footer-copy" data-i18n="f.copy"></p>'+
-      '<nav class="footer-legal" aria-label="Note legali"><a href="privacy.html" data-i18n="f.privacy">Privacy Policy</a><a href="cookie.html" data-i18n="f.cookie">Cookie Policy</a><a href="termini.html" data-i18n="f.terms">Termini di Servizio</a><a href="note-legali.html" data-i18n="f.legal">Note legali</a></nav></div></footer>';
+      '<nav class="footer-legal" aria-label="Note legali"><a href="/privacy" data-i18n="f.privacy">Privacy Policy</a><a href="/cookie" data-i18n="f.cookie">Cookie Policy</a><a href="/termini" data-i18n="f.terms">Termini di Servizio</a><a href="/note-legali" data-i18n="f.legal">Note legali</a></nav></div></footer>';
   }
   function applyLang(l){
     if(!I18N[l])l='it'; lang=l; const d=Object.assign({},I18N[l],(window.EIH_I18N_EXTRA||{})[l]||{});

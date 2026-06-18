@@ -1,9 +1,16 @@
 'use strict';
 
-// GET /api/email-status — diagnostica invio email + ultime 5 dalla Resend API
+// GET /api/email-status?token=<ADMIN_TOKEN> — diagnostica invio email
+// Protetto da token (env ADMIN_TOKEN o fallback fisso solo per ambienti senza config)
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method !== 'GET') return res.status(405).end();
+
+  const adminToken = process.env.ADMIN_TOKEN;
+  const provided = req.query && req.query.token;
+  if (adminToken && provided !== adminToken) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
 
   const key = process.env.RESEND_API_KEY || '';
   const to  = process.env.CONTACT_TO_EMAIL || '';

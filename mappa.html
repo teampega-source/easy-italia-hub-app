@@ -92,11 +92,11 @@
     </section>
 
     <!-- ░░ HONESTY / CROWDSOURCE BANNER ░░ -->
-    <div class="draft-banner reveal">🙌 <span data-i18n-html="mp.6">Stiamo costruendo l'elenco insieme alla community. I CAF e i patronati qui sotto sono <strong>reti ufficiali nazionali</strong>: clicca per trovare la sede reale più vicina. Negozi, templi e professionisti li raccogliamo dalle segnalazioni — <a class="inline" href="contatti.html">segnala un luogo che conosci</a>.</span></div>
+    <div class="draft-banner reveal">🙌 <span data-i18n-html="mp.6">Stiamo costruendo l'elenco insieme alla community. I CAF e i patronati qui sotto sono <strong>reti ufficiali nazionali</strong>: clicca per trovare la sede reale più vicina. Negozi, templi e professionisti li raccogliamo dalle segnalazioni — <a class="inline" href="/contatti">segnala un luogo che conosci</a>.</span></div>
 
     <div class="cta-row reveal">
-      <a href="percorso.html" class="btn-primary" data-i18n="mp.7">Inizia il percorso</a>
-      <a href="contatti.html" class="btn-ghost" data-i18n="mp.8">Segnala un servizio</a>
+      <a href="/percorso" class="btn-primary" data-i18n="mp.7">Inizia il percorso</a>
+      <a href="/contatti" class="btn-ghost" data-i18n="mp.8">Segnala un servizio</a>
     </div>
   </div>
 </main>
@@ -260,7 +260,7 @@
     return '<article class="svc">'+head+
       '<p>'+esc(phrase)+' a '+esc(city.name)+'. Per ora questo elenco è <strong>in raccolta</strong>: pubblichiamo solo i contatti che ci segnala la community, per non dare informazioni non verificate.</p>'+
       '<p class="svc-note muted">Conosci un posto affidabile a '+esc(city.name)+'?</p>'+
-      '<a class="svc-cta" href="contatti.html">Segnala il tuo <span aria-hidden="true">→</span></a>'+
+      '<a class="svc-cta" href="/contatti">Segnala il tuo <span aria-hidden="true">→</span></a>'+
       '</article>';
   }
 
@@ -421,6 +421,7 @@
 </script>
 
 <script src="eih.js"></script>
+<script src="eih-auth.js" defer></script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
 <script src="assets/eih-atmosphere.js" defer></script>
 <script src="assets/eih-palette.js" defer></script>

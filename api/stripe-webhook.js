@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-module.exports = async function handler(req, res) {
+async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
@@ -67,7 +67,13 @@ module.exports = async function handler(req, res) {
   }
 
   res.status(200).json({ received: true });
-};
+}
+
+// Disable Vercel's automatic body parsing so we can read the raw stream
+// (Stripe signature verification requires the raw bytes, not a parsed object)
+handler.config = { api: { bodyParser: false } };
+
+module.exports = handler;
 
 function verifyAndParse(payload, sigHeader, secret) {
   const parts = sigHeader.split(',');
