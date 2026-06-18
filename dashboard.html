@@ -153,6 +153,46 @@
 
     /* live region for screen readers */
     [data-page="dashboard"] .sr-live{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    /* ── urgent alert banner ── */
+    [data-page="dashboard"] .urgent-banner{display:none;align-items:flex-start;gap:.75rem;background:rgba(235,89,57,.12);border:1px solid rgba(235,89,57,.45);border-radius:var(--radius);padding:1rem 1.15rem;margin-bottom:var(--sp-3);line-height:1.55}
+    [data-page="dashboard"] .urgent-banner.show{display:flex}
+    [data-page="dashboard"] .urgent-banner .ub-ic{flex:none;font-size:1.3rem;line-height:1.3}
+    [data-page="dashboard"] .urgent-banner .ub-body{flex:1;min-width:0}
+    [data-page="dashboard"] .urgent-banner .ub-title{font-family:'Clash Grotesk',sans-serif;font-weight:700;font-size:var(--text-base);color:var(--coral);margin:0 0 .35rem}
+    [data-page="dashboard"] .urgent-banner .ub-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.25rem}
+    [data-page="dashboard"] .urgent-banner .ub-list li{font-size:var(--text-sm);color:var(--ink);display:flex;align-items:baseline;gap:.5rem}
+    [data-page="dashboard"] .urgent-banner .ub-list li::before{content:"•";color:var(--coral);font-weight:700;flex:none}
+    [data-page="dashboard"] .urgent-banner .ub-badge{display:inline-flex;align-items:center;font-size:.65rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--coral);color:#fff;padding:.15rem .5rem;border-radius:99px;margin-left:.5rem;vertical-align:middle}
+
+    /* ── quick stats bar ── */
+    [data-page="dashboard"] .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:var(--sp-3)}
+    @media(max-width:600px){[data-page="dashboard"] .stats-bar{grid-template-columns:repeat(2,1fr)}}
+    [data-page="dashboard"] .stat-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;display:flex;flex-direction:column;align-items:flex-start;gap:.25rem;transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std)}
+    [data-page="dashboard"] .stat-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(20,30,48,.08)}
+    [data-page="dashboard"] .stat-val{font-family:'Clash Grotesk',sans-serif;font-weight:700;font-size:1.75rem;line-height:1;color:var(--ink)}
+    [data-page="dashboard"] .stat-lbl{font-size:var(--text-xs);color:var(--fg-muted);font-weight:500;letter-spacing:.03em}
+    [data-page="dashboard"] .stat-ic{font-size:1.2rem;line-height:1;margin-bottom:.1rem}
+
+    /* ── quick action buttons ── */
+    [data-page="dashboard"] .qa-section{margin-bottom:var(--sp-4)}
+    [data-page="dashboard"] .qa-section h2{font-size:var(--text-xl);margin:0 0 .9rem}
+    [data-page="dashboard"] .qa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+    @media(max-width:700px){[data-page="dashboard"] .qa-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:420px){[data-page="dashboard"] .qa-grid{grid-template-columns:1fr}}
+    [data-page="dashboard"] .qa-btn{display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;padding:1.1rem 1rem;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;color:var(--ink);transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std),border-color var(--dur-micro)}
+    [data-page="dashboard"] .qa-btn:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(20,30,48,.1);border-color:var(--border-bright)}
+    [data-page="dashboard"] .qa-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+    [data-page="dashboard"] .qa-ic{font-size:1.6rem;line-height:1}
+    [data-page="dashboard"] .qa-tt{font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:var(--text-base)}
+    [data-page="dashboard"] .qa-ds{font-size:var(--text-xs);color:var(--fg-muted);line-height:1.4}
+
+    /* ── AI tip of the day ── */
+    [data-page="dashboard"] .tip-card{background:var(--bg-elevated);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:var(--radius);padding:1rem 1.15rem;margin-bottom:var(--sp-3);display:flex;align-items:flex-start;gap:.8rem}
+    [data-page="dashboard"] .tip-card .tip-ic{flex:none;font-size:1.3rem;line-height:1.3}
+    [data-page="dashboard"] .tip-card .tip-body{flex:1;min-width:0}
+    [data-page="dashboard"] .tip-card .tip-label{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+    [data-page="dashboard"] .tip-card .tip-text{font-size:var(--text-sm);color:var(--ink);line-height:1.65;margin:0}
   </style>
 
   <div class="page page-wide">
@@ -168,6 +208,85 @@
 
     <!-- honest banner -->
     <div class="draft-banner reveal">📧 <span>Le notifiche via email arriveranno con gli account reali (in arrivo). Per ora i promemoria restano nel tuo browser, su questo dispositivo.</span></div>
+
+    <!-- ── URGENT DEADLINE ALERT ── -->
+    <div id="urgent-banner" class="urgent-banner" role="alert" aria-live="polite">
+      <span class="ub-ic" aria-hidden="true">⚠️</span>
+      <div class="ub-body">
+        <p class="ub-title">Scadenze urgenti nei prossimi 30 giorni</p>
+        <ul class="ub-list" id="urgent-list"></ul>
+      </div>
+    </div>
+
+    <!-- ── QUICK STATS BAR ── -->
+    <div class="stats-bar reveal" id="stats-bar">
+      <div class="stat-card">
+        <span class="stat-ic" aria-hidden="true">📄</span>
+        <span class="stat-val" id="stat-docs">0</span>
+        <span class="stat-lbl">Documenti</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-ic" aria-hidden="true">📅</span>
+        <span class="stat-val" id="stat-deadlines">0</span>
+        <span class="stat-lbl">Scadenze</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-ic" aria-hidden="true">🗓️</span>
+        <span class="stat-val" id="stat-days">0</span>
+        <span class="stat-lbl">Giorni con noi</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-ic" aria-hidden="true">✅</span>
+        <span class="stat-val" id="stat-completeness">0%</span>
+        <span class="stat-lbl">Profilo completato</span>
+      </div>
+    </div>
+
+    <!-- ── AI TIP OF THE DAY ── -->
+    <div class="tip-card reveal" id="tip-card">
+      <span class="tip-ic" aria-hidden="true">💡</span>
+      <div class="tip-body">
+        <div class="tip-label">Consiglio del giorno</div>
+        <p class="tip-text" id="tip-text"></p>
+      </div>
+    </div>
+
+    <!-- ── QUICK ACTION BUTTONS ── -->
+    <section class="qa-section reveal" aria-labelledby="qa-h">
+      <h2 id="qa-h">Accesso rapido</h2>
+      <div class="qa-grid">
+        <a class="qa-btn" href="permesso-tracker.html">
+          <span class="qa-ic" aria-hidden="true">🛂</span>
+          <span class="qa-tt">Permesso tracker</span>
+          <span class="qa-ds">Monitora lo stato del tuo rinnovo</span>
+        </a>
+        <a class="qa-btn" href="documenti.html">
+          <span class="qa-ic" aria-hidden="true">📁</span>
+          <span class="qa-tt">Documenti</span>
+          <span class="qa-ds">Archivia e gestisci le scadenze</span>
+        </a>
+        <a class="qa-btn" href="cv-builder.html">
+          <span class="qa-ic" aria-hidden="true">📝</span>
+          <span class="qa-tt">CV Builder</span>
+          <span class="qa-ds">Crea e scarica il tuo curriculum</span>
+        </a>
+        <a class="qa-btn" href="moduli.html">
+          <span class="qa-ic" aria-hidden="true">📋</span>
+          <span class="qa-tt">Moduli e lettere</span>
+          <span class="qa-ds">Template pronti da compilare</span>
+        </a>
+        <a class="qa-btn" href="mappa.html">
+          <span class="qa-ic" aria-hidden="true">📍</span>
+          <span class="qa-tt">Mappa servizi</span>
+          <span class="qa-ds">Patronati, CAF e sportelli vicini</span>
+        </a>
+        <a class="qa-btn" href="money-transfer.html">
+          <span class="qa-ic" aria-hidden="true">💸</span>
+          <span class="qa-tt">Rimesse</span>
+          <span class="qa-ds">Confronta i servizi di transfer</span>
+        </a>
+      </div>
+    </section>
 
     <div class="dash-grid">
       <!-- ── CALENDAR PANEL ── -->
@@ -746,6 +865,99 @@
       setTimeout(showNearNotifications, 1200);
     }
   })();
+
+  // ── SUPER-APP WIDGETS ────────────────────────────────────
+
+  // 1. Urgent deadline alert (within 30 days)
+  function renderUrgentBanner(dls){
+    var banner = document.getElementById('urgent-banner');
+    var list   = document.getElementById('urgent-list');
+    if(!banner || !list) return;
+    var today = todayStart();
+    var soon = dls.filter(function(d){
+      var days = Math.ceil((parseYmd(d.date) - today) / 86400000);
+      return days >= 0 && days <= 30;
+    }).sort(function(a,b){ return a.date < b.date ? -1 : 1; });
+    list.innerHTML = '';
+    if(!soon.length){ banner.classList.remove('show'); return; }
+    soon.forEach(function(d){
+      var days = Math.ceil((parseYmd(d.date) - today) / 86400000);
+      var li = document.createElement('li');
+      var badge = days === 0 ? 'oggi' : (days === 1 ? 'domani' : 'tra ' + days + ' giorni');
+      li.innerHTML = escapeHTML(d.title) + ' <span class="ub-badge">' + escapeHTML(badge) + '</span>';
+      list.appendChild(li);
+    });
+    banner.classList.add('show');
+  }
+
+  // 2. Quick stats
+  function renderStats(dls){
+    var docs = 0;
+    try{
+      var raw = localStorage.getItem('eih-documents');
+      if(raw){ var arr = JSON.parse(raw); if(Array.isArray(arr)) docs = arr.length; }
+    }catch(e){}
+
+    var daysSince = 0;
+    try{
+      var since = localStorage.getItem('eih-user-since');
+      if(since){
+        var ms = Date.now() - new Date(since).getTime();
+        daysSince = Math.max(0, Math.floor(ms / 86400000));
+      }
+    }catch(e){}
+
+    var completeness = 0;
+    try{
+      var user = JSON.parse(localStorage.getItem('eih-user') || 'null');
+      if(user){
+        var fields = ['name','email','city','phone','nationality','birth_date'];
+        var filled = fields.filter(function(f){ return user[f] && String(user[f]).trim().length > 0; }).length;
+        completeness = Math.round((filled / fields.length) * 100);
+      }
+    }catch(e){}
+
+    var elDocs  = document.getElementById('stat-docs');
+    var elDl    = document.getElementById('stat-deadlines');
+    var elDays  = document.getElementById('stat-days');
+    var elComp  = document.getElementById('stat-completeness');
+    if(elDocs)  elDocs.textContent  = String(docs);
+    if(elDl)    elDl.textContent    = String(dls.length);
+    if(elDays)  elDays.textContent  = String(daysSince);
+    if(elComp)  elComp.textContent  = completeness + '%';
+  }
+
+  // 3. Tip of the day (no API call — hardcoded array, pick by day-of-year)
+  (function renderTip(){
+    var tips = [
+      'Avvia il rinnovo del permesso di soggiorno almeno 60 giorni prima della scadenza: la Questura accetta la richiesta anticipata e ti rilascia una ricevuta valida come documento.',
+      'Iscriviti all\'AIRE se risiedi stabilmente all\'estero: ti permette di rinnovare il passaporto presso il consolato e votare dall\'estero.',
+      'Il codice fiscale italiano è gratuito e puoi richiederlo all\'Agenzia delle Entrate o al consolato anche prima di arrivare in Italia.',
+      'Lo SPID si attiva una sola volta e ti consente di accedere a tutti i servizi pubblici (INPS, Agenzia delle Entrate, FSE) senza code agli sportelli.',
+      'Il CAF è gratuito per la dichiarazione dei redditi (modello 730): non pagare intermediari privati per un servizio che hai già diritto a ricevere.',
+      'Il Bonus Bebè e l\'Assegno Unico spettano anche ai cittadini stranieri con permesso di soggiorno di lungo periodo. Verifica i requisiti sul sito INPS.',
+      'Quando cerchi lavoro, fai certificare le tue qualifiche estere dalla tua regione: aumenta il tuo valore sul mercato e può darti accesso a concorsi pubblici.',
+      'Conserva sempre una copia digitale di tutti i tuoi documenti (fronte e retro) in un cloud privato: in caso di furto o smarrimento velocizzi enormemente le pratiche.',
+      'Per inviare denaro a casa, confronta sempre i tassi di cambio e le commissioni su almeno 3 servizi diversi: la differenza può superare il 5% sulla stessa cifra.',
+      'Se hai figli nati in Italia, registra la nascita entro 10 giorni all\'anagrafe del comune: il ritardo può creare complicazioni per il permesso di soggiorno del minore.'
+    ];
+    var dayOfYear = (function(){
+      var now = new Date();
+      var start = new Date(now.getFullYear(), 0, 0);
+      return Math.floor((now - start) / 86400000);
+    })();
+    var tip = tips[dayOfYear % tips.length];
+    var el = document.getElementById('tip-text');
+    if(el) el.textContent = tip;
+  })();
+
+  // Hook into renderAll to also update super-app widgets
+  var _origRenderAll = renderAll;
+  renderAll = function(){
+    _origRenderAll();
+    renderUrgentBanner(deadlines);
+    renderStats(deadlines);
+  };
 
   // ── EMAIL REMINDERS ──────────────────────────────────────
   var elEmailInput  = document.getElementById('remind-email');

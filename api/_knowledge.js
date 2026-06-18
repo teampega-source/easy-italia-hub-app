@@ -107,6 +107,54 @@ const KNOWLEDGE = [
     keywords: ["marketplace", "commercialista", "avvocato", "professionisti", "consulenza", "mediatore"],
     text: "La piattaforma offre un marketplace di professionisti verificati (commercialisti, avvocati, mediatori) che parlano la lingua dell'utente. È una delle monetizzazioni più pulite: commissione su consulenze prenotate, mai vendita aggressiva. Utile per pratiche complesse dove la barriera linguistica fa più danni.",
   },
+  // ── Lavoro ──
+  {
+    id: "lavoro-contratti",
+    topic: "Lavoro — contratti, diritti e busta paga",
+    keywords: ["lavoro", "contratto", "ccnl", "tempo determinato", "indeterminato", "part-time", "straordinario", "ferie", "tredicesima", "tfr", "licenziamento", "dimissioni", "preavviso", "job", "work", "employment"],
+    text: "In Italia il rapporto di lavoro dipendente è regolato dal Contratto Collettivo Nazionale di Lavoro (CCNL) del settore. Il contratto può essere a tempo determinato (max 24 mesi, prorogabile) o indeterminato. Diritti fondamentali: ferie pagate (min 4 settimane/anno), tredicesima, TFR (liquidazione ~1 mese di stipendio/anno accantonato), straordinari retribuiti. In caso di licenziamento ingiustificato si ha diritto alla NASpI (disoccupazione INPS). Per le dimissioni serve dare il preavviso previsto dal contratto. Verifica sempre le condizioni specifiche con un patronato o sindacato.",
+    source: "Ministero del Lavoro — lavoro.gov.it",
+  },
+  // ── Casa / affitto ──
+  {
+    id: "casa-affitto",
+    topic: "Casa — affitto, contratto, agevolazioni",
+    keywords: ["casa", "affitto", "contratto affitto", "sfratto", "canone", "deposito cauzionale", "agenzia immobiliare", "cedolare secca", "erp", "edilizia popolare", "house", "rent", "apartment"],
+    text: "Il contratto di affitto standard in Italia è 4+4 anni (residenziale) o 3+2 anni (transitorio). Va registrato all'Agenzia delle Entrate entro 30 giorni dalla firma — il costo di registrazione è in genere 50/50 tra inquilino e proprietario. Il deposito cauzionale non può superare 3 mensilità. Attenzione: affittare senza contratto registrato espone l'inquilino a sfratti immediati e impedisce la residenza anagrafica. Le case popolari (ERP) richiedono di partecipare ai bandi comunali, con requisiti reddituali e di residenza. Per agevolazioni sull'affitto (bonus affitti, cedolare secca) verifica con il Comune o un CAF.",
+    source: "Agenzia delle Entrate — agenziaentrate.gov.it",
+  },
+  // ── Famiglia ──
+  {
+    id: "ricongiungimento-familiare",
+    topic: "Ricongiungimento familiare",
+    keywords: ["ricongiungimento", "famiglia", "coniuge", "figli", "genitori", "family reunification", "visto familiare", "nucleo familiare", "assegno unico"],
+    text: "Il ricongiungimento familiare permette di far venire in Italia il coniuge, i figli minori e in alcuni casi i genitori a carico. Richiede: permesso di soggiorno in corso di validità (non sempre il primo — dipende dal tipo), reddito minimo annuo (circa 8.500 € per il primo familiare, di più per ogni aggiunta), alloggio adeguato certificato. Si presenta allo Sportello Unico per l'Immigrazione. I tempi sono lunghi (spesso 6-12 mesi). I figli minori hanno diritto all'iscrizione scolastica indipendentemente dallo stato di soggiorno. L'Assegno Unico spetta anche ai titolari di permesso di soggiorno UE o di lungo periodo.",
+    source: "Ministero dell'Interno — interno.gov.it",
+  },
+  // ── Salute ──
+  {
+    id: "salute-ssn",
+    topic: "Salute — SSN, medico di base, pronto soccorso, STP",
+    keywords: ["salute", "medico", "medico di base", "pronto soccorso", "stp", "sanità", "farmaco", "ticket", "ssn", "asl", "health", "doctor", "hospital", "medicine"],
+    text: "Chi ha residenza e permesso di soggiorno ha diritto all'iscrizione al SSN: scegli il medico di base alla tua ASL, gratuito per la maggior parte dei lavoratori. Il ticket sanitario dipende dal reddito (ISEE) — molti lavoratori a basso reddito sono esentati. Il Pronto Soccorso è sempre accessibile a chiunque, italiani o stranieri, documentati o no. Chi non ha permesso in regola può usare il Codice STP (Straniero Temporaneamente Presente) per cure urgenti e non urgenti. I farmaci con ricetta hanno un costo ridotto (ticket); alcuni sono gratuiti. Verifica esenzioni e fasce di reddito sul sito della tua Regione o ASL.",
+    source: "Ministero della Salute — salute.gov.it",
+  },
+  // ── Fisco / dichiarazione ──
+  {
+    id: "730-dichiarazione-redditi",
+    topic: "Dichiarazione dei redditi — 730 e modello Redditi",
+    keywords: ["730", "dichiarazione redditi", "irpef", "detrazioni", "deduzioni", "caf", "modello redditi", "rimborso", "isee", "fisco", "taxes", "tax return"],
+    text: "La dichiarazione dei redditi in Italia si fa con il Modello 730 (per lavoratori dipendenti e pensionati, più semplice, da aprile a settembre) o il Modello Redditi (per autonomi e casi complessi). Si può presentare gratis tramite un CAF o un patronato. Vantaggi: recuperare detrazioni (spese mediche, affitto, istruzione) e deduzioni (contributi volontari, fondi pensione). L'ISEE si calcola separatamente per accedere a bonus e agevolazioni. Chi guadagna solo da lavoro dipendente e non ha altri redditi può non presentarla, ma in genere conviene farlo per recuperare quanto spettante. Verifica scadenze e requisiti su agenziaentrate.gov.it o presso un CAF.",
+    source: "Agenzia delle Entrate — agenziaentrate.gov.it",
+  },
+  // ── Scuola ──
+  {
+    id: "scuola-figli",
+    topic: "Scuola e istruzione per i figli",
+    keywords: ["scuola", "scuola materna", "elementare", "media", "superiore", "iscrizione scuola", "asilo", "nido", "figli", "studenti", "education", "school", "children"],
+    text: "L'iscrizione scolastica è un diritto per tutti i minori presenti in Italia, indipendentemente dal loro stato di soggiorno. Per iscrivere i figli serve recarsi alla segreteria della scuola scelta con: documento del genitore, codice fiscale del bambino e (se disponibile) permesso di soggiorno. L'istruzione è obbligatoria dai 6 ai 16 anni. Gli asili nido comunali hanno rette proporzionali all'ISEE — spesso ci sono liste d'attesa, meglio iscriversi presto. Molte scuole offrono corsi di italiano L2 per bambini che non parlano la lingua. Per il riconoscimento di titoli di studio esteri dei figli rivolgersi all'Ufficio Scolastico Regionale.",
+    source: "Ministero dell'Istruzione — istruzione.gov.it",
+  },
 ];
 
 /**
