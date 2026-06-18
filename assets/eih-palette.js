@@ -27,9 +27,9 @@
   ];
 
   var css =
-    '#eihp-fab{position:fixed;right:18px;bottom:188px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(118,118,118,.3);' +
-    'background:rgba(243,241,236,.92);backdrop-filter:blur(10px);cursor:pointer;z-index:9000;display:flex;align-items:center;justify-content:center;' +
-    'box-shadow:0 4px 18px rgba(22,20,18,.14);transition:transform .25s cubic-bezier(.16,1,.3,1)}' +
+    '#eihp-fab{position:fixed;right:18px;bottom:188px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(118,118,118,.35);' +
+    'background:rgba(255,255,255,.95);backdrop-filter:blur(16px);cursor:pointer;z-index:9000;display:flex;align-items:center;justify-content:center;' +
+    'box-shadow:0 8px 28px rgba(20,30,48,.18);transition:transform .25s cubic-bezier(.16,1,.3,1)}' +
     '#eihp-fab:hover{transform:scale(1.08)}#eihp-fab svg{width:19px;height:19px;stroke:#161412}' +
     '#eihp-ov{position:fixed;inset:0;background:rgba(22,20,18,.38);backdrop-filter:blur(6px);z-index:10500;display:none;align-items:flex-start;justify-content:center;padding:12vh 1rem 0}' +
     '#eihp-ov.open{display:flex}' +
