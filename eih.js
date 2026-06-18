@@ -119,6 +119,39 @@
   const navHost=document.getElementById('site-nav'); if(navHost)navHost.innerHTML=navHTML();
   const footHost=document.getElementById('site-footer'); if(footHost)footHost.innerHTML=footHTML();
 
+  // PWA bottom nav (visible only in standalone/installed mode)
+  (function(){
+    function pwaNav(){
+      var pg=document.body.getAttribute('data-page')||'home';
+      var tabs=[
+        {href:'/',label:'Home',page:'home',icon:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'},
+        {href:'/guide',label:'Guide',page:'guide',icon:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'},
+        {href:'/percorso',label:'AI',page:'percorso',icon:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'},
+        {href:'/mappa',label:'Mappa',page:'mappa',icon:'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>'},
+        {href:'/dashboard',label:'Profilo',page:'dashboard',icon:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'},
+      ];
+      var html='<nav class="pwa-bnav" aria-label="Navigazione app">';
+      tabs.forEach(function(t){
+        var isActive=pg===t.page||(pg===''&&t.page==='home');
+        html+='<a href="'+t.href+'" class="pbn-item'+(isActive?' pbn-active':'')+'" aria-current="'+(isActive?'page':'false')+'">'
+          +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+t.icon+'</svg>'
+          +'<span>'+t.label+'</span></a>';
+      });
+      html+='</nav>';
+      var el=document.createElement('div');
+      el.innerHTML=html;
+      document.body.appendChild(el.firstChild);
+    }
+    if(document.body) pwaNav(); else document.addEventListener('DOMContentLoaded',pwaNav);
+
+    // iOS meta tags
+    if(!document.querySelector('meta[name="apple-mobile-web-app-capable"]')){
+      [['apple-mobile-web-app-capable','yes'],['apple-mobile-web-app-status-bar-style','default'],['apple-mobile-web-app-title','Easy Italia']].forEach(function(pair){
+        var m=document.createElement('meta');m.name=pair[0];m.content=pair[1];document.head.appendChild(m);
+      });
+    }
+  })();
+
   // Vercel Speed Insights
   if(!document.querySelector('script[src*="speed-insights"]')){
     const si=document.createElement('script');

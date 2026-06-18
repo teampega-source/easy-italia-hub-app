@@ -6,10 +6,20 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#e9e6e0",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
   "theme_color": "#7d7058",
+  "categories": ["productivity", "lifestyle", "utilities"],
   "icons": [
     { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Consigliere AI", "short_name": "AI", "url": "/percorso", "description": "Chiedi al tuo consigliere di percorso" },
+    { "name": "Guide burocratiche", "short_name": "Guide", "url": "/guide", "description": "Permesso, SPID, codice fiscale e altro" },
+    { "name": "Tracker Permesso", "short_name": "Permesso", "url": "/permesso-tracker", "description": "Segui la tua pratica di rinnovo" },
+    { "name": "Dashboard", "short_name": "Dashboard", "url": "/dashboard", "description": "Le tue scadenze e documenti" }
   ]
 }

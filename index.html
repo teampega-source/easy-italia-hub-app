@@ -10,6 +10,9 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
 <link rel="manifest" href="/manifest.json"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="Easy Italia"/>
 
 <!-- ─── Primary SEO ─── -->
 <title>Easy Italia Hub — Guide e Community Srilankese in Italia</title>
@@ -4115,6 +4118,28 @@ function sendSug(el){
 <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
 <script src="assets/eih-motion.js" defer></script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<!-- PWA bottom nav (visible only when installed) -->
+<style>
+.pwa-bnav{display:none}
+@media(display-mode:standalone){
+  .pwa-bnav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:8000;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(118,118,118,.15);padding-bottom:env(safe-area-inset-bottom,0);height:calc(60px + env(safe-area-inset-bottom,0));align-items:stretch}
+  .pbn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;color:#7d7568;font-size:.62rem;font-weight:500;letter-spacing:.03em;transition:color .15s;padding-bottom:2px}
+  .pbn-item svg{width:22px;height:22px;flex-shrink:0}
+  .pbn-item.pbn-active{color:#7d7058}
+  .pbn-item.pbn-active svg{stroke-width:2.4}
+  body{padding-bottom:calc(60px + env(safe-area-inset-bottom,0))}
+  html[data-theme="dark"] .pwa-bnav{background:rgba(26,24,21,.96);border-top-color:rgba(180,172,158,.14)}
+  html[data-theme="dark"] .pbn-item{color:#8e877b}
+  html[data-theme="dark"] .pbn-item.pbn-active{color:#b9aa8d}
+}
+</style>
+<nav class="pwa-bnav" aria-label="Navigazione app">
+  <a href="/" class="pbn-item pbn-active" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></a>
+  <a href="/guide" class="pbn-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>Guide</span></a>
+  <a href="/percorso" class="pbn-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>AI</span></a>
+  <a href="/mappa" class="pbn-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Mappa</span></a>
+  <a href="/dashboard" class="pbn-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profilo</span></a>
+</nav>
 <script src="assets/eih-atmosphere.js" defer></script>
 <script src="assets/eih-palette.js" defer></script>
 <script src="assets/eih-theme.js" defer></script>
