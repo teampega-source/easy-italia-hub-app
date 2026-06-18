@@ -819,21 +819,30 @@ function calcMortgage(){
 
 /* ═══ Italian mini-test (quiz) — questions in Italian (it's a language test) ═══ */
 const QUIZ=[
-  {q:"Quale documento ti identifica con la Pubblica Amministrazione italiana?",o:["Codice Fiscale","La patente","Il biglietto del bus"],a:0},
-  {q:"Cosa significa «scadenza»?",o:["La data entro cui fare qualcosa","Un tipo di permesso","Un ufficio comunale"],a:0},
-  {q:"Dove si richiede la «residenza»?",o:["Al Comune (Anagrafe)","Alla Posta","Al supermercato"],a:0},
-  {q:"Il «permesso di soggiorno» serve per…",o:["Vivere legalmente in Italia","Guidare l'auto","Viaggiare in aereo"],a:0},
-  {q:"Cos'è la «busta paga»?",o:["Il documento dello stipendio","Una bolletta","Un contratto d'affitto"],a:0},
-  {q:"Cos'è la «marca da bollo»?",o:["Un bollo che si compra e si applica su documenti","Un francobollo per le lettere","Una multa stradale"],a:0},
+  {q:"Quale documento ti identifica con la Pubblica Amministrazione italiana?",o:["Codice Fiscale","La patente di guida","Il biglietto del bus"],a:0},
+  {q:"Cosa significa «scadenza»?",o:["La data entro cui fare qualcosa","Un tipo di permesso speciale","Un ufficio del comune"],a:0},
+  {q:"Dove si richiede la «residenza»?",o:["Al Comune — ufficio Anagrafe","All'ufficio postale","Al supermercato"],a:0},
+  {q:"Il «permesso di soggiorno» serve per…",o:["Soggiornare legalmente in Italia","Guidare l'automobile","Prendere l'aereo"],a:0},
+  {q:"Cos'è la «busta paga»?",o:["Il documento che riepiloga lo stipendio","Una bolletta mensile","Un contratto d'affitto"],a:0},
+  {q:"Cos'è la «marca da bollo»?",o:["Un bollo fiscale da applicare su documenti","Un francobollo per le lettere","Una multa stradale"],a:0},
   {q:"A cosa serve la «ricevuta»?",o:["Dimostra che hai pagato qualcosa","È un tipo di contratto di lavoro","È un documento di viaggio"],a:0},
-  {q:"Che cos'è l'«ASL»?",o:["L'azienda sanitaria locale","Una banca","Una scuola di lingua"],a:0},
-  {q:"L'«anagrafe» è l'ufficio che gestisce…",o:["I dati di residenza e stato civile","Le tasse sulle imprese","Le multe del traffico"],a:0},
-  {q:"Quale parola indica un appuntamento prenotato online o al telefono?",o:["Prenotazione","Scadenza","Ricevuta"],a:0},
-  {q:"Qual è la moneta usata in Italia?",o:["Euro","Lira","Franco"],a:0},
+  {q:"Che cos'è l'«ASL»?",o:["Azienda Sanitaria Locale — gestisce la salute","Una banca pubblica","Una scuola di lingue"],a:0},
+  {q:"L'«anagrafe» è l'ufficio che gestisce…",o:["Residenza e stato civile dei cittadini","Le tasse delle imprese","Le multe del traffico"],a:0},
+  {q:"Quale parola indica un appuntamento prenotato?",o:["Prenotazione","Scadenza","Ricevuta"],a:0},
+  {q:"Qual è la moneta usata in Italia?",o:["Euro","Lira italiana","Franco svizzero"],a:0},
   {q:"Qual è la capitale d'Italia?",o:["Roma","Milano","Napoli"],a:0},
-  {q:"Se un ufficio è «chiuso», significa che…",o:["Non è aperto al pubblico","Ha tanti sportelli","È molto grande"],a:0},
-  {q:"Cosa chiedi se vuoi sapere il costo di qualcosa?",o:["«Quanto costa?»","«Dove abiti?»","«Che ore sono?»"],a:0}
+  {q:"Se un ufficio è «chiuso», significa che…",o:["Non è aperto al pubblico in questo momento","Ha molti sportelli disponibili","È un ufficio molto grande"],a:0},
+  {q:"Cosa chiedi per sapere il costo di qualcosa?",o:["«Quanto costa?»","«Dove abiti?»","«Che ore sono?»"],a:0},
+  {q:"Il «CAF» è un centro che aiuta a…",o:["Compilare dichiarazioni fiscali e pratiche","Imparare l'italiano","Trovare lavoro all'estero"],a:0},
+  {q:"Cosa significa «quietanza»?",o:["Ricevuta che certifica un pagamento avvenuto","Un tipo di busta paga","Un modulo per la residenza"],a:0},
+  {q:"Il «Patronato» è un ente che…",o:["Aiuta gratuitamente con pratiche INPS e sociali","Vende assicurazioni","Gestisce le scuole"],a:0},
+  {q:"Cosa si fa con la «dichiarazione dei redditi»?",o:["Si comunicano i guadagni annuali al Fisco","Si rinnova il passaporto","Si cambia medico di base"],a:0},
+  {q:"Cosa si intende con «orario di sportello»?",o:["Gli orari in cui l'ufficio riceve il pubblico","L'orario di chiusura del negozio","Il turno di lavoro notturno"],a:0},
+  {q:"Lo «SPID» è…",o:["Il sistema di identità digitale italiana","Una rete ferroviaria","Un tipo di contratto a tempo determinato"],a:0}
 ];
+function _shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+function _shuffleItem(item){const idx=_shuffle([...Array(item.o.length).keys()]);return{q:item.q,o:idx.map(i=>item.o[i]),a:idx.indexOf(item.a)};}
+let _quizShuffled=null,_matchShuffled=null;
 let quizI=0,quizScore=0,quizLock=false;
 function openQuiz(){quizI=0;quizScore=0;quizLock=false;document.getElementById('quiz-modal').classList.add('open');document.body.style.overflow='hidden';renderQuiz();}
 function closeQuiz(){document.getElementById('quiz-modal').classList.remove('open');document.body.style.overflow='';}
@@ -845,16 +854,16 @@ function renderQuiz(){
       '<button class="btn-primary" style="width:100%;justify-content:center;margin-top:var(--sp-2)" onclick="openQuiz()">'+t('quiz.retry')+'</button>';
     return;
   }
-  const item=QUIZ[quizI];quizLock=false;
+  const item=QUIZ[quizI];_quizShuffled=_shuffleItem(item);quizLock=false;
   body.innerHTML='<p style="font-size:var(--text-xs);color:var(--fg-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem">'+t('quiz.q')+' '+(quizI+1)+'/'+QUIZ.length+'</p>'+
-    '<p style="font-family:\'Clash Grotesk\',sans-serif;font-size:var(--text-lg);color:var(--ink);margin-bottom:var(--sp-2);line-height:1.3">'+item.q+'</p>'+
+    '<p style="font-family:\'Clash Grotesk\',sans-serif;font-size:var(--text-lg);color:var(--ink);margin-bottom:var(--sp-2);line-height:1.3">'+_quizShuffled.q+'</p>'+
     '<div id="quiz-opts" style="display:flex;flex-direction:column;gap:.5rem">'+
-      item.o.map((op,i)=>'<button class="tool-btn" style="width:100%;justify-content:flex-start;text-align:left" onclick="answerQuiz('+i+')">'+op+'</button>').join('')+
+      _quizShuffled.o.map((op,i)=>'<button class="tool-btn" style="width:100%;justify-content:flex-start;text-align:left" onclick="answerQuiz('+i+')">'+op+'</button>').join('')+
     '</div><div id="quiz-fb" style="margin-top:.7rem;font-size:var(--text-sm)"></div>';
 }
 function answerQuiz(i){
   if(quizLock)return;quizLock=true;
-  const item=QUIZ[quizI];const correct=(i===item.a);
+  const item=_quizShuffled;const correct=(i===item.a);
   if(correct)quizScore++;
   document.querySelectorAll('#quiz-opts .tool-btn').forEach((b,idx)=>{
     b.disabled=true;
@@ -871,15 +880,20 @@ function answerQuiz(i){
 /* ═══ "Abbina la parola" mini-game — term→meaning (terms in Italian by design) ═══ */
 const MATCH=[
   {w:"Scadenza",o:["La data entro cui fare qualcosa","Un documento di viaggio","Un ufficio postale"],a:0},
-  {w:"Marca da bollo",o:["Un bollo da applicare sui documenti","Una multa per il traffico","Una carta di credito"],a:0},
-  {w:"Ricevuta",o:["La prova che hai pagato","Un tipo di contratto","Un permesso di lavoro"],a:0},
-  {w:"ASL",o:["L'azienda sanitaria locale","Una banca","Una compagnia aerea"],a:0},
-  {w:"Anagrafe",o:["L'ufficio dei dati di residenza","Un negozio di alimentari","Una scuola superiore"],a:0},
-  {w:"Tessera Sanitaria",o:["La carta per accedere al servizio sanitario","Un biglietto del treno","Una carta fedeltà del supermercato"],a:0},
+  {w:"Marca da bollo",o:["Un bollo fiscale da applicare sui documenti","Una multa per il traffico","Una carta di credito"],a:0},
+  {w:"Ricevuta",o:["La prova scritta che hai pagato","Un tipo di contratto","Un permesso di lavoro"],a:0},
+  {w:"ASL",o:["Azienda Sanitaria Locale","Una banca popolare","Una compagnia aerea"],a:0},
+  {w:"Anagrafe",o:["Ufficio che gestisce i dati di residenza","Un negozio di alimentari","Una scuola superiore"],a:0},
+  {w:"Tessera Sanitaria",o:["La carta per accedere al Servizio Sanitario","Un biglietto del treno","Una carta fedeltà del supermercato"],a:0},
   {w:"Bolletta",o:["La fattura di luce, gas o acqua","Un documento d'identità","Un contratto di lavoro"],a:0},
-  {w:"Affitto",o:["Il pagamento mensile per una casa in locazione","Una tassa sull'auto","Un tipo di mutuo"],a:0},
-  {w:"Contratto",o:["Un accordo scritto tra due parti","Una ricevuta di pagamento","Un ufficio comunale"],a:0},
-  {w:"Patronato",o:["Un ente che aiuta con le pratiche","Un ristorante tipico","Un mezzo di trasporto"],a:0}
+  {w:"Affitto",o:["Il pagamento mensile per vivere in un'abitazione altrui","Una tassa sull'automobile","Un tipo di mutuo bancario"],a:0},
+  {w:"Contratto",o:["Un accordo scritto tra due o più parti","Una ricevuta di pagamento","Un ufficio comunale"],a:0},
+  {w:"Patronato",o:["Ente che aiuta gratuitamente con le pratiche burocratiche","Un ristorante tipico","Un mezzo di trasporto"],a:0},
+  {w:"CAF",o:["Centro di Assistenza Fiscale per le dichiarazioni","Un tipo di permesso di soggiorno","Un'associazione sportiva"],a:0},
+  {w:"INPS",o:["Ente che gestisce pensioni e contributi sociali","Una banca italiana","Un ministero della giustizia"],a:0},
+  {w:"SPID",o:["Identità digitale per accedere ai servizi online","Un documento cartaceo","Un tipo di visto d'ingresso"],a:0},
+  {w:"Codice Fiscale",o:["Il codice alfanumerico che identifica ogni persona in Italia","Il numero del conto corrente","Un codice postale"],a:0},
+  {w:"Busta paga",o:["Il documento mensile che riepiloga lo stipendio","Una lettera di assunzione","Un contratto collettivo"],a:0}
 ];
 let matchI=0,matchScore=0,matchLock=false;
 function openMatch(){matchI=0;matchScore=0;matchLock=false;document.getElementById('match-modal').classList.add('open');document.body.style.overflow='hidden';renderMatch();}
@@ -892,17 +906,17 @@ function renderMatch(){
       '<button class="btn-primary" style="width:100%;justify-content:center;margin-top:var(--sp-2)" onclick="openMatch()">'+t('match.retry')+'</button>';
     return;
   }
-  const item=MATCH[matchI];matchLock=false;
+  const item=MATCH[matchI];_matchShuffled=_shuffleItem(item);matchLock=false;
   body.innerHTML='<p style="font-size:var(--text-xs);color:var(--fg-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem">'+t('match.q')+' '+(matchI+1)+'/'+MATCH.length+'</p>'+
     '<p class="modal-sub" style="margin-bottom:.35rem">'+t('match.prompt')+'</p>'+
-    '<p style="font-family:\'Clash Grotesk\',sans-serif;font-size:var(--text-xl);color:var(--ink);margin-bottom:var(--sp-2);line-height:1.2">«'+item.w+'»</p>'+
+    '<p style="font-family:\'Clash Grotesk\',sans-serif;font-size:var(--text-xl);color:var(--ink);margin-bottom:var(--sp-2);line-height:1.2">«'+_matchShuffled.w+'»</p>'+
     '<div id="match-opts" style="display:flex;flex-direction:column;gap:.5rem">'+
-      item.o.map((op,i)=>'<button class="tool-btn" style="width:100%;justify-content:flex-start;text-align:left" onclick="answerMatch('+i+')">'+op+'</button>').join('')+
+      _matchShuffled.o.map((op,i)=>'<button class="tool-btn" style="width:100%;justify-content:flex-start;text-align:left" onclick="answerMatch('+i+')">'+op+'</button>').join('')+
     '</div><div id="match-fb" style="margin-top:.7rem;font-size:var(--text-sm)"></div>';
 }
 function answerMatch(i){
   if(matchLock)return;matchLock=true;
-  const item=MATCH[matchI];const correct=(i===item.a);
+  const item=_matchShuffled;const correct=(i===item.a);
   if(correct)matchScore++;
   document.querySelectorAll('#match-opts .tool-btn').forEach((b,idx)=>{
     b.disabled=true;

@@ -150,9 +150,9 @@
 <style>
 /* ─── TOKENS ─────────────────────────────────────────────── */
 :root{
-  /* Editorial — White + warm coral */
-  --bg-deep:#fdfcf9;
-  --bg-base:#f9f5f0;
+  /* Editorial — Clean white */
+  --bg-deep:#ffffff;
+  --bg-base:#f5f5f5;
   --bg-elevated:#ffffff;
   --surface:rgba(40,36,30,0.025);
   --surface-hover:rgba(40,36,30,0.052);
@@ -233,50 +233,29 @@ body{
 #bg{
   position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(1100px 700px at 18% 12%, rgba(235,89,57,0.05), transparent 60%),
-    radial-gradient(900px 600px at 85% 80%, rgba(154,125,69,0.06), transparent 60%),
-    linear-gradient(180deg,#ffffff 0%, #f8f2e9 100%);
+    radial-gradient(900px 600px at 15% 10%, rgba(235,89,57,0.03), transparent 55%),
+    radial-gradient(700px 500px at 88% 85%, rgba(154,125,69,0.03), transparent 55%),
+    #ffffff;
 }
 
-/* ─── SEASONAL BANNER (dismissible, top of page) ─── */
-#season-banner{
-  position:fixed;top:0;left:0;right:0;z-index:260;
-  display:flex;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap;
-  padding:.55rem var(--sp-3);min-height:42px;
-  background:linear-gradient(135deg,var(--blue-deep),var(--blue));
-  color:#fff;font-size:var(--text-sm);font-weight:400;text-align:center;
-  box-shadow:0 2px 12px rgba(20,30,48,.12);
+/* ─── SMART TOAST (bottom-right, once per user) ─── */
+#smart-toast{
+  position:fixed;bottom:calc(var(--fab-bottom,1.75rem) + 230px);right:1.25rem;z-index:8500;
+  max-width:300px;width:calc(100vw - 2.5rem);
+  background:#ffffff;border:1px solid var(--border-bright);border-radius:16px;
+  box-shadow:0 8px 32px rgba(22,20,18,.13);
+  padding:1rem 1.1rem 1rem 1.1rem;
+  display:none;
 }
-#season-banner.hidden{display:none}
-#season-banner .sb-text{color:#fff}
-#season-banner .sb-cta{
-  display:inline-flex;align-items:center;gap:.3rem;
-  color:#fff;font-weight:600;text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.55);
-  transition:border-color var(--dur-micro),opacity var(--dur-micro);
-}
-#season-banner .sb-cta:hover{opacity:.9;border-color:#fff}
-#season-banner .sb-cta:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:3px}
-#season-banner .sb-x{
-  position:absolute;right:.6rem;top:50%;transform:translateY(-50%);
-  width:30px;height:30px;border-radius:8px;border:none;cursor:pointer;
-  background:rgba(255,255,255,.12);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  transition:background var(--dur-micro);
-}
-#season-banner .sb-x:hover{background:rgba(255,255,255,.24)}
-#season-banner .sb-x:focus-visible{outline:2px solid #fff;outline-offset:2px}
-#season-banner .sb-x svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
-/* When the banner is visible, push the fixed nav below it and offset anchor scrolling */
-body.has-banner .site-nav{top:42px}
-body.has-banner{scroll-padding-top:96px}
-@media(prefers-reduced-motion:no-preference){
-  #season-banner:not(.hidden){animation:sbDrop var(--dur-std) var(--ease-spring) both}
-}
-@keyframes sbDrop{from{transform:translateY(-100%)}to{transform:translateY(0)}}
-@media(max-width:600px){
-  #season-banner{font-size:var(--text-xs);padding-right:2.6rem;padding-left:.9rem}
-}
+#smart-toast.visible{display:block;animation:toastIn .35s var(--ease-spring) both}
+@keyframes toastIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+#smart-toast .st-icon{font-size:1.3rem;margin-bottom:.35rem;display:block}
+#smart-toast .st-title{font:600 .88rem/1.3 'Satoshi',sans-serif;color:var(--ink);margin-bottom:.2rem}
+#smart-toast .st-body{font:400 .8rem/1.45 'Satoshi',sans-serif;color:var(--fg-secondary)}
+#smart-toast .st-cta{display:inline-block;margin-top:.6rem;font:600 .8rem 'Satoshi',sans-serif;color:var(--coral);text-decoration:none}
+#smart-toast .st-x{position:absolute;top:.6rem;right:.6rem;width:24px;height:24px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--fg-muted);border-radius:6px;transition:background var(--dur-micro)}
+#smart-toast .st-x:hover{background:var(--surface-hover)}
+#smart-toast .st-x svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
 
 /* ─── NAV ─── */
 .site-nav{
@@ -2286,16 +2265,15 @@ footer{
 
 <a href="#main-content" class="skip-link">Salta al contenuto</a>
 
-<!-- Seasonal banner (dismissible, once per session) -->
-<div id="season-banner" class="hidden" role="region" aria-label="Avviso stagionale">
-  <span class="sb-text" id="sb-text"></span>
-  <a class="sb-cta" id="sb-cta" href="guide.html">
-    <span id="sb-cta-label">Vai alla guida</span>
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-  </a>
-  <button class="sb-x" id="sb-x" aria-label="Chiudi avviso">
+<!-- Smart toast (once per user, bottom-right) -->
+<div id="smart-toast" role="status" aria-live="polite">
+  <button class="st-x" id="st-x" aria-label="Chiudi">
     <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
+  <span class="st-icon" id="st-icon"></span>
+  <div class="st-title" id="st-title"></div>
+  <div class="st-body" id="st-body"></div>
+  <a class="st-cta" id="st-cta" href="#">Scopri di più →</a>
 </div>
 
 <!-- Page-transition wipe -->
@@ -3762,40 +3740,38 @@ document.getElementById('nav-collapse').addEventListener('click',e=>{
 });
 window.addEventListener('resize',()=>{if(window.innerWidth>=1024)closeMenu();},{passive:true});
 
-/* ── Seasonal banner (month-conditional, dismissible once per session) ── */
+/* ── Smart toast (once per user, varied topics, bottom-right) ── */
 (function(){
-  const banner=document.getElementById('season-banner');
-  if(!banner)return;
-  let dismissed=false;
-  try{dismissed=sessionStorage.getItem('eih-banner-dismissed')==='1';}catch(e){}
-  if(dismissed)return; // stays .hidden
-
-  const m=new Date().getMonth(); // 0=gennaio … 11=dicembre
-  let text,label='Vai alla guida',href='guide.html';
-  if(m===0||m===1){ // gennaio / febbraio
-    text="È il periodo della dichiarazione di residenza? Ecco la guida.";
-    label='Guida residenza';href='guide.html#residenza';
-  }else if(m===2||m===3){ // marzo / aprile
-    text="Dichiarazione dei redditi (730/IRPEF): cosa sapere.";
-    label='Guida busta paga';href='guide.html#busta-paga';
-  }else if(m===5||m===6){ // giugno / luglio
-    text="Permesso in scadenza d'estate? Come rinnovarlo.";
-    label='Guida permesso';href='guide.html#permesso-soggiorno';
-  }else{
-    text="Hai una scadenza in arrivo? Trova la guida giusta.";
-    label='Esplora le guide';href='guide.html';
-  }
-  document.getElementById('sb-text').textContent=text;
-  document.getElementById('sb-cta-label').textContent=label;
-  document.getElementById('sb-cta').setAttribute('href',href);
-
-  banner.classList.remove('hidden');
-  document.body.classList.add('has-banner');
-
-  document.getElementById('sb-x').addEventListener('click',()=>{
-    banner.classList.add('hidden');
-    document.body.classList.remove('has-banner');
-    try{sessionStorage.setItem('eih-banner-dismissed','1');}catch(e){}
+  const TIPS=[
+    {icon:'📋',title:'Permesso di soggiorno',body:'Controlla la scadenza del tuo permesso e avvia il rinnovo con anticipo.',href:'permesso-tracker.html'},
+    {icon:'🪪',title:'Codice Fiscale',body:'Non hai ancora il codice fiscale? Scopri come ottenerlo in pochi passi.',href:'guide.html#codice-fiscale'},
+    {icon:'🏥',title:'Tessera Sanitaria',body:'Con la residenza puoi iscriverti al medico di base gratuitamente.',href:'guide.html#tessera-sanitaria'},
+    {icon:'💼',title:'CV Builder',body:'Crea il tuo curriculum in formato europeo pronto da inviare.',href:'cv-builder.html'},
+    {icon:'💸',title:'Money Transfer',body:'Confronta i costi di Wise, Western Union e Ria prima di inviare denaro.',href:'money-transfer.html'},
+    {icon:'🤖',title:'Consigliere AI',body:'Hai una domanda burocratica? L\'AI risponde in italiano, inglese e sinhala.',href:'percorso.html'},
+    {icon:'🗺️',title:'Mappa dei servizi',body:'Trova CAF, patronati e consolati vicino a te.',href:'mappa.html'},
+    {icon:'📰',title:'News dalla comunità',body:'Leggi le ultime notizie rilevanti per gli srilankesi in Italia.',href:'news.html'},
+    {icon:'🧾',title:'Diritti INPS',body:'Scopri a quali contributi e assegni hai diritto.',href:'diritti-inps.html'},
+    {icon:'📄',title:'Moduli e Lettere',body:'Genera lettere di disdetta, delega o ospitalità in un clic.',href:'moduli.html'},
+  ];
+  const toast=document.getElementById('smart-toast');
+  if(!toast)return;
+  let seen=false;
+  try{seen=!!localStorage.getItem('eih-toast-seen');}catch(e){}
+  if(seen)return;
+  const tip=TIPS[Math.floor(Math.random()*TIPS.length)];
+  document.getElementById('st-icon').textContent=tip.icon;
+  document.getElementById('st-title').textContent=tip.title;
+  document.getElementById('st-body').textContent=tip.body;
+  document.getElementById('st-cta').setAttribute('href',tip.href);
+  setTimeout(()=>toast.classList.add('visible'),5000);
+  document.getElementById('st-x').addEventListener('click',()=>{
+    toast.classList.remove('visible');
+    setTimeout(()=>toast.style.display='none',400);
+    try{localStorage.setItem('eih-toast-seen','1');}catch(e){}
+  });
+  document.getElementById('st-cta').addEventListener('click',()=>{
+    try{localStorage.setItem('eih-toast-seen','1');}catch(e){}
   });
 })();
 
