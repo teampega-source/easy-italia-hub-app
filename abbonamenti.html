@@ -118,7 +118,7 @@ async function startCheckout(){
     if(u && u.email) email = u.email;
   } catch(e){}
   try {
-    var resp = await fetch('/api/stripe-checkout', {
+    var resp = await fetch('/api/stripe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email }),

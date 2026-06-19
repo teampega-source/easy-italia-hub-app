@@ -77,7 +77,7 @@
         var ok=this.querySelector('.form-ok'),demo=this.querySelector('.form-demo'),err=this.querySelector('.form-err'),btn=document.getElementById('c-submit');
         ok.hidden=true;demo.hidden=true;err.hidden=true;btn.disabled=true;
         try{
-          var r=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},
+          var r=await fetch('/api/email',{method:'POST',headers:{'Content-Type':'application/json'},
             body:JSON.stringify({type:'contact',
               name:document.getElementById('c-name').value,
               email:document.getElementById('c-email').value,

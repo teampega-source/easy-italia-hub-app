@@ -248,7 +248,7 @@
     var origin = document.getElementById('fs-origin').value;
     var budget = document.getElementById('fs-budget').value;
     btn.disabled = true; btn.textContent = '...';
-    fetch('/api/subscribe-flights', {
+    fetch('/api/flights', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({email: email, origin: origin, max_price: budget ? parseInt(budget) : null}),

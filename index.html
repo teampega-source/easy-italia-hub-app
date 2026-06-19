@@ -3285,7 +3285,7 @@ async function subscribeNewsletter(){
   var orig=btn.textContent;
   btn.disabled=true;btn.textContent='…';
   try{
-    var r=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},
+    var r=await fetch('/api/email',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({type:'newsletter',email:el.value})});
     var data=await r.json().catch(function(){return{}});
     if(r.ok&&!data.error){
@@ -4070,7 +4070,7 @@ function sendSug(el){
     donateBtn.textContent='…';
     donateMsg.textContent='Connessione a Stripe…';
     try{
-      var r=await fetch('/api/stripe-donate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:selected})});
+      var r=await fetch('/api/stripe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'donate',amount:selected})});
       var d=await r.json();
       if(d.demo){donateMsg.textContent='Donazioni disponibili a breve — grazie per il supporto!';donateBtn.disabled=false;donateBtn.innerHTML='♥ &nbsp;Dona ora';return;}
       if(d.url){window.location.href=d.url;return;}
