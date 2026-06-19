@@ -193,6 +193,38 @@
       </ul>
     </section>
 
+    <!-- ─── ISCRIZIONE AVVISI ─── -->
+    <section id="avvisi" class="reveal" aria-labelledby="avvisi-heading">
+      <h2 id="avvisi-heading">Ricevi avvisi volo ogni settimana</h2>
+      <p>Iscriviti gratuitamente: ogni lunedì ti inviamo le migliori opportunità sulla tua rotta, con il consiglio stagionale del mese.</p>
+      <form id="flight-sub-form" style="margin-top:var(--sp-3)">
+        <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:.75rem;align-items:end;flex-wrap:wrap" class="flight-sub-grid">
+          <div>
+            <label for="fs-origin" style="display:block;font-size:var(--text-sm);margin-bottom:.4rem;font-weight:500">Città di partenza</label>
+            <select id="fs-origin" name="origin" class="ch-in">
+              <option value="MXP">Milano (MXP)</option>
+              <option value="FCO">Roma (FCO)</option>
+              <option value="TRN">Torino (TRN)</option>
+              <option value="VCE">Venezia (VCE)</option>
+              <option value="NAP">Napoli (NAP)</option>
+              <option value="BGY">Bergamo (BGY)</option>
+            </select>
+          </div>
+          <div>
+            <label for="fs-email" style="display:block;font-size:var(--text-sm);margin-bottom:.4rem;font-weight:500">La tua email</label>
+            <input id="fs-email" type="email" name="email" class="ch-in" placeholder="tua@email.com" required autocomplete="email"/>
+          </div>
+          <button type="submit" class="btn-primary" id="fs-btn" style="white-space:nowrap;height:42px">Iscrivimi</button>
+        </div>
+        <div style="margin-top:.6rem">
+          <label for="fs-budget" style="font-size:var(--text-sm);margin-right:.5rem;font-weight:500">Budget max (opzionale):</label>
+          <input id="fs-budget" type="number" name="max_price" class="ch-in" placeholder="es. 700" min="50" max="5000" style="width:110px;display:inline-block"/>
+          <span style="font-size:var(--text-sm);color:var(--fg-muted);margin-left:.3rem">€ — ti avvisiamo quando il prezzo è interessante</span>
+        </div>
+      </form>
+      <p id="fs-msg" style="display:none;margin-top:var(--sp-2);font-size:var(--text-sm);padding:.75rem 1rem;border-radius:var(--radius-sm);background:var(--bg-elevated)"></p>
+    </section>
+
     <div class="cta-row reveal">
       <a href="/money-transfer" class="btn-primary" data-i18n="v.cta.money">Confronta Money Transfer</a>
       <a href="/percorso" class="btn-ghost" data-i18n="v.cta.journey">Apri Il Mio Percorso</a>
@@ -204,6 +236,44 @@
 <script src="eih.js"></script>
 <script src="eih-auth.js" defer></script>
 <script>
+// Form iscrizione avvisi volo
+(function(){
+  var form = document.getElementById('flight-sub-form');
+  if (!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var btn = document.getElementById('fs-btn');
+    var msg = document.getElementById('fs-msg');
+    var email = document.getElementById('fs-email').value.trim();
+    var origin = document.getElementById('fs-origin').value;
+    var budget = document.getElementById('fs-budget').value;
+    btn.disabled = true; btn.textContent = '...';
+    fetch('/api/subscribe-flights', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({email: email, origin: origin, max_price: budget ? parseInt(budget) : null}),
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      msg.style.display = 'block';
+      if (d.ok) {
+        msg.style.borderLeft = '3px solid #16a34a';
+        msg.textContent = '✅ Iscritto! Riceverai il primo avviso lunedì prossimo.';
+        form.reset();
+      } else {
+        msg.style.borderLeft = '3px solid var(--coral)';
+        msg.textContent = d.error || 'Errore. Riprova.';
+        btn.disabled = false; btn.textContent = 'Iscrivimi';
+      }
+    })
+    .catch(function(){
+      msg.style.display = 'block';
+      msg.style.borderLeft = '3px solid var(--coral)';
+      msg.textContent = 'Errore di rete. Riprova.';
+      btn.disabled = false; btn.textContent = 'Iscrivimi';
+    });
+  });
+})();
 // Skyscanner affiliate ID — set when approved at partners.skyscanner.net
 (function(){
   var AFF_ID = ''; // ← inserire qui l'ID affiliate quando approvato
