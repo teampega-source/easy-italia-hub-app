@@ -36,10 +36,12 @@ async function handler(req, res) {
       case 'checkout.session.completed': {
         if (obj.mode === 'subscription') {
           const custEmail = (obj.customer_details && obj.customer_details.email) || obj.customer_email;
-          const userId = (obj.metadata && obj.metadata.user_id) ||
-                         (obj.subscription_data && obj.subscription_data.metadata && obj.subscription_data.metadata.user_id);
+          const sessionMeta = obj.metadata || {};
+          const subMeta = (obj.subscription_data && obj.subscription_data.metadata) || {};
+          const userId = sessionMeta.user_id || subMeta.user_id;
+          const plan = resolvePlan(sessionMeta.plan || subMeta.plan);
           await upsertSubscription({
-            email: custEmail, user_id: userId, plan: 'premium',
+            email: custEmail, user_id: userId, plan,
             stripe_subscription_id: obj.subscription,
             stripe_customer_id: obj.customer, status: 'active',
           });
@@ -47,7 +49,8 @@ async function handler(req, res) {
         break;
       }
       case 'customer.subscription.updated': {
-        const plan = ['active', 'trialing'].includes(obj.status) ? 'premium' : 'free';
+        const isActive = ['active', 'trialing'].includes(obj.status);
+        const plan = isActive ? resolvePlan((obj.metadata && obj.metadata.plan) || null) : 'free';
         const status = obj.status || 'active';
         await upsertSubscription({
           stripe_subscription_id: obj.id, stripe_customer_id: obj.customer, plan, status,
@@ -75,6 +78,10 @@ handler.config = { api: { bodyParser: false } };
 
 module.exports = handler;
 
+function resolvePlan(raw) {
+  return ['premium', 'premium_plus', 'business'].includes(raw) ? raw : 'premium';
+}
+
 function verifyAndParse(payload, sigHeader, secret) {
   const parts = sigHeader.split(',');
   const tPart = parts.find(p => p.startsWith('t='));
@@ -85,9 +92,10 @@ function verifyAndParse(payload, sigHeader, secret) {
   if (Math.abs(Date.now() / 1000 - Number(timestamp)) > 300) throw new Error('Timestamp too old');
   const signed = `${timestamp}.${payload.toString('utf8')}`;
   const expected = crypto.createHmac('sha256', secret).update(signed, 'utf8').digest('hex');
-  if (!crypto.timingSafeEqual(Buffer.from(expected, 'hex'), Buffer.from(signature, 'hex'))) {
-    throw new Error('Signature mismatch');
-  }
+  const expectedBuf = Buffer.from(expected, 'hex');
+  const signatureBuf = Buffer.from(signature, 'hex');
+  if (expectedBuf.length !== signatureBuf.length) throw new Error('Signature length mismatch');
+  if (!crypto.timingSafeEqual(expectedBuf, signatureBuf)) throw new Error('Signature mismatch');
   return JSON.parse(payload.toString('utf8'));
 }
 

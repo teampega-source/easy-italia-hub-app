@@ -443,7 +443,6 @@
       return deadlinesTable.list();
     },
     addDeadline: function (obj) {
-      // Normalise to the exact demo shape the dashboard expects.
       var src = obj || {};
       var row = {
         id: src.id || uid(),

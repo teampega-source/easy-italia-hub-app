@@ -22,7 +22,8 @@ module.exports = async function handler(req, res) {
     body = {};
   }
 
-  const { email, user_id } = body;
+  const { email, user_id, plan = 'premium' } = body;
+  const safePlan = ['premium', 'premium_plus', 'business'].includes(plan) ? plan : 'premium';
   const origin =
     req.headers.origin ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://easyitaliahub.it');
@@ -38,6 +39,7 @@ module.exports = async function handler(req, res) {
   params.set('billing_address_collection', 'auto');
   if (email) params.set('customer_email', email);
   if (user_id) params.set('subscription_data[metadata][user_id]', user_id);
+  params.set('subscription_data[metadata][plan]', safePlan);
 
   const resp = await fetch('https://api.stripe.com/v1/checkout/sessions', {
     method: 'POST',

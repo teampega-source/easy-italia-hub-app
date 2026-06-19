@@ -165,7 +165,6 @@
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 
   // scroll reveal
-  document.querySelectorAll('.reveal').forEach(()=>{});
   (function(){
     const els=[...document.querySelectorAll('.reveal')];
     if(reduce){els.forEach(el=>el.classList.add('in'));return;}
@@ -203,7 +202,7 @@
       const a=e.target.closest('a');if(!a)return;
       const href=a.getAttribute('href')||'';
       if(a.target==='_blank'||a.hasAttribute('download')||href===''||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
-      if(/\.html(\?|#|$)/.test(href)){e.preventDefault();if(reduce){location.href=href;return;}wipe.classList.add('cover');setTimeout(()=>{location.href=href;},470);}
+      e.preventDefault();if(reduce){location.href=href;return;}wipe.classList.add('cover');setTimeout(()=>{location.href=href;},470);
     });
     const _resetWipe=()=>{wipe.style.transition='none';wipe.classList.remove('cover');requestAnimationFrame(()=>{wipe.style.transition='';});};
     addEventListener('pageshow',e=>{
