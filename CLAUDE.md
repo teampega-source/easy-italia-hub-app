@@ -44,6 +44,37 @@ All'avvio di ogni sessione verificare che queste skill siano caricate e usarle p
 
 **Regola:** non completare un task visivo senza prima chiamare `/verify` o `/run`. Il type-check non sostituisce il test nel browser.
 
+## Superpowers Skills (installate in `.agents/skills/`)
+
+Installate via `npx skills add obra/superpowers`. Metodologia completa di sviluppo software:
+
+| Skill | Quando usarla |
+|-------|--------------|
+| `brainstorming` | Brainstorming strutturato prima di scegliere un approccio |
+| `writing-plans` | Scrivere piani di implementazione dettagliati |
+| `executing-plans` | Eseguire piani passo-passo con verifica |
+| `test-driven-development` | TDD — scrivere i test prima del codice |
+| `subagent-driven-development` | Parallelizzare task con sub-agenti |
+| `systematic-debugging` | Debug strutturato e metodico |
+| `verification-before-completion` | Verificare correttezza prima di dichiarare done |
+| `requesting-code-review` | Richiedere review del codice |
+| `receiving-code-review` | Gestire feedback da code review |
+| `finishing-a-development-branch` | Checklist prima di mergiare un branch |
+| `using-git-worktrees` | Lavorare con git worktrees |
+| `dispatching-parallel-agents` | Dispatch di agenti paralleli |
+| `using-superpowers` | Overview del sistema superpowers |
+| `writing-skills` | Scrivere nuove skill riutilizzabili |
+
+## The Council Skill (installata in `.agents/skills/llm-council/`)
+
+Installata da `gcpdev/llm-council-skill`. Consulta ChatGPT e Gemini in parallelo per ottenere prospettive multiple prima di presentare un piano.
+
+**Invocazione:** "Consult the council: [domanda]" oppure "Ask ChatGPT and Gemini about..."
+
+**Richiede:** `OPENAI_API_KEY` nel file `.env` della root del progetto. `GEMINI_API_KEY` già disponibile come env var.
+
+**Script:** `.agents/skills/llm-council/scripts/query_llms.py`
+
 ## Vercel Agent Skills (installate in `.agents/skills/`)
 
 Installate via `npx skills add vercel-labs/agent-skills`. Usarle proattivamente:
