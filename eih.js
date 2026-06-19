@@ -54,6 +54,7 @@
               '<li><a href="/corsi">Corsi di Lingue</a></li>'+
               '<li><a href="/opportunita">Opportunità</a></li>'+
               '<li><a href="/money-transfer">Money Transfer</a></li>'+
+              '<li><a href="/voli">Voli Sri Lanka</a></li>'+
               '<li><a href="/moduli">Moduli e Lettere</a></li>'+
               '<li><a href="/assegno-unico">Assegno Unico</a></li>'+
               '<li><a href="/diritti-inps">Diritti INPS</a></li>'+
@@ -87,7 +88,7 @@
     return '<footer><div class="footer-inner">'+
       '<div class="footer-brand"><a href="/" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a><p class="footer-tag" data-i18n="f.tag"></p></div>'+
       '<div class="footer-col"><h4 data-i18n="f.product">Prodotto</h4><ul>'+
-        '<li><a href="/guide" data-i18n="nav.guide">Guide</a></li><li><a href="/percorso" data-i18n="f.aiAssistant">Assistente AI</a></li><li><a href="/community" data-i18n="nav.community">Community</a></li><li><a href="/corsi">Corsi di Lingue</a></li><li><a href="/opportunita">Opportunità</a></li><li><a href="/money-transfer">Money Transfer</a></li><li><a href="/moduli">Moduli e Lettere</a></li><li><a href="/assegno-unico">Calcolatore Assegno Unico</a></li><li><a href="/diritti-inps">Verifica Diritti INPS</a></li><li><a href="/riconoscimento-titoli">Riconoscimento Titoli</a></li><li><a href="/mappa" data-i18n="f.mapServices">Mappa servizi</a></li></ul></div>'+
+        '<li><a href="/guide" data-i18n="nav.guide">Guide</a></li><li><a href="/percorso" data-i18n="f.aiAssistant">Assistente AI</a></li><li><a href="/community" data-i18n="nav.community">Community</a></li><li><a href="/corsi">Corsi di Lingue</a></li><li><a href="/opportunita">Opportunità</a></li><li><a href="/money-transfer">Money Transfer</a></li><li><a href="/voli">Voli Sri Lanka</a></li><li><a href="/moduli">Moduli e Lettere</a></li><li><a href="/assegno-unico">Calcolatore Assegno Unico</a></li><li><a href="/diritti-inps">Verifica Diritti INPS</a></li><li><a href="/riconoscimento-titoli">Riconoscimento Titoli</a></li><li><a href="/mappa" data-i18n="f.mapServices">Mappa servizi</a></li></ul></div>'+
       '<div class="footer-col"><h4 data-i18n="f.company">Azienda</h4><ul>'+
         '<li><a href="/chi-siamo" data-i18n="f.about">Chi siamo</a></li><li><a href="/news" data-i18n="nav.news">News</a></li><li><a href="/contatti" data-i18n="f.advertising">Pubblicità</a></li><li><a href="/contatti" data-i18n="f.contact">Contatti</a></li></ul></div>'+
       '<div class="footer-col"><h4 data-i18n="f.account">Account</h4><ul>'+
