@@ -177,7 +177,6 @@ Piattaforma multilingue (IT/EN/SI/TA) per la comunità dello Sri Lanka in Italia
 | `abbonamenti.html` | Piani abbonamento (Stripe) |
 | `chi-siamo.html`, `contatti.html` | Istituzionali |
 | `privacy.html`, `cookie.html`, `termini.html`, `note-legali.html` | Legali |
-| `benvenuto.html` | Onboarding nuovo utente |
 | `404.html` | Pagina 404 brandizzata |
 
 ---
