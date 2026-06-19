@@ -280,6 +280,7 @@ module.exports = async (req, res) => {
 
     return res.status(200).json({ reply, model: usedModel });
   } catch (err) {
+    console.error('[chat] unhandled exception:', err);
     return res.status(200).json({
       reply: "Si è verificato un errore temporaneo. Riprova tra poco.",
       error: "exception",

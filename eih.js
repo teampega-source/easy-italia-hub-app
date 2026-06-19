@@ -41,8 +41,8 @@
         '<div class="nav-right">'+
           '<div class="lang-switch"><button class="lang-btn" id="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Lingua" onclick="EIH.toggleLang(event)"><span class="lang-flag" id="lang-flag">🇮🇹</span><span class="lang-code" id="lang-code">IT</span><svg class="lang-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>'+
             '<ul class="lang-menu" id="lang-menu" role="menu"><li><button role="menuitem" onclick="EIH.setLang(\'it\')"><span>🇮🇹</span> Italiano</button></li><li><button role="menuitem" onclick="EIH.setLang(\'en\')"><span>🇬🇧</span> English</button></li><li><button role="menuitem" onclick="EIH.setLang(\'si\')"><span>🇱🇰</span> සිංහල</button></li><li><button role="menuitem" onclick="EIH.setLang(\'ta\')"><span>🇱🇰</span> தமிழ்</button></li></ul></div>'+
-          '<a href="/percorso" class="nav-login" data-i18n="nav.login">Accedi</a>'+
-          '<a href="/percorso" class="nav-cta" data-i18n="nav.signup">Registrati gratis</a>'+
+          '<button class="nav-login" data-i18n="nav.login" onclick="openAuth(\'login\')">Accedi</button>'+
+          '<button class="nav-cta" data-i18n="nav.signup" onclick="openAuth(\'signup\')">Registrati gratis</button>'+
         '</div>'+
         '<div class="nav-mobile-extra">'+
           '<div class="nav-m-sect">'+
@@ -119,6 +119,99 @@
   const navHost=document.getElementById('site-nav'); if(navHost)navHost.innerHTML=navHTML();
   const footHost=document.getElementById('site-footer'); if(footHost)footHost.innerHTML=footHTML();
 
+  // inject auth modal (only when the page doesn't already define its own — index.html does)
+  if(!document.getElementById('auth-modal')){
+    const _am=document.createElement('div');
+    _am.innerHTML=
+      '<div class="modal-overlay" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title" onclick="if(event.target===this)closeAuth()">'+
+      '<div class="modal" style="max-width:420px;position:relative">'+
+      '<button class="modal-close" onclick="closeAuth()" aria-label="Chiudi"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'+
+      '<div class="modal-head" style="margin-bottom:var(--sp-3)"><h2 class="modal-title" id="auth-title" style="font-size:var(--text-xl)">Bentornato</h2>'+
+      '<p class="modal-sub" id="auth-sub">Accedi al tuo account Easy Italia Hub</p></div>'+
+      '<form onsubmit="event.preventDefault();eihSubmitAuth();return false;" style="display:flex;flex-direction:column;gap:var(--sp-2)">'+
+      '<div id="name-field" style="display:none;flex-direction:column;gap:.4rem"><label for="auth-name" style="font-size:.75rem;color:var(--fg-secondary);font-weight:500">Nome completo</label>'+
+      '<input id="auth-name" type="text" class="ch-in" placeholder="Mario Rossi" autocomplete="name"/></div>'+
+      '<div style="display:flex;flex-direction:column;gap:.4rem"><label for="auth-email" style="font-size:.75rem;color:var(--fg-secondary);font-weight:500">Email</label>'+
+      '<input id="auth-email" type="email" class="ch-in" placeholder="nome@email.com" autocomplete="email" required/></div>'+
+      '<div style="display:flex;flex-direction:column;gap:.4rem"><label for="auth-pass" style="font-size:.75rem;color:var(--fg-secondary);font-weight:500">Password</label>'+
+      '<input id="auth-pass" type="password" class="ch-in" placeholder="••••••••" autocomplete="current-password" required/></div>'+
+      '<button type="submit" class="btn-primary" style="justify-content:center;margin-top:.5rem" id="auth-submit">Accedi</button>'+
+      '<p id="auth-error-msg" role="alert" style="color:#e53e3e;font-size:.75rem;text-align:center;min-height:1em;margin-top:.25rem"></p>'+
+      '<p id="auth-forgot-row" style="text-align:center;font-size:.75rem;color:var(--fg-muted);margin-top:.1rem">'+
+      '<button type="button" class="ad-cta" onclick="triggerPasswordReset()" style="color:var(--fg-muted)">Password dimenticata?</button></p>'+
+      '</form>'+
+      '<p style="text-align:center;font-size:.75rem;color:var(--fg-muted);margin-top:1rem">'+
+      '<span id="auth-switch-text">Non hai un account?</span> '+
+      '<button class="ad-cta" id="auth-switch" onclick="switchAuth()">Registrati</button></p>'+
+      '</div></div>';
+    document.body.appendChild(_am.firstChild);
+  }
+
+  // Auth modal logic — exposed as window.* so inline onclick handlers can call them.
+  // Guard: index.html defines its own openAuth; this block only runs on secondary pages.
+  if(!window.openAuth){
+    var _authMode='login',_activeModal=null,_lastFocused=null;
+    var _FQ='a[href],button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]:not([tabindex="-1"])';
+    function _lock(){var sw=innerWidth-document.documentElement.clientWidth;document.body.style.overflow='hidden';if(sw>0)document.body.style.paddingRight=sw+'px';}
+    function _unlock(){document.body.style.overflow='';document.body.style.paddingRight='';}
+    function _vis(m){return[...m.querySelectorAll(_FQ)].filter(function(el){return el.offsetParent!==null||el===document.activeElement;});}
+    window.openModal=function(id,fid){var m=document.getElementById(id);if(!m)return;_lastFocused=document.activeElement;m.classList.add('open');_activeModal=m;_lock();setTimeout(function(){var t=fid&&document.getElementById(fid);(t||_vis(m)[0]||m).focus();},300);};
+    window.closeModal=function(id){var m=document.getElementById(id);if(!m||!m.classList.contains('open'))return;m.classList.remove('open');if(_activeModal===m)_activeModal=null;if(!_activeModal)_unlock();if(_lastFocused&&_lastFocused.focus)_lastFocused.focus();};
+    window.openAuth=function(mode){_authMode=mode||'login';applyAuthMode();openModal('auth-modal',_authMode==='signup'?'auth-name':'auth-email');};
+    window.closeAuth=function(){closeModal('auth-modal');};
+    window.switchAuth=function(){_authMode=_authMode==='login'?'signup':'login';applyAuthMode();var el=document.getElementById(_authMode==='signup'?'auth-name':'auth-email');if(el)el.focus();};
+    window.applyAuthMode=function(){
+      var s=_authMode==='signup';
+      var get=function(id){return document.getElementById(id);};
+      if(get('auth-title'))get('auth-title').textContent=s?'Crea il tuo account':'Bentornato';
+      if(get('auth-sub'))get('auth-sub').textContent=s?'Registrati gratis su Easy Italia Hub':'Accedi al tuo account Easy Italia Hub';
+      if(get('auth-submit'))get('auth-submit').textContent=s?'Registrati gratis':'Accedi';
+      if(get('name-field'))get('name-field').style.display=s?'flex':'none';
+      if(get('auth-pass'))get('auth-pass').setAttribute('autocomplete',s?'new-password':'current-password');
+      if(get('auth-switch-text'))get('auth-switch-text').textContent=s?'Hai già un account?':'Non hai un account?';
+      if(get('auth-switch'))get('auth-switch').textContent=s?'Accedi':'Registrati';
+      if(get('auth-forgot-row'))get('auth-forgot-row').style.display=s?'none':'';
+    };
+    window.eihSubmitAuth=async function(){
+      var email=(document.getElementById('auth-email')||{}).value||'';
+      var pass=(document.getElementById('auth-pass')||{}).value||'';
+      var name=(document.getElementById('auth-name')||{}).value||'';
+      var btn=document.getElementById('auth-submit');
+      var errEl=document.getElementById('auth-error-msg');
+      if(errEl)errEl.textContent='';
+      if(btn){btn.disabled=true;btn.textContent=_authMode==='signup'?'Registrazione…':'Accesso…';}
+      var authErr=null,needConfirm=false;
+      if(window.EIH_AUTH){
+        try{
+          await window.EIH_AUTH.ready;
+          var res=_authMode==='signup'?await window.EIH_AUTH.signUp(email,pass,{name:name}):await window.EIH_AUTH.signIn(email,pass);
+          if(res&&res.error){authErr=res.error;}else if(res&&!res.demo&&res.user&&!res.session){needConfirm=true;}
+        }catch(e){authErr=e;}
+      }else{try{localStorage.setItem('eih-registered','1');}catch(e){}}
+      if(btn){btn.disabled=false;btn.textContent=_authMode==='signup'?'Registrati gratis':'Accedi';}
+      if(authErr){
+        if(errEl){var msg=(authErr.message||'').toLowerCase();errEl.textContent=_authMode==='signup'?(msg.includes('already')||msg.includes('registered')?'Indirizzo già in uso. Prova ad accedere.':'Registrazione non riuscita. Riprova.'):'Email o password non corretti.';}
+        return;
+      }
+      if(needConfirm){
+        var mo=document.querySelector('#auth-modal .modal');
+        if(mo)mo.innerHTML='<div style="text-align:center;padding:2rem 1.5rem"><div style="font-size:2.5rem;margin-bottom:1rem">📧</div><h2 style="font-size:1.5rem;margin-bottom:1rem">Controlla la tua email</h2><p style="color:var(--fg-secondary);font-size:.875rem">Abbiamo inviato un link a <strong>'+email+'</strong>. Clicca sul link per attivare il tuo account.</p><button class="btn-primary" style="margin-top:1.5rem;width:100%;justify-content:center" onclick="closeAuth()">OK</button></div>';
+        return;
+      }
+      location.href='/dashboard';
+    };
+    window.triggerPasswordReset=async function(){
+      var emailEl=document.getElementById('auth-email');
+      var errEl=document.getElementById('auth-error-msg');
+      var email=(emailEl&&emailEl.value||'').trim();
+      if(!email){if(errEl)errEl.textContent='Inserisci prima la tua email.';return;}
+      var mo=document.querySelector('#auth-modal .modal');
+      if(mo)mo.innerHTML='<div style="text-align:center;padding:2rem 1.5rem"><div style="font-size:2.5rem;margin-bottom:1rem">📧</div><h2 style="font-size:1.5rem;margin-bottom:1rem">Controlla la tua email</h2><p style="color:var(--fg-secondary);font-size:.875rem">Se l\'indirizzo è registrato riceverai le istruzioni a breve.</p><button class="btn-primary" style="margin-top:1.5rem;width:100%;justify-content:center" onclick="closeAuth()">OK</button></div>';
+      if(window.EIH_AUTH)await window.EIH_AUTH.resetPassword(email).catch(function(){});
+    };
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&_activeModal)closeModal(_activeModal.id);});
+  }
+
   // PWA bottom nav (visible only in standalone/installed mode)
   (function(){
     function pwaNav(){
@@ -165,7 +258,6 @@
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 
   // scroll reveal
-  document.querySelectorAll('.reveal').forEach(()=>{});
   (function(){
     const els=[...document.querySelectorAll('.reveal')];
     if(reduce){els.forEach(el=>el.classList.add('in'));return;}
@@ -191,7 +283,7 @@
   let firstVisit=true;
   try{firstVisit=!sessionStorage.getItem('eih-loaded');sessionStorage.setItem('eih-loaded','1');}catch(e){}
   const pre=document.getElementById('preloader');
-  if(pre){ if(firstVisit){setTimeout(()=>pre.classList.add('done'),reduce?150:1450);}else{pre.classList.add('done');} }
+  if(pre){ if(firstVisit){setTimeout(()=>pre.classList.add('done'),reduce?0:300);}else{pre.classList.add('done');} }
   const wipe=document.getElementById('wipe');
   if(wipe){
     if(!firstVisit && !reduce){
@@ -203,7 +295,7 @@
       const a=e.target.closest('a');if(!a)return;
       const href=a.getAttribute('href')||'';
       if(a.target==='_blank'||a.hasAttribute('download')||href===''||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
-      if(/\.html(\?|#|$)/.test(href)){e.preventDefault();if(reduce){location.href=href;return;}wipe.classList.add('cover');setTimeout(()=>{location.href=href;},470);}
+      e.preventDefault();if(reduce){location.href=href;return;}wipe.classList.add('cover');setTimeout(()=>{location.href=href;},470);
     });
     const _resetWipe=()=>{wipe.style.transition='none';wipe.classList.remove('cover');requestAnimationFrame(()=>{wipe.style.transition='';});};
     addEventListener('pageshow',e=>{

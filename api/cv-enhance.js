@@ -3,6 +3,8 @@
 // Returns { enhanced: string, model: string }
 'use strict';
 
+const { isRateLimited, clientIp } = require('./_ratelimit');
+
 const MODEL_CHAIN = [
   process.env.GEMINI_MODEL,
   'gemini-2.5-flash',
@@ -19,6 +21,10 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  if (isRateLimited(clientIp(req), { name: 'cv-enhance', max: 10 })) {
+    return res.status(429).json({ error: 'Troppe richieste. Attendi un minuto e riprova.' });
+  }
 
   let body = req.body;
   if (typeof body === 'string') { try { body = JSON.parse(body); } catch { body = {}; } }

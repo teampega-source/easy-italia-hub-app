@@ -8,7 +8,7 @@ module.exports = async function handler(req, res) {
 
   const adminToken = process.env.ADMIN_TOKEN;
   const provided = req.query && req.query.token;
-  if (adminToken && provided !== adminToken) {
+  if (!adminToken || provided !== adminToken) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
