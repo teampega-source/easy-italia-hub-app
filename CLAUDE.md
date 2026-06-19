@@ -8,6 +8,12 @@
 - Non spiegare cosa si sta per fare — farlo e basta
 - Spiegare il "perché" solo se non è ovvio dal contesto
 
+## Generazione immagini e video AI
+- Usare **sempre MeiGen** (tools `mcp__meigen__*`) per qualsiasi creazione di immagini o video AI
+- **Non usare Higgsfield** né altri provider — MeiGen è il riferimento unico
+- Tools disponibili: `generate_image`, `generate_video`, `enhance_prompt`, `search_gallery`, `get_inspiration`, `list_models`
+- Chiedere conferma prima di: video (lento + costoso), batch >1 immagine, upgrade risoluzione 2K/4K
+
 ## Output
 - Emettere solo il codice o le modifiche essenziali
 - Niente documentazione non richiesta
