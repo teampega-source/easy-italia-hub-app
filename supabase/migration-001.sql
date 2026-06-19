@@ -28,12 +28,26 @@ begin
 end $$;
 
 
--- 3. subscriptions: add Stripe tracking columns used by stripe-webhook.js
+-- 3. subscriptions:
+--    a) add Stripe tracking columns used by stripe-webhook.js
+--    b) add UNIQUE(user_id) so webhook POST upsert on_conflict=user_id works
 alter table public.subscriptions add column if not exists stripe_subscription_id text;
 alter table public.subscriptions add column if not exists stripe_customer_id text;
 
 create index if not exists idx_subscriptions_stripe_sub  on public.subscriptions(stripe_subscription_id);
 create index if not exists idx_subscriptions_stripe_cust on public.subscriptions(stripe_customer_id);
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conrelid = 'public.subscriptions'::regclass
+      and contype = 'u'
+      and conname = 'subscriptions_user_id_key'
+  ) then
+    alter table public.subscriptions add constraint subscriptions_user_id_key unique (user_id);
+  end if;
+end $$;
 
 -- profiles: allow Tamil language (schema CHECK was missing 'ta')
 alter table public.profiles drop constraint if exists profiles_lang_check;

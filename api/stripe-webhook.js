@@ -101,31 +101,37 @@ function verifyAndParse(payload, sigHeader, secret) {
 
 async function upsertSubscription(data) {
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) return;
-  const payload = {
-    plan: data.plan,
-    status: data.status,
-    updated_at: new Date().toISOString(),
+  const base = {
+    'apikey': SUPABASE_SERVICE_KEY,
+    'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+    'Content-Type': 'application/json',
   };
-  if (data.stripe_subscription_id) payload.stripe_subscription_id = data.stripe_subscription_id;
-  if (data.stripe_customer_id) payload.stripe_customer_id = data.stripe_customer_id;
 
-  let filterUrl;
   if (data.user_id) {
-    filterUrl = `${SUPABASE_URL}/rest/v1/subscriptions?user_id=eq.${encodeURIComponent(data.user_id)}`;
-  } else if (data.stripe_customer_id) {
-    filterUrl = `${SUPABASE_URL}/rest/v1/subscriptions?stripe_customer_id=eq.${encodeURIComponent(data.stripe_customer_id)}`;
-  } else {
+    // True upsert (INSERT OR UPDATE) on unique user_id — requires UNIQUE(user_id) on table.
+    const payload = { user_id: data.user_id, plan: data.plan, status: data.status, updated_at: new Date().toISOString() };
+    if (data.stripe_subscription_id) payload.stripe_subscription_id = data.stripe_subscription_id;
+    if (data.stripe_customer_id) payload.stripe_customer_id = data.stripe_customer_id;
+    await fetch(`${SUPABASE_URL}/rest/v1/subscriptions?on_conflict=user_id`, {
+      method: 'POST',
+      headers: { ...base, 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify(payload),
+    }).catch(err => console.error('[stripe-webhook] upsert error:', err.message));
     return;
   }
 
-  await fetch(filterUrl, {
+  // No user_id (subscription lifecycle events): update existing row by Stripe identifiers.
+  const payload = { plan: data.plan, status: data.status, updated_at: new Date().toISOString() };
+  if (data.stripe_subscription_id) payload.stripe_subscription_id = data.stripe_subscription_id;
+
+  const filterCol = data.stripe_subscription_id ? 'stripe_subscription_id' :
+                    data.stripe_customer_id ? 'stripe_customer_id' : null;
+  const filterVal = data.stripe_subscription_id || data.stripe_customer_id;
+  if (!filterCol) return;
+
+  await fetch(`${SUPABASE_URL}/rest/v1/subscriptions?${filterCol}=eq.${encodeURIComponent(filterVal)}`, {
     method: 'PATCH',
-    headers: {
-      'apikey': SUPABASE_SERVICE_KEY,
-      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=minimal',
-    },
+    headers: { ...base, 'Prefer': 'return=minimal' },
     body: JSON.stringify(payload),
   }).catch(err => console.error('[stripe-webhook] PATCH error:', err.message));
 }

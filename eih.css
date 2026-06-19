@@ -164,6 +164,23 @@ main{position:relative;z-index:1}
 .form input:focus,.form textarea:focus{border-color:rgba(125,112,88,.5)}
 .form textarea{min-height:120px;resize:vertical}
 
+/* ── AUTH MODAL (injected by eih.js on secondary pages) ── */
+.modal-overlay{position:fixed;inset:0;z-index:6000;display:flex;align-items:center;justify-content:center;padding:var(--sp-3);background:rgba(0,0,0,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity var(--dur-std)}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{width:100%;max-width:860px;max-height:90vh;overflow-y:auto;border-radius:24px;padding:var(--sp-5);background:var(--bg-base);border:1px solid var(--border);box-shadow:0 32px 64px rgba(0,0,0,.15);transform:scale(.97) translateY(16px);transition:transform var(--dur-std) var(--ease-spring)}
+.modal-overlay.open .modal{transform:scale(1) translateY(0)}
+.modal-close{position:absolute;top:var(--sp-2);right:var(--sp-2);width:36px;height:36px;border-radius:10px;border:none;background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--fg-muted);transition:background var(--dur-micro),color var(--dur-micro)}
+.modal-close:hover{background:var(--surface-hover);color:var(--ink)}
+.modal-close:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.modal-close svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.modal-head{text-align:center;margin-bottom:var(--sp-4)}
+.modal-title{font-size:var(--text-2xl);font-weight:500;color:var(--ink);margin-bottom:.5rem}
+.modal-sub{font-size:var(--text-sm);color:var(--fg-secondary);font-weight:300;max-width:440px;margin:0 auto}
+.ch-in{width:100%;padding:.65rem .9rem;border:1px solid var(--border-bright);border-radius:var(--radius-sm);background:var(--bg-base);color:var(--fg);font-size:var(--text-sm);font-family:inherit;transition:border-color var(--dur-micro);min-height:42px}
+.ch-in:focus{outline:none;border-color:rgba(125,112,88,.6)}
+.ad-cta{background:none;border:none;color:var(--gold);font-size:inherit;font-family:inherit;cursor:pointer;padding:0;font-weight:500;text-decoration:underline;text-underline-offset:2px}
+.ad-cta:hover{opacity:.8}
+
 /* ── FOOTER ── */
 footer{position:relative;z-index:1;margin-top:var(--sp-6);border-top:1px solid var(--border);background:rgba(255,252,248,0.82);backdrop-filter:blur(12px)}
 .footer-inner{max-width:1200px;margin:0 auto;padding:var(--sp-5) var(--sp-5) var(--sp-3);display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:var(--sp-4)}
