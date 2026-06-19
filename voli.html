@@ -274,16 +274,6 @@
     });
   });
 })();
-// Skyscanner affiliate ID — set when approved at partners.skyscanner.net
-(function(){
-  var AFF_ID = ''; // ← inserire qui l'ID affiliate quando approvato
-  if (!AFF_ID) return;
-  document.querySelectorAll('a.route-card[href*="skyscanner"]').forEach(function(a){
-    var u = new URL(a.href);
-    u.searchParams.set('associateid', AFF_ID);
-    a.href = u.toString();
-  });
-})();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
 <script src="assets/eih-atmosphere.js" defer></script>
