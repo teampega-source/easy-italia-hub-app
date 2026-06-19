@@ -1,6 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "crons": [
+    {
+      "path": "/api/flight-digest",
+      "schedule": "0 7 * * 1"
+    }
+  ],
   "trailingSlash": false,
   "redirects": [
     {
