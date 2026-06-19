@@ -984,10 +984,10 @@
       if (elEmailStatus) elEmailStatus.textContent = '';
       try {
         var dls = deadlines.slice();
-        var resp = await fetch('/api/remind', {
+        var resp = await fetch('/api/email', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email, deadlines: dls }),
+          body: JSON.stringify({ type: 'remind', email: email, deadlines: dls }),
         });
         var data = await resp.json();
         if (data.ok) {
