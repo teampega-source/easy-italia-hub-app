@@ -40,11 +40,12 @@ a{color:inherit}
     align-items:stretch;
   }
   .pbn-item{
-    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:3px;text-decoration:none;color:var(--fg-muted);font-size:.62rem;font-weight:500;
-    letter-spacing:.03em;transition:color .15s;padding-bottom:2px;
+    flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:3px;text-decoration:none;color:var(--fg-muted);font-size:.58rem;font-weight:500;
+    letter-spacing:.02em;transition:color .15s;padding-bottom:2px;overflow:hidden;
   }
-  .pbn-item svg{width:22px;height:22px;flex-shrink:0}
+  .pbn-item span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center;padding:0 2px}
+  .pbn-item svg{width:20px;height:20px;flex-shrink:0}
   .pbn-item.pbn-active{color:var(--blue)}
   .pbn-item.pbn-active svg{stroke-width:2.4}
   body{padding-bottom:calc(60px + env(safe-area-inset-bottom,0))}

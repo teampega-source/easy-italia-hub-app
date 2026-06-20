@@ -261,9 +261,12 @@
       btn.classList.add('active');
       var cat = btn.dataset.cat;
       sections.forEach(function(s){
+        s.querySelectorAll('tbody tr').forEach(function(r){ r.style.display=''; });
         if(cat === 'all' || s.dataset.cat === cat) s.classList.remove('dm-hidden');
         else s.classList.add('dm-hidden');
       });
+      searchEl.value = '';
+      noResults.style.display = 'none';
     });
   });
 
@@ -272,7 +275,14 @@
   var noResults = document.getElementById('dm-no-results');
   searchEl.addEventListener('input', function(){
     var q = searchEl.value.trim().toLowerCase();
-    if(!q){ sections.forEach(function(s){ s.classList.remove('dm-hidden'); }); noResults.style.display='none'; return; }
+    if(!q){
+      sections.forEach(function(s){
+        s.classList.remove('dm-hidden');
+        s.querySelectorAll('tbody tr').forEach(function(r){ r.style.display=''; });
+      });
+      noResults.style.display='none';
+      return;
+    }
     catBtns.forEach(function(b){ b.classList.remove('active'); });
     catBtns[0].classList.add('active');
     var found = 0;
