@@ -444,6 +444,10 @@ body{
 .btn-ghost:hover{background:rgba(20,30,48,.05);color:var(--ink);transform:translateY(-2px)}
 .btn-ghost:active{transform:scale(0.97);transition-duration:var(--dur-micro)}
 .btn-ghost:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:var(--radius-full)}
+/* Button-in-button trailing arrow pill */
+.btn-arrow{display:inline-flex;align-items:center;justify-content:center;width:1.4rem;height:1.4rem;border-radius:50%;background:rgba(0,0,0,.12);font-style:normal;font-size:.8rem;transition:transform var(--dur-std) var(--ease-spring)}
+.btn-primary .btn-arrow{background:rgba(255,255,255,.2)}
+.btn-primary:hover .btn-arrow,.btn-ghost:hover .btn-arrow{transform:translate(2px,-1px) scale(1.1)}
 /* Stats */
 .hero-stats{
   display:flex;gap:var(--sp-4);
@@ -1532,8 +1536,9 @@ footer{
 /* ═══ TIER-1 ENHANCEMENTS ═══ */
 
 /* 1) Scroll reveal (staggered) — hidden state gated behind html.anim so no-JS shows everything */
-.anim .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease-spring),transform .9s var(--ease-spring);transition-delay:calc(var(--ri,0)*70ms)}
-.anim .reveal.in{opacity:1;transform:none}
+.anim .reveal{opacity:0;transform:translateY(22px);filter:blur(5px);transition:opacity .85s var(--ease-spring),transform .85s var(--ease-spring),filter .65s var(--ease-spring);transition-delay:calc(var(--ri,0)*70ms)}
+.anim .reveal.in{opacity:1;transform:none;filter:blur(0)}
+@media(prefers-reduced-motion:reduce){.anim .reveal{filter:none;transform:none}}
 
 /* 2) Hero masked line reveal (keyframe on load — deterministic) */
 .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
@@ -2714,8 +2719,8 @@ footer{
     <h2 id="cta-heading" class="cta-title" data-i18n-html="cta.title">Pronto a iniziare<br/><em style="font-style:italic;color:var(--gold)">il tuo percorso?</em></h2>
     <p class="cta-sub" data-i18n="cta.sub">Registrati gratis. Nessuna carta di credito richiesta.</p>
     <div class="cta-btns">
-      <a href="/percorso" class="btn-primary btn-accent" data-i18n="cta.btn1" onclick="if(typeof openAuth==='function'){openAuth('signup');return false;}">Crea il tuo account gratuito</a>
-      <a href="/chi-siamo" class="btn-ghost" data-i18n="cta.btn2">Scopri come funziona</a>
+      <a href="/percorso" class="btn-primary btn-accent" data-i18n="cta.btn1" onclick="if(typeof openAuth==='function'){openAuth('signup');return false;}">Crea il tuo account gratuito <span class="btn-arrow" aria-hidden="true">↗</span></a>
+      <a href="/chi-siamo" class="btn-ghost" data-i18n="cta.btn2">Scopri come funziona <span class="btn-arrow" aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
