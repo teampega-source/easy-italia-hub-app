@@ -83,9 +83,9 @@ module.exports = async function handler(req, res) {
 
 function buildEmail(sub, tip) {
   const originLabel = ORIGIN_LABELS[sub.origin] || sub.origin;
-  const skyscanner = `https://www.skyscanner.it/transport/voli/${sub.origin.toLowerCase()}/cmb/`;
+  const kiwi = `https://easyitaliahub.it/api/go?to=kiwi&from=${sub.origin}`;
   const googleFlights = `https://www.google.com/flights?hl=it#flt=${sub.origin}.CMB.`;
-  const unsubUrl = `https://easyitaliahub.it/api/unsubscribe-flights?id=${sub.id}`;
+  const unsubUrl = `https://easyitaliahub.it/api/flights?id=${sub.id}`;
   const budgetRow = sub.max_price
     ? `<p style="margin:0 0 20px;font-size:13px;color:#7d7058">Il tuo budget massimo impostato: <strong>€${sub.max_price}</strong>. Se trovi un'offerta sotto questa soglia, è il momento di prenotare.</p>`
     : '';
@@ -112,7 +112,7 @@ function buildEmail(sub, tip) {
     <table cellpadding="0" cellspacing="0" style="margin-bottom:28px">
       <tr>
         <td style="padding-right:8px">
-          <a href="${skyscanner}" style="display:inline-block;background:#7d7058;color:#fff;text-decoration:none;padding:11px 20px;border-radius:8px;font-weight:600;font-size:14px">Skyscanner →</a>
+          <a href="${kiwi}" style="display:inline-block;background:#7d7058;color:#fff;text-decoration:none;padding:11px 20px;border-radius:8px;font-weight:600;font-size:14px">Cerca su Kiwi →</a>
         </td>
         <td>
           <a href="${googleFlights}" style="display:inline-block;background:#f5f4f0;color:#3a3630;text-decoration:none;padding:11px 20px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid #e0dbd2">Google Flights →</a>
