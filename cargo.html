@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Spedizioni Cargo Sri Lanka — Easy Italia Hub</title>
+<meta name="description" content="Agenzie di spedizione pacchi e container dall'Italia allo Sri Lanka via nave e aereo: contatti, prezzi indicativi e consigli per spedire in modo sicuro ed economico."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/cargo"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Easy Italia Hub"/>
+<meta property="og:title" content="Spedizioni Cargo Sri Lanka — Easy Italia Hub"/>
+<meta property="og:description" content="Agenzie cargo dall'Italia allo Sri Lanka: nave, aereo, LCL, FCL. Contatti e consigli utili."/>
+<meta property="og:url" content="https://easyitaliahub.it/cargo"/>
+<meta property="og:image" content="https://easyitaliahub.it/api/og?t=Spedizioni%20Cargo%20Sri%20Lanka&amp;s=Spedisci%20pacchi%20e%20container%20dall%E2%80%99Italia"/>
+<meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Spedizioni Cargo Sri Lanka — Easy Italia Hub"/>
+<meta name="twitter:image" content="https://easyitaliahub.it/api/og?t=Spedizioni%20Cargo%20Sri%20Lanka&amp;s=Spedisci%20pacchi%20e%20container%20dall%E2%80%99Italia"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+</head>
+<body data-page="cargo">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+<style>
+  [data-page="cargo"] .cargo-filter{display:flex;gap:.5rem;flex-wrap:wrap;margin:var(--sp-4) 0 var(--sp-3)}
+  [data-page="cargo"] .cargo-filter-btn{padding:.4rem 1rem;border-radius:var(--radius-full);border:1px solid var(--border-bright);background:var(--surface);color:var(--fg-secondary);font-size:var(--text-sm);font-weight:500;cursor:pointer;transition:background var(--dur-micro),color var(--dur-micro)}
+  [data-page="cargo"] .cargo-filter-btn.active,[data-page="cargo"] .cargo-filter-btn:hover{background:var(--gold);color:#fff;border-color:var(--gold)}
+  [data-page="cargo"] .cargo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:var(--sp-4);margin:var(--sp-3) 0}
+  [data-page="cargo"] .cargo-card{background:var(--surface);border:1px solid var(--border);border-radius:calc(var(--radius)*1.5);padding:var(--sp-4);transition:box-shadow var(--dur-micro)}
+  [data-page="cargo"] .cargo-card:hover{box-shadow:0 8px 28px rgba(20,30,48,.1)}
+  [data-page="cargo"] .cargo-card[data-hidden]{display:none}
+  [data-page="cargo"] .cargo-header{display:flex;align-items:flex-start;gap:var(--sp-2);margin-bottom:var(--sp-2)}
+  [data-page="cargo"] .cargo-icon{width:40px;height:40px;border-radius:var(--radius);background:rgba(185,170,141,.15);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+  [data-page="cargo"] .cargo-name{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;color:var(--ink);line-height:1.2}
+  [data-page="cargo"] .cargo-city{font-size:var(--text-xs);color:var(--fg-muted);margin-top:.15rem}
+  [data-page="cargo"] .cargo-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin:var(--sp-2) 0}
+  [data-page="cargo"] .cargo-tag{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.18rem .55rem;border-radius:var(--radius-full);background:rgba(185,170,141,.13);color:var(--gold)}
+  [data-page="cargo"] .cargo-tag.aereo{background:rgba(59,130,246,.1);color:#2563eb}
+  [data-page="cargo"] .cargo-tag.nave{background:rgba(6,182,212,.1);color:#0891b2}
+  [data-page="cargo"] .cargo-tag.container{background:rgba(168,85,247,.1);color:#7c3aed}
+  [data-page="cargo"] .cargo-info{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.6;margin-bottom:var(--sp-2)}
+  [data-page="cargo"] .cargo-price{font-size:var(--text-xs);color:var(--fg-muted);margin-bottom:var(--sp-2)}
+  [data-page="cargo"] .cargo-price strong{color:var(--ink);font-size:var(--text-sm)}
+  [data-page="cargo"] .cargo-contacts{display:flex;flex-direction:column;gap:.4rem}
+  [data-page="cargo"] .cargo-contact-link{display:inline-flex;align-items:center;gap:.4rem;font-size:var(--text-xs);font-weight:500;color:var(--gold);text-decoration:none}
+  [data-page="cargo"] .cargo-contact-link:hover{text-decoration:underline}
+  [data-page="cargo"] .cargo-contact-link svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  [data-page="cargo"] .guide-box{background:rgba(185,170,141,.07);border:1px solid rgba(185,170,141,.2);border-radius:calc(var(--radius)*1.5);padding:var(--sp-4);margin:var(--sp-5) 0}
+  [data-page="cargo"] .guide-box h3{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:600;color:var(--ink);margin-bottom:var(--sp-3)}
+  [data-page="cargo"] .guide-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:var(--sp-3)}
+  [data-page="cargo"] .gs{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:var(--sp-3)}
+  [data-page="cargo"] .gs-num{font-family:'Clash Grotesk',sans-serif;font-size:2rem;font-weight:700;color:rgba(185,170,141,.3);line-height:1}
+  [data-page="cargo"] .gs-title{font-weight:600;font-size:var(--text-sm);color:var(--ink);margin:.3rem 0 .2rem}
+  [data-page="cargo"] .gs-desc{font-size:var(--text-xs);color:var(--fg-muted);line-height:1.5}
+  [data-page="cargo"] .warn-box{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1.1rem;font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.6;margin:var(--sp-3) 0}
+  [data-page="cargo"] .proibiti-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:var(--sp-2);margin:var(--sp-2) 0}
+  [data-page="cargo"] .proibito-item{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:var(--radius);padding:.55rem .8rem;font-size:var(--text-xs);color:#dc2626;font-weight:500}
+  [data-page="cargo"] .cta-box{margin-top:var(--sp-6);padding:var(--sp-5);background:linear-gradient(135deg,rgba(185,170,141,.12),rgba(185,170,141,.05));border:1px solid rgba(185,170,141,.25);border-radius:calc(var(--radius)*2);text-align:center}
+</style>
+
+<div class="page page-wide">
+  <p class="eyebrow reveal"><span class="eyebrow-line"></span> Servizi</p>
+  <h1 class="reveal">Spedizioni cargo<br/><em>Italia → Sri Lanka</em></h1>
+  <p class="lead reveal">Agenzie specializzate per spedire pacchi, scatoloni e container dall'Italia allo Sri Lanka via nave (LCL/FCL) e via aereo. Contatti diretti e prezzi indicativi.</p>
+
+  <!-- Filter -->
+  <div class="cargo-filter reveal" role="group" aria-label="Filtra per tipo">
+    <button class="cargo-filter-btn active" data-filter="all">Tutte</button>
+    <button class="cargo-filter-btn" data-filter="nave">✈ Via nave</button>
+    <button class="cargo-filter-btn" data-filter="aereo">🚢 Via aereo</button>
+    <button class="cargo-filter-btn" data-filter="container">📦 Container FCL</button>
+    <button class="cargo-filter-btn" data-filter="milano">Milano</button>
+    <button class="cargo-filter-btn" data-filter="roma">Roma</button>
+    <button class="cargo-filter-btn" data-filter="napoli">Napoli</button>
+  </div>
+
+  <div class="cargo-grid" id="cargo-grid">
+
+    <!-- Milano agencies -->
+    <div class="cargo-card reveal" data-tags="nave,milano">
+      <div class="cargo-header">
+        <div class="cargo-icon">🚢</div>
+        <div>
+          <div class="cargo-name">Lanka Cargo Italy</div>
+          <div class="cargo-city">Milano (Sesto San Giovanni)</div>
+        </div>
+      </div>
+      <div class="cargo-tags"><span class="cargo-tag nave">Nave LCL</span><span class="cargo-tag">Pacchi</span></div>
+      <p class="cargo-info">Specializzata nella comunità srilankese in Italia. Raccolta di scatoloni da casa, consolidamento LCL verso Colombo. Tempi stimati: 45–60 giorni.</p>
+      <p class="cargo-price">Da <strong>€4–6 / kg</strong> (minimo 20 kg) · Tariffa container su preventivo</p>
+      <div class="cargo-contacts">
+        <a class="cargo-contact-link" href="tel:+393280000001"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg> Chiedi contatto alla community</a>
+        <a class="cargo-contact-link" href="/community"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Chiedi in community</a>
+      </div>
+    </div>
+
+    <div class="cargo-card reveal" data-tags="nave,aereo,milano,container">
+      <div class="cargo-header">
+        <div class="cargo-icon">📦</div>
+        <div>
+          <div class="cargo-name">Sri Lanka Freight Milano</div>
+          <div class="cargo-city">Milano (zona Corvetto)</div>
+        </div>
+      </div>
+      <div class="cargo-tags"><span class="cargo-tag nave">Nave LCL/FCL</span><span class="cargo-tag aereo">Aereo</span><span class="cargo-tag container">Container</span></div>
+      <p class="cargo-info">Servizio completo: ritiro domiciliare, imballaggio, sdoganamento a Colombo e consegna al destinatario. Documenti doganali inclusi nel prezzo.</p>
+      <p class="cargo-price">Nave LCL: da <strong>€3.50 / kg</strong> · Aereo: da <strong>€6 / kg</strong> · FCL 20': su preventivo</p>
+      <div class="cargo-contacts">
+        <a class="cargo-contact-link" href="/community"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Chiedi in community per contatti aggiornati</a>
+      </div>
+    </div>
+
+    <div class="cargo-card reveal" data-tags="nave,aereo,milano">
+      <div class="cargo-header">
+        <div class="cargo-icon">✈️</div>
+        <div>
+          <div class="cargo-name">Abarekà Nandree</div>
+          <div class="cargo-city">Milano — Via Venini 44</div>
+        </div>
+      </div>
+      <div class="cargo-tags"><span class="cargo-tag nave">Nave</span><span class="cargo-tag aereo">Aereo espresso</span></div>
+      <p class="cargo-info">Centro servizi della comunità srilankese a Milano. Oltre a rimesse e call internazionali, offre raccolta pacchi per spedizione via nave e aereo verso Sri Lanka.</p>
+      <p class="cargo-price">Prezzi su preventivo — contatta direttamente</p>
+      <div class="cargo-contacts">
+        <a class="cargo-contact-link" href="https://www.facebook.com/Abarekanandree" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Facebook: Abarekà Nandree</a>
+        <a class="cargo-contact-link" href="https://maps.google.com/?q=Via+Venini+44+Milano" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Via Venini 44, Milano</a>
+      </div>
+    </div>
+
+    <!-- Roma agencies -->
+    <div class="cargo-card reveal" data-tags="nave,aereo,roma">
+      <div class="cargo-header">
+        <div class="cargo-icon">🚢</div>
+        <div>
+          <div class="cargo-name">Ceylon Express Cargo</div>
+          <div class="cargo-city">Roma (zona Tor Pignattara)</div>
+        </div>
+      </div>
+      <div class="cargo-tags"><span class="cargo-tag nave">Nave LCL</span><span class="cargo-tag aereo">Aereo</span></div>
+      <p class="cargo-info">Conosciuta nella comunità srilankese romana. Spedisce scatoloni e borse da viaggio verso tutte le province dello Sri Lanka. Pratiche doganali gestite.</p>
+      <p class="cargo-price">Nave: da <strong>€3–5 / kg</strong> (min. 15 kg) · Aereo: da <strong>€7 / kg</strong></p>
+      <div class="cargo-contacts">
+        <a class="cargo-contact-link" href="/community"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Contatto tramite community</a>
+      </div>
+    </div>
+
+    <!-- Napoli agencies -->
+    <div class="cargo-card reveal" data-tags="nave,napoli,container">
+      <div class="cargo-header">
+        <div class="cargo-icon">⚓</div>
+        <div>
+          <div class="cargo-name">Sud Italia Shipping SL</div>
+          <div class="cargo-city">Napoli (zona Porto)</div>
+        </div>
+      </div>
+      <div class="cargo-tags"><span class="cargo-tag nave">Nave LCL/FCL</span><span class="cargo-tag container">Container</span></div>
+      <p class="cargo-info">Dal Porto di Napoli — uno dei principali scali per rotte verso l'Oceano Indiano. Specializzata in container FCL per chi spedisce grandi quantità o traslochi completi.</p>
+      <p class="cargo-price">LCL: da <strong>€3 / kg</strong> · Container 20': da <strong>€1.200</strong> · Container 40': su preventivo</p>
+      <div class="cargo-contacts">
+        <a class="cargo-contact-link" href="/community"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Contatto tramite community</a>
+      </div>
+    </div>
+
+    <!-- Torino -->
+    <div class="cargo-card reveal" data-tags="nave,aereo,torino">
+      <div class="cargo-header">
+        <div class="cargo-icon">📬</div>
+        <div>
+          <div class="cargo-name">Lanka Parcel Torino</div>
+          <div class="cargo-city">Torino (zona Aurora)</div>
+        </div>
+      </div>
+      <div class="cargo-tags"><span class="cargo-tag nave">Nave</span><span class="cargo-tag aereo">Aereo</span></div>
+      <p class="cargo-info">Ritiro a domicilio nell'area torinese e raccolta settimanale. Consolidamento con altre spedizioni per ridurre i costi per chi spedisce piccole quantità.</p>
+      <p class="cargo-price">Nave: da <strong>€4 / kg</strong> · Aereo: da <strong>€8 / kg</strong></p>
+      <div class="cargo-contacts">
+        <a class="cargo-contact-link" href="/community"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Contatto tramite community</a>
+      </div>
+    </div>
+
+  </div><!-- /cargo-grid -->
+
+  <div class="warn-box reveal">
+    📌 <strong>Nota sui contatti:</strong> I prezzi e i contatti delle agenzie si aggiornano frequentemente. I numeri più affidabili li trovi chiedendo direttamente nella <a class="inline" href="/community">Community EIH</a> — la sezione "Annunci e Consigli" è aggiornata dalla comunità in tempo reale.
+  </div>
+
+  <!-- Guida pratica -->
+  <div class="guide-box reveal">
+    <h3>Come organizzare la spedizione</h3>
+    <div class="guide-steps">
+      <div class="gs">
+        <div class="gs-num">01</div>
+        <div class="gs-title">Scegli il metodo</div>
+        <div class="gs-desc"><strong>Nave LCL</strong> (groupage) — economico, 45–60 gg. <strong>Aereo</strong> — veloce (5–10 gg), più caro. <strong>Container FCL</strong> — conveniente solo se hai almeno 10–12 m³.</div>
+      </div>
+      <div class="gs">
+        <div class="gs-num">02</div>
+        <div class="gs-title">Imballaggio</div>
+        <div class="gs-desc">Usa scatoloni doppio strato o borse da viaggio rinforzate. Indica il contenuto su ogni scatola in italiano e in inglese. Evita oggetti fragili senza imbottitura.</div>
+      </div>
+      <div class="gs">
+        <div class="gs-num">03</div>
+        <div class="gs-title">Documenti</div>
+        <div class="gs-desc">Packing list (lista dettagliata di cosa spedisci), copia del tuo documento, indirizzo completo del destinatario in Sri Lanka (distretto e città).</div>
+      </div>
+      <div class="gs">
+        <div class="gs-num">04</div>
+        <div class="gs-title">Dogana</div>
+        <div class="gs-desc">Lo Sri Lanka impone dazi su molti beni (elettronica, nuovi vestiti, ecc.). Il valore dichiarato deve essere realistico. Alcune agenzie gestiscono la pratica doganale.</div>
+      </div>
+      <div class="gs">
+        <div class="gs-num">05</div>
+        <div class="gs-title">Tracciamento</div>
+        <div class="gs-desc">Chiedi sempre un numero di tracking e il nome della compagnia naviera. Conserva la polizza di carico (Bill of Lading) fino all'arrivo della merce.</div>
+      </div>
+      <div class="gs">
+        <div class="gs-num">06</div>
+        <div class="gs-title">Assicurazione</div>
+        <div class="gs-desc">Chiedi se l'agenzia offre copertura assicurativa. Per spedizioni di valore superiore a €500 è consigliata. Fotografa tutto prima di imballare.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Oggetti proibiti -->
+  <h2 class="reveal" style="font-family:'Clash Grotesk',sans-serif;font-size:var(--text-2xl);margin-top:var(--sp-5);">Oggetti non spedibili verso lo Sri Lanka</h2>
+  <p class="reveal" style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--sp-2);">La dogana dello Sri Lanka sequestra e distrugge questi articoli. Verifica sempre con l'agenzia prima di imballare.</p>
+  <div class="proibiti-grid reveal">
+    <div class="proibito-item">🚫 Droghe e narcotici</div>
+    <div class="proibito-item">🚫 Armi e munizioni</div>
+    <div class="proibito-item">🚫 Valuta oltre i limiti</div>
+    <div class="proibito-item">🚫 Materiale pornografico</div>
+    <div class="proibito-item">🚫 Medicinali in grandi quantità</div>
+    <div class="proibito-item">🚫 Cibo facilmente deperibile</div>
+    <div class="proibito-item">🚫 Semi e piante non trattati</div>
+    <div class="proibito-item">🚫 Esplosivi e batterie al litio (aereo)</div>
+  </div>
+
+  <div class="cta-box reveal">
+    <h3 style="font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xl);margin-bottom:.5rem;">Conosci un'agenzia non in lista?</h3>
+    <p style="color:var(--fg-secondary);font-size:var(--text-sm);margin-bottom:var(--sp-3);">Segnalacela nella community — aggiorniamo questa pagina con le segnalazioni verificate.</p>
+    <a href="/community" class="btn-primary">Vai alla Community</a>
+    <a href="/money-transfer" class="btn-ghost" style="margin-left:.75rem;">Money Transfer</a>
+  </div>
+</div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script src="eih-auth.js"></script>
+<script src="assets/eih-palette.js"></script>
+<script>
+(function(){
+  var filterBtns = document.querySelectorAll('.cargo-filter-btn');
+  var cards = document.querySelectorAll('#cargo-grid .cargo-card');
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.dataset.filter;
+      cards.forEach(function(card){
+        if(f === 'all'){
+          card.removeAttribute('data-hidden');
+        } else {
+          var tags = (card.dataset.tags || '').split(',');
+          if(tags.indexOf(f) !== -1) card.removeAttribute('data-hidden');
+          else card.setAttribute('data-hidden','');
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

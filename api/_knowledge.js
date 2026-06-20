@@ -172,6 +172,30 @@ ONLINE — Gruppi Facebook: "Sri Lankans in Italy" (principale, lavoro e info), 
     text: "L'iscrizione scolastica è un diritto per tutti i minori presenti in Italia, indipendentemente dal loro stato di soggiorno. Per iscrivere i figli serve recarsi alla segreteria della scuola scelta con: documento del genitore, codice fiscale del bambino e (se disponibile) permesso di soggiorno. L'istruzione è obbligatoria dai 6 ai 16 anni. Gli asili nido comunali hanno rette proporzionali all'ISEE — spesso ci sono liste d'attesa, meglio iscriversi presto. Molte scuole offrono corsi di italiano L2 per bambini che non parlano la lingua. Per il riconoscimento di titoli di studio esteri dei figli rivolgersi all'Ufficio Scolastico Regionale.",
     source: "Ministero dell'Istruzione — istruzione.gov.it",
   },
+  // ── Conto bancario ──
+  {
+    id: "conto-bancario",
+    topic: "Aprire un conto corrente bancario o postale in Italia",
+    keywords: ["conto corrente", "conto bancario", "bancoposta", "iban", "banca", "aprire conto", "hype", "n26", "revolut", "bunq", "poste italiane", "conto online", "bank account", "stranieri banca", "conto senza residenza"],
+    text: "Per aprire un conto corrente in Italia come straniero servono: passaporto o documento d'identità, codice fiscale (obbligatorio), permesso di soggiorno in corso di validità (o ricevuta di rinnovo), e in alcuni casi prova di residenza (bolletta o contratto d'affitto). Le banche tradizionali (UniCredit, Intesa Sanpaolo, BNL) richiedono solitamente la residenza; i conti online (HYPE, N26, Revolut) spesso no. HYPE offre IBAN italiano gratis e si apre in 15 minuti con selfie. N26 e Revolut hanno IBAN europeo ma funzionano per bonifici e stipendi. Il conto BancoPosta di Poste Italiane è accessibile in tutti i comuni. Il permesso di soggiorno in rinnovo è accettato legalmente (la ricevuta postale equivale al permesso). Guida completa su Easy Italia Hub: /guida-conti.",
+    source: "Easy Italia Hub — Guida Conto Corrente",
+  },
+  // ── Spedizioni cargo ──
+  {
+    id: "cargo-sri-lanka",
+    topic: "Spedizioni cargo dall'Italia allo Sri Lanka",
+    keywords: ["cargo", "spedizione", "pacco", "container", "nave", "aereo", "lcl", "fcl", "colombo", "spedire", "scatolone", "rimessa in natura", "shipping", "freight", "spedizioniere", "dogana sri lanka"],
+    text: "Per spedire pacchi o container dall'Italia allo Sri Lanka si usano principalmente: nave LCL (groupage, economico, 45–60 giorni, da €3–6/kg), aereo espresso (5–10 giorni, da €6–8/kg), o container FCL 20'/40' (conveniente per traslochi o grandi quantità). Agenzie attive nelle città italiane: Abarekà Nandree a Milano (Via Venini 44), Lanka Cargo Italy (Sesto San Giovanni), Ceylon Express Cargo a Roma (Tor Pignattara). La dogana dello Sri Lanka impone dazi su elettronica, abiti nuovi e medicinali in grande quantità — la packing list deve essere veritiera. Richiedere sempre il Bill of Lading e il numero di tracking. Contatti aggiornati disponibili nella community EIH: /cargo e /community.",
+    source: "Easy Italia Hub — Spedizioni Cargo",
+  },
+  // ── Dizionario medico ──
+  {
+    id: "dizionario-medico",
+    topic: "Frasi mediche italiano-singalese per spiegare i sintomi al medico",
+    keywords: ["medico", "sintomi", "pronto soccorso", "farmacia", "singalese", "sinhala", "traduzione medica", "118", "ambulanza", "febbre", "dolore", "medicine", "hospital", "emergenza medica", "mal di testa", "sick", "doctor", "pharmacy"],
+    text: "In Italia il numero di emergenza medica è il 118 (ambulanza) e il 112 (numero unico). Frasi utili in singalese: 'Aiuto!' = 'උදව්!' (udaw!); 'Ho bisogno di un medico' = 'මට වෛද්‍යවරයෙකු අවශ්‍යයි' (mata vaidyavariyeku avashyai); 'Ho la febbre' = 'මට උෂ්ණත්වය තිබෙනවා'; 'Ho mal di testa' = 'මට හිස් වේදනාවක් තිබෙනවා'; 'Ho mal di stomaco' = 'මට බඩේ වේදනාවක් තිබෙනවා'; 'Non riesco a respirare' = 'මට හුස්ම ගන්න බෑ'. Il dizionario completo con 60+ frasi (emergenza, sintomi, parti del corpo, farmacia, bambini) è disponibile su /dizionario-medico. Il Consigliere AI di EIH risponde anche in singalese per costruire frasi personalizzate.",
+    source: "Easy Italia Hub — Dizionario Medico IT-SI",
+  },
 ];
 
 /**
