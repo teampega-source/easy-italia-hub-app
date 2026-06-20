@@ -27,9 +27,13 @@ function buildUrl(to, q) {
   const city  = AIRPORT_CITY[from] || 'italy';
 
   switch (to) {
-    case 'kiwi':
-      return 'https://www.kiwi.com/it/search/results/' + city + '/colombo-sri-lanka/'
-        + (IDS.kiwi ? '?affilid=' + encodeURIComponent(IDS.kiwi) : '');
+    case 'kiwi': {
+      const dep = q.date ? String(q.date).replace(/[^0-9-]/g,'').slice(0,10) : null;
+      const ret = q.ret  ? String(q.ret).replace(/[^0-9-]/g,'').slice(0,10) : null;
+      const dateSeg = dep ? '/' + dep + '/' + (ret || 'no-return') : '';
+      const aff = IDS.kiwi ? '?affilid=' + encodeURIComponent(IDS.kiwi) : '';
+      return 'https://www.kiwi.com/it/search/results/' + city + '/colombo-sri-lanka' + dateSeg + '/' + aff;
+    }
 
     case 'booking':
       return 'https://www.booking.com/searchresults.it.html?country=lk'
