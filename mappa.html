@@ -172,6 +172,11 @@
   .svc-note{margin-top:auto}
   .svc-cta{display:inline-flex;align-items:center;gap:.35rem;margin-top:.5rem;font-size:var(--text-sm);font-weight:600;color:var(--coral);text-decoration:none}
   .svc-cta:hover{text-decoration:underline;text-underline-offset:2px}
+  .place-list{display:flex;flex-direction:column;gap:.6rem;margin:0 0 .6rem}
+  .place-item{padding:.75rem .9rem;border-radius:calc(var(--radius) - 2px);background:var(--surface);border:1px solid var(--border-bright)}
+  .place-name{font-size:var(--text-sm);font-weight:600;color:var(--ink);margin:0 0 .25rem}
+  .place-detail{font-size:.73rem;color:var(--fg-muted);line-height:1.55;margin:0}
+  .place-detail a{color:var(--gold);text-decoration:none}.place-detail a:hover{text-decoration:underline}
 
   /* ── responsive ── */
   @media(max-width:860px){
@@ -216,6 +221,39 @@
     { name:'CAF / rete ACLI',url:'https://www.acli.it/dove-siamo/',              label:'Sportelli e sedi ACLI in Italia' }
   ];
 
+  /* ── Luoghi verificati per città ─────────────────────────────────── */
+  var PLACES = {
+    milano: {
+      worship: [
+        { name:'Tempio Buddhista Lankaramaya', addr:'Via Pienza 8 (area Chiesa Rossa)', note:'Principale centro buddhista della comunità — cerimonie Vesak ogni maggio.' },
+        { name:'Dharma Nikethanaya', addr:'Via Padova 318', note:'Centro culturale e spirituale srilankese.' },
+        { name:'Comunità Tamil (Camnago Faloppio)', addr:'Chiesa di S. Margherita, Camnago Faloppio (CO)', note:'Festività tamil: Pongal, Puthandu. Vicino alla Brianza.' }
+      ],
+      shop: [
+        { name:'"Little Sri Lanka" — Via Cesare da Sesto', addr:'Via Cesare da Sesto (Piazza Sant\'Agostino)', note:'Oltre 10 attività in 100 metri: alimentari, ristoranti, money transfer, parrucchieri.' }
+      ],
+      pro: [
+        { name:'Abarekà Nandree (onlus)', addr:'Via Venini, Milano', note:'Mediazione culturale e supporto ai cittadini stranieri. Attiva dal 2002.' }
+      ]
+    },
+    napoli: {
+      worship: [
+        { name:'Napoli Buddhist Vihara', addr:'Via G. Tomasi di Lampedusa 91 (80145 NA)', tel:'+39 081 7407766', url:'http://www.napolibuddhistvihara.net', note:'Dir. spirituale: Ven. Panangala Vajiragnana Thero.' }
+      ]
+    },
+    torino: {
+      worship: [
+        { name:'Centro Buddista del Piemonte', addr:'Via Chambery 119 (10142 TO)', tel:'+39 347 7384565', email:'centrobuddhistapiemonte@gmail.com', note:'Punto di riferimento anche per Verona e Messina.' }
+      ]
+    },
+    roma: {
+      worship: [
+        { name:'S. Maria dei Pellegrini all\'Infernetto', addr:'Via Castel di Guido, Roma (zona Infernetto)', note:'Festività cattoliche srilankesi — Nostra Signora di Madhu, messa presieduta dal Card. Malcolm Ranjith.' },
+        { name:'Santacittarama', addr:'Loc. Sasso, Poggio Nativo (RI) — vicino Roma', url:'https://santacittarama.org', note:'Monastero Theravada dal 1990, aperto alle comunità thai, srilankese e birmana.' }
+      ]
+    }
+  };
+
   var CAT_META = {
     caf:     { icon:'🏛️', label:'CAF & patronati' },
     shop:    { icon:'🛒',       label:'Negozi srilankesi' },
@@ -251,7 +289,24 @@
         '<div class="svc-links">'+links+'</div>'+
         '</article>';
     }
-    // honest "in raccolta" for shop / worship / pro
+    // places verificati per questa città + categoria
+    var cityPlaces = (PLACES[city.id] || {})[cat] || [];
+    if(cityPlaces.length){
+      var items = cityPlaces.map(function(p){
+        var d = '';
+        if(p.addr)  d += '📍 '+esc(p.addr)+'<br/>';
+        if(p.tel)   d += '📞 <a href="tel:'+esc(p.tel)+'">'+esc(p.tel)+'</a><br/>';
+        if(p.email) d += '✉️ <a href="mailto:'+esc(p.email)+'">'+esc(p.email)+'</a><br/>';
+        if(p.url)   d += '<a href="'+esc(p.url)+'" target="_blank" rel="noopener">Sito web ↗</a><br/>';
+        if(p.note)  d += '<em>'+esc(p.note)+'</em>';
+        return '<div class="place-item"><p class="place-name">'+esc(p.name)+'</p><p class="place-detail">'+d+'</p></div>';
+      }).join('');
+      return '<article class="svc">'+head+
+        '<div class="place-list">'+items+'</div>'+
+        '<a class="svc-cta" href="/contatti">Segnala un altro luogo <span aria-hidden="true">→</span></a>'+
+        '</article>';
+    }
+    // fallback "in raccolta" per città senza dati ancora verificati
     var phrase = {
       shop:'Stiamo raccogliendo alimentari e attività della comunità',
       worship:'Stiamo raccogliendo templi e centri culturali cingalesi e tamil',

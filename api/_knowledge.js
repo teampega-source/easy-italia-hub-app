@@ -101,6 +101,23 @@ const KNOWLEDGE = [
     keywords: ["community", "comunità", "supporto", "forum", "persone", "gruppo"],
     text: "La community riunisce migliaia di srilankesi (5.000+) che si supportano ogni giorno: domande pratiche, esperienze, eventi culturali. È pensata come ponte tra chi è appena arrivato e chi è in Italia da anni. Il principio è 'insieme è più facile'.",
   },
+  // ── Luoghi comunità srilankese in Italia ──
+  {
+    id: "luoghi-comunita",
+    topic: "Luoghi e associazioni della comunità srilankese in Italia",
+    keywords: ["tempio", "temple", "associazione", "centro culturale", "buddista", "buddhista", "lankaramaya", "dharma", "abareka", "onlus", "napoli vihara", "centro buddista", "santacittarama", "little sri lanka", "via pienza", "via padova", "facebook gruppo", "dove", "comunità dove", "camnago", "mitra sangamaya"],
+    text: `La comunità srilankese in Italia conta oltre 113.000 residenti ed è concentrata principalmente in Lombardia (oltre 17.000 a Milano). Principali punti di riferimento per città:
+
+MILANO — Tempio Buddhista Lankaramaya (Via Pienza 8, area Chiesa Rossa): principale centro religioso buddhista, cerimonie Vesak ogni maggio. Dharma Nikethanaya (Via Padova 318): centro culturale e spirituale. "Little Sri Lanka" in Via Cesare da Sesto (Piazza Sant'Agostino): oltre 10 attività — alimentari, ristoranti, money transfer, parrucchieri. Associazione Abarekà Nandree onlus (Via Venini): mediazione culturale e supporto ai cittadini stranieri, attiva dal 2002. Sri Lanka Mitra Sangamaya: una delle prime associazioni italiane, fondata nel 1986. Comunità Tamil: si ritrova alla Chiesa di S. Margherita a Camnago Faloppio (CO) per festività come il Pongal.
+
+NAPOLI — Napoli Buddhist Vihara (Via G. Tomasi di Lampedusa 91, tel. 081 7407766, napolibuddhistvihara.net): tempio srilankese con direttore spirituale Ven. Panangala Vajiragnana Thero. La comunità cattolica singalese fa capo a don Prashan Gomez.
+
+TORINO — Centro Buddista del Piemonte (Via Chambery 119, tel. 347 7384565, email centrobuddhistapiemonte@gmail.com): riferimento per Piemonte, Verona e Messina.
+
+ROMA — Parrocchia S. Maria dei Pellegrini all'Infernetto: festività cattoliche, messa di Nostra Signora di Madhu presieduta dal Card. Malcolm Ranjith. Santacittarama (Poggio Nativo, RI): monastero Theravada dal 1990, aperto a comunità thai, srilankese e birmana. Sito: santacittarama.org.
+
+ONLINE — Gruppi Facebook: "Sri Lankans in Italy" (principale, lavoro e info), "Community center of srilanka" (Milano). Lotus Club: giovani professionisti italo-srilankesi.`,
+  },
   {
     id: "marketplace",
     topic: "Marketplace di professionisti verificati",
