@@ -61,10 +61,22 @@
 
     <div class="reveal">
       <h2 data-i18n="ct.5">Scrivici un messaggio</h2>
-      <form class="form" id="contact-form">
-        <div><label for="c-name" data-i18n="ct.6">Nome</label><input id="c-name" type="text" autocomplete="name" required/></div>
-        <div><label for="c-email">Email</label><input id="c-email" type="email" autocomplete="email" required/></div>
-        <div><label for="c-msg" data-i18n="ct.7">Messaggio</label><textarea id="c-msg" required></textarea></div>
+      <form class="form" id="contact-form" novalidate>
+        <div>
+          <label for="c-name" data-i18n="ct.6">Nome</label>
+          <input id="c-name" type="text" autocomplete="name" aria-describedby="c-name-err"/>
+          <span class="field-err-msg" id="c-name-err" role="alert">Inserisci il tuo nome.</span>
+        </div>
+        <div>
+          <label for="c-email">Email</label>
+          <input id="c-email" type="email" autocomplete="email" aria-describedby="c-email-err"/>
+          <span class="field-err-msg" id="c-email-err" role="alert">Inserisci un'email valida.</span>
+        </div>
+        <div>
+          <label for="c-msg" data-i18n="ct.7">Messaggio</label>
+          <textarea id="c-msg" aria-describedby="c-msg-err"></textarea>
+          <span class="field-err-msg" id="c-msg-err" role="alert">Scrivi un messaggio.</span>
+        </div>
         <input type="text" name="website" id="c-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0"/>
         <button type="submit" class="btn-primary" id="c-submit" data-i18n="ct.8">Invia messaggio</button>
         <p class="form-ok muted" hidden data-i18n-html="ct.9">✓ Grazie! Ti risponderemo presto.</p>
@@ -72,27 +84,53 @@
         <p class="form-err muted" hidden style="color:#dc2626" data-i18n-html="ct.11">Errore di invio. Riprova tra poco o scrivi a <a class="inline" href="mailto:info@easyitaliahub.it">info@easyitaliahub.it</a>.</p>
       </form>
       <script>
-      document.getElementById('contact-form').addEventListener('submit',async function(ev){
-        ev.preventDefault();
-        var ok=this.querySelector('.form-ok'),demo=this.querySelector('.form-demo'),err=this.querySelector('.form-err'),btn=document.getElementById('c-submit');
-        ok.hidden=true;demo.hidden=true;err.hidden=true;btn.disabled=true;
-        try{
-          var r=await fetch('/api/email',{method:'POST',headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({type:'contact',
-              name:document.getElementById('c-name').value,
-              email:document.getElementById('c-email').value,
-              message:document.getElementById('c-msg').value,
-              website:document.getElementById('c-website').value})});
-          var data=await r.json().catch(function(){return{}});
-          if(r.ok&&!data.error){
-            if(data.demo){demo.hidden=false;}else{ok.hidden=false;this.reset();}
-          }else{
-            if(data._resend)console.error('[EIH contact] Resend error:',data._resend);
-            err.hidden=false;
-          }
-          btn.disabled=false;
-        }catch(e){err.hidden=false;btn.disabled=false;}
-      });
+      (function(){
+        var fields = [
+          {id:'c-name',  errId:'c-name-err',  check:function(v){return v.trim().length>0;}},
+          {id:'c-email', errId:'c-email-err', check:function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());}},
+          {id:'c-msg',   errId:'c-msg-err',   check:function(v){return v.trim().length>0;}}
+        ];
+        // clear inline error on input
+        fields.forEach(function(f){
+          document.getElementById(f.id).addEventListener('input',function(){
+            this.classList.remove('field-err');
+            document.getElementById(f.errId).classList.remove('show');
+          });
+        });
+        document.getElementById('contact-form').addEventListener('submit',async function(ev){
+          ev.preventDefault();
+          // inline validation
+          var hasErr=false;
+          fields.forEach(function(f){
+            var el=document.getElementById(f.id);
+            if(!f.check(el.value)){
+              el.classList.add('field-err');
+              document.getElementById(f.errId).classList.add('show');
+              if(!hasErr){el.focus();hasErr=true;}
+            }
+          });
+          if(hasErr)return;
+          var ok=this.querySelector('.form-ok'),demo=this.querySelector('.form-demo'),err=this.querySelector('.form-err'),btn=document.getElementById('c-submit');
+          ok.hidden=true;demo.hidden=true;err.hidden=true;
+          btn.disabled=true;btn.classList.add('btn-loading');
+          try{
+            var r=await fetch('/api/email',{method:'POST',headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({type:'contact',
+                name:document.getElementById('c-name').value,
+                email:document.getElementById('c-email').value,
+                message:document.getElementById('c-msg').value,
+                website:document.getElementById('c-website').value})});
+            var data=await r.json().catch(function(){return{};});
+            if(r.ok&&!data.error){
+              if(data.demo){demo.hidden=false;}else{ok.hidden=false;this.reset();}
+            }else{
+              if(data._resend)console.error('[EIH contact] Resend error:',data._resend);
+              err.hidden=false;
+            }
+          }catch(e){err.hidden=false;}
+          btn.disabled=false;btn.classList.remove('btn-loading');
+        });
+      })();
       </script>
       <p class="muted" style="margin-top:var(--sp-2)" data-i18n-html="ct.10">Hai bisogno subito di una risposta pratica? Chiedi al <a class="inline" href="/percorso">Consigliere AI</a>, disponibile 24/7.</p>
     </div>

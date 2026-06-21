@@ -136,6 +136,51 @@
   const navHost=document.getElementById('site-nav'); if(navHost)navHost.innerHTML=navHTML();
   const footHost=document.getElementById('site-footer'); if(footHost)footHost.innerHTML=footHTML();
 
+  // inject breadcrumbs on secondary pages
+  const BREADCRUMBS={
+    'guide':[['Guide','/guide']],
+    'community':[['Community','/community']],
+    'percorso':[['Il Mio Percorso','/percorso']],
+    'news':[['News','/news']],
+    'voli':[['Voli Sri Lanka','/voli']],
+    'mappa':[['Mappa Servizi','/mappa']],
+    'contatti':[['Contatti','/contatti']],
+    'chi-siamo':[['Chi Siamo','/chi-siamo']],
+    'dashboard':[['Dashboard','/dashboard']],
+    'documenti':[['Archivio Documenti','/documenti']],
+    'permesso-tracker':[['Tracker Permesso','/permesso-tracker']],
+    'cv-builder':[['CV Builder','/cv-builder']],
+    'cargo':[['Spedizioni Cargo','/cargo']],
+    'guida-conti':[['Aprire un Conto','/guida-conti']],
+    'dizionario-medico':[['Dizionario Medico','/dizionario-medico']],
+    'money-transfer':[['Money Transfer','/money-transfer']],
+    'opportunita':[['Opportunità','/opportunita']],
+    'corsi':[['Corsi di Lingue','/corsi']],
+    'abbonamenti':[['Abbonamenti','/abbonamenti']],
+    'moduli':[['Moduli e Lettere','/moduli']],
+    'assegno-unico':[['Assegno Unico','/assegno-unico']],
+    'diritti-inps':[['Diritti INPS','/diritti-inps']],
+    'riconoscimento-titoli':[['Riconoscimento Titoli','/riconoscimento-titoli']],
+    'travel-sri-lanka':[['Travel Hub Sri Lanka','/travel-sri-lanka']],
+    'privacy':[['Privacy Policy','/privacy']],
+    'cookie':[['Cookie Policy','/cookie']],
+    'termini':[['Termini di Servizio','/termini']],
+    'note-legali':[['Note Legali','/note-legali']]
+  };
+  if(active&&BREADCRUMBS[active]){
+    const trail=BREADCRUMBS[active];
+    const items=['<li><a href="/">Home</a></li>'];
+    trail.forEach(function(step,i){
+      if(i===trail.length-1){items.push('<li aria-current="page">'+step[0]+'</li>');}
+      else{items.push('<li><a href="'+step[1]+'">'+step[0]+'</a></li>');}
+    });
+    const bc=document.createElement('nav');
+    bc.className='breadcrumb';bc.setAttribute('aria-label','Breadcrumb');
+    bc.innerHTML='<ol>'+items.join('')+'</ol>';
+    const page=document.querySelector('.page');
+    if(page)page.insertBefore(bc,page.firstChild);
+  }
+
   // inject auth modal (only when the page doesn't already define its own — index.html does)
   if(!document.getElementById('auth-modal')){
     const _am=document.createElement('div');
