@@ -1,0 +1,7 @@
+{
+  "files": ["**/*.html"],
+  "exclude": ["node_modules/**", ".git/**", ".agents/**", ".references/**"],
+  "insertBefore": "</body>",
+  "commentSyntax": "html",
+  "cspChecked": true
+}
