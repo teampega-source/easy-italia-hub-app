@@ -76,7 +76,7 @@ html.returning #preloader{display:none}
 #preloader .pre-bar{width:120px;height:2px;background:var(--border);overflow:hidden;border-radius:2px;position:relative}
 #preloader .pre-bar::after{content:'';position:absolute;inset:0;background:var(--taupe);transform:translateX(-100%);animation:preBar 1.1s var(--ease-enter) .2s forwards}
 @keyframes preBar{to{transform:translateX(0)}}
-#wipe{position:fixed;inset:0;z-index:9998;background:var(--ink);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .5s var(--ease-spring),visibility .5s}
+#wipe{position:fixed;inset:0;z-index:9998;background:var(--ink);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .5s var(--ease-enter),visibility .5s}
 #wipe.cover{opacity:1;visibility:visible}
 
 /* ── NAV ── */
@@ -231,7 +231,7 @@ footer{position:relative;z-index:1;margin-top:var(--sp-6);border-top:1px solid v
 .footer-legal a:hover{color:var(--ink)}
 
 /* reveal */
-.anim .reveal{opacity:0;transform:translateY(20px);filter:blur(4px);transition:opacity .75s var(--ease-spring),transform .75s var(--ease-spring),filter .6s var(--ease-spring);transition-delay:var(--reveal-delay,0s)}
+.anim .reveal{opacity:0;transform:translateY(20px);filter:blur(4px);transition:opacity .75s var(--ease-enter),transform .75s var(--ease-enter),filter .6s var(--ease-enter);transition-delay:var(--reveal-delay,0s)}
 .anim .reveal.in{opacity:1;transform:none;filter:blur(0)}
 @media(prefers-reduced-motion:reduce){.anim .reveal{filter:none;transform:none}}
 

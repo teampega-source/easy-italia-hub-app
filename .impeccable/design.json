@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-21T00:00:00Z",
+  "title": "Design System: Easy Italia Hub",
+  "extensions": {
+    "colorMeta": {
+      "taupe": {
+        "role": "primary",
+        "displayName": "Taupe Accogliente",
+        "canonical": "#c4a882",
+        "tonalRamp": ["#3a2e1f", "#4d3f2a", "#6b5738", "#8a7050", "#a88f6a", "#c4a882", "#d4bfa0", "#e8d9c2", "#f5ede0", "#faf5ee"]
+      },
+      "gold": {
+        "role": "secondary",
+        "displayName": "Oro Antico",
+        "canonical": "#9a7d45",
+        "tonalRamp": ["#2e2410", "#3f3118", "#5a4522", "#7a5e30", "#9a7d45", "#b89a5e", "#ccb07a", "#dfc89a", "#efdfbf", "#f8f2e2"]
+      },
+      "coral": {
+        "role": "tertiary",
+        "displayName": "Corallo Discreto",
+        "canonical": "#eb5939",
+        "tonalRamp": ["#3d0f06", "#5c1a0e", "#8a2a1a", "#b33b24", "#eb5939", "#f07860", "#f4988a", "#f8bdb5", "#fcddd9", "#fef0ee"]
+      },
+      "warm-brown": {
+        "role": "primary",
+        "displayName": "Caldo-Marrone Istituzionale",
+        "canonical": "#7d7058",
+        "tonalRamp": ["#201c14", "#302a1e", "#48402e", "#5e5440", "#7d7058", "#978f7a", "#b0aa98", "#cac6bc", "#e0ded8", "#f2f1ee"]
+      },
+      "green": {
+        "role": "tertiary",
+        "displayName": "Verde Conferma",
+        "canonical": "#1f9d55",
+        "tonalRamp": ["#07230e", "#0d3418", "#124825", "#166334", "#1f9d55", "#3fbf74", "#72d09a", "#a5e0bf", "#d0f0e0", "#edf8f3"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Inchiostro Caldo",
+        "canonical": "#161412",
+        "tonalRamp": ["#0a0908", "#161412", "#242018", "#3a3528", "#504a3a", "#6e6758", "#918b7e", "#b6b0a6", "#d8d4ce", "#f2f0ec"]
+      },
+      "fg-muted": {
+        "role": "neutral",
+        "displayName": "Testo Attenuato",
+        "canonical": "#636058",
+        "tonalRamp": ["#1a1916", "#2a2822", "#3e3b33", "#524e46", "#636058", "#7e7a72", "#9c9990", "#bab7b0", "#d8d6d0", "#f0efec"]
+      },
+      "bg-base": {
+        "role": "neutral",
+        "displayName": "Sfondo Avorio",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#e8e4de", "#ede9e3", "#f0ece6", "#f3f0ea", "#f6f3ee", "#f8f5f0", "#faf7f2", "#fcfaf7", "#fefcfa", "#ffffff"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headlines, page h1. Una per pagina." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles h2. Max 3 per pagina." },
+      "title": { "displayName": "Title", "purpose": "Card titles h3, form headers." },
+      "body": { "displayName": "Body", "purpose": "Contenuto principale. Max-width 620px (≈65ch)." },
+      "label": { "displayName": "Label", "purpose": "Eyebrow, badge, nav headers. Sempre uppercase e tracking ampio." }
+    },
+    "shadows": [
+      {
+        "name": "ambient-hover",
+        "value": "0 16px 40px rgba(20,30,48,0.10)",
+        "purpose": "Card hover. Diffusa, bassa intensità."
+      },
+      {
+        "name": "button-glow",
+        "value": "0 8px 28px rgba(125,112,88,0.18)",
+        "purpose": "Bottoni primary a riposo. Warm glow direzionale."
+      },
+      {
+        "name": "button-glow-hover",
+        "value": "0 16px 44px rgba(125,112,88,0.18)",
+        "purpose": "Bottoni primary su hover."
+      },
+      {
+        "name": "modal",
+        "value": "0 32px 64px rgba(0,0,0,0.15)",
+        "purpose": "Layer modal e drawer. Unica ombra ad alto contrasto."
+      },
+      {
+        "name": "dropdown",
+        "value": "0 16px 40px rgba(20,30,48,0.14)",
+        "purpose": "Dropdown floating (language menu, tooltip)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-enter",
+        "value": "cubic-bezier(0.0, 0.0, 0.2, 1)",
+        "purpose": "Deceleration. Usata per scroll reveal, fade-in/out, progress bar, wipe. Gli elementi arrivano, non rimbalzano."
+      },
+      {
+        "name": "ease-spring",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Spring. SOLO per interazioni dirette: hover su bottoni/card, apertura modal, toggle nav, cursor ring. Mai su reveal passivi."
+      },
+      {
+        "name": "ease-exit",
+        "value": "cubic-bezier(0.4, 0.0, 1, 1)",
+        "purpose": "Acceleration. Elementi che escono dallo schermo."
+      },
+      {
+        "name": "dur-micro",
+        "value": "150ms",
+        "purpose": "Feedback immediato: color change, opacity micro."
+      },
+      {
+        "name": "dur-std",
+        "value": "280ms",
+        "purpose": "Standard: hover transform, modal open, nav toggle."
+      },
+      {
+        "name": "dur-complex",
+        "value": "420ms",
+        "purpose": "Transizioni articolate: card entry, scroll reveal."
+      }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "600px" },
+      { "name": "tablet", "value": "1023px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Azione principale. Pill, gradient warm-brown, glow shadow.",
+      "html": "<button class=\"ds-btn-primary\"><span>Inizia gratis</span><i class=\"ds-btn-arrow\">→</i></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; padding: 0.8rem 1.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.02em; color: #fff; background: linear-gradient(135deg, #665b46, #7d7058); box-shadow: 0 8px 28px rgba(125,112,88,0.18); border: none; cursor: pointer; min-height: 44px; font-family: 'Satoshi', 'Inter', system-ui, sans-serif; transition: transform 280ms cubic-bezier(0.16,1,0.3,1), box-shadow 280ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 44px rgba(125,112,88,0.18); } .ds-btn-primary:active { transform: scale(0.97); transition-duration: 150ms; } .ds-btn-primary:focus-visible { outline: 2px solid #7d7058; outline-offset: 3px; } .ds-btn-arrow { display: inline-flex; align-items: center; justify-content: center; width: 1.4rem; height: 1.4rem; border-radius: 50%; background: rgba(255,255,255,0.2); font-style: normal; font-size: 0.8rem; transition: transform 280ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-primary:hover .ds-btn-arrow { transform: translate(2px,-1px) scale(1.1); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Azione secondaria. Pill, outline, trasparente.",
+      "html": "<button class=\"ds-btn-ghost\">Esplora le guide</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; padding: 0.8rem 1.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 400; color: #161412; background: transparent; border: 1px solid rgba(118,118,118,0.26); cursor: pointer; min-height: 44px; font-family: 'Satoshi', 'Inter', system-ui, sans-serif; transition: background 150ms cubic-bezier(0.0,0.0,0.2,1), color 150ms cubic-bezier(0.0,0.0,0.2,1), transform 280ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-ghost:hover { background: rgba(40,36,30,0.052); color: #161412; transform: translateY(-2px); } .ds-btn-ghost:active { transform: scale(0.97); transition-duration: 150ms; } .ds-btn-ghost:focus-visible { outline: 2px solid #7d7058; outline-offset: 3px; }"
+    },
+    {
+      "name": "Info Card",
+      "kind": "card",
+      "refersTo": "icard",
+      "description": "Card con icona aurora, titolo, descrizione. Hover lift.",
+      "html": "<div class=\"ds-icard\"><div class=\"ds-ic\">🗂️</div><h3 class=\"ds-icard-title\">Permesso di soggiorno</h3><p class=\"ds-icard-desc\">Guida step-by-step per il rinnovo</p></div>",
+      "css": ".ds-icard { padding: 1.4rem; border-radius: 16px; background: rgba(40,36,30,0.025); border: 1px solid rgba(118,118,118,0.14); transition: transform 280ms cubic-bezier(0.16,1,0.3,1), box-shadow 280ms, border-color 280ms; } .ds-icard:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(20,30,48,0.10); border-color: rgba(118,118,118,0.26); } .ds-ic { width: 2.6rem; height: 2.6rem; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; background: rgba(183,171,152,0.18); font-size: 1.2rem; margin-bottom: 0.6rem; } .ds-icard-title { font-family: 'Clash Grotesk', system-ui, sans-serif; font-size: 1.125rem; font-weight: 600; color: #161412; margin: 0 0 0.3rem; } .ds-icard-desc { font-size: 0.875rem; color: #524c44; line-height: 1.6; margin: 0; }"
+    },
+    {
+      "name": "Form Input",
+      "kind": "input",
+      "refersTo": "form-input",
+      "description": "Campo testo standard. Focus ring caldo.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-label\" for=\"ds-input-example\">Nome completo</label><input class=\"ds-input\" id=\"ds-input-example\" type=\"text\" placeholder=\"Es. Kamal Perera\"></div>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 0.3rem; } .ds-label { font-size: 0.75rem; font-weight: 500; color: #524c44; font-family: 'Satoshi', 'Inter', system-ui, sans-serif; } .ds-input { width: 100%; background: rgba(40,36,30,0.025); border: 1px solid rgba(118,118,118,0.14); border-radius: 10px; padding: 0.7rem 0.9rem; font-size: 1rem; color: #161412; font-family: 'Satoshi', 'Inter', system-ui, sans-serif; outline: none; min-height: 44px; transition: border-color 150ms, box-shadow 150ms; } .ds-input:focus { border-color: rgba(125,112,88,0.5); box-shadow: 0 0 0 3px rgba(125,112,88,0.1); } .ds-input::placeholder { color: #636058; }"
+    },
+    {
+      "name": "Eyebrow Label",
+      "kind": "custom",
+      "refersTo": "eyebrow",
+      "description": "Etichetta di sezione con linea e testo uppercase. Pattern fisso.",
+      "html": "<div class=\"ds-eyebrow\"><span class=\"ds-eyebrow-line\"></span><span>Le guide essenziali</span></div>",
+      "css": ".ds-eyebrow { display: inline-flex; align-items: center; gap: 0.7rem; margin-bottom: 1.1rem; font-size: 0.66rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: #9a7d45; font-family: 'Satoshi', 'Inter', system-ui, sans-serif; } .ds-eyebrow-line { width: 32px; height: 1px; background: #9a7d45; opacity: 0.6; flex-shrink: 0; }"
+    },
+    {
+      "name": "Status Badge",
+      "kind": "chip",
+      "refersTo": "roadmap-badge",
+      "description": "Badge stato roadmap. Done = gold, Now = coral.",
+      "html": "<span class=\"ds-badge ds-badge--done\">Completato</span><span class=\"ds-badge ds-badge--now\">In corso</span>",
+      "css": ".ds-badge { display: inline-block; padding: 0.24rem 0.65rem; border-radius: 9999px; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; font-family: 'Satoshi', 'Inter', system-ui, sans-serif; } .ds-badge--done { background: rgba(124,112,89,0.12); color: #9a7d45; } .ds-badge--now { background: rgba(235,89,57,0.12); color: #eb5939; }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "site-nav",
+      "description": "Nav fixed con backdrop-blur, logo, links, CTA pill.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-logo\" href=\"/\">Easy<em>Italia</em></a><div class=\"ds-nav-links\"><a href=\"/guide\">Guide</a><a href=\"/community\">Community</a></div><a class=\"ds-nav-cta\" href=\"/dashboard\">Accedi</a></nav>",
+      "css": ".ds-nav { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: rgba(255,255,255,0.82); backdrop-filter: blur(20px) saturate(1.5); border-bottom: 1px solid rgba(118,118,118,0.14); } .ds-nav-logo { font-family: 'Clash Grotesk', system-ui, sans-serif; font-size: 1.125rem; font-weight: 600; color: #161412; text-decoration: none; letter-spacing: -0.01em; } .ds-nav-logo em { font-style: normal; color: #c4a882; } .ds-nav-links { display: flex; gap: 1.5rem; list-style: none; } .ds-nav-links a { font-size: 0.875rem; font-weight: 400; color: #636058; text-decoration: none; letter-spacing: 0.05em; transition: color 150ms; font-family: 'Satoshi', 'Inter', system-ui, sans-serif; } .ds-nav-links a:hover { color: #161412; } .ds-nav-cta { padding: 0.55rem 1.4rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 500; color: #fff; text-decoration: none; background: linear-gradient(135deg, #665b46, #7d7058); transition: opacity 150ms, transform 280ms cubic-bezier(0.16,1,0.3,1); font-family: 'Satoshi', 'Inter', system-ui, sans-serif; } .ds-nav-cta:hover { opacity: 0.88; transform: translateY(-2px); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "La Porta d'Ingresso",
+    "overview": "Easy Italia Hub è il sistema che apre porte — dall'esterno verso il dentro, dalla confusione burocratica verso la chiarezza operativa. Ogni pagina è un passo avanti in un percorso che l'utente conosce e sente come sicuro. Il design non vuole impressionare: vuole orientare. L'autorevolezza si guadagna con la precisione delle informazioni, non con il peso visivo.\n\nLa palette è calda e terrosa — taupe, oro, corallo — perché evoca accoglienza senza perdere serietà. Non è la freddezza asettica di un portale governativo né la vivacità distraente di un'app di consumo. È la dignità silenziosa di un ufficio ben tenuto, dove sai di essere nel posto giusto.\n\nLa tipografia è netta. Clash Grotesk porta autorevolezza nei titoli; Satoshi porta leggibilità nel corpo. La gerarchia è deliberata: ogni pagina ha un titolo principale, un sottotitolo, contenuto — senza ambiguità di importanza.",
+    "keyCharacteristics": [
+      "Palette terrosa e calda: taupe, oro antico, corallo discreto",
+      "Tipografia a contrasto: geometrico stretto per i titoli, umanista per il corpo",
+      "Gesto hover: lift verticale leggero (translateY -3px) + ombra — mai bounce",
+      "Sfondo con rumore sottile e gradiente radiale: profondità senza decorazione",
+      "Motion: deceleration-first per reveal; spring riservata a interazioni dirette",
+      "Accessibilità: focus ring visibili, touch target 44px, contrasti WCAG AA"
+    ],
+    "rules": [
+      {
+        "name": "The One Accent Rule",
+        "body": "Coral e gold non appaiono mai insieme nello stesso componente. Coral è azione; gold è informazione.",
+        "section": "colors"
+      },
+      {
+        "name": "The Warmth Rule",
+        "body": "Nessun colore freddo nelle UI primarie. Blues e purples sono vietati come accent.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Weight Rule",
+        "body": "I titoli usano sempre 600. Il body usa sempre 400. Il 500 è riservato a label e UI micro-copy. Non esiste 700 nel sistema.",
+        "section": "typography"
+      },
+      {
+        "name": "The Terse Copy Rule",
+        "body": "Nessun headline supera i 6 token (parole). L'utente è in una situazione burocratica stressante: ogni parola extra è rumore.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Le superfici sono piatte a riposo. Le ombre comunicano stato (hover, elevation, focus) — non decorazione.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Warm Shadow Rule",
+        "body": "Le ombre su bottoni usano il warm-brown glow (rgba(125,112,88,0.18)), non nero neutro.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do usare ease-deceleration per reveal e fade — gli elementi arrivano, non rimbalzano",
+      "Do riservare ease-spring esclusivamente a interazioni dirette: hover su bottoni/card, apertura modal, toggle nav",
+      "Do mantenere box-shadow: inset ≤ 2px per indicatori di stato sulle card",
+      "Do usare translateY(-3px) come gesto hover canonico sui bottoni; translateY(-4px) sulle card",
+      "Do mantenere tutti i touch target a min-height 44px / min-width 44px",
+      "Do testare il contrasto di --fg-muted su bg-base prima di ogni deploy — minimo 4.5:1 WCAG AA",
+      "Do usare il warm-brown glow per le ombre sui bottoni, non nero neutro",
+      "Do limitare la larghezza del testo body a 620px (≈65ch) nelle pagine di contenuto"
+    ],
+    "donts": [
+      "Don't usare border-left colorato > 1px come indicatore di stato — è il pattern SaaS americano generico più riconoscibile",
+      "Don't applicare ease-spring alle transizioni di opacity, alle animazioni di scroll reveal, o alle barre di avanzamento",
+      "Don't introdurre colori freddi (blue, purple, teal) come accent primari",
+      "Don't usare glassmorphism con blur > 4px su superfici di contenuto",
+      "Don't aggiungere più di un accent colorato per schermata",
+      "Don't creare headline che superano i 6 token",
+      "Don't progettare come un SaaS americano generico: niente hero con gradiente viola, niente card con badge NEW in verde lime",
+      "Don't usare font-weight 700 nel sistema — il peso massimo è 600"
+    ]
+  }
+}
