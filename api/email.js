@@ -62,7 +62,8 @@ async function handleContact(req, res, body, type) {
     console.error('[email/contact] Resend error', resp.status, errBody);
     let reason = 'unknown';
     try { reason = JSON.parse(errBody).message || errBody.slice(0, 120); } catch {}
-    return res.status(500).json({ error: 'Errore invio. Riprova più tardi.', _resend: reason });
+    console.error('[email/contact] resend reason:', reason);
+    return res.status(500).json({ error: 'Errore invio. Riprova più tardi.' });
   }
 
   return res.status(200).json({ ok: true });
