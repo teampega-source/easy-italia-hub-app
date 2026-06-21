@@ -14,7 +14,7 @@ Easy Italia Hub è la piattaforma di riferimento per la comunità srilankese in 
 
 ## Brand Personality
 
-Moderno, inclusivo, autorevole. Voce: un amico esperto che conosce il sistema e ti spiega le cose chiaramente — senza paternalismo, senza burocrazia, senza pietismo. Caldo ma competente. Non condiscendente.
+Autorevole, affidabile, inclusivo. Voce: un punto di riferimento esperto — le informazioni burocratiche sono precise e sicure, ma il tono è umano, mai distante. La comunità si fida perché la piattaforma non sbaglia mai un dato. Non condiscendente, non pietistico.
 
 ## Anti-references
 
