@@ -151,7 +151,8 @@
             <a href="/percorso" class="btn-ghost" data-i18n="n.15">Registrati con il tuo percorso</a>
           </div>
           <p class="form-err muted" id="signup-err" role="alert" hidden></p>
-          <p class="form-ok" id="signup-ok" role="status" hidden data-i18n-html="n.16">✓ Fatto, <span id="signup-name">amico</span>! Sei in lista (in locale). <span class="muted">Demo dimostrativa: non c'è ancora una newsletter reale e nessun dato viene inviato. Per accedere subito ai servizi <a class="inline" href="/percorso">registrati nel tuo percorso</a>.</span></p>
+          <p class="form-ok" id="signup-ok" role="status" hidden>✓ Grazie, <span id="signup-name">amico</span>! Ti contatteremo non appena gli aggiornamenti saranno attivi.</p>
+          <p class="form-demo" id="signup-demo" role="status" hidden style="color:#b45309;background:#fef3c7;border-radius:8px;padding:.6rem .9rem;font-size:.85rem">⚠️ Iscrizione NON inviata — modalità demo attiva. Scrivi direttamente a <a class="inline" href="mailto:info@easyitaliahub.it">info@easyitaliahub.it</a></p>
         </form>
       </div>
     </section>
@@ -534,35 +535,54 @@
     }
   }
 
-  // ── Newsletter signup (DEMO, client-side only) ──
+  // ── Newsletter signup ──
   var form = document.getElementById('signup-form');
   if(form){
-    var okEl = document.getElementById('signup-ok');
-    var errEl = document.getElementById('signup-err');
+    var okEl   = document.getElementById('signup-ok');
+    var errEl  = document.getElementById('signup-err');
+    var demoEl = document.getElementById('signup-demo');
     var nameOut = document.getElementById('signup-name');
-    form.addEventListener('submit', function(e){
+    var submitBtn = form.querySelector('button[type="submit"]');
+    form.addEventListener('submit', async function(e){
       e.preventDefault();
-      var name = (document.getElementById('s-name').value || '').trim();
+      var name  = (document.getElementById('s-name').value  || '').trim();
       var email = (document.getElementById('s-email').value || '').trim();
       var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       if(!name || !emailOk){
-        if(okEl) okEl.hidden = true;
+        if(okEl)   okEl.hidden   = true;
+        if(demoEl) demoEl.hidden = true;
         if(errEl){
-          errEl.hidden = false;
-          errEl.textContent = !name
-            ? 'Inserisci il tuo nome per continuare.'
-            : 'Inserisci un indirizzo email valido.';
+          errEl.hidden  = false;
+          errEl.textContent = !name ? 'Inserisci il tuo nome per continuare.' : 'Inserisci un indirizzo email valido.';
         }
         return;
       }
-      if(errEl) errEl.hidden = true;
-      if(nameOut) nameOut.textContent = name;
-      // DEMO persistence only — no network request is made anywhere.
+      if(errEl)   errEl.hidden   = true;
+      if(okEl)    okEl.hidden    = true;
+      if(demoEl)  demoEl.hidden  = true;
+      if(submitBtn) submitBtn.disabled = true;
       try {
-        localStorage.setItem('eih-news-signup', JSON.stringify({name:name, email:email, ts:Date.now()}));
-      } catch(err){}
-      if(okEl) okEl.hidden = false;
-      form.reset();
+        var r = await fetch('/api/email', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({type: 'newsletter', name: name, email: email})
+        });
+        var data = await r.json().catch(function(){ return {}; });
+        if(r.ok && !data.error){
+          if(data.demo){
+            if(demoEl) demoEl.hidden = false;
+          } else {
+            if(nameOut) nameOut.textContent = name;
+            if(okEl) okEl.hidden = false;
+          }
+          form.reset();
+        } else {
+          if(errEl){ errEl.hidden = false; errEl.textContent = 'Errore di invio. Riprova o scrivi a info@easyitaliahub.it'; }
+        }
+      } catch(err){
+        if(errEl){ errEl.hidden = false; errEl.textContent = 'Errore di rete. Riprova tra poco.'; }
+      }
+      if(submitBtn) submitBtn.disabled = false;
     });
   }
 

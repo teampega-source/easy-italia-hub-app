@@ -45,9 +45,9 @@ async function handleContact(req, res, body, type) {
   }
 
   const subject = type === 'newsletter'
-    ? `Nuova iscrizione newsletter — ${email}`
+    ? `Nuova iscrizione newsletter — ${name ? name + ' ' : ''}<${email}>`
     : `Nuovo messaggio dal sito — ${name}`;
-  const html = type === 'newsletter' ? buildNewsletterHtml(email) : buildContactHtml(name, email, message);
+  const html = type === 'newsletter' ? buildNewsletterHtml(name, email) : buildContactHtml(name, email, message);
   const payload = { from: 'Easy Italia Hub <notifiche@easyitaliahub.it>', to: [TO], subject, html };
   if (type === 'contact') payload.reply_to = email;
 
@@ -150,10 +150,14 @@ function buildContactHtml(name, email, message) {
     <p style="margin:24px 0 0;font-size:12px;color:#7d7058;">Rispondi a questa email per scrivere direttamente al mittente.</p>`);
 }
 
-function buildNewsletterHtml(email) {
+function buildNewsletterHtml(name, email) {
+  const nameRow = name ? `<p style="margin:0 0 4px;font-size:13px;color:#a89070;">Nome</p>
+    <p style="margin:0 0 14px;font-size:15px;color:#e8dcc8;font-weight:600;">${escHtml(name)}</p>` : '';
   return wrap('Nuova iscrizione alla newsletter', `
+    ${nameRow}
+    <p style="margin:0 0 4px;font-size:13px;color:#a89070;">Email</p>
     <p style="margin:0;font-size:15px;color:#e8dcc8;font-weight:600;">${escHtml(email)}</p>
-    <p style="margin:16px 0 0;font-size:12px;color:#7d7058;">Iscrizione dal footer di easyitaliahub.it.</p>`);
+    <p style="margin:16px 0 0;font-size:12px;color:#7d7058;">Iscrizione da easyitaliahub.it.</p>`);
 }
 
 function parseDate(s) {
