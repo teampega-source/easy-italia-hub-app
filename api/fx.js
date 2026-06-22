@@ -106,7 +106,6 @@ module.exports = async (req, res) => {
       updated: new Date().toISOString(),
       source: FALLBACK.source,
       stale: true,
-      detail: String(err?.message || err),
     });
   }
 };

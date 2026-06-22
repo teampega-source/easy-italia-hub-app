@@ -79,7 +79,7 @@ handler.config = { api: { bodyParser: false } };
 module.exports = handler;
 
 function resolvePlan(raw) {
-  return ['premium', 'premium_plus', 'business'].includes(raw) ? raw : 'premium';
+  return ['premium', 'premium_plus', 'business'].includes(raw) ? raw : 'free';
 }
 
 function verifyAndParse(payload, sigHeader, secret) {
