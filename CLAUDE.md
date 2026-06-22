@@ -23,6 +23,11 @@
 - Usare `/plan` per analizzare il codebase prima di scrivere modifiche complesse
 - Usare `/compact` per condensare la cronologia quando il contesto diventa lungo
 
+## GitHub — gestione autonoma
+- Dopo ogni push su un branch di lavoro: creare la PR (`mcp__github__create_pull_request`) e mergiarla (`mcp__github__merge_pull_request`) **autonomamente**, senza chiedere all'utente.
+- Merge method: `squash` su `main`.
+- L'utente non deve toccare GitHub manualmente.
+
 ## Riferimento servizi gratuiti — free-for-dev
 
 **Repo:** `.references/free-for-dev/README.md` (git submodule da `https://github.com/ripienaar/free-for-dev`)
