@@ -39,7 +39,7 @@ module.exports = async function handler(req, res) {
   }
 
   const subResp = await fetch(
-    `${SUPABASE_URL}/rest/v1/flight_subscribers?active=eq.true&select=id,email,origin,max_price`,
+    `${SUPABASE_URL}/rest/v1/flight_subscribers?active=eq.true&select=id,email,origin,max_price,unsubscribe_token`,
     {
       headers: {
         'apikey': SUPABASE_SERVICE_KEY,
@@ -85,7 +85,7 @@ function buildEmail(sub, tip) {
   const originLabel = ORIGIN_LABELS[sub.origin] || sub.origin;
   const kiwi = `https://easyitaliahub.it/api/go?to=kiwi&from=${sub.origin}`;
   const googleFlights = `https://www.google.com/flights?hl=it#flt=${sub.origin}.CMB.`;
-  const unsubUrl = `https://easyitaliahub.it/api/flights?id=${sub.id}`;
+  const unsubUrl = `https://easyitaliahub.it/api/flights?t=${sub.unsubscribe_token}`;
   const budgetRow = sub.max_price
     ? `<p style="margin:0 0 20px;font-size:13px;color:#7d7058">Il tuo budget massimo impostato: <strong>€${sub.max_price}</strong>. Se trovi un'offerta sotto questa soglia, è il momento di prenotare.</p>`
     : '';

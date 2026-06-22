@@ -67,6 +67,7 @@ async function handler(req, res) {
     }
   } catch (err) {
     console.error('[stripe-webhook] DB error:', err.message);
+    return res.status(500).json({ error: 'DB error — Stripe will retry' });
   }
 
   res.status(200).json({ received: true });

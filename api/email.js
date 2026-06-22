@@ -10,15 +10,18 @@ const MAX_MSG  = 5000;
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  if (isRateLimited(clientIp(req), { name: 'email', max: 8 })) {
-    return res.status(429).json({ error: 'Troppe richieste. Attendi un minuto e riprova.' });
-  }
-
   let body;
   try { body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {}); }
   catch (e) { return res.status(400).json({ error: 'JSON non valido.' }); }
 
   const type = ['newsletter', 'remind'].includes(body.type) ? body.type : 'contact';
+  const ip = clientIp(req);
+  const rlName = type === 'remind' ? 'email-remind' : 'email';
+  const rlMax  = type === 'remind' ? 2 : 8;
+  if (isRateLimited(ip, { name: rlName, max: rlMax })) {
+    return res.status(429).json({ error: 'Troppe richieste. Attendi un minuto e riprova.' });
+  }
+
   if (type === 'remind') return handleRemind(req, res, body);
   return handleContact(req, res, body, type);
 };

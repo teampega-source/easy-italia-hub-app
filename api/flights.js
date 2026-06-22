@@ -160,12 +160,12 @@ async function handleSubscribe(req, res) {
 
 // ── DISISCRIZIONE ────────────────────────────────────────────────────────────
 async function handleUnsubscribe(req, res) {
-  const id = String((req.query && req.query.id) || '').trim();
-  if (!id || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(id))
+  const token = String((req.query && req.query.t) || '').trim();
+  if (!token || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(token))
     return res.status(400).send('Link non valido o scaduto.');
 
   if (SUPABASE_URL && SUPABASE_SERVICE_KEY) {
-    await fetch(`${SUPABASE_URL}/rest/v1/flight_subscribers?id=eq.${id}`, {
+    await fetch(`${SUPABASE_URL}/rest/v1/flight_subscribers?unsubscribe_token=eq.${token}`, {
       method: 'PATCH',
       headers: {
         'apikey': SUPABASE_SERVICE_KEY,

@@ -707,6 +707,31 @@ create policy "jobs_select_public" on public.jobs
 
 
 -- ============================================================================
+-- FLIGHT SUBSCRIBERS — iscrizioni avvisi volo settimanali
+-- Nessuna RLS pubblica: accesso esclusivo tramite service role.
+-- unsubscribe_token è un UUID separato dall'id primario, incluso
+-- nel link di disiscrizione nelle email. Rotazione possibile senza
+-- esporre l'id del record.
+-- ============================================================================
+create table if not exists public.flight_subscribers (
+  id                uuid primary key default gen_random_uuid(),
+  email             text not null,
+  origin            text not null check (origin in ('MXP','FCO','TRN','VCE','NAP','BGY','LIN','PMO')),
+  destination       text not null default 'CMB',
+  max_price         integer check (max_price between 50 and 5000),
+  active            boolean not null default true,
+  unsubscribe_token uuid not null default gen_random_uuid(),
+  created_at        timestamptz not null default now(),
+  updated_at        timestamptz not null default now(),
+  unique (email, origin, destination)
+);
+alter table public.flight_subscribers enable row level security;
+create trigger set_flight_subscribers_updated_at
+  before update on public.flight_subscribers
+  for each row execute function public.set_updated_at();
+
+
+-- ============================================================================
 -- ============================================================================
 -- STORAGE / ARCHIVIAZIONE FILE  —  bucket privato "documents"
 -- ----------------------------------------------------------------------------
@@ -734,51 +759,51 @@ create policy "jobs_select_public" on public.jobs
 --        Uncomment the WHOLE block below to create the bucket + policies via SQL.
 -- ----------------------------------------------------------------------------
 --
--- -- Crea il bucket privato / Create the private bucket
--- insert into storage.buckets (id, name, public)
--- values ('documents', 'documents', false)
--- on conflict (id) do nothing;
---
--- -- RLS owner-only su storage.objects per il bucket 'documents'.
--- -- La RLS su storage.objects è già abilitata da Supabase.
--- -- Owner = prima cartella del percorso == auth.uid()
--- -- (storage.foldername(name))[1] è il primo segmento del path.
---
--- drop policy if exists "documents_storage_select_own" on storage.objects;
--- create policy "documents_storage_select_own" on storage.objects
---   for select to authenticated
---   using (
---     bucket_id = 'documents'
---     and (storage.foldername(name))[1] = auth.uid()::text
---   );
---
--- drop policy if exists "documents_storage_insert_own" on storage.objects;
--- create policy "documents_storage_insert_own" on storage.objects
---   for insert to authenticated
---   with check (
---     bucket_id = 'documents'
---     and (storage.foldername(name))[1] = auth.uid()::text
---   );
---
--- drop policy if exists "documents_storage_update_own" on storage.objects;
--- create policy "documents_storage_update_own" on storage.objects
---   for update to authenticated
---   using (
---     bucket_id = 'documents'
---     and (storage.foldername(name))[1] = auth.uid()::text
---   )
---   with check (
---     bucket_id = 'documents'
---     and (storage.foldername(name))[1] = auth.uid()::text
---   );
---
--- drop policy if exists "documents_storage_delete_own" on storage.objects;
--- create policy "documents_storage_delete_own" on storage.objects
---   for delete to authenticated
---   using (
---     bucket_id = 'documents'
---     and (storage.foldername(name))[1] = auth.uid()::text
---   );
+-- Crea il bucket privato / Create the private bucket
+insert into storage.buckets (id, name, public)
+values ('documents', 'documents', false)
+on conflict (id) do nothing;
+
+-- RLS owner-only su storage.objects per il bucket 'documents'.
+-- La RLS su storage.objects è già abilitata da Supabase.
+-- Owner = prima cartella del percorso == auth.uid()
+-- (storage.foldername(name))[1] è il primo segmento del path.
+
+drop policy if exists "documents_storage_select_own" on storage.objects;
+create policy "documents_storage_select_own" on storage.objects
+  for select to authenticated
+  using (
+    bucket_id = 'documents'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );
+
+drop policy if exists "documents_storage_insert_own" on storage.objects;
+create policy "documents_storage_insert_own" on storage.objects
+  for insert to authenticated
+  with check (
+    bucket_id = 'documents'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );
+
+drop policy if exists "documents_storage_update_own" on storage.objects;
+create policy "documents_storage_update_own" on storage.objects
+  for update to authenticated
+  using (
+    bucket_id = 'documents'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  )
+  with check (
+    bucket_id = 'documents'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );
+
+drop policy if exists "documents_storage_delete_own" on storage.objects;
+create policy "documents_storage_delete_own" on storage.objects
+  for delete to authenticated
+  using (
+    bucket_id = 'documents'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );
 --
 -- ============================================================================
 -- FINE / END — Easy Italia Hub schema
