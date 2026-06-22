@@ -28,6 +28,13 @@
         "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}",
         "GOOGLE_API_KEY": "${GEMINI_API_KEY}"
       }
+    },
+    "glif": {
+      "command": "npx",
+      "args": ["-y", "@glifxyz/glif-mcp-server@latest"],
+      "env": {
+        "GLIF_API_TOKEN": "${GLIF_API_TOKEN}"
+      }
     }
   }
 }
