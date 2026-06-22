@@ -285,7 +285,6 @@ module.exports = async (req, res) => {
     return res.status(200).json({
       reply: "Si è verificato un errore temporaneo. Riprova tra poco.",
       error: "exception",
-      detail: String(err?.message || err),
     });
   }
 };

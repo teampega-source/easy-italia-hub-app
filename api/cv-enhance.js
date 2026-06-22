@@ -34,7 +34,8 @@ module.exports = async (req, res) => {
 
   const text = rawText.slice(0, MAX_INPUT_CHARS);
   const lang = ['it', 'en', 'si', 'ta'].includes(body?.lang) ? body.lang : 'it';
-  const section = typeof body?.section === 'string' ? body.section.slice(0, 60) : '';
+  const VALID_SECTIONS = ['esperienza', 'formazione', 'competenze', 'obiettivo', 'profilo', 'lingue', 'istruzione'];
+  const section = VALID_SECTIONS.includes(body?.section) ? body.section : '';
 
   const langInstr = {
     it: 'Rispondi SOLO in italiano.',

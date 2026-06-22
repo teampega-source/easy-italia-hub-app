@@ -75,7 +75,8 @@ async function fetchFeed(feed) {
       headers: { "User-Agent": "EasyItaliaHub/1.0 (+https://easyitaliahub.it)", "Accept": "application/rss+xml, application/xml, text/xml, */*" },
     });
     if (!r.ok) return [];
-    const xml = await r.text();
+    const raw = await r.text();
+    const xml = raw.slice(0, 2_000_000);
     return parseFeed(xml, feed.source);
   } catch (e) {
     return [];
