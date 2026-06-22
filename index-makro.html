@@ -274,15 +274,15 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
   <div class="container nav-inner">
     <a href="/" class="nav-logo">Easy <em>Italia</em> Hub</a>
     <ul class="nav-links">
-      <li><a href="/guide">Guide</a></li>
-      <li><a href="/community">Community</a></li>
-      <li><a href="/percorso">Il Mio Percorso</a></li>
-      <li><a href="/news">News</a></li>
-      <li><a href="/mappa">Mappa</a></li>
+      <li><a href="/guide" data-i18n="nav.guide">Guide</a></li>
+      <li><a href="/community" data-i18n="nav.community">Community</a></li>
+      <li><a href="/percorso" data-i18n="nav.journey">Il Mio Percorso</a></li>
+      <li><a href="/news" data-i18n="nav.news">News</a></li>
+      <li><a href="/mappa" data-i18n="nav.map">Mappa</a></li>
     </ul>
     <div class="nav-r">
-      <a href="#" class="btn btn-ghost" onclick="return false">Accedi</a>
-      <a href="#" class="btn btn-dark" onclick="return false">Registrati gratis</a>
+      <a href="#" class="btn btn-ghost" onclick="return false" data-i18n="nav.login">Accedi</a>
+      <a href="#" class="btn btn-dark" onclick="return false" data-i18n="nav.signup">Registrati gratis</a>
       <button class="nav-tog" aria-label="Menu">
         <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
@@ -296,19 +296,19 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
     <div class="hero-grid">
       <div class="hero-left">
         <div class="hero-badge reveal">
-          <span class="hero-pill">Nuovo</span>
-          Assistente AI aggiornato — Gemini 2.5
+          <span class="hero-pill" data-i18n="hero.pill">Nuovo</span>
+          <span data-i18n="hero.badge">Assistente AI aggiornato — Gemini 2.5</span>
         </div>
-        <h1 class="display hero-h reveal d1">Naviga il sistema<br>italiano.<br><span style="color:var(--muted)">Pianifica con l'AI.</span></h1>
-        <p class="body-lg hero-sub reveal d2">Guide burocratiche in 4 lingue, assistente AI, tracker permesso di soggiorno e strumenti essenziali per la comunità srilankese in Italia.</p>
+        <h1 class="display hero-h reveal d1" data-i18n-html="hero.h">Naviga il sistema<br>italiano.<br><span style="color:var(--muted)">Pianifica con l'AI.</span></h1>
+        <p class="body-lg hero-sub reveal d2" data-i18n="hero.sub">Guide burocratiche in 4 lingue, assistente AI, tracker permesso di soggiorno e strumenti essenziali per la comunità srilankese in Italia.</p>
         <div class="hero-cta reveal d3">
-          <a href="/percorso" class="btn btn-dark btn-lg">Inizia gratis</a>
-          <a href="/guide" class="btn btn-ghost btn-lg">Scopri le guide →</a>
+          <a href="/percorso" class="btn btn-dark btn-lg" data-i18n="hero.cta1">Inizia gratis</a>
+          <a href="/guide" class="btn btn-ghost btn-lg" data-i18n="hero.cta2">Scopri le guide →</a>
         </div>
         <div class="hero-stats reveal d4">
-          <div><div class="stat-n">10.000+</div><div class="stat-l">Utenti attivi</div></div>
-          <div><div class="stat-n">4</div><div class="stat-l">Lingue disponibili</div></div>
-          <div><div class="stat-n">25+</div><div class="stat-l">Guide pratiche</div></div>
+          <div><div class="stat-n">10.000+</div><div class="stat-l" data-i18n="hero.stat1l">Utenti attivi</div></div>
+          <div><div class="stat-n">4</div><div class="stat-l" data-i18n="hero.stat2l">Lingue disponibili</div></div>
+          <div><div class="stat-n">25+</div><div class="stat-l" data-i18n="hero.stat3l">Guide pratiche</div></div>
         </div>
       </div>
       <div class="hero-right reveal d2">
@@ -317,16 +317,16 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
             <div class="mkp-bar"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div></div>
             <div class="mkp-body">
               <div class="mkp-row">
-                <span class="mkp-t">📋 Dashboard personale</span>
-                <span class="mkp-ok">✓ Tutto in ordine</span>
+                <span class="mkp-t" data-i18n="mkp.title">📋 Dashboard personale</span>
+                <span class="mkp-ok" data-i18n="mkp.ok">✓ Tutto in ordine</span>
               </div>
               <div class="mkp-stats">
-                <div class="ms"><div class="ms-v">247</div><div class="ms-l">Giorni rimasti</div></div>
-                <div class="ms"><div class="ms-v" style="color:var(--brand)">3</div><div class="ms-l">Scadenze vicine</div></div>
-                <div class="ms"><div class="ms-v" style="color:#16A34A">€840</div><div class="ms-l">Rimesse mese</div></div>
+                <div class="ms"><div class="ms-v">247</div><div class="ms-l" data-i18n="mkp.s1">Giorni rimasti</div></div>
+                <div class="ms"><div class="ms-v" style="color:var(--brand)">3</div><div class="ms-l" data-i18n="mkp.s2">Scadenze vicine</div></div>
+                <div class="ms"><div class="ms-v" style="color:#16A34A">€840</div><div class="ms-l" data-i18n="mkp.s3">Rimesse mese</div></div>
               </div>
               <div class="mkp-bars-wrap">
-                <div class="mkp-bars-t">Attività ultimi 6 mesi</div>
+                <div class="mkp-bars-t" data-i18n="mkp.activity">Attività ultimi 6 mesi</div>
                 <div class="bars">
                   <div class="bar bar-1"></div><div class="bar bar-2"></div>
                   <div class="bar bar-3"></div><div class="bar bar-4"></div>
@@ -334,14 +334,14 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
                 </div>
               </div>
               <div class="mkp-items">
-                <div class="mi"><div class="mi-dot" style="background:#16A34A"></div><div class="mi-text">Permesso di soggiorno</div><span class="mi-st st-g">Attivo</span></div>
-                <div class="mi"><div class="mi-dot" style="background:#EA580C"></div><div class="mi-text">Rinnovo patente — 15 gen</div><span class="mi-st st-o">15 giorni</span></div>
-                <div class="mi"><div class="mi-dot" style="background:#2563EB"></div><div class="mi-text">CV aggiornato</div><span class="mi-st st-b">Completo</span></div>
+                <div class="mi"><div class="mi-dot" style="background:#16A34A"></div><div class="mi-text" data-i18n="mkp.i1">Permesso di soggiorno</div><span class="mi-st st-g" data-i18n="mkp.st1">Attivo</span></div>
+                <div class="mi"><div class="mi-dot" style="background:#EA580C"></div><div class="mi-text" data-i18n="mkp.i2">Rinnovo patente — 15 gen</div><span class="mi-st st-o" data-i18n="mkp.st2">15 giorni</span></div>
+                <div class="mi"><div class="mi-dot" style="background:#2563EB"></div><div class="mi-text" data-i18n="mkp.i3">CV aggiornato</div><span class="mi-st st-b" data-i18n="mkp.st3">Completo</span></div>
               </div>
             </div>
           </div>
-          <div class="mkp-float f1"><div class="fi" style="background:#F0FDF4">✓</div>SPID attivato</div>
-          <div class="mkp-float f2"><div class="fi" style="background:#FFF7ED">🤖</div>AI disponibile 24/7</div>
+          <div class="mkp-float f1"><div class="fi" style="background:#F0FDF4">✓</div><span data-i18n="float.spid">SPID attivato</span></div>
+          <div class="mkp-float f2"><div class="fi" style="background:#FFF7ED">🤖</div><span data-i18n="float.ai">AI disponibile 24/7</span></div>
         </div>
       </div>
     </div>
@@ -351,7 +351,7 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 <!-- ─── LOGO STRIP ─── -->
 <div class="logo-strip">
   <div class="container">
-    <div class="ls-lbl">Informazioni verificate da fonti ufficiali</div>
+    <div class="ls-lbl" data-i18n="strip.lbl">Informazioni verificate da fonti ufficiali</div>
     <div class="ls-logos">
       <span class="ls-item">INPS</span>
       <span class="ls-item">Min. Interno</span>
@@ -370,9 +370,9 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
     <div class="feat-grid">
       <div class="reveal">
         <div class="feat-num">01</div>
-        <h2 class="feat-title">Traccia il permesso<br>prima che scada</h2>
-        <p class="feat-desc">Il tracker calcola automaticamente le scadenze del tuo permesso di soggiorno e ti avvisa con reminder email quando è ora di rinnovare. Niente sorprese.</p>
-        <a href="/permesso-tracker" class="feat-link">Apri il tracker <span>→</span></a>
+        <h2 class="feat-title" data-i18n-html="f1.title">Traccia il permesso<br>prima che scada</h2>
+        <p class="feat-desc" data-i18n="f1.desc">Il tracker calcola automaticamente le scadenze del tuo permesso di soggiorno e ti avvisa con reminder email quando è ora di rinnovare. Niente sorprese.</p>
+        <a href="/permesso-tracker" class="feat-link" data-i18n="f1.link">Apri il tracker</a>
       </div>
       <div class="reveal d2">
         <div class="feat-vis">
@@ -385,10 +385,10 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
             <div class="fv-row" style="margin-top:6px"><span class="fv-muted">Presentata: 12 gen 2024</span><span class="fv-muted">Scade: 28 feb 2025</span></div>
           </div>
           <div class="fv-card">
-            <div class="fv-label" style="margin-bottom:8px">📅 Prossime scadenze</div>
-            <div class="fv-check-row"><div class="fv-chk chk-y">✓</div><span class="fv-check-text">Rinnovo permesso presentato</span></div>
-            <div class="fv-check-row"><div class="fv-chk chk-n">→</div><span class="fv-check-text">Ritiro permesso — verifica questura</span></div>
-            <div class="fv-check-row"><div class="fv-chk chk-n">!</div><span class="fv-check-text" style="color:var(--brand)">Reminder email: tra 60 giorni</span></div>
+            <div class="fv-label" style="margin-bottom:8px" data-i18n="f1.vis.dead">📅 Prossime scadenze</div>
+            <div class="fv-check-row"><div class="fv-chk chk-y">✓</div><span class="fv-check-text" data-i18n="f1.vis.c1">Rinnovo permesso presentato</span></div>
+            <div class="fv-check-row"><div class="fv-chk chk-n">→</div><span class="fv-check-text" data-i18n="f1.vis.c2">Ritiro permesso — verifica questura</span></div>
+            <div class="fv-check-row"><div class="fv-chk chk-n">!</div><span class="fv-check-text" style="color:var(--brand)" data-i18n="f1.vis.c3">Reminder email: tra 60 giorni</span></div>
           </div>
         </div>
       </div>
@@ -402,13 +402,13 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
     <div class="feat-grid rev">
       <div class="reveal">
         <div class="feat-num">02</div>
-        <h2 class="feat-title">Scopri tutti i tuoi<br>diritti INPS</h2>
-        <p class="feat-desc">Assegno unico, NASpI, maternità, permessi retribuiti: molti lavoratori stranieri non sanno a cosa hanno diritto. Il nostro checker ti dice cosa puoi richiedere in base alla tua situazione.</p>
-        <a href="/diritti-inps" class="feat-link">Verifica i tuoi diritti <span>→</span></a>
+        <h2 class="feat-title" data-i18n-html="f2.title">Scopri tutti i tuoi<br>diritti INPS</h2>
+        <p class="feat-desc" data-i18n="f2.desc">Assegno unico, NASpI, maternità, permessi retribuiti: molti lavoratori stranieri non sanno a cosa hanno diritto. Il nostro checker ti dice cosa puoi richiedere in base alla tua situazione.</p>
+        <a href="/diritti-inps" class="feat-link" data-i18n="f2.link">Verifica i tuoi diritti</a>
       </div>
       <div class="reveal d2">
         <div class="feat-vis">
-          <div class="fv-label" style="margin-bottom:12px">✅ Diritti verificati per te</div>
+          <div class="fv-label" style="margin-bottom:12px" data-i18n="f2.vis.title">✅ Diritti verificati per te</div>
           <div class="fv-check-row"><div class="fv-chk chk-y">✓</div><span class="fv-check-text">Assegno Unico Universale</span><span class="fv-tag" style="background:#F0FDF4;color:#16A34A;font-size:10px;padding:2px 8px;border-radius:999px;font-weight:600;margin-left:auto">Richiedibile</span></div>
           <div class="fv-check-row"><div class="fv-chk chk-y">✓</div><span class="fv-check-text">Bonus asilo nido 2024</span><span class="fv-tag" style="background:#F0FDF4;color:#16A34A;font-size:10px;padding:2px 8px;border-radius:999px;font-weight:600;margin-left:auto">Fino a €3.000</span></div>
           <div class="fv-check-row"><div class="fv-chk chk-y">✓</div><span class="fv-check-text">Congedo parentale retribuito</span><span class="fv-tag" style="background:#F0FDF4;color:#16A34A;font-size:10px;padding:2px 8px;border-radius:999px;font-weight:600;margin-left:auto">Richiedibile</span></div>
@@ -426,13 +426,13 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
     <div class="feat-grid">
       <div class="reveal">
         <div class="feat-num">03</div>
-        <h2 class="feat-title">Tieni tutto sotto<br>controllo</h2>
-        <p class="feat-desc">Documenti, scadenze, pratiche burocratiche: tutto in un unico posto. Carica i tuoi file, imposta promemoria e non perdere più nessuna scadenza importante.</p>
-        <a href="/dashboard" class="feat-link">Apri la dashboard <span>→</span></a>
+        <h2 class="feat-title" data-i18n-html="f3.title">Tieni tutto sotto<br>controllo</h2>
+        <p class="feat-desc" data-i18n="f3.desc">Documenti, scadenze, pratiche burocratiche: tutto in un unico posto. Carica i tuoi file, imposta promemoria e non perdere più nessuna scadenza importante.</p>
+        <a href="/dashboard" class="feat-link" data-i18n="f3.link">Apri la dashboard</a>
       </div>
       <div class="reveal d2">
         <div class="feat-vis">
-          <div class="fv-label" style="margin-bottom:10px">📁 Archivio documenti</div>
+          <div class="fv-label" style="margin-bottom:10px" data-i18n="f3.vis.docs">📁 Archivio documenti</div>
           <div class="fv-card" style="margin-bottom:10px">
             <div class="fv-row">
               <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">📄</span><div><div style="font-size:12px;font-weight:600;color:var(--fg)">Permesso soggiorno.pdf</div><div style="font-size:10.5px;color:var(--muted)">Scade: 28 feb 2025</div></div></div>
@@ -463,18 +463,18 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
     <div class="feat-grid rev">
       <div class="reveal">
         <div class="feat-num">04</div>
-        <h2 class="feat-title">Un consigliere AI<br>sempre disponibile</h2>
-        <p class="feat-desc">Il nostro assistente risponde in italiano, inglese, sinhala e tamil. Conosce le procedure burocratiche italiane e ti guida passo passo — 24 ore su 24, 7 giorni su 7.</p>
-        <a href="/percorso" class="feat-link">Prova l'assistente <span>→</span></a>
+        <h2 class="feat-title" data-i18n-html="f4.title">Un consigliere AI<br>sempre disponibile</h2>
+        <p class="feat-desc" data-i18n="f4.desc">Il nostro assistente risponde in italiano, inglese, sinhala e tamil. Conosce le procedure burocratiche italiane e ti guida passo passo — 24 ore su 24, 7 giorni su 7.</p>
+        <a href="/percorso" class="feat-link" data-i18n="f4.link">Prova l'assistente</a>
       </div>
       <div class="reveal d2">
         <div class="feat-vis" style="justify-content:flex-start;padding-top:24px">
-          <div class="bubble-user fv-chat-bubble">Come rinnovo il permesso di soggiorno?</div>
-          <div class="bubble-ai fv-chat-bubble">Per rinnovare il permesso devi presentare domanda alla questura almeno 60 giorni prima della scadenza. I documenti necessari sono: passaporto valido, foto tessera, marca da bollo €16 e modulo kit postale. Vuoi che controlli le scadenze specifiche per la tua questura? 📋</div>
+          <div class="bubble-user fv-chat-bubble" data-i18n="f4.user">Come rinnovo il permesso di soggiorno?</div>
+          <div class="bubble-ai fv-chat-bubble" data-i18n="f4.ai">Per rinnovare il permesso devi presentare domanda alla questura almeno 60 giorni prima della scadenza. I documenti necessari sono: passaporto valido, foto tessera, marca da bollo €16 e modulo kit postale. Vuoi che controlli le scadenze specifiche per la tua questura? 📋</div>
           <div class="fv-typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
           <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-            <span style="font-size:11px;padding:4px 10px;background:var(--bg);border:1px solid var(--border);border-radius:999px;color:var(--muted);cursor:pointer">🇱🇰 Rispondi in sinhala</span>
-            <span style="font-size:11px;padding:4px 10px;background:var(--bg);border:1px solid var(--border);border-radius:999px;color:var(--muted);cursor:pointer">📍 Trova questura vicina</span>
+            <span style="font-size:11px;padding:4px 10px;background:var(--bg);border:1px solid var(--border);border-radius:999px;color:var(--muted);cursor:pointer" data-i18n="f4.chip1">🇱🇰 Rispondi in sinhala</span>
+            <span style="font-size:11px;padding:4px 10px;background:var(--bg);border:1px solid var(--border);border-radius:999px;color:var(--muted);cursor:pointer" data-i18n="f4.chip2">📍 Trova questura vicina</span>
           </div>
         </div>
       </div>
@@ -486,17 +486,17 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 <section class="section">
   <div class="container">
     <div class="sh reveal">
-      <div class="eyebrow"><div class="edot"></div>Tutti gli strumenti</div>
-      <h2 class="headline">Ogni cosa di cui hai bisogno,<br>in un solo posto</h2>
-      <p class="body">Strumenti pratici pensati per la vita quotidiana della comunità srilankese in Italia.</p>
+      <div class="eyebrow"><div class="edot"></div><span data-i18n="mini.eye">Tutti gli strumenti</span></div>
+      <h2 class="headline" data-i18n-html="mini.h">Ogni cosa di cui hai bisogno,<br>in un solo posto</h2>
+      <p class="body" data-i18n="mini.sub">Strumenti pratici pensati per la vita quotidiana della comunità srilankese in Italia.</p>
     </div>
     <div class="mini-grid">
-      <div class="card mini-card reveal"><div class="mini-icon" style="background:#FFF7ED">📚</div><div class="mini-title">Guide burocratiche</div><div class="mini-desc">Permesso, SPID, codice fiscale, residenza: guide passo-passo verificate da fonti ufficiali.</div></div>
-      <div class="card mini-card reveal d1"><div class="mini-icon" style="background:#EFF6FF">🤖</div><div class="mini-title">Assistente AI</div><div class="mini-desc">Risposte immediate in 4 lingue su qualsiasi procedura burocratica italiana.</div></div>
-      <div class="card mini-card reveal d2"><div class="mini-icon" style="background:#F0FDF4">🏘️</div><div class="mini-title">Community</div><div class="mini-desc">Connettiti con altri membri della comunità, trova lavoro e scambia esperienze.</div></div>
-      <div class="card mini-card reveal d3"><div class="mini-icon" style="background:#FDF4FF">💸</div><div class="mini-title">Money Transfer</div><div class="mini-desc">Confronta i migliori servizi di rimessa verso lo Sri Lanka in tempo reale.</div></div>
-      <div class="card mini-card reveal"><div class="mini-icon" style="background:#FFF1F2">📝</div><div class="mini-title">CV Builder</div><div class="mini-desc">Crea un curriculum professionale in formato europeo, pronto da scaricare in PDF.</div></div>
-      <div class="card mini-card reveal d1"><div class="mini-icon" style="background:#F0FDF4">🗺️</div><div class="mini-title">Mappa servizi</div><div class="mini-desc">Trova CAF, patronati, questure e negozi srilankesi vicino a te.</div></div>
+      <div class="card mini-card reveal"><div class="mini-icon" style="background:#FFF7ED">📚</div><div class="mini-title" data-i18n="mini.c1t">Guide burocratiche</div><div class="mini-desc" data-i18n="mini.c1d">Permesso, SPID, codice fiscale, residenza: guide passo-passo verificate da fonti ufficiali.</div></div>
+      <div class="card mini-card reveal d1"><div class="mini-icon" style="background:#EFF6FF">🤖</div><div class="mini-title" data-i18n="mini.c2t">Assistente AI</div><div class="mini-desc" data-i18n="mini.c2d">Risposte immediate in 4 lingue su qualsiasi procedura burocratica italiana.</div></div>
+      <div class="card mini-card reveal d2"><div class="mini-icon" style="background:#F0FDF4">🏘️</div><div class="mini-title" data-i18n="mini.c3t">Community</div><div class="mini-desc" data-i18n="mini.c3d">Connettiti con altri membri della comunità, trova lavoro e scambia esperienze.</div></div>
+      <div class="card mini-card reveal d3"><div class="mini-icon" style="background:#FDF4FF">💸</div><div class="mini-title" data-i18n="mini.c4t">Money Transfer</div><div class="mini-desc" data-i18n="mini.c4d">Confronta i migliori servizi di rimessa verso lo Sri Lanka in tempo reale.</div></div>
+      <div class="card mini-card reveal"><div class="mini-icon" style="background:#FFF1F2">📝</div><div class="mini-title" data-i18n="mini.c5t">CV Builder</div><div class="mini-desc" data-i18n="mini.c5d">Crea un curriculum professionale in formato europeo, pronto da scaricare in PDF.</div></div>
+      <div class="card mini-card reveal d1"><div class="mini-icon" style="background:#F0FDF4">🗺️</div><div class="mini-title" data-i18n="mini.c6t">Mappa servizi</div><div class="mini-desc" data-i18n="mini.c6d">Trova CAF, patronati, questure e negozi srilankesi vicino a te.</div></div>
     </div>
   </div>
 </section>
@@ -505,16 +505,16 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 <section class="section-sm" style="background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
   <div class="container">
     <div class="sh reveal">
-      <div class="eyebrow"><div class="edot"></div>Perché Easy Italia Hub</div>
-      <h2 class="headline">Costruito per chi<br>naviga il sistema da fuori</h2>
+      <div class="eyebrow"><div class="edot"></div><span data-i18n="ben.eye">Perché Easy Italia Hub</span></div>
+      <h2 class="headline" data-i18n-html="ben.h">Costruito per chi<br>naviga il sistema da fuori</h2>
     </div>
     <div class="benefits-grid">
-      <div class="ben-item reveal"><div class="ben-icon">🆓</div><div><div class="ben-title">Gratuito per iniziare</div><div class="ben-desc">Tutte le guide, l'assistente AI e gli strumenti base sono gratuiti. Sempre.</div></div></div>
-      <div class="ben-item reveal d1"><div class="ben-icon">🌐</div><div><div class="ben-title">4 lingue disponibili</div><div class="ben-desc">Italiano, inglese, sinhala e tamil. Nessuna barriera linguistica.</div></div></div>
-      <div class="ben-item reveal d2"><div class="ben-icon">📱</div><div><div class="ben-title">Mobile first</div><div class="ben-desc">Ottimizzato per smartphone. Funziona anche offline una volta installato.</div></div></div>
-      <div class="ben-item reveal d3"><div class="ben-icon">🔒</div><div><div class="ben-title">Dati privati e sicuri</div><div class="ben-desc">I tuoi dati restano nel dispositivo o nel tuo account cifrato. Non li vendiamo mai.</div></div></div>
-      <div class="ben-item reveal"><div class="ben-icon">✅</div><div><div class="ben-title">Informazioni verificate</div><div class="ben-desc">Ogni guida è curata da esperti e aggiornata alle normative vigenti.</div></div></div>
-      <div class="ben-item reveal d1"><div class="ben-icon">🤝</div><div><div class="ben-title">Senza intermediari</div><div class="ben-desc">Risolvi le pratiche in autonomia. Niente CAF costosi per informazioni che puoi avere gratis.</div></div></div>
+      <div class="ben-item reveal"><div class="ben-icon">🆓</div><div><div class="ben-title" data-i18n="ben.1t">Gratuito per iniziare</div><div class="ben-desc" data-i18n="ben.1d">Tutte le guide, l'assistente AI e gli strumenti base sono gratuiti. Sempre.</div></div></div>
+      <div class="ben-item reveal d1"><div class="ben-icon">🌐</div><div><div class="ben-title" data-i18n="ben.2t">4 lingue disponibili</div><div class="ben-desc" data-i18n="ben.2d">Italiano, inglese, sinhala e tamil. Nessuna barriera linguistica.</div></div></div>
+      <div class="ben-item reveal d2"><div class="ben-icon">📱</div><div><div class="ben-title" data-i18n="ben.3t">Mobile first</div><div class="ben-desc" data-i18n="ben.3d">Ottimizzato per smartphone. Funziona anche offline una volta installato.</div></div></div>
+      <div class="ben-item reveal d3"><div class="ben-icon">🔒</div><div><div class="ben-title" data-i18n="ben.4t">Dati privati e sicuri</div><div class="ben-desc" data-i18n="ben.4d">I tuoi dati restano nel dispositivo o nel tuo account cifrato. Non li vendiamo mai.</div></div></div>
+      <div class="ben-item reveal"><div class="ben-icon">✅</div><div><div class="ben-title" data-i18n="ben.5t">Informazioni verificate</div><div class="ben-desc" data-i18n="ben.5d">Ogni guida è curata da esperti e aggiornata alle normative vigenti.</div></div></div>
+      <div class="ben-item reveal d1"><div class="ben-icon">🤝</div><div><div class="ben-title" data-i18n="ben.6t">Senza intermediari</div><div class="ben-desc" data-i18n="ben.6d">Risolvi le pratiche in autonomia. Niente CAF costosi per informazioni che puoi avere gratis.</div></div></div>
     </div>
   </div>
 </section>
@@ -523,54 +523,54 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 <section class="section">
   <div class="container">
     <div class="sh reveal">
-      <div class="eyebrow"><div class="edot"></div>Prezzi</div>
-      <h2 class="headline">Inizia gratis,<br>scala quando vuoi</h2>
-      <p class="body">Nessuna carta di credito richiesta per iniziare. Upgrade in qualsiasi momento.</p>
+      <div class="eyebrow"><div class="edot"></div><span data-i18n="price.eye">Prezzi</span></div>
+      <h2 class="headline" data-i18n-html="price.h">Inizia gratis,<br>scala quando vuoi</h2>
+      <p class="body" data-i18n="price.sub">Nessuna carta di credito richiesta per iniziare. Upgrade in qualsiasi momento.</p>
     </div>
     <div class="pricing-grid">
       <div class="card price-card reveal">
         <div class="price-plan">Free</div>
         <div><span class="price-amount">€0</span></div>
-        <div class="price-desc">Per chi vuole iniziare a orientarsi nel sistema italiano.</div>
+        <div class="price-desc" data-i18n="plan.fd">Per chi vuole iniziare a orientarsi nel sistema italiano.</div>
         <hr class="price-divider">
         <ul class="price-features">
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Guide burocratiche complete</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Assistente AI (20 msg/giorno)</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Tracker permesso base</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Calcolatori INPS</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Mappa servizi</li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.ff1">Guide burocratiche complete</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.ff2">Assistente AI (20 msg/giorno)</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.ff3">Tracker permesso base</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.ff4">Calcolatori INPS</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.ff5">Mappa servizi</span></li>
         </ul>
-        <a href="/percorso" class="btn btn-ghost" style="width:100%;justify-content:center">Inizia gratis</a>
+        <a href="/percorso" class="btn btn-ghost" style="width:100%;justify-content:center" data-i18n="plan.fbtn">Inizia gratis</a>
       </div>
       <div class="card price-card feat reveal d1">
-        <div class="price-badge">Più scelto</div>
+        <div class="price-badge" data-i18n="plan.badge">Più scelto</div>
         <div class="price-plan">Premium</div>
         <div><span class="price-amount">€9</span><span class="price-period">/mese</span></div>
-        <div class="price-desc">Per chi gestisce la propria vita burocratica in autonomia.</div>
+        <div class="price-desc" data-i18n="plan.pd">Per chi gestisce la propria vita burocratica in autonomia.</div>
         <hr class="price-divider">
         <ul class="price-features">
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Tutto del piano Free</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>AI illimitato</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Archivio documenti 10GB</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Reminder email scadenze</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>CV Builder avanzato</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Priorità supporto</li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.pf1">Tutto del piano Free</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.pf2">AI illimitato</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.pf3">Archivio documenti 10GB</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.pf4">Reminder email scadenze</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.pf5">CV Builder avanzato</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.pf6">Priorità supporto</span></li>
         </ul>
-        <a href="/abbonamenti" class="btn btn-white btn-lg" style="width:100%;justify-content:center">Scegli Premium</a>
+        <a href="/abbonamenti" class="btn btn-white btn-lg" style="width:100%;justify-content:center" data-i18n="plan.pbtn">Scegli Premium</a>
       </div>
       <div class="card price-card reveal d2">
         <div class="price-plan">Business</div>
         <div><span class="price-amount">€29</span><span class="price-period">/mese</span></div>
-        <div class="price-desc">Per consulenti, CAF e associazioni che assistono la comunità.</div>
+        <div class="price-desc" data-i18n="plan.bd">Per consulenti, CAF e associazioni che assistono la comunità.</div>
         <hr class="price-divider">
         <ul class="price-features">
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Tutto del piano Premium</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Gestione fino a 50 profili</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Dashboard multi-utente</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Report e statistiche</li>
-          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Account manager dedicato</li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.bf1">Tutto del piano Premium</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.bf2">Gestione fino a 50 profili</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.bf3">Dashboard multi-utente</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.bf4">Report e statistiche</span></li>
+          <li class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="plan.bf5">Account manager dedicato</span></li>
         </ul>
-        <a href="/contatti" class="btn btn-ghost" style="width:100%;justify-content:center">Contattaci</a>
+        <a href="/contatti" class="btn btn-ghost" style="width:100%;justify-content:center" data-i18n="plan.bbtn">Contattaci</a>
       </div>
     </div>
   </div>
@@ -580,24 +580,24 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 <section class="section-sm" style="background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
   <div class="container">
     <div class="sh reveal">
-      <div class="eyebrow"><div class="edot"></div>Testimonianze</div>
-      <h2 class="headline">Già usato da migliaia<br>di srilankesi in Italia</h2>
+      <div class="eyebrow"><div class="edot"></div><span data-i18n="testi.eye">Testimonianze</span></div>
+      <h2 class="headline" data-i18n-html="testi.h">Già usato da migliaia<br>di srilankesi in Italia</h2>
     </div>
     <div class="testi-grid">
       <div class="card testi-card reveal">
         <div class="stars">★★★★★</div>
-        <p class="testi-text">"Finalmente un sito che spiega le procedure in sinhala! Ho rinnovato il permesso da solo per la prima volta senza andare al CAF. Grazie mille."</p>
-        <div class="testi-author"><div class="tav" style="background:#FFF7ED">🙏</div><div><div class="a-name">Nimal P.</div><div class="a-role">Milano · 4 anni in Italia</div></div></div>
+        <p class="testi-text" data-i18n="testi.1">"Finalmente un sito che spiega le procedure in sinhala! Ho rinnovato il permesso da solo per la prima volta senza andare al CAF. Grazie mille."</p>
+        <div class="testi-author"><div class="tav" style="background:#FFF7ED">🙏</div><div><div class="a-name">Nimal P.</div><div class="a-role" data-i18n="testi.1r">Milano · 4 anni in Italia</div></div></div>
       </div>
       <div class="card testi-card reveal d1">
         <div class="stars">★★★★★</div>
-        <p class="testi-text">"L'assistente AI mi ha spiegato passo per passo come richiedere l'assegno unico. Non sapevo nemmeno di averci diritto. Ho recuperato 8 mesi di arretrati!"</p>
-        <div class="testi-author"><div class="tav" style="background:#EFF6FF">💙</div><div><div class="a-name">Priya S.</div><div class="a-role">Roma · 7 anni in Italia</div></div></div>
+        <p class="testi-text" data-i18n="testi.2">"L'assistente AI mi ha spiegato passo per passo come richiedere l'assegno unico. Non sapevo nemmeno di averci diritto. Ho recuperato 8 mesi di arretrati!"</p>
+        <div class="testi-author"><div class="tav" style="background:#EFF6FF">💙</div><div><div class="a-name">Priya S.</div><div class="a-role" data-i18n="testi.2r">Roma · 7 anni in Italia</div></div></div>
       </div>
       <div class="card testi-card reveal d2">
         <div class="stars">★★★★★</div>
-        <p class="testi-text">"Come consulente aiuto tante famiglie srilankesi. Easy Italia Hub mi ha cambiato il lavoro: risparmio ore ogni settimana e i miei clienti trovano le risposte da soli."</p>
-        <div class="testi-author"><div class="tav" style="background:#F0FDF4">🌟</div><div><div class="a-name">Rohan K.</div><div class="a-role">Torino · Consulente immigrazione</div></div></div>
+        <p class="testi-text" data-i18n="testi.3">"Come consulente aiuto tante famiglie srilankesi. Easy Italia Hub mi ha cambiato il lavoro: risparmio ore ogni settimana e i miei clienti trovano le risposte da soli."</p>
+        <div class="testi-author"><div class="tav" style="background:#F0FDF4">🌟</div><div><div class="a-name">Rohan K.</div><div class="a-role" data-i18n="testi.3r">Torino · Consulente immigrazione</div></div></div>
       </div>
     </div>
   </div>
@@ -607,33 +607,33 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 <section class="section">
   <div class="container">
     <div class="sh reveal">
-      <div class="eyebrow"><div class="edot"></div>FAQ</div>
-      <h2 class="headline">Domande frequenti</h2>
+      <div class="eyebrow"><div class="edot"></div><span data-i18n="faq.eye">FAQ</span></div>
+      <h2 class="headline" data-i18n="faq.h">Domande frequenti</h2>
     </div>
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span>Easy Italia Hub è gratuito?</span><svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><p>Sì. Tutte le guide, l'assistente AI (con limite giornaliero) e gli strumenti base sono completamente gratuiti. Il piano Premium aggiunge AI illimitato, archivio documenti e reminder email.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq.1q">Easy Italia Hub è gratuito?</span><svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p data-i18n="faq.1a">Sì. Tutte le guide, l'assistente AI (con limite giornaliero) e gli strumenti base sono completamente gratuiti. Il piano Premium aggiunge AI illimitato, archivio documenti e reminder email.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span>In quali lingue funziona l'assistente AI?</span><svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><p>L'assistente risponde in italiano, inglese, sinhala e tamil. Puoi scrivere nella lingua che preferisci e ricevere la risposta nella stessa lingua.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq.2q">In quali lingue funziona l'assistente AI?</span><svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p data-i18n="faq.2a">L'assistente risponde in italiano, inglese, sinhala e tamil. Puoi scrivere nella lingua che preferisci e ricevere la risposta nella stessa lingua.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span>Le informazioni sono aggiornate?</span><svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><p>Sì. Le guide sono verificate su fonti ufficiali (INPS, Ministero dell'Interno, Polizia di Stato) e aggiornate regolarmente. L'AI indica sempre di verificare i dati sulle fonti ufficiali per importi e scadenze precise che cambiano ogni anno.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq.3q">Le informazioni sono aggiornate?</span><svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p data-i18n="faq.3a">Sì. Le guide sono verificate su fonti ufficiali (INPS, Ministero dell'Interno, Polizia di Stato) e aggiornate regolarmente.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span>I miei dati sono al sicuro?</span><svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><p>I dati restano nel tuo dispositivo (localStorage) finché non attivi un account. Con account, i dati sono cifrati su Supabase con Row Level Security: solo tu puoi accedere ai tuoi file e scadenze. Non vendiamo né condividiamo dati con terzi.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq.4q">I miei dati sono al sicuro?</span><svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p data-i18n="faq.4a">I dati restano nel tuo dispositivo (localStorage) finché non attivi un account. Con account, i dati sono cifrati su Supabase con Row Level Security.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span>Funziona anche senza connessione?</span><svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><p>Sì, dopo la prima visita le guide e molti strumenti funzionano offline grazie al Service Worker. L'assistente AI richiede connessione per rispondere.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq.5q">Funziona anche senza connessione?</span><svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p data-i18n="faq.5a">Sì, dopo la prima visita le guide e molti strumenti funzionano offline grazie al Service Worker. L'assistente AI richiede connessione per rispondere.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span>Come posso inviare un feedback o segnalare un errore?</span><svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><p>Scrivi a <strong>info@easyitaliahub.it</strong> o usa il form di contatto nella pagina <a href="/contatti" style="color:var(--brand)">Contatti</a>. Rispondiamo entro 24 ore.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq.6q">Come posso inviare un feedback o segnalare un errore?</span><svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p data-i18n-html="faq.6a">Scrivi a <strong>info@easyitaliahub.it</strong> o usa il form nella pagina <a href="/contatti" style="color:var(--brand)">Contatti</a>. Rispondiamo entro 24 ore.</p></div>
       </div>
     </div>
   </div>
@@ -643,34 +643,34 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 <section class="section-sm" style="background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
   <div class="container">
     <div class="sh reveal">
-      <div class="eyebrow"><div class="edot"></div>Risorse</div>
-      <h2 class="headline">Guide e aggiornamenti</h2>
+      <div class="eyebrow"><div class="edot"></div><span data-i18n="blog.eye">Risorse</span></div>
+      <h2 class="headline" data-i18n="blog.h">Guide e aggiornamenti</h2>
     </div>
     <div class="blog-grid">
       <div class="card blog-card reveal">
         <div class="blog-img">📋</div>
         <div class="blog-body">
-          <div class="blog-cat">Permesso di soggiorno</div>
-          <div class="blog-title">Come rinnovare il permesso di soggiorno nel 2024: guida completa</div>
-          <div class="blog-exc">Tutte le procedure aggiornate, i documenti necessari e i moduli da compilare per il rinnovo.</div>
+          <div class="blog-cat" data-i18n="blog.1c">Permesso di soggiorno</div>
+          <div class="blog-title" data-i18n="blog.1t">Come rinnovare il permesso di soggiorno nel 2024: guida completa</div>
+          <div class="blog-exc" data-i18n="blog.1x">Tutte le procedure aggiornate, i documenti necessari e i moduli da compilare per il rinnovo.</div>
         </div>
         <div class="blog-foot">📅 12 gen 2024 · 8 min</div>
       </div>
       <div class="card blog-card reveal d1">
         <div class="blog-img">💰</div>
         <div class="blog-body">
-          <div class="blog-cat">INPS</div>
-          <div class="blog-title">Assegno Unico 2024: importi, requisiti e come richiederlo con SPID</div>
-          <div class="blog-exc">Fino a €199 al mese per figlio: ecco chi può richiederlo e come compilare la domanda online.</div>
+          <div class="blog-cat" data-i18n="blog.2c">INPS</div>
+          <div class="blog-title" data-i18n="blog.2t">Assegno Unico 2024: importi, requisiti e come richiederlo con SPID</div>
+          <div class="blog-exc" data-i18n="blog.2x">Fino a €199 al mese per figlio: ecco chi può richiederlo e come compilare la domanda online.</div>
         </div>
         <div class="blog-foot">📅 3 feb 2024 · 6 min</div>
       </div>
       <div class="card blog-card reveal d2">
         <div class="blog-img">🆔</div>
         <div class="blog-body">
-          <div class="blog-cat">Identità digitale</div>
-          <div class="blog-title">SPID senza passaporto italiano: guida per i cittadini stranieri</div>
-          <div class="blog-exc">Come attivare l'identità digitale SPID con il permesso di soggiorno e un documento di identità valido.</div>
+          <div class="blog-cat" data-i18n="blog.3c">Identità digitale</div>
+          <div class="blog-title" data-i18n="blog.3t">SPID senza passaporto italiano: guida per i cittadini stranieri</div>
+          <div class="blog-exc" data-i18n="blog.3x">Come attivare l'identità digitale SPID con il permesso di soggiorno e un documento di identità valido.</div>
         </div>
         <div class="blog-foot">📅 18 feb 2024 · 5 min</div>
       </div>
@@ -682,11 +682,11 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 <div class="cta-wrap">
   <div class="container">
     <div class="cta-inner reveal">
-      <h2 class="display">Inizia oggi,<br>è gratis.</h2>
-      <p class="body-lg">Unisciti a migliaia di srilankesi che navigano il sistema italiano con Easy Italia Hub.</p>
+      <h2 class="display" data-i18n-html="cta.h">Inizia oggi,<br>è gratis.</h2>
+      <p class="body-lg" data-i18n="cta.sub">Unisciti a migliaia di srilankesi che navigano il sistema italiano con Easy Italia Hub.</p>
       <div class="cta-btns">
-        <a href="/percorso" class="btn btn-brand btn-lg">Registrati gratis</a>
-        <a href="/guide" class="btn btn-outline-white btn-lg">Sfoglia le guide</a>
+        <a href="/percorso" class="btn btn-brand btn-lg" data-i18n="cta.btn1">Registrati gratis</a>
+        <a href="/guide" class="btn btn-outline-white btn-lg" data-i18n="cta.btn2">Sfoglia le guide</a>
       </div>
     </div>
   </div>
@@ -698,10 +698,10 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
     <div class="footer-top">
       <div>
         <div class="nav-logo">Easy <em style="font-style:normal;color:var(--brand)">Italia</em> Hub</div>
-        <p class="footer-brand-desc">Il punto di riferimento per la comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un posto.</p>
+        <p class="footer-brand-desc" data-i18n="f.tag">Il punto di riferimento per la comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un posto.</p>
       </div>
       <div class="footer-col">
-        <h4>Prodotto</h4>
+        <h4 data-i18n="f.prod">Prodotto</h4>
         <ul class="footer-links">
           <li><a href="/guide">Guide burocratiche</a></li>
           <li><a href="/percorso">Assistente AI</a></li>
@@ -711,7 +711,7 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Strumenti</h4>
+        <h4 data-i18n="f.tools">Strumenti</h4>
         <ul class="footer-links">
           <li><a href="/permesso-tracker">Tracker Permesso</a></li>
           <li><a href="/cv-builder">CV Builder</a></li>
@@ -721,7 +721,7 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Azienda</h4>
+        <h4 data-i18n="f.company">Azienda</h4>
         <ul class="footer-links">
           <li><a href="/chi-siamo">Chi siamo</a></li>
           <li><a href="/contatti">Contatti</a></li>
@@ -732,7 +732,7 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2026 Easy Italia Hub. Tutti i diritti riservati.</span>
+      <span class="footer-copy" data-i18n="f.copy">© 2026 Easy Italia Hub. Tutti i diritti riservati.</span>
       <div class="footer-legal">
         <a href="/privacy">Privacy</a>
         <a href="/cookie">Cookie</a>
@@ -744,25 +744,393 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 </footer>
 
 <script>
-// reveal on scroll — progressive enhancement
+// ── I18N ──────────────────────────────────────────────────────────────────
+var T = {
+  it: {
+    "nav.guide":"Guide","nav.community":"Community","nav.journey":"Il Mio Percorso","nav.news":"News","nav.map":"Mappa","nav.login":"Accedi","nav.signup":"Registrati gratis",
+    "hero.pill":"Nuovo","hero.badge":"Assistente AI aggiornato — Gemini 2.5",
+    "hero.h":"Naviga il sistema<br>italiano.<br><span style=\"color:var(--muted)\">Pianifica con l'AI.</span>",
+    "hero.sub":"Guide burocratiche in 4 lingue, assistente AI, tracker permesso di soggiorno e strumenti essenziali per la comunità srilankese in Italia.",
+    "hero.cta1":"Inizia gratis","hero.cta2":"Scopri le guide →",
+    "hero.stat1l":"Utenti attivi","hero.stat2l":"Lingue disponibili","hero.stat3l":"Guide pratiche",
+    "mkp.title":"📋 Dashboard personale","mkp.ok":"✓ Tutto in ordine",
+    "mkp.s1":"Giorni rimasti","mkp.s2":"Scadenze vicine","mkp.s3":"Rimesse mese",
+    "mkp.activity":"Attività ultimi 6 mesi",
+    "mkp.i1":"Permesso di soggiorno","mkp.i2":"Rinnovo patente — 15 gen","mkp.i3":"CV aggiornato",
+    "mkp.st1":"Attivo","mkp.st2":"15 giorni","mkp.st3":"Completo",
+    "float.spid":"SPID attivato","float.ai":"AI disponibile 24/7",
+    "strip.lbl":"Informazioni verificate da fonti ufficiali",
+    "f1.title":"Traccia il permesso<br>prima che scada",
+    "f1.desc":"Il tracker calcola automaticamente le scadenze del tuo permesso di soggiorno e ti avvisa con reminder email quando è ora di rinnovare. Niente sorprese.",
+    "f1.link":"Apri il tracker","f1.vis.dead":"📅 Prossime scadenze",
+    "f1.vis.c1":"Rinnovo permesso presentato","f1.vis.c2":"Ritiro permesso — verifica questura","f1.vis.c3":"Reminder email: tra 60 giorni",
+    "f2.title":"Scopri tutti i tuoi<br>diritti INPS",
+    "f2.desc":"Assegno unico, NASpI, maternità, permessi retribuiti: molti lavoratori stranieri non sanno a cosa hanno diritto. Il nostro checker ti dice cosa puoi richiedere in base alla tua situazione.",
+    "f2.link":"Verifica i tuoi diritti","f2.vis.title":"✅ Diritti verificati per te",
+    "f3.title":"Tieni tutto sotto<br>controllo",
+    "f3.desc":"Documenti, scadenze, pratiche burocratiche: tutto in un unico posto. Carica i tuoi file, imposta promemoria e non perdere più nessuna scadenza importante.",
+    "f3.link":"Apri la dashboard","f3.vis.docs":"📁 Archivio documenti",
+    "f4.title":"Un consigliere AI<br>sempre disponibile",
+    "f4.desc":"Il nostro assistente risponde in italiano, inglese, sinhala e tamil. Conosce le procedure burocratiche italiane e ti guida passo passo — 24 ore su 24, 7 giorni su 7.",
+    "f4.link":"Prova l'assistente",
+    "f4.user":"Come rinnovo il permesso di soggiorno?",
+    "f4.ai":"Per rinnovare il permesso devi presentare domanda alla questura almeno 60 giorni prima della scadenza. I documenti necessari sono: passaporto valido, foto tessera, marca da bollo €16 e modulo kit postale. Vuoi che controlli le scadenze specifiche per la tua questura? 📋",
+    "f4.chip1":"🇱🇰 Rispondi in sinhala","f4.chip2":"📍 Trova questura vicina",
+    "mini.eye":"Tutti gli strumenti","mini.h":"Ogni cosa di cui hai bisogno,<br>in un solo posto",
+    "mini.sub":"Strumenti pratici pensati per la vita quotidiana della comunità srilankese in Italia.",
+    "mini.c1t":"Guide burocratiche","mini.c1d":"Permesso, SPID, codice fiscale, residenza: guide passo-passo verificate da fonti ufficiali.",
+    "mini.c2t":"Assistente AI","mini.c2d":"Risposte immediate in 4 lingue su qualsiasi procedura burocratica italiana.",
+    "mini.c3t":"Community","mini.c3d":"Connettiti con altri membri della comunità, trova lavoro e scambia esperienze.",
+    "mini.c4t":"Money Transfer","mini.c4d":"Confronta i migliori servizi di rimessa verso lo Sri Lanka in tempo reale.",
+    "mini.c5t":"CV Builder","mini.c5d":"Crea un curriculum professionale in formato europeo, pronto da scaricare in PDF.",
+    "mini.c6t":"Mappa servizi","mini.c6d":"Trova CAF, patronati, questure e negozi srilankesi vicino a te.",
+    "ben.eye":"Perché Easy Italia Hub","ben.h":"Costruito per chi<br>naviga il sistema da fuori",
+    "ben.1t":"Gratuito per iniziare","ben.1d":"Tutte le guide, l'assistente AI e gli strumenti base sono gratuiti. Sempre.",
+    "ben.2t":"4 lingue disponibili","ben.2d":"Italiano, inglese, sinhala e tamil. Nessuna barriera linguistica.",
+    "ben.3t":"Mobile first","ben.3d":"Ottimizzato per smartphone. Funziona anche offline una volta installato.",
+    "ben.4t":"Dati privati e sicuri","ben.4d":"I tuoi dati restano nel dispositivo o nel tuo account cifrato. Non li vendiamo mai.",
+    "ben.5t":"Informazioni verificate","ben.5d":"Ogni guida è curata da esperti e aggiornata alle normative vigenti.",
+    "ben.6t":"Senza intermediari","ben.6d":"Risolvi le pratiche in autonomia. Niente CAF costosi per informazioni che puoi avere gratis.",
+    "price.eye":"Prezzi","price.h":"Inizia gratis,<br>scala quando vuoi",
+    "price.sub":"Nessuna carta di credito richiesta per iniziare. Upgrade in qualsiasi momento.",
+    "plan.badge":"Più scelto",
+    "plan.fd":"Per chi vuole iniziare a orientarsi nel sistema italiano.",
+    "plan.ff1":"Guide burocratiche complete","plan.ff2":"Assistente AI (20 msg/giorno)","plan.ff3":"Tracker permesso base","plan.ff4":"Calcolatori INPS","plan.ff5":"Mappa servizi",
+    "plan.fbtn":"Inizia gratis",
+    "plan.pd":"Per chi gestisce la propria vita burocratica in autonomia.",
+    "plan.pf1":"Tutto del piano Free","plan.pf2":"AI illimitato","plan.pf3":"Archivio documenti 10GB","plan.pf4":"Reminder email scadenze","plan.pf5":"CV Builder avanzato","plan.pf6":"Priorità supporto",
+    "plan.pbtn":"Scegli Premium",
+    "plan.bd":"Per consulenti, CAF e associazioni che assistono la comunità.",
+    "plan.bf1":"Tutto del piano Premium","plan.bf2":"Gestione fino a 50 profili","plan.bf3":"Dashboard multi-utente","plan.bf4":"Report e statistiche","plan.bf5":"Account manager dedicato",
+    "plan.bbtn":"Contattaci",
+    "testi.eye":"Testimonianze","testi.h":"Già usato da migliaia<br>di srilankesi in Italia",
+    "testi.1":"\"Finalmente un sito che spiega le procedure in sinhala! Ho rinnovato il permesso da solo per la prima volta senza andare al CAF. Grazie mille.\"",
+    "testi.1r":"Milano · 4 anni in Italia",
+    "testi.2":"\"L'assistente AI mi ha spiegato passo per passo come richiedere l'assegno unico. Non sapevo nemmeno di averci diritto. Ho recuperato 8 mesi di arretrati!\"",
+    "testi.2r":"Roma · 7 anni in Italia",
+    "testi.3":"\"Come consulente aiuto tante famiglie srilankesi. Easy Italia Hub mi ha cambiato il lavoro: risparmio ore ogni settimana e i miei clienti trovano le risposte da soli.\"",
+    "testi.3r":"Torino · Consulente immigrazione",
+    "faq.eye":"FAQ","faq.h":"Domande frequenti",
+    "faq.1q":"Easy Italia Hub è gratuito?",
+    "faq.1a":"Sì. Tutte le guide, l'assistente AI (con limite giornaliero) e gli strumenti base sono completamente gratuiti. Il piano Premium aggiunge AI illimitato, archivio documenti e reminder email.",
+    "faq.2q":"In quali lingue funziona l'assistente AI?",
+    "faq.2a":"L'assistente risponde in italiano, inglese, sinhala e tamil. Puoi scrivere nella lingua che preferisci e ricevere la risposta nella stessa lingua.",
+    "faq.3q":"Le informazioni sono aggiornate?",
+    "faq.3a":"Sì. Le guide sono verificate su fonti ufficiali (INPS, Ministero dell'Interno, Polizia di Stato) e aggiornate regolarmente. L'AI indica sempre di verificare i dati sulle fonti ufficiali per importi e scadenze precise.",
+    "faq.4q":"I miei dati sono al sicuro?",
+    "faq.4a":"I dati restano nel tuo dispositivo (localStorage) finché non attivi un account. Con account, i dati sono cifrati su Supabase con Row Level Security: solo tu puoi accedere ai tuoi file e scadenze.",
+    "faq.5q":"Funziona anche senza connessione?",
+    "faq.5a":"Sì, dopo la prima visita le guide e molti strumenti funzionano offline grazie al Service Worker. L'assistente AI richiede connessione per rispondere.",
+    "faq.6q":"Come posso inviare un feedback o segnalare un errore?",
+    "faq.6a":"Scrivi a <strong>info@easyitaliahub.it</strong> o usa il form nella pagina <a href=\"/contatti\" style=\"color:var(--brand)\">Contatti</a>. Rispondiamo entro 24 ore.",
+    "blog.eye":"Risorse","blog.h":"Guide e aggiornamenti",
+    "blog.1c":"Permesso di soggiorno","blog.1t":"Come rinnovare il permesso di soggiorno nel 2024: guida completa","blog.1x":"Tutte le procedure aggiornate, i documenti necessari e i moduli da compilare per il rinnovo.",
+    "blog.2c":"INPS","blog.2t":"Assegno Unico 2024: importi, requisiti e come richiederlo con SPID","blog.2x":"Fino a €199 al mese per figlio: ecco chi può richiederlo e come compilare la domanda online.",
+    "blog.3c":"Identità digitale","blog.3t":"SPID senza passaporto italiano: guida per i cittadini stranieri","blog.3x":"Come attivare l'identità digitale SPID con il permesso di soggiorno e un documento di identità valido.",
+    "cta.h":"Inizia oggi,<br>è gratis.","cta.sub":"Unisciti a migliaia di srilankesi che navigano il sistema italiano con Easy Italia Hub.",
+    "cta.btn1":"Registrati gratis","cta.btn2":"Sfoglia le guide",
+    "f.prod":"Prodotto","f.tools":"Strumenti","f.company":"Azienda",
+    "f.tag":"Il punto di riferimento per la comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un posto.",
+    "f.copy":"© 2026 Easy Italia Hub. Tutti i diritti riservati."
+  },
+  en: {
+    "nav.guide":"Guides","nav.community":"Community","nav.journey":"My Journey","nav.news":"News","nav.map":"Map","nav.login":"Log in","nav.signup":"Register free",
+    "hero.pill":"New","hero.badge":"AI Assistant updated — Gemini 2.5",
+    "hero.h":"Navigate the Italian<br>system.<br><span style=\"color:var(--muted)\">Plan with AI.</span>",
+    "hero.sub":"Bureaucratic guides in 4 languages, AI assistant, residence permit tracker and essential tools for the Sri Lankan community in Italy.",
+    "hero.cta1":"Start free","hero.cta2":"Browse guides →",
+    "hero.stat1l":"Active users","hero.stat2l":"Languages available","hero.stat3l":"Practical guides",
+    "mkp.title":"📋 Personal Dashboard","mkp.ok":"✓ All good",
+    "mkp.s1":"Days left","mkp.s2":"Upcoming deadlines","mkp.s3":"Monthly remittances",
+    "mkp.activity":"Activity last 6 months",
+    "mkp.i1":"Residence permit","mkp.i2":"License renewal — Jan 15","mkp.i3":"Updated CV",
+    "mkp.st1":"Active","mkp.st2":"15 days","mkp.st3":"Complete",
+    "float.spid":"SPID activated","float.ai":"AI available 24/7",
+    "strip.lbl":"Information verified from official sources",
+    "f1.title":"Track your permit<br>before it expires",
+    "f1.desc":"The tracker automatically calculates your residence permit deadlines and alerts you with email reminders when it's time to renew. No surprises.",
+    "f1.link":"Open tracker","f1.vis.dead":"📅 Upcoming deadlines",
+    "f1.vis.c1":"Permit renewal submitted","f1.vis.c2":"Permit pickup — check police station","f1.vis.c3":"Email reminder: in 60 days",
+    "f2.title":"Discover all your<br>INPS rights",
+    "f2.desc":"Child allowance, NASpI, maternity, paid leave: many foreign workers don't know what they're entitled to. Our checker tells you what you can claim based on your situation.",
+    "f2.link":"Check your rights","f2.vis.title":"✅ Rights verified for you",
+    "f3.title":"Keep everything<br>under control",
+    "f3.desc":"Documents, deadlines, bureaucratic procedures: everything in one place. Upload your files, set reminders and never miss an important deadline.",
+    "f3.link":"Open dashboard","f3.vis.docs":"📁 Document archive",
+    "f4.title":"An AI advisor<br>always available",
+    "f4.desc":"Our assistant responds in Italian, English, Sinhala and Tamil. It knows Italian bureaucratic procedures and guides you step by step — 24 hours a day, 7 days a week.",
+    "f4.link":"Try the assistant",
+    "f4.user":"How do I renew my residence permit?",
+    "f4.ai":"To renew your permit you need to apply at the police station at least 60 days before expiry. Required documents: valid passport, ID photos, €16 tax stamp and postal kit form. Shall I check the specific deadlines for your police station? 📋",
+    "f4.chip1":"🇱🇰 Reply in Sinhala","f4.chip2":"📍 Find nearest police station",
+    "mini.eye":"All tools","mini.h":"Everything you need,<br>in one place",
+    "mini.sub":"Practical tools designed for the daily life of the Sri Lankan community in Italy.",
+    "mini.c1t":"Bureaucratic guides","mini.c1d":"Permit, SPID, tax code, residence: step-by-step guides verified from official sources.",
+    "mini.c2t":"AI Assistant","mini.c2d":"Instant answers in 4 languages on any Italian bureaucratic procedure.",
+    "mini.c3t":"Community","mini.c3d":"Connect with other community members, find work and share experiences.",
+    "mini.c4t":"Money Transfer","mini.c4d":"Compare the best remittance services to Sri Lanka in real time.",
+    "mini.c5t":"CV Builder","mini.c5d":"Create a professional CV in European format, ready to download as PDF.",
+    "mini.c6t":"Services map","mini.c6d":"Find CAF, support offices, police stations and Sri Lankan shops near you.",
+    "ben.eye":"Why Easy Italia Hub","ben.h":"Built for those who<br>navigate the system from outside",
+    "ben.1t":"Free to start","ben.1d":"All guides, AI assistant (with daily limit) and basic tools are completely free. Always.",
+    "ben.2t":"4 languages available","ben.2d":"Italian, English, Sinhala and Tamil. No language barrier.",
+    "ben.3t":"Mobile first","ben.3d":"Optimized for smartphones. Works offline once installed.",
+    "ben.4t":"Private and secure data","ben.4d":"Your data stays on your device or in your encrypted account. We never sell it.",
+    "ben.5t":"Verified information","ben.5d":"Every guide is curated by experts and updated to current regulations.",
+    "ben.6t":"No intermediaries","ben.6d":"Handle procedures independently. No expensive CAF for information you can get for free.",
+    "price.eye":"Pricing","price.h":"Start free,<br>scale when you want",
+    "price.sub":"No credit card required to start. Upgrade at any time.",
+    "plan.badge":"Most popular",
+    "plan.fd":"For those who want to start navigating the Italian system.",
+    "plan.ff1":"Complete bureaucratic guides","plan.ff2":"AI assistant (20 msg/day)","plan.ff3":"Basic permit tracker","plan.ff4":"INPS calculators","plan.ff5":"Services map",
+    "plan.fbtn":"Start free",
+    "plan.pd":"For those who manage their bureaucratic life independently.",
+    "plan.pf1":"Everything in Free plan","plan.pf2":"Unlimited AI","plan.pf3":"Document archive 10GB","plan.pf4":"Deadline email reminders","plan.pf5":"Advanced CV Builder","plan.pf6":"Priority support",
+    "plan.pbtn":"Choose Premium",
+    "plan.bd":"For consultants, CAF and associations assisting the community.",
+    "plan.bf1":"Everything in Premium plan","plan.bf2":"Manage up to 50 profiles","plan.bf3":"Multi-user dashboard","plan.bf4":"Reports and statistics","plan.bf5":"Dedicated account manager",
+    "plan.bbtn":"Contact us",
+    "testi.eye":"Testimonials","testi.h":"Already used by thousands<br>of Sri Lankans in Italy",
+    "testi.1":"\"Finally a site that explains procedures in Sinhala! I renewed my permit alone for the first time without going to CAF. Thank you so much.\"",
+    "testi.1r":"Milan · 4 years in Italy",
+    "testi.2":"\"The AI assistant explained step by step how to claim the child allowance. I didn't even know I was entitled to it. I recovered 8 months of arrears!\"",
+    "testi.2r":"Rome · 7 years in Italy",
+    "testi.3":"\"As a consultant I help many Sri Lankan families. Easy Italia Hub changed my work: I save hours every week and my clients find answers themselves.\"",
+    "testi.3r":"Turin · Immigration consultant",
+    "faq.eye":"FAQ","faq.h":"Frequently asked questions",
+    "faq.1q":"Is Easy Italia Hub free?",
+    "faq.1a":"Yes. All guides, the AI assistant (with daily limit) and basic tools are completely free. The Premium plan adds unlimited AI, document archive and email reminders.",
+    "faq.2q":"In which languages does the AI assistant work?",
+    "faq.2a":"The assistant responds in Italian, English, Sinhala and Tamil. You can write in your preferred language and receive the response in the same language.",
+    "faq.3q":"Is the information up to date?",
+    "faq.3a":"Yes. Guides are verified on official sources (INPS, Ministry of Interior, State Police) and regularly updated. The AI always indicates to verify data on official sources for precise amounts and deadlines.",
+    "faq.4q":"Is my data secure?",
+    "faq.4a":"Data stays on your device (localStorage) until you activate an account. With an account, data is encrypted on Supabase with Row Level Security: only you can access your files and deadlines.",
+    "faq.5q":"Does it work without connection?",
+    "faq.5a":"Yes, after the first visit guides and many tools work offline thanks to the Service Worker. The AI assistant requires connection to respond.",
+    "faq.6q":"How can I send feedback or report an error?",
+    "faq.6a":"Write to <strong>info@easyitaliahub.it</strong> or use the contact form on the <a href=\"/contatti\" style=\"color:var(--brand)\">Contacts</a> page. We respond within 24 hours.",
+    "blog.eye":"Resources","blog.h":"Guides and updates",
+    "blog.1c":"Residence permit","blog.1t":"How to renew your residence permit in 2024: complete guide","blog.1x":"All updated procedures, necessary documents and forms to fill in for renewal.",
+    "blog.2c":"INPS","blog.2t":"Assegno Unico 2024: amounts, requirements and how to apply with SPID","blog.2x":"Up to €199 per month per child: who can apply and how to fill in the online application.",
+    "blog.3c":"Digital identity","blog.3t":"SPID without Italian passport: guide for foreign citizens","blog.3x":"How to activate SPID digital identity with residence permit and a valid identity document.",
+    "cta.h":"Start today,<br>it's free.","cta.sub":"Join thousands of Sri Lankans navigating the Italian system with Easy Italia Hub.",
+    "cta.btn1":"Register free","cta.btn2":"Browse guides",
+    "f.prod":"Product","f.tools":"Tools","f.company":"Company",
+    "f.tag":"The reference point for the Sri Lankan community in Italy. Guides, multilingual AI, community and services — all in one place.",
+    "f.copy":"© 2026 Easy Italia Hub. All rights reserved."
+  },
+  si: {
+    "nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.journey":"මගේ ගමන","nav.news":"පුවත්","nav.map":"සිතියම","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි",
+    "hero.pill":"නව","hero.badge":"AI සහායක යාවත්කාලීන — Gemini 2.5",
+    "hero.h":"ඉතාලි පද්ධතිය<br>දිශානිගත කරන්න.<br><span style=\"color:var(--muted)\">AI සමඟ සැලසුම් කරන්න.</span>",
+    "hero.sub":"භාෂා 4කින් නිලධාරී මාර්ගෝපදේශ, AI සහායක, නේවාසික බලපත්‍ර ලුහුබැඳීම සහ ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව සඳහා අත්‍යවශ්‍ය මෙවලම්.",
+    "hero.cta1":"නොමිලේ ආරම්භ කරන්න","hero.cta2":"මාර්ගෝපදේශ බලන්න →",
+    "hero.stat1l":"ක්‍රියාශීලී පරිශීලකයින්","hero.stat2l":"ලබා ගත හැකි භාෂා","hero.stat3l":"ප්‍රායෝගික මාර්ගෝපදේශ",
+    "mkp.title":"📋 පුද්ගලික ඩෑෂ්බෝඩ්","mkp.ok":"✓ සියල්ල හරි",
+    "mkp.s1":"ඉතිරි දිනයන්","mkp.s2":"ළඟා වන කාල සීමා","mkp.s3":"මාසිල රේමිටන්ස්",
+    "mkp.activity":"පසුගිය මාස 6 ක් ක්‍රියාකාරිත්වය",
+    "mkp.i1":"නේවාසික බලපත්‍රය","mkp.i2":"බලපත්‍ර අලුත් කිරීම — ජන 15","mkp.i3":"යාවත්කාලීන CV",
+    "mkp.st1":"ක්‍රියාශීලී","mkp.st2":"දින 15","mkp.st3":"සම්පූර්ණ",
+    "float.spid":"SPID සක්‍රිය කරන ලදී","float.ai":"AI 24/7 ලබා ගත හැකිය",
+    "strip.lbl":"නිල මූලාශ්‍ර වලින් සත්‍යාපිත තොරතුරු",
+    "f1.title":"කල් ඉකුත් වීමට පෙර<br>ඔබේ බලපත්‍රය නිරීක්ෂණය කරන්න",
+    "f1.desc":"ලුහුබැඳීම ඔබේ නේවාසික බලපත්‍රයේ කාලසීමාවන් ස්වයංක්‍රීයව ගණනය කර, අලුත් කළ යුතු විටෙදී ඊමේල් මතක් කිරීම් සමඟ ඔබව දැනුවත් කරයි. කිසිදු ආශ්චර්යයක් නැත.",
+    "f1.link":"ලුහුබැඳීම් විවෘත කරන්න","f1.vis.dead":"📅 ළඟා වන කාල සීමා",
+    "f1.vis.c1":"බලපත්‍ර අලුත් කිරීම ඉදිරිපත් කරන ලදී","f1.vis.c2":"බලපත්‍රය ලැබීම — පොලිස් ස්ථානය පරීක්ෂා කරන්න","f1.vis.c3":"ඊමේල් මතක් කිරීම: දින 60 කින්",
+    "f2.title":"ඔබේ INPS<br>අයිතිවාසිකම් සොයා ගන්න",
+    "f2.desc":"ළමා දීමනා, NASpI, මාතෘ, ගෙවන ලද නිවාඩු: බොහෝ විදේශ කාර්මිකයන්ට ඔවුන්ට ලැබිය යුතු දෙයක් නොදනී. අපේ සෙකරය ඔබේ තත්ත්වය අනුව ලබා ගත හැකි දේ සොයා දෙයි.",
+    "f2.link":"ඔබේ අයිතිවාසිකම් පරීක්ෂා කරන්න","f2.vis.title":"✅ ඔබ සඳහා සත්‍යාපිත අයිතිවාසිකම්",
+    "f3.title":"සියල්ල<br>පාලනය යටතේ තබා ගන්න",
+    "f3.desc":"ලේඛන, කාල සීමාවන්, නිලධාරී කටයුතු: සියල්ල එකම තැනක. ගොනු උඩුගත කරන්න, මතක් කිරීම් සකස් කරන්න, කිසිදු වැදගත් කාල සීමාවක් මග හරින්නෙ නැත.",
+    "f3.link":"ඩෑෂ්බෝඩ් විවෘත කරන්න","f3.vis.docs":"📁 ලේඛන ලේඛනාගාරය",
+    "f4.title":"සෑම විටම ලබා ගත හැකි<br>AI උපදේශකයෙක්",
+    "f4.desc":"අපේ සහායකයා ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවෙන් පිළිතුරු දෙයි. ඉතාලි නිලධාරී ක්‍රියාවලි දනී, ඔබව පියවරෙන් පියවර මෙහෙයවයි — දිනකට පැය 24, සතියකට දිනෙ 7.",
+    "f4.link":"සහායකයා අත්හදා බලන්න",
+    "f4.user":"නේවාසික බලපත්‍රය අලුත් කරන්නේ කෙසේද?",
+    "f4.ai":"බලපත්‍රය අලුත් කිරීමට, කල් ඉකුත් වීමට දිනෙ 60 ක් ලගම පොලිස් ස්ථානයේ අයදුම් කළ යුතුය. අවශ්‍ය ලේඛන: වලංගු ගමන් බලපත්‍රය, ඡායාරූප, €16 බදු මුද්දර සහ තැපැල් කිට් පෝරමය. ඔබේ පොලිස් ස්ථානය සඳහා නිශ්චිත කාල සීමාවන් පරීක්ෂා කරන්නද? 📋",
+    "f4.chip1":"🇱🇰 සිංහලෙන් පිළිතුරු දෙන්න","f4.chip2":"📍 ළඟම පොලිස් ස්ථානය සොයන්න",
+    "mini.eye":"සියලු මෙවලම්","mini.h":"ඔබට අවශ්‍ය සියල්ල,<br>එකම තැනක",
+    "mini.sub":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාවේ දෛනික ජීවිතය සඳහා නිර්මිත ප්‍රායෝගික මෙවලම්.",
+    "mini.c1t":"නිලධාරී මාර්ගෝපදේශ","mini.c1d":"බලපත්‍ර, SPID, බදු අංකය, නිවාස: නිල මූලාශ්‍ර වලින් සත්‍යාපිත පියවර-පියවර මාර්ගෝපදේශ.",
+    "mini.c2t":"AI සහායක","mini.c2d":"ඉතාලි ඕනෑම නිලධාරී ක්‍රියාවලියක් සඳහා භාෂා 4කින් ක්ෂණික පිළිතුරු.",
+    "mini.c3t":"ප්‍රජාව","mini.c3d":"අනෙකුත් ප්‍රජා සාමාජිකයන් සමඟ සම්බන්ධ වන්න, රැකියා සොයා ගන්න, අත්දැකීම් බෙදා ගන්න.",
+    "mini.c4t":"මුදල් හුවමාරුව","mini.c4d":"ශ්‍රී ලංකාව වෙත හොඳම රේමිටන්ස් සේවා සැසඳීම.",
+    "mini.c5t":"CV Builder","mini.c5d":"යුරෝපීය ආකෘතියේ වෘත්තීය ජීව දත්ත නිර්මාණය කර PDF ලෙස බාගත කරන්න.",
+    "mini.c6t":"සේවා සිතියම","mini.c6d":"ඔබ ළඟ CAF, ශ්‍රී ලාංකික නිවාස, පොලිස් ස්ථාන සොයා ගන්න.",
+    "ben.eye":"ඇයි Easy Italia Hub","ben.h":"පිටතින් පද්ධතිය<br>සංචාරය කරන්නන් සඳහා",
+    "ben.1t":"ආරම්භ කිරීමට නොමිලේ","ben.1d":"සියලු මාර්ගෝපදේශ, AI සහායක සහ මූලික මෙවලම් සම්පූර්ණයෙන් නොමිලේ. සෑම විටම.",
+    "ben.2t":"භාෂා 4 ක් ලබා ගත හැකිය","ben.2d":"ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ. කිසිදු භාෂා බාධාවක් නැත.",
+    "ben.3t":"Mobile first","ben.3d":"ස්මාර්ට්ෆෝන් සඳහා ප්‍රශස්ත. ස්ථාපිත කළ පසු නොබැඳිව ක්‍රියා කරයි.",
+    "ben.4t":"දත්ත පෞද්ගලික සහ සුරක්ෂිත","ben.4d":"ඔබේ දත්ත ඔබේ උපාංගයේ හෝ ඔබේ සංකේතාංකිත ගිණුමේ රහිත. කිසිදා විකිණිය නොහෙමු.",
+    "ben.5t":"සත්‍යාපිත තොරතුරු","ben.5d":"සෑම මාර්ගෝපදේශයක්ම විශේෂඥයන් විසින් සකස් කරන ලද, වර්තමාන රෙගුලාසි සඳහා යාවත්කාලීන.",
+    "ben.6t":"මැදිහත්කරුවන් නොමැතිව","ben.6d":"ස්වාධීනව ක්‍රියා කිරීම. නොමිලේ ලබා ගත හැකි තොරතුරු සඳහා මිල අධික CAF අවශ්‍ය නැත.",
+    "price.eye":"මිල","price.h":"නොමිලේ ආරම්භ කරන්න,<br>අවශ්‍ය විටෙදී ශ්‍රේණිගත කරන්න",
+    "price.sub":"ආරම්භ කිරීමට ණය කාඩ්පතක් අවශ්‍ය නැත. ඕනෑම වේලාවක උත්ශ්‍රේණිගත කරන්න.",
+    "plan.badge":"වඩාත් ජනප්‍රිය",
+    "plan.fd":"ඉතාලි පද්ධතිය ආරම්භ කිරීමට කැමැත්තන් සඳහා.",
+    "plan.ff1":"සම්පූර්ණ නිලධාරී මාර්ගෝපදේශ","plan.ff2":"AI සහායක (දිනකට msg 20)","plan.ff3":"මූලික බලපත්‍ර ලුහුබැඳීම","plan.ff4":"INPS ගණකකාරකය","plan.ff5":"සේවා සිතියම",
+    "plan.fbtn":"නොමිලේ ආරම්භ කරන්න",
+    "plan.pd":"ස්වාධීනව නිලධාරී ජීවිතය කළමනාකරණය කරන්නන් සඳහා.",
+    "plan.pf1":"Free සැලැස්මේ සියල්ල","plan.pf2":"AI සීමාවකින් තොරව","plan.pf3":"ලේඛන ලේඛනාගාරය 10GB","plan.pf4":"කාල සීමා ඊමේල් මතක් කිරීම්","plan.pf5":"උසස් CV Builder","plan.pf6":"ප්‍රමුඛ සහාය",
+    "plan.pbtn":"Premium තෝරන්න",
+    "plan.bd":"ප්‍රජාවට සහාය කරන උපදේශකයන්, CAF සහ සංගම් සඳහා.",
+    "plan.bf1":"Premium සැලැස්මේ සියල්ල","plan.bf2":"පැතිකඩ 50 දක්වා කළමනාකරණය","plan.bf3":"බහු-පරිශීලක ඩෑෂ්බෝඩ්","plan.bf4":"වාර්තා සහ සංඛ්‍යාලේඛන","plan.bf5":"කැප කළ ගිණුම් කළමනාකරු",
+    "plan.bbtn":"අප ඇමතුම් කරන්න",
+    "testi.eye":"සාක්ෂි","testi.h":"ඉතාලියේ සිංහල දහස් ගණනකට<br>දැනටමත් භාවිතා කරයි",
+    "testi.1":"\"අවසානයේ සිංහලෙන් ක්‍රියා පටිපාටි පැහැදිලි කරන වෙබ් අඩවියක්! CAF නොගොස් පළමු වතාවට තනිව බලපත්‍රය අලුත් කළෙමි. බොහොම ස්තූතියි.\"",
+    "testi.1r":"මිලාන් · ඉතාලියේ අවුරුදු 4 ක්",
+    "testi.2":"\"AI සහායකයා ළමා දීමනාව ඉල්ලීමට පියවරෙන් පියවර පැහැදිලි කළා. ලැබෙන්නේ දන්නේවත් නැතිව. මාස 8ක් අදිනා ලෑලෙ!\"",
+    "testi.2r":"රෝම · ඉතාලියේ අවුරුදු 7 ක්",
+    "testi.3":"\"උපදේශකයෙකු ලෙස ශ්‍රී ලාංකික පවුල් රැසකට සහාය කරමි. Easy Italia Hub මගේ කාර්යය වෙනස් කළා: සෑම සතියකම පැය ගණනාවක් ඉතිරි කරමි.\"",
+    "testi.3r":"ටූරින් · සංක්‍රමණ උපදේශක",
+    "faq.eye":"FAQ","faq.h":"නිතර අසනු ලබන ප්‍රශ්න",
+    "faq.1q":"Easy Italia Hub නොමිලේද?",
+    "faq.1a":"ඔව්. සියලු මාර්ගෝපදේශ, AI සහායක (දෛනික සීමාවකින්) සහ මූලික මෙවලම් සම්පූර්ණයෙන් නොමිලේ. Premium සැලැස්ම AI සීමාවකින් තොරව, ලේඛනාගාරය සහ ඊමේල් මතක් කිරීම් එකතු කරයි.",
+    "faq.2q":"AI සහායකයා කුමන භාෂාවලින් ක්‍රියා කරයිද?",
+    "faq.2a":"සහායකයා ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවෙන් පිළිතුරු දෙයි. ඔබ කැමති භාෂාවෙන් ලිවිය හැකි අතර ඒ ම භාෂාවෙන් ම පිළිතුර ලැබේ.",
+    "faq.3q":"තොරතුරු යාවත්කාලීනද?",
+    "faq.3a":"ඔව්. මාර්ගෝපදේශ නිල මූලාශ්‍ර (INPS, ස්වරාෂ්ට්‍ර අමාත්‍යාංශය, ජාතික පොලිසිය) ලෙස සත්‍යාපිත සහ නිතිපතා යාවත්කාලීන කරනු ලැබේ.",
+    "faq.4q":"මගේ දත්ත සුරක්ෂිතද?",
+    "faq.4a":"ගිණුමක් සක්‍රිය කරන තෙක් දත්ත ඔබේ උපාංගයේ (localStorage) රැඳේ. ගිණුමක් ඇතිව, දත්ත Row Level Security සමඟ Supabase හිදී සංකේතාංකනය කරනු ලැබේ.",
+    "faq.5q":"සම්බන්ධතාවයකින් තොරව ක්‍රියා කරයිද?",
+    "faq.5a":"ඔව්, පළමු වීචාරෙ සිට Service Worker හේතුවෙන් මාර්ගෝපදේශ සහ බොහෝ මෙවලම් නොබැඳිව ක්‍රියා කරයි. AI සහායකයාට ප්‍රතිචාර දැක්වීමට සම්බන්ධතාව අවශ්‍ය වේ.",
+    "faq.6q":"ප්‍රතිපෝෂණ ලබා දෙන්නේ කෙසේද?",
+    "faq.6a":"<strong>info@easyitaliahub.it</strong> ලිවිය හැකිය හෝ <a href=\"/contatti\" style=\"color:var(--brand)\">සම්බන්ධ</a> පිටුවේ ෆෝමය භාවිතා කරන්න. පැය 24ක් ඇතුළත ප්‍රතිචාර දක්වමු.",
+    "blog.eye":"සම්පත්","blog.h":"මාර්ගෝපදේශ සහ යාවත්කාලීන",
+    "blog.1c":"නේවාසික බලපත්‍රය","blog.1t":"2024 දී නේවාසික බලපත්‍රය අලුත් කරන ආකාරය: සම්පූර්ණ මාර්ගෝපදේශ","blog.1x":"සියලු යාවත්කාලීන ක්‍රියා පටිපාටි, අවශ්‍ය ලේඛන සහ අලුත් කිරීම සඳහා පෝරම.",
+    "blog.2c":"INPS","blog.2t":"Assegno Unico 2024: ප්‍රමාණ, අවශ්‍යතා සහ SPID සමඟ ඉල්ලීමේ ආකාරය","blog.2x":"ළමයෙකු සඳහා මාසිකව €199 දක්වා: ඉල්ලීමට සුදුසු අය කවුරුදැයිත් ඔන්ලයිනේ ඉල්ලීමේ ආකාරය.",
+    "blog.3c":"ඩිජිටල් අනන්‍යතාව","blog.3t":"ඉතාලි ගමන් බලපත්‍රයකින් තොරව SPID: විදේශ පුරවැසියන් සඳහා මාර්ගෝපදේශ","blog.3x":"නේවාසික බලපත්‍රය සහ වලංගු හැඳුනුම්පතක් සමඟ SPID ඩිජිටල් අනන්‍යතාව සක්‍රිය කරන ආකාරය.",
+    "cta.h":"අද ආරම්භ කරන්න,<br>එය නොමිලේ.","cta.sub":"Easy Italia Hub සමඟ ඉතාලි පද්ධතිය ගමන් කරන ශ්‍රී ලාංකිකයින් දහස් ගණනකට එකතු වන්න.",
+    "cta.btn1":"නොමිලේ ලියාපදිංචි වන්න","cta.btn2":"මාර්ගෝපදේශ බලන්න",
+    "f.prod":"නිෂ්පාදනය","f.tools":"මෙවලම්","f.company":"සමාගම",
+    "f.tag":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාවේ විශ්වාසනීය මධ්‍යස්ථානය. මාර්ගෝපදේශ, AI, ප්‍රජාව සහ සේවා — සියල්ල එක තැනක.",
+    "f.copy":"© 2026 Easy Italia Hub. සියලු හිමිකම් ඇවිරිණි."
+  },
+  ta: {
+    "nav.guide":"வழிகாட்டிகள்","nav.community":"சமூகம்","nav.journey":"என் பயணம்","nav.news":"செய்திகள்","nav.map":"வரைபடம்","nav.login":"உள்நுழைய","nav.signup":"இலவசமாக பதிவு",
+    "hero.pill":"புதிய","hero.badge":"AI உதவியாளர் புதுப்பிக்கப்பட்டது — Gemini 2.5",
+    "hero.h":"இத்தாலிய அமைப்பில்<br>வழிநடவுங்கள்.<br><span style=\"color:var(--muted)\">AI உடன் திட்டமிடுங்கள்.</span>",
+    "hero.sub":"4 மொழிகளில் அதிகார வழிகாட்டிகள், AI உதவியாளர், வசிப்பிட அனுமதி கண்காணிப்பு மற்றும் இத்தாலியில் இலங்கை சமூகத்திற்கான அத்தியாவசிய கருவிகள்.",
+    "hero.cta1":"இலவசமாக தொடங்குங்கள்","hero.cta2":"வழிகாட்டிகளை காணுங்கள் →",
+    "hero.stat1l":"செயலில் உள்ள பயனர்கள்","hero.stat2l":"கிடைக்கும் மொழிகள்","hero.stat3l":"நடைமுறை வழிகாட்டிகள்",
+    "mkp.title":"📋 தனிப்பட்ட டாஷ்போர்டு","mkp.ok":"✓ எல்லாம் சரியாக உள்ளது",
+    "mkp.s1":"மீதமுள்ள நாட்கள்","mkp.s2":"வரவிருக்கும் காலக்கெடுக்கள்","mkp.s3":"மாதாந்திர பண அனுப்புதல்",
+    "mkp.activity":"கடந்த 6 மாதங்களின் செயல்பாடு",
+    "mkp.i1":"வசிப்பிட அனுமதி","mkp.i2":"உரிமம் புதுப்பிப்பு — ஜன 15","mkp.i3":"புதுப்பிக்கப்பட்ட CV",
+    "mkp.st1":"செயலில்","mkp.st2":"15 நாட்கள்","mkp.st3":"முழுமையான",
+    "float.spid":"SPID செயல்படுத்தப்பட்டது","float.ai":"AI 24/7 கிடைக்கும்",
+    "strip.lbl":"அதிகாரப்பூர்வ ஆதாரங்களிலிருந்து சரிபார்க்கப்பட்ட தகவல்கள்",
+    "f1.title":"காலாவதியாவதற்கு முன்<br>அனுமதியை கண்காணிக்கவும்",
+    "f1.desc":"கண்காணிப்பு உங்கள் வசிப்பிட அனுமதியின் காலக்கெடுக்களை தானாக கணக்கிட்டு, புதுப்பிக்க வேண்டிய நேரத்தில் மின்னஞ்சல் நினைவூட்டல்களுடன் உங்களை எச்சரிக்கிறது. எந்த ஆச்சரியமும் இல்லை.",
+    "f1.link":"கண்காணிப்பை திறக்கவும்","f1.vis.dead":"📅 வரவிருக்கும் காலக்கெடுக்கள்",
+    "f1.vis.c1":"அனுமதி புதுப்பிப்பு சமர்ப்பிக்கப்பட்டது","f1.vis.c2":"அனுமதி சேகரிப்பு — போலீஸ் ஸ்டேஷன் சரிபார்க்கவும்","f1.vis.c3":"மின்னஞ்சல் நினைவூட்டல்: 60 நாட்களில்",
+    "f2.title":"உங்கள் அனைத்து INPS<br>உரிமைகளையும் கண்டறியுங்கள்",
+    "f2.desc":"குழந்தை உதவித்தொகை, NASpI, மகப்பேறு, ஊதியமுள்ள விடுமுறைகள்: பல வெளிநாட்டு தொழிலாளர்களுக்கு தங்களுக்கு என்ன உரிமை உள்ளது என்று தெரியாது. எங்கள் கருவி உங்கள் நிலைமையின் அடிப்படையில் என்ன கோரலாம் என்று சொல்கிறது.",
+    "f2.link":"உங்கள் உரிமைகளை சரிபார்க்கவும்","f2.vis.title":"✅ உங்களுக்கான சரிபார்க்கப்பட்ட உரிமைகள்",
+    "f3.title":"எல்லாவற்றையும்<br>கட்டுப்பாட்டில் வையுங்கள்",
+    "f3.desc":"ஆவணங்கள், காலக்கெடுக்கள், அலுவலக நடவடிக்கைகள்: எல்லாம் ஒரே இடத்தில். உங்கள் கோப்புகளை பதிவேற்றவும், நினைவூட்டல்களை அமைக்கவும், எந்த முக்கிய காலக்கெடுவையும் தவறவிடாதீர்கள்.",
+    "f3.link":"டாஷ்போர்டை திறக்கவும்","f3.vis.docs":"📁 ஆவண காப்பகம்",
+    "f4.title":"எப்போதும் கிடைக்கும்<br>AI ஆலோசகர்",
+    "f4.desc":"எங்கள் உதவியாளர் இத்தாலியன், ஆங்கிலம், சிங்களம் மற்றும் தமிழில் பதில் சொல்கிறது. இத்தாலிய அலுவலக நடவடிக்கைகளை அறிந்து உங்களை படிப்படியாக வழிநடத்துகிறது — 24 மணி நேரமும், வாரத்தில் 7 நாட்களும்.",
+    "f4.link":"உதவியாளரை முயற்சிக்கவும்",
+    "f4.user":"வசிப்பிட அனுமதியை எவ்வாறு புதுப்பிப்பது?",
+    "f4.ai":"வசிப்பிட அனுமதியை புதுப்பிக்க, காலாவதியாவதற்கு குறைந்தது 60 நாட்கள் முன்பு போலீஸ் ஸ்டேஷனில் விண்ணப்பிக்க வேண்டும். தேவையான ஆவணங்கள்: செல்லுபடியாகும் பாஸ்போர்ட், புகைப்படங்கள், €16 வரி முத்திரை மற்றும் தபால் வடிவம். உங்கள் போலீஸ் ஸ்டேஷனுக்கான குறிப்பிட்ட காலக்கெடுக்களை சரிபார்க்கட்டுமா? 📋",
+    "f4.chip1":"🇱🇰 சிங்களத்தில் பதிலளிக்கவும்","f4.chip2":"📍 அருகிலுள்ள போலீஸ் ஸ்டேஷனை கண்டறியுங்கள்",
+    "mini.eye":"அனைத்து கருவிகளும்","mini.h":"உங்களுக்கு தேவையான அனைத்தும்,<br>ஒரே இடத்தில்",
+    "mini.sub":"இத்தாலியில் இலங்கை சமூகத்தின் அன்றாட வாழ்க்கைக்காக வடிவமைக்கப்பட்ட நடைமுறை கருவிகள்.",
+    "mini.c1t":"அதிகார வழிகாட்டிகள்","mini.c1d":"அனுமதி, SPID, வரி எண், வசிப்பிடம்: அதிகாரப்பூர்வ ஆதாரங்களிலிருந்து சரிபார்க்கப்பட்ட படிப்படியான வழிகாட்டிகள்.",
+    "mini.c2t":"AI உதவியாளர்","mini.c2d":"4 மொழிகளில் எந்த இத்தாலிய நடவடிக்கையிலும் உடனடி பதில்கள்.",
+    "mini.c3t":"சமூகம்","mini.c3d":"சமூக உறுப்பினர்களுடன் இணைந்து, வேலை கண்டறிந்து, அனுபவங்களை பகிருங்கள்.",
+    "mini.c4t":"பண மாற்றம்","mini.c4d":"இலங்கைக்கு சிறந்த பண அனுப்புதல் சேவைகளை நேரடியாக ஒப்பிடுங்கள்.",
+    "mini.c5t":"CV நிர்மாதா","mini.c5d":"ஐரோப்பிய வடிவத்தில் தொழில்முறை வாழ்க்கை வரலாற்றை உருவாக்கி PDF ஆக பதிவிறக்கவும்.",
+    "mini.c6t":"சேவை வரைபடம்","mini.c6d":"உங்களுக்கு அருகில் CAF, ஆதரவு அலுவலகங்கள், போலீஸ் ஸ்டேஷன்கள் மற்றும் இலங்கை கடைகளை கண்டறியுங்கள்.",
+    "ben.eye":"ஏன் Easy Italia Hub","ben.h":"வெளியிலிருந்து அமைப்பில்<br>வழிநடப்பவர்களுக்காக உருவாக்கப்பட்டது",
+    "ben.1t":"தொடங்க இலவசம்","ben.1d":"அனைத்து வழிகாட்டிகள், AI உதவியாளர் (தினசரி வரம்புடன்) மற்றும் அடிப்படை கருவிகள் முற்றிலும் இலவசம். எப்போதும்.",
+    "ben.2t":"4 மொழிகள் கிடைக்கும்","ben.2d":"இத்தாலியன், ஆங்கிலம், சிங்களம் மற்றும் தமிழ். எந்த மொழித் தடையும் இல்லை.",
+    "ben.3t":"Mobile first","ben.3d":"ஸ்மார்ட்போனுக்கு உகந்தது. நிறுவிய பிறகு ஆஃப்லைனிலும் செயல்படும்.",
+    "ben.4t":"தரவு தனிப்பட்டது மற்றும் பாதுகாப்பானது","ben.4d":"உங்கள் தரவு உங்கள் சாதனத்தில் அல்லது உங்கள் குறியாக்கப்பட்ட கணக்கில் இருக்கும். நாங்கள் அதை எப்போதும் விற்க மாட்டோம்.",
+    "ben.5t":"சரிபார்க்கப்பட்ட தகவல்கள்","ben.5d":"ஒவ்வொரு வழிகாட்டியும் நிபுணர்களால் கவனிக்கப்பட்டு தற்போதைய விதிமுறைகளுக்கு புதுப்பிக்கப்படுகிறது.",
+    "ben.6t":"இடைத்தரகர்கள் இல்லாமல்","ben.6d":"சுதந்திரமாக நடவடிக்கைகளை தீர்க்கவும். இலவசமாக பெறக்கூடிய தகவலுக்காக விலையுயர்ந்த CAF தேவையில்லை.",
+    "price.eye":"விலை","price.h":"இலவசமாக தொடங்கி,<br>விரும்பும்போது மேம்படுத்துங்கள்",
+    "price.sub":"தொடங்க கிரெடிட் கார்டு தேவையில்லை. எந்த நேரத்திலும் மேம்படுத்துங்கள்.",
+    "plan.badge":"மிகவும் பிரபலமானது",
+    "plan.fd":"இத்தாலிய அமைப்பில் தொடங்க விரும்புவோருக்கு.",
+    "plan.ff1":"முழுமையான அதிகார வழிகாட்டிகள்","plan.ff2":"AI உதவியாளர் (தினசரி 20 செய்திகள்)","plan.ff3":"அடிப்படை அனுமதி கண்காணிப்பு","plan.ff4":"INPS கணக்கிடுகள்","plan.ff5":"சேவை வரைபடம்",
+    "plan.fbtn":"இலவசமாக தொடங்குங்கள்",
+    "plan.pd":"தன்னிச்சையாக அலுவல் வாழ்க்கையை நிர்வகிப்பவர்களுக்கு.",
+    "plan.pf1":"இலவசத் திட்டத்தின் அனைத்தும்","plan.pf2":"AI வரம்பற்றது","plan.pf3":"10GB ஆவண காப்பகம்","plan.pf4":"காலக்கெடு மின்னஞ்சல் நினைவூட்டல்கள்","plan.pf5":"மேம்பட்ட CV நிர்மாதா","plan.pf6":"முன்னுரிமை ஆதரவு",
+    "plan.pbtn":"Premium தேர்ந்தெடுங்கள்",
+    "plan.bd":"சமூகத்திற்கு உதவும் ஆலோசகர்கள், CAF மற்றும் சங்கங்களுக்கு.",
+    "plan.bf1":"Premium திட்டத்தின் அனைத்தும்","plan.bf2":"50 சுயவிவரங்கள் வரை நிர்வாகம்","plan.bf3":"பல பயனர் டாஷ்போர்டு","plan.bf4":"அறிக்கைகள் மற்றும் புள்ளிவிவரங்கள்","plan.bf5":"அர்ப்பணிப்பு கணக்கு மேலாளர்",
+    "plan.bbtn":"எங்களை தொடர்பு கொள்ளுங்கள்",
+    "testi.eye":"சாட்சியங்கள்","testi.h":"இத்தாலியில் ஆயிரக்கணக்கான<br>இலங்கையர்களால் ஏற்கனவே பயன்படுத்தப்படுகிறது",
+    "testi.1":"\"இறுதியாக சிங்களத்தில் நடவடிக்கைகளை விளக்கும் ஒரு தளம்! CAF போகாமலேயே முதல் முறையாக தனியாக அனுமதி புதுப்பிப்பு செய்தேன். மிக்க நன்றி.\"",
+    "testi.1r":"மிலான் · 4 ஆண்டுகள் இத்தாலியில்",
+    "testi.2":"\"AI உதவியாளர் எனக்கு Assegno Unico கோர படிப்படியாக விளக்கியது. அதற்கு உரிமை இருப்பதே தெரியவில்லை. 8 மாதங்கள் நிலுவை பெற்றேன்!\"",
+    "testi.2r":"ரோம் · 7 ஆண்டுகள் இத்தாலியில்",
+    "testi.3":"\"ஆலோசகராக பல இலங்கை குடும்பங்களுக்கு உதவுகிறேன். Easy Italia Hub என் வேலையை மாற்றியது: வாரத்தில் மணிக்கணக்கில் சேமிக்கிறேன்.\"",
+    "testi.3r":"டுரின் · குடியேற்ற ஆலோசகர்",
+    "faq.eye":"FAQ","faq.h":"அடிக்கடி கேட்கப்படும் கேள்விகள்",
+    "faq.1q":"Easy Italia Hub இலவசமா?",
+    "faq.1a":"ஆம். அனைத்து வழிகாட்டிகள், AI உதவியாளர் (தினசரி வரம்புடன்) மற்றும் அடிப்படை கருவிகள் முற்றிலும் இலவசம். Premium திட்டம் வரம்பற்ற AI, ஆவண காப்பகம் மற்றும் மின்னஞ்சல் நினைவூட்டல்களை சேர்க்கிறது.",
+    "faq.2q":"AI உதவியாளர் எந்த மொழிகளில் செயல்படுகிறது?",
+    "faq.2a":"உதவியாளர் இத்தாலியன், ஆங்கிலம், சிங்களம் மற்றும் தமிழில் பதில் சொல்கிறது. நீங்கள் விரும்பும் மொழியில் எழுதி அதே மொழியில் பதில் பெறலாம்.",
+    "faq.3q":"தகவல்கள் புதுப்பிக்கப்படுகிறதா?",
+    "faq.3a":"ஆம். வழிகாட்டிகள் அதிகாரப்பூர்வ ஆதாரங்களில் சரிபார்க்கப்பட்டு தொடர்ந்து புதுப்பிக்கப்படுகின்றன. AI ஒவ்வொரு ஆண்டும் மாறும் தொகைகள் மற்றும் காலக்கெடுக்களுக்கு அதிகாரப்பூர்வ ஆதாரங்களில் சரிபார்க்குமாறு எப்போதும் சொல்கிறது.",
+    "faq.4q":"என் தரவு பாதுகாப்பாக உள்ளதா?",
+    "faq.4a":"கணக்கை செயல்படுத்தும் வரை தரவு உங்கள் சாதனத்தில் (localStorage) இருக்கும். கணக்குடன், தரவு Row Level Security உடன் Supabase இல் குறியாக்கப்படும்: உங்கள் கோப்புகளை நீங்கள் மட்டுமே அணுகலாம்.",
+    "faq.5q":"இணைப்பு இல்லாமல் செயல்படுமா?",
+    "faq.5a":"ஆம், முதல் வருகைக்கு பிறகு Service Worker காரணமாக வழிகாட்டிகள் மற்றும் பல கருவிகள் ஆஃப்லைனில் செயல்படும். AI உதவியாளருக்கு பதில் சொல்ல இணைப்பு தேவை.",
+    "faq.6q":"கருத்து சொல்ல அல்லது பிழையை சுட்டிக்காட்ட எப்படி?",
+    "faq.6a":"<strong>info@easyitaliahub.it</strong> க்கு எழுதுங்கள் அல்லது <a href=\"/contatti\" style=\"color:var(--brand)\">தொடர்பு</a> பக்கத்தில் உள்ள படிவத்தை பயன்படுத்துங்கள். 24 மணி நேரத்திற்குள் பதில் சொல்கிறோம்.",
+    "blog.eye":"வளங்கள்","blog.h":"வழிகாட்டிகள் மற்றும் புதுப்பிப்புகள்",
+    "blog.1c":"வசிப்பிட அனுமதி","blog.1t":"2024 இல் வசிப்பிட அனுமதியை எவ்வாறு புதுப்பிப்பது: முழுமையான வழிகாட்டி","blog.1x":"புதுப்பிப்பிற்கான அனைத்து புதுப்பிக்கப்பட்ட நடவடிக்கைகள், தேவையான ஆவணங்கள் மற்றும் படிவங்கள்.",
+    "blog.2c":"INPS","blog.2t":"Assegno Unico 2024: தொகைகள், தகுதிகள் மற்றும் SPID உடன் கோரும் முறை","blog.2x":"குழந்தைக்கு மாதம் €199 வரை: யார் கோரலாம், ஆன்லைனில் விண்ணப்பிக்கும் முறை.",
+    "blog.3c":"டிஜிட்டல் அடையாளம்","blog.3t":"இத்தாலிய பாஸ்போர்ட் இல்லாமல் SPID: வெளிநாட்டு குடிமக்களுக்கான வழிகாட்டி","blog.3x":"வசிப்பிட அனுமதி மற்றும் செல்லுபடியாகும் அடையாள ஆவணத்துடன் SPID டிஜிட்டல் அடையாளத்தை எவ்வாறு செயல்படுத்துவது.",
+    "cta.h":"இன்றே தொடங்குங்கள்,<br>இது இலவசம்.","cta.sub":"Easy Italia Hub உடன் இத்தாலிய அமைப்பில் வழிநடக்கும் ஆயிரக்கணக்கான இலங்கையர்களுடன் சேருங்கள்.",
+    "cta.btn1":"இலவசமாக பதிவு செய்யுங்கள்","cta.btn2":"வழிகாட்டிகளை உலாவுங்கள்",
+    "f.prod":"தயாரிப்பு","f.tools":"கருவிகள்","f.company":"நிறுவனம்",
+    "f.tag":"இத்தாலியில் இலங்கை சமூகத்தின் நம்பகமான மையம். வழிகாட்டிகள், பன்மொழி AI, சமூகம் மற்றும் சேவைகள் — அனைத்தும் ஒரே இடத்தில்.",
+    "f.copy":"© 2026 Easy Italia Hub. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
+  }
+};
+
+function applyI18n(lang) {
+  var d = T[lang] || T.it;
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var k = el.getAttribute('data-i18n');
+    if (d[k] !== undefined) el.textContent = d[k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+    var k = el.getAttribute('data-i18n-html');
+    if (d[k] !== undefined) el.innerHTML = d[k];
+  });
+  document.documentElement.lang = lang === 'ta' ? 'ta' : lang === 'si' ? 'si' : lang === 'en' ? 'en' : 'it';
+}
+
+// ── REVEAL on scroll — progressive enhancement ────────────────────────────
 (function(){
   document.body.classList.add('js-on');
-  const els = document.querySelectorAll('.reveal');
+
+  // apply stored language
+  var lang = (function(){ try { return localStorage.getItem('eih-lang'); } catch(e){ return null; } })() || 'it';
+  if (!T[lang]) lang = 'it';
+  applyI18n(lang);
+
+  var els = document.querySelectorAll('.reveal');
   if (!els.length) return;
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.05, rootMargin: '0px 0px -4% 0px' });
-  // trigger subito gli elementi già visibili nel viewport
-  requestAnimationFrame(function() {
-    els.forEach(el => io.observe(el));
-  });
+  requestAnimationFrame(function() { els.forEach(function(el) { io.observe(el); }); });
 })();
 
-// faq
+// ── FAQ ───────────────────────────────────────────────────────────────────
 function toggleFaq(btn) {
-  const item = btn.closest('.faq-item');
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  var item = btn.closest('.faq-item');
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(i) { i.classList.remove('open'); });
   if (!isOpen) item.classList.add('open');
 }
 </script>
