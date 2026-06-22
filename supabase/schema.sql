@@ -174,7 +174,7 @@ create trigger trg_deadlines_updated_at
 -- ============================================================================
 create table if not exists public.permesso_practices (
   id                  uuid primary key default gen_random_uuid(),
-  user_id             uuid not null references auth.users(id) on delete cascade,
+  user_id             uuid not null default auth.uid() references auth.users(id) on delete cascade,
   tipo                text,
   data_presentazione  date,
   questura            text,
@@ -182,6 +182,7 @@ create table if not exists public.permesso_practices (
   scadenza            date,
   status              text not null default 'presentata'
                         check (status in ('presentata', 'in_lavorazione', 'pronto_ritiro', 'ritirato')),
+  data                jsonb,
   created_at          timestamptz not null default now(),
   updated_at          timestamptz not null default now()
 );

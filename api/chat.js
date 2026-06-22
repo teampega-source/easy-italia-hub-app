@@ -258,7 +258,8 @@ module.exports = async (req, res) => {
         : lastStatus === 401 || lastStatus === 403 ? "Chiave Gemini non valida o non autorizzata."
         : lastStatus === 429 ? "Limite di richieste gratuite raggiunto su tutti i modelli, riprova tra poco."
         : "Si è verificato un errore temporaneo. Riprova tra poco.";
-      return res.status(200).json({ reply: msg, error: "gemini_error", status: lastStatus, detail: lastDetail, triedModels: MODEL_CHAIN });
+      console.error('[chat] gemini_error status=%d detail=%s models=%s', lastStatus, lastDetail, MODEL_CHAIN.join(','));
+      return res.status(200).json({ reply: msg, error: "gemini_error" });
     }
 
     const data = await gemRes.json();

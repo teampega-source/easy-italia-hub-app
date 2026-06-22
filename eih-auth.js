@@ -396,7 +396,7 @@
         });
       },
       insert: function (obj) {
-        var row = obj || {};
+        var row = Object.assign({}, obj || {});
         return ready.then(function () {
           if (configured && supabase) {
             return supabase.from(name).insert(row).select().then(function (res) {
@@ -479,19 +479,22 @@
       var practice = obj || {};
       return ready.then(function () {
         if (configured && supabase) {
-          // Upsert the single practice for this user. RLS + a unique user_id
-          // constraint make this a per-user singleton; we let the DB default
-          // user_id from auth.uid() (or a trigger) rather than trusting client.
-          return supabase
-            .from("permesso_practices")
-            .upsert({ data: practice }, { onConflict: "user_id" })
-            .select()
-            .then(function (res) {
-              var rows = (res && res.data) || [];
-              var rec = rows[0];
-              return rec && rec.data != null ? rec.data : practice;
-            })
-            .catch(function () { return practice; });
+          // user_id is NOT NULL with no DB default; must be sent by the client.
+          // RLS INSERT policy enforces user_id = auth.uid(), so this is safe.
+          return supabase.auth.getUser().then(function (res) {
+            var uid = res && res.data && res.data.user && res.data.user.id;
+            if (!uid) return practice; // unauthenticated — skip silently
+            return supabase
+              .from("permesso_practices")
+              .upsert({ user_id: uid, data: practice }, { onConflict: "user_id" })
+              .select()
+              .then(function (res) {
+                var rows = (res && res.data) || [];
+                var rec = rows[0];
+                return rec && rec.data != null ? rec.data : practice;
+              })
+              .catch(function () { return practice; });
+          }).catch(function () { return practice; });
         }
         lsSetJSON("eih-permesso", practice);
         return practice;
