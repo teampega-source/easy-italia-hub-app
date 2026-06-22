@@ -25,9 +25,9 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 .container{max-width:1280px;margin:0 auto;padding:0 24px}
 .section{padding:96px 0}.section-sm{padding:64px 0}
 
-/* reveal */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
-.reveal.in{opacity:1;transform:none}
+/* reveal — opacity:0 solo se JS è attivo (evita flash su primo paint) */
+.js-on .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+.js-on .reveal.in{opacity:1;transform:none}
 .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
 
 /* eyebrow */
@@ -55,7 +55,7 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh-sm)}
 
 /* ── NAVBAR ── */
-.navbar{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(246,247,249,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(246,247,249,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);will-change:transform}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:62px}
 .nav-logo{font-size:.9375rem;font-weight:800;letter-spacing:-.02em}
 .nav-logo em{font-style:normal;color:var(--brand)}
@@ -744,14 +744,18 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 </footer>
 
 <script>
-// reveal on scroll
+// reveal on scroll — progressive enhancement
 (function(){
+  document.body.classList.add('js-on');
   const els = document.querySelectorAll('.reveal');
   if (!els.length) return;
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
-  els.forEach(el => io.observe(el));
+  }, { threshold: 0.05, rootMargin: '0px 0px -4% 0px' });
+  // trigger subito gli elementi già visibili nel viewport
+  requestAnimationFrame(function() {
+    els.forEach(el => io.observe(el));
+  });
 })();
 
 // faq
