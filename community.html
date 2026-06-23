@@ -548,7 +548,7 @@
     askForm.addEventListener('submit', function(e){
       e.preventDefault();
       var q = (askInput && askInput.value ? askInput.value : '').trim();
-      var url = 'percorso.html' + (q ? ('#q=' + encodeURIComponent(q)) : '');
+      var url = '/percorso' + (q ? ('?q=' + encodeURIComponent(q)) : '');
       // mirror eih.js page-transition feel; eih's own handler won't see this programmatic nav
       var wipe = document.getElementById('wipe');
       if(wipe && !reduce){
