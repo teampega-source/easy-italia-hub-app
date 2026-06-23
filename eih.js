@@ -324,14 +324,6 @@
     document.head.appendChild(si);
   }
 
-  // Google Search Console verification
-  if(!document.querySelector('meta[name="google-site-verification"]')){
-    var gscMeta=document.createElement('meta');
-    gscMeta.name='google-site-verification';
-    gscMeta.content='GKELK29hW2Ul19kj1qzfSGHm0bavE3vn4vtWL5GyhYs';
-    document.head.appendChild(gscMeta);
-  }
-
   // Google Analytics 4
   (function(){
     var GA_ID='G-13TEJWCKZZ';
