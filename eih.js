@@ -324,6 +324,21 @@
     document.head.appendChild(si);
   }
 
+  // Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID
+  (function(){
+    var GA_ID='G-XXXXXXXXXX';
+    if(!GA_ID||GA_ID==='G-XXXXXXXXXX')return;
+    if(document.querySelector('script[src*="googletagmanager.com/gtag"]'))return;
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag=gtag;
+    gtag('js',new Date());
+    gtag('config',GA_ID,{anonymize_ip:true,cookie_flags:'SameSite=None;Secure'});
+    var s=document.createElement('script');s.async=true;
+    s.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;
+    document.head.appendChild(s);
+  })();
+
   // Travelpayouts Drive (publisher verification + widget engine)
   if(!document.querySelector('script[src*="emrldtp.cc"]')){
     (function(){var s=document.createElement('script');s.async=1;s.src='https://emrldtp.cc/NTQyNTg2.js?t=542586';document.head.appendChild(s);})();
