@@ -1,6 +1,13 @@
 # 📌 RESUME — Dove siamo arrivati
 
-> Ultimo aggiornamento: 12 giugno 2026
+> Ultimo aggiornamento: 23 giugno 2026
+
+## 🆕 23 giugno: servizi esterni ATTIVATI
+
+- **Chat AI LIVE** — `GEMINI_API_KEY` impostata su Vercel (production + preview). Fine modalità demo: la chat risponde con Gemini + RAG.
+- **Email LIVE** — `RESEND_API_KEY` impostata. Form contatti (`/api/contact`) e reminder (`/api/remind`) inviano email reali a `wasapeiris@gmail.com`.
+- **Supabase backend completato** — `SUPABASE_SERVICE_ROLE_KEY` e `SUPABASE_SECRET_KEY` impostate; `site_url` + redirect URI auth configurati; bucket `documents` privato con policy RLS per-utente.
+- **sitemap.xml** — riscritto con tutte e 29 le pagine (rimossi i path hreflang inesistenti).
 
 ## 🆕 Oggi: Supabase LIVE
 
