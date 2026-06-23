@@ -326,7 +326,7 @@
 
   // Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID
   (function(){
-    var GA_ID='G-XXXXXXXXXX';
+    var GA_ID='G-13TEJWCKZZ';
     if(!GA_ID||GA_ID==='G-XXXXXXXXXX')return;
     if(document.querySelector('script[src*="googletagmanager.com/gtag"]'))return;
     window.dataLayer=window.dataLayer||[];
