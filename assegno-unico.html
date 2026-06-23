@@ -79,28 +79,28 @@
     html[data-theme="dark"] [data-page="assegno-unico"] .calc-num,html[data-theme="dark"] [data-page="assegno-unico"] .calc-select{background:var(--bg-elevated);border-color:var(--border-bright)}
   </style>
   <div class="page page-wide">
-    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Strumenti</p>
-    <h1 class="reveal">Calcola il tuo<br/><em>Assegno Unico</em></h1>
-    <p class="lead reveal">L'Assegno Unico e Universale è un sostegno mensile per chi ha figli a carico fino a 21 anni. Inserisci la tua situazione e ottieni una stima immediata dell'importo 2026.</p>
-    <div class="warn-box reveal">⚠️ <strong>Simulazione indicativa</strong> basata sulle tabelle INPS 2026. L'importo reale dipende dalla tua DSU/ISEE certificata e dalla tua situazione specifica. <strong>Verifica sempre su <a class="inline" href="https://www.inps.it" target="_blank" rel="noopener noreferrer">inps.it</a></strong> e rivolgiti a un patronato per la domanda ufficiale.</div>
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> <span data-i18n="au.eyebrow">Strumenti</span></p>
+    <h1 class="reveal" data-i18n-html="page.h1">Calcola il tuo<br/><em>Assegno Unico</em></h1>
+    <p class="lead reveal" data-i18n="page.lead">L'Assegno Unico e Universale è un sostegno mensile per chi ha figli a carico fino a 21 anni. Inserisci la tua situazione e ottieni una stima immediata dell'importo 2026.</p>
+    <div class="warn-box reveal" data-i18n-html="au.warn">⚠️ <strong>Simulazione indicativa</strong> basata sulle tabelle INPS 2026. L'importo reale dipende dalla tua DSU/ISEE certificata e dalla tua situazione specifica. <strong>Verifica sempre su <a class="inline" href="https://www.inps.it" target="_blank" rel="noopener noreferrer">inps.it</a></strong> e rivolgiti a un patronato per la domanda ufficiale.</div>
 
     <div class="calc-card reveal">
-      <h2 style="font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xl);margin-bottom:var(--sp-3);">Simulatore importo 2026</h2>
+      <h2 style="font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xl);margin-bottom:var(--sp-3);" data-i18n="au.h_sim">Simulatore importo 2026</h2>
 
       <!-- ISEE field -->
       <div class="calc-field">
-        <label class="calc-label" for="au-isee">ISEE del nucleo familiare</label>
+        <label class="calc-label" for="au-isee" data-i18n="au.isee_label">ISEE del nucleo familiare</label>
         <div class="calc-row">
           <input type="range" class="calc-range" id="au-isee-range" min="0" max="50000" step="100" value="20000"/>
           <input type="number" class="calc-num" id="au-isee" min="0" max="200000" value="20000" placeholder="es. 20000"/>
-          <span class="calc-euro">€/anno</span>
+          <span class="calc-euro" data-i18n="au.isee_unit">€/anno</span>
         </div>
         <span class="calc-note">Se non hai ISEE o supera €43.240, viene applicato l'importo minimo di €57,00/mese per figlio.</span>
       </div>
 
       <!-- Number of children -->
       <div class="calc-field">
-        <label class="calc-label" for="au-figli">Numero di figli a carico (0–21 anni)</label>
+        <label class="calc-label" for="au-figli" data-i18n="au.figli_label">Numero di figli a carico (0–21 anni)</label>
         <div class="calc-row">
           <select class="calc-select" id="au-figli">
             <option value="1">1 figlio</option>
@@ -115,7 +115,7 @@
 
       <!-- Under 1 year -->
       <div class="calc-field">
-        <label class="calc-label">Figli di età inferiore a 1 anno</label>
+        <label class="calc-label" data-i18n="au.under1_label">Figli di età inferiore a 1 anno</label>
         <div class="calc-row">
           <select class="calc-select" id="au-under1">
             <option value="0">Nessuno</option>
@@ -129,7 +129,7 @@
 
       <!-- Disability -->
       <div class="calc-field">
-        <label class="calc-label">Figli con disabilità riconosciuta</label>
+        <label class="calc-label" data-i18n="au.disab_label">Figli con disabilità riconosciuta</label>
         <div class="calc-row">
           <select class="calc-select" id="au-disab">
             <option value="0">Nessuno</option>
@@ -145,13 +145,13 @@
       <!-- Result box -->
       <div class="result-box" id="au-result">
         <div class="result-total" id="au-total">—</div>
-        <div class="result-label">importo mensile stimato totale</div>
+        <div class="result-label" data-i18n="au.result_label">importo mensile stimato totale</div>
         <div class="result-breakdown" id="au-breakdown"></div>
       </div>
     </div>
 
-    <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5);">Chi può richiederlo</h2>
-    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--sp-2);">Per ricevere l'Assegno Unico devi soddisfare <strong>tutti</strong> questi requisiti:</p>
+    <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5);" data-i18n="au.h_who">Chi può richiederlo</h2>
+    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--sp-2);" data-i18n-html="au.who_lead">Per ricevere l'Assegno Unico devi soddisfare <strong>tutti</strong> questi requisiti:</p>
     <div class="req-grid reveal">
       <div class="req-card">
         <span class="req-icon">📄</span>
@@ -175,7 +175,7 @@
       </div>
     </div>
 
-    <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5);">Come fare domanda</h2>
+    <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5);" data-i18n="au.h_how">Come fare domanda</h2>
     <ol style="font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.9;padding-left:1.4rem;">
       <li>Calcola il tuo <strong>ISEE</strong> recandoti a un CAF o patronato (gratuito) oppure compilando la DSU precompilata su inps.it con SPID.</li>
       <li>Accedi a <strong>inps.it</strong> con SPID o CIE e cerca "Assegno Unico e Universale".</li>
@@ -185,7 +185,7 @@
     </ol>
 
     <div class="link-utili reveal" style="margin-top:var(--sp-4)">
-      <p class="link-utili-title">Link e contatti utili</p>
+      <p class="link-utili-title" data-i18n="g.link_utili">Link e contatti utili</p>
       <div class="link-utili-grid">
         <a class="lu-link" href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-unico-e-universale-per-i-figli-a-carico-55984.assegno-unico-e-universale-per-i-figli-a-carico.html" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>INPS — domanda ufficiale</a>
         <a class="lu-link" href="https://servizi2.inps.it/servizi/ISEEPrecompilato/WfSimHome.aspx" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>INPS — Simulatore ISEE</a>
@@ -250,6 +250,61 @@
 </main>
 
 <div id="site-footer"></div>
+<script>
+window.EIH_I18N_EXTRA={
+  "en":{
+    "page.h1":"Calculate your<br/><em>Assegno Unico</em>",
+    "page.lead":"The Assegno Unico e Universale is a monthly benefit for families with dependent children up to 21 years. Enter your situation and get an instant 2026 estimate.",
+    "au.eyebrow":"Tools",
+    "au.warn":"⚠️ <strong>Indicative simulation</strong> based on INPS 2026 tables. The actual amount depends on your certified DSU/ISEE and your specific situation. <strong>Always verify at <a class=\"inline\" href=\"https://www.inps.it\" target=\"_blank\" rel=\"noopener noreferrer\">inps.it</a></strong> and contact a patronato for the official application.",
+    "au.h_sim":"2026 amount simulator",
+    "au.isee_label":"Household ISEE",
+    "au.isee_unit":"€/year",
+    "au.figli_label":"Number of dependent children (0–21 years)",
+    "au.under1_label":"Children under 1 year",
+    "au.disab_label":"Children with recognised disability",
+    "au.result_label":"estimated total monthly amount",
+    "au.h_who":"Who can apply",
+    "au.who_lead":"To receive the Assegno Unico you must meet <strong>all</strong> of these requirements:",
+    "au.h_how":"How to apply",
+    "g.link_utili":"Useful links & contacts"
+  },
+  "si":{
+    "page.h1":"ඔබේ<br/><em>Assegno Unico</em> ගණනය කරන්න",
+    "page.lead":"Assegno Unico e Universale යනු 21 හැවිරිදිවන තෙක් යැපෙන දරුවන් ඇති කුටුම්බ සඳහා මාසික ආධාරයකි. ඔබේ තත්ත්වය ඇතුළු කර 2026 ප්‍රමාණයේ ක්ෂණික ඇස්තමේන්තුවක් ලබා ගන්න.",
+    "au.eyebrow":"මෙවලම්",
+    "au.warn":"⚠️ <strong>ඇඟවුම් සිමියුලේෂනය</strong> INPS 2026 වගු මත. සත්‍ය ප්‍රමාණය ඔබේ DSU/ISEE සහ ඔබේ නිශ්චිත තත්ත්වය මත රඳා පවතී. <strong>සෑමවිටම <a class=\"inline\" href=\"https://www.inps.it\" target=\"_blank\" rel=\"noopener noreferrer\">inps.it</a> හිදී සත්‍යාපනය කරන්න</strong> සහ නිල අයදුම්පත සඳහා patronato ආධාරය ලබා ගන්න.",
+    "au.h_sim":"2026 ප්‍රමාණ සිමියුලේටරය",
+    "au.isee_label":"ගෘහ ISEE",
+    "au.isee_unit":"€/වසර",
+    "au.figli_label":"යැපෙන දරුවන් (0–21 අවුරුදු)",
+    "au.under1_label":"අවුරුදු 1 ට අඩු දරුවන්",
+    "au.disab_label":"ආබාධ ඇති දරුවන්",
+    "au.result_label":"ඇස්තමේන්තු මාසික මුළු ප්‍රමාණය",
+    "au.h_who":"ඉල්ලුම් කළ හැකි අය",
+    "au.who_lead":"Assegno Unico ලබා ගැනීමට ඔබ <strong>සියලු</strong> මෙම අවශ්‍යතා සපුරාලිය යුතුය:",
+    "au.h_how":"ඉල්ලුම් කරන ආකාරය",
+    "g.link_utili":"ප්‍රයෝජනවත් සබැඳි සහ සම්බන්ධතා"
+  },
+  "ta":{
+    "page.h1":"உங்கள்<br/><em>Assegno Unico</em> கணக்கிடுங்கள்",
+    "page.lead":"Assegno Unico e Universale என்பது 21 வயது வரை扶養கூடிய குழந்தைகள் உள்ள குடும்பங்களுக்கான மாதாந்திர உதவி. உங்கள் நிலைமையை உள்ளிட்டு 2026 தொகையின் உடனடி மதிப்பீட்டை பெறுங்கள்.",
+    "au.eyebrow":"கருவிகள்",
+    "au.warn":"⚠️ <strong>குறிப்பான சிமுலேஷன்</strong> INPS 2026 அட்டவணைகளின் அடிப்படையில். உண்மையான தொகை உங்கள் DSU/ISEE மற்றும் உங்கள் குறிப்பிட்ட நிலைமையைப் பொறுத்தது. <strong>எப்போதும் <a class=\"inline\" href=\"https://www.inps.it\" target=\"_blank\" rel=\"noopener noreferrer\">inps.it</a> இல் சரிபார்க்கவும்</strong> மற்றும் அதிகாரப்பூர்வ விண்ணப்பத்திற்கு ஒரு patronato ஐ தொடர்பு கொள்ளுங்கள்.",
+    "au.h_sim":"2026 தொகை சிமுலேட்டர்",
+    "au.isee_label":"குடும்ப ISEE",
+    "au.isee_unit":"€/ஆண்டு",
+    "au.figli_label":"扶養குழந்தைகளின் எண்ணிக்கை (0–21 வயது)",
+    "au.under1_label":"1 வயதுக்கு கீழ் குழந்தைகள்",
+    "au.disab_label":"அங்கீகரிக்கப்பட்ட ஊனமுடைய குழந்தைகள்",
+    "au.result_label":"மதிப்பிடப்பட்ட மொத்த மாதாந்திர தொகை",
+    "au.h_who":"யார் விண்ணப்பிக்கலாம்",
+    "au.who_lead":"Assegno Unico பெற நீங்கள் <strong>அனைத்து</strong> தேவைகளையும் பூர்த்தி செய்ய வேண்டும்:",
+    "au.h_how":"விண்ணப்பிப்பது எப்படி",
+    "g.link_utili":"பயனுள்ள இணைப்புகள் & தொடர்புகள்"
+  }
+};
+</script>
 <script src="eih.js"></script>
 <script src="eih-auth.js" defer></script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>

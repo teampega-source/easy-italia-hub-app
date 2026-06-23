@@ -98,9 +98,9 @@
   </style>
 
   <div class="page page-wide">
-    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Strumenti</p>
-    <h1 class="reveal">I tuoi diritti<br/><em>INPS</em></h1>
-    <p class="lead reveal">Rispondi a 4 domande sulla tua situazione e scopri subito a quali prestazioni INPS hai diritto: disoccupazione, famiglia, maternità, malattia e pensione.</p>
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> <span data-i18n="di.eyebrow">Strumenti</span></p>
+    <h1 class="reveal" data-i18n-html="di.h1">I tuoi diritti<br/><em>INPS</em></h1>
+    <p class="lead reveal" data-i18n="di.lead">Rispondi a 4 domande sulla tua situazione e scopri subito a quali prestazioni INPS hai diritto: disoccupazione, famiglia, maternità, malattia e pensione.</p>
 
     <div class="quiz-card reveal" id="quiz-wrap">
 
@@ -110,134 +110,134 @@
 
       <!-- Step 1: tipo di permesso -->
       <div class="q-step active" id="step-1">
-        <p class="q-title">Che tipo di permesso hai?</p>
-        <p class="q-sub">Il tipo di permesso determina l'accesso alle prestazioni INPS.</p>
+        <p class="q-title" data-i18n="di.s1_title">Che tipo di permesso hai?</p>
+        <p class="q-sub" data-i18n="di.s1_sub">Il tipo di permesso determina l'accesso alle prestazioni INPS.</p>
         <div class="q-opts">
           <button class="q-btn" data-step="1" data-val="lungo">
             <span class="q-btn-icon">🏅</span>
-            <span><span class="q-btn-label">Lungo soggiorno UE</span><br/><span class="q-btn-note">Permesso CE per soggiornanti di lungo periodo (5+ anni)</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s1_l_lungo">Lungo soggiorno UE</span><br/><span class="q-btn-note" data-i18n="di.s1_n_lungo">Permesso CE per soggiornanti di lungo periodo (5+ anni)</span></span>
           </button>
           <button class="q-btn" data-step="1" data-val="lavoro">
             <span class="q-btn-icon">💼</span>
-            <span><span class="q-btn-label">Lavoro / Studio / Famiglia</span><br/><span class="q-btn-note">Permesso ordinario valido per motivi di lavoro, studio o ricongiungimento</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s1_l_lavoro">Lavoro / Studio / Famiglia</span><br/><span class="q-btn-note" data-i18n="di.s1_n_lavoro">Permesso ordinario valido per motivi di lavoro, studio o ricongiungimento</span></span>
           </button>
           <button class="q-btn" data-step="1" data-val="protezione">
             <span class="q-btn-icon">🛡️</span>
-            <span><span class="q-btn-label">Protezione internazionale</span><br/><span class="q-btn-note">Rifugiato o protezione sussidiaria</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s1_l_prot">Protezione internazionale</span><br/><span class="q-btn-note" data-i18n="di.s1_n_prot">Rifugiato o protezione sussidiaria</span></span>
           </button>
           <button class="q-btn" data-step="1" data-val="attesa">
             <span class="q-btn-icon">⏳</span>
-            <span><span class="q-btn-label">In rinnovo / Attesa</span><br/><span class="q-btn-note">Ricevuta di rinnovo o permesso scaduto in attesa di rinnovo</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s1_l_att">In rinnovo / Attesa</span><br/><span class="q-btn-note" data-i18n="di.s1_n_att">Ricevuta di rinnovo o permesso scaduto in attesa di rinnovo</span></span>
           </button>
         </div>
       </div>
 
       <!-- Step 2: anni di lavoro in Italia -->
       <div class="q-step" id="step-2">
-        <p class="q-title">Quanti mesi hai lavorato in Italia?</p>
-        <p class="q-sub">Conta i mesi con contributi INPS versati (busta paga regolare).</p>
+        <p class="q-title" data-i18n="di.s2_title">Quanti mesi hai lavorato in Italia?</p>
+        <p class="q-sub" data-i18n="di.s2_sub">Conta i mesi con contributi INPS versati (busta paga regolare).</p>
         <div class="q-opts">
           <button class="q-btn" data-step="2" data-val="meno3">
             <span class="q-btn-icon">🌱</span>
-            <span><span class="q-btn-label">Meno di 3 mesi</span><br/><span class="q-btn-note">Appena iniziato o lavoro molto recente</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s2_l_meno3">Meno di 3 mesi</span><br/><span class="q-btn-note" data-i18n="di.s2_n_meno3">Appena iniziato o lavoro molto recente</span></span>
           </button>
           <button class="q-btn" data-step="2" data-val="3a12">
             <span class="q-btn-icon">📅</span>
-            <span><span class="q-btn-label">3–12 mesi</span><br/><span class="q-btn-note">Meno di un anno di contributi</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s2_l_312">3–12 mesi</span><br/><span class="q-btn-note" data-i18n="di.s2_n_312">Meno di un anno di contributi</span></span>
           </button>
           <button class="q-btn" data-step="2" data-val="1a5anni">
             <span class="q-btn-icon">📈</span>
-            <span><span class="q-btn-label">1–5 anni</span><br/><span class="q-btn-note">12–60 mesi di contributi versati</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s2_l_15">1–5 anni</span><br/><span class="q-btn-note" data-i18n="di.s2_n_15">12–60 mesi di contributi versati</span></span>
           </button>
           <button class="q-btn" data-step="2" data-val="oltre5">
             <span class="q-btn-icon">⭐</span>
-            <span><span class="q-btn-label">Oltre 5 anni</span><br/><span class="q-btn-note">Più di 60 mesi di contributi</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s2_l_5p">Oltre 5 anni</span><br/><span class="q-btn-note" data-i18n="di.s2_n_5p">Più di 60 mesi di contributi</span></span>
           </button>
         </div>
       </div>
 
       <!-- Step 3: situazione lavorativa attuale -->
       <div class="q-step" id="step-3">
-        <p class="q-title">Qual è la tua situazione lavorativa attuale?</p>
-        <p class="q-sub">Indica lo stato al momento in cui stai usando questo strumento.</p>
+        <p class="q-title" data-i18n="di.s3_title">Qual è la tua situazione lavorativa attuale?</p>
+        <p class="q-sub" data-i18n="di.s3_sub">Indica lo stato al momento in cui stai usando questo strumento.</p>
         <div class="q-opts">
           <button class="q-btn" data-step="3" data-val="dipendente">
             <span class="q-btn-icon">🏢</span>
-            <span><span class="q-btn-label">Lavoratore dipendente</span><br/><span class="q-btn-note">Contratto a tempo determinato o indeterminato</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s3_l_dip">Lavoratore dipendente</span><br/><span class="q-btn-note" data-i18n="di.s3_n_dip">Contratto a tempo determinato o indeterminato</span></span>
           </button>
           <button class="q-btn" data-step="3" data-val="autonomo">
             <span class="q-btn-icon">🧾</span>
-            <span><span class="q-btn-label">Autonomo / Partita IVA</span><br/><span class="q-btn-note">Artigiano, commerciante, libero professionista, co.co.co.</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s3_l_aut">Autonomo / Partita IVA</span><br/><span class="q-btn-note" data-i18n="di.s3_n_aut">Artigiano, commerciante, libero professionista, co.co.co.</span></span>
           </button>
           <button class="q-btn" data-step="3" data-val="disoccupato">
             <span class="q-btn-icon">🔍</span>
-            <span><span class="q-btn-label">Disoccupato / In cerca di lavoro</span><br/><span class="q-btn-note">Non lavoro e cerco occupazione</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s3_l_dis">Disoccupato / In cerca di lavoro</span><br/><span class="q-btn-note" data-i18n="di.s3_n_dis">Non lavoro e cerco occupazione</span></span>
           </button>
           <button class="q-btn" data-step="3" data-val="altro">
             <span class="q-btn-icon">🏠</span>
-            <span><span class="q-btn-label">Altro</span><br/><span class="q-btn-note">Casalinga/o, studente, inattivo</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s3_l_alt">Altro</span><br/><span class="q-btn-note" data-i18n="di.s3_n_alt">Casalinga/o, studente, inattivo</span></span>
           </button>
         </div>
       </div>
 
       <!-- Step 4: situazione familiare -->
       <div class="q-step" id="step-4">
-        <p class="q-title">Hai figli o familiari a carico?</p>
-        <p class="q-sub">Questa informazione apre l'accesso a bonus e assegni familiari.</p>
+        <p class="q-title" data-i18n="di.s4_title">Hai figli o familiari a carico?</p>
+        <p class="q-sub" data-i18n="di.s4_sub">Questa informazione apre l'accesso a bonus e assegni familiari.</p>
         <div class="q-opts">
           <button class="q-btn" data-step="4" data-val="figli_minori">
             <span class="q-btn-icon">👶</span>
-            <span><span class="q-btn-label">Sì, figli minorenni</span><br/><span class="q-btn-note">Almeno un figlio con meno di 18 anni</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s4_l_min">Sì, figli minorenni</span><br/><span class="q-btn-note" data-i18n="di.s4_n_min">Almeno un figlio con meno di 18 anni</span></span>
           </button>
           <button class="q-btn" data-step="4" data-val="figli_grandi">
             <span class="q-btn-icon">🎓</span>
-            <span><span class="q-btn-label">Sì, figli 18–21 anni</span><br/><span class="q-btn-note">Studenti, tirocinanti o disoccupati a carico</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s4_l_gran">Sì, figli 18–21 anni</span><br/><span class="q-btn-note" data-i18n="di.s4_n_gran">Studenti, tirocinanti o disoccupati a carico</span></span>
           </button>
           <button class="q-btn" data-step="4" data-val="nessun_figlio">
             <span class="q-btn-icon">🙋</span>
-            <span><span class="q-btn-label">No, nessun figlio a carico</span><br/><span class="q-btn-note">Single o figli economicamente autonomi</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s4_l_no">No, nessun figlio a carico</span><br/><span class="q-btn-note" data-i18n="di.s4_n_no">Single o figli economicamente autonomi</span></span>
           </button>
           <button class="q-btn" data-step="4" data-val="disabile">
             <span class="q-btn-icon">♿</span>
-            <span><span class="q-btn-label">Figlio o familiare con disabilità</span><br/><span class="q-btn-note">Riconoscimento di invalidità o disabilità</span></span>
+            <span><span class="q-btn-label" data-i18n="di.s4_l_dis">Figlio o familiare con disabilità</span><br/><span class="q-btn-note" data-i18n="di.s4_n_dis">Riconoscimento di invalidità o disabilità</span></span>
           </button>
         </div>
         <div class="q-actions">
-          <button class="btn-primary" id="btn-results" disabled>Vedi i miei diritti →</button>
+          <button class="btn-primary" id="btn-results" disabled data-i18n="di.btn_results">Vedi i miei diritti →</button>
         </div>
       </div>
 
       <!-- Results section -->
       <div class="results-section" id="results-section">
         <div class="results-header">
-          <p class="q-title">I tuoi diritti INPS</p>
+          <p class="q-title" data-i18n="di.res_title">I tuoi diritti INPS</p>
           <p class="q-sub" id="res-subtitle"></p>
         </div>
         <div class="benefit-list" id="benefit-list"></div>
 
         <div class="restart-row">
-          <button class="btn-secondary" id="btn-restart">← Ricomincia</button>
-          <span style="font-size:var(--text-xs);color:var(--fg-muted)">Questi risultati sono indicativi. Rivolgiti a un patronato per la verifica ufficiale.</span>
+          <button class="btn-secondary" id="btn-restart" data-i18n="di.btn_restart">← Ricomincia</button>
+          <span style="font-size:var(--text-xs);color:var(--fg-muted)" data-i18n="di.disclaimer">Questi risultati sono indicativi. Rivolgiti a un patronato per la verifica ufficiale.</span>
         </div>
       </div>
     </div>
 
     <!-- Info box: convenzione bilaterale -->
     <div class="warn-box reveal" style="background:rgba(185,170,141,.07);border-color:rgba(185,170,141,.25);margin-top:var(--sp-2)">
-      🇮🇹🇱🇰 <strong>Convenzione Italia–Sri Lanka</strong> — Italia e Sri Lanka hanno firmato un accordo bilaterale di sicurezza sociale. I contributi versati in entrambi i paesi si <strong>totalizzano</strong> per raggiungere i requisiti pensionistici. Se hai lavorato anche in Sri Lanka, i tuoi anni non vanno persi.
+      <span data-i18n-html="di.warn">🇮🇹🇱🇰 <strong>Convenzione Italia–Sri Lanka</strong> — Italia e Sri Lanka hanno firmato un accordo bilaterale di sicurezza sociale. I contributi versati in entrambi i paesi si <strong>totalizzano</strong> per raggiungere i requisiti pensionistici. Se hai lavorato anche in Sri Lanka, i tuoi anni non vanno persi.</span>
     </div>
 
     <!-- Benefits overview table -->
-    <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5);">Panoramica prestazioni INPS</h2>
-    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--sp-3);">Le principali prestazioni accessibili ai lavoratori stranieri regolari in Italia.</p>
+    <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5);" data-i18n="di.h2_over">Panoramica prestazioni INPS</h2>
+    <p style="font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--sp-3);" data-i18n="di.over_sub">Le principali prestazioni accessibili ai lavoratori stranieri regolari in Italia.</p>
 
     <div style="overflow-x:auto;margin:0 calc(var(--sp-2)*-1)">
     <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm);min-width:520px">
       <thead>
         <tr style="background:var(--bg-elevated);border-bottom:1px solid var(--border)">
-          <th style="text-align:left;padding:.65rem .9rem;font-family:'Clash Grotesk',sans-serif;font-weight:500;color:var(--ink)">Prestazione</th>
-          <th style="text-align:left;padding:.65rem .9rem;font-family:'Clash Grotesk',sans-serif;font-weight:500;color:var(--ink)">Requisito principale</th>
-          <th style="text-align:left;padding:.65rem .9rem;font-family:'Clash Grotesk',sans-serif;font-weight:500;color:var(--ink)">A chi spetta</th>
+          <th style="text-align:left;padding:.65rem .9rem;font-family:'Clash Grotesk',sans-serif;font-weight:500;color:var(--ink)" data-i18n="di.th_prest">Prestazione</th>
+          <th style="text-align:left;padding:.65rem .9rem;font-family:'Clash Grotesk',sans-serif;font-weight:500;color:var(--ink)" data-i18n="di.th_req">Requisito principale</th>
+          <th style="text-align:left;padding:.65rem .9rem;font-family:'Clash Grotesk',sans-serif;font-weight:500;color:var(--ink)" data-i18n="di.th_chi">A chi spetta</th>
         </tr>
       </thead>
       <tbody>
@@ -276,7 +276,7 @@
     </div>
 
     <div class="link-utili reveal" style="margin-top:var(--sp-4)">
-      <p class="link-utili-title">Link e contatti utili</p>
+      <p class="link-utili-title" data-i18n="g.link_utili">Link e contatti utili</p>
       <div class="link-utili-grid">
         <a class="lu-link" href="https://www.inps.it" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>INPS.it</a>
         <a class="lu-link" href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-unico-e-universale-per-i-figli-a-carico-55984.assegno-unico-e-universale-per-i-figli-a-carico.html" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Assegno Unico INPS</a>
@@ -295,6 +295,18 @@
     var answers={};
     var STEPS=4;
     function pct(n){return Math.round((n/STEPS)*100)+'%';}
+
+    var _LANG=(typeof EIH_LANG!=='undefined'?EIH_LANG:localStorage.getItem('eih-lang')||'it');
+    var _T_MAP={
+      en:{q:'Question',of:'of',done:'Completed',yes:'✓ Eligible',partial:'~ Check',no:'✗ Not applicable',summary:'Based on your answers: {0} benefits probably accessible, {1} to verify.'},
+      si:{q:'ප්‍රශ්නය',of:'න',done:'සම්පූර්ණ',yes:'✓ හිමිකාරිත්වය',partial:'~ සත්‍යාපනය',no:'✗ අදාළ නොවේ',summary:'ඔබේ පිළිතුරු මත: {0} ප්‍රතිලාභ ලැබිය හැකිය, {1} සත්‍යාපනය කළ යුතුය.'},
+      ta:{q:'கேள்வி',of:'இல்',done:'நிறைவு',yes:'✓ உரிமை உண்டு',partial:'~ சரிபார்க்கவும்',no:'✗ பொருந்தாது',summary:'உங்கள் பதில்களின் அடிப்படையில்: {0} நலன்கள் அனுமதிக்கப்பட்டவை, {1} சரிபார்க்க வேண்டியவை.'}
+    };
+    var _T=_T_MAP[_LANG]||{q:'Domanda',of:'di',done:'Completato',yes:'✓ Hai diritto',partial:'~ Verifica',no:'✗ Non applicabile',summary:'Basato sulle tue risposte: {0} prestazioni probabilmente accessibili, {1} da verificare.'};
+    document.addEventListener('eih:langchange',function(e){
+      _LANG=e.detail||'it';
+      _T=_T_MAP[_LANG]||{q:'Domanda',of:'di',done:'Completato',yes:'✓ Hai diritto',partial:'~ Verifica',no:'✗ Non applicabile',summary:'Basato sulle tue risposte: {0} prestazioni probabilmente accessibili, {1} da verificare.'};
+    });
 
     // benefit definitions
     var BENEFITS=[
@@ -402,26 +414,26 @@
       if(el){
         el.classList.add('active');
         document.getElementById('q-progress-fill').style.width=pct(n-1);
-        document.getElementById('q-count').textContent='Domanda '+n+' di '+STEPS;
+        document.getElementById('q-count').textContent=_T.q+' '+n+' '+_T.of+' '+STEPS;
       }
     }
 
     function statusHtml(s){
-      if(s==='yes') return '<span class="benefit-status status-yes">✓ Hai diritto</span>';
-      if(s==='partial') return '<span class="benefit-status status-partial">~ Verifica</span>';
-      return '<span class="benefit-status status-no">✗ Non applicabile</span>';
+      if(s==='yes') return '<span class="benefit-status status-yes">'+_T.yes+'</span>';
+      if(s==='partial') return '<span class="benefit-status status-partial">'+_T.partial+'</span>';
+      return '<span class="benefit-status status-no">'+_T.no+'</span>';
     }
 
     function showResults(){
       document.getElementById('q-progress-fill').style.width='100%';
-      document.getElementById('q-count').textContent='Completato';
+      document.getElementById('q-count').textContent=_T.done;
       document.querySelectorAll('.q-step').forEach(function(s){s.classList.remove('active');});
       var rs=document.getElementById('results-section');
       rs.classList.add('active');
 
       var eligible=0,partial=0;
       BENEFITS.forEach(function(b){if(b.check(answers)==='yes')eligible++;else if(b.check(answers)==='partial')partial++;});
-      document.getElementById('res-subtitle').textContent='Basato sulle tue risposte: '+eligible+' prestazioni probabilmente accessibili, '+partial+' da verificare.';
+      document.getElementById('res-subtitle').textContent=_T.summary.replace('{0}',eligible).replace('{1}',partial);
 
       var html='';
       BENEFITS.forEach(function(b){
@@ -484,6 +496,178 @@
 </main>
 
 <div id="site-footer"></div>
+<script>
+window.EIH_I18N_EXTRA={
+"en":{
+"di.eyebrow":"Tools",
+"di.h1":"Your INPS<br/><em>Rights</em>",
+"di.lead":"Answer 4 questions about your situation and instantly discover which INPS benefits you\'re entitled to: unemployment, family, maternity, illness and pension.",
+"di.s1_title":"What type of residence permit do you have?",
+"di.s1_sub":"The type of permit determines access to INPS benefits.",
+"di.s1_l_lungo":"EU Long Stay",
+"di.s1_n_lungo":"EC permit for long-term residents (5+ years)",
+"di.s1_l_lavoro":"Work / Study / Family",
+"di.s1_n_lavoro":"Standard permit valid for work, study or family reunification",
+"di.s1_l_prot":"International Protection",
+"di.s1_n_prot":"Refugee or subsidiary protection",
+"di.s1_l_att":"Renewal / Pending",
+"di.s1_n_att":"Renewal receipt or expired permit pending renewal",
+"di.s2_title":"How many months have you worked in Italy?",
+"di.s2_sub":"Count months with INPS contributions paid (regular payslip).",
+"di.s2_l_meno3":"Less than 3 months",
+"di.s2_n_meno3":"Just started or very recent work",
+"di.s2_l_312":"3–12 months",
+"di.s2_n_312":"Less than a year of contributions",
+"di.s2_l_15":"1–5 years",
+"di.s2_n_15":"12–60 months of contributions paid",
+"di.s2_l_5p":"Over 5 years",
+"di.s2_n_5p":"More than 60 months of contributions",
+"di.s3_title":"What is your current work situation?",
+"di.s3_sub":"Indicate your status at the time you are using this tool.",
+"di.s3_l_dip":"Employed",
+"di.s3_n_dip":"Fixed-term or permanent contract",
+"di.s3_l_aut":"Self-employed / VAT number",
+"di.s3_n_aut":"Craftsman, trader, freelancer, co.co.co.",
+"di.s3_l_dis":"Unemployed / Job seeking",
+"di.s3_n_dis":"Not working and looking for employment",
+"di.s3_l_alt":"Other",
+"di.s3_n_alt":"Housewife/husband, student, inactive",
+"di.s4_title":"Do you have dependent children or family members?",
+"di.s4_sub":"This information opens access to bonuses and family allowances.",
+"di.s4_l_min":"Yes, minor children",
+"di.s4_n_min":"At least one child under 18",
+"di.s4_l_gran":"Yes, children 18–21",
+"di.s4_n_gran":"Students, trainees or unemployed dependents",
+"di.s4_l_no":"No, no dependent children",
+"di.s4_n_no":"Single or financially independent children",
+"di.s4_l_dis":"Child or family member with disability",
+"di.s4_n_dis":"Recognised invalidity or disability",
+"di.btn_results":"See my rights →",
+"di.res_title":"Your INPS Rights",
+"di.btn_restart":"← Restart",
+"di.disclaimer":"These results are indicative. Contact a patronato for official verification.",
+"di.warn":"🇮🇹🇱🇰 <strong>Italy–Sri Lanka Convention</strong> — Italy and Sri Lanka signed a bilateral social security agreement. Contributions paid in both countries are <strong>totalized</strong> to meet pension requirements. If you have also worked in Sri Lanka, your years are not lost.",
+"di.h2_over":"INPS Benefits Overview",
+"di.over_sub":"The main benefits accessible to regular foreign workers in Italy.",
+"di.th_prest":"Benefit",
+"di.th_req":"Main requirement",
+"di.th_chi":"Who is entitled",
+"g.link_utili":"Useful links & contacts"
+},
+"si":{
+"di.eyebrow":"මෙවලම්",
+"di.h1":"ඔබේ INPS<br/><em>අයිතිවාසිකම්</em>",
+"di.lead":"ඔබේ තත්ත්වය ගැන ප්‍රශ්න 4කට පිළිතුරු දී ඔබට හිමි INPS ප්‍රතිලාභ වහාම සොයා ගන්න: රැකියා විරහිත, පවුල, මාතෘත්ව, රෝගාබාධ සහ විශ්‍රාම.",
+"di.s1_title":"ඔබ සතු පදිංචි බලපත්‍රය කුමක්ද?",
+"di.s1_sub":"බලපත්‍රයේ වර්ගය INPS ප්‍රතිලාභ ලැබීමට බලපායි.",
+"di.s1_l_lungo":"EU දීර්ඝ නවාතැන්",
+"di.s1_n_lungo":"දිගු කාලීන පදිංචිකරුවන් සඳහා EC බලපත්‍රය (5+ වසර)",
+"di.s1_l_lavoro":"රැකියා / අධ්‍යාපන / පවුල්",
+"di.s1_n_lavoro":"රැකියා, අධ්‍යාපන හෝ පවුල් එක්රැස් කිරීම සඳහා සාමාන්‍ය බලපත්‍රය",
+"di.s1_l_prot":"ජාත්‍යන්තර ආරක්ෂාව",
+"di.s1_n_prot":"සරණාගත හෝ බෙදාගත් ආරක්ෂාව",
+"di.s1_l_att":"අලුත් කිරීමේ / බලාපොරොත්තුවෙන්",
+"di.s1_n_att":"අලුත් කිරීමේ රිසිට්පතක් හෝ අලුත් කිරීමේ බලාපොරොත්තුවෙන් ඇති කල් ඉකුත් වූ බලපත්‍රය",
+"di.s2_title":"ඔබ ඉතාලියේ කොපමණ මාස ගණනක් රැකියා කළාද?",
+"di.s2_sub":"INPS දායක සහ ගෙවූ (නිත්‍ය වැටුප්) මාස ගණන.",
+"di.s2_l_meno3":"3ට අඩු මාස",
+"di.s2_n_meno3":"දැන් ආරම්භ කළ හෝ ඉතා මෑත රැකියාව",
+"di.s2_l_312":"3–12 මාස",
+"di.s2_n_312":"වසරකට අඩු දායක",
+"di.s2_l_15":"1–5 වසර",
+"di.s2_n_15":"ගෙවූ දායක මාස 12–60",
+"di.s2_l_5p":"5 වසරට වඩා",
+"di.s2_n_5p":"දායක මාස 60කට වඩා",
+"di.s3_title":"ඔබේ වර්තමාන රැකියා තත්ත්වය කුමක්ද?",
+"di.s3_sub":"ඔබ මෙම මෙවලම භාවිතා කරන විට ඔබේ තත්ත්වය දක්වන්න.",
+"di.s3_l_dip":"සේවකයෙකු",
+"di.s3_n_dip":"ස්ථිර හෝ කාලීන ගිවිසුම",
+"di.s3_l_aut":"ස්වයං රැකියා / VAT අංකය",
+"di.s3_n_aut":"ශිල්පී, වෙළෙඳ, නිදහස් වෘත්තිකය, co.co.co.",
+"di.s3_l_dis":"රැකියා විරහිත / රැකියා සොයන",
+"di.s3_n_dis":"රැකියාවක් නැතිව රැකියා සොයනවා",
+"di.s3_l_alt":"වෙනත්",
+"di.s3_n_alt":"ගෘහිණිය, ශිෂ්‍යයෙකු, අක්‍රිය",
+"di.s4_title":"ඔබ සතු යැපෙන දරුවන් හෝ පවුලේ අය සිටිනවාද?",
+"di.s4_sub":"මෙම තොරතුරු බෝනස් සහ පවුල් දීමනාවලට ප්‍රවේශය විවෘත කරයි.",
+"di.s4_l_min":"ඔව්, නාඳුනන දරුවන්",
+"di.s4_n_min":"18 ට අඩු අවම වශයෙන් එක් දරුවෙකු",
+"di.s4_l_gran":"ඔව්, දරුවන් 18–21",
+"di.s4_n_gran":"ශිෂ්‍යයන්, පුහුණු ශිෂ්‍යයන් හෝ රැකියා විරහිත යැපෙන්නන්",
+"di.s4_l_no":"නැහැ, යැපෙන දරුවන් නැහැ",
+"di.s4_n_no":"තනිකඩ හෝ ආර්ථිකව ස්වාධීන දරුවන්",
+"di.s4_l_dis":"ආබාධිත දරුවෙකු හෝ පවුලේ සාමාජිකයෙකු",
+"di.s4_n_dis":"හඳුනාගත් ආබාධිත",
+"di.btn_results":"මගේ අයිතිවාසිකම් බලන්න →",
+"di.res_title":"ඔබේ INPS අයිතිවාසිකම්",
+"di.btn_restart":"← නැවත ආරම්භ",
+"di.disclaimer":"මෙම ප්‍රතිඵල දිශාවන් ලෙස පමණි. නිල තහවුරු කිරීම සඳහා patronato සම්බන්ධ කර ගන්න.",
+"di.warn":"🇮🇹🇱🇰 <strong>ඉතාලිය–ශ්‍රී ලංකා ගිවිසුම</strong> — ඉතාලිය සහ ශ්‍රී ලංකාව ද්විපාර්ශ්විය සමාජ සුරක්ෂා ගිවිසුමක් අත්සන් කළා. දෙරටෙහිම ගෙවූ දායක <strong>ප්‍රමාණය ගණනය කෙරේ</strong> විශ්‍රාම අවශ්‍යතා සපුරාලීමට. ශ්‍රී ලංකාවේ ද වැඩ කළා නම් ඔබේ වසර නාස්ති නොවේ.",
+"di.h2_over":"INPS ප්‍රතිලාභ දළ විශ්ලේෂණය",
+"di.over_sub":"ඉතාලියේ නිත්‍ය විදේශ කම්කරුවන්ට ලැබිය හැකි ප්‍රධාන ප්‍රතිලාභ.",
+"di.th_prest":"ප්‍රතිලාභය",
+"di.th_req":"ප්‍රධාන අවශ්‍යතාව",
+"di.th_chi":"හිමි වන්නේ කාට",
+"g.link_utili":"ප්‍රයෝජනවත් සබැඳි සහ සම්බන්ධතා"
+},
+"ta":{
+"di.eyebrow":"கருவிகள்",
+"di.h1":"உங்கள் INPS<br/><em>உரிமைகள்</em>",
+"di.lead":"உங்கள் நிலைமை பற்றி 4 கேள்விகளுக்கு பதிலளித்து, உங்களுக்கு உரிய INPS நலன்களை உடனடியாக கண்டறியுங்கள்: வேலையின்மை, குடும்பம், மகப்பேறு, நோய் மற்றும் ஓய்வூதியம்.",
+"di.s1_title":"உங்களிடம் எந்த வகை வதிவிட அனுமதி உள்ளது?",
+"di.s1_sub":"அனுமதியின் வகை INPS நலன்களுக்கான அணுகலை தீர்மானிக்கிறது.",
+"di.s1_l_lungo":"EU நீண்ட தங்கல்",
+"di.s1_n_lungo":"நீண்ட கால வதிவாளர்களுக்கான EC அனுமதி (5+ ஆண்டுகள்)",
+"di.s1_l_lavoro":"வேலை / படிப்பு / குடும்பம்",
+"di.s1_n_lavoro":"வேலை, படிப்பு அல்லது குடும்ப இணைவுக்கு செல்லுபடியான சாதாரண அனுமதி",
+"di.s1_l_prot":"சர்வதேச பாதுகாப்பு",
+"di.s1_n_prot":"அகதி அல்லது துணை பாதுகாப்பு",
+"di.s1_l_att":"புதுப்பிப்பு / காத்திருப்பு",
+"di.s1_n_att":"புதுப்பிக்கும் ரசீது அல்லது புதுப்பிப்புக்காக காத்திருக்கும் காலாவதியான அனுமதி",
+"di.s2_title":"நீங்கள் இத்தாலியில் எத்தனை மாதங்கள் வேலை செய்தீர்கள்?",
+"di.s2_sub":"INPS பங்களிப்புகள் செலுத்தப்பட்ட மாதங்களை (சரியான சம்பள பட்டியல்) எண்ணுங்கள்.",
+"di.s2_l_meno3":"3 மாதங்களுக்கும் குறைவு",
+"di.s2_n_meno3":"இப்போது தொடங்கியது அல்லது மிகவும் சமீபத்திய வேலை",
+"di.s2_l_312":"3–12 மாதங்கள்",
+"di.s2_n_312":"ஒரு வருடத்திற்கும் குறைவான பங்களிப்புகள்",
+"di.s2_l_15":"1–5 ஆண்டுகள்",
+"di.s2_n_15":"செலுத்திய பங்களிப்பு மாதங்கள் 12–60",
+"di.s2_l_5p":"5 ஆண்டுகளுக்கும் மேல்",
+"di.s2_n_5p":"60 மாதங்களுக்கும் மேற்பட்ட பங்களிப்புகள்",
+"di.s3_title":"உங்கள் தற்போதைய வேலை நிலைமை என்ன?",
+"di.s3_sub":"நீங்கள் இந்த கருவியை பயன்படுத்தும் நேரத்தில் உங்கள் நிலையை குறிப்பிடுங்கள்.",
+"di.s3_l_dip":"ஊழியர்",
+"di.s3_n_dip":"நிரந்தர அல்லது தற்காலிக ஒப்பந்தம்",
+"di.s3_l_aut":"சுயதொழில் / VAT எண்",
+"di.s3_n_aut":"கைவினைஞர், வணிகர், சுதந்திர தொழில்முறை வல்லுனர், co.co.co.",
+"di.s3_l_dis":"வேலையற்றவர் / வேலை தேடுபவர்",
+"di.s3_n_dis":"வேலை இல்லாமல் வேலை தேடுகிறேன்",
+"di.s3_l_alt":"மற்றவை",
+"di.s3_n_alt":"இல்லத்தரசி, மாணவர், செயலற்றவர்",
+"di.s4_title":"உங்களுக்கு சார்பான குழந்தைகள் அல்லது குடும்ப உறுப்பினர்கள் இருக்கிறார்களா?",
+"di.s4_sub":"இந்த தகவல் போனஸ் மற்றும் குடும்ப கொடுப்பனவுகளுக்கான அணுகலை திறக்கிறது.",
+"di.s4_l_min":"ஆம், சிறுவயது குழந்தைகள்",
+"di.s4_n_min":"18 வயதுக்கு கீழ் குறைந்தது ஒரு குழந்தை",
+"di.s4_l_gran":"ஆம், குழந்தைகள் 18–21",
+"di.s4_n_gran":"மாணவர்கள், பயிற்சியாளர்கள் அல்லது வேலையற்ற சார்பினர்கள்",
+"di.s4_l_no":"இல்லை, சார்பான குழந்தைகள் இல்லை",
+"di.s4_n_no":"தனிவாழ்வு அல்லது பொருளாதார சுதந்திரம் உள்ள குழந்தைகள்",
+"di.s4_l_dis":"மாற்றுத்திறனாளி குழந்தை அல்லது குடும்ப உறுப்பினர்",
+"di.s4_n_dis":"அங்கீகரிக்கப்பட்ட ஊனம் அல்லது மாற்றுத்திறன்",
+"di.btn_results":"என் உரிமைகளை பார்க்க →",
+"di.res_title":"உங்கள் INPS உரிமைகள்",
+"di.btn_restart":"← மீண்டும் தொடங்கு",
+"di.disclaimer":"இந்த முடிவுகள் சுட்டும் மட்டுமே. அதிகாரப்பூர்வ சரிபார்ப்புக்கு ஒரு patronato-ஐ தொடர்பு கொள்ளுங்கள்.",
+"di.warn":"🇮🇹🇱🇰 <strong>இத்தாலி–இலங்கை ஒப்பந்தம்</strong> — இத்தாலியும் இலங்கையும் இருதரப்பு சமூக பாதுகாப்பு ஒப்பந்தம் கையெழுத்திட்டன. இரு நாடுகளிலும் செலுத்திய பங்களிப்புகள் ஓய்வூதிய தேவைகளை பூர்த்தி செய்ய <strong>ஒருங்கிணைக்கப்படுகின்றன</strong>. இலங்கையிலும் வேலை செய்திருந்தால், உங்கள் ஆண்டுகள் வீணாகவில்லை.",
+"di.h2_over":"INPS நலன்களின் கண்ணோட்டம்",
+"di.over_sub":"இத்தாலியில் சட்டப்பூர்வ வெளிநாட்டு தொழிலாளர்களுக்கு அணுகக்கூடிய முக்கிய நலன்கள்.",
+"di.th_prest":"நலன்",
+"di.th_req":"முக்கிய தேவை",
+"di.th_chi":"யாருக்கு உரியது",
+"g.link_utili":"பயனுள்ள இணைப்புகள் & தொடர்புகள்"
+}
+};
+</script>
 <script src="eih.js"></script>
 <script src="eih-auth.js" defer></script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
