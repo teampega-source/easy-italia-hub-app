@@ -35,6 +35,27 @@ function buildUrl(to, q) {
       return 'https://www.kiwi.com/it/search/results/' + city + '/colombo-sri-lanka' + dateSeg + '/' + aff;
     }
 
+    case 'skyscanner': {
+      const dep = q.date ? String(q.date).replace(/[^0-9-]/g,'').slice(0,10) : null;
+      const ret = q.ret  ? String(q.ret).replace(/[^0-9-]/g,'').slice(0,10) : null;
+      // Skyscanner date format: YYMMDD (e.g. 2026-08-01 → 260801)
+      const fmt = (iso) => iso ? iso.slice(2).replace(/-/g,'') : null;
+      let url = `https://www.skyscanner.it/voli/${from.toLowerCase()}/cmb/`;
+      if (fmt(dep)) url += fmt(dep) + '/';
+      if (fmt(ret)) url += fmt(ret) + '/';
+      return url;
+    }
+
+    case 'gflights': {
+      const dep = q.date ? String(q.date).replace(/[^0-9-]/g,'').slice(0,10) : null;
+      const ret = q.ret  ? String(q.ret).replace(/[^0-9-]/g,'').slice(0,10) : null;
+      // Google Flights deep-link format
+      let flight = from + '.CMB';
+      if (dep) flight += '.' + dep;
+      if (ret) flight += '*CMB.' + from + '.' + ret;
+      return `https://www.google.com/travel/flights?hl=it&gl=it#flt=${flight};c:EUR;e:1;sd:1;t:f`;
+    }
+
     case 'booking':
       return 'https://www.booking.com/searchresults.it.html?country=lk'
         + (IDS.booking ? '&aid=' + encodeURIComponent(IDS.booking) + '&label=easyitaliahub' : '');
