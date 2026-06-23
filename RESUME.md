@@ -1,6 +1,13 @@
 # 📌 RESUME — Dove siamo arrivati
 
-> Ultimo aggiornamento: 23 giugno 2026
+> Ultimo aggiornamento: 23 giugno 2026 (sessione 2)
+
+## 🆕 23 giugno (sessione 2): voli Amadeus + fix sicurezza/performance Supabase
+
+- **Voli: switch a Amadeus** — `api/flights.js` riscritto per usare Amadeus Flight Cheapest Date Search (test env, chiave istantanea). Env necessarie: `AMADEUS_CLIENT_ID` + `AMADEUS_CLIENT_SECRET` (developers.amadeus.com → crea app). Fino ad allora resta in demo mode.
+- **Supabase security fix** — `set_updated_at` search_path immutabile; `handle_new_user` non più eseguibile via REST da anon/authenticated.
+- **Supabase RLS performance** — tutte le 40+ policy RLS aggiornate con `(select auth.uid())` per evitare re-evaluation per-riga.
+- **Supabase multiple permissive policies** — `community_posts` e `marketplace_ads`: 2 policy SELECT mergiate in 1 (`status='published' OR user_id=...`).
 
 ## 🆕 23 giugno: servizi esterni ATTIVATI
 

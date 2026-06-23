@@ -42,6 +42,7 @@ create extension if not exists "pgcrypto";
 create or replace function public.set_updated_at()
 returns trigger
 language plpgsql
+set search_path = public, pg_catalog
 as $$
 begin
   new.updated_at = now();
@@ -106,6 +107,8 @@ drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
+
+revoke execute on function public.handle_new_user() from anon, authenticated;
 
 
 -- ============================================================================
@@ -441,13 +444,13 @@ create trigger trg_certificates_updated_at
 --     accesso (deny-all) per i client anon/authenticated; il service role
 --     bypassa SEMPRE la RLS (usato solo dal backend, mai dal frontend).
 --     Regola generale tabelle "user-owned": l'utente vede/modifica SOLO le
---     proprie righe (user_id = auth.uid()); per profiles è id = auth.uid().
+--     proprie righe (user_id = (select auth.uid())); per profiles è id = (select auth.uid()).
 --     Lettura pubblica SOLO dove ha senso (post/annunci pubblicati; corsi/jobs).
 -- EN: We enable RLS on EVERY table. With RLS on and no policy, anon/authenticated
 --     clients get deny-all; the service role ALWAYS bypasses RLS (backend only,
 --     never the frontend). General rule for user-owned tables: a user can
---     read/write ONLY their own rows (user_id = auth.uid()); for profiles it is
---     id = auth.uid(). Public read ONLY where it makes sense (published
+--     read/write ONLY their own rows (user_id = (select auth.uid())); for profiles it is
+--     id = (select auth.uid()). Public read ONLY where it makes sense (published
 --     posts/ads; courses/jobs).
 -- ============================================================================
 -- ============================================================================
@@ -467,7 +470,7 @@ alter table public.certificates       enable row level security;
 
 
 -- ----------------------------------------------------------------------------
--- 14a. PROFILES — owner-only (chiave: id = auth.uid())
+-- 14a. PROFILES — owner-only (chiave: id = (select auth.uid()))
 -- ----------------------------------------------------------------------------
 -- IT: Nessuna policy DELETE: il profilo si elimina solo via cascade da
 --     auth.users (cancellazione account). Ogni utente legge/aggiorna SOLO il
@@ -478,15 +481,15 @@ alter table public.certificates       enable row level security;
 -- ----------------------------------------------------------------------------
 drop policy if exists "profiles_select_own" on public.profiles;
 create policy "profiles_select_own" on public.profiles
-  for select using (id = auth.uid());
+  for select using (id = (select auth.uid()));
 
 drop policy if exists "profiles_insert_own" on public.profiles;
 create policy "profiles_insert_own" on public.profiles
-  for insert with check (id = auth.uid());
+  for insert with check (id = (select auth.uid()));
 
 drop policy if exists "profiles_update_own" on public.profiles;
 create policy "profiles_update_own" on public.profiles
-  for update using (id = auth.uid()) with check (id = auth.uid());
+  for update using (id = (select auth.uid())) with check (id = (select auth.uid()));
 
 
 -- ----------------------------------------------------------------------------
@@ -494,19 +497,19 @@ create policy "profiles_update_own" on public.profiles
 -- ----------------------------------------------------------------------------
 drop policy if exists "subscriptions_select_own" on public.subscriptions;
 create policy "subscriptions_select_own" on public.subscriptions
-  for select using (user_id = auth.uid());
+  for select using (user_id = (select auth.uid()));
 
 drop policy if exists "subscriptions_insert_own" on public.subscriptions;
 create policy "subscriptions_insert_own" on public.subscriptions
-  for insert with check (user_id = auth.uid());
+  for insert with check (user_id = (select auth.uid()));
 
 drop policy if exists "subscriptions_update_own" on public.subscriptions;
 create policy "subscriptions_update_own" on public.subscriptions
-  for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+  for update using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
 
 drop policy if exists "subscriptions_delete_own" on public.subscriptions;
 create policy "subscriptions_delete_own" on public.subscriptions
-  for delete using (user_id = auth.uid());
+  for delete using (user_id = (select auth.uid()));
 
 
 -- ----------------------------------------------------------------------------
@@ -514,19 +517,19 @@ create policy "subscriptions_delete_own" on public.subscriptions
 -- ----------------------------------------------------------------------------
 drop policy if exists "deadlines_select_own" on public.deadlines;
 create policy "deadlines_select_own" on public.deadlines
-  for select using (user_id = auth.uid());
+  for select using (user_id = (select auth.uid()));
 
 drop policy if exists "deadlines_insert_own" on public.deadlines;
 create policy "deadlines_insert_own" on public.deadlines
-  for insert with check (user_id = auth.uid());
+  for insert with check (user_id = (select auth.uid()));
 
 drop policy if exists "deadlines_update_own" on public.deadlines;
 create policy "deadlines_update_own" on public.deadlines
-  for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+  for update using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
 
 drop policy if exists "deadlines_delete_own" on public.deadlines;
 create policy "deadlines_delete_own" on public.deadlines
-  for delete using (user_id = auth.uid());
+  for delete using (user_id = (select auth.uid()));
 
 
 -- ----------------------------------------------------------------------------
@@ -534,19 +537,19 @@ create policy "deadlines_delete_own" on public.deadlines
 -- ----------------------------------------------------------------------------
 drop policy if exists "permesso_select_own" on public.permesso_practices;
 create policy "permesso_select_own" on public.permesso_practices
-  for select using (user_id = auth.uid());
+  for select using (user_id = (select auth.uid()));
 
 drop policy if exists "permesso_insert_own" on public.permesso_practices;
 create policy "permesso_insert_own" on public.permesso_practices
-  for insert with check (user_id = auth.uid());
+  for insert with check (user_id = (select auth.uid()));
 
 drop policy if exists "permesso_update_own" on public.permesso_practices;
 create policy "permesso_update_own" on public.permesso_practices
-  for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+  for update using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
 
 drop policy if exists "permesso_delete_own" on public.permesso_practices;
 create policy "permesso_delete_own" on public.permesso_practices
-  for delete using (user_id = auth.uid());
+  for delete using (user_id = (select auth.uid()));
 
 
 -- ----------------------------------------------------------------------------
@@ -554,19 +557,19 @@ create policy "permesso_delete_own" on public.permesso_practices
 -- ----------------------------------------------------------------------------
 drop policy if exists "documents_select_own" on public.documents;
 create policy "documents_select_own" on public.documents
-  for select using (user_id = auth.uid());
+  for select using (user_id = (select auth.uid()));
 
 drop policy if exists "documents_insert_own" on public.documents;
 create policy "documents_insert_own" on public.documents
-  for insert with check (user_id = auth.uid());
+  for insert with check (user_id = (select auth.uid()));
 
 drop policy if exists "documents_update_own" on public.documents;
 create policy "documents_update_own" on public.documents
-  for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+  for update using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
 
 drop policy if exists "documents_delete_own" on public.documents;
 create policy "documents_delete_own" on public.documents
-  for delete using (user_id = auth.uid());
+  for delete using (user_id = (select auth.uid()));
 
 
 -- ----------------------------------------------------------------------------
@@ -574,19 +577,19 @@ create policy "documents_delete_own" on public.documents
 -- ----------------------------------------------------------------------------
 drop policy if exists "ai_chats_select_own" on public.ai_chats;
 create policy "ai_chats_select_own" on public.ai_chats
-  for select using (user_id = auth.uid());
+  for select using (user_id = (select auth.uid()));
 
 drop policy if exists "ai_chats_insert_own" on public.ai_chats;
 create policy "ai_chats_insert_own" on public.ai_chats
-  for insert with check (user_id = auth.uid());
+  for insert with check (user_id = (select auth.uid()));
 
 drop policy if exists "ai_chats_update_own" on public.ai_chats;
 create policy "ai_chats_update_own" on public.ai_chats
-  for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+  for update using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
 
 drop policy if exists "ai_chats_delete_own" on public.ai_chats;
 create policy "ai_chats_delete_own" on public.ai_chats
-  for delete using (user_id = auth.uid());
+  for delete using (user_id = (select auth.uid()));
 
 
 -- ----------------------------------------------------------------------------
@@ -594,19 +597,19 @@ create policy "ai_chats_delete_own" on public.ai_chats
 -- ----------------------------------------------------------------------------
 drop policy if exists "notifications_select_own" on public.notifications;
 create policy "notifications_select_own" on public.notifications
-  for select using (user_id = auth.uid());
+  for select using (user_id = (select auth.uid()));
 
 drop policy if exists "notifications_insert_own" on public.notifications;
 create policy "notifications_insert_own" on public.notifications
-  for insert with check (user_id = auth.uid());
+  for insert with check (user_id = (select auth.uid()));
 
 drop policy if exists "notifications_update_own" on public.notifications;
 create policy "notifications_update_own" on public.notifications
-  for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+  for update using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
 
 drop policy if exists "notifications_delete_own" on public.notifications;
 create policy "notifications_delete_own" on public.notifications
-  for delete using (user_id = auth.uid());
+  for delete using (user_id = (select auth.uid()));
 
 
 -- ----------------------------------------------------------------------------
@@ -618,48 +621,44 @@ create policy "notifications_delete_own" on public.notifications
 --     anyone (incl. anon) sees posts with status = 'published'.
 -- ----------------------------------------------------------------------------
 drop policy if exists "community_posts_select_own" on public.community_posts;
-create policy "community_posts_select_own" on public.community_posts
-  for select using (user_id = auth.uid());
-
 drop policy if exists "community_posts_select_published" on public.community_posts;
-create policy "community_posts_select_published" on public.community_posts
-  for select using (status = 'published');
+drop policy if exists "community_posts_select" on public.community_posts;
+create policy "community_posts_select" on public.community_posts
+  for select using (status = 'published' or user_id = (select auth.uid()));
 
 drop policy if exists "community_posts_insert_own" on public.community_posts;
 create policy "community_posts_insert_own" on public.community_posts
-  for insert with check (user_id = auth.uid());
+  for insert with check (user_id = (select auth.uid()));
 
 drop policy if exists "community_posts_update_own" on public.community_posts;
 create policy "community_posts_update_own" on public.community_posts
-  for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+  for update using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
 
 drop policy if exists "community_posts_delete_own" on public.community_posts;
 create policy "community_posts_delete_own" on public.community_posts
-  for delete using (user_id = auth.uid());
+  for delete using (user_id = (select auth.uid()));
 
 
 -- ----------------------------------------------------------------------------
 -- 14i. MARKETPLACE_ADS — owner-only + lettura pubblica degli annunci pubblicati
 -- ----------------------------------------------------------------------------
 drop policy if exists "marketplace_ads_select_own" on public.marketplace_ads;
-create policy "marketplace_ads_select_own" on public.marketplace_ads
-  for select using (user_id = auth.uid());
-
 drop policy if exists "marketplace_ads_select_published" on public.marketplace_ads;
-create policy "marketplace_ads_select_published" on public.marketplace_ads
-  for select using (status = 'published');
+drop policy if exists "marketplace_ads_select" on public.marketplace_ads;
+create policy "marketplace_ads_select" on public.marketplace_ads
+  for select using (status = 'published' or user_id = (select auth.uid()));
 
 drop policy if exists "marketplace_ads_insert_own" on public.marketplace_ads;
 create policy "marketplace_ads_insert_own" on public.marketplace_ads
-  for insert with check (user_id = auth.uid());
+  for insert with check (user_id = (select auth.uid()));
 
 drop policy if exists "marketplace_ads_update_own" on public.marketplace_ads;
 create policy "marketplace_ads_update_own" on public.marketplace_ads
-  for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+  for update using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
 
 drop policy if exists "marketplace_ads_delete_own" on public.marketplace_ads;
 create policy "marketplace_ads_delete_own" on public.marketplace_ads
-  for delete using (user_id = auth.uid());
+  for delete using (user_id = (select auth.uid()));
 
 
 -- ----------------------------------------------------------------------------
@@ -676,11 +675,11 @@ create policy "marketplace_ads_delete_own" on public.marketplace_ads
 -- ----------------------------------------------------------------------------
 drop policy if exists "certificates_select_own" on public.certificates;
 create policy "certificates_select_own" on public.certificates
-  for select using (user_id = auth.uid());
+  for select using (user_id = (select auth.uid()));
 
 drop policy if exists "certificates_delete_own" on public.certificates;
 create policy "certificates_delete_own" on public.certificates
-  for delete using (user_id = auth.uid());
+  for delete using (user_id = (select auth.uid()));
 
 
 -- ----------------------------------------------------------------------------
@@ -766,7 +765,7 @@ on conflict (id) do nothing;
 
 -- RLS owner-only su storage.objects per il bucket 'documents'.
 -- La RLS su storage.objects è già abilitata da Supabase.
--- Owner = prima cartella del percorso == auth.uid()
+-- Owner = prima cartella del percorso == (select auth.uid())
 -- (storage.foldername(name))[1] è il primo segmento del path.
 
 drop policy if exists "documents_storage_select_own" on storage.objects;
@@ -774,7 +773,7 @@ create policy "documents_storage_select_own" on storage.objects
   for select to authenticated
   using (
     bucket_id = 'documents'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and (storage.foldername(name))[1] = (select auth.uid())::text
   );
 
 drop policy if exists "documents_storage_insert_own" on storage.objects;
@@ -782,7 +781,7 @@ create policy "documents_storage_insert_own" on storage.objects
   for insert to authenticated
   with check (
     bucket_id = 'documents'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and (storage.foldername(name))[1] = (select auth.uid())::text
   );
 
 drop policy if exists "documents_storage_update_own" on storage.objects;
@@ -790,11 +789,11 @@ create policy "documents_storage_update_own" on storage.objects
   for update to authenticated
   using (
     bucket_id = 'documents'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and (storage.foldername(name))[1] = (select auth.uid())::text
   )
   with check (
     bucket_id = 'documents'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and (storage.foldername(name))[1] = (select auth.uid())::text
   );
 
 drop policy if exists "documents_storage_delete_own" on storage.objects;
@@ -802,7 +801,7 @@ create policy "documents_storage_delete_own" on storage.objects
   for delete to authenticated
   using (
     bucket_id = 'documents'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and (storage.foldername(name))[1] = (select auth.uid())::text
   );
 --
 -- ============================================================================
