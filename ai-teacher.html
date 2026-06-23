@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Teacher — Easy Italia Hub</title>
+<meta name="description" content="Pratica l'italiano con un insegnante AI: correggi grammatica, conversa, preparati ai colloqui."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/ai-teacher"/>
+
+<!-- ─── Open Graph ─── -->
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Easy Italia Hub"/>
+<meta property="og:title" content="AI Teacher — Easy Italia Hub"/>
+<meta property="og:description" content="Pratica l'italiano con un insegnante AI: correggi grammatica, conversa, preparati ai colloqui."/>
+<meta property="og:url" content="https://easyitaliahub.it/ai-teacher"/>
+<meta property="og:image" content="https://easyitaliahub.it/api/og?t=AI%20Teacher&amp;s=Pratica%20l%27italiano%20con%20un%20insegnante%20AI"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="it_IT"/>
+<meta property="og:locale:alternate" content="en_US"/>
+<meta property="og:locale:alternate" content="si_LK"/>
+<meta property="og:locale:alternate" content="ta_IN"/>
+
+<!-- ─── Twitter Card ─── -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="AI Teacher — Easy Italia Hub"/>
+<meta name="twitter:description" content="Pratica l'italiano con un insegnante AI: correggi grammatica, conversa, preparati ai colloqui."/>
+<meta name="twitter:image" content="https://easyitaliahub.it/api/og?t=AI%20Teacher&amp;s=Pratica%20l%27italiano%20con%20un%20insegnante%20AI"/>
+
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+</head>
+<body data-page="ai-teacher">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+<style>
+  [data-page="ai-teacher"] .page-hero{max-width:1100px;margin:0 auto;padding:calc(var(--sp-6) + 2.5rem) var(--sp-3) var(--sp-3)}
+  [data-page="ai-teacher"] .section-label{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem}
+  [data-page="ai-teacher"] h1{font-family:'Clash Grotesk',sans-serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:600;letter-spacing:-.02em;line-height:1.05;margin:0 0 1rem}
+  [data-page="ai-teacher"] h1 em{font-style:italic;color:var(--gold)}
+  [data-page="ai-teacher"] .lead{max-width:62ch;color:var(--fg-secondary);font-size:var(--text-lg);line-height:1.65}
+  [data-page="ai-teacher"] .wrap{max-width:860px;margin:0 auto;padding:0 var(--sp-3) var(--sp-6)}
+  /* Mode cards */
+  [data-page="ai-teacher"] .modes{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);margin-bottom:var(--sp-3)}
+  @media(max-width:640px){[data-page="ai-teacher"] .modes{grid-template-columns:1fr}}
+  [data-page="ai-teacher"] .mode-card{cursor:pointer;text-align:left;padding:1.1rem 1.2rem;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg-elevated);transition:transform var(--dur-std) var(--ease-spring),border-color var(--dur-std),box-shadow var(--dur-std)}
+  [data-page="ai-teacher"] .mode-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(22,20,18,.10)}
+  [data-page="ai-teacher"] .mode-card.active{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+  [data-page="ai-teacher"] .mode-card .mc-icon{font-size:1.6rem;margin-bottom:.5rem;display:block}
+  [data-page="ai-teacher"] .mode-card .mc-title{font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:1rem;margin-bottom:.3rem}
+  [data-page="ai-teacher"] .mode-card .mc-desc{font-size:var(--text-sm);color:var(--fg-muted);line-height:1.45}
+  /* Chat area */
+  [data-page="ai-teacher"] .chat-wrap{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column;min-height:400px}
+  [data-page="ai-teacher"] #chat-thread{flex:1;padding:1.2rem 1.3rem;display:flex;flex-direction:column;gap:.9rem;overflow-y:auto;max-height:420px}
+  [data-page="ai-teacher"] .msg-user{align-self:flex-end;max-width:78%;background:var(--gold);color:#fff;border-radius:var(--radius) var(--radius) 2px var(--radius);padding:.65rem 1rem;font-size:var(--text-sm);line-height:1.55}
+  [data-page="ai-teacher"] .msg-ai{align-self:flex-start;max-width:82%;background:var(--bg-deep);color:var(--fg);border-radius:var(--radius) var(--radius) var(--radius) 2px;padding:.65rem 1rem;font-size:var(--text-sm);line-height:1.65;border:1px solid var(--border)}
+  [data-page="ai-teacher"] .msg-ai strong{color:var(--gold)}
+  [data-page="ai-teacher"] .chat-input-row{display:flex;gap:.6rem;padding:1rem 1.2rem;border-top:1px solid var(--border);align-items:flex-end}
+  [data-page="ai-teacher"] #user-input{flex:1;padding:.65rem .9rem;border-radius:var(--radius-sm);border:1px solid var(--border-bright);background:var(--bg-deep);color:var(--fg);font:inherit;font-size:var(--text-sm);line-height:1.5;resize:none;min-height:2.8rem;max-height:10rem}
+  [data-page="ai-teacher"] #user-input:focus{outline:2px solid var(--gold);outline-offset:1px}
+  [data-page="ai-teacher"] #send-btn{cursor:pointer;border:0;font:inherit;font-weight:700;padding:.65rem 1.2rem;border-radius:var(--radius-full);background:var(--ink);color:var(--bg-deep);white-space:nowrap;transition:opacity var(--dur-std)}
+  [data-page="ai-teacher"] #send-btn:disabled{opacity:.45;cursor:not-allowed}
+  [data-page="ai-teacher"] .empty-state{color:var(--fg-muted);font-size:var(--text-sm);text-align:center;padding:2rem 1rem;line-height:1.6}
+  [data-page="ai-teacher"] .spinner-inline{display:inline-block;width:1rem;height:1rem;border:2px solid var(--border-bright);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle}
+  @keyframes spin{to{transform:rotate(360deg)}}
+</style>
+
+<section class="page-hero">
+  <p class="section-label">— FORMAZIONE</p>
+  <h1 class="reveal">Impara l'italiano,<br/><em>con l'AI.</em></h1>
+  <p class="lead reveal">Scegli una modalità e inizia subito.</p>
+</section>
+
+<div class="wrap">
+  <div class="modes reveal" role="radiogroup" aria-label="Modalità di apprendimento">
+    <button class="mode-card active" data-mode="correggi" role="radio" aria-checked="true">
+      <span class="mc-icon">&#9999;&#65039;</span>
+      <div class="mc-title">Correggi il mio italiano</div>
+      <div class="mc-desc">Scrivi una frase o un testo in italiano. L'AI corregge gli errori e spiega perché.</div>
+    </button>
+    <button class="mode-card" data-mode="conversazione" role="radio" aria-checked="false">
+      <span class="mc-icon">&#128172;</span>
+      <div class="mc-title">Pratica conversazione</div>
+      <div class="mc-desc">Simula una conversazione: al CAF, alla questura, dal medico, al lavoro.</div>
+    </button>
+    <button class="mode-card" data-mode="colloquio" role="radio" aria-checked="false">
+      <span class="mc-icon">&#128084;</span>
+      <div class="mc-title">Prepara il colloquio</div>
+      <div class="mc-desc">Simula un colloquio di lavoro. Ottieni feedback immediato su lingua e contenuto.</div>
+    </button>
+  </div>
+
+  <div class="chat-wrap reveal">
+    <div id="chat-thread" aria-live="polite">
+      <div class="empty-state" id="empty-state">Scegli una modalità qui sopra e scrivi il tuo primo messaggio in italiano.</div>
+    </div>
+    <div class="chat-input-row">
+      <textarea id="user-input" placeholder="Scrivi qui in italiano..." rows="1" aria-label="Il tuo messaggio"></textarea>
+      <button id="send-btn">Invia &#8594;</button>
+    </div>
+  </div>
+</div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script src="eih-auth.js" defer></script>
+<script>
+(function(){
+'use strict';
+
+var systemPrompts = {
+  correggi: 'Sei un insegnante di italiano madrelingua. L\'utente ti manda un testo in italiano. Correggi gli errori grammaticali e ortografici, spiega ogni correzione in modo semplice. Se il testo è corretto, dillo e fai un complimento.',
+  conversazione: 'Sei un italiano in una situazione quotidiana (CAF, questura, medico, negozio). Rispondi in italiano semplice e naturale. Se l\'utente fa errori grammaticali gravi, correggili gentilmente dopo aver risposto.',
+  colloquio: 'Sei un responsabile HR italiano che conduce un colloquio di lavoro. Fai domande tipiche di colloquio in italiano, valuta le risposte dell\'utente e dai feedback costruttivo su lingua e contenuto.'
+};
+
+var currentMode = 'correggi';
+var conversationHistory = [];
+var MAX_HISTORY = 6;
+
+var modeCards = document.querySelectorAll('.mode-card');
+var thread = document.getElementById('chat-thread');
+var input = document.getElementById('user-input');
+var sendBtn = document.getElementById('send-btn');
+var emptyState = document.getElementById('empty-state');
+
+modeCards.forEach(function(card) {
+  card.addEventListener('click', function() {
+    modeCards.forEach(function(c){ c.classList.remove('active'); c.setAttribute('aria-checked','false'); });
+    card.classList.add('active');
+    card.setAttribute('aria-checked','true');
+    currentMode = card.getAttribute('data-mode');
+    conversationHistory = [];
+    thread.innerHTML = '';
+    var es = document.createElement('div');
+    es.className = 'empty-state';
+    es.id = 'empty-state';
+    es.textContent = 'Modalità: ' + card.querySelector('.mc-title').textContent + '. Scrivi il tuo primo messaggio.';
+    thread.appendChild(es);
+  });
+});
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function addBubble(role, text) {
+  var es = document.getElementById('empty-state');
+  if (es) es.remove();
+  var div = document.createElement('div');
+  div.className = role === 'user' ? 'msg-user' : 'msg-ai';
+  div.innerHTML = escHtml(text).replace(/\n/g,'<br/>');
+  thread.appendChild(div);
+  thread.scrollTop = thread.scrollHeight;
+  return div;
+}
+
+function addSpinner() {
+  var es = document.getElementById('empty-state');
+  if (es) es.remove();
+  var div = document.createElement('div');
+  div.className = 'msg-ai';
+  div.id = 'typing-indicator';
+  div.innerHTML = '<span class="spinner-inline"></span> Sto scrivendo&hellip;';
+  thread.appendChild(div);
+  thread.scrollTop = thread.scrollHeight;
+}
+
+function removeSpinner() {
+  var el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
+function send() {
+  var text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  input.style.height = '';
+  sendBtn.disabled = true;
+
+  addBubble('user', text);
+  conversationHistory.push({ role: 'user', content: text });
+  if (conversationHistory.length > MAX_HISTORY * 2) {
+    conversationHistory = conversationHistory.slice(-MAX_HISTORY * 2);
+  }
+
+  addSpinner();
+
+  var messages = [{ role: 'user', content: systemPrompts[currentMode] + '\n\n---\n\n' + text }];
+  if (conversationHistory.length > 1) {
+    messages = conversationHistory.slice(0, -1).map(function(m, i) {
+      if (i === 0) return { role: 'user', content: systemPrompts[currentMode] + '\n\n---\n\n' + m.content };
+      return m;
+    });
+    messages.push(conversationHistory[conversationHistory.length - 1]);
+  }
+
+  fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages: messages })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    removeSpinner();
+    sendBtn.disabled = false;
+    if (data && data.reply) {
+      addBubble('ai', data.reply);
+      conversationHistory.push({ role: 'assistant', content: data.reply });
+    } else {
+      addBubble('ai', 'Risposta non disponibile. Riprova tra qualche istante.');
+    }
+  })
+  .catch(function(){
+    removeSpinner();
+    sendBtn.disabled = false;
+    addBubble('ai', 'Errore di connessione. Controlla la rete e riprova.');
+  });
+}
+
+sendBtn.addEventListener('click', send);
+input.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+});
+input.addEventListener('input', function(){
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 160) + 'px';
+});
+})();
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="assets/eih-atmosphere.js" defer></script>
+<script src="assets/eih-palette.js" defer></script>
+<script src="assets/eih-theme.js" defer></script>
+<script src="assets/eih-consent.js" defer></script>
+</body>
+</html>
