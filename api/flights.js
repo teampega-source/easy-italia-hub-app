@@ -1,5 +1,5 @@
 // api/flights.js
-// GET ?from=IATA → prezzi live Amadeus (comparatore)
+// GET ?from=IATA → prezzi voli (comparatore, dati Travelpayouts/Aviasales)
 // GET ?id=UUID   → disiscrizione avvisi volo
 // POST           → iscrizione avvisi volo
 'use strict';
@@ -8,16 +8,16 @@ const { isRateLimited, clientIp } = require('./_ratelimit');
 
 const SUPABASE_URL        = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const AM_ID     = process.env.AMADEUS_CLIENT_ID;
-const AM_SECRET = process.env.AMADEUS_CLIENT_SECRET;
-const AM_HOST   = process.env.AMADEUS_ENV === 'production'
-  ? 'https://api.amadeus.com'
-  : 'https://test.api.amadeus.com';
+// Travelpayouts (Aviasales) Flight Data API — gratis, accetta publisher piccoli.
+// TRAVELPAYOUTS_TOKEN: token API (obbligatorio per i prezzi reali).
+// TRAVELPAYOUTS_MARKER: marker affiliato (opzionale, per i deep-link monetizzati).
+const TP_TOKEN  = process.env.TRAVELPAYOUTS_TOKEN;
+const TP_MARKER = process.env.TRAVELPAYOUTS_MARKER || '';
+const TP_HOST   = 'https://api.travelpayouts.com/aviasales/v3/prices_for_dates';
 
 const VALID_ORIGINS = new Set(['MXP','FCO','TRN','VCE','NAP','BGY','LIN','PMO']);
 
 // ── In-memory caches (warm instances) ───────────────────────────────────────
-let _amToken = null, _amTokenExp = 0;
 const _priceCache = new Map(); // origin → { data, exp }
 
 // ── Router ───────────────────────────────────────────────────────────────────
@@ -33,7 +33,7 @@ module.exports = async function handler(req, res) {
   return res.status(405).json({ error: 'Method not allowed' });
 };
 
-// ── PREZZI LIVE (Amadeus) ────────────────────────────────────────────────────
+// ── PREZZI (Travelpayouts/Aviasales) ─────────────────────────────────────────
 async function handlePrices(req, res, q) {
   if (isRateLimited(clientIp(req), { name: 'prices', max: 30 })) {
     return res.status(429).json({ error: 'Troppe richieste.' });
@@ -49,30 +49,25 @@ async function handlePrices(req, res, q) {
     return res.status(200).json(cached.data);
   }
 
-  if (!AM_ID || !AM_SECRET) {
+  if (!TP_TOKEN) {
     return res.status(200).json({ demo: true, origin, destination: 'CMB', offers: demoOffers(origin) });
   }
 
   try {
-    const token = await getAmadeusToken();
-    const today = new Date();
-    const start = addDays(today, 3);
-    const end   = addDays(today, 90);
-    const fmt   = d => d.toISOString().slice(0, 10);
+    // I prezzi cache Travelpayouts sono per mese: interrogo i prossimi 3 mesi in
+    // parallelo, unisco, tengo il più economico per data e prendo gli 8 più bassi.
+    const months = nextMonths(3);
+    const batches = await Promise.all(months.map(m => fetchTpMonth(origin, m)));
 
-    const url = `${AM_HOST}/v1/shopping/flight-dates?origin=${origin}&destination=CMB&oneWay=true&departureDate=${fmt(start)},${fmt(end)}&nonStop=false&viewBy=DATE`;
-    const resp = await fetch(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (!resp.ok) throw new Error(`Amadeus ${resp.status}`);
-
-    const json = await resp.json();
-    const offers = (json.data || [])
-      .filter(d => d.price && d.departureDate)
-      .sort((a, b) => parseFloat(a.price.total) - parseFloat(b.price.total))
-      .slice(0, 8)
-      .map(d => ({ departureDate: d.departureDate, price: parseFloat(d.price.total), currency: 'EUR' }));
+    const cheapestByDate = new Map();
+    for (const o of batches.flat()) {
+      if (!o.price || !o.departureDate) continue;
+      const cur = cheapestByDate.get(o.departureDate);
+      if (!cur || o.price < cur.price) cheapestByDate.set(o.departureDate, o);
+    }
+    const offers = [...cheapestByDate.values()]
+      .sort((a, b) => a.price - b.price)
+      .slice(0, 8);
 
     const result = { origin, destination: 'CMB', offers: offers.length ? offers : demoOffers(origin) };
     _priceCache.set(origin, { data: result, exp: Date.now() + 4 * 3600_000 });
@@ -85,19 +80,30 @@ async function handlePrices(req, res, q) {
   }
 }
 
-async function getAmadeusToken() {
-  if (_amToken && Date.now() < _amTokenExp) return _amToken;
-  const params = new URLSearchParams({ grant_type: 'client_credentials', client_id: AM_ID, client_secret: AM_SECRET });
-  const resp = await fetch(`${AM_HOST}/v1/security/oauth2/token`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: params.toString(),
-  });
-  if (!resp.ok) throw new Error('Token ' + resp.status);
+// Prezzi più economici origin→CMB per un mese (YYYY-MM), ordinati per prezzo.
+async function fetchTpMonth(origin, month) {
+  const url = `${TP_HOST}?origin=${origin}&destination=CMB&departure_at=${month}`
+    + `&one_way=true&currency=eur&sorting=price&limit=10`
+    + (TP_MARKER ? `&marker=${encodeURIComponent(TP_MARKER)}` : '');
+  const resp = await fetch(url, { headers: { 'X-Access-Token': TP_TOKEN } });
+  if (!resp.ok) throw new Error(`Travelpayouts ${resp.status}`);
   const json = await resp.json();
-  _amToken = json.access_token;
-  _amTokenExp = Date.now() + (json.expires_in - 60) * 1000;
-  return _amToken;
+  if (!json.success) throw new Error('Travelpayouts: ' + (json.error || 'unknown'));
+  return (json.data || []).map(d => ({
+    departureDate: String(d.departure_at).slice(0, 10),
+    price: Math.round(parseFloat(d.price)),
+    currency: 'EUR',
+  }));
+}
+
+// I prossimi n mesi nel formato YYYY-MM (incluso quello corrente).
+function nextMonths(n) {
+  const out = [], now = new Date();
+  for (let i = 0; i < n; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    out.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`);
+  }
+  return out;
 }
 
 function addDays(date, n) { const d = new Date(date); d.setDate(d.getDate() + n); return d; }
