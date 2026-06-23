@@ -1089,6 +1089,32 @@ renderPhases();
   }
 })();
 </script>
+<script>
+/* auto-open chat from ?q= or #q= — used by community.html ask box */
+(function(){
+  function getQ(){
+    try{
+      var h=location.hash;
+      if(h&&h.indexOf('#q=')===0) return decodeURIComponent(h.slice(3));
+      var s=new URLSearchParams(location.search);
+      var q=s.get('q');
+      if(q) return q;
+    }catch(e){}
+    return '';
+  }
+  var q=getQ();
+  if(!q) return;
+  window.addEventListener('load',function(){
+    setTimeout(function(){
+      if(typeof toggleChat==='function'&&!chatOpen) toggleChat();
+      setTimeout(function(){
+        var inp=document.getElementById('ch-in');
+        if(inp){ inp.value=q; if(typeof sendMsg==='function') sendMsg(); }
+      }, 350);
+    }, 600);
+  });
+})();
+</script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
 <script src="assets/eih-atmosphere.js" defer></script>
 <script src="assets/eih-palette.js" defer></script>
