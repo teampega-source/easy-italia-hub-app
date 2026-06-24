@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Benvenuta — Easy Italia Hub</title>
+<meta name="description" content="La piattaforma per la comunità srilankese in Italia. Guide, AI assistant, community e strumenti — tutto gratis."/>
+<meta name="robots" content="noindex"/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/benvenuta"/>
+<link rel="stylesheet" href="/eih.css"/>
+<style>
+  .bv-hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem 1.5rem 3rem;gap:1.5rem;position:relative;overflow:hidden;}
+  .bv-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(125,112,88,.15);border:1px solid rgba(125,112,88,.3);color:var(--accent);border-radius:999px;padding:.35rem 1rem;font-size:.85rem;font-weight:600;letter-spacing:.02em;}
+  .bv-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(2.2rem,7vw,3.8rem);line-height:1.15;font-weight:700;max-width:700px;}
+  .bv-title span{color:var(--accent);}
+  .bv-sub{font-size:1.1rem;color:var(--muted);max-width:520px;line-height:1.6;}
+  .bv-cta-group{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-top:.5rem;}
+  .bv-cta-primary{background:var(--accent);color:#fff;border:none;padding:.85rem 2rem;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity .2s,transform .2s;}
+  .bv-cta-primary:hover{opacity:.88;transform:translateY(-1px);}
+  .bv-cta-secondary{background:transparent;color:var(--fg);border:1.5px solid var(--border);padding:.85rem 2rem;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;transition:background .2s;}
+  .bv-cta-secondary:hover{background:var(--surface);}
+  .bv-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;max-width:860px;width:100%;margin-top:1rem;}
+  .bv-feat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.25rem 1rem;text-align:left;transition:border-color .2s;}
+  .bv-feat:hover{border-color:var(--accent);}
+  .bv-feat-icon{font-size:1.6rem;margin-bottom:.5rem;}
+  .bv-feat h3{font-size:.95rem;font-weight:700;margin:0 0 .25rem;}
+  .bv-feat p{font-size:.82rem;color:var(--muted);margin:0;line-height:1.5;}
+  .bv-social-proof{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;justify-content:center;}
+  .bv-avatars{display:flex;}
+  .bv-avatars span{width:32px;height:32px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;font-weight:700;margin-left:-8px;}
+  .bv-avatars span:first-child{margin-left:0;}
+  .bv-proof-text{font-size:.85rem;color:var(--muted);}
+  .bv-proof-text strong{color:var(--fg);}
+  .bv-divider{width:40px;height:3px;background:var(--accent);border-radius:2px;opacity:.5;}
+  .bv-free-tag{background:rgba(34,197,94,.15);color:#16a34a;border:1px solid rgba(34,197,94,.3);border-radius:6px;padding:.2rem .6rem;font-size:.75rem;font-weight:700;letter-spacing:.04em;}
+  [data-theme="dark"] .bv-free-tag{background:rgba(34,197,94,.1);color:#4ade80;border-color:rgba(34,197,94,.25);}
+</style>
+</head>
+<body data-page="benvenuta">
+<div id="site-nav"></div>
+<div id="preloader"><div class="pre-inner"><span class="pre-logo">E<span>I</span>H</span></div></div>
+<div id="wipe"></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<main>
+  <section class="bv-hero">
+    <div class="bv-badge">
+      <span>✨</span> Benvenuta nella community
+    </div>
+
+    <h1 class="bv-title">
+      Tutto quello che ti serve<br/>per vivere bene <span>in Italia</span>
+    </h1>
+
+    <p class="bv-sub">
+      Guide burocratiche, assistente AI multilingua, forum community e strumenti pratici — pensati per la comunità srilankese in Italia. Gratis.
+    </p>
+
+    <div class="bv-social-proof">
+      <div class="bv-avatars">
+        <span>KP</span><span>SA</span><span>RM</span><span>DJ</span><span>NW</span>
+      </div>
+      <span class="bv-proof-text"><strong>Già attivi</strong> — permesso, SPID, INPS e altro</span>
+    </div>
+
+    <div class="bv-cta-group">
+      <button class="bv-cta-primary" onclick="openAuth('signup'); trackCTA('hero_signup')">
+        Registrati gratis
+      </button>
+      <button class="bv-cta-secondary" onclick="window.location='/percorso'; trackCTA('hero_explore')">
+        Esplora le guide
+      </button>
+    </div>
+
+    <div class="bv-divider"></div>
+
+    <div class="bv-features">
+      <a href="/percorso" class="bv-feat" style="text-decoration:none;color:inherit;" onclick="trackCTA('feat_percorso')">
+        <div class="bv-feat-icon">🗺️</div>
+        <h3>Il Tuo Percorso</h3>
+        <p>Permesso di soggiorno, SPID, residenza — step by step nella tua lingua.</p>
+      </a>
+      <a href="/percorso" class="bv-feat" style="text-decoration:none;color:inherit;" onclick="trackCTA('feat_ai')">
+        <div class="bv-feat-icon">🤖</div>
+        <h3>Consigliere AI</h3>
+        <p>Fai domande in italiano, sinhala o tamil. Risponde 24/7, gratis.</p>
+      </a>
+      <a href="/ai-teacher" class="bv-feat" style="text-decoration:none;color:inherit;" onclick="trackCTA('feat_teacher')">
+        <div class="bv-feat-icon">🎓</div>
+        <h3>AI Teacher</h3>
+        <p>Impara l'italiano con conversazioni, correzioni e simulazioni di colloquio.</p>
+      </a>
+      <a href="/forum" class="bv-feat" style="text-decoration:none;color:inherit;" onclick="trackCTA('feat_forum')">
+        <div class="bv-feat-icon">💬</div>
+        <h3>Community Forum</h3>
+        <p>Fai domande, condividi esperienze con chi è passato dalla stessa situazione.</p>
+      </a>
+      <a href="/traduci" class="bv-feat" style="text-decoration:none;color:inherit;" onclick="trackCTA('feat_traduci')">
+        <div class="bv-feat-icon">🌐</div>
+        <h3>Traduttore Documenti</h3>
+        <p>Traduci lettere burocratiche in sinhala, tamil o inglese istantaneamente.</p>
+      </a>
+      <a href="/assegno-unico" class="bv-feat" style="text-decoration:none;color:inherit;" onclick="trackCTA('feat_assegno')">
+        <div class="bv-feat-icon">💶</div>
+        <h3>Calcola i tuoi diritti</h3>
+        <p>Assegno Unico, INPS, bonus — scopri quanto spetta a te e alla tua famiglia.</p>
+      </a>
+    </div>
+
+    <p style="font-size:.78rem;color:var(--muted);margin-top:1rem;">
+      <span class="bv-free-tag">GRATIS</span> &nbsp;Nessuna carta di credito. Nessun abbonamento richiesto.
+    </p>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="/eih.js"></script>
+<script src="/eih-auth.js"></script>
+<script>
+function trackCTA(label){
+  try{
+    if(typeof gtag==='function'){
+      gtag('event','cta_click',{event_category:'influencer_landing',event_label:label,page_source:document.referrer||'direct'});
+    }
+    var src=new URLSearchParams(location.search).get('utm_source')||'direct';
+    console.log('[EIH track]',label,'src:',src);
+  }catch(e){}
+}
+// Legge UTM source e salva in localStorage per attribuzione
+(function(){
+  try{
+    var p=new URLSearchParams(location.search);
+    var utm={source:p.get('utm_source'),medium:p.get('utm_medium'),campaign:p.get('utm_campaign'),content:p.get('utm_content')};
+    if(utm.source) localStorage.setItem('eih-utm',JSON.stringify({...utm,ts:Date.now()}));
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
