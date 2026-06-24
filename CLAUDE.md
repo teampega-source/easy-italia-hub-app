@@ -42,6 +42,9 @@ Prima di scegliere servizi esterni consultare `.references/free-for-dev/README.m
 | `vercel-optimize` | Audit costi/performance Vercel |
 | `writing-guidelines` | Su testi UX e copy interfaccia |
 
+## Strumenti richiesti dall'utente
+- **jcode** (`https://github.com/1jehuang/jcode`): harness agente AI (Rust). Installare sulla macchina locale con `curl -fsSL https://raw.githubusercontent.com/1jehuang/jcode/main/install.sh | bash`. Non installabile nel container remoto (rete bloccata su repo esterni).
+
 ## Codebase: Easy Italia Hub
 **Stack:** HTML statico + Vanilla JS + Vercel Serverless + Supabase + Gemini AI  
 **Deploy:** Vercel auto-deploy su push a `main`. Nessun build step.  
