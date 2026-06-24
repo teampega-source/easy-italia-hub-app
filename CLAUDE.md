@@ -45,6 +45,7 @@ Prima di scegliere servizi esterni consultare `.references/free-for-dev/README.m
 ## Strumenti richiesti dall'utente
 - **jcode** (`https://github.com/1jehuang/jcode`): harness agente AI (Rust). Installato in `/root/.local/bin/jcode` (v0.31.2). Installare/aggiornare con: `curl -fsSL https://raw.githubusercontent.com/1jehuang/jcode/master/scripts/install.sh | bash`
 - **cc-nano-banana** (`https://github.com/kkoppenhaver/cc-nano-banana`): skill generazione immagini via Gemini CLI. Installato in `/root/.claude/skills/nano-banana/SKILL.md`. Richiede: `GEMINI_API_KEY` env var + `gemini extensions install https://github.com/gemini-cli-extensions/nanobanana --consent` (manuale). Comandi: `gemini --yolo "/generate|/edit|/icon|/diagram|/pattern|/story"`.
+- **claude-ads** (`https://github.com/AgriciDaniel/claude-ads`): skill audit pubblicitario multi-piattaforma (Google, Meta, TikTok, LinkedIn, ecc.). Installato in `/root/.claude/skills/ads/` (22 sub-skill) + `/root/.claude/agents/` (10 agenti). Reinstallare con: `curl -fsSL https://raw.githubusercontent.com/AgriciDaniel/claude-ads/main/install.sh | bash --target=claude`. Trigger: `/ads audit|google|meta|youtube|linkedin|tiktok|microsoft|apple|amazon|budget|creative|landing|plan|competitor|dna|generate`.
 
 ## Codebase: Easy Italia Hub
 **Stack:** HTML statico + Vanilla JS + Vercel Serverless + Supabase + Gemini AI  
