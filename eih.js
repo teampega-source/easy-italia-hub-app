@@ -35,7 +35,7 @@
 
   function navHTML(){
     return '<nav class="site-nav" aria-label="Navigazione principale">'+
-      '<a href="/" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a>'+
+      '<a href="/" class="nav-logo"><img src="/assets/img/logo-symbol.jpg" alt="" class="nav-logo-img">Easy <span class="accent">Italia</span> Hub</a>'+
       '<button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" onclick="EIH.toggleMenu()"><span></span><span></span><span></span></button>'+
       '<div class="nav-collapse" id="nav-collapse">'+
         '<ul class="nav-links">'+
@@ -110,7 +110,7 @@
   }
   function footHTML(){
     return '<footer><div class="footer-inner">'+
-      '<div class="footer-brand"><a href="/" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a><p class="footer-tag" data-i18n="f.tag"></p></div>'+
+      '<div class="footer-brand"><a href="/"><img src="/assets/img/logo-full.svg" alt="Easy Italia Hub" class="footer-logo-img"></a><p class="footer-tag" data-i18n="f.tag"></p></div>'+
       '<div class="footer-col"><h4 data-i18n="f.product">Prodotto</h4><ul>'+
         '<li><a href="/guide" data-i18n="nav.guide">Guide</a></li><li><a href="/percorso" data-i18n="f.aiAssistant">Assistente AI</a></li><li><a href="/community" data-i18n="nav.community">Community</a></li><li><a href="/corsi" data-i18n="m.languages">Corsi di Lingue</a></li><li><a href="/opportunita" data-i18n="m.opportunities">Opportunità</a></li><li><a href="/money-transfer">Money Transfer</a></li><li><a href="/cargo" data-i18n="m.cargo">Spedizioni Cargo</a></li><li><a href="/voli" data-i18n="m.flights">Voli Sri Lanka</a></li><li><a href="/travel-sri-lanka">Travel Hub Sri Lanka</a></li><li><a href="/moduli" data-i18n="m.templates">Moduli e Lettere</a></li><li><a href="/guida-conti" data-i18n="m.openaccount">Aprire un Conto</a></li><li><a href="/assegno-unico" data-i18n="m.assegno">Calcolatore Assegno Unico</a></li><li><a href="/diritti-inps" data-i18n="m.inps">Verifica Diritti INPS</a></li><li><a href="/riconoscimento-titoli" data-i18n="m.titles">Riconoscimento Titoli</a></li><li><a href="/dizionario-medico" data-i18n="m.medical">Dizionario Medico IT-SI</a></li><li><a href="/mappa" data-i18n="f.mapServices">Mappa servizi</a></li></ul></div>'+
       '<div class="footer-col"><h4 data-i18n="f.company">Azienda</h4><ul>'+

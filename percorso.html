@@ -68,8 +68,9 @@ body{font-family:'Satoshi','Inter',system-ui,sans-serif;background:var(--bg-base
 
 /* ─── NAV (shared) ─── */
 .site-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:var(--sp-2) var(--sp-5);background:rgba(255,253,249,0.72);backdrop-filter:blur(var(--blur-amount)) saturate(1.5);-webkit-backdrop-filter:blur(var(--blur-amount)) saturate(1.5);border-bottom:1px solid var(--border)}
-.nav-logo{font-family:'Playfair Display',Georgia,serif;font-size:var(--text-lg);font-weight:500;color:var(--ink);display:flex;align-items:center;gap:.4rem;letter-spacing:.01em;text-decoration:none}
+.nav-logo{font-family:'Playfair Display',Georgia,serif;font-size:var(--text-lg);font-weight:500;color:var(--ink);display:flex;align-items:center;gap:.55rem;letter-spacing:.01em;text-decoration:none}
 .nav-logo .accent{color:var(--gold)}
+.nav-logo-img{height:36px;width:auto;display:block;flex-shrink:0}
 .nav-collapse{display:contents}
 .nav-links{display:flex;gap:var(--sp-3);list-style:none}
 .nav-links a{font-size:var(--text-sm);font-weight:400;color:var(--fg-muted);text-decoration:none;letter-spacing:.05em;transition:color var(--dur-micro) var(--ease-enter);cursor:pointer}
@@ -321,7 +322,7 @@ html.returning #preloader{display:none}
 
 <!-- NAV -->
 <nav class="site-nav" aria-label="Navigazione principale">
-  <a href="/" class="nav-logo">Easy <span class="accent">Italia</span> Hub</a>
+  <a href="/" class="nav-logo"><img src="/assets/img/logo-symbol.jpg" alt="" class="nav-logo-img">Easy <span class="accent">Italia</span> Hub</a>
   <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-collapse" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   <div class="nav-collapse" id="nav-collapse">
     <ul class="nav-links">
@@ -409,7 +410,7 @@ html.returning #preloader{display:none}
 <footer class="pf" aria-label="Piè di pagina">
   <div class="pf-inner">
     <div class="pf-brand">
-      <a href="/" class="pf-logo">Easy <span class="ac">Italia</span> Hub</a>
+      <a href="/"><img src="/assets/img/logo-full.svg" alt="Easy Italia Hub" style="height:80px;width:auto;display:block;margin-bottom:var(--sp-2)"></a>
       <p class="pf-tag">La casa digitale della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — in un unico posto.</p>
     </div>
     <div class="pf-col">
