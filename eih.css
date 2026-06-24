@@ -81,8 +81,10 @@ html.returning #preloader{display:none}
 
 /* ── NAV ── */
 .site-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:var(--sp-2) var(--sp-5);background:rgba(255,255,255,0.82);backdrop-filter:blur(var(--blur-amount)) saturate(1.5);-webkit-backdrop-filter:blur(var(--blur-amount)) saturate(1.5);border-bottom:1px solid var(--border)}
-.nav-logo{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:600;color:var(--ink);display:flex;align-items:center;gap:.4rem;letter-spacing:-.01em;text-decoration:none}
+.nav-logo{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:600;color:var(--ink);display:flex;align-items:center;gap:.55rem;letter-spacing:-.01em;text-decoration:none}
 .nav-logo .accent{color:var(--taupe)}
+.nav-logo-img{height:36px;width:auto;display:block;flex-shrink:0}
+.footer-logo-img{height:90px;width:auto;display:block;margin-bottom:var(--sp-2)}
 .nav-collapse{display:contents}
 .nav-links{display:flex;gap:var(--sp-3);list-style:none}
 .nav-links a{font-size:var(--text-sm);font-weight:400;color:var(--fg-muted);text-decoration:none;letter-spacing:.05em;transition:color var(--dur-micro);cursor:pointer}
