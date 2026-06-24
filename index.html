@@ -289,6 +289,8 @@ body{
   letter-spacing:.01em;text-decoration:none;
 }
 .nav-logo .accent{color:var(--gold)}
+.nav-logo-img{height:36px;width:auto;display:block;flex-shrink:0}
+.footer-logo-img{height:90px;width:auto;display:block;margin-bottom:var(--sp-2)}
 .nav-links{display:flex;gap:var(--sp-3);list-style:none}
 .nav-links a{
   font-size:var(--text-sm);font-weight:400;
@@ -2299,7 +2301,7 @@ footer{
 
 <!-- NAV -->
 <nav class="site-nav" aria-label="Navigazione principale">
-  <a href="/" class="nav-logo"><img src="/assets/img/logo-symbol.jpg" alt="" class="nav-logo-img">Easy <span class="accent">Italia</span> Hub</a>
+  <a href="/" class="nav-logo"><img src="/assets/img/logo-symbol.jpg" alt="" class="nav-logo-img" style="height:36px;width:auto;display:block;flex-shrink:0">Easy <span class="accent">Italia</span> Hub</a>
   <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-collapse" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
@@ -3317,7 +3319,7 @@ async function subscribeNewsletter(){
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="/"><img src="/assets/img/logo-full.svg" alt="Easy Italia Hub" class="footer-logo-img"></a>
+      <a href="/"><img src="/assets/img/logo-full.svg" alt="Easy Italia Hub" class="footer-logo-img" style="height:90px;width:auto;display:block"></a>
       <p class="footer-tag" data-i18n="footer.tag">Il punto di riferimento della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.</p>
     </div>
     <div class="footer-col">

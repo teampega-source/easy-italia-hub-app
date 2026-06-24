@@ -35,7 +35,7 @@
 
   function navHTML(){
     return '<nav class="site-nav" aria-label="Navigazione principale">'+
-      '<a href="/" class="nav-logo"><img src="/assets/img/logo-symbol.jpg" alt="" class="nav-logo-img">Easy <span class="accent">Italia</span> Hub</a>'+
+      '<a href="/" class="nav-logo"><img src="/assets/img/logo-symbol.jpg" alt="" class="nav-logo-img" style="height:36px;width:auto;display:block;flex-shrink:0">Easy <span class="accent">Italia</span> Hub</a>'+
       '<button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" onclick="EIH.toggleMenu()"><span></span><span></span><span></span></button>'+
       '<div class="nav-collapse" id="nav-collapse">'+
         '<ul class="nav-links">'+
