@@ -19,6 +19,12 @@
 - Niente documentazione non richiesta
 - Niente commenti ridondanti nel codice
 
+## Riduzione token — IMPERATIVO
+- Ogni modifica a `api/chat.js` o al sistema AI deve ridurre i token al minimo possibile.
+- System prompt e security reminder devono essere i più brevi possibile mantenendo sicurezza e qualità.
+- Eliminare ridondanze, ripetizioni, frasi verbose nei prompt LLM.
+- Prima di qualsiasi modifica ai prompt, verificare che la versione risultante sia più corta dell'originale.
+
 ## Flusso di lavoro
 - Usare `/plan` per analizzare il codebase prima di scrivere modifiche complesse
 - Usare `/compact` per condensare la cronologia quando il contesto diventa lungo
