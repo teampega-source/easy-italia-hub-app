@@ -1,0 +1,45 @@
+{
+  "packageId": "it.easyitaliahub.app",
+  "host": "easyitaliahub.it",
+  "name": "Easy Italia Hub",
+  "launcherName": "Easy Italia",
+  "display": "standalone",
+  "themeColor": "#7d7058",
+  "navigationColor": "#7d7058",
+  "navigationColorDark": "#5a5040",
+  "navigationDividerColor": "#7d7058",
+  "navigationDividerColorDark": "#5a5040",
+  "backgroundColor": "#ffffff",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "https://easyitaliahub.it/assets/icon-512.png",
+  "maskableIconUrl": "https://easyitaliahub.it/assets/icon-512.png",
+  "monochromeIconUrl": "https://easyitaliahub.it/assets/icon-512.png",
+  "appVersion": "1",
+  "appVersionName": "1.0.0",
+  "shortcuts": [
+    {
+      "name": "Consigliere AI",
+      "shortName": "AI",
+      "url": "/percorso",
+      "icons": [{ "src": "https://easyitaliahub.it/assets/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Guide",
+      "shortName": "Guide",
+      "url": "/guide",
+      "icons": [{ "src": "https://easyitaliahub.it/assets/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "signingKey": {
+    "path": "./android-keystore.jks",
+    "alias": "eih-key"
+  },
+  "splashScreenFadeOutDuration": 300,
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://easyitaliahub.it/",
+  "minSdkVersion": 21,
+  "orientation": "portrait"
+}
