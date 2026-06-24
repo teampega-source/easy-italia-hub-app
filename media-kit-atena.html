@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Media Kit · Atena × Easy Italia Hub</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --taupe: #7d7058;
+    --taupe-dark: #5a5040;
+    --taupe-light: #c8b99a;
+    --taupe-pale: #f5f0e8;
+    --black: #1a1a1a;
+    --grey: #6b6b6b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--black);
+    background: #fff;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* PRINT */
+  @media print {
+    .no-print { display: none; }
+    body { font-size: 12px; }
+    .page { page-break-after: always; }
+    a { color: inherit; text-decoration: none; }
+  }
+
+  /* COVER */
+  .cover {
+    min-height: 100vh;
+    background: var(--taupe);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    color: white;
+    position: relative;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 70%, rgba(255,255,255,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 20%, rgba(0,0,0,0.15) 0%, transparent 60%);
+  }
+
+  .cover-inner { position: relative; z-index: 1; max-width: 700px; }
+
+  .cover .badge {
+    display: inline-block;
+    border: 1px solid rgba(255,255,255,0.5);
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0.85;
+  }
+
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .cover .x { opacity: 0.5; font-weight: 300; }
+
+  .cover h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3vw, 30px);
+    font-weight: 400;
+    opacity: 0.9;
+    margin-bottom: 32px;
+  }
+
+  .cover .tagline {
+    font-size: 16px;
+    opacity: 0.75;
+    max-width: 480px;
+    margin: 0 auto 48px;
+    font-weight: 300;
+  }
+
+  .cover .meta {
+    font-size: 12px;
+    opacity: 0.5;
+    letter-spacing: 1px;
+  }
+
+  .cover .watermark {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    opacity: 0.3;
+    letter-spacing: 1px;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  .section {
+    margin-bottom: 64px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--taupe);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--taupe-dark);
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--taupe-pale);
+    padding-bottom: 12px;
+  }
+
+  .section p { margin-bottom: 12px; color: var(--grey); }
+  .section p strong { color: var(--black); }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .card {
+    background: var(--taupe-pale);
+    border-left: 3px solid var(--taupe);
+    padding: 20px;
+    border-radius: 4px;
+  }
+
+  .card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--taupe-dark);
+    margin-bottom: 8px;
+  }
+
+  .card p { font-size: 13px; color: var(--grey); margin: 0; }
+
+  /* PILLOLE */
+  .pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .pill {
+    background: var(--taupe);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .pill.outline {
+    background: transparent;
+    border: 1.5px solid var(--taupe);
+    color: var(--taupe);
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    font-size: 13px;
+  }
+
+  th {
+    background: var(--taupe);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--taupe-pale);
+    color: var(--grey);
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #faf8f4; }
+
+  /* CONTENT IDEAS */
+  .idea {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--taupe-pale);
+  }
+
+  .idea:last-child { border-bottom: none; }
+
+  .idea-num {
+    width: 36px;
+    height: 36px;
+    background: var(--taupe);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .idea-body h4 {
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+
+  .idea-body p { font-size: 13px; color: var(--grey); margin: 0; }
+  .idea-body .tag { font-size: 11px; color: var(--taupe); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* QUOTE */
+  .quote {
+    border-left: 4px solid var(--taupe);
+    padding: 16px 24px;
+    background: var(--taupe-pale);
+    margin: 24px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--taupe-dark);
+    font-style: italic;
+    margin: 0;
+  }
+
+  /* FOOTER */
+  .doc-footer {
+    background: var(--taupe-dark);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 40px;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .doc-footer a { color: var(--taupe-light); text-decoration: none; }
+
+  /* DL BUTTON */
+  .dl-bar {
+    background: var(--taupe-pale);
+    border-bottom: 1px solid var(--taupe-light);
+    padding: 12px 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--grey);
+  }
+
+  .dl-bar button {
+    margin-left: auto;
+    background: var(--taupe);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: 500;
+  }
+
+  .dl-bar button:hover { background: var(--taupe-dark); }
+
+  /* COLORS SWATCH */
+  .swatches {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .swatch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--grey);
+  }
+
+  .swatch-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight {
+    background: var(--taupe);
+    color: white;
+    padding: 24px 28px;
+    border-radius: 6px;
+    margin: 16px 0;
+  }
+
+  .highlight h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .highlight ul { padding-left: 20px; }
+  .highlight li { margin-bottom: 6px; font-size: 13px; opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<!-- DOWNLOAD BAR -->
+<div class="dl-bar no-print">
+  <span>📄 Media Kit · Atena × Easy Italia Hub · Giugno 2026</span>
+  <button onclick="window.print()">⬇ Salva come PDF</button>
+</div>
+
+<!-- COVER -->
+<div class="cover page">
+  <div class="cover-inner">
+    <div class="badge">Media Kit Riservato</div>
+    <h1>Atena<br><span class="x">×</span><br>Easy Italia Hub</h1>
+    <h2>Partnership di Contenuto</h2>
+    <p class="tagline">La piattaforma che guida la comunità srilankese attraverso la vita in Italia — e Atena è la voce che la porta a casa loro.</p>
+    <p class="meta">Giugno 2026 · easyitaliahub.it · Riservato</p>
+  </div>
+  <div class="watermark">Easy Italia Hub</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- 1. CHI SIAMO -->
+  <div class="section page">
+    <div class="section-label">01 · Il Brand</div>
+    <h2>Chi è Easy Italia Hub</h2>
+    <p>Easy Italia Hub è la <strong>piattaforma multilingue</strong> (italiano, inglese, singalese, tamil) pensata per la comunità srilankese in Italia. Aiuta a navigare la burocrazia italiana, trovare lavoro, gestire documenti, capire i diritti INPS e molto altro — tutto in un'unica app.</p>
+
+    <div class="quote">
+      <p>"Non devi affrontare l'Italia da solo. Siamo qui, nella tua lingua."</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>🏛️ Burocrazia Guidata</h3>
+        <p>Permesso di soggiorno, SPID, codice fiscale, residenza — spiegati in modo semplice.</p>
+      </div>
+      <div class="card">
+        <h3>🤖 Consigliere AI</h3>
+        <p>Assistente AI multilingue disponibile 24/7 per rispondere a ogni dubbio burocratico.</p>
+      </div>
+      <div class="card">
+        <h3>📋 Tracker Permesso</h3>
+        <p>Monitora lo stato del rinnovo, ricevi reminder sulle scadenze.</p>
+      </div>
+      <div class="card">
+        <h3>💰 Strumenti INPS</h3>
+        <p>Calcola assegno unico, verifica diritti, costruisci il tuo CV in italiano.</p>
+      </div>
+      <div class="card">
+        <h3>🗺️ Mappa Servizi</h3>
+        <p>Trova patronati, sportelli immigrazione, CAF vicino a te.</p>
+      </div>
+      <div class="card">
+        <h3>🌐 Community</h3>
+        <p>Marketplace, eventi, connessioni con la comunità srilankese in tutta Italia.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. AUDIENCE -->
+  <div class="section">
+    <div class="section-label">02 · L'Audience</div>
+    <h2>A chi parliamo</h2>
+
+    <table>
+      <tr>
+        <th>Segmento</th>
+        <th>Caratteristiche</th>
+        <th>Bisogno principale</th>
+      </tr>
+      <tr>
+        <td><strong>Appena arrivati</strong></td>
+        <td>18–35 anni, primo anno in Italia, poco italiano</td>
+        <td>Capire come funziona la burocrazia da zero</td>
+      </tr>
+      <tr>
+        <td><strong>Residenti da anni</strong></td>
+        <td>Famiglia in Italia, lavoro fisso, rinnovo permesso</td>
+        <td>Non perdere scadenze importanti</td>
+      </tr>
+      <tr>
+        <td><strong>Seconda generazione</strong></td>
+        <td>Nati/cresciuti in Italia, bilingui</td>
+        <td>Aiutare i genitori a capire i documenti</td>
+      </tr>
+      <tr>
+        <td><strong>Imprenditori</strong></td>
+        <td>Partita IVA, attività commerciale, rimesse</td>
+        <td>Fatturazione, INPS, trasferimento denaro a casa</td>
+      </tr>
+    </table>
+
+    <div class="pill-list" style="margin-top: 24px;">
+      <div class="pill">~130.000 srilankesi in Italia</div>
+      <div class="pill">Comunità più numerosa a Roma, Milano, Bergamo</div>
+      <div class="pill">Molto attivi su WhatsApp, YouTube, Instagram</div>
+      <div class="pill">Lingua primaria: singalese e tamil</div>
+    </div>
+  </div>
+
+  <!-- 3. OBIETTIVI CAMPAGNA -->
+  <div class="section page">
+    <div class="section-label">03 · La Campagna</div>
+    <h2>Obiettivi della partnership</h2>
+
+    <div class="highlight">
+      <h3>Missione principale</h3>
+      <ul>
+        <li>Far conoscere Easy Italia Hub alla comunità srilankese che ancora non la conosce</li>
+        <li>Posizionare Atena come punto di riferimento affidabile per la vita in Italia</li>
+        <li>Aumentare registrazioni e utilizzo del Consigliere AI e del Tracker Permesso</li>
+      </ul>
+    </div>
+
+    <div class="card-grid" style="margin-top: 24px;">
+      <div class="card">
+        <h3>📈 Awareness</h3>
+        <p>Portare il brand davanti a nuovi utenti che non la conoscono ancora.</p>
+      </div>
+      <div class="card">
+        <h3>🎯 Conversione</h3>
+        <p>Visite al sito + iscrizioni tramite link/codice personalizzato Atena.</p>
+      </div>
+      <div class="card">
+        <h3>🤝 Fiducia</h3>
+        <p>Testimonianza autentica: "Io uso questa piattaforma per X".</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. IDEE CONTENUTO -->
+  <div class="section">
+    <div class="section-label">04 · Idee Contenuto</div>
+    <h2>10 idee per i tuoi post</h2>
+    <p style="margin-bottom:24px;">Suggerimenti — adattali liberamente al tuo stile. La spontaneità batte la perfezione.</p>
+
+    <div class="idea">
+      <div class="idea-num">1</div>
+      <div class="idea-body">
+        <div class="tag">Reel / TikTok</div>
+        <h4>"Ho rinnovato il permesso senza andare allo sportello" 🇮🇹</h4>
+        <p>Show don't tell: schermo che mostra il Tracker Permesso in azione. Voice over in singalese.</p>
+      </div>
+    </div>
+
+    <div class="idea">
+      <div class="idea-num">2</div>
+      <div class="idea-body">
+        <div class="tag">Story / Carosello</div>
+        <h4>"5 cose che non sapevo fare in Italia — ora le so"</h4>
+        <p>Una slide per ogni strumento della piattaforma. Tono personale, prima persona.</p>
+      </div>
+    </div>
+
+    <div class="idea">
+      <div class="idea-num">3</div>
+      <div class="idea-body">
+        <div class="tag">YouTube / Reel lungo</div>
+        <h4>Demo live del Consigliere AI</h4>
+        <p>Atena fa una domanda reale al chatbot in singalese. Mostra la risposta. Reazione autentica.</p>
+      </div>
+    </div>
+
+    <div class="idea">
+      <div class="idea-num">4</div>
+      <div class="idea-body">
+        <div class="tag">Story interattiva</div>
+        <h4>Quiz: "Sai quando scade il tuo permesso?"</h4>
+        <p>Poll/domanda che porta a scoprire il Tracker. Alto engagement + educativo.</p>
+      </div>
+    </div>
+
+    <div class="idea">
+      <div class="idea-num">5</div>
+      <div class="idea-body">
+        <div class="tag">Reel / TikTok</div>
+        <h4>"Cosa significa questo documento?" (con AI)</h4>
+        <p>Lettera burocratica reale → domanda al Consigliere AI → risposta semplice. Molto condivisibile.</p>
+      </div>
+    </div>
+
+    <div class="idea">
+      <div class="idea-num">6</div>
+      <div class="idea-body">
+        <div class="tag">Post / Carosello</div>
+        <h4>Guida in 5 passi: come fare lo SPID</h4>
+        <p>Problema reale comune. Link alla guida sul sito. Call to action chiaro.</p>
+      </div>
+    </div>
+
+    <div class="idea">
+      <div class="idea-num">7</div>
+      <div class="idea-body">
+        <div class="tag">Story / Q&amp;A</div>
+        <h4>"Mandatemi le vostre domande sulla burocrazia italiana"</h4>
+        <p>Raccoglie domande → risponde usando la piattaforma → dimostrazione naturale.</p>
+      </div>
+    </div>
+
+    <div class="idea">
+      <div class="idea-num">8</div>
+      <div class="idea-body">
+        <div class="tag">Reel</div>
+        <h4>"Prima vs. Dopo Easy Italia Hub"</h4>
+        <p>Formato confronto: confusione/paura vs. chiarezza/sicurezza. Emotivamente forte.</p>
+      </div>
+    </div>
+
+    <div class="idea">
+      <div class="idea-num">9</div>
+      <div class="idea-body">
+        <div class="tag">YouTube / Lungo</div>
+        <h4>Tour completo della piattaforma + miei preferiti</h4>
+        <p>Review onesta: cosa funziona, cosa è utile per chi è nuovo in Italia.</p>
+      </div>
+    </div>
+
+    <div class="idea">
+      <div class="idea-num">10</div>
+      <div class="idea-body">
+        <div class="tag">Post / Community</div>
+        <h4>"Non ero sola" — storia personale</h4>
+        <p>Racconto autentico di un momento difficile → come la piattaforma ha aiutato. Il contenuto più potente.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. MESSAGGI CHIAVE -->
+  <div class="section page">
+    <div class="section-label">05 · Messaggi</div>
+    <h2>Messaggi chiave da comunicare</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>✅ Da dire</h3>
+        <p>"È gratis."<br>"È in singalese/tamil."<br>"L'ho usato anch'io."<br>"Ti fa risparmiare tempo."<br>"Non serve capire l'italiano perfettamente."</p>
+      </div>
+      <div class="card">
+        <h3>❌ Da evitare</h3>
+        <p>Linguaggio troppo formale.<br>Promesse esagerate.<br>Dire che sostituisce un avvocato/patronato.<br>Contenuti eccessivamente pubblicitari.</p>
+      </div>
+    </div>
+
+    <div class="quote" style="margin-top:24px;">
+      <p>"Non è una app che ti dice cosa fare. È come avere un amico che conosce l'Italia."</p>
+    </div>
+
+    <h3 style="margin: 24px 0 12px; font-family: 'Playfair Display', serif; color: var(--taupe-dark);">Hashtag suggeriti</h3>
+    <div class="pill-list">
+      <div class="pill">#EasyItaliaHub</div>
+      <div class="pill">#SrilankesiInItalia</div>
+      <div class="pill">#VitaInItalia</div>
+      <div class="pill">#ImmigrazioneFacile</div>
+      <div class="pill">#PermessoDiSoggiorno</div>
+      <div class="pill">#Comunità</div>
+      <div class="pill outline">#SriLankaItaly</div>
+      <div class="pill outline">#ලංකාවෙන් ඉතාලි</div>
+    </div>
+  </div>
+
+  <!-- 6. PIATTAFORME -->
+  <div class="section">
+    <div class="section-label">06 · Canali</div>
+    <h2>Strategia per piattaforma</h2>
+
+    <table>
+      <tr>
+        <th>Piattaforma</th>
+        <th>Formato consigliato</th>
+        <th>Frequenza</th>
+        <th>Nota</th>
+      </tr>
+      <tr>
+        <td><strong>Instagram</strong></td>
+        <td>Reel 30–60s + Story demo</td>
+        <td>2× a settimana</td>
+        <td>Link in bio + sticker link su Story</td>
+      </tr>
+      <tr>
+        <td><strong>TikTok</strong></td>
+        <td>Video 15–45s, hook forte nei primi 3s</td>
+        <td>3× a settimana</td>
+        <td>Alta viralità per contenuti problem/solution</td>
+      </tr>
+      <tr>
+        <td><strong>YouTube</strong></td>
+        <td>Tutorial/demo 5–10 min</td>
+        <td>1× a settimana</td>
+        <td>Contenuto più duraturo, ottimo SEO</td>
+      </tr>
+      <tr>
+        <td><strong>Facebook</strong></td>
+        <td>Post testo + link, gruppi</td>
+        <td>2× a settimana</td>
+        <td>Comunità srilankese molto attiva su FB</td>
+      </tr>
+      <tr>
+        <td><strong>WhatsApp</strong></td>
+        <td>Messaggio status + forwarding</td>
+        <td>1× a settimana</td>
+        <td>Canale caldo, alto tasso apertura</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 7. BRAND GUIDELINES -->
+  <div class="section page">
+    <div class="section-label">07 · Brand</div>
+    <h2>Linee guida del brand</h2>
+
+    <p><strong>Tono della voce:</strong> caldo, diretto, inclusivo. Come parlerebbe un amico saggio — non una burocrazia.</p>
+    <p><strong>Lingua nei contenuti:</strong> singalese (o tamil) come lingua principale, italiano nelle didascalie e per i termini tecnici.</p>
+
+    <div style="margin-top: 24px;">
+      <p><strong>Colori ufficiali:</strong></p>
+      <div class="swatches">
+        <div class="swatch">
+          <div class="swatch-box" style="background: #7d7058;"></div>
+          <span>Taupe · #7d7058<br><small>Colore primario</small></span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-box" style="background: #5a5040;"></div>
+          <span>Taupe scuro · #5a5040<br><small>Accenti, titoli</small></span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-box" style="background: #f5f0e8;"></div>
+          <span>Avorio · #f5f0e8<br><small>Sfondi, schiaritura</small></span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-box" style="background: #ffffff; border: 1px solid #ddd;"></div>
+          <span>Bianco · #ffffff<br><small>Background</small></span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 24px;">
+      <p><strong>Font:</strong> Playfair Display (titoli) + Inter (testo). Disponibili gratuitamente su Google Fonts.</p>
+      <p><strong>Logo:</strong> <em>in arrivo — verrà fornito in versione PNG e SVG su sfondo trasparente.</em></p>
+      <p><strong>Foto profilo suggerita nei contenuti:</strong> usare screenshot della vera app su easyitaliahub.it — non mockup generici.</p>
+    </div>
+  </div>
+
+  <!-- 8. LINK E CTA -->
+  <div class="section">
+    <div class="section-label">08 · Link & CTA</div>
+    <h2>Link e call to action</h2>
+
+    <div class="highlight">
+      <h3>URL principale da condividere</h3>
+      <ul>
+        <li>Sito: <strong>easyitaliahub.it</strong></li>
+        <li>Consigliere AI: <strong>easyitaliahub.it/percorso</strong></li>
+        <li>Tracker Permesso: <strong>easyitaliahub.it/permesso-tracker</strong></li>
+        <li>Guide: <strong>easyitaliahub.it/guide</strong></li>
+      </ul>
+    </div>
+
+    <p style="margin-top:16px;"><strong>CTA consigliata:</strong> "Vai su easyitaliahub.it — è gratis, in singalese, e ti aiuta davvero."</p>
+    <p><strong>CTA breve per video:</strong> "Link in bio 👆"</p>
+    <p><em>Nota: un link tracciato personalizzato per Atena verrà fornito prima del lancio della campagna.</em></p>
+  </div>
+
+  <!-- 9. TEMPISTICHE -->
+  <div class="section page">
+    <div class="section-label">09 · Piano</div>
+    <h2>Piano di lancio suggerito</h2>
+
+    <table>
+      <tr>
+        <th>Settimana</th>
+        <th>Contenuto</th>
+        <th>Piattaforma</th>
+        <th>Obiettivo</th>
+      </tr>
+      <tr>
+        <td><strong>Settimana 1</strong></td>
+        <td>Annuncio della partnership — "Collaboro con EIH"</td>
+        <td>Instagram + TikTok</td>
+        <td>Curiosità, hype</td>
+      </tr>
+      <tr>
+        <td><strong>Settimana 2</strong></td>
+        <td>Demo Consigliere AI + storia personale</td>
+        <td>YouTube + Instagram Reel</td>
+        <td>Awareness funzionalità</td>
+      </tr>
+      <tr>
+        <td><strong>Settimana 3</strong></td>
+        <td>Tutorial permesso / SPID / codice fiscale</td>
+        <td>TikTok + Facebook</td>
+        <td>Utilità pratica, condivisioni</td>
+      </tr>
+      <tr>
+        <td><strong>Settimana 4</strong></td>
+        <td>Q&amp;A live con domande community + risposta live con l'AI</td>
+        <td>Instagram Live / YouTube</td>
+        <td>Engagement, conversioni</td>
+      </tr>
+    </table>
+
+    <p style="margin-top: 16px; font-size: 13px; color: var(--grey);">Il piano è flessibile — adattabile in base all'engagement e alle disponibilità di Atena.</p>
+  </div>
+
+  <!-- 10. CONTATTI -->
+  <div class="section">
+    <div class="section-label">10 · Contatti</div>
+    <h2>Contatti del team</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>📧 Email</h3>
+        <p>Per approvazioni contenuti, brief dettagliati, contratti:<br><strong>hello@easyitaliahub.it</strong></p>
+      </div>
+      <div class="card">
+        <h3>🌐 Sito</h3>
+        <p>Vedi la piattaforma live:<br><strong>easyitaliahub.it</strong></p>
+      </div>
+      <div class="card">
+        <h3>📱 Revisione contenuti</h3>
+        <p>Ogni contenuto prima della pubblicazione può essere revisionato dal team. Tempi: 24–48h.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <p><strong>Easy Italia Hub</strong> · <a href="https://easyitaliahub.it">easyitaliahub.it</a></p>
+  <p>Media Kit riservato · Atena × Easy Italia Hub · Giugno 2026</p>
+  <p style="margin-top:8px; font-size:11px;">Documento confidenziale — non distribuire senza autorizzazione del team Easy Italia Hub.</p>
+</div>
+
+</body>
+</html>
