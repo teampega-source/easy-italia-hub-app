@@ -12,7 +12,10 @@
       "args": [
         "-y",
         "meigen@latest"
-      ]
+      ],
+      "env": {
+        "MEIGEN_API_TOKEN": "${MEIGEN_API_TOKEN}"
+      }
     },
     "@21st-dev/magic": {
       "command": "npx",
