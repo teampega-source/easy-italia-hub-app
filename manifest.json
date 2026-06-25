@@ -26,6 +26,9 @@
     { "name": "Mercatino", "short_name": "Mercatino", "url": "/mercatino", "description": "Annunci della community" },
     { "name": "Podcast", "short_name": "Podcast", "url": "/podcast", "description": "Guide audio in sinhala, tamil e italiano" },
     { "name": "Tracker Permesso", "short_name": "Permesso", "url": "/permesso-tracker", "description": "Segui la tua pratica di rinnovo" },
-    { "name": "Dashboard", "short_name": "Dashboard", "url": "/dashboard", "description": "Le tue scadenze e documenti" }
+    { "name": "Dashboard", "short_name": "Dashboard", "url": "/dashboard", "description": "Le tue scadenze e documenti" },
+    { "name": "Fisco e Tasse", "short_name": "Fisco", "url": "/fisco", "description": "730, ISEE, CAF e scadenze fiscali" },
+    { "name": "Scuola Italiana", "short_name": "Scuola", "url": "/scuola", "description": "Iscrivere i figli a scuola in Italia" },
+    { "name": "Numeri Emergenza", "short_name": "Emergenze", "url": "/emergenze", "description": "112, 118, ambasciata e numeri utili" }
   ]
 }
