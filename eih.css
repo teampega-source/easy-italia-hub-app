@@ -126,6 +126,10 @@ main{position:relative;z-index:1}
 .page h1{font-family:'Clash Grotesk',sans-serif;font-size:clamp(2.4rem,5.5vw,4.25rem);font-weight:600;line-height:1;letter-spacing:-.035em;color:var(--ink);margin-bottom:var(--sp-3)}
 .page h1 em{font-style:normal;color:var(--taupe)}
 .page .lead{font-size:var(--text-lg);line-height:1.7;color:var(--fg-secondary);font-weight:300;max-width:620px;margin-bottom:var(--sp-4)}
+.guide-meta{display:flex;flex-wrap:wrap;gap:.4rem .6rem;margin:-.75rem 0 var(--sp-3);align-items:center}
+.guide-meta-date{font-size:var(--text-xs);color:var(--fg-muted);background:var(--surface);border:1px solid var(--border);padding:.22rem .65rem;border-radius:var(--radius-full)}
+.guide-meta-fonte{font-size:var(--text-xs);color:var(--gold);text-decoration:none;background:rgba(185,170,141,.08);border:1px solid rgba(185,170,141,.22);padding:.22rem .65rem;border-radius:var(--radius-full);transition:background .15s}
+.guide-meta-fonte:hover{background:rgba(185,170,141,.18)}
 .page h2{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-2xl);font-weight:600;letter-spacing:-.02em;color:var(--ink);margin:var(--sp-5) 0 var(--sp-2)}
 .page h3{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:600;color:var(--ink);margin:var(--sp-3) 0 .4rem}
 .page p{font-size:var(--text-base);line-height:1.75;color:var(--fg-secondary);margin-bottom:var(--sp-2)}
