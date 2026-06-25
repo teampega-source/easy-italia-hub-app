@@ -19,6 +19,12 @@
   "shortcuts": [
     { "name": "Consigliere AI", "short_name": "AI", "url": "/percorso", "description": "Chiedi al tuo consigliere di percorso" },
     { "name": "Guide burocratiche", "short_name": "Guide", "url": "/guide", "description": "Permesso, SPID, codice fiscale e altro" },
+    { "name": "Guida SSN", "short_name": "SSN", "url": "/guida-ssn", "description": "Medico di base e Servizio Sanitario Nazionale" },
+    { "name": "Patente", "short_name": "Patente", "url": "/patente", "description": "Conversione e guida patente italiana" },
+    { "name": "Associazioni", "short_name": "Associazioni", "url": "/associazioni", "description": "Comunità srilankesi in Italia" },
+    { "name": "Casa in Affitto", "short_name": "Casa", "url": "/housing", "description": "Trovare casa e diritti inquilino" },
+    { "name": "Mercatino", "short_name": "Mercatino", "url": "/mercatino", "description": "Annunci della community" },
+    { "name": "Podcast", "short_name": "Podcast", "url": "/podcast", "description": "Guide audio in sinhala, tamil e italiano" },
     { "name": "Tracker Permesso", "short_name": "Permesso", "url": "/permesso-tracker", "description": "Segui la tua pratica di rinnovo" },
     { "name": "Dashboard", "short_name": "Dashboard", "url": "/dashboard", "description": "Le tue scadenze e documenti" }
   ]

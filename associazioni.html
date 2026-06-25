@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Associazioni Srilankesi in Italia — Easy Italia Hub</title>
+<meta name="description" content="Directory delle associazioni e comunità srilankesi in Italia per città: Roma, Milano, Torino, Genova e altre. Trova supporto, eventi e connessioni nella tua città."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/associazioni"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Easy Italia Hub"/>
+<meta property="og:title" content="Associazioni Srilankesi in Italia — Easy Italia Hub"/>
+<meta property="og:description" content="Directory delle comunità srilankesi per città: trova supporto, eventi e connessioni vicino a te."/>
+<meta property="og:url" content="https://easyitaliahub.it/associazioni"/>
+<meta property="og:image" content="https://easyitaliahub.it/api/og?t=Associazioni%20Srilankesi&amp;s=Community%20e%20supporto%20per%20citt%C3%A0"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="it_IT"/>
+<meta property="og:locale:alternate" content="en_US"/>
+<meta property="og:locale:alternate" content="si_LK"/>
+<meta property="og:locale:alternate" content="ta_IN"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Associazioni Srilankesi in Italia — Easy Italia Hub"/>
+<meta name="twitter:description" content="Directory delle comunità srilankesi per città: trova supporto, eventi e connessioni vicino a te."/>
+<meta name="twitter:image" content="https://easyitaliahub.it/api/og?t=Associazioni%20Srilankesi&amp;s=Community%20e%20supporto%20per%20citt%C3%A0"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+<script>window.EIH_I18N_EXTRA={"en":{"page.h1":"Sri Lankan associations<br/><em>across Italy</em>","page.lead":"Find Sri Lankan community associations, cultural groups and temples near you. Connect, get support and stay informed about events in your city."},"si":{"page.h1":"ඉතාලියේ ශ්‍රී ලාංකික<br/><em>සංවිධාන</em>","page.lead":"ඔබ ළඟ ශ්‍රී ලාංකික ප්‍රජා සංවිධාන, සංස්කෘතික කණ්ඩායම් සහ දේවාල සොයාගන්න. ඔබේ නගරයේ සිදුවීම් ගැන සම්බන්ධ වී, සහාය ලබාගෙන, දැනුවත් වන්න."},"ta":{"page.h1":"இத்தாலியில் இலங்கை<br/><em>சமூக அமைப்புகள்</em>","page.lead":"உங்களுக்கு அருகில் இலங்கை சமூக அமைப்புகள், கலாசார குழுக்கள் மற்றும் கோவில்களைக் கண்டறியுங்கள். உங்கள் நகரத்தில் நிகழ்வுகள் பற்றி இணைந்து, ஆதரவு பெறுங்கள்."}};</script>
+</head>
+<body data-page="associazioni">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <style>
+    [data-page="associazioni"] .city-filter{display:flex;flex-wrap:wrap;gap:.5rem;margin:var(--sp-3) 0 var(--sp-4)}
+    [data-page="associazioni"] .city-btn{padding:.4rem 1rem;border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:500;border:1px solid var(--border);background:var(--surface);color:var(--fg-secondary);cursor:pointer;transition:background var(--dur-micro),color var(--dur-micro),border-color var(--dur-micro)}
+    [data-page="associazioni"] .city-btn:hover,[data-page="associazioni"] .city-btn.active{background:var(--gold);color:#fff;border-color:var(--gold)}
+    [data-page="associazioni"] .city-section{margin-bottom:var(--sp-5)}
+    [data-page="associazioni"] .city-heading{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xl);font-weight:500;color:var(--ink);margin-bottom:var(--sp-2);display:flex;align-items:center;gap:.6rem}
+    [data-page="associazioni"] .city-flag{font-size:1.2rem}
+    [data-page="associazioni"] .assoc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--sp-2)}
+    [data-page="associazioni"] .assoc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:var(--sp-3);transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std)}
+    [data-page="associazioni"] .assoc-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+    [data-page="associazioni"] .assoc-type{display:inline-block;padding:.15rem .55rem;border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:600;margin-bottom:.5rem}
+    [data-page="associazioni"] .assoc-type.cultural{background:rgba(185,170,141,.15);color:var(--gold)}
+    [data-page="associazioni"] .assoc-type.religious{background:rgba(139,92,246,.1);color:#6d28d9}
+    [data-page="associazioni"] .assoc-type.community{background:rgba(59,130,246,.1);color:#1d4ed8}
+    [data-page="associazioni"] .assoc-type.sports{background:rgba(34,197,94,.1);color:#15803d}
+    [data-page="associazioni"] .assoc-name{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:600;color:var(--ink);margin:0 0 .3rem}
+    [data-page="associazioni"] .assoc-desc{font-size:var(--text-xs);color:var(--fg-muted);line-height:1.6;margin-bottom:.6rem}
+    [data-page="associazioni"] .assoc-meta{font-size:var(--text-xs);color:var(--fg-muted)}
+    [data-page="associazioni"] .assoc-meta a{color:var(--gold);text-decoration:none}
+    [data-page="associazioni"] .submit-box{margin:var(--sp-5) 0;padding:var(--sp-4);border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);text-align:center}
+    [data-page="associazioni"] .submit-box h3{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);margin:0 0 .5rem}
+    [data-page="associazioni"] .submit-box p{font-size:var(--text-sm);color:var(--fg-secondary);margin:0 0 var(--sp-2)}
+  </style>
+  <div class="page page-wide">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Community</p>
+    <h1 class="reveal" data-i18n-html="page.h1">Associazioni Srilankesi<br/><em>in Italia</em></h1>
+    <p class="lead reveal" data-i18n="page.lead">Trova associazioni comunitarie srilankesi, gruppi culturali e templi vicino a te. Connettiti, ricevi supporto e resta aggiornato sugli eventi della tua città.</p>
+
+    <div class="draft-banner reveal">ℹ️ Questa directory è in costruzione. Se conosci un'associazione non presente, <a class="inline" href="#aggiungi">segnalacela</a>.</div>
+
+    <!-- ── FILTRO CITTÀ ── -->
+    <div class="city-filter reveal" id="city-filter" role="group" aria-label="Filtra per città">
+      <button class="city-btn active" data-city="all">Tutte le città</button>
+      <button class="city-btn" data-city="roma">Roma</button>
+      <button class="city-btn" data-city="milano">Milano</button>
+      <button class="city-btn" data-city="torino">Torino</button>
+      <button class="city-btn" data-city="genova">Genova</button>
+      <button class="city-btn" data-city="napoli">Napoli</button>
+      <button class="city-btn" data-city="bologna">Bologna</button>
+    </div>
+
+    <!-- ── ROMA ── -->
+    <section class="city-section reveal" data-city-section="roma">
+      <h2 class="city-heading"><span class="city-flag">🏛️</span> Roma</h2>
+      <div class="assoc-grid">
+        <div class="assoc-card">
+          <span class="assoc-type cultural">Culturale</span>
+          <p class="assoc-name">Associazione Culturale Sri Lanka Italia Roma</p>
+          <p class="assoc-desc">Promuove la cultura srilankese nella capitale attraverso eventi, feste nazionali e supporto alla comunità.</p>
+          <p class="assoc-meta">📍 Roma (zona Prati) · Cerca su Facebook: "Sri Lanka Roma"</p>
+        </div>
+        <div class="assoc-card">
+          <span class="assoc-type religious">Religioso</span>
+          <p class="assoc-name">Tempio Buddista — Roma</p>
+          <p class="assoc-desc">Centro di aggregazione buddista frequentato dalla comunità srilankese di Roma. Offre cerimonie, poya days e supporto spirituale.</p>
+          <p class="assoc-meta">📍 Roma · Contatto tramite comunità locale</p>
+        </div>
+        <div class="assoc-card">
+          <span class="assoc-type community">Supporto</span>
+          <p class="assoc-name">Centro Ascolto Sri Lanka Roma</p>
+          <p class="assoc-desc">Orientamento per nuovi arrivi: permesso di soggiorno, ricerca lavoro, scuola per i figli e supporto burocratico.</p>
+          <p class="assoc-meta">📍 Roma · Contatta l'AI Advisor per ulteriori info</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MILANO ── -->
+    <section class="city-section reveal" data-city-section="milano">
+      <h2 class="city-heading"><span class="city-flag">🏙️</span> Milano</h2>
+      <div class="assoc-grid">
+        <div class="assoc-card">
+          <span class="assoc-type cultural">Culturale</span>
+          <p class="assoc-name">Sri Lanka Cultural Association — Milano</p>
+          <p class="assoc-desc">Una delle associazioni più attive del nord Italia. Organizza il Vesak, capodanno srilankese e corsi di danza tradizionale.</p>
+          <p class="assoc-meta">📍 Milano · Cerca su Facebook: "Sri Lanka Milano"</p>
+        </div>
+        <div class="assoc-card">
+          <span class="assoc-type sports">Sport</span>
+          <p class="assoc-name">Lanka Cricket Club Milano</p>
+          <p class="assoc-desc">Club di cricket per srilankesi in Lombardia. Partecipa a tornei nazionali della comunità asiatica in Italia.</p>
+          <p class="assoc-meta">📍 Milano/hinterland · Cerca su Facebook: "Lanka Cricket Italy"</p>
+        </div>
+        <div class="assoc-card">
+          <span class="assoc-type religious">Religioso</span>
+          <p class="assoc-name">Kovil Tamil — Milano</p>
+          <p class="assoc-desc">Tempio induista per la comunità Tamil srilankese. Festival religiosi, cerimonie matrimoniali e supporto comunitario.</p>
+          <p class="assoc-meta">📍 Milano · Contatto tramite comunità locale</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TORINO ── -->
+    <section class="city-section reveal" data-city-section="torino">
+      <h2 class="city-heading"><span class="city-flag">🏔️</span> Torino</h2>
+      <div class="assoc-grid">
+        <div class="assoc-card">
+          <span class="assoc-type community">Community</span>
+          <p class="assoc-name">Comunità Srilankese Torino</p>
+          <p class="assoc-desc">Punto di riferimento per srilankesi a Torino: supporto burocratico, rete lavorativa e eventi culturali.</p>
+          <p class="assoc-meta">📍 Torino · Cerca su Facebook: "Sri Lanka Torino"</p>
+        </div>
+        <div class="assoc-card">
+          <span class="assoc-type cultural">Culturale</span>
+          <p class="assoc-name">Associazione Lanka Piemonte</p>
+          <p class="assoc-desc">Promuove l'integrazione culturale e organizza eventi gastronomici, mostre e celebrazioni nazionali srilankesi.</p>
+          <p class="assoc-meta">📍 Torino e Piemonte</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── GENOVA ── -->
+    <section class="city-section reveal" data-city-section="genova">
+      <h2 class="city-heading"><span class="city-flag">⛵</span> Genova</h2>
+      <div class="assoc-grid">
+        <div class="assoc-card">
+          <span class="assoc-type community">Community</span>
+          <p class="assoc-name">Comunità Srilankese Genova</p>
+          <p class="assoc-desc">Una delle comunità srilankesi più storiche in Italia. Offre reti di supporto, mediazione culturale e aggregazione sociale.</p>
+          <p class="assoc-meta">📍 Genova · Cerca su Facebook: "Sri Lanka Genova"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── NAPOLI ── -->
+    <section class="city-section reveal" data-city-section="napoli">
+      <h2 class="city-heading"><span class="city-flag">🌋</span> Napoli</h2>
+      <div class="assoc-grid">
+        <div class="assoc-card">
+          <span class="assoc-type cultural">Culturale</span>
+          <p class="assoc-name">Associazione Sri Lanka Campania</p>
+          <p class="assoc-desc">Riunisce la comunità srilankese in Campania per eventi culturali, supporto all'integrazione e celebrazioni festive.</p>
+          <p class="assoc-meta">📍 Napoli e provincia</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── BOLOGNA ── -->
+    <section class="city-section reveal" data-city-section="bologna">
+      <h2 class="city-heading"><span class="city-flag">🎓</span> Bologna</h2>
+      <div class="assoc-grid">
+        <div class="assoc-card">
+          <span class="assoc-type community">Community</span>
+          <p class="assoc-name">Lanka Emilia-Romagna</p>
+          <p class="assoc-desc">Associazione per srilankesi in Emilia-Romagna. Supporto burocratico e rete lavorativa nella regione.</p>
+          <p class="assoc-meta">📍 Bologna e Emilia-Romagna</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── AGGIUNGI ── -->
+    <div class="submit-box reveal" id="aggiungi">
+      <h3>Conosci un'associazione non presente?</h3>
+      <p>Segnalaci nome, città e contatti — aggiungeremo la tua associazione alla directory.</p>
+      <a href="/percorso" class="btn-primary" style="text-decoration:none;display:inline-block">Segnala un'associazione</a>
+    </div>
+  </div><!-- .page -->
+</main>
+
+<script src="/eih.js" defer></script>
+<script src="/eih-auth.js" defer></script>
+<script>
+(function(){
+  const filter = document.getElementById('city-filter');
+  if(!filter) return;
+  filter.addEventListener('click', function(e){
+    const btn = e.target.closest('.city-btn');
+    if(!btn) return;
+    filter.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const city = btn.dataset.city;
+    document.querySelectorAll('[data-city-section]').forEach(s => {
+      s.style.display = (city === 'all' || s.dataset.citySection === city) ? '' : 'none';
+    });
+  });
+})();
+</script>
+</body>
+</html>
