@@ -1095,6 +1095,43 @@ body{
 .nr-empty a{color:var(--gold);text-decoration:none;font-weight:600}
 @media(prefers-reduced-motion:reduce){.nr-viewport{overflow-y:auto}.nr-track.nr-animate{animation:none}.nr-opp-card{transition:none}}
 
+/* — CTAs in news rail — */
+.nr-cta{flex-shrink:0;display:flex;flex-direction:column;gap:.36rem;padding:.6rem .7rem;border-bottom:1px solid var(--border)}
+.nr-cta-btn{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.42rem .65rem;border-radius:var(--radius-full);font-family:'Clash Grotesk',sans-serif;font-size:.67rem;font-weight:600;letter-spacing:.01em;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease;cursor:pointer;border:none}
+.nr-cta-btn:hover{transform:translateY(-1px)}
+.nr-cta-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:var(--radius-full)}
+.nr-cta-btn svg{width:12px;height:12px;flex-shrink:0}
+.nr-cta-primary{background:linear-gradient(135deg,var(--blue-deep),var(--blue));color:#fff;box-shadow:0 3px 10px var(--blue-glow)}
+.nr-cta-primary:hover{box-shadow:0 5px 16px var(--blue-glow)}
+.nr-cta-ai{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25)}
+.nr-cta-ai:hover{box-shadow:0 5px 16px rgba(124,58,237,.38)}
+/* — Festività in arrivo — */
+.nr-fests{flex-shrink:0;padding:.55rem .7rem .45rem;border-bottom:1px solid var(--border);background:linear-gradient(150deg,rgba(124,112,89,.05) 0%,rgba(235,89,57,.04) 100%)}
+.nr-fests-h{font-family:'Clash Grotesk',sans-serif;font-size:.56rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:.38rem}
+.nr-fest{display:flex;align-items:flex-start;gap:.4rem;padding:.28rem 0;border-bottom:1px solid rgba(124,112,89,.08)}
+.nr-fest:last-child{border-bottom:none;padding-bottom:0}
+.nr-fest-e{font-size:.95rem;line-height:1;margin-top:.04rem}
+.nr-fest-body{flex:1;min-width:0}
+.nr-fest-tag{font-size:.5rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border-radius:3px;padding:.09rem .28rem;display:inline-block;margin-bottom:.14rem}
+.nr-fest-name{font-size:.68rem;font-weight:600;color:var(--ink);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nr-fest-date{font-size:.58rem;color:var(--fg-muted);margin-top:.06rem}
+.nr-fest-soon{font-size:.58rem;font-weight:700;color:var(--coral)}
+/* — Celebration toast — */
+.eih-fest-toast{position:fixed;bottom:1.75rem;left:1.75rem;z-index:500;max-width:258px;border-radius:16px;overflow:hidden;background:rgba(255,253,250,0.97);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:1px solid var(--border-bright);box-shadow:0 16px 44px rgba(20,30,48,.18),inset 0 1px 0 rgba(255,255,255,.4);transform:translateY(8px) scale(.97);opacity:0;pointer-events:none;transition:transform .35s var(--ease-spring),opacity .35s ease}
+.eih-fest-toast.is-shown{transform:none;opacity:1;pointer-events:auto}
+.eih-fest-toast-inner{padding:.85rem 1rem .9rem}
+.eih-fest-toast-close{position:absolute;top:.5rem;right:.5rem;width:22px;height:22px;border-radius:50%;border:none;background:rgba(124,112,89,.15);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:var(--fg-muted);transition:background .2s ease}
+.eih-fest-toast-close:hover{background:rgba(124,112,89,.3)}
+.eih-fest-toast-close:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.eih-fest-toast-emoji{font-size:1.6rem;line-height:1;display:block;margin-bottom:.32rem}
+.eih-fest-toast-tag{font-size:.53rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:4px;padding:.1rem .38rem;display:inline-block;margin-bottom:.28rem}
+.eih-fest-toast-title{font-family:'Clash Grotesk',sans-serif;font-size:.88rem;font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:.28rem}
+.eih-fest-toast-msg{font-size:.7rem;color:var(--fg-secondary);line-height:1.45;margin-bottom:.52rem}
+.eih-fest-toast-cta{display:inline-flex;align-items:center;gap:.25rem;font-family:'Clash Grotesk',sans-serif;font-size:.64rem;font-weight:600;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--blue-deep),var(--blue));padding:.3rem .68rem;border-radius:var(--radius-full);box-shadow:0 3px 10px var(--blue-glow);transition:box-shadow .2s ease}
+.eih-fest-toast-cta:hover{box-shadow:0 5px 14px var(--blue-glow)}
+.eih-fest-toast-cta:focus-visible{outline:2px solid var(--coral);outline-offset:2px;border-radius:var(--radius-full)}
+@media(max-width:639px){.eih-fest-toast{left:.75rem;right:.75rem;max-width:none;bottom:5.5rem}}
+
 /* ─── CHATBOT ─── */
 #chat-btn{
   position:fixed;bottom:1.75rem;right:1.75rem;z-index:400;
@@ -2415,6 +2452,19 @@ footer{
     <div class="nr-opp-dots" id="nr-opp-dots" role="tablist" aria-label="Scegli opportunità"></div>
     <a class="nr-opp-all" href="/opportunita">Tutte le opportunità →</a>
   </div>
+  <!-- CTAs -->
+  <div class="nr-cta">
+    <a class="nr-cta-btn nr-cta-primary" href="/percorso" onclick="if(typeof openAuth==='function'){openAuth('signup');return false;}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Unisciti gratis
+    </a>
+    <button type="button" class="nr-cta-btn nr-cta-ai" onclick="var b=document.getElementById('chat-btn');if(b)b.click();" aria-label="Apri assistente AI">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Chiedi all'AI
+    </button>
+  </div>
+  <!-- Festività religiose in arrivo (populated by JS) -->
+  <div class="nr-fests" id="nr-fests"></div>
   <!-- Secondary: live news ticker (loaded by news-ticker.js into .nr-track) -->
   <div class="nr-head"><span class="nr-live" aria-hidden="true"></span> Ultime news · Sri Lanka</div>
   <div class="nr-viewport"><div class="nr-track"></div></div>
@@ -2461,6 +2511,83 @@ footer{
     stage.addEventListener('focusin',stop);
     stage.addEventListener('focusout',start);
     start();
+  }
+})();
+</script>
+<script>
+/* Religious celebration widget + toast. */
+(function(){
+  var F=[
+    {n:"Esala Poya",d:"2026-07-01",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Nikini Poya",d:"2026-07-30",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Assunzione",d:"2026-08-15",e:"✝️",r:"Cristiana",c:"#2563eb"},
+    {n:"Binara Poya",d:"2026-08-29",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Mawlid an-Nabi",d:"2026-09-04",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Vap Poya",d:"2026-09-27",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Navaratri",d:"2026-10-02",e:"🕉️",r:"Indù",c:"#dc2626"},
+    {n:"Diwali / Deepavali",d:"2026-10-20",e:"🪔",r:"Indù",c:"#dc2626"},
+    {n:"Il Poya",d:"2026-10-27",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Natale",d:"2026-12-25",e:"✝️",r:"Cristiana",c:"#2563eb"},
+    {n:"Unduvap Poya",d:"2026-12-26",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Thai Pongal",d:"2027-01-14",e:"🌾",r:"Indù/Tamil",c:"#dc2626"},
+    {n:"Duruthu Poya",d:"2027-01-24",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Maha Sivaratri",d:"2027-02-17",e:"🕉️",r:"Indù",c:"#dc2626"},
+    {n:"Ramadan",d:"2027-02-17",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Eid al-Fitr",d:"2027-03-19",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Pasqua",d:"2027-04-04",e:"✝️",r:"Cristiana",c:"#2563eb"},
+    {n:"Anno Nuovo Sinhalese",d:"2027-04-14",e:"🎊",r:"Buddista",c:"#d97706"},
+    {n:"Anno Nuovo Tamil",d:"2027-04-14",e:"🎊",r:"Indù/Tamil",c:"#dc2626"},
+    {n:"Vesak Poya",d:"2027-05-21",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Eid al-Adha",d:"2027-05-26",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Poson Poya",d:"2027-06-20",e:"🪷",r:"Buddista",c:"#d97706"}
+  ];
+  var now=new Date();now.setHours(0,0,0,0);
+  var upcoming=F.map(function(f){return Object.assign({},f,{dt:new Date(f.d+'T00:00:00')});})
+    .filter(function(f){return f.dt>=now;})
+    .sort(function(a,b){return a.dt-b.dt;})
+    .slice(0,2);
+
+  var wrap=document.getElementById('nr-fests');
+  if(wrap&&upcoming.length){
+    var h='<div class="nr-fests-h">🗓 Festività in arrivo</div>';
+    upcoming.forEach(function(f){
+      var diff=Math.round((f.dt-now)/864e5);
+      var ds=diff===0?'Oggi':diff===1?'Domani':'Tra '+diff+' gg';
+      var isSoon=diff<=3;
+      var ts='background:'+f.c+'20;color:'+f.c;
+      h+='<div class="nr-fest"><span class="nr-fest-e" aria-hidden="true">'+f.e+'</span>'
+        +'<div class="nr-fest-body"><span class="nr-fest-tag" style="'+ts+'">'+f.r+'</span>'
+        +'<div class="nr-fest-name">'+f.n+'</div>'
+        +(isSoon?'<div class="nr-fest-soon">'+ds+'</div>':'<div class="nr-fest-date">'+ds+'</div>')
+        +'</div></div>';
+    });
+    wrap.innerHTML=h;
+  }
+
+  var tf=upcoming.find(function(f){return Math.round((f.dt-now)/864e5)<=7;});
+  if(tf){
+    var key='eih_fest_'+tf.d;
+    if(!sessionStorage.getItem(key)){
+      sessionStorage.setItem(key,'1');
+      var diff=Math.round((tf.dt-now)/864e5);
+      var ws=diff===0?'oggi':diff===1?'domani':'tra '+diff+' giorni';
+      var t=document.createElement('div');
+      t.className='eih-fest-toast';
+      t.setAttribute('role','alertdialog');
+      t.setAttribute('aria-labelledby','eft-title');
+      t.setAttribute('aria-describedby','eft-msg');
+      var ts='background:'+tf.c+'20;color:'+tf.c;
+      t.innerHTML='<div class="eih-fest-toast-inner">'
+        +'<button class="eih-fest-toast-close" aria-label="Chiudi" onclick="this.closest(\'.eih-fest-toast\').classList.remove(\'is-shown\')">✕</button>'
+        +'<span class="eih-fest-toast-emoji" aria-hidden="true">'+tf.e+'</span>'
+        +'<span class="eih-fest-toast-tag" style="'+ts+'">'+tf.r+'</span>'
+        +'<h2 class="eih-fest-toast-title" id="eft-title">'+tf.n+'</h2>'
+        +'<p class="eih-fest-toast-msg" id="eft-msg">La festività si celebra '+ws+'. Auguri a tutta la comunità! 🙏</p>'
+        +'<a class="eih-fest-toast-cta" href="/guide">Esplora le guide →</a>'
+        +'</div>';
+      document.body.appendChild(t);
+      setTimeout(function(){t.classList.add('is-shown');},1500);
+    }
   }
 })();
 </script>
