@@ -1131,6 +1131,21 @@ body{
 .eih-fest-toast-cta:hover{box-shadow:0 5px 14px var(--blue-glow)}
 .eih-fest-toast-cta:focus-visible{outline:2px solid var(--coral);outline-offset:2px;border-radius:var(--radius-full)}
 @media(max-width:639px){.eih-fest-toast{left:.75rem;right:.75rem;max-width:none;bottom:5.5rem}}
+/* — Navigazione rapida — */
+.nr-nav{flex-shrink:0;border-bottom:1px solid var(--border)}
+.nr-nav-tog{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.48rem .7rem;background:none;border:none;cursor:pointer;font-size:.68rem;font-weight:600;color:var(--fg);text-align:left}
+.nr-nav-tog:hover{background:rgba(0,0,0,.04)}
+.nr-nav-label{display:flex;align-items:center;gap:.32rem}
+.nr-nav-arr{transition:transform .2s;flex-shrink:0;opacity:.6}
+.nr-nav-tog[aria-expanded="true"] .nr-nav-arr{transform:rotate(180deg)}
+.nr-nav-body{overflow:hidden;max-height:0;transition:max-height .25s ease}
+.nr-nav-body.is-open{max-height:280px;overflow-y:auto}
+.nr-nav-sect{padding:.3rem .7rem .1rem}
+.nr-nav-sh{font-size:.5rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted);margin:.3rem 0 .2rem}
+.nr-nav-ul{list-style:none;margin:0;padding:0}
+.nr-nav-ul li{line-height:1}
+.nr-nav-ul a,.nr-nav-lnk{font-size:.66rem;color:var(--fg-secondary);text-decoration:none;display:block;padding:.17rem .28rem;border-radius:3px;transition:color .15s,background .15s;background:none;border:none;cursor:pointer;width:100%;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nr-nav-ul a:hover,.nr-nav-lnk:hover{color:var(--accent);background:rgba(37,99,235,.06)}
 
 /* ─── CHATBOT ─── */
 #chat-btn{
@@ -2465,6 +2480,57 @@ footer{
   </div>
   <!-- Festività religiose in arrivo (populated by JS) -->
   <div class="nr-fests" id="nr-fests"></div>
+  <!-- Navigazione rapida (specchio del footer) -->
+  <div class="nr-nav" id="nr-nav">
+    <button class="nr-nav-tog" id="nr-nav-tog" aria-expanded="false" aria-controls="nr-nav-body">
+      <span class="nr-nav-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        Menu rapido
+      </span>
+      <svg class="nr-nav-arr" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="nr-nav-body" id="nr-nav-body" role="region" aria-labelledby="nr-nav-tog">
+      <div class="nr-nav-sect">
+        <p class="nr-nav-sh">Servizi</p>
+        <ul class="nr-nav-ul">
+          <li><a href="/guide">📖 Guide</a></li>
+          <li><a href="/percorso">🤖 Assistente AI</a></li>
+          <li><a href="/community">👥 Community</a></li>
+          <li><a href="/corsi">🗣️ Corsi di Lingue</a></li>
+          <li><a href="/opportunita">✨ Opportunità</a></li>
+          <li><a href="/money-transfer">💸 Money Transfer</a></li>
+          <li><a href="/moduli">📄 Moduli e Lettere</a></li>
+          <li><a href="/assegno-unico">👶 Assegno Unico</a></li>
+          <li><a href="/diritti-inps">🏛️ Diritti INPS</a></li>
+          <li><a href="/guida-ssn">🏥 Guida SSN</a></li>
+          <li><a href="/patente">🚗 Patente</a></li>
+          <li><a href="/housing">🏠 Casa in Affitto</a></li>
+          <li><a href="/associazioni">🤝 Associazioni</a></li>
+          <li><a href="/mercatino">🛍️ Mercatino</a></li>
+          <li><a href="/podcast">🎙️ Podcast</a></li>
+          <li><a href="/riconoscimento-titoli">🎓 Riconosc. Titoli</a></li>
+          <li><a href="/mappa">🗺️ Mappa servizi</a></li>
+        </ul>
+      </div>
+      <div class="nr-nav-sect">
+        <p class="nr-nav-sh">Azienda</p>
+        <ul class="nr-nav-ul">
+          <li><a href="/chi-siamo">Chi siamo</a></li>
+          <li><a href="/news">News</a></li>
+          <li><button class="nr-nav-lnk" onclick="openPricing()">Pubblicità</button></li>
+          <li><a href="/contatti">Contatti</a></li>
+        </ul>
+      </div>
+      <div class="nr-nav-sect" style="padding-bottom:.5rem">
+        <p class="nr-nav-sh">Account</p>
+        <ul class="nr-nav-ul">
+          <li><button class="nr-nav-lnk" onclick="openAuth('login')">Accedi</button></li>
+          <li><button class="nr-nav-lnk" onclick="openAuth('signup')">Registrati</button></li>
+          <li><a href="/abbonamenti">Abbonamenti</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
   <!-- Secondary: live news ticker (loaded by news-ticker.js into .nr-track) -->
   <div class="nr-head"><span class="nr-live" aria-hidden="true"></span> Ultime news · Sri Lanka</div>
   <div class="nr-viewport"><div class="nr-track"></div></div>
@@ -2589,6 +2655,18 @@ footer{
       setTimeout(function(){t.classList.add('is-shown');},1500);
     }
   }
+})();
+</script>
+<script>
+(function(){
+  var btn=document.getElementById('nr-nav-tog');
+  var body=document.getElementById('nr-nav-body');
+  if(!btn||!body)return;
+  btn.addEventListener('click',function(){
+    var ex=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',ex?'false':'true');
+    body.classList.toggle('is-open',!ex);
+  });
 })();
 </script>
 
