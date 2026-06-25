@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Calendario Festività — Easy Italia Hub</title>
+<meta name="description" content="Calendario delle festività religiose e culturali della comunità srilankese in Italia: buddiste, indù, cristiane e musulmane."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/calendario"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Easy Italia Hub"/>
+<meta property="og:title" content="Calendario Festività — Easy Italia Hub"/>
+<meta property="og:description" content="Festività buddiste, indù, cristiane e musulmane della comunità srilankese in Italia."/>
+<meta property="og:url" content="https://easyitaliahub.it/calendario"/>
+<meta property="og:locale" content="it_IT"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+<style>
+  .cal-wrap{max-width:860px;margin:0 auto;padding:var(--sp-4) var(--sp-3)}
+  .cal-hero{margin-bottom:var(--sp-4)}
+  .cal-hero h1{font-family:'Clash Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;margin:0 0 .4rem}
+  .cal-hero p{color:var(--fg-secondary);font-size:.95rem;margin:0}
+  .cal-filters{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:var(--sp-3)}
+  .cal-chip{display:inline-flex;align-items:center;gap:.3rem;padding:.35rem .75rem;border-radius:20px;border:1.5px solid var(--border);background:var(--bg-elevated);cursor:pointer;font-size:.8rem;font-weight:500;color:var(--fg-secondary);transition:all .15s;white-space:nowrap}
+  .cal-chip:hover{border-color:var(--accent);color:var(--accent)}
+  .cal-chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .cal-section{margin-bottom:var(--sp-4)}
+  .cal-month{font-family:'Clash Grotesk',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--fg-muted);padding:.3rem 0 .6rem;border-bottom:1px solid var(--border);margin-bottom:.75rem}
+  .cal-list{display:flex;flex-direction:column;gap:.6rem}
+  .cal-item{display:flex;align-items:flex-start;gap:.85rem;padding:.75rem 1rem;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg-elevated);transition:border-color .15s}
+  .cal-item.is-today{border-color:var(--accent);background:rgba(37,99,235,.04)}
+  .cal-item.is-past{opacity:.45}
+  .cal-date-col{display:flex;flex-direction:column;align-items:center;min-width:40px}
+  .cal-day{font-family:'Clash Grotesk',sans-serif;font-size:1.5rem;font-weight:700;line-height:1;color:var(--fg)}
+  .cal-wd{font-size:.58rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-muted);margin-top:.1rem}
+  .cal-emoji{font-size:1.8rem;line-height:1;flex-shrink:0;margin-top:.05rem}
+  .cal-body{flex:1;min-width:0}
+  .cal-name{font-family:'Clash Grotesk',sans-serif;font-size:1.05rem;font-weight:600;color:var(--fg);margin:0 0 .2rem}
+  .cal-tag{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.09rem .35rem;border-radius:3px;margin-bottom:.2rem}
+  .cal-countdown{font-size:.75rem;font-weight:600;margin-top:.2rem}
+  .cal-countdown.soon{color:#dc2626}
+  .cal-countdown.ok{color:var(--fg-muted)}
+  .cal-empty{text-align:center;padding:var(--sp-4);color:var(--fg-muted)}
+  @media(max-width:520px){
+    .cal-item{gap:.55rem;padding:.6rem .75rem}
+    .cal-emoji{font-size:1.4rem}
+    .cal-name{font-size:.95rem}
+  }
+</style>
+</head>
+<body data-page="calendario">
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <div class="cal-wrap">
+    <div class="cal-hero">
+      <h1>🗓 Calendario Festività</h1>
+      <p>Festività religiose e culturali della comunità srilankese in Italia.</p>
+    </div>
+    <div class="cal-filters" id="cal-filters" role="group" aria-label="Filtra per religione"></div>
+    <div id="cal-content"></div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script src="eih-auth.js" defer></script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="assets/eih-atmosphere.js" defer></script>
+<script src="assets/eih-palette.js" defer></script>
+<script src="assets/eih-theme.js" defer></script>
+<script src="assets/eih-consent.js" defer></script>
+
+<script>
+(function(){
+  var EVENTS=[
+    /* 2025 — passate ma utili come archivio */
+    {n:"Thai Pongal",d:"2025-01-14",e:"🌾",r:"Indù/Tamil",c:"#dc2626"},
+    {n:"Maha Sivaratri",d:"2025-03-01",e:"🕉️",r:"Indù",c:"#dc2626"},
+    {n:"Anno Nuovo Sinhalese",d:"2025-04-13",e:"🎊",r:"Buddista",c:"#d97706"},
+    {n:"Anno Nuovo Tamil",d:"2025-04-13",e:"🎊",r:"Indù/Tamil",c:"#dc2626"},
+    {n:"Eid al-Fitr",d:"2025-03-31",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Vesak Poya",d:"2025-05-12",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Eid al-Adha",d:"2025-06-07",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Esala Poya",d:"2025-07-10",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Assunzione",d:"2025-08-15",e:"✝️",r:"Cristiana",c:"#2563eb"},
+    {n:"Mawlid an-Nabi",d:"2025-09-05",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Navaratri",d:"2025-09-22",e:"🕉️",r:"Indù",c:"#dc2626"},
+    {n:"Diwali / Deepavali",d:"2025-10-20",e:"🪔",r:"Indù",c:"#dc2626"},
+    {n:"Natale",d:"2025-12-25",e:"✝️",r:"Cristiana",c:"#2563eb"},
+    /* 2026 */
+    {n:"Thai Pongal",d:"2026-01-14",e:"🌾",r:"Indù/Tamil",c:"#dc2626"},
+    {n:"Duruthu Poya",d:"2026-01-24",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Navam Poya",d:"2026-02-22",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Maha Sivaratri",d:"2026-02-19",e:"🕉️",r:"Indù",c:"#dc2626"},
+    {n:"Ramadan (inizio)",d:"2026-02-18",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Medin Poya",d:"2026-03-24",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Eid al-Fitr",d:"2026-03-20",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Pasqua",d:"2026-04-05",e:"✝️",r:"Cristiana",c:"#2563eb"},
+    {n:"Anno Nuovo Sinhalese",d:"2026-04-13",e:"🎊",r:"Buddista",c:"#d97706"},
+    {n:"Anno Nuovo Tamil",d:"2026-04-13",e:"🎊",r:"Indù/Tamil",c:"#dc2626"},
+    {n:"Bak Poya",d:"2026-04-23",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Vesak Poya",d:"2026-05-23",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Eid al-Adha",d:"2026-05-27",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Poson Poya",d:"2026-06-21",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Esala Poya",d:"2026-07-01",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Nikini Poya",d:"2026-07-30",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Assunzione",d:"2026-08-15",e:"✝️",r:"Cristiana",c:"#2563eb"},
+    {n:"Binara Poya",d:"2026-08-29",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Mawlid an-Nabi",d:"2026-09-04",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Vap Poya",d:"2026-09-27",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Navaratri",d:"2026-10-02",e:"🕉️",r:"Indù",c:"#dc2626"},
+    {n:"Diwali / Deepavali",d:"2026-10-20",e:"🪔",r:"Indù",c:"#dc2626"},
+    {n:"Il Poya",d:"2026-10-27",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Natale",d:"2026-12-25",e:"✝️",r:"Cristiana",c:"#2563eb"},
+    {n:"Unduvap Poya",d:"2026-12-26",e:"🪷",r:"Buddista",c:"#d97706"},
+    /* 2027 */
+    {n:"Thai Pongal",d:"2027-01-14",e:"🌾",r:"Indù/Tamil",c:"#dc2626"},
+    {n:"Duruthu Poya",d:"2027-01-24",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Maha Sivaratri",d:"2027-02-17",e:"🕉️",r:"Indù",c:"#dc2626"},
+    {n:"Ramadan (inizio)",d:"2027-02-17",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Eid al-Fitr",d:"2027-03-19",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Pasqua",d:"2027-04-04",e:"✝️",r:"Cristiana",c:"#2563eb"},
+    {n:"Anno Nuovo Sinhalese",d:"2027-04-14",e:"🎊",r:"Buddista",c:"#d97706"},
+    {n:"Anno Nuovo Tamil",d:"2027-04-14",e:"🎊",r:"Indù/Tamil",c:"#dc2626"},
+    {n:"Vesak Poya",d:"2027-05-21",e:"🪷",r:"Buddista",c:"#d97706"},
+    {n:"Eid al-Adha",d:"2027-05-26",e:"☪️",r:"Musulmana",c:"#15803d"},
+    {n:"Poson Poya",d:"2027-06-20",e:"🪷",r:"Buddista",c:"#d97706"},
+  ];
+
+  var WD=['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+  var MONTHS=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+
+  var RELIGIONS=[
+    {id:'Tutti',label:'Tutte le festività',emoji:'🗓'},
+    {id:'Buddista',label:'Buddiste',emoji:'🪷'},
+    {id:'Indù',label:'Indù',emoji:'🕉️'},
+    {id:'Indù/Tamil',label:'Tamil / Indù',emoji:'🌾'},
+    {id:'Cristiana',label:'Cristiane',emoji:'✝️'},
+    {id:'Musulmana',label:'Musulmane',emoji:'☪️'},
+  ];
+
+  var activeFilter='Tutti';
+
+  function esc(s){return s.replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]||c});}
+
+  function buildFilters(){
+    var wrap=document.getElementById('cal-filters');
+    RELIGIONS.forEach(function(rel){
+      var btn=document.createElement('button');
+      btn.className='cal-chip'+(rel.id==='Tutti'?' active':'');
+      btn.setAttribute('data-filter',rel.id);
+      btn.setAttribute('aria-pressed',rel.id==='Tutti'?'true':'false');
+      btn.textContent=rel.emoji+' '+rel.label;
+      btn.addEventListener('click',function(){
+        activeFilter=rel.id;
+        document.querySelectorAll('.cal-chip').forEach(function(c){
+          var isActive=c.getAttribute('data-filter')===rel.id;
+          c.classList.toggle('active',isActive);
+          c.setAttribute('aria-pressed',isActive?'true':'false');
+        });
+        renderContent();
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  function filterEvents(){
+    if(activeFilter==='Tutti') return EVENTS;
+    return EVENTS.filter(function(e){return e.r===activeFilter||e.r.indexOf(activeFilter)!==-1;});
+  }
+
+  function renderContent(){
+    var now=new Date(); now.setHours(0,0,0,0);
+    var events=filterEvents().map(function(ev){
+      var dt=new Date(ev.d+'T00:00:00');
+      return Object.assign({},ev,{dt:dt});
+    }).sort(function(a,b){return a.dt-b.dt;});
+
+    var content=document.getElementById('cal-content');
+    if(!events.length){
+      content.innerHTML='<div class="cal-empty">Nessuna festività per questo filtro.</div>';
+      return;
+    }
+
+    /* group by month-year */
+    var groups={};
+    var order=[];
+    events.forEach(function(ev){
+      var key=ev.dt.getFullYear()+'-'+(ev.dt.getMonth());
+      if(!groups[key]){groups[key]=[];order.push(key);}
+      groups[key].push(ev);
+    });
+
+    var html='';
+    order.forEach(function(key){
+      var parts=key.split('-');
+      var yr=parseInt(parts[0]);
+      var mo=parseInt(parts[1]);
+      var label=MONTHS[mo]+' '+yr;
+      html+='<div class="cal-section"><div class="cal-month">'+esc(label)+'</div><div class="cal-list">';
+      groups[key].forEach(function(ev){
+        var diff=Math.round((ev.dt-now)/864e5);
+        var isPast=diff<0;
+        var isToday=diff===0;
+        var cntText='',cntClass='ok';
+        if(isToday){cntText='Oggi';cntClass='soon';}
+        else if(diff===1){cntText='Domani';cntClass='soon';}
+        else if(diff>0&&diff<=7){cntText='Tra '+diff+' giorni';cntClass='soon';}
+        else if(diff>0){cntText='Tra '+diff+' giorni';cntClass='ok';}
+        else{cntText=Math.abs(diff)+' giorni fa';cntClass='ok';}
+        var tagStyle='background:'+ev.c+'20;color:'+ev.c;
+        html+='<div class="cal-item'+(isToday?' is-today':'')+(isPast?' is-past':'')+'">'
+          +'<div class="cal-date-col"><span class="cal-day">'+ev.dt.getDate()+'</span><span class="cal-wd">'+WD[ev.dt.getDay()]+'</span></div>'
+          +'<span class="cal-emoji" aria-hidden="true">'+ev.e+'</span>'
+          +'<div class="cal-body">'
+          +'<span class="cal-tag" style="'+tagStyle+'">'+esc(ev.r)+'</span>'
+          +'<div class="cal-name">'+esc(ev.n)+'</div>'
+          +'<div class="cal-countdown '+cntClass+'">'+cntText+'</div>'
+          +'</div></div>';
+      });
+      html+='</div></div>';
+    });
+    content.innerHTML=html;
+  }
+
+  buildFilters();
+  renderContent();
+})();
+</script>
+</body>
+</html>
