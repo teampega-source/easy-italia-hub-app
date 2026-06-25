@@ -1,0 +1,117 @@
+{
+  "name": "EIH × Atena — Calendario contenuti settimanale AI",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": { "interval": [{ "field": "cronExpression", "expression": "0 8 * * 1" }] }
+      },
+      "id": "cron-monday",
+      "name": "Ogni lunedì alle 8:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Sei il social media manager di Easy Italia Hub e gestisci il profilo Instagram/TikTok di Atena Solis (@atena_solis_offic), un'AI influencer che aiuta la comunità srilankese in Italia.\n\nAtena: capelli castani ondulati, occhi grigio-azzurri, lineamenti mediterranei. Tono: caldo, diretto, come un'amica saggia. Contenuti: italiano + singalese nei caption.\n\nHashtag fissi: #EasyItaliaHub #SrilankesiInItalia #VitaInItalia #ImmigrazioneFacile #PermessoDiSoggiorno"
+            },
+            {
+              "role": "user",
+              "content": "Crea il piano contenuti per la settimana del {{ $now.toFormat('dd/MM/yyyy') }}. Genera 5 idee post (Lun-Ven), per ognuna:\n- Tipo: Reel / Carosello / Story\n- Tema: (es. permesso di soggiorno, lavoro, sanità, scuola, cucina italiana)\n- Caption IT (max 150 char)\n- Caption SI (singalese, max 150 char)\n- Hook (prima frase che ferma lo scroll)\n- CTA\n\nRestituisci JSON array con campi: giorno, tipo, tema, caption_it, caption_si, hook, cta"
+            }
+          ]
+        },
+        "options": { "temperature": 0.8 }
+      },
+      "id": "ai-calendar",
+      "name": "AI genera piano settimanale",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [460, 300],
+      "credentials": { "openAiApi": { "id": "openai-creds", "name": "OpenAI" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const content = JSON.parse($input.item.json.message.content);\nreturn content.map(post => ({ json: post }));"
+      },
+      "id": "parse-calendar",
+      "name": "Parse piano contenuti",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "create",
+        "tableId": "content_calendar",
+        "dataToSend": "defineBelow",
+        "fieldsUi": {
+          "fieldValues": [
+            { "fieldId": "week_of", "fieldValue": "={{ $now.startOf('week').toISO() }}" },
+            { "fieldId": "giorno", "fieldValue": "={{ $json.giorno }}" },
+            { "fieldId": "tipo", "fieldValue": "={{ $json.tipo }}" },
+            { "fieldId": "tema", "fieldValue": "={{ $json.tema }}" },
+            { "fieldId": "caption_it", "fieldValue": "={{ $json.caption_it }}" },
+            { "fieldId": "caption_si", "fieldValue": "={{ $json.caption_si }}" },
+            { "fieldId": "hook", "fieldValue": "={{ $json.hook }}" },
+            { "fieldId": "cta", "fieldValue": "={{ $json.cta }}" },
+            { "fieldId": "status", "fieldValue": "draft" }
+          ]
+        }
+      },
+      "id": "save-calendar",
+      "name": "Salva in Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [900, 300],
+      "credentials": { "supabaseApi": { "id": "supabase-creds", "name": "Supabase EIH" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst summary = items.map(i => `• *${i.json.giorno}* — ${i.json.tipo}: ${i.json.tema}`).join('\\n');\nreturn [{ json: { summary } }];"
+      },
+      "id": "build-summary",
+      "name": "Costruisce riepilogo",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "channel": "#content-calendar",
+        "text": "📅 *Piano contenuti Atena × EIH — settimana {{ $now.toFormat('dd/MM') }}*\n\n{{ $json.summary }}\n\nRevisiona su Supabase → content_calendar"
+      },
+      "id": "slack-calendar",
+      "name": "Invia riepilogo su Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [1340, 300],
+      "credentials": { "slackApi": { "id": "slack-creds", "name": "Slack EIH" } }
+    }
+  ],
+  "connections": {
+    "Ogni lunedì alle 8:00": {
+      "main": [[ { "node": "AI genera piano settimanale", "type": "main", "index": 0 } ]]
+    },
+    "AI genera piano settimanale": {
+      "main": [[ { "node": "Parse piano contenuti", "type": "main", "index": 0 } ]]
+    },
+    "Parse piano contenuti": {
+      "main": [[ { "node": "Salva in Supabase", "type": "main", "index": 0 } ]]
+    },
+    "Salva in Supabase": {
+      "main": [[ { "node": "Costruisce riepilogo", "type": "main", "index": 0 } ]]
+    },
+    "Costruisce riepilogo": {
+      "main": [[ { "node": "Invia riepilogo su Slack", "type": "main", "index": 0 } ]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": ["eih", "atena", "content", "calendar"]
+}

@@ -1,0 +1,161 @@
+{
+  "name": "EIH × Atena — Auto-post social media",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "eih-social-post",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook nuovo contenuto pronto",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "notes": "Chiamare da Supabase trigger o manualmente quando il video è pronto. Body: { video_url, caption_it, caption_si, hashtags, platform }"
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Sei un social media manager per Easy Italia Hub. Ottimizza le caption per Instagram e TikTok. Tono: amichevole, diretto, warm. Includi sempre CTA 'easyitaliahub.it'. Max 200 caratteri per TikTok."
+            },
+            {
+              "role": "user",
+              "content": "Caption italiana: {{ $json.caption_it }}\nCaption singalese: {{ $json.caption_si }}\nHashtag: {{ $json.hashtags }}\n\nCrea versioni ottimizzate per: 1) Instagram Reel 2) TikTok. Restituisci JSON: {instagram: string, tiktok: string}"
+            }
+          ]
+        },
+        "options": { "temperature": 0.7 }
+      },
+      "id": "ai-optimize-caption",
+      "name": "AI ottimizza caption",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [460, 300],
+      "credentials": { "openAiApi": { "id": "openai-creds", "name": "OpenAI" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const caption = JSON.parse($('AI ottimizza caption').item.json.message.content);\nconst platforms = $input.item.json.platform || ['instagram', 'tiktok'];\nreturn platforms.map(p => ({\n  platform: p,\n  caption: p === 'instagram' ? caption.instagram : caption.tiktok,\n  video_url: $input.item.json.video_url,\n  hashtags: $input.item.json.hashtags\n}));"
+      },
+      "id": "split-platforms",
+      "name": "Split per piattaforma",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [{ "value1": "={{ $json.platform }}", "operation": "equals", "value2": "instagram" }]
+        }
+      },
+      "id": "if-instagram",
+      "name": "Instagram?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.buffer.com/1/updates/create.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "Authorization", "value": "Bearer {{ $env.BUFFER_TOKEN }}" }]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "text", "value": "={{ $json.caption + '\n\n' + $json.hashtags }}" },
+            { "name": "media[video]", "value": "={{ $json.video_url }}" },
+            { "name": "profile_ids[]", "value": "={{ $env.BUFFER_INSTAGRAM_ID }}" },
+            { "name": "scheduled_at", "value": "={{ $now.plus({hours: 2}).toISO() }}" }
+          ]
+        }
+      },
+      "id": "buffer-instagram",
+      "name": "Pubblica su Instagram (Buffer)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1120, 100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.buffer.com/1/updates/create.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "Authorization", "value": "Bearer {{ $env.BUFFER_TOKEN }}" }]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "text", "value": "={{ $json.caption + '\n\n' + $json.hashtags }}" },
+            { "name": "media[video]", "value": "={{ $json.video_url }}" },
+            { "name": "profile_ids[]", "value": "={{ $env.BUFFER_TIKTOK_ID }}" },
+            { "name": "scheduled_at", "value": "={{ $now.plus({hours: 3}).toISO() }}" }
+          ]
+        }
+      },
+      "id": "buffer-tiktok",
+      "name": "Pubblica su TikTok (Buffer)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1120, 400]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "create",
+        "tableId": "social_posts",
+        "dataToSend": "defineBelow",
+        "fieldsUi": {
+          "fieldValues": [
+            { "fieldId": "video_url", "fieldValue": "={{ $('Webhook nuovo contenuto pronto').item.json.video_url }}" },
+            { "fieldId": "platform", "fieldValue": "={{ $json.platform }}" },
+            { "fieldId": "caption", "fieldValue": "={{ $json.caption }}" },
+            { "fieldId": "scheduled_at", "fieldValue": "={{ $now.toISO() }}" },
+            { "fieldId": "status", "fieldValue": "scheduled" }
+          ]
+        }
+      },
+      "id": "log-supabase",
+      "name": "Log su Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1340, 250],
+      "credentials": { "supabaseApi": { "id": "supabase-creds", "name": "Supabase EIH" } }
+    }
+  ],
+  "connections": {
+    "Webhook nuovo contenuto pronto": {
+      "main": [[ { "node": "AI ottimizza caption", "type": "main", "index": 0 } ]]
+    },
+    "AI ottimizza caption": {
+      "main": [[ { "node": "Split per piattaforma", "type": "main", "index": 0 } ]]
+    },
+    "Split per piattaforma": {
+      "main": [[ { "node": "Instagram?", "type": "main", "index": 0 } ]]
+    },
+    "Instagram?": {
+      "main": [
+        [ { "node": "Pubblica su Instagram (Buffer)", "type": "main", "index": 0 } ],
+        [ { "node": "Pubblica su TikTok (Buffer)", "type": "main", "index": 0 } ]
+      ]
+    },
+    "Pubblica su Instagram (Buffer)": {
+      "main": [[ { "node": "Log su Supabase", "type": "main", "index": 0 } ]]
+    },
+    "Pubblica su TikTok (Buffer)": {
+      "main": [[ { "node": "Log su Supabase", "type": "main", "index": 0 } ]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": ["eih", "atena", "social", "autopost"]
+}
