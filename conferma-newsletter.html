@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Newsletter — Easy Italia Hub</title>
+<link rel="stylesheet" href="/eih-theme.css"/>
+<link rel="stylesheet" href="/eih-atmosphere.css"/>
+<script>!function(){var s=localStorage.getItem('eih-theme')||'dark';document.documentElement.setAttribute('data-theme',s)}()</script>
+<link rel="icon" href="/assets/img/favicon.ico"/>
+<link rel="manifest" href="/site.webmanifest"/>
+<link rel="stylesheet" href="/eih.css"/>
+<style>
+.confirm-wrap{max-width:520px;margin:var(--sp-12) auto;padding:var(--sp-5) var(--sp-4);text-align:center}
+.confirm-icon{font-size:3.5rem;line-height:1;margin-bottom:var(--sp-4)}
+.confirm-wrap h1{font-size:var(--text-2xl);font-weight:700;color:var(--fg-primary);margin:0 0 var(--sp-3)}
+.confirm-wrap p{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.7;margin:0 0 var(--sp-5)}
+.confirm-btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;font-size:var(--text-sm);padding:.75rem 2rem;border-radius:var(--radius-full);transition:opacity .15s}
+.confirm-btn:hover{opacity:.85}
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main>
+<div class="confirm-wrap" id="confirm-content">
+  <div class="confirm-icon">⏳</div>
+  <h1>Verifica in corso…</h1>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="/eih.js"></script>
+<script src="/eih-auth.js"></script>
+<script src="/eih-atmosphere.js"></script>
+<script src="/eih-palette.js"></script>
+<script src="/eih-theme.js"></script>
+<script src="/eih-consent.js"></script>
+<script>
+(function(){
+  var p = new URLSearchParams(location.search);
+  var ok = p.get('ok'), err = p.get('e'), already = p.get('already'), demo = p.get('demo');
+  var el = document.getElementById('confirm-content');
+
+  if (ok) {
+    el.innerHTML = already
+      ? '<div class="confirm-icon">✓</div><h1>Già iscritto</h1><p>Il tuo indirizzo email era già stato confermato in precedenza.</p><a href="/" class="confirm-btn">Torna alla home</a>'
+      : demo
+        ? '<div class="confirm-icon">✓</div><h1>Iscrizione ricevuta</h1><p>Modalità demo — il sistema di conferma è attivo con Supabase e Resend configurati.</p><a href="/" class="confirm-btn">Torna alla home</a>'
+        : '<div class="confirm-icon">🎉</div><h1>Iscrizione confermata!</h1><p>Benvenuto nella newsletter di <strong>Easy Italia Hub</strong>. Riceverai aggiornamenti su novità burocratiche, opportunità selezionate e risorse per la vita in Italia.</p><a href="/" class="confirm-btn">Vai alla home</a>';
+    return;
+  }
+
+  if (err === 'expired') {
+    el.innerHTML = '<div class="confirm-icon">⏰</div><h1>Link scaduto</h1><p>Il link di conferma è valido solo per 24 ore. Iscriviti di nuovo per ricevere un nuovo link.</p><a href="/#newsletter" class="confirm-btn">Iscriviti di nuovo</a>';
+    return;
+  }
+
+  if (err === 'invalid') {
+    el.innerHTML = '<div class="confirm-icon">❌</div><h1>Link non valido</h1><p>Il link di conferma non è valido. Verifica di aver copiato l\'URL completo oppure iscriviti di nuovo.</p><a href="/#newsletter" class="confirm-btn">Iscriviti di nuovo</a>';
+    return;
+  }
+
+  if (err === 'server') {
+    el.innerHTML = '<div class="confirm-icon">⚠️</div><h1>Errore temporaneo</h1><p>Si è verificato un problema. Riprova tra qualche minuto o contattaci.</p><a href="/" class="confirm-btn">Torna alla home</a>';
+    return;
+  }
+
+  // No params: user landed directly
+  el.innerHTML = '<div class="confirm-icon">✉️</div><h1>Controlla la tua email</h1><p>Abbiamo inviato un link di conferma al tuo indirizzo. Clicca il link nell\'email per completare l\'iscrizione alla newsletter.</p><a href="/" class="confirm-btn">Torna alla home</a>';
+})();
+</script>
+</body>
+</html>
