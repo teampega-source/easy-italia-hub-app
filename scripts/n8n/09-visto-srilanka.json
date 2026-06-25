@@ -1,0 +1,72 @@
+{
+  "name": "09 — Visto Sri Lanka Info",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "eih-visto-srilanka",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-visto",
+      "name": "Webhook Richiesta Visto",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "eih-visto-srilanka"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body || {};\nconst email = (body.email || '').trim();\nconst name  = (body.name || 'Utente').trim();\nconst type  = (body.type || 'tourist').trim();\nreturn [{ json: { email, name, type } }];"
+      },
+      "id": "validate-input",
+      "name": "Valida Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const VISTO_INFO = {\n  tourist: {\n    name: 'Visto Turistico (ETA)',\n    url: 'https://eta.gov.lk',\n    fee: '35 USD',\n    validity: '30 giorni (prorogabile a 90)',\n    processing: '24-48 ore online',\n    docs: ['Passaporto valido 6+ mesi', 'Biglietto A/R', 'Prova alloggio', 'Fondi sufficienti'],\n  },\n  business: {\n    name: 'Visto Business',\n    url: 'https://eta.gov.lk',\n    fee: '40 USD',\n    validity: '30 giorni (prorogabile)',\n    processing: '3-5 giorni lavorativi',\n    docs: ['Passaporto valido 6+ mesi', 'Lettera invito azienda SL', 'Biglietto A/R'],\n  },\n  transit: {\n    name: 'Transito (scalo)',\n    url: 'https://eta.gov.lk',\n    fee: '0 (scalo <48h, no uscita aeroporto)',\n    validity: '48 ore',\n    processing: 'Immediato',\n    docs: ['Passaporto valido', 'Biglietto coincidenza'],\n  },\n};\nconst info = VISTO_INFO[$json.type] || VISTO_INFO.tourist;\nreturn [{ json: { ...$json, info } }];"
+      },
+      "id": "build-info",
+      "name": "Dati Visto",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "info@easyitaliahub.it",
+        "toEmail": "={{ $json.email }}",
+        "subject": "Informazioni visto Sri Lanka — {{ $json.info.name }}",
+        "html": "<h2>Ciao {{ $json.name }}!</h2><p>Ecco le informazioni per il <strong>{{ $json.info.name }}</strong>:</p><table><tr><td><b>Costo</b></td><td>{{ $json.info.fee }}</td></tr><tr><td><b>Validità</b></td><td>{{ $json.info.validity }}</td></tr><tr><td><b>Elaborazione</b></td><td>{{ $json.info.processing }}</td></tr></table><p><b>Documenti richiesti:</b><ul>{{ $json.info.docs.map(d => '<li>' + d + '</li>').join('') }}</ul></p><p>Fai domanda ufficialmente su: <a href='{{ $json.info.url }}'>{{ $json.info.url }}</a></p><p>Per ulteriore assistenza visita <a href='https://easyitaliahub.it'>easyitaliahub.it</a></p><p><small>Queste informazioni hanno scopo orientativo. Verifica sempre sul sito ufficiale dell'immigrazione Sri Lanka.</small></p>"
+      },
+      "id": "send-email",
+      "name": "Invia Email Info Visto",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [900, 300],
+      "credentials": { "smtp": { "id": "resend-smtp", "name": "Resend SMTP" } }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: true, info: $('Dati Visto').item.json.info }) }}"
+      },
+      "id": "respond",
+      "name": "Risposta JSON",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1100, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Richiesta Visto": { "main": [[{ "node": "Valida Input", "type": "main", "index": 0 }]] },
+    "Valida Input": { "main": [[{ "node": "Dati Visto", "type": "main", "index": 0 }]] },
+    "Dati Visto": { "main": [[{ "node": "Invia Email Info Visto", "type": "main", "index": 0 }]] },
+    "Invia Email Info Visto": { "main": [[{ "node": "Risposta JSON", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": {},
+  "notes": "Webhook POST /eih-visto-srilanka. Body: { email, name, type: 'tourist'|'business'|'transit' }. Risponde con dati visto + invia email riepilogo."
+}

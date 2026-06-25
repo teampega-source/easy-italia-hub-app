@@ -59,6 +59,11 @@
     [data-page="money-transfer"] .provider-list li{margin:0}
     [data-page="money-transfer"] .provider-list a{display:inline-flex;align-items:center;gap:.35rem;padding:.55rem 1.1rem;border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:500;color:var(--ink);text-decoration:none;background:var(--surface);border:1px solid var(--border-bright);transition:transform var(--dur-std) var(--ease-spring),background var(--dur-micro)}
     [data-page="money-transfer"] .provider-list a:hover{transform:translateY(-2px);background:var(--surface-hover)}
+    [data-page="money-transfer"] .fx-alert-box{margin-top:var(--sp-4);padding:1.25rem 1.5rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border)}
+    [data-page="money-transfer"] .fx-alert-box h2{margin:0 0 .3rem}
+    [data-page="money-transfer"] .fx-alert-box .form{margin-top:var(--sp-2)}
+    [data-page="money-transfer"] .fa-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    @media(max-width:540px){[data-page="money-transfer"] .fa-grid{grid-template-columns:1fr}}
   </style>
   <div class="page page-wide">
     <p class="eyebrow reveal"><span class="eyebrow-line"></span> Money Transfer</p>
@@ -99,6 +104,24 @@
       </ul>
     </section>
 
+    <section id="alert-tasso" class="reveal">
+      <div class="fx-alert-box">
+        <h2>Ricevi un avviso quando il tasso sale</h2>
+        <p class="muted" style="font-size:var(--text-sm)">Indicaci email e tasso obiettivo: ti scriviamo quando 1 EUR supera quella soglia LKR.</p>
+        <form class="form" id="fx-alert-form" novalidate>
+          <div class="fa-grid">
+            <label style="font-size:var(--text-sm);font-weight:500;display:flex;flex-direction:column;gap:.35rem">Email<input type="email" id="fa-email" placeholder="nome@email.it" required/></label>
+            <label style="font-size:var(--text-sm);font-weight:500;display:flex;flex-direction:column;gap:.35rem">Tasso obiettivo LKR<input type="number" id="fa-rate" placeholder="es. 340" min="200" max="600" step="1" required/></label>
+          </div>
+          <div class="signup-actions" style="margin-top:.75rem">
+            <button type="submit" class="btn-primary">Attiva avviso tasso</button>
+          </div>
+          <p class="form-ok" id="fa-ok" role="status" hidden>✓ Avviso attivato! Ti scriveremo quando 1 EUR &gt; <span id="fa-rate-val">-</span> LKR.</p>
+          <p class="form-err muted" id="fa-err" role="alert" hidden></p>
+        </form>
+      </div>
+    </section>
+
     <section id="consigli" class="reveal">
       <h2 data-i18n="m.10">Consigli pratici</h2>
       <ul>
@@ -121,6 +144,32 @@
 <script src="eih.js"></script>
 <script src="eih-auth.js" defer></script>
 <script src="fx-comparator.js" defer></script>
+<script>
+(function(){
+  var form=document.getElementById('fx-alert-form');
+  if(!form)return;
+  var okEl=document.getElementById('fa-ok'),errEl=document.getElementById('fa-err'),rateValEl=document.getElementById('fa-rate-val');
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();
+    var email=(document.getElementById('fa-email').value||'').trim();
+    var rate=parseInt(document.getElementById('fa-rate').value,10);
+    var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if(!emailOk||!rate||rate<200||rate>600){
+      if(okEl)okEl.hidden=true;
+      if(errEl){errEl.hidden=false;errEl.textContent=!emailOk?'Inserisci un email valida.':'Tasso tra 200 e 600 LKR.';}
+      return;
+    }
+    if(errEl)errEl.hidden=true;if(okEl)okEl.hidden=true;
+    var btn=form.querySelector('button[type="submit"]');if(btn)btn.disabled=true;
+    try{
+      var r=await fetch('/api/fx-alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,target_rate:rate})});
+      if(r.ok){if(rateValEl)rateValEl.textContent=rate;if(okEl)okEl.hidden=false;form.reset();}
+      else{if(errEl){errEl.hidden=false;errEl.textContent='Errore. Riprova tra poco.';}}
+    }catch(err){if(errEl){errEl.hidden=false;errEl.textContent='Errore di rete. Riprova.';}}
+    if(btn)btn.disabled=false;
+  });
+})();
+</script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
 <script src="assets/eih-atmosphere.js" defer></script>
 <script src="assets/eih-palette.js" defer></script>

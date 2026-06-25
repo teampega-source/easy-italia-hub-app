@@ -1,0 +1,123 @@
+{
+  "name": "08 — WhatsApp Chatbot (Atena)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "eih-whatsapp",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-verify",
+      "name": "Webhook Verifica Token",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 200],
+      "webhookId": "eih-whatsapp-verify"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "eih-whatsapp",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-msg",
+      "name": "Webhook Messaggio Entrata",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 400],
+      "webhookId": "eih-whatsapp-msg"
+    },
+    {
+      "parameters": {
+        "jsCode": "// WhatsApp token verification (hub.mode=subscribe)\nconst q = $input.first().json.query || {};\nif (q['hub.mode'] === 'subscribe' && q['hub.verify_token'] === $env.WHATSAPP_VERIFY_TOKEN) {\n  return [{ json: { challenge: q['hub.challenge'] } }];\n}\nreturn [{ json: { error: 'forbidden' } }];"
+      },
+      "id": "verify-token",
+      "name": "Controlla Verify Token",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body || {};\nconst entry = (body.entry || [])[0] || {};\nconst change = (entry.changes || [])[0] || {};\nconst msg = ((change.value || {}).messages || [])[0] || {};\nconst from = msg.from || '';\nconst text = (msg.text || {}).body || '';\nif (!from || !text) return [];\nreturn [{ json: { from, text, wa_id: msg.id } }];"
+      },
+      "id": "extract-msg",
+      "name": "Estrai Messaggio",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 400]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Sei Atena Solis, assistente virtuale di Easy Italia Hub. Aiuti la comunità srilankese in Italia con permessi di soggiorno, lavoro, visti Sri Lanka, trasferimenti di denaro e viaggi. Rispondi in modo chiaro, amichevole e professionale. Usa l'italiano. Se non sai qualcosa di preciso, rimanda sempre al sito easyitaliahub.it o agli uffici competenti. Mai dare consulenza legale definitiva."
+            },
+            { "role": "user", "content": "={{ $json.text }}" }
+          ]
+        },
+        "options": { "maxTokens": 500 }
+      },
+      "id": "ai-reply",
+      "name": "AI Risposta Atena",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [700, 400],
+      "credentials": { "openAiApi": { "id": "openai-creds", "name": "OpenAI" } }
+    },
+    {
+      "parameters": {
+        "url": "https://graph.facebook.com/v18.0/{{ $env.WHATSAPP_PHONE_ID }}/messages",
+        "method": "POST",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [{ "name": "Authorization", "value": "Bearer {{ $env.WHATSAPP_TOKEN }}" }] },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "messaging_product", "value": "whatsapp" },
+            { "name": "to", "value": "={{ $('Estrai Messaggio').item.json.from }}" },
+            { "name": "type", "value": "text" },
+            { "name": "text", "value": "={{ JSON.stringify({ body: $json.message.content }) }}" }
+          ]
+        }
+      },
+      "id": "send-whatsapp",
+      "name": "Invia Risposta WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [950, 400]
+    },
+    {
+      "parameters": { "respondWith": "text", "responseBody": "={{ $('Controlla Verify Token').item.json.challenge }}" },
+      "id": "respond-verify",
+      "name": "Risposta Verifica",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [700, 200]
+    },
+    {
+      "parameters": { "respondWith": "json", "responseBody": "{\"status\":\"ok\"}" },
+      "id": "respond-ok",
+      "name": "Risposta 200 OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1150, 400]
+    }
+  ],
+  "connections": {
+    "Webhook Verifica Token": { "main": [[{ "node": "Controlla Verify Token", "type": "main", "index": 0 }]] },
+    "Webhook Messaggio Entrata": { "main": [[{ "node": "Estrai Messaggio", "type": "main", "index": 0 }]] },
+    "Controlla Verify Token": { "main": [[{ "node": "Risposta Verifica", "type": "main", "index": 0 }]] },
+    "Estrai Messaggio": { "main": [[{ "node": "AI Risposta Atena", "type": "main", "index": 0 }]] },
+    "AI Risposta Atena": { "main": [[{ "node": "Invia Risposta WhatsApp", "type": "main", "index": 0 }]] },
+    "Invia Risposta WhatsApp": { "main": [[{ "node": "Risposta 200 OK", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": {},
+  "notes": "Richiede: WHATSAPP_TOKEN, WHATSAPP_PHONE_ID, WHATSAPP_VERIFY_TOKEN env vars in n8n. Configurare webhook URL in Meta Business Manager → WhatsApp → Webhook."
+}

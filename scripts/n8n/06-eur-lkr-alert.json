@@ -1,0 +1,97 @@
+{
+  "name": "06 — EUR/LKR Rate Alert",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": { "interval": [{ "field": "cronExpression", "expression": "0 8 * * *" }] }
+      },
+      "id": "cron-daily",
+      "name": "Cron Giornaliero 08:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.exchangerate-api.com/v4/latest/EUR",
+        "method": "GET"
+      },
+      "id": "fetch-rate",
+      "name": "Fetch EUR→LKR",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const rate = $input.first().json.rates.LKR;\nconst items = $input.all();\nreturn [{ json: { eur_lkr: rate } }];"
+      },
+      "id": "extract-rate",
+      "name": "Estrai LKR",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "fx_alert_subscriptions",
+        "additionalFields": {}
+      },
+      "id": "get-subscribers",
+      "name": "Leggi Iscritti Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [850, 300],
+      "credentials": { "supabaseApi": { "id": "supabase-creds", "name": "Supabase" } }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [{ "value1": "={{ $('Estrai LKR').item.json.eur_lkr }}", "operation": "larger", "value2": "={{ $json.target_rate }}" }]
+        }
+      },
+      "id": "filter-triggered",
+      "name": "Filtra Soglia Superata",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "alerts@easyitaliahub.it",
+        "toEmail": "={{ $json.email }}",
+        "subject": "Tasso EUR/LKR ha superato {{ $json.target_rate }}!",
+        "text": "Buone notizie! Il tasso EUR/LKR è ora {{ $('Estrai LKR').item.json.eur_lkr }} LKR per 1 EUR — ha superato la tua soglia di {{ $json.target_rate }} LKR.\n\nÈ un buon momento per fare un bonifico verso lo Sri Lanka!\n\nVisita: https://easyitaliahub.it/money-transfer\n\n— Easy Italia Hub"
+      },
+      "id": "send-alert-email",
+      "name": "Invia Email Avviso",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [1250, 200],
+      "credentials": { "smtp": { "id": "resend-smtp", "name": "Resend SMTP" } }
+    },
+    {
+      "parameters": {
+        "channel": "#alerts",
+        "text": "💱 EUR/LKR={{ $('Estrai LKR').item.json.eur_lkr }} — {{ $('Filtra Soglia Superata').outputLength }} iscritti notificati."
+      },
+      "id": "slack-notify",
+      "name": "Slack Notifica",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [1450, 300],
+      "credentials": { "slackApi": { "id": "slack-creds", "name": "Slack" } }
+    }
+  ],
+  "connections": {
+    "Cron Giornaliero 08:00": { "main": [[{ "node": "Fetch EUR→LKR", "type": "main", "index": 0 }]] },
+    "Fetch EUR→LKR": { "main": [[{ "node": "Estrai LKR", "type": "main", "index": 0 }]] },
+    "Estrai LKR": { "main": [[{ "node": "Leggi Iscritti Supabase", "type": "main", "index": 0 }]] },
+    "Leggi Iscritti Supabase": { "main": [[{ "node": "Filtra Soglia Superata", "type": "main", "index": 0 }]] },
+    "Filtra Soglia Superata": { "main": [[{ "node": "Invia Email Avviso", "type": "main", "index": 0 }], [{ "node": "Slack Notifica", "type": "main", "index": 0 }]] },
+    "Invia Email Avviso": { "main": [[{ "node": "Slack Notifica", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": {}
+}

@@ -91,7 +91,7 @@
     [data-page="voli"] .se-btn .se-note{font-size:.73rem;color:var(--fg-muted);font-weight:400}
     [data-page="voli"] .se-kiwi{border-color:#00b2a9}[data-page="voli"] .se-kiwi:hover{border-color:#00b2a9;background:rgba(0,178,169,.06)}
     [data-page="voli"] .se-google{border-color:#4285f4}[data-page="voli"] .se-google:hover{border-color:#4285f4;background:rgba(66,133,244,.06)}
-    [data-page="voli"] .se-sky{border-color:#0770e3}[data-page="voli"] .se-sky:hover{border-color:#0770e3;background:rgba(7,112,227,.06)}
+    [data-page="voli"] .se-kayak{border-color:#ff690f}[data-page="voli"] .se-kayak:hover{border-color:#ff690f;background:rgba(255,105,15,.06)}
     [data-page="voli"] .btn-all{margin-top:.75rem;width:100%;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.85rem 1.5rem;background:var(--gold);color:#fff;font-size:var(--text-sm);font-weight:600;font-family:inherit;border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .18s}
     [data-page="voli"] .btn-all:hover{opacity:.88}
     @media(max-width:600px){[data-page="voli"] .engine-grid{grid-template-columns:1fr 1fr}[data-page="voli"] .flight-search{grid-template-columns:1fr}}
@@ -129,9 +129,9 @@
           <span class="se-name">Google Flights</span>
           <span class="se-note">Panoramica prezzi</span>
         </button>
-        <button class="se-btn se-sky" data-engine="skyscanner">
-          <span class="se-logo">◈</span>
-          <span class="se-name">Skyscanner</span>
+        <button class="se-btn se-kayak" data-engine="kayak">
+          <span class="se-logo">🔶</span>
+          <span class="se-name">Kayak</span>
           <span class="se-note">Confronto completo</span>
         </button>
       </div>
@@ -387,7 +387,7 @@
   var allBtn = document.getElementById('fs-search-all');
   if (allBtn) {
     allBtn.addEventListener('click', function() {
-      ['kiwi','gflights','skyscanner'].forEach(function(engine, i) {
+      ['kiwi','gflights','kayak'].forEach(function(engine, i) {
         setTimeout(function() {
           window.open(buildUrl(engine), '_blank', 'noopener,noreferrer');
         }, i * 150);

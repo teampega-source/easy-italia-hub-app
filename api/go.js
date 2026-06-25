@@ -35,14 +35,11 @@ function buildUrl(to, q) {
       return 'https://www.kiwi.com/it/search/results/' + city + '/colombo-sri-lanka' + dateSeg + '/' + aff;
     }
 
-    case 'skyscanner': {
+    case 'kayak': {
       const dep = q.date ? String(q.date).replace(/[^0-9-]/g,'').slice(0,10) : null;
       const ret = q.ret  ? String(q.ret).replace(/[^0-9-]/g,'').slice(0,10) : null;
-      // Skyscanner date format: YYMMDD (e.g. 2026-08-01 → 260801)
-      const fmt = (iso) => iso ? iso.slice(2).replace(/-/g,'') : null;
-      let url = `https://www.skyscanner.it/voli/${from.toLowerCase()}/cmb/`;
-      if (fmt(dep)) url += fmt(dep) + '/';
-      if (fmt(ret)) url += fmt(ret) + '/';
+      let url = `https://www.kayak.it/flights/${from}-CMB`;
+      if (dep) { url += '/' + dep; if (ret) url += '/' + ret; }
       return url;
     }
 
