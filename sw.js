@@ -4,11 +4,12 @@
    Le API (/api/) e le richieste cross-origin non vengono mai intercettate. */
 'use strict';
 
-const CACHE = 'eih-v18';
+const CACHE = 'eih-v19';
 const CORE = [
   '/',
   '/eih.css',
   '/eih.js',
+  '/eih-chat-widget.js',
   '/eih-auth.js',
   '/assets/eih-motion.js',
   '/assets/vendor/lenis.min.js',

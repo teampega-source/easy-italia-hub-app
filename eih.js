@@ -173,7 +173,10 @@
     'privacy':[['Privacy Policy','/privacy']],
     'cookie':[['Cookie Policy','/cookie']],
     'termini':[['Termini di Servizio','/termini','f.terms']],
-    'note-legali':[['Note Legali','/note-legali','f.legal']]
+    'note-legali':[['Note Legali','/note-legali','f.legal']],
+    'fisco':[['Fisco e Tasse','/fisco']],
+    'scuola':[['Scuola Italiana','/scuola']],
+    'emergenze':[['Numeri di Emergenza','/emergenze']]
   };
   if(active&&BREADCRUMBS[active]){
     const trail=BREADCRUMBS[active];
@@ -398,4 +401,5 @@
     });
     document.addEventListener('visibilitychange',()=>{if(!document.hidden&&wipe.classList.contains('cover'))setTimeout(_resetWipe,80);});
   }
+  if(!document.getElementById('chat-btn')){var _cw=document.createElement('script');_cw.src='/eih-chat-widget.js';document.head.appendChild(_cw);}
 })();
