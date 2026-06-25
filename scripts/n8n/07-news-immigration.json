@@ -1,0 +1,101 @@
+{
+  "name": "07 — Immigration News Feed",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": { "interval": [{ "field": "cronExpression", "expression": "0 */6 * * *" }] }
+      },
+      "id": "cron-6h",
+      "name": "Cron ogni 6h",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://www.interno.gov.it/it/stampa-e-comunicazione/comunicati/rss.xml",
+        "method": "GET"
+      },
+      "id": "fetch-interno",
+      "name": "RSS Interno.gov.it",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [450, 200]
+    },
+    {
+      "parameters": {
+        "url": "https://www.lavoro.gov.it/rss/Pages/default.aspx",
+        "method": "GET"
+      },
+      "id": "fetch-lavoro",
+      "name": "RSS Lavoro.gov.it",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [450, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "const parseRSS = (xml, source) => {\n  const items = [];\n  const blocks = xml.match(/<item[\\s\\S]*?<\\/item>/gi) || [];\n  for (const b of blocks.slice(0, 5)) {\n    const title = (b.match(/<title[^>]*><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/title>/) || b.match(/<title[^>]*>([\\s\\S]*?)<\\/title>/) || [])[1] || '';\n    const link  = (b.match(/<link[^>]*>([\\s\\S]*?)<\\/link>/) || [])[1] || '';\n    const desc  = (b.match(/<description[^>]*><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/description>/) || b.match(/<description[^>]*>([\\s\\S]*?)<\\/description>/) || [])[1] || '';\n    const clean = s => s.replace(/<[^>]+>/g,'').replace(/\\s+/g,' ').trim().slice(0,400);\n    if (title && link) items.push({ title: clean(title), link: clean(link), description: clean(desc), source });\n  }\n  return items;\n};\nconst all = [\n  ...(parseRSS($('RSS Interno.gov.it').item.json.data || '', 'interno')),\n  ...(parseRSS($('RSS Lavoro.gov.it').item.json.data || '', 'lavoro')),\n];\nreturn all.map(x => ({ json: x }));"
+      },
+      "id": "parse-rss",
+      "name": "Parsa RSS",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            { "role": "system", "content": "Sei un assistente che traduce brevi notizie italiane in sinhala (si_LK). Traduci solo il testo fornito, nessuna spiegazione aggiuntiva." },
+            { "role": "user", "content": "Titolo: {{ $json.title }}\n\nDescrizione: {{ $json.description }}\n\nTraduzione Sinhala:" }
+          ]
+        },
+        "options": { "maxTokens": 300 }
+      },
+      "id": "translate-si",
+      "name": "Traduzione Sinhala",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [950, 300],
+      "credentials": { "openAiApi": { "id": "openai-creds", "name": "OpenAI" } }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "tableId": "news_items",
+        "dataToSend": "autoMapInputData",
+        "conflictColumns": "link"
+      },
+      "id": "save-supabase",
+      "name": "Salva su Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1150, 300],
+      "credentials": { "supabaseApi": { "id": "supabase-creds", "name": "Supabase" } }
+    },
+    {
+      "parameters": {
+        "channel": "#news-feed",
+        "text": "📰 {{ $json.title }}\n{{ $json.link }}"
+      },
+      "id": "slack-news",
+      "name": "Slack Riepilogo",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [1350, 300],
+      "credentials": { "slackApi": { "id": "slack-creds", "name": "Slack" } }
+    }
+  ],
+  "connections": {
+    "Cron ogni 6h": { "main": [[{ "node": "RSS Interno.gov.it", "type": "main", "index": 0 }, { "node": "RSS Lavoro.gov.it", "type": "main", "index": 0 }]] },
+    "RSS Interno.gov.it": { "main": [[{ "node": "Parsa RSS", "type": "main", "index": 0 }]] },
+    "RSS Lavoro.gov.it": { "main": [[{ "node": "Parsa RSS", "type": "main", "index": 0 }]] },
+    "Parsa RSS": { "main": [[{ "node": "Traduzione Sinhala", "type": "main", "index": 0 }]] },
+    "Traduzione Sinhala": { "main": [[{ "node": "Salva su Supabase", "type": "main", "index": 0 }]] },
+    "Salva su Supabase": { "main": [[{ "node": "Slack Riepilogo", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": {}
+}
