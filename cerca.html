@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cerca — Easy Italia Hub</title>
+<meta name="description" content="Cerca guide, servizi e informazioni per vivere in Italia."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/cerca"/>
+<meta name="robots" content="noindex"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Easy Italia Hub"/>
+<meta property="og:title" content="Cerca — Easy Italia Hub"/>
+<meta property="og:url" content="https://easyitaliahub.it/cerca"/>
+<meta property="og:locale" content="it_IT"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+<style>
+  .cerca-wrap{max-width:720px;margin:0 auto;padding:var(--sp-4) var(--sp-3)}
+  .cerca-hero{text-align:center;margin-bottom:var(--sp-4)}
+  .cerca-hero h1{font-family:'Clash Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;margin:0 0 .5rem}
+  .cerca-form{display:flex;gap:.5rem;margin:var(--sp-3) 0}
+  .cerca-input{flex:1;padding:.65rem 1rem;border:2px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);color:var(--fg);font-size:1rem;font-family:'Satoshi',sans-serif;outline:none;transition:border-color .15s}
+  .cerca-input:focus{border-color:var(--accent)}
+  .cerca-btn{padding:.65rem 1.2rem;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:600;font-size:.95rem;white-space:nowrap;transition:opacity .15s}
+  .cerca-btn:hover{opacity:.85}
+  .cerca-status{font-size:.88rem;color:var(--fg-muted);margin-bottom:var(--sp-3)}
+  .cerca-results{display:flex;flex-direction:column;gap:1rem}
+  .cerca-card{display:block;padding:1rem 1.2rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);text-decoration:none;transition:border-color .15s,box-shadow .15s}
+  .cerca-card:hover{border-color:var(--accent);box-shadow:0 2px 12px rgba(37,99,235,.08)}
+  .cerca-card-top{display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem}
+  .cerca-cat{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-muted);background:var(--bg-base);border:1px solid var(--border);padding:.1rem .4rem;border-radius:3px}
+  .cerca-card h3{font-family:'Clash Grotesk',sans-serif;font-size:1rem;font-weight:600;color:var(--fg);margin:0 0 .25rem}
+  .cerca-card p{font-size:.83rem;color:var(--fg-secondary);margin:0;line-height:1.45}
+  .cerca-card-url{font-size:.72rem;color:var(--accent);margin-top:.3rem;opacity:.7}
+  .cerca-empty{text-align:center;padding:var(--sp-4);color:var(--fg-muted)}
+  .cerca-empty strong{display:block;font-size:1.1rem;color:var(--fg);margin-bottom:.4rem}
+  .cerca-suggestions{margin-top:var(--sp-3)}
+  .cerca-suggestions ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+  .cerca-suggestions li a{font-size:.83rem;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:.25rem .65rem;border-radius:20px;transition:background .15s}
+  .cerca-suggestions li a:hover{background:rgba(37,99,235,.07)}
+  mark{background:rgba(253,224,71,.5);color:inherit;border-radius:2px;padding:0 1px}
+  [data-theme="dark"] mark{background:rgba(253,224,71,.25)}
+</style>
+</head>
+<body data-page="cerca">
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <div class="cerca-wrap">
+    <div class="cerca-hero">
+      <h1>🔍 Cerca</h1>
+    </div>
+    <form class="cerca-form" id="cerca-form" role="search" action="/cerca" method="get">
+      <input class="cerca-input" type="search" name="q" id="cerca-q" placeholder="Permesso di soggiorno, SPID, codice fiscale…" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Cerca nel sito"/>
+      <button class="cerca-btn" type="submit">Cerca</button>
+    </form>
+    <div id="cerca-status" class="cerca-status" aria-live="polite"></div>
+    <div id="cerca-results" class="cerca-results" role="region" aria-label="Risultati ricerca"></div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script src="eih-auth.js" defer></script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="assets/eih-atmosphere.js" defer></script>
+<script src="assets/eih-palette.js" defer></script>
+<script src="assets/eih-theme.js" defer></script>
+<script src="assets/eih-consent.js" defer></script>
+
+<script>
+(function(){
+  var PAGES=[
+    {url:'/guide',emoji:'📖',cat:'Guide',title:'Guide burocratiche',desc:'Permesso di soggiorno, codice fiscale, SPID, residenza, tessera sanitaria, lavoro, fisco e cittadinanza.',keys:'guide guida documenti burocrazia permesso soggiorno spid codice fiscale residenza tessera sanitaria lavoro fisco cittadinanza passo passo'},
+    {url:'/guida-ssn',emoji:'🏥',cat:'Guide',title:'Guida al Sistema Sanitario Nazionale',desc:'Come iscriversi al SSN, scegliere il medico di base, il Pronto Soccorso, le visite specialistiche e le esenzioni.',keys:'ssn salute medico sanità pronto soccorso tessera sanitaria guardia medica farmacia esenzione ticket asl'},
+    {url:'/patente',emoji:'🚗',cat:'Guide',title:'Patente di guida',desc:'Convertire la patente straniera, ottenere la patente italiana, quiz di teoria, autoscuola.',keys:'patente guida auto convertire straniera motorizzazione quiz teoria esame autoscuola'},
+    {url:'/housing',emoji:'🏠',cat:'Guide',title:'Casa in Affitto',desc:'Trovare casa in Italia: contratti, deposito cauzionale, utenze, diritti dell\'inquilino.',keys:'casa affitto appartamento contratto inquilino deposito cauzione utenze agenzia immobiliare'},
+    {url:'/assegno-unico',emoji:'👶',cat:'Guide',title:'Assegno Unico Universale',desc:'Come richiedere l\'assegno unico per i figli: requisiti, ISEE, importi e scadenze.',keys:'assegno unico figli bambini isee inps family'},
+    {url:'/diritti-inps',emoji:'🏛️',cat:'Guide',title:'Diritti INPS',desc:'Indennità di disoccupazione (NASpI), maternità, malattia, pensione e contributi.',keys:'inps naspi disoccupazione pensione contributi maternità malattia infortunio cassa integrazione'},
+    {url:'/riconoscimento-titoli',emoji:'🎓',cat:'Guide',title:'Riconoscimento Titoli di Studio',desc:'Come far riconoscere un titolo di studio straniero in Italia: università, scuola, professioni.',keys:'titolo studio laurea diploma riconoscimento nostrificazione università professione straniero'},
+    {url:'/ricongiungimento',emoji:'👨‍👩‍👧',cat:'Guide',title:'Ricongiungimento Familiare',desc:'Come portare in Italia i familiari: requisiti, documenti, visto e permesso di soggiorno.',keys:'ricongiungimento familiare famiglia visto permesso soggiorno coniuge figli genitori nulla osta'},
+    {url:'/fisco',emoji:'💶',cat:'Guide',title:'Fisco e Dichiarazione dei Redditi',desc:'Dichiarazione 730 e Redditi PF, partita IVA, codice fiscale, detrazioni e rimborsi.',keys:'fisco dichiarazione redditi 730 irpef partita iva detrazioni rimborso caf commercialista tasse'},
+    {url:'/documenti',emoji:'📋',cat:'Guide',title:'Documenti essenziali',desc:'Carta di identità, passaporto, codice fiscale, stato di famiglia e altri documenti importanti.',keys:'documenti carta identità passaporto codice fiscale stato famiglia certificati anagrafe comune'},
+    {url:'/scuola',emoji:'🎒',cat:'Guide',title:'Scuola e Istruzione',desc:'Iscrivere i figli a scuola, equivalenza dei titoli, università e istruzione per adulti.',keys:'scuola iscrizione figli università istruzione adulti equivalenza titoli nido asilo elementari medie'},
+    {url:'/moduli',emoji:'📄',cat:'Servizi',title:'Moduli e Lettere tipo',desc:'Moduli precompilati e lettere standard per disdetta, reclami, richieste all\'amministrazione.',keys:'moduli lettere tipo disdetta reclamo richiesta autocertificazione dichiarazione template'},
+    {url:'/percorso',emoji:'🤖',cat:'Servizi',title:'Assistente AI Personale',desc:'L\'AI di Easy Italia Hub risponde alle tue domande su burocrazia, documenti e vita in Italia.',keys:'ai assistente chatbot intelligenza artificiale domande risposte aiuto'},
+    {url:'/community',emoji:'👥',cat:'Servizi',title:'Community',desc:'Forum e gruppi di supporto per stranieri che vivono in Italia.',keys:'community forum gruppo supporto stranieri immigrati'},
+    {url:'/corsi',emoji:'🗣️',cat:'Servizi',title:'Corsi di Lingua Italiana',desc:'Corsi gratuiti e a pagamento per imparare l\'italiano: online, in presenza, A1 B1 B2 C1.',keys:'corsi italiano lingua imparare livello A1 B1 B2 C1 scuola adulti gratuito online'},
+    {url:'/opportunita',emoji:'✨',cat:'Servizi',title:'Opportunità',desc:'Borse di studio, tirocini, bandi, lavoro e opportunità per stranieri in Italia.',keys:'opportunità lavoro borse studio tirocinio bando concorso stage'},
+    {url:'/money-transfer',emoji:'💸',cat:'Servizi',title:'Money Transfer',desc:'Confronto commissioni per inviare soldi all\'estero: Western Union, Wise, Remitly e altri.',keys:'money transfer rimessa soldi estero commissioni western union wise remitly transferwise'},
+    {url:'/associazioni',emoji:'🤝',cat:'Servizi',title:'Associazioni',desc:'Associazioni di immigrati, patronati, CAF e sportelli di assistenza in tutta Italia.',keys:'associazioni immigrati patronato caf sportello assistenza supporto volontariato'},
+    {url:'/mercatino',emoji:'🛍️',cat:'Servizi',title:'Mercatino',desc:'Compra e vendi: annunci di seconda mano nella community di Easy Italia Hub.',keys:'mercatino annunci compra vendi seconda mano usato oggetti'},
+    {url:'/podcast',emoji:'🎙️',cat:'Servizi',title:'Podcast',desc:'Episodi in italiano su burocrazia, lavoro, vita in Italia e storie di immigrati.',keys:'podcast audio episodi italiano storie immigrati'},
+    {url:'/mappa',emoji:'🗺️',cat:'Servizi',title:'Mappa dei Servizi',desc:'Trova patronati, CAF, centri immigrazione, questure e comuni vicino a te.',keys:'mappa servizi patronato caf questura comune vicino geolocalizzazione'},
+    {url:'/cv-builder',emoji:'📝',cat:'Strumenti',title:'CV Builder',desc:'Crea il tuo curriculum vitae in italiano con il formato europeo Europass.',keys:'cv curriculum vitae europass lavoro candidatura'},
+    {url:'/dizionario-medico',emoji:'🩺',cat:'Strumenti',title:'Dizionario Medico',desc:'Glossario medico multilingue: termini medici in italiano, inglese, sinhala, tamil.',keys:'dizionario medico glossario termini italiano inglese sinhala tamil'},
+    {url:'/traduci',emoji:'🌐',cat:'Strumenti',title:'Traduttore',desc:'Traduci documenti, testi e moduli in italiano, inglese, sinhala, tamil.',keys:'traduci traduttore traduzione lingua documento'},
+    {url:'/permesso-tracker',emoji:'📍',cat:'Strumenti',title:'Tracker Permesso di Soggiorno',desc:'Tieni traccia della scadenza del permesso di soggiorno e ricevi promemoria.',keys:'permesso soggiorno tracker scadenza rinnovo promemoria ricordo'},
+    {url:'/emergenze',emoji:'🚨',cat:'Strumenti',title:'Numeri di Emergenza',desc:'Numeri utili in Italia: 112, 118, 115, ambasciate, consulati e assistenza.',keys:'emergenze numeri utili 112 118 115 ambasciata consolato pronto soccorso carabinieri'},
+    {url:'/voli',emoji:'✈️',cat:'Strumenti',title:'Voli Sri Lanka — Italia',desc:'Confronta voli tra Sri Lanka e Italia: tariffe, compagnie aeree, scali.',keys:'voli aereo sri lanka italia colombo roma milano tariffe compagnie'},
+    {url:'/certificazioni',emoji:'📜',cat:'Strumenti',title:'Certificazioni Linguistiche',desc:'CELI, CILS, PLIDA, Dante Alighieri: come ottenere la certificazione di italiano.',keys:'certificazione italiano celi cils plida dante alighieri esame livello'},
+    {url:'/guida-conti',emoji:'🏦',cat:'Strumenti',title:'Guida ai Conti Bancari',desc:'Come aprire un conto corrente in Italia da straniero: documenti, banche, costi.',keys:'conto banca bancario corrente aprire straniero documenti bancomat carta credito'},
+    {url:'/cargo',emoji:'📦',cat:'Strumenti',title:'Cargo — Spedizioni',desc:'Spedire pacchi e bagagli tra Italia e Sri Lanka: corrieri, costi, tempi.',keys:'cargo spedizione pacco bagaglio corriere italia sri lanka doganale'},
+    {url:'/academy',emoji:'🎓',cat:'Formazione',title:'Academy',desc:'Corsi online su burocrazia italiana, diritti del lavoratore, italiano per stranieri.',keys:'academy corsi formazione online burocrazia diritti lavoratore'},
+    {url:'/ai-teacher',emoji:'🤖',cat:'Formazione',title:'AI Teacher',desc:'Insegnante virtuale AI per imparare l\'italiano con conversazioni simulate.',keys:'ai teacher insegnante italiano imparare conversazione pratica'},
+    {url:'/profili',emoji:'👤',cat:'Formazione',title:'Profili Utente',desc:'Percorsi personalizzati in base alla tua situazione: lavoratore, studente, familiare.',keys:'profilo utente percorso personalizzato lavoratore studente studente familiare'},
+    {url:'/news',emoji:'📰',cat:'Azienda',title:'News',desc:'Aggiornamenti su burocrazia, leggi per immigrati, novità di Easy Italia Hub.',keys:'news notizie aggiornamenti leggi novità'},
+    {url:'/chi-siamo',emoji:'🙋',cat:'Azienda',title:'Chi siamo',desc:'La storia e il team di Easy Italia Hub, nata per aiutare la comunità srilankese in Italia.',keys:'chi siamo storia team missione comunità srilankese'},
+    {url:'/contatti',emoji:'✉️',cat:'Azienda',title:'Contatti',desc:'Scrivici per domande, segnalazioni, collaborazioni e pubblicità.',keys:'contatti scrivici email collaborazione pubblicità segnalazione'},
+    {url:'/abbonamenti',emoji:'⭐',cat:'Account',title:'Abbonamenti',desc:'Piani premium: accesso illimitato all\'AI, guide avanzate e supporto prioritario.',keys:'abbonamento premium piano prezzo accesso ai supporto'},
+    {url:'/privacy',emoji:'🔒',cat:'Legal',title:'Privacy Policy',desc:'Come trattiamo i tuoi dati personali in conformità al GDPR.',keys:'privacy gdpr dati personali cookie trattamento'},
+    {url:'/termini',emoji:'📑',cat:'Legal',title:'Termini di Servizio',desc:'Condizioni d\'uso della piattaforma Easy Italia Hub.',keys:'termini servizio condizioni uso legale'},
+    {url:'/cookie',emoji:'🍪',cat:'Legal',title:'Cookie Policy',desc:'Informativa sull\'uso dei cookie su Easy Italia Hub.',keys:'cookie policy informativa tracciamento'},
+    {url:'/note-legali',emoji:'⚖️',cat:'Legal',title:'Note Legali',desc:'Disclaimer, limitazioni di responsabilità e informazioni legali.',keys:'note legali disclaimer responsabilità'},
+  ];
+
+  function esc(s){return s.replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]||c});}
+
+  function highlight(text, q){
+    if(!q)return esc(text);
+    var words=q.trim().split(/\s+/).filter(Boolean).map(function(w){return w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');});
+    var re=new RegExp('('+words.join('|')+')','gi');
+    return esc(text).replace(re,'<mark>$1</mark>');
+  }
+
+  function score(page, terms){
+    var s=0;
+    var title=page.title.toLowerCase();
+    var desc=page.desc.toLowerCase();
+    var keys=page.keys.toLowerCase();
+    var url=page.url.toLowerCase();
+    terms.forEach(function(t){
+      if(title.indexOf(t)!==-1) s+=10;
+      if(url.indexOf(t)!==-1) s+=8;
+      if(desc.indexOf(t)!==-1) s+=5;
+      if(keys.indexOf(t)!==-1) s+=3;
+    });
+    return s;
+  }
+
+  function search(q){
+    if(!q||!q.trim()) return [];
+    var terms=q.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    var results=PAGES.map(function(p){return{page:p,score:score(p,terms)};}).filter(function(r){return r.score>0;});
+    results.sort(function(a,b){return b.score-a.score;});
+    return results.map(function(r){return r.page;});
+  }
+
+  function render(pages, q){
+    var status=document.getElementById('cerca-status');
+    var out=document.getElementById('cerca-results');
+    if(!pages.length){
+      status.textContent='';
+      out.innerHTML='<div class="cerca-empty"><strong>Nessun risultato per "'+esc(q)+'"</strong><p>Prova con parole diverse o sfoglia le sezioni qui sotto.</p><div class="cerca-suggestions"><ul><li><a href="/guide">📖 Guide</a></li><li><a href="/percorso">🤖 AI</a></li><li><a href="/diritti-inps">🏛️ INPS</a></li><li><a href="/guida-ssn">🏥 SSN</a></li><li><a href="/patente">🚗 Patente</a></li><li><a href="/housing">🏠 Casa</a></li></ul></div></div>';
+      return;
+    }
+    status.textContent=pages.length===1?'1 risultato trovato':pages.length+' risultati trovati';
+    var html='';
+    pages.forEach(function(p){
+      html+='<a class="cerca-card" href="'+esc(p.url)+'"><div class="cerca-card-top"><span class="cerca-cat">'+esc(p.cat)+'</span></div><h3>'+p.emoji+' '+highlight(p.title,q)+'</h3><p>'+highlight(p.desc,q)+'</p><div class="cerca-card-url">easyitaliahub.it'+esc(p.url)+'</div></a>';
+    });
+    out.innerHTML=html;
+  }
+
+  function run(){
+    var params=new URLSearchParams(location.search);
+    var q=params.get('q')||'';
+    var input=document.getElementById('cerca-q');
+    if(input) input.value=q;
+    if(q.trim()){
+      var results=search(q);
+      render(results,q);
+    }
+  }
+
+  document.getElementById('cerca-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var q=document.getElementById('cerca-q').value.trim();
+    if(!q) return;
+    history.pushState(null,'','/cerca?q='+encodeURIComponent(q));
+    var results=search(q);
+    render(results,q);
+    document.getElementById('cerca-q').blur();
+  });
+
+  window.addEventListener('popstate',run);
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',run);
+  } else {
+    run();
+  }
+})();
+</script>
+</body>
+</html>
