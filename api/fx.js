@@ -63,32 +63,64 @@ async function fetchWithTimeout(url, ms) {
   }
 }
 
+const { isRateLimited, clientIp } = require('./_ratelimit');
+
 module.exports = async (req, res) => {
-  // Accept GET (primary) and POST; reject anything else.
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.status(204).end();
+
   if (req.method !== "GET" && req.method !== "POST") {
     res.setHeader("Allow", "GET, POST");
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  // Edge/CDN cache: rates change slowly, so serve cached for an hour and allow
-  // stale-while-revalidate so users never wait on a cold upstream call.
-  res.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate");
+  // POST with email+target_rate → EUR/LKR alert subscription
+  if (req.method === 'POST' && (req.body?.email || req.body?.target_rate)) {
+    if (isRateLimited(clientIp(req), { name: 'fx-alert', max: 10 })) {
+      return res.status(429).json({ error: 'Too many requests' });
+    }
+    const email = String(req.body.email || '').trim().toLowerCase();
+    const rate  = parseInt(req.body.target_rate, 10);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ error: 'Email non valida' });
+    }
+    if (!rate || rate < 200 || rate > 600) {
+      return res.status(400).json({ error: 'Tasso fuori range (200-600)' });
+    }
+    const url = process.env.SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (url && key) {
+      const r = await fetch(url + '/rest/v1/fx_alert_subscriptions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': key,
+          'Authorization': 'Bearer ' + key,
+          'Prefer': 'resolution=merge-duplicates',
+        },
+        body: JSON.stringify({ email, target_rate: rate, created_at: new Date().toISOString() }),
+      });
+      if (!r.ok && r.status !== 409) {
+        return res.status(502).json({ error: 'Database error' });
+      }
+    }
+    return res.status(200).json({ ok: true });
+  }
 
-  // No input is needed and none is trusted: we ignore any query/body entirely.
-  // (No user secrets, no API key — nothing to validate beyond the method.)
+  // GET (or POST without alert fields) → return FX rates
+  res.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate");
 
   try {
     const r = await fetchWithTimeout(FX_URL, FETCH_TIMEOUT_MS);
     if (!r.ok) throw new Error(`upstream_status_${r.status}`);
 
     const data = await r.json();
-    // Upstream signals success via result:"success"; bail to fallback otherwise.
     if (data?.result && data.result !== "success") {
       throw new Error(`upstream_result_${data.result}`);
     }
 
     const rates = pickRates(data?.rates);
-    // The whole point is LKR — if it is missing, the response is useless: fall back.
     if (rates.LKR === undefined) throw new Error("missing_lkr");
 
     return res.status(200).json({
@@ -98,8 +130,6 @@ module.exports = async (req, res) => {
       source: "open.er-api.com",
     });
   } catch (err) {
-    // ROBUST fallback: never 500. Return a recent static rate marked stale so the
-    // widget keeps working (and can tell the user the figure is not up to date).
     return res.status(200).json({
       base: FALLBACK.base,
       rates: FALLBACK.rates,
