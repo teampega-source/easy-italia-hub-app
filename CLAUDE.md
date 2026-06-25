@@ -55,4 +55,4 @@ Prima di scegliere servizi esterni consultare `.references/free-for-dev/README.m
 **Stack:** HTML statico + Vanilla JS + Vercel Serverless + Supabase + Gemini AI  
 **Deploy:** Vercel auto-deploy su push a `main`. Nessun build step.  
 **Stato:** Demo mode (localStorage). Supabase/Stripe/Resend opzionali.  
-**Comandi:** `npx serve . -l 3000` (preview) · `node api/test/chat-redteam.mjs <url>` (red-team AI)
+**Comandi:** `npx serve . -l 3000` (preview) · `node scripts/chat-redteam.mjs <url>` (red-team AI)
