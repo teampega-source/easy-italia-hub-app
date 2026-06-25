@@ -162,7 +162,7 @@
     if(errEl)errEl.hidden=true;if(okEl)okEl.hidden=true;
     var btn=form.querySelector('button[type="submit"]');if(btn)btn.disabled=true;
     try{
-      var r=await fetch('/api/fx-alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,target_rate:rate})});
+      var r=await fetch('/api/fx',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,target_rate:rate})});
       if(r.ok){if(rateValEl)rateValEl.textContent=rate;if(okEl)okEl.hidden=false;form.reset();}
       else{if(errEl){errEl.hidden=false;errEl.textContent='Errore. Riprova tra poco.';}}
     }catch(err){if(errEl){errEl.hidden=false;errEl.textContent='Errore di rete. Riprova.';}}
