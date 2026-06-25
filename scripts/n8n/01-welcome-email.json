@@ -1,0 +1,81 @@
+{
+  "name": "EIH — Benvenuto nuovo utente",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "eih-new-user",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook nuovo utente",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "create",
+        "tableId": "users",
+        "dataToSend": "defineBelow",
+        "fieldsUi": {
+          "fieldValues": [
+            { "fieldId": "email", "fieldValue": "={{ $json.email }}" },
+            { "fieldId": "name", "fieldValue": "={{ $json.name }}" },
+            { "fieldId": "language", "fieldValue": "={{ $json.language || 'si' }}" },
+            { "fieldId": "source", "fieldValue": "={{ $json.source || 'web' }}" },
+            { "fieldId": "created_at", "fieldValue": "={{ $now.toISO() }}" }
+          ]
+        }
+      },
+      "id": "supabase-create",
+      "name": "Salva in Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [460, 300],
+      "credentials": { "supabaseApi": { "id": "supabase-creds", "name": "Supabase EIH" } }
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@easyitaliahub.it",
+        "toEmail": "={{ $json.email }}",
+        "subject": "Benvenuto su Easy Italia Hub! 🇮🇹",
+        "emailType": "html",
+        "message": "<!DOCTYPE html><html><body style='font-family:Inter,sans-serif;background:#f5f0e8;padding:32px'><div style='max-width:600px;margin:0 auto;background:#fff;border-radius:12px;padding:32px'><h1 style='color:#5a5040;font-family:Playfair Display,serif'>Benvenuto, {{ $json.name }}! 👋</h1><p style='color:#333'>Il tuo account su <strong>Easy Italia Hub</strong> è attivo.</p><p>Cosa puoi fare subito:</p><ul><li>🤖 Chiedere al Consigliere AI in singalese</li><li>📋 Controllare lo stato del permesso di soggiorno</li><li>📚 Accedere alla guida documenti</li></ul><a href='https://easyitaliahub.it/dashboard' style='display:inline-block;background:#7d7058;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;margin-top:16px'>Accedi ora →</a><p style='color:#999;font-size:12px;margin-top:32px'>Easy Italia Hub — in italiano, singalese e tamil</p></div></body></html>"
+      },
+      "id": "send-welcome-email",
+      "name": "Email benvenuto (Resend)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [680, 200],
+      "credentials": { "smtp": { "id": "resend-smtp", "name": "Resend SMTP" } }
+    },
+    {
+      "parameters": {
+        "channel": "#nuovi-utenti",
+        "text": "🎉 Nuovo utente: *{{ $json.name }}* ({{ $json.email }}) — lingua: {{ $json.language || 'si' }}"
+      },
+      "id": "slack-notify",
+      "name": "Notifica Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [680, 400],
+      "credentials": { "slackApi": { "id": "slack-creds", "name": "Slack EIH" } }
+    }
+  ],
+  "connections": {
+    "Webhook nuovo utente": {
+      "main": [[ { "node": "Salva in Supabase", "type": "main", "index": 0 } ]]
+    },
+    "Salva in Supabase": {
+      "main": [
+        [ { "node": "Email benvenuto (Resend)", "type": "main", "index": 0 } ],
+        [ { "node": "Notifica Slack", "type": "main", "index": 0 } ]
+      ]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": ["eih", "onboarding"]
+}

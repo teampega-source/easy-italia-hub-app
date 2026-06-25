@@ -1,0 +1,111 @@
+{
+  "name": "EIH — Lead generation strutture/tour operator",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "eih-lead",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "webhook-lead",
+      "name": "Webhook form lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "notes": "Body: { name, email, phone, tipo (struttura|tour_operator|privato), interesse, messaggio }"
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "create",
+        "tableId": "leads",
+        "dataToSend": "defineBelow",
+        "fieldsUi": {
+          "fieldValues": [
+            { "fieldId": "name", "fieldValue": "={{ $json.name }}" },
+            { "fieldId": "email", "fieldValue": "={{ $json.email }}" },
+            { "fieldId": "phone", "fieldValue": "={{ $json.phone }}" },
+            { "fieldId": "tipo", "fieldValue": "={{ $json.tipo }}" },
+            { "fieldId": "interesse", "fieldValue": "={{ $json.interesse }}" },
+            { "fieldId": "messaggio", "fieldValue": "={{ $json.messaggio }}" },
+            { "fieldId": "status", "fieldValue": "new" },
+            { "fieldId": "created_at", "fieldValue": "={{ $now.toISO() }}" }
+          ]
+        }
+      },
+      "id": "save-lead",
+      "name": "Salva lead in Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [460, 300],
+      "credentials": { "supabaseApi": { "id": "supabase-creds", "name": "Supabase EIH" } }
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Sei un assistente commerciale di Easy Italia Hub. Scrivi email di follow-up calde e personalizzate in italiano. Max 150 parole."
+            },
+            {
+              "role": "user",
+              "content": "Lead: {{ $json.name }}, tipo: {{ $json.tipo }}, interesse: {{ $json.interesse }}, messaggio: {{ $json.messaggio }}. Scrivi un'email di benvenuto/follow-up personalizzata."
+            }
+          ]
+        }
+      },
+      "id": "ai-email",
+      "name": "AI genera email follow-up",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [680, 200],
+      "credentials": { "openAiApi": { "id": "openai-creds", "name": "OpenAI" } }
+    },
+    {
+      "parameters": {
+        "fromEmail": "partnership@easyitaliahub.it",
+        "toEmail": "={{ $('Webhook form lead').item.json.email }}",
+        "subject": "Grazie per il tuo interesse in Easy Italia Hub 🇮🇹",
+        "emailType": "html",
+        "message": "<div style='font-family:Inter,sans-serif;padding:24px'>{{ $json.message.content }}<br><br><a href='https://easyitaliahub.it/contatti' style='background:#7d7058;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none'>Parla con noi →</a></div>"
+      },
+      "id": "send-followup",
+      "name": "Invia email follow-up",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [900, 200],
+      "credentials": { "smtp": { "id": "resend-smtp", "name": "Resend SMTP" } }
+    },
+    {
+      "parameters": {
+        "channel": "#leads",
+        "text": "🎯 Nuovo lead!\n*Nome:* {{ $('Webhook form lead').item.json.name }}\n*Email:* {{ $('Webhook form lead').item.json.email }}\n*Tipo:* {{ $('Webhook form lead').item.json.tipo }}\n*Interesse:* {{ $('Webhook form lead').item.json.interesse }}"
+      },
+      "id": "slack-lead",
+      "name": "Notifica Slack #leads",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [680, 400],
+      "credentials": { "slackApi": { "id": "slack-creds", "name": "Slack EIH" } }
+    }
+  ],
+  "connections": {
+    "Webhook form lead": {
+      "main": [[ { "node": "Salva lead in Supabase", "type": "main", "index": 0 } ]]
+    },
+    "Salva lead in Supabase": {
+      "main": [
+        [ { "node": "AI genera email follow-up", "type": "main", "index": 0 } ],
+        [ { "node": "Notifica Slack #leads", "type": "main", "index": 0 } ]
+      ]
+    },
+    "AI genera email follow-up": {
+      "main": [[ { "node": "Invia email follow-up", "type": "main", "index": 0 } ]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": ["eih", "lead", "b2b"]
+}

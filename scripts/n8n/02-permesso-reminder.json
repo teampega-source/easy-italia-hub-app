@@ -1,0 +1,102 @@
+{
+  "name": "EIH — Reminder permesso in scadenza",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": { "interval": [{ "field": "cronExpression", "expression": "0 9 * * *" }] }
+      },
+      "id": "cron-trigger",
+      "name": "Ogni giorno alle 9:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "getAll",
+        "tableId": "permesso_tracker",
+        "filterType": "string",
+        "filterString": "scadenza=gte.{{ $now.toISO() }}&scadenza=lte.{{ $now.plus({days:30}).toISO() }}&reminder_sent=eq.false"
+      },
+      "id": "supabase-query",
+      "name": "Leggi permessi in scadenza (30gg)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [460, 300],
+      "credentials": { "supabaseApi": { "id": "supabase-creds", "name": "Supabase EIH" } }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [{ "value1": "={{ $items().length }}", "operation": "largerEqual", "value2": 1 }]
+        }
+      },
+      "id": "if-has-results",
+      "name": "Ci sono permessi in scadenza?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": { "batchSize": 1, "options": {} },
+      "id": "split-batch",
+      "name": "Per ogni permesso",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@easyitaliahub.it",
+        "toEmail": "={{ $json.user_email }}",
+        "subject": "⚠️ Il tuo permesso scade tra {{ $json.giorni_rimanenti }} giorni",
+        "emailType": "html",
+        "message": "<!DOCTYPE html><html><body style='font-family:Inter,sans-serif;background:#f5f0e8;padding:32px'><div style='max-width:600px;margin:0 auto;background:#fff;border-radius:12px;padding:32px'><h2 style='color:#c0392b'>⚠️ Attenzione: permesso in scadenza</h2><p>Il tuo <strong>{{ $json.tipo_permesso }}</strong> scade il <strong>{{ $json.scadenza }}</strong>.</p><p>Hai <strong>{{ $json.giorni_rimanenti }} giorni</strong> per rinnovarlo.</p><a href='https://easyitaliahub.it/permesso-tracker' style='display:inline-block;background:#7d7058;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;margin-top:16px'>Vedi checklist rinnovo →</a><p style='color:#666;margin-top:16px'>Il nostro AI Consigliere può guidarti passo dopo passo nel rinnovo.</p></div></body></html>"
+      },
+      "id": "send-reminder",
+      "name": "Invia reminder email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [1120, 200],
+      "credentials": { "smtp": { "id": "resend-smtp", "name": "Resend SMTP" } }
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "update",
+        "tableId": "permesso_tracker",
+        "id": "={{ $json.id }}",
+        "dataToSend": "defineBelow",
+        "fieldsUi": {
+          "fieldValues": [{ "fieldId": "reminder_sent", "fieldValue": "true" }]
+        }
+      },
+      "id": "mark-sent",
+      "name": "Segna reminder inviato",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1340, 200],
+      "credentials": { "supabaseApi": { "id": "supabase-creds", "name": "Supabase EIH" } }
+    }
+  ],
+  "connections": {
+    "Ogni giorno alle 9:00": {
+      "main": [[ { "node": "Leggi permessi in scadenza (30gg)", "type": "main", "index": 0 } ]]
+    },
+    "Leggi permessi in scadenza (30gg)": {
+      "main": [[ { "node": "Ci sono permessi in scadenza?", "type": "main", "index": 0 } ]]
+    },
+    "Ci sono permessi in scadenza?": {
+      "main": [[ { "node": "Per ogni permesso", "type": "main", "index": 0 } ]]
+    },
+    "Per ogni permesso": {
+      "main": [[ { "node": "Invia reminder email", "type": "main", "index": 0 } ]]
+    },
+    "Invia reminder email": {
+      "main": [[ { "node": "Segna reminder inviato", "type": "main", "index": 0 } ]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": ["eih", "permesso", "reminder"]
+}
