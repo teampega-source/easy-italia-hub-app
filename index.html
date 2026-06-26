@@ -2148,8 +2148,15 @@ footer{
 @media(max-width:600px){
   .roadmap-item{grid-template-columns:56px 1fr}
   .roadmap-quarter{font-size:.58rem;padding-right:var(--sp-1)}
-  .roadmap-section,.testimonials-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
+  .roadmap-section,.testimonials-section,.pricing-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
 }
+
+/* ─── PRICING SECTION ─── */
+.pricing-section{position:relative;z-index:1;padding:var(--sp-5) var(--sp-5);max-width:1380px;margin:0 auto;text-align:center}
+.pricing-section .plans{margin-top:var(--sp-4);text-align:left}
+.pricing-note{font-size:var(--text-xs);color:var(--fg-muted);margin-top:var(--sp-3)}
+@media(max-width:900px){.pricing-section .plans{grid-template-columns:1fr}}
+@media(max-width:680px){.pricing-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}}
 
 /* ─── DONATE ─── */
 .donate-section{
@@ -3348,6 +3355,55 @@ footer{
   </div>
 </section>
 
+<!-- ─── PRICING SECTION ─── -->
+<section class="pricing-section" id="prezzi" aria-labelledby="pricing-heading">
+  <p class="section-label">Piani</p>
+  <h2 id="pricing-heading" class="section-title">Scegli il tuo <em>piano</em></h2>
+  <p class="section-sub">Promuovi la tua attività presso la community srilankese in Italia. Inizia con 3 giorni gratuiti.</p>
+  <div class="plans">
+    <div class="plan reveal" style="--ri:0">
+      <h3 class="plan-name">Starter</h3>
+      <div class="plan-price"><span class="amount">€29</span><span class="per">/mese</span></div>
+      <p class="plan-desc">Per piccole attività locali</p>
+      <ul class="plan-feats">
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>1 slot pubblicitario</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Fino a 5.000 impression/mese</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Statistiche base</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Supporto via email</li>
+      </ul>
+      <button class="plan-btn" onclick="startTrial('Starter')">Inizia gratis</button>
+    </div>
+    <div class="plan featured reveal" style="--ri:1">
+      <span class="plan-flag">Più scelto</span>
+      <h3 class="plan-name">Pro</h3>
+      <div class="plan-price"><span class="amount">€79</span><span class="per">/mese</span></div>
+      <p class="plan-desc">Per attività in crescita</p>
+      <ul class="plan-feats">
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>3 slot pubblicitari</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Impression illimitate</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Slot premium (leaderboard)</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Statistiche avanzate</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Supporto prioritario</li>
+      </ul>
+      <button class="plan-btn" onclick="startTrial('Pro')">Inizia gratis</button>
+    </div>
+    <div class="plan reveal" style="--ri:2">
+      <h3 class="plan-name">Business</h3>
+      <div class="plan-price"><span class="amount">€199</span><span class="per">/mese</span></div>
+      <p class="plan-desc">Per brand e grandi aziende</p>
+      <ul class="plan-feats">
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Slot illimitati</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Posizionamento prioritario</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Newsletter sponsorizzata</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Account manager dedicato</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Report mensile personalizzato</li>
+      </ul>
+      <button class="plan-btn" onclick="startTrial('Business')">Contattaci</button>
+    </div>
+  </div>
+  <p class="pricing-note">Nessun addebito durante i 3 giorni di prova. Disdici quando vuoi.</p>
+</section>
+
 <!-- ─── ROADMAP ─── -->
 <section class="roadmap-section" id="roadmap" aria-labelledby="roadmap-heading">
   <div style="text-align:center">
@@ -3795,12 +3851,13 @@ async function subscribeNewsletter(){
           <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>1 slot pubblicitario</li>
           <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Fino a 5.000 impression/mese</li>
           <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Statistiche base</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Supporto via email</li>
         </ul>
         <button class="plan-btn" onclick="startTrial('Starter')">Inizia prova gratis</button>
       </div>
       <div class="plan featured">
-        <span class="plan-flag">Più popolare</span>
-        <h3 class="plan-name">Business</h3>
+        <span class="plan-flag">Più scelto</span>
+        <h3 class="plan-name">Pro</h3>
         <div class="plan-price"><span class="amount">€79</span><span class="per">/mese</span></div>
         <p class="plan-desc">Per attività in crescita</p>
         <ul class="plan-feats">
@@ -3808,11 +3865,12 @@ async function subscribeNewsletter(){
           <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Impression illimitate</li>
           <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Slot premium (leaderboard)</li>
           <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Statistiche avanzate</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Supporto prioritario</li>
         </ul>
-        <button class="plan-btn" onclick="startTrial('Business')">Inizia prova gratis</button>
+        <button class="plan-btn" onclick="startTrial('Pro')">Inizia prova gratis</button>
       </div>
       <div class="plan">
-        <h3 class="plan-name">Premium</h3>
+        <h3 class="plan-name">Business</h3>
         <div class="plan-price"><span class="amount">€199</span><span class="per">/mese</span></div>
         <p class="plan-desc">Per brand e grandi aziende</p>
         <ul class="plan-feats">
@@ -3820,8 +3878,9 @@ async function subscribeNewsletter(){
           <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Posizionamento prioritario</li>
           <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Newsletter sponsorizzata</li>
           <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Account manager dedicato</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>Report mensile personalizzato</li>
         </ul>
-        <button class="plan-btn" onclick="startTrial('Premium')">Inizia prova gratis</button>
+        <button class="plan-btn" onclick="startTrial('Business')">Contattaci</button>
       </div>
     </div>
     <p style="text-align:center;font-size:var(--text-xs);color:var(--fg-muted);margin-top:var(--sp-3)">Nessun addebito durante i 3 giorni di prova. Disdici quando vuoi.</p>
