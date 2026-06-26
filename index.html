@@ -1030,18 +1030,33 @@ body{
 /* ─── LIVE NEWS RAIL (sidebar) ─── */
 #news-rail{display:none}
 @media(min-width:1280px){
-  body{padding-right:230px}
-  .site-nav{right:230px}
+  body{padding-right:260px}
+  .site-nav{display:none}
   #news-rail{
     display:flex;flex-direction:column;
-    position:fixed;right:0;left:auto;top:80px;transform:none;
-    width:230px;max-height:calc(100vh - 96px);z-index:150;
-    background:rgba(255,253,250,0.94);
+    position:fixed;right:0;left:auto;top:0;transform:none;
+    width:260px;height:100vh;max-height:none;z-index:150;
+    background:rgba(255,253,250,0.96);
     backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);
-    border:1px solid var(--border);border-right:none;border-left:1px solid var(--border);border-radius:16px 0 0 16px;
-    box-shadow:0 24px 60px rgba(20,30,48,.12);overflow:hidden;
+    border:none;border-left:1px solid var(--border);border-radius:0;
+    box-shadow:-4px 0 24px rgba(20,30,48,.08);overflow:hidden;
   }
 }
+/* ─── Sidebar nav (visible only in #news-rail on ≥1280px) ─── */
+.nr-sidebar-nav{flex-shrink:0;display:flex;flex-direction:column;gap:.15rem;padding:1.1rem .75rem .6rem;border-bottom:1px solid var(--border)}
+.nr-sidebar-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--ink);font-family:'Clash Grotesk',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.55rem;padding:.2rem .15rem}
+.nr-sidebar-logo img{height:26px;width:auto;border-radius:5px;flex-shrink:0}
+.nr-sidebar-links{display:flex;flex-direction:column;gap:.05rem}
+.nr-sidebar-link{display:flex;align-items:center;gap:.6rem;padding:.45rem .6rem;border-radius:10px;text-decoration:none;color:var(--fg-secondary);font-size:.82rem;font-weight:500;transition:background var(--dur-micro),color var(--dur-micro);white-space:nowrap}
+.nr-sidebar-link:hover{background:var(--surface-hover);color:var(--ink)}
+.nr-sidebar-link.active{background:rgba(235,89,57,.08);color:var(--coral);font-weight:600}
+.nr-sl-icon{font-size:.88rem;width:1.25rem;text-align:center;flex-shrink:0}
+/* ─── Sidebar footer (auth buttons) ─── */
+.nr-sidebar-footer{flex-shrink:0;display:flex;flex-direction:column;gap:.45rem;padding:.75rem .75rem 1rem;border-top:1px solid var(--border);margin-top:auto}
+.nr-sidebar-btn{width:100%;padding:.52rem .75rem;border-radius:10px;font-size:.8rem;font-weight:600;font-family:'Clash Grotesk',sans-serif;cursor:pointer;border:none;text-align:center;transition:opacity var(--dur-micro)}
+.nr-sidebar-btn:hover{opacity:.85}
+.nr-sidebar-btn-primary{background:var(--coral);color:#fff}
+.nr-sidebar-btn-ghost{background:var(--surface-hover);color:var(--fg)}
 /* — Featured "In evidenza" rotating widget (top of rail) — */
 .nr-opp{flex-shrink:0;display:flex;flex-direction:column;padding:.7rem .7rem .6rem;border-bottom:1px solid var(--border);
   background:linear-gradient(150deg,rgba(235,89,57,.07) 0%,rgba(183,171,152,.10) 48%,rgba(124,112,89,.07) 100%)}
@@ -2430,7 +2445,22 @@ footer{
 </nav>
 
 <!-- ─── LIVE NEWS RAIL (titoli Sri Lanka via RSS, caricati da news-ticker.js) ─── -->
-<aside id="news-rail" aria-label="Opportunità in evidenza e ultime notizie dallo Sri Lanka">
+<aside id="news-rail" aria-label="Navigazione principale e ultime notizie dallo Sri Lanka">
+  <!-- ─── Sidebar navigation (desktop ≥1280px only) ─── -->
+  <div class="nr-sidebar-nav">
+    <a href="/" class="nr-sidebar-logo">
+      <img src="/assets/img/logo-symbol.jpg" alt="">
+      Easy <span class="accent">Italia</span> Hub
+    </a>
+    <nav class="nr-sidebar-links" aria-label="Navigazione">
+      <a href="/guide" class="nr-sidebar-link"><span class="nr-sl-icon">📖</span>Guide</a>
+      <a href="/community" class="nr-sidebar-link"><span class="nr-sl-icon">👥</span>Community</a>
+      <a href="/percorso" class="nr-sidebar-link"><span class="nr-sl-icon">🛤️</span>Il Mio Percorso</a>
+      <a href="/news" class="nr-sidebar-link"><span class="nr-sl-icon">📰</span>News</a>
+      <a href="/mappa" class="nr-sidebar-link"><span class="nr-sl-icon">🗺️</span>Mappa</a>
+      <a href="/contatti" class="nr-sidebar-link"><span class="nr-sl-icon">✉️</span>Contattaci</a>
+    </nav>
+  </div>
   <!-- Featured rotating widget: "Opportunità in evidenza" (real, sourced opportunities) -->
   <div class="nr-opp">
     <div class="nr-opp-h"><span class="nr-spark" aria-hidden="true">✨</span> In evidenza</div>
@@ -2535,6 +2565,11 @@ footer{
   <div class="nr-head"><span class="nr-live" aria-hidden="true"></span> Ultime news · Sri Lanka</div>
   <div class="nr-viewport"><div class="nr-track"></div></div>
   <div class="nr-foot"><a href="/news">Tutte le news &rarr;</a></div>
+  <!-- ─── Account footer (desktop ≥1280px only) ─── -->
+  <div class="nr-sidebar-footer">
+    <button class="nr-sidebar-btn nr-sidebar-btn-primary" onclick="openAuth('signup')">Registrati gratis</button>
+    <button class="nr-sidebar-btn nr-sidebar-btn-ghost" onclick="openAuth('login')">Accedi</button>
+  </div>
 </aside>
 <script>
 /* Featured "In evidenza" rotator — vanilla, accessible, reduced-motion aware.
