@@ -2022,13 +2022,16 @@ footer{
 .t-text{font-size:var(--text-sm);line-height:1.75;color:var(--fg-secondary);font-weight:300;font-style:italic;margin-bottom:var(--sp-2)}
 .t-author{display:flex;align-items:center;gap:.75rem}
 .t-av{
-  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
   background:linear-gradient(135deg,var(--blue-deep),var(--blue));
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
   font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);color:#fff;font-weight:500;
+  border:2px solid var(--border-bright);box-shadow:0 2px 8px rgba(20,30,48,.10);
 }
-.t-name{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:500;color:var(--ink)}
-.t-loc{font-size:var(--text-xs);color:var(--fg-muted);margin-top:.1rem}
+.t-av img{width:100%;height:100%;object-fit:cover;display:block}
+.t-name{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:600;color:var(--ink)}
+.t-role{font-size:var(--text-xs);color:var(--coral);font-weight:500;margin-top:.1rem}
+.t-loc{font-size:var(--text-xs);color:var(--fg-muted);margin-top:.05rem}
 @media(max-width:767px){
   .testimonials-grid{grid-template-columns:1fr}
   .testimonials-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}
@@ -3300,8 +3303,14 @@ footer{
       <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
       <p class="t-text">"Finalmente una guida chiara per il permesso di soggiorno. Ho seguito i passaggi passo-passo e in 30 minuti sapevo esattamente cosa fare. L'assistente AI mi ha risposto anche in sinhala!"</p>
       <div class="t-author">
-        <div class="t-av" aria-hidden="true">A</div>
-        <div><div class="t-name">Amara S.</div><div class="t-loc">Milano · in Italia dal 2019</div></div>
+        <div class="t-av">
+          <img src="https://i.pravatar.cc/88?img=47" alt="Foto di Amara S." loading="lazy">
+        </div>
+        <div>
+          <div class="t-name">Amara S.</div>
+          <div class="t-role">Infermiera · Milano</div>
+          <div class="t-loc">In Italia dal 2019</div>
+        </div>
       </div>
     </article>
 
@@ -3309,8 +3318,14 @@ footer{
       <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
       <p class="t-text">"Pensavo che ottenere lo SPID fosse complicatissimo. Grazie alla guida dettagliata l'ho fatto in 20 minuti. La sezione passo-passo con checklist è davvero ben fatta, consiglio a tutti."</p>
       <div class="t-author">
-        <div class="t-av" aria-hidden="true">K</div>
-        <div><div class="t-name">Kasun P.</div><div class="t-loc">Roma · in Italia dal 2021</div></div>
+        <div class="t-av">
+          <img src="https://i.pravatar.cc/88?img=12" alt="Foto di Kasun P." loading="lazy">
+        </div>
+        <div>
+          <div class="t-name">Kasun P.</div>
+          <div class="t-role">Tecnico IT · Roma</div>
+          <div class="t-loc">In Italia dal 2021</div>
+        </div>
       </div>
     </article>
 
@@ -3318,8 +3333,14 @@ footer{
       <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
       <p class="t-text">"Il comparatore di money transfer mi ha fatto risparmiare quasi €15 a transazione. Non sapevo che ci fossero così tante differenze tra i provider. Uno strumento indispensabile!"</p>
       <div class="t-author">
-        <div class="t-av" aria-hidden="true">R</div>
-        <div><div class="t-name">Ruvini F.</div><div class="t-loc">Torino · in Italia dal 2018</div></div>
+        <div class="t-av">
+          <img src="https://i.pravatar.cc/88?img=23" alt="Foto di Ruvini F." loading="lazy">
+        </div>
+        <div>
+          <div class="t-name">Ruvini F.</div>
+          <div class="t-role">Operatrice socio-sanitaria · Torino</div>
+          <div class="t-loc">In Italia dal 2018</div>
+        </div>
       </div>
     </article>
 
