@@ -343,10 +343,6 @@
     document.head.appendChild(s);
   })();
 
-  // Travelpayouts Drive (publisher verification + widget engine)
-  if(!document.querySelector('script[src*="emrldtp.cc"]')){
-    (function(){var s=document.createElement('script');s.async=1;s.src='https://emrldtp.cc/NTQyNTg2.js?t=542586';document.head.appendChild(s);})();
-  }
   applyLang(lang);
   document.addEventListener('click',e=>{if(!e.target.closest('.lang-switch'))EIH.closeLang();});
   document.getElementById('nav-collapse')&&document.getElementById('nav-collapse').addEventListener('click',e=>{if(e.target.closest('a'))document.getElementById('nav-collapse').classList.remove('open');});
