@@ -78,7 +78,16 @@
     var center=(hir.top+bottom)/2-hr.top;
     stage.style.top=Math.max(0,center-stage.offsetHeight/2)+'px';
   }
+  function reveal(){
+    var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(window.gsap&&!rm){
+      var g=window.gsap;
+      g.timeline({delay:.15})
+        .fromTo(stage,{opacity:0,scale:.84,filter:'blur(12px)'},{opacity:1,scale:1,filter:'blur(0px)',duration:1,ease:'expo.out',onComplete:function(){stage.classList.add('in');stage.style.removeProperty('transform');stage.style.removeProperty('filter');}})
+        .from(stage.querySelectorAll('.h3d-glow,.h3d-ring,.h3d-orbit,.h3d-pin,.g-mer,.g-lat,.h3d-plane'),{opacity:0,duration:.5,stagger:.05,ease:'power2.out'},'-=.6');
+    }else stage.classList.add('in');
+  }
   place();
-  requestAnimationFrame(function(){place();stage.classList.add('in');});
+  requestAnimationFrame(function(){place();reveal();});
   addEventListener('resize',place,{passive:true});
 })();
