@@ -1450,6 +1450,19 @@ footer{
 .footer-col a{font-size:var(--text-sm);color:var(--fg-muted);text-decoration:none;font-weight:300;transition:color var(--dur-micro)}
 .footer-col a:hover{color:var(--fg)}
 .footer-col a:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:3px}
+.footer-acc{display:flex;flex-direction:column;gap:.15rem}
+.footer-acc details{border-bottom:1px solid var(--border)}
+.footer-acc details:last-child{border-bottom:none}
+.footer-acc summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:.5rem;font-size:var(--text-sm);color:var(--fg);font-weight:400;padding:.55rem 0;transition:color var(--dur-micro)}
+.footer-acc summary::-webkit-details-marker{display:none}
+.footer-acc summary:hover,.footer-acc details[open]>summary{color:var(--coral)}
+.footer-acc summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:3px}
+.footer-acc .acc-chev{width:13px;height:13px;flex-shrink:0;color:var(--fg-muted);transition:transform var(--dur-micro) var(--ease-enter)}
+.footer-acc details[open]>summary .acc-chev{transform:rotate(180deg);color:var(--coral)}
+.footer-acc .acc-body{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin:0 0 .55rem .1rem;padding:.1rem 0 0 .75rem;border-left:1px solid var(--border)}
+.footer-acc .acc-body a{font-size:var(--text-sm);color:var(--fg-muted);text-decoration:none;font-weight:300;transition:color var(--dur-micro)}
+.footer-acc .acc-body a:hover{color:var(--fg)}
+.footer-acc .acc-body a:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:3px}
 .footer-bottom{
   max-width:1380px;margin:0 auto;padding:var(--sp-2) var(--sp-5) var(--sp-3);
   border-top:1px solid var(--border);
@@ -3866,25 +3879,45 @@ async function subscribeNewsletter(){
     </div>
     <div class="footer-col">
       <h4 data-i18n="footer.product">Prodotto</h4>
-      <ul>
-        <li><a href="/guide" data-i18n="nav.guide">Guide</a></li>
-        <li><a href="/percorso" data-i18n="footer.aiAssistant">Assistente AI</a></li>
-        <li><a href="/community" data-i18n="nav.community">Community</a></li>
-        <li><a href="/corsi">Corsi di Lingue</a></li>
-        <li><a href="/opportunita">Opportunità</a></li>
-        <li><a href="/money-transfer">Money Transfer</a></li>
-        <li><a href="/moduli">Moduli e Lettere</a></li>
-        <li><a href="/assegno-unico">Assegno Unico</a></li>
-        <li><a href="/diritti-inps">Diritti INPS</a></li>
-        <li><a href="/guida-ssn">Guida SSN</a></li>
-        <li><a href="/patente">Patente</a></li>
-        <li><a href="/housing">Casa in Affitto</a></li>
-        <li><a href="/associazioni">Associazioni</a></li>
-        <li><a href="/mercatino">Mercatino</a></li>
-        <li><a href="/podcast">Podcast</a></li>
-        <li><a href="/riconoscimento-titoli">Riconosc. Titoli</a></li>
-        <li><a href="/mappa" data-i18n="footer.mapServices">Mappa servizi</a></li>
-      </ul>
+      <div class="footer-acc">
+        <details>
+          <summary>Guide &amp; Diritti<svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <ul class="acc-body">
+            <li><a href="/guide" data-i18n="nav.guide">Guide</a></li>
+            <li><a href="/percorso" data-i18n="footer.aiAssistant">Assistente AI</a></li>
+            <li><a href="/diritti-inps">Diritti INPS</a></li>
+            <li><a href="/assegno-unico">Assegno Unico</a></li>
+            <li><a href="/guida-ssn">Guida SSN</a></li>
+          </ul>
+        </details>
+        <details>
+          <summary>Documenti<svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <ul class="acc-body">
+            <li><a href="/moduli">Moduli e Lettere</a></li>
+            <li><a href="/patente">Patente</a></li>
+            <li><a href="/riconoscimento-titoli">Riconosc. Titoli</a></li>
+          </ul>
+        </details>
+        <details>
+          <summary>Lavoro &amp; Casa<svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <ul class="acc-body">
+            <li><a href="/opportunita">Opportunità</a></li>
+            <li><a href="/housing">Casa in Affitto</a></li>
+            <li><a href="/money-transfer">Money Transfer</a></li>
+          </ul>
+        </details>
+        <details>
+          <summary>Community &amp; Media<svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+          <ul class="acc-body">
+            <li><a href="/community" data-i18n="nav.community">Community</a></li>
+            <li><a href="/corsi">Corsi di Lingue</a></li>
+            <li><a href="/associazioni">Associazioni</a></li>
+            <li><a href="/mercatino">Mercatino</a></li>
+            <li><a href="/podcast">Podcast</a></li>
+            <li><a href="/mappa" data-i18n="footer.mapServices">Mappa servizi</a></li>
+          </ul>
+        </details>
+      </div>
     </div>
     <div class="footer-col">
       <h4 data-i18n="footer.company">Azienda</h4>
