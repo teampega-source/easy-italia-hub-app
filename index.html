@@ -1610,6 +1610,11 @@ footer{
 .anim .reveal.in{opacity:1;transform:none;filter:blur(0)}
 @media(prefers-reduced-motion:reduce){.anim .reveal{filter:none;transform:none}}
 
+/* 1b) FadeContent (React Bits port) — opacity + blur reveal on scroll */
+.anim .fade-content{opacity:var(--fc-o,0);filter:blur(10px);transition:opacity 1s var(--ease-enter),filter 1s var(--ease-enter);transition-delay:calc(var(--fi,0)*130ms);will-change:opacity,filter}
+.anim .fade-content.in{opacity:1;filter:blur(0)}
+@media(prefers-reduced-motion:reduce){.anim .fade-content{filter:none;opacity:1}}
+
 /* 2) Hero masked line reveal (keyframe on load — deterministic) */
 .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
 .anim .hero h1 .ln>span{display:block;animation:lineUp .9s var(--ease-enter) both}
@@ -3003,8 +3008,9 @@ footer{
   <p class="section-sub" data-i18n="how.sub">Nessuna carta di credito. Nessun abbonamento obbligatorio. Solo tu e le risorse di cui hai bisogno.</p>
 
   <style>
-  .eih-demo{display:flex;justify-content:center;margin:1.8rem 0 2.8rem}
-  .eih-phone{width:240px;height:476px;background:#1c1c1e;border-radius:40px;padding:10px;box-shadow:0 28px 56px rgba(0,0,0,.26),0 6px 12px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07);position:relative;animation:eih-float 5s ease-in-out infinite}
+  .eih-demo{display:flex;justify-content:center;margin:1.8rem 0 2.8rem;position:relative;isolation:isolate}
+  .eih-strands{position:absolute;inset:-8% -4%;width:108%;height:116%;z-index:-1;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse 60% 70% at 50% 50%,#000 35%,transparent 78%);mask-image:radial-gradient(ellipse 60% 70% at 50% 50%,#000 35%,transparent 78%)}
+  .eih-phone{width:240px;height:476px;background:#1c1c1e;border-radius:40px;padding:10px;box-shadow:0 28px 56px rgba(0,0,0,.26),0 6px 12px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07);position:relative;z-index:1;animation:eih-float 5s ease-in-out infinite}
   .eih-phone::before{content:'';position:absolute;top:15px;left:50%;transform:translateX(-50%);width:58px;height:6px;background:#111;border-radius:4px;z-index:10}
   .eih-screen{width:100%;height:100%;background:#faf8f5;border-radius:32px;overflow:hidden;position:relative}
   .eih-slide{position:absolute;inset:0;padding:30px 18px 22px;display:flex;flex-direction:column;opacity:0}
@@ -3046,6 +3052,7 @@ footer{
   @media(max-width:500px){.eih-phone{width:200px;height:396px}.eih-slide{padding:24px 15px 18px}}
   </style>
   <div class="eih-demo" aria-label="Demo animata — tre passi per iniziare">
+    <canvas class="eih-strands" aria-hidden="true"></canvas>
     <div class="eih-phone">
       <div class="eih-screen">
         <div class="eih-slide eih-s1">
@@ -3106,6 +3113,43 @@ footer{
       <p data-i18n="how.s3.p">Hai dubbi? L'assistente risponde in 4 lingue, 24 ore su 24. Oppure confrontati con la community — trovi sempre chi ha vissuto la tua stessa situazione.</p>
     </div>
 
+  </div>
+</section>
+
+<!-- ─── FADE-IN VALUE SECTION (React Bits FadeContent) ─── -->
+<section class="fade-section" id="perche" aria-labelledby="fade-heading">
+  <style>
+  .fade-section{max-width:1080px;margin:0 auto;padding:var(--sp-6,5rem) var(--sp-4,1.5rem)}
+  .fade-section .fade-head{text-align:center;max-width:640px;margin:0 auto 2.6rem}
+  .fade-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+  .fade-item{padding:1.6rem 1.5rem;border:1px solid var(--gold-dim);border-radius:18px;background:var(--surface);transition:background .3s,border-color .3s}
+  .fade-item:hover{background:var(--surface-hover);border-color:rgba(154,125,69,.3)}
+  .fade-item .fi-ico{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--gold-dim);color:var(--gold);margin-bottom:1rem}
+  .fade-item h3{font-size:1.08rem;font-weight:700;color:var(--ink);margin:0 0 .4rem;line-height:1.3}
+  .fade-item p{font-size:.92rem;color:var(--blue-deep);margin:0;line-height:1.55}
+  @media(max-width:760px){.fade-grid{grid-template-columns:1fr;gap:.9rem}.fade-section{padding:var(--sp-5,3.5rem) var(--sp-3,1rem)}}
+  </style>
+  <div class="fade-head">
+    <p class="section-label fade-content" data-i18n="why.label">Perché Easy Italia Hub</p>
+    <h2 id="fade-heading" class="section-title fade-content" style="--fi:1" data-i18n-html="why.title">Tutto in <em>un unico posto</em></h2>
+    <p class="section-sub fade-content" style="--fi:2" data-i18n="why.sub">Burocrazia, lavoro, casa e community: ciò che ti serve per vivere in Italia, senza perderti tra mille siti.</p>
+  </div>
+  <div class="fade-grid">
+    <div class="fade-item fade-content" style="--fi:0">
+      <div class="fi-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg></div>
+      <h3 data-i18n="why.c1.t">Guide chiare</h3>
+      <p data-i18n="why.c1.p">Permesso, SPID, codice fiscale: passo per passo, in parole semplici e in 4 lingue.</p>
+    </div>
+    <div class="fade-item fade-content" style="--fi:1">
+      <div class="fi-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></div>
+      <h3 data-i18n="why.c2.t">Opportunità reali</h3>
+      <p data-i18n="why.c2.p">Lavoro, casa e servizi selezionati per chi arriva in Italia, aggiornati di continuo.</p>
+    </div>
+    <div class="fade-item fade-content" style="--fi:2">
+      <div class="fi-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h3 data-i18n="why.c3.t">Community vicina</h3>
+      <p data-i18n="why.c3.p">Confrontati con chi ha vissuto la tua stessa situazione. Non sei mai solo.</p>
+    </div>
   </div>
 </section>
 
@@ -4176,6 +4220,43 @@ applyLang(currentLang);
   if(reduce){targets.forEach(el=>el.classList.add('in'));return;}
   const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
   targets.forEach(el=>io.observe(el));
+})();
+
+/* ── FadeContent (React Bits port): opacity+blur reveal once in view ── */
+(function(){
+  const els=[...document.querySelectorAll('.fade-content')];if(!els.length)return;
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches){els.forEach(el=>el.classList.add('in'));return;}
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.15,rootMargin:'0px 0px -10% 0px'});
+  els.forEach(el=>io.observe(el));
+})();
+
+/* ── Strands background (React Bits, port Canvas 2D) ── */
+(function(){
+  const cv=document.querySelector('.eih-strands');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const cols=['#9a7d45','#eb5939','#7d7058','#c9a84c'];
+  const N=11;let W=0,H=0,dpr=1,t=0,raf=0,mx=.5,my=.5,vis=true;
+  function size(){dpr=Math.min(devicePixelRatio||1,2);const r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+  function strand(i,time){
+    const f=i/(N-1),y0=H*(.12+f*.76),amp=H*(.06+.05*Math.sin(i*1.7)),k=2.1+f*1.4,
+      sp=.18+f*.12,ph=i*.9+(mx-.5)*1.2,col=cols[i%cols.length];
+    ctx.beginPath();
+    for(let x=-10;x<=W+10;x+=8){
+      const u=x/W,wob=(my-.5)*22*Math.sin(u*3+time*.3),
+        y=y0+Math.sin(u*Math.PI*k+time*sp+ph)*amp*(.5+.5*Math.sin(u*Math.PI))+wob;
+      x<=-10?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle=col;ctx.globalAlpha=.16+.12*Math.sin(i*1.3+time*.2);
+    ctx.lineWidth=1+.7*Math.sin(i*2.1);ctx.stroke();
+  }
+  function frame(){t+=1;ctx.clearRect(0,0,W,H);ctx.lineCap='round';for(let i=0;i<N;i++)strand(i,t/16);raf=requestAnimationFrame(frame);}
+  size();
+  if(reduce){t=40;ctx.clearRect(0,0,W,H);ctx.lineCap='round';for(let i=0;i<N;i++)strand(i,2.5);return;}
+  cv.parentElement.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();mx=(e.clientX-r.left)/r.width;my=(e.clientY-r.top)/r.height;},{passive:true});
+  new ResizeObserver(size).observe(cv);
+  const io=new IntersectionObserver(([e])=>{vis=e.isIntersecting;if(vis&&!raf)frame();else if(!vis){cancelAnimationFrame(raf);raf=0;}},{threshold:0});
+  io.observe(cv);
 })();
 
 /* ── Tier-2: count-up stats + magnetic buttons ── */
