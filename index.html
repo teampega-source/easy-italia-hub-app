@@ -2155,8 +2155,20 @@ footer{
 .pricing-section{position:relative;z-index:1;padding:var(--sp-5) var(--sp-5);max-width:1380px;margin:0 auto;text-align:center}
 .pricing-section .plans{margin-top:var(--sp-4);text-align:left}
 .pricing-note{font-size:var(--text-xs);color:var(--fg-muted);margin-top:var(--sp-3)}
-@media(max-width:900px){.pricing-section .plans{grid-template-columns:1fr}}
-@media(max-width:680px){.pricing-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-2);margin-top:var(--sp-4);text-align:left}
+.svc-card{position:relative;display:flex;flex-direction:column;gap:var(--sp-1);padding:var(--sp-3);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:transform var(--dur-2) var(--ease-spring),border-color var(--dur-2),background var(--dur-2)}
+.svc-card:hover{transform:translateY(-4px);border-color:rgba(58,123,213,.4);background:var(--surface-hover)}
+.svc-card.span2{grid-column:span 2}
+.svc-ico{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:rgba(58,123,213,.12);color:var(--blue);margin-bottom:var(--sp-1)}
+.svc-ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.svc-name{font-size:var(--text-base);font-weight:600;color:var(--fg)}
+.svc-desc{font-size:var(--text-xs);color:var(--fg-secondary);line-height:1.5;margin:0}
+.svc-badge{position:absolute;top:var(--sp-2);right:var(--sp-2);font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:999px}
+.svc-badge.b-starter{background:rgba(120,120,128,.14);color:var(--fg-secondary)}
+.svc-badge.b-pro{background:rgba(58,123,213,.16);color:var(--blue)}
+.svc-badge.b-business{background:linear-gradient(120deg,var(--coral),var(--blue));color:#fff}
+@media(max-width:900px){.pricing-section .plans{grid-template-columns:1fr}.svc-grid{grid-template-columns:repeat(2,1fr)}.svc-card.span2{grid-column:span 2}}
+@media(max-width:680px){.pricing-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}.svc-grid{grid-template-columns:1fr}.svc-card.span2{grid-column:span 1}}
 
 /* ─── DONATE ─── */
 .donate-section{
@@ -3360,6 +3372,68 @@ footer{
   <p class="section-label">Piani</p>
   <h2 id="pricing-heading" class="section-title">Scegli il tuo <em>piano</em></h2>
   <p class="section-sub">Raggiungi la community srilankese e tamil in Italia con strumenti veri, non solo banner. 3 giorni gratis, poi disdici quando vuoi.</p>
+  <div class="svc-grid">
+    <div class="svc-card reveal" style="--ri:0">
+      <span class="svc-badge b-starter">Starter</span>
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <h3 class="svc-name">Scheda sulla mappa</h3>
+      <p class="svc-desc">La tua attività geolocalizzata nella mappa servizi più usata dalla community.</p>
+    </div>
+    <div class="svc-card reveal" style="--ri:1">
+      <span class="svc-badge b-starter">Starter</span>
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg></div>
+      <h3 class="svc-name">Banner pubblicitari</h3>
+      <p class="svc-desc">Spazi grafici in posizioni ad alta visibilità, con impression tracciate in tempo reale.</p>
+    </div>
+    <div class="svc-card span2 reveal" style="--ri:2">
+      <span class="svc-badge b-pro">Pro</span>
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M5 8h14M5 12h14M5 16h9"/><circle cx="19" cy="16" r="2"/></svg></div>
+      <h3 class="svc-name">Annuncio multilingua creato dal team</h3>
+      <p class="svc-desc">Copy e grafica professionali in 4 lingue (IT, EN, singalese, tamil) — parli a tutta la community nella sua lingua.</p>
+    </div>
+    <div class="svc-card reveal" style="--ri:3">
+      <span class="svc-badge b-pro">Pro</span>
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H5.2L4 17.5z"/><path d="M8 9h8M8 12h5"/></svg></div>
+      <h3 class="svc-name">Newsletter mensile</h3>
+      <p class="svc-desc">Menzione nella newsletter che arriva diretta nelle caselle di migliaia di iscritti.</p>
+    </div>
+    <div class="svc-card reveal" style="--ri:4">
+      <span class="svc-badge b-pro">Pro</span>
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+      <h3 class="svc-name">Contatti diretti clienti</h3>
+      <p class="svc-desc">Ricevi i recapiti di chi è davvero interessato: lead reali, non solo click.</p>
+    </div>
+    <div class="svc-card reveal" style="--ri:5">
+      <span class="svc-badge b-business">Business</span>
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div>
+      <h3 class="svc-name">Articolo redazionale</h3>
+      <p class="svc-desc">Un pezzo dedicato scritto dalla nostra redazione: racconto del brand, non pubblicità.</p>
+    </div>
+    <div class="svc-card reveal" style="--ri:6">
+      <span class="svc-badge b-business">Business</span>
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M12 3v10"/><rect x="9" y="3" width="6" height="10" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg></div>
+      <h3 class="svc-name">Sponsor podcast</h3>
+      <p class="svc-desc">Il tuo brand citato nel podcast della community e in una newsletter dedicata.</p>
+    </div>
+    <div class="svc-card reveal" style="--ri:7">
+      <span class="svc-badge b-business">Business</span>
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/><path d="M16 3l2 2 3-3"/></svg></div>
+      <h3 class="svc-name">Consigliato dall'AI Consigliere</h3>
+      <p class="svc-desc">L'assistente AI suggerisce la tua attività agli utenti pertinenti, nel momento giusto della conversazione.</p>
+    </div>
+    <div class="svc-card span2 reveal" style="--ri:8">
+      <span class="svc-badge b-business">Business</span>
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg></div>
+      <h3 class="svc-name">Immagini e video prodotti dal team</h3>
+      <p class="svc-desc">Creatività pubblicitarie professionali realizzate per te: foto, grafiche e video pronti a convertire.</p>
+    </div>
+    <div class="svc-card reveal" style="--ri:9">
+      <span class="svc-badge b-business">Business</span>
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
+      <h3 class="svc-name">Account manager + report competitor</h3>
+      <p class="svc-desc">Un referente dedicato e analisi periodiche su risultati e concorrenti della community.</p>
+    </div>
+  </div>
   <div class="plans">
     <div class="plan reveal" style="--ri:0">
       <h3 class="plan-name">Starter</h3>
