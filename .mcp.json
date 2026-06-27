@@ -19,14 +19,20 @@
     },
     "@21st-dev/magic": {
       "command": "npx",
-      "args": ["-y", "@21st-dev/magic@latest"],
+      "args": [
+        "-y",
+        "@21st-dev/magic@latest"
+      ],
       "env": {
         "TWENTY_FIRST_API_KEY": "${TWENTY_FIRST_API_KEY}"
       }
     },
     "task-master-ai": {
       "command": "npx",
-      "args": ["-y", "task-master-ai"],
+      "args": [
+        "-y",
+        "task-master-ai"
+      ],
       "env": {
         "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}",
         "GOOGLE_API_KEY": "${GEMINI_API_KEY}"
@@ -34,7 +40,10 @@
     },
     "glif": {
       "command": "npx",
-      "args": ["-y", "@glifxyz/glif-mcp-server@latest"],
+      "args": [
+        "-y",
+        "@glifxyz/glif-mcp-server@latest"
+      ],
       "env": {
         "GLIF_API_TOKEN": "${GLIF_API_TOKEN}"
       }
