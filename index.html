@@ -232,14 +232,19 @@ body{
 }
 .skip-link:focus{top:var(--sp-1)}
 
-/* ─── BACKGROUND WASH (soft ivory field — static, zero-JS) ─── */
+/* ─── BACKGROUND WASH (soft ivory field — evolves on scroll) ─── */
 #bg{
   position:fixed;inset:0;z-index:0;pointer-events:none;
+  --sp:0; /* scroll progress 0→1, set via JS */
   background:
-    radial-gradient(900px 600px at 15% 10%, rgba(235,89,57,0.03), transparent 55%),
-    radial-gradient(700px 500px at 88% 85%, rgba(154,125,69,0.03), transparent 55%),
-    #ffffff;
+    radial-gradient(900px 600px at 15% calc(8% + var(--sp)*26%), rgba(235,89,57,0.045), transparent 55%),
+    radial-gradient(760px 540px at 88% calc(86% - var(--sp)*34%), rgba(154,125,69,0.05), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #fdfaf3 48%, #ffffff 100%);
+  will-change:background-position;
 }
+@media(prefers-reduced-motion:reduce){#bg{--sp:0!important;background:
+  radial-gradient(900px 600px at 15% 10%, rgba(235,89,57,0.03), transparent 55%),
+  radial-gradient(700px 500px at 88% 85%, rgba(154,125,69,0.03), transparent 55%),#ffffff}}
 
 /* ─── SMART TOAST (bottom-right, once per user) ─── */
 #smart-toast{
@@ -4425,10 +4430,18 @@ function scrollToTop(){
   const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
 }
+const bgEl=document.getElementById('bg');
+const bgReduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+let bgTick=false;
 window.addEventListener('scroll',()=>{
   const y=window.scrollY;
   toTopBtn.classList.toggle('show',y>400);
   if(siteNav)siteNav.classList.toggle('scrolled',y>200);
+  if(bgEl&&!bgReduce&&!bgTick){bgTick=true;requestAnimationFrame(()=>{
+    const max=document.documentElement.scrollHeight-window.innerHeight;
+    bgEl.style.setProperty('--sp',max>0?(window.scrollY/max).toFixed(3):'0');
+    bgTick=false;
+  });}
 },{passive:true});
 
 /* ── Shared modal controller (focus-trap + scroll-lock + focus restore) ── */
