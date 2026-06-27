@@ -2062,6 +2062,23 @@ footer{
 @media(min-width:520px) and (max-width:767px){
   .testimonials-grid{grid-template-columns:1fr 1fr}
 }
+/* ─── TESTIMONIALS MARQUEE (scorrimento infinito, pausa su hover) ─── */
+.testimonials-marquee{margin-top:var(--sp-4);position:relative;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.tm-track{display:flex;gap:var(--sp-3);width:max-content;padding:.5rem 0;animation:tmScroll 46s linear infinite}
+.testimonials-marquee:hover .tm-track{animation-play-state:paused}
+@keyframes tmScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tm-card{flex:0 0 360px;width:360px;display:flex;flex-direction:column;
+  background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:var(--sp-3);
+  transition:border-color var(--dur-micro),box-shadow var(--dur-micro),transform var(--dur-micro)}
+.tm-card:hover{border-color:var(--border-bright);box-shadow:0 8px 32px rgba(20,30,48,.08);transform:translateY(-4px)}
+.tm-card .t-text{flex:1}
+@media(max-width:767px){.tm-card{flex-basis:286px;width:286px}}
+@media(prefers-reduced-motion:reduce){
+  .tm-track{animation:none;flex-wrap:wrap;justify-content:center;width:auto}
+  .testimonials-marquee{mask-image:none;-webkit-mask-image:none}
+}
 
 /* ─── MISSION TEASER ─── */
 .mission-section{
@@ -3378,54 +3395,84 @@ footer{
 <section class="testimonials-section" aria-labelledby="testimonials-heading">
   <p class="section-label" data-i18n="test.label">Cosa dicono</p>
   <h2 id="testimonials-heading" class="section-title" data-i18n-html="test.title">La community <em>parla</em></h2>
-  <div class="testimonials-grid">
+  <div class="testimonials-marquee">
+    <div class="tm-track">
 
-    <article class="testimonial reveal" style="--ri:0">
-      <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-      <p class="t-text">"Finalmente una guida chiara per il permesso di soggiorno. Ho seguito i passaggi passo-passo e in 30 minuti sapevo esattamente cosa fare. L'assistente AI mi ha risposto anche in sinhala!"</p>
-      <div class="t-author">
-        <div class="t-av">
-          <img src="https://i.pravatar.cc/88?img=47" alt="Foto di Amara S." loading="lazy">
+      <!-- set 1 -->
+      <article class="tm-card">
+        <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="t-text">"Ragazzi questa app è oro 🙏 ho trovato il money transfer più economico in due minuti, prima buttavo via un sacco di soldi. E la cosa più bella? L'assistente mi parla in singalese, troppo comoda!"</p>
+        <div class="t-author">
+          <div class="t-av"><img src="https://i.pravatar.cc/88?img=45" alt="Foto di Dilani" loading="lazy"></div>
+          <div><div class="t-name">Dilani</div><div class="t-role">Estetista · Napoli</div><div class="t-loc">In Italia dal 2020</div></div>
         </div>
-        <div>
-          <div class="t-name">Amara S.</div>
-          <div class="t-role">Infermiera · Milano</div>
-          <div class="t-loc">In Italia dal 2019</div>
-        </div>
-      </div>
-    </article>
+      </article>
 
-    <article class="testimonial reveal" style="--ri:1">
-      <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-      <p class="t-text">"Pensavo che ottenere lo SPID fosse complicatissimo. Grazie alla guida dettagliata l'ho fatto in 20 minuti. La sezione passo-passo con checklist è davvero ben fatta, consiglio a tutti."</p>
-      <div class="t-author">
-        <div class="t-av">
-          <img src="https://i.pravatar.cc/88?img=12" alt="Foto di Kasun P." loading="lazy">
+      <article class="tm-card">
+        <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="t-text">"Bro col permesso di soggiorno ero perso totale 😅 qua è tutto spiegato passo passo, ho fatto pure lo SPID in mezz'ora da solo. Non ci credevo. La consiglio a tutti gli amici appena arrivati!"</p>
+        <div class="t-author">
+          <div class="t-av"><img src="https://i.pravatar.cc/88?img=33" alt="Foto di Nuwan" loading="lazy"></div>
+          <div><div class="t-name">Nuwan</div><div class="t-role">Rider · Roma</div><div class="t-loc">In Italia dal 2022</div></div>
         </div>
-        <div>
-          <div class="t-name">Kasun P.</div>
-          <div class="t-role">Tecnico IT · Roma</div>
-          <div class="t-loc">In Italia dal 2021</div>
-        </div>
-      </div>
-    </article>
+      </article>
 
-    <article class="testimonial reveal" style="--ri:2">
-      <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-      <p class="t-text">"Il comparatore di money transfer mi ha fatto risparmiare quasi €15 a transazione. Non sapevo che ci fossero così tante differenze tra i provider. Uno strumento indispensabile!"</p>
-      <div class="t-author">
-        <div class="t-av">
-          <img src="https://i.pravatar.cc/88?img=23" alt="Foto di Ruvini F." loading="lazy">
+      <article class="tm-card">
+        <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="t-text">"Finalmente qualcosa fatto per noi ❤️ ho trovato il tempio vicino casa, gli eventi della community e pure il dottore che parla la mia lingua. Mi sento meno sola qua adesso. Bravissimi davvero!"</p>
+        <div class="t-author">
+          <div class="t-av"><img src="https://i.pravatar.cc/88?img=44" alt="Foto di Tharushi" loading="lazy"></div>
+          <div><div class="t-name">Tharushi</div><div class="t-role">Studentessa · Milano</div><div class="t-loc">In Italia dal 2023</div></div>
         </div>
-        <div>
-          <div class="t-name">Ruvini F.</div>
-          <div class="t-role">Operatrice socio-sanitaria · Torino</div>
-          <div class="t-loc">In Italia dal 2018</div>
+      </article>
+
+      <article class="tm-card">
+        <div class="t-stars" aria-label="5 stelle su 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="t-text">"Lavoro ogni giorno con persone appena arrivate e questa piattaforma mi semplifica tutto: guide chiare, servizi geolocalizzati e informazioni sempre aggiornate. La consiglio a ogni persona che seguo."</p>
+        <div class="t-author">
+          <div class="t-av"><img src="https://i.pravatar.cc/88?img=20" alt="Foto di Giulia Marchetti" loading="lazy"></div>
+          <div><div class="t-name">Giulia Marchetti</div><div class="t-role">Operatrice dell'integrazione · Torino</div><div class="t-loc">Mediatrice culturale</div></div>
         </div>
-      </div>
-    </article>
+      </article>
 
+      <!-- set 2 (duplicato per loop continuo) -->
+      <article class="tm-card" aria-hidden="true">
+        <div class="t-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="t-text">"Ragazzi questa app è oro 🙏 ho trovato il money transfer più economico in due minuti, prima buttavo via un sacco di soldi. E la cosa più bella? L'assistente mi parla in singalese, troppo comoda!"</p>
+        <div class="t-author">
+          <div class="t-av"><img src="https://i.pravatar.cc/88?img=45" alt="" loading="lazy"></div>
+          <div><div class="t-name">Dilani</div><div class="t-role">Estetista · Napoli</div><div class="t-loc">In Italia dal 2020</div></div>
+        </div>
+      </article>
 
+      <article class="tm-card" aria-hidden="true">
+        <div class="t-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="t-text">"Bro col permesso di soggiorno ero perso totale 😅 qua è tutto spiegato passo passo, ho fatto pure lo SPID in mezz'ora da solo. Non ci credevo. La consiglio a tutti gli amici appena arrivati!"</p>
+        <div class="t-author">
+          <div class="t-av"><img src="https://i.pravatar.cc/88?img=33" alt="" loading="lazy"></div>
+          <div><div class="t-name">Nuwan</div><div class="t-role">Rider · Roma</div><div class="t-loc">In Italia dal 2022</div></div>
+        </div>
+      </article>
+
+      <article class="tm-card" aria-hidden="true">
+        <div class="t-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="t-text">"Finalmente qualcosa fatto per noi ❤️ ho trovato il tempio vicino casa, gli eventi della community e pure il dottore che parla la mia lingua. Mi sento meno sola qua adesso. Bravissimi davvero!"</p>
+        <div class="t-author">
+          <div class="t-av"><img src="https://i.pravatar.cc/88?img=44" alt="" loading="lazy"></div>
+          <div><div class="t-name">Tharushi</div><div class="t-role">Studentessa · Milano</div><div class="t-loc">In Italia dal 2023</div></div>
+        </div>
+      </article>
+
+      <article class="tm-card" aria-hidden="true">
+        <div class="t-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="t-text">"Lavoro ogni giorno con persone appena arrivate e questa piattaforma mi semplifica tutto: guide chiare, servizi geolocalizzati e informazioni sempre aggiornate. La consiglio a ogni persona che seguo."</p>
+        <div class="t-author">
+          <div class="t-av"><img src="https://i.pravatar.cc/88?img=20" alt="" loading="lazy"></div>
+          <div><div class="t-name">Giulia Marchetti</div><div class="t-role">Operatrice dell'integrazione · Torino</div><div class="t-loc">Mediatrice culturale</div></div>
+        </div>
+      </article>
+
+    </div>
   </div>
 </section>
 
@@ -4252,7 +4299,7 @@ applyLang(currentLang);
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   // Hero headline reveals via CSS keyframe (lineUp) automatically on load.
   // Scroll-reveal targets (below the fold)
-  const targets=[...document.querySelectorAll('.features .section-label,.features .section-title,.features .section-sub,.feat,.ad-mini-bar,.donate-card,.cta-card,.footer-brand,.footer-col')];
+  const targets=[...document.querySelectorAll('.features .section-label,.features .section-title,.features .section-sub,.feat,.ad-mini-bar,.donate-card,.cta-card,.footer-brand,.footer-col,.svc-card,.plan')];
   document.querySelectorAll('.feat-grid').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--ri',i));});
   targets.forEach(el=>el.classList.add('reveal'));
   if(reduce){targets.forEach(el=>el.classList.add('in'));return;}
