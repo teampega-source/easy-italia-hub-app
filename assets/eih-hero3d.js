@@ -53,7 +53,7 @@
   var html;
   if(scene==='globe'){
     html='<span class="h3d-glow"></span>'+
-      '<div class="h3d-globe"><span class="g-ocean"></span><span class="g-strip"></span><span class="g-clouds"></span><span class="g-shade"></span><span class="g-atmo"></span></div>'+
+      '<div class="h3d-globe"><span class="g-ocean"></span><span class="g-strip"></span><span class="g-shade"></span><span class="g-atmo"></span></div>'+
       '<div class="h3d-orbit"><span class="g-arc"></span><span class="h3d-plane"><svg viewBox="0 0 32 32" aria-hidden="true">'+G.plane+'</svg></span></div>'+
       '<span class="h3d-pin s"></span><span class="h3d-pin e"></span>';
   }else{
