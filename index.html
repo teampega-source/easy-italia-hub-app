@@ -3129,44 +3129,17 @@ footer{
   @keyframes eih-d2{0%,33%{background:#ddd}34%,65%{background:#7c7059}66%,100%{background:#ddd}}
   @keyframes eih-d3{0%,66%{background:#ddd}67%,100%{background:#7c7059}}
   @media(max-width:500px){.eih-phone{width:200px;height:396px}.eih-slide{padding:24px 15px 18px}}
+  .eih-hero-photo{display:flex;justify-content:center;margin:1.8rem 0 2.8rem}
+  .eih-hero-photo figure{margin:0;width:100%;max-width:560px;border-radius:24px;overflow:hidden;position:relative;box-shadow:0 28px 56px rgba(0,0,0,.20),0 6px 14px rgba(0,0,0,.10);opacity:0;animation:eih-photo-in 1.7s cubic-bezier(.22,.61,.36,1) .1s forwards}
+  .eih-hero-photo img{display:block;width:100%;height:auto}
+  .eih-hero-photo figure::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.04) 0%,transparent 30%,rgba(0,0,0,.05) 100%);pointer-events:none}
+  @keyframes eih-photo-in{from{opacity:0;transform:scale(1.045) translateY(12px);filter:blur(10px) saturate(.85)}to{opacity:1;transform:none;filter:blur(0) saturate(1)}}
+  @media(prefers-reduced-motion:reduce){.eih-hero-photo figure{animation:none;opacity:1}}
   </style>
-  <div class="eih-demo" aria-label="Demo animata — tre passi per iniziare">
-    <canvas class="eih-strands" aria-hidden="true"></canvas>
-    <div class="eih-phone">
-      <div class="eih-screen">
-        <div class="eih-slide eih-s1">
-          <div class="eih-bar"><span>09:41</span><span>Easy Italia Hub</span></div>
-          <div class="eih-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Passo 01</div>
-          <h4>Crea il tuo profilo</h4>
-          <p>Registrati gratis in 30 secondi</p>
-          <div class="eih-field"><span style="color:#2d2926">Laksiri</span><span class="eih-cursor"></span></div>
-          <div class="eih-field">email@gmail.com</div>
-          <div class="eih-field">Città di residenza…</div>
-          <div class="eih-btn">Inizia il percorso →</div>
-        </div>
-        <div class="eih-slide eih-s2">
-          <div class="eih-bar"><span>09:41</span><span>Le tue guide</span></div>
-          <div class="eih-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Passo 02</div>
-          <h4>Scegli la guida giusta</h4>
-          <p>Checklist ufficiali e link verificati</p>
-          <div class="eih-card"><div class="eih-ci"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><h5>Permesso di soggiorno</h5><span>12 checklist · link ufficiali</span></div></div>
-          <div class="eih-card"><div class="eih-ci"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div><h5>SPID e identità digitale</h5><span>8 passi guidati</span></div></div>
-          <div class="eih-card"><div class="eih-ci"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><h5>Money transfer sicuro</h5><span>Confronta 8 operatori</span></div></div>
-        </div>
-        <div class="eih-slide eih-s3">
-          <div class="eih-bar"><span>09:41</span><span>AI Assistant</span></div>
-          <div class="eih-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>Passo 03</div>
-          <h4>Chiedi all'AI</h4>
-          <p>In italiano, inglese, sinhala e tamil</p>
-          <div class="eih-chat">
-            <div class="eih-user">Come rinnovo il permesso di soggiorno?</div>
-            <div class="eih-ai">Devi presentare domanda al Questore <strong>60 giorni prima</strong> della scadenza. Documenti: passaporto, marca da bollo €16…</div>
-            <div class="eih-typing"><i></i><i></i><i></i></div>
-          </div>
-        </div>
-        <div class="eih-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
-      </div>
-    </div>
+  <div class="eih-hero-photo">
+    <figure>
+      <img src="/assets/img/community-welcome.webp" width="1402" height="1122" loading="lazy" decoding="async" alt="Tre amici sorridenti in una via italiana con le bandiere dello Sri Lanka e dell'Italia — la community srilankese che cresce in Italia">
+    </figure>
   </div>
 
   <div class="steps-row">
@@ -3338,6 +3311,46 @@ footer{
   <p class="section-label" data-i18n="preview.label">La piattaforma</p>
   <h2 id="preview-heading" class="section-title" data-i18n-html="preview.title">Progettata per <em>semplificare</em></h2>
   <p class="section-sub" data-i18n="preview.sub">Un'interfaccia chiara, multilingua, accessibile da ogni dispositivo. Tutto in un unico posto.</p>
+
+  <div class="eih-demo" aria-label="Demo animata — tre passi per iniziare">
+    <canvas class="eih-strands" aria-hidden="true"></canvas>
+    <div class="eih-phone">
+      <div class="eih-screen">
+        <div class="eih-slide eih-s1">
+          <div class="eih-bar"><span>09:41</span><span>Easy Italia Hub</span></div>
+          <div class="eih-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Passo 01</div>
+          <h4>Crea il tuo profilo</h4>
+          <p>Registrati gratis in 30 secondi</p>
+          <div class="eih-field"><span style="color:#2d2926">Laksiri</span><span class="eih-cursor"></span></div>
+          <div class="eih-field">email@gmail.com</div>
+          <div class="eih-field">Città di residenza…</div>
+          <div class="eih-btn">Inizia il percorso →</div>
+        </div>
+        <div class="eih-slide eih-s2">
+          <div class="eih-bar"><span>09:41</span><span>Le tue guide</span></div>
+          <div class="eih-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Passo 02</div>
+          <h4>Scegli la guida giusta</h4>
+          <p>Checklist ufficiali e link verificati</p>
+          <div class="eih-card"><div class="eih-ci"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><h5>Permesso di soggiorno</h5><span>12 checklist · link ufficiali</span></div></div>
+          <div class="eih-card"><div class="eih-ci"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div><h5>SPID e identità digitale</h5><span>8 passi guidati</span></div></div>
+          <div class="eih-card"><div class="eih-ci"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><h5>Money transfer sicuro</h5><span>Confronta 8 operatori</span></div></div>
+        </div>
+        <div class="eih-slide eih-s3">
+          <div class="eih-bar"><span>09:41</span><span>AI Assistant</span></div>
+          <div class="eih-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>Passo 03</div>
+          <h4>Chiedi all'AI</h4>
+          <p>In italiano, inglese, sinhala e tamil</p>
+          <div class="eih-chat">
+            <div class="eih-user">Come rinnovo il permesso di soggiorno?</div>
+            <div class="eih-ai">Devi presentare domanda al Questore <strong>60 giorni prima</strong> della scadenza. Documenti: passaporto, marca da bollo €16…</div>
+            <div class="eih-typing"><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="eih-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+      </div>
+    </div>
+  </div>
+
   <div class="screenshots-grid">
 
     <!-- Dashboard mockup -->
