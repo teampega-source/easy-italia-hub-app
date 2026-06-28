@@ -29,8 +29,22 @@
 @keyframes h3dSpin{to{transform:translateX(-50%)}}
 @keyframes h3dRing2{to{transform:translate(-50%,-50%) rotateZ(360deg)}}
 
+/* ---- mapsq scene (mappa quadrata + lente) ---- */
+.h3d-mapsq{position:absolute;left:50%;top:50%;width:88%;height:88%;transform:translate(-50%,-50%);border-radius:18px;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,#000 18%,#000 82%,transparent),linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(to right,transparent,#000 18%,#000 82%,transparent),linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent);-webkit-mask-composite:source-in;mask-composite:intersect}
+.h3d-mapsq .m-tex{position:absolute;inset:-6%;background:url("/assets/earth-blue-marble.jpg") no-repeat;background-size:340% auto;background-position:53% 27%;animation:h3dMapZoom 22s ease-in-out infinite}
+.h3d-mapsq .m-grid{position:absolute;inset:0;background:linear-gradient(color-mix(in srgb,var(--h3d-accent,var(--green)) 16%,transparent) 1px,transparent 1px) 0 0/100% 18%,linear-gradient(90deg,color-mix(in srgb,var(--h3d-accent,var(--green)) 16%,transparent) 1px,transparent 1px) 0 0/18% 100%;opacity:.5}
+.h3d-mapsq .m-pin{position:absolute;width:8px;height:8px;border-radius:50% 50% 50% 0;background:var(--coral);transform:rotate(-45deg);box-shadow:0 0 9px color-mix(in srgb,var(--coral) 70%,transparent)}
+.h3d-mapsq .m-pin.a{top:38%;left:46%}.h3d-mapsq .m-pin.b{top:54%;left:58%}.h3d-mapsq .m-pin.c{top:30%;left:60%}
+.h3d-lens{position:absolute;top:18%;right:8%;width:40%;height:40%;border-radius:50%;overflow:hidden;box-shadow:0 14px 30px -8px rgba(20,30,48,.55),0 0 0 5px color-mix(in srgb,var(--surface) 90%,transparent),0 0 0 7px var(--border-bright),inset 0 0 0 1px rgba(255,255,255,.5);animation:h3dLensBob 6s ease-in-out infinite}
+.h3d-lens .m-tex{position:absolute;inset:-30%;background:url("/assets/earth-blue-marble.jpg") no-repeat;background-size:760% auto;background-position:54% 26%}
+.h3d-lens .l-glass{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.55),rgba(255,255,255,0) 46%),radial-gradient(circle at 70% 78%,rgba(7,18,34,.32),transparent 50%)}
+.h3d-lens .l-handle{position:absolute;right:-13%;bottom:-13%;width:34%;height:11%;border-radius:6px;background:linear-gradient(90deg,color-mix(in srgb,var(--taupe) 70%,#000),var(--taupe));transform:rotate(45deg);transform-origin:left center;box-shadow:0 3px 8px rgba(20,30,48,.4)}
+@keyframes h3dMapZoom{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+@keyframes h3dLensBob{0%,100%{transform:translateY(-4%)}50%{transform:translateY(4%)}}
+
 @media(prefers-reduced-motion:reduce){
   .eih-h3d{transform:none;filter:none;transition:opacity .3s ease}
-  .h3d-card,.h3d-ring,.h3d-orbit,.h3d-globe .g-strip{animation:none}
+  .h3d-card,.h3d-ring,.h3d-orbit,.h3d-globe .g-strip,.h3d-mapsq .m-tex,.h3d-lens{animation:none}
   .h3d-card{transform:translate(-50%,-50%) rotateY(-12deg) rotateX(5deg)}
+  .h3d-mapsq .m-tex{transform:scale(1.06)}
 }
