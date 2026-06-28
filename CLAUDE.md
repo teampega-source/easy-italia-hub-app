@@ -53,6 +53,6 @@ Prima di scegliere servizi esterni consultare `.references/free-for-dev/README.m
 
 ## Codebase: Easy Italia Hub
 **Stack:** HTML statico + Vanilla JS + Vercel Serverless + Supabase + Gemini AI  
-**Deploy:** Vercel auto-deploy su push a `main`. Nessun build step.  
+**Deploy:** Vercel auto-deploy su push a `main`. Nessun build step. **Ad ogni modifica forzare il deploy Vercel** (`vercel --prod` o redeploy via dashboard), non affidarsi solo al merge.  
 **Stato:** Demo mode (localStorage). Supabase/Stripe/Resend opzionali.  
 **Comandi:** `npx serve . -l 3000` (preview) · `node scripts/chat-redteam.mjs <url>` (red-team AI)
