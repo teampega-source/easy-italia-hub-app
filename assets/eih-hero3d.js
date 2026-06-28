@@ -26,7 +26,7 @@
   };
 
   var REG={
-    voli:['globe',null,'blue'],'travel-sri-lanka':['globe',null,'blue'],cargo:['globe',null,'blue'],mappa:['globe',null,'blue'],
+    voli:['globe',null,'blue'],'travel-sri-lanka':['globe',null,'blue'],cargo:['globe',null,'blue'],mappa:['mapsq',null,'green'],
     fisco:['card','coins','gold'],'money-transfer':['card','coins','gold'],'guida-conti':['card','coins','gold'],abbonamenti:['card','coins','gold'],'assegno-unico':['card','coins','gold'],'diritti-inps':['card','coins','gold'],mercatino:['card','coins','gold'],
     documenti:['card','passport','taupe'],moduli:['card','passport','taupe'],'permesso-tracker':['card','passport','taupe'],certificazioni:['card','passport','taupe'],'riconoscimento-titoli':['card','passport','taupe'],ricongiungimento:['card','passport','taupe'],patente:['card','passport','taupe'],
     privacy:['card','shield','blue'],termini:['card','shield','blue'],'note-legali':['card','shield','blue'],cookie:['card','shield','blue'],
@@ -56,6 +56,10 @@
       '<div class="h3d-globe"><span class="g-ocean"></span><span class="g-strip"></span><span class="g-shade"></span><span class="g-atmo"></span></div>'+
       '<div class="h3d-orbit"><span class="g-arc"></span><span class="h3d-plane"><svg viewBox="0 0 32 32" aria-hidden="true">'+G.plane+'</svg></span></div>'+
       '<span class="h3d-pin s"></span><span class="h3d-pin e"></span>';
+  }else if(scene==='mapsq'){
+    html='<span class="h3d-glow"></span>'+
+      '<div class="h3d-mapsq"><span class="m-tex"></span><span class="m-grid"></span><span class="m-pin a"></span><span class="m-pin b"></span><span class="m-pin c"></span></div>'+
+      '<div class="h3d-lens"><span class="m-tex"></span><span class="l-glass"></span><span class="l-handle"></span></div>';
   }else{
     html='<span class="h3d-glow"></span>'+
       '<div class="h3d-card"><svg viewBox="0 0 24 24" aria-hidden="true">'+(G[glyph]||G.spark)+'</svg></div>'+
@@ -84,7 +88,7 @@
       var g=window.gsap;
       g.timeline({delay:.15})
         .fromTo(stage,{opacity:0,scale:.84,filter:'blur(12px)'},{opacity:1,scale:1,filter:'blur(0px)',duration:1,ease:'expo.out',onComplete:function(){stage.classList.add('in');stage.style.removeProperty('transform');stage.style.removeProperty('filter');}})
-        .from(stage.querySelectorAll('.h3d-glow,.h3d-ring,.h3d-orbit,.h3d-pin,.h3d-plane'),{opacity:0,duration:.5,stagger:.05,ease:'power2.out'},'-=.6');
+        .from(stage.querySelectorAll('.h3d-glow,.h3d-ring,.h3d-orbit,.h3d-pin,.h3d-plane,.h3d-lens,.m-pin'),{opacity:0,duration:.5,stagger:.05,ease:'power2.out'},'-=.6');
     }else stage.classList.add('in');
   }
   place();
