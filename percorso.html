@@ -925,7 +925,7 @@ const QUIZ=[
   {q:"Lo «SPID» è…",o:["Il sistema di identità digitale italiana","Una rete ferroviaria","Un tipo di contratto a tempo determinato"],a:0}
 ];
 function _shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
-function _shuffleItem(item){const idx=_shuffle([...Array(item.o.length).keys()]);return{q:item.q,o:idx.map(i=>item.o[i]),a:idx.indexOf(item.a)};}
+function _shuffleItem(item){const idx=_shuffle([...Array(item.o.length).keys()]);return{q:item.q,w:item.w,o:idx.map(i=>item.o[i]),a:idx.indexOf(item.a)};}
 let _quizShuffled=null,_matchShuffled=null;
 let quizI=0,quizScore=0,quizLock=false;
 function openQuiz(){quizI=0;quizScore=0;quizLock=false;document.getElementById('quiz-modal').classList.add('open');document.body.style.overflow='hidden';renderQuiz();}
@@ -980,7 +980,7 @@ const MATCH=[
   {w:"Busta paga",o:["Il documento mensile che riepiloga lo stipendio","Una lettera di assunzione","Un contratto collettivo"],a:0}
 ];
 let matchI=0,matchScore=0,matchLock=false;
-function openMatch(){matchI=0;matchScore=0;matchLock=false;document.getElementById('match-modal').classList.add('open');document.body.style.overflow='hidden';renderMatch();}
+function openMatch(){_shuffle(MATCH);matchI=0;matchScore=0;matchLock=false;document.getElementById('match-modal').classList.add('open');document.body.style.overflow='hidden';renderMatch();}
 function closeMatch(){document.getElementById('match-modal').classList.remove('open');document.body.style.overflow='';}
 function renderMatch(){
   const body=document.getElementById('match-body');
