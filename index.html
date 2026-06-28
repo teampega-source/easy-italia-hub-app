@@ -271,7 +271,7 @@ body{
   display:flex;align-items:center;justify-content:space-between;
   padding:var(--sp-2) var(--sp-5);
   /* Liquid Glass nav */
-  background:rgba(255,255,255,0.85);
+  background:rgba(255,255,255,0.72);
   backdrop-filter:blur(var(--blur-amount)) saturate(1.5);
   -webkit-backdrop-filter:blur(var(--blur-amount)) saturate(1.5);
   border-bottom:1px solid var(--border);
@@ -282,7 +282,7 @@ body{
 /* Shrink-on-scroll: subtler padding, denser glass, slight elevation */
 .site-nav.scrolled{
   padding-top:.55rem;padding-bottom:.55rem;
-  background:rgba(255,255,255,0.92);
+  background:rgba(255,255,255,0.82);
   box-shadow:0 6px 24px rgba(20,30,48,.08);
 }
 .nav-logo{transition:font-size var(--dur-std) var(--ease-spring)}
@@ -1036,7 +1036,6 @@ body{
 #news-rail{display:none}
 @media(min-width:1280px){
   body{padding-right:14px}
-  .site-nav{display:none}
   #news-rail{
     display:flex;flex-direction:column;
     position:fixed;right:0;left:auto;top:0;
