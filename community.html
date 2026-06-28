@@ -58,6 +58,8 @@
   .faq-icon::before,.faq-icon::after{content:'';position:absolute;top:50%;left:50%;width:13px;height:2px;background:var(--gold);border-radius:2px;transform:translate(-50%,-50%)}
   .faq-icon::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform var(--dur-std) var(--ease-spring)}
   .faq-item.open .faq-icon::after{transform:translate(-50%,-50%) rotate(0deg)}
+  .faq-chev{flex-shrink:0;width:20px;height:20px;stroke:var(--fg-muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--dur-std) var(--ease-spring)}
+  .faq-item.open .faq-chev{transform:rotate(180deg);stroke:var(--gold)}
   .faq-a{max-height:0;overflow:hidden;transition:max-height var(--dur-complex) var(--ease-spring)}
   .faq-a-inner{padding:0 1.3rem 1.2rem;font-size:var(--text-base);line-height:1.75;color:var(--fg-secondary)}
   .faq-a-inner p{margin:0 0 .6rem;font-size:var(--text-base);color:var(--fg-secondary)}
