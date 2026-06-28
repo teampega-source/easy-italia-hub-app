@@ -399,4 +399,5 @@
     document.addEventListener('visibilitychange',()=>{if(!document.hidden&&wipe.classList.contains('cover'))setTimeout(_resetWipe,80);});
   }
   if(!document.getElementById('chat-btn')){var _cw=document.createElement('script');_cw.src='/eih-chat-widget.js';document.head.appendChild(_cw);}
+  if(!window.__eihSearch){var _se=document.createElement('script');_se.src='/eih-search.js';document.head.appendChild(_se);}
 })();
