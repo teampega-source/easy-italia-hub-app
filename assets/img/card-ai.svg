@@ -5,17 +5,17 @@
 <circle cx="60" cy="36" r="110" fill="rgba(255,255,255,.05)"/>
 <circle cx="440" cy="250" r="95" fill="rgba(20,5,45,.22)"/>
 <!-- bolla assistente -->
-<rect x="96" y="66" width="208" height="92" rx="26" fill="#f3f1ec"/>
-<path d="M126 158l-12 30 36-30z" fill="#f3f1ec"/>
-<circle cx="160" cy="112" r="9" fill="#7c7059"/>
-<circle cx="200" cy="112" r="9" fill="#9a8d76"/>
-<circle cx="240" cy="112" r="9" fill="#c2b6a0"/>
+<rect x="96" y="66" width="208" height="92" rx="26" fill="#f4f6f9"/>
+<path d="M126 158l-12 30 36-30z" fill="#f4f6f9"/>
+<circle cx="160" cy="112" r="9" fill="#7e848e"/>
+<circle cx="200" cy="112" r="9" fill="#9ca2ac"/>
+<circle cx="240" cy="112" r="9" fill="#bcc1c9"/>
 <!-- bolla utente -->
-<rect x="252" y="172" width="150" height="64" rx="20" fill="rgba(243,241,236,.30)"/>
-<path d="M376 236l10 22-30-22z" fill="rgba(243,241,236,.30)"/>
-<rect x="272" y="192" width="86" height="8" rx="4" fill="rgba(243,241,236,.75)"/>
-<rect x="272" y="210" width="62" height="8" rx="4" fill="rgba(243,241,236,.55)"/>
+<rect x="252" y="172" width="150" height="64" rx="20" fill="rgba(244,246,249,.30)"/>
+<path d="M376 236l10 22-30-22z" fill="rgba(244,246,249,.30)"/>
+<rect x="272" y="192" width="86" height="8" rx="4" fill="rgba(244,246,249,.75)"/>
+<rect x="272" y="210" width="62" height="8" rx="4" fill="rgba(244,246,249,.55)"/>
 <!-- scintilla AI -->
-<path d="M348 58l8 22 22 8-22 8-8 22-8-22-22-8 22-8z" fill="#eb5939"/>
-<path d="M392 110l4 11 11 4-11 4-4 11-4-11-11-4 11-4z" fill="rgba(243,241,236,.85)"/>
+<path d="M348 58l8 22 22 8-22 8-8 22-8-22-22-8 22-8z" fill="#7c828c"/>
+<path d="M392 110l4 11 11 4-11 4-4 11-4-11-11-4 11-4z" fill="rgba(244,246,249,.85)"/>
 </svg>
