@@ -10,7 +10,7 @@
   }
   function syncMeta() {
     var m = document.querySelector('meta[name="theme-color"]');
-    if (m) m.setAttribute('content', current() === 'dark' ? '#1a1815' : '#7d7058');
+    if (m) m.setAttribute('content', current() === 'dark' ? '#1a1815' : '#8a909a');
   }
   function set(theme) {
     var root = document.documentElement;

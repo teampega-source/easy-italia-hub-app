@@ -11,7 +11,7 @@
   style.textContent =
     'html.has-lenis{scroll-behavior:auto}' +
     '#eih-progress{position:fixed;top:0;left:0;right:0;height:2px;' +
-    'background:linear-gradient(90deg,var(--gold,#7c7059),var(--coral,#eb5939));' +
+    'background:linear-gradient(90deg,var(--gold,#7e848e),var(--coral,#7c828c));' +
     'transform-origin:0 50%;transform:scaleX(0);z-index:9999;pointer-events:none}' +
     '.kw{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em}' +
     '.kwi{display:inline-block;will-change:transform}';

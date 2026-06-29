@@ -5,29 +5,29 @@ html[data-theme="dark"]{
   --bg-deep:#161412;
   --bg-base:#1a1815;
   --bg-elevated:#211e1a;
-  --surface:rgba(243,241,236,0.05);
-  --surface-hover:rgba(243,241,236,0.09);
-  --border:rgba(180,172,158,0.16);
-  --border-bright:rgba(180,172,158,0.32);
-  --taupe:#a99c89;
-  --coral:#ff6a47;
-  --gold:#b9aa8d;--gold-dim:rgba(185,170,141,0.16);
-  --blue:#b9aa8d;--blue-deep:#d6c9ab;--blue-glow:rgba(185,170,141,0.20);
+  --surface:rgba(244,246,249,0.05);
+  --surface-hover:rgba(244,246,249,0.09);
+  --border:rgba(188,193,201,0.16);
+  --border-bright:rgba(188,193,201,0.32);
+  --taupe:#aab0b9;
+  --coral:#9aa0aa;
+  --gold:#bcc1c9;--gold-dim:rgba(195,200,208,0.16);
+  --blue:#bcc1c9;--blue-deep:#d6d9df;--blue-glow:rgba(195,200,208,0.20);
   --green:#3fcf7c;--green-dim:rgba(63,207,124,0.14);
-  --ink:#f3f1ec;
-  --fg:#eceae4;--fg-secondary:#b6afa4;--fg-muted:#8e877b;
+  --ink:#f4f6f9;
+  --fg:#eceae4;--fg-secondary:#b9bec6;--fg-muted:#91969f;
 }
 /* unici colori chiari non variabilizzati */
 html[data-theme="dark"] #bg,html[data-theme="dark"] #particles{background:
-  radial-gradient(1100px 700px at 18% 12%, rgba(185,170,141,0.07), transparent 60%),
-  radial-gradient(900px 600px at 85% 80%, rgba(255,106,71,0.05), transparent 60%),
+  radial-gradient(1100px 700px at 18% 12%, rgba(195,200,208,0.07), transparent 60%),
+  radial-gradient(900px 600px at 85% 80%, rgba(154,160,170,0.05), transparent 60%),
   linear-gradient(180deg,#1c1916 0%, #161412 100%)}
 html[data-theme="dark"] .lang-menu{background:#211e1a}
 html[data-theme="dark"] .modal{background:#211e1a}
 html[data-theme="dark"] #eihp-box{background:#211e1a}
 html[data-theme="dark"] #eihp-in{color:#eceae4}
 html[data-theme="dark"] #eihp-fab,html[data-theme="dark"] #eiht-fab{background:rgba(33,30,26,.92)}
-html[data-theme="dark"] #eihp-fab svg,html[data-theme="dark"] #eiht-fab svg{stroke:#f3f1ec}
+html[data-theme="dark"] #eihp-fab svg,html[data-theme="dark"] #eiht-fab svg{stroke:#f4f6f9}
 html[data-theme="dark"] .eihp-it{color:#eceae4}
 
 /* pulsante toggle (sopra il pulsante ricerca) */
@@ -44,20 +44,20 @@ html[data-theme="dark"] #eiht-fab .moon{display:none}
 
 /* ─── nuove sezioni: dark mode overrides ─── */
 html[data-theme="dark"] .problem-section{background:#0d0c0a}
-html[data-theme="dark"] .step{background:rgba(243,241,236,.04)}
-html[data-theme="dark"] .testimonial{background:rgba(243,241,236,.04)}
+html[data-theme="dark"] .step{background:rgba(244,246,249,.04)}
+html[data-theme="dark"] .testimonial{background:rgba(244,246,249,.04)}
 html[data-theme="dark"] .screenshot-card{background:var(--bg-elevated)}
-html[data-theme="dark"] .sol-card{background:rgba(243,241,236,.05)}
+html[data-theme="dark"] .sol-card{background:rgba(244,246,249,.05)}
 html[data-theme="dark"] .mission-visual{box-shadow:0 32px 80px rgba(0,0,0,.4)}
 html[data-theme="dark"] .card{background:rgba(30,28,25,0.80);border-color:rgba(255,255,255,0.08)}
 html[data-theme="dark"] .card:nth-child(1) .card-img{background:linear-gradient(145deg,rgba(30,58,138,.55) 0%,rgba(29,78,216,.35) 100%)}
 html[data-theme="dark"] .card:nth-child(2) .card-img{background:linear-gradient(145deg,rgba(76,29,149,.55) 0%,rgba(109,40,217,.35) 100%)}
 html[data-theme="dark"] .card:nth-child(3) .card-img{background:linear-gradient(145deg,rgba(20,83,45,.55) 0%,rgba(22,163,74,.30) 100%)}
-html[data-theme="dark"] .card:nth-child(4) .card-img{background:linear-gradient(145deg,rgba(120,53,15,.55) 0%,rgba(217,119,6,.30) 100%)}
+html[data-theme="dark"] .card:nth-child(4) .card-img{background:linear-gradient(145deg,rgba(70,74,82,.55) 0%,rgba(110,116,125,.30) 100%)}
 
 html[data-theme="dark"] .partner-inner{background:rgba(33,30,26,.72)}
-html[data-theme="dark"] .pcard{background:rgba(243,241,236,.04)}
-html[data-theme="dark"] .pcard:hover{background:rgba(243,241,236,.07)}
+html[data-theme="dark"] .pcard{background:rgba(244,246,249,.04)}
+html[data-theme="dark"] .pcard:hover{background:rgba(244,246,249,.07)}
 
 /* transizione morbida durante lo switch (classe momentanea) */
 html.theme-anim,html.theme-anim *{transition:background-color .3s ease,color .3s ease,border-color .3s ease!important}

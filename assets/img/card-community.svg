@@ -5,16 +5,16 @@
 <circle cx="430" cy="44" r="115" fill="rgba(255,255,255,.05)"/>
 <circle cx="36" cy="244" r="85" fill="rgba(5,30,15,.2)"/>
 <!-- legami -->
-<path d="M150 150 Q240 92 330 150 M150 162 Q240 224 330 162" fill="none" stroke="rgba(243,241,236,.4)" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+<path d="M150 150 Q240 92 330 150 M150 162 Q240 224 330 162" fill="none" stroke="rgba(244,246,249,.4)" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
 <!-- persona sinistra -->
-<circle cx="130" cy="138" r="26" fill="#f3f1ec"/>
-<path d="M92 206c6-26 20-38 38-38s32 12 38 38z" fill="#f3f1ec"/>
+<circle cx="130" cy="138" r="26" fill="#f4f6f9"/>
+<path d="M92 206c6-26 20-38 38-38s32 12 38 38z" fill="#f4f6f9"/>
 <!-- persona centrale (primo piano) -->
-<circle cx="240" cy="126" r="32" fill="#eb5939"/>
-<path d="M194 210c7-32 24-46 46-46s39 14 46 46z" fill="#eb5939"/>
+<circle cx="240" cy="126" r="32" fill="#7c828c"/>
+<path d="M194 210c7-32 24-46 46-46s39 14 46 46z" fill="#7c828c"/>
 <!-- persona destra -->
-<circle cx="350" cy="138" r="26" fill="rgba(243,241,236,.78)"/>
-<path d="M312 206c6-26 20-38 38-38s32 12 38 38z" fill="rgba(243,241,236,.78)"/>
+<circle cx="350" cy="138" r="26" fill="rgba(244,246,249,.78)"/>
+<path d="M312 206c6-26 20-38 38-38s32 12 38 38z" fill="rgba(244,246,249,.78)"/>
 <!-- cuore -->
-<path d="M240 64c-5-10-20-10-20 3 0 9 12 16 20 22 8-6 20-13 20-22 0-13-15-13-20-3z" fill="rgba(243,241,236,.9)"/>
+<path d="M240 64c-5-10-20-10-20 3 0 9 12 16 20 22 8-6 20-13 20-22 0-13-15-13-20-3z" fill="rgba(244,246,249,.9)"/>
 </svg>
