@@ -52,7 +52,7 @@
       for(var i=0;i<N;i++){
         pos[i*3]=(Math.random()-.5)*30;pos[i*3+1]=(Math.random()-.5)*20;pos[i*3+2]=6-Math.random()*34;
         var p=pal[i%pal.length];col[i*3]=p[0];col[i*3+1]=p[1];col[i*3+2]=p[2];
-        spd[i]=.002+Math.random()*.006;
+        spd[i]=.0002+Math.random()*.0004;
       }
       var pg=new T.BufferGeometry();
       pg.setAttribute('position',new T.BufferAttribute(pos,3));
