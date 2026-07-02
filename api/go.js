@@ -101,5 +101,7 @@ module.exports = function handler(req, res) {
 
   console.log('[go] to=' + to + ' from=' + (q.from || '-') + ' ip=' + clientIp(req));
   res.setHeader('Cache-Control', 'no-store');
-  return res.redirect(301, url);
+  res.statusCode = 301;
+  res.setHeader('Location', url);
+  return res.end();
 };
