@@ -25,8 +25,20 @@
 ## Flusso di lavoro
 - `/plan` prima di modifiche multi-file. `/compact` quando il contesto diventa lungo.
 
-## Servizi gratuiti
-Prima di scegliere servizi esterni consultare `.references/free-for-dev/README.md`.
+## Riferimenti (`.references/`) — consultare prima di agire
+
+| Quando | File |
+|--------|------|
+| Scegliere servizi esterni | `free-for-dev/README.md` |
+| Scegliere tool AI | `ai-tool-directory.md` (~40 tool per job + alternativa gratuita) |
+| Scrivere prompt business (marketing, sales, content, ecc.) | `ai-prompt-pack/prompts.json` (100 prompt, 7 categorie) |
+| Code review / caccia bug | `silent-failure-checklist.md` (16 pattern di bug silenziosi) |
+| Produrre video AI locali $0 | `ai-video-studio-kit/` — ⚠️ scorer TRIBE v2 **solo non-commerciale** (`LICENSES.md`) |
+| Task hard multi-modello | `flux-fusion-megaprompt.md` (orchestrazione multi-LLM) |
+| Loop agente autonomo | `evolving-megacycle-prompt.md` · `universal-sentient-operator.md` |
+| Strategia business/agenzia AI | `uncaged-operator-course.md` |
+| Migliorare questo CLAUDE.md | `claude-md-templates/` (5 template per ruolo) |
+| Multilingua sito IT/SI/EN + codice email anti-phishing | `ai-studio-code.js` (da adottare quando si implementa i18n/email) |
 
 ## Skill disponibili
 
