@@ -57,12 +57,40 @@ export function makeColorPlaceholder(index: number): HTMLCanvasElement {
   }
   ctx.globalAlpha = 1;
 
-  // etichetta discreta "PLACEHOLDER"
-  ctx.fillStyle = 'rgba(255,255,255,0.35)';
-  ctx.font = '20px system-ui, sans-serif';
-  ctx.fillText('PLACEHOLDER — scene ' + (index + 1), 24, 40);
+  // Foschia atmosferica sull'orizzonte: dà profondità aerea (lontano = più lattiginoso).
+  haze(ctx);
+  // Grana filmica sottile: rompe le bande dei gradienti, look cinematografico.
+  grain(ctx, 0.05);
+
+  // Tag discreto (l'intro carica le foto reali appena presenti in /public/parallax/).
+  ctx.fillStyle = 'rgba(255,255,255,0.28)';
+  ctx.font = '600 13px system-ui, sans-serif';
+  ctx.fillText('anteprima · scena ' + (index + 1), 22, 34);
 
   return c;
+}
+
+// Banda di foschia calda sull'orizzonte (prospettiva aerea).
+function haze(ctx: CanvasRenderingContext2D) {
+  const g = ctx.createLinearGradient(0, H * 0.4, 0, H * 0.72);
+  g.addColorStop(0, 'rgba(255,235,200,0)');
+  g.addColorStop(0.5, 'rgba(255,232,196,0.22)');
+  g.addColorStop(1, 'rgba(255,235,200,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, H * 0.4, W, H * 0.32);
+}
+
+// Grana monocromatica leggera via ImageData (deterministica per frame, low-cost).
+function grain(ctx: CanvasRenderingContext2D, amount: number) {
+  const img = ctx.getImageData(0, 0, W, H);
+  const d = img.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const n = (Math.random() - 0.5) * 255 * amount;
+    d[i] += n;
+    d[i + 1] += n;
+    d[i + 2] += n;
+  }
+  ctx.putImageData(img, 0, 0);
 }
 
 // Depth map: bianco = vicino (in basso/primo piano), nero = lontano (orizzonte).

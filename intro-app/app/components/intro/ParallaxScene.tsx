@@ -29,7 +29,13 @@ function lerp(a: number, b: number, t: number) {
 }
 
 // Carica una texture da URL; se fallisce (404) applica il fallback canvas.
-function loadTexture(url: string, fallback: () => HTMLCanvasElement): THREE.Texture {
+// isData=true per la depth map: va letta LINEARE (nessuna decodifica sRGB),
+// altrimenti la gamma falsa i valori di profondità e il displacement Z è errato.
+function loadTexture(
+  url: string,
+  fallback: () => HTMLCanvasElement,
+  isData = false
+): THREE.Texture {
   const tex = new THREE.TextureLoader().load(
     url,
     undefined,
@@ -40,7 +46,7 @@ function loadTexture(url: string, fallback: () => HTMLCanvasElement): THREE.Text
       tex.needsUpdate = true;
     }
   );
-  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.colorSpace = isData ? THREE.NoColorSpace : THREE.SRGBColorSpace;
   tex.minFilter = THREE.LinearFilter;
   tex.magFilter = THREE.LinearFilter;
   return tex;
@@ -62,7 +68,7 @@ export default function ParallaxScene({ index, timeline, elapsedRef }: Props) {
     const names = ASSET_NAMES[index];
     return {
       colorTex: loadTexture(base + names.color, () => makeColorPlaceholder(index)),
-      depthTex: loadTexture(base + names.depth, () => makeDepthPlaceholder(index)),
+      depthTex: loadTexture(base + names.depth, () => makeDepthPlaceholder(index), true),
     };
   }, [index]);
 
