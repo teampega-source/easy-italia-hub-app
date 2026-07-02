@@ -24,7 +24,7 @@
 ### Aperto / bloccato
 - **Voli Amadeus** — tralasciato per decisione utente (2/7). `api/flights.js` resta in demo; riattivabile con `AMADEUS_CLIENT_ID`/`AMADEUS_CLIENT_SECRET`.
 - **Stripe** — `abbonamenti.html` è vetrina; flusso reale richiede `STRIPE_SECRET_KEY` + `STRIPE_WEBHOOK_SECRET`.
-- **Branch `claude/jarvis-r8pi7k`** — chat AI personale `/ai` via proxy NVIDIA NIM + Gradio "nim-space" (mai in produzione): decidere se mergiare, tenere o archiviare.
+- **Branch `claude/jarvis-r8pi7k`** — deciso: **eliminare** (2/7, contenuto obsoleto: restyling superato + chat `/ai` mai usata). Cancellazione bloccata dai permessi della sessione → eliminare dal dashboard GitHub (Branches → cestino). SHA di recupero: `80439d4`.
 
 ## Note ambiente
 - Preview locale: `npx serve . -l 3000` dalla root.
