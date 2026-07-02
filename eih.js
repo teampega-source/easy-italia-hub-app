@@ -400,4 +400,5 @@
   }
   if(!document.getElementById('chat-btn')){var _cw=document.createElement('script');_cw.src='/eih-chat-widget.js';document.head.appendChild(_cw);}
   if(!window.__eihSearch){var _se=document.createElement('script');_se.src='/eih-search.js';document.head.appendChild(_se);}
+  if(!window.__eihVfx){var _vf=document.createElement('script');_vf.src='/assets/eih-vfx.js';_vf.defer=true;document.head.appendChild(_vf);}
 })();
