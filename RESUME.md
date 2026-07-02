@@ -19,10 +19,10 @@
 - **Email** — Resend LIVE (`api/email.js`, `api/newsletter.js` → wasapeiris@gmail.com).
 - **Sito** — ~50 pagine, i18n IT/EN/SI/TA, PWA, dark mode, command palette, SEO/OG dinamici (`/api/og`), security headers, cron `/api/flight-digest` (lun 07:00).
 - **GA4** — attivo con ID reale `G-13TEJWCKZZ` in `eih.js` (decisione: si tiene).
+- **Email invio dal dominio** — Resend verificato via DNS: DKIM `resend._domainkey` + SPF/MX su `send.easyitaliahub.it` attivi; invio da `notifiche@easyitaliahub.it`. (Ricezione `info@` ecc. non configurata: nessun MX sul root, NS su IONOS — serve solo se si vuole ricevere posta sul dominio.)
 
 ### Aperto / bloccato
-- **Voli Amadeus** — `api/flights.js` pronto, in demo finché mancano `AMADEUS_CLIENT_ID`/`AMADEUS_CLIENT_SECRET` (developers.amadeus.com).
-- **Email dominio** — Cloudflare Email Routing (`info@`, `partner@`, `ads@`, `privacy@easyitaliahub.it`) + verifica dominio su Resend (DKIM/SPF): da fare, servono gli account dell'utente.
+- **Voli Amadeus** — tralasciato per decisione utente (2/7). `api/flights.js` resta in demo; riattivabile con `AMADEUS_CLIENT_ID`/`AMADEUS_CLIENT_SECRET`.
 - **Stripe** — `abbonamenti.html` è vetrina; flusso reale richiede `STRIPE_SECRET_KEY` + `STRIPE_WEBHOOK_SECRET`.
 - **Branch `claude/jarvis-r8pi7k`** — chat AI personale `/ai` via proxy NVIDIA NIM + Gradio "nim-space" (mai in produzione): decidere se mergiare, tenere o archiviare.
 
