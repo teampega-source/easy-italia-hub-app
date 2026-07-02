@@ -25,13 +25,12 @@
 
   // ══════════════ #1 HERO — scroll camera-spline 3D ══════════════
   function heroScene(host){
-    if(coarse)return; // scena pesante: solo desktop/pointer fine
     three().then(function(T){
       var W=host.clientWidth,H=host.clientHeight;
       var sc=new T.Scene();sc.fog=new T.FogExp2(INK,0.03);
       var cam=new T.PerspectiveCamera(60,W/H,0.1,100);
-      var rnd=new T.WebGLRenderer({alpha:true,antialias:true,powerPreference:'low-power'});
-      rnd.setPixelRatio(Math.min(devicePixelRatio,2));rnd.setSize(W,H);
+      var rnd=new T.WebGLRenderer({alpha:true,antialias:!coarse,powerPreference:'low-power'});
+      rnd.setPixelRatio(Math.min(devicePixelRatio,coarse?1.5:2));rnd.setSize(W,H);
       rnd.domElement.className='eih-3d-canvas';host.appendChild(rnd.domElement);
 
       // Spline: percorso curvo lungo cui viaggia la camera (scroll-driven)
@@ -46,7 +45,7 @@
         g.addColorStop(.55,'rgba(255,255,255,.25)');g.addColorStop(1,'rgba(255,255,255,0)');
         x.fillStyle=g;x.fillRect(0,0,64,64);var t=new T.CanvasTexture(c);return t;}
       // Campo di polvere luminosa: palette calda armonica (tricolore + bianco caldo)
-      var N=520,pos=new Float32Array(N*3),col=new Float32Array(N*3),spd=new Float32Array(N);
+      var N=coarse?260:520,pos=new Float32Array(N*3),col=new Float32Array(N*3),spd=new Float32Array(N);
       var pal=[[.902,.224,.275],[.969,.498,0],[1,.718,.012],[1,.93,.82]]; // CORAL,ORANGE,GOLD,warm
       var c3=new T.Color();
       for(var i=0;i<N;i++){
