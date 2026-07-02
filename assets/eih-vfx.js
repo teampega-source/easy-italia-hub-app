@@ -1,5 +1,5 @@
 /* Easy Italia Hub — VFX runtime
-   Cinematic layer: scroll progress, film grain/vignette, cursor trail,
+   Cinematic layer: scroll progress, film grain/vignette,
    3D tilt cards, magnetic CTA, click ripple, kinetic typography.
    Progressive enhancement: no-op sotto prefers-reduced-motion o su touch. */
 (function(){
@@ -118,20 +118,5 @@
       requestAnimationFrame(function(){requestAnimationFrame(function(){el.classList.add('eih-split-in');});});
     });
 
-    // ---- Cursor trail ----
-    if(fine && !reduce){
-      var cv=document.createElement('canvas');cv.id='eih-vfx-trail';document.body.appendChild(cv);
-      var cx=cv.getContext('2d'),pts=[],mx=-100,my=-100;
-      function resize(){cv.width=innerWidth;cv.height=innerHeight;}resize();addEventListener('resize',resize);
-      addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;},{passive:true});
-      (function draw(){
-        pts.push({x:mx,y:my,a:1});if(pts.length>18)pts.shift();
-        cx.clearRect(0,0,cv.width,cv.height);
-        for(var i=0;i<pts.length;i++){var p=pts[i],rr=(i/pts.length)*6+1;
-          cx.beginPath();cx.arc(p.x,p.y,rr,0,6.283);
-          cx.fillStyle='rgba(247,127,0,'+(i/pts.length*.35)+')';cx.fill();}
-        requestAnimationFrame(draw);
-      })();
-    }
   });
 })();

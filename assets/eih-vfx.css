@@ -20,9 +20,6 @@
   0%{transform:translate(0,0)}20%{transform:translate(-6%,4%)}40%{transform:translate(4%,-6%)}
   60%{transform:translate(-4%,-4%)}80%{transform:translate(6%,6%)}100%{transform:translate(0,0)}}
 
-/* Cursor trail canvas */
-#eih-vfx-trail{position:fixed;inset:0;z-index:9994;pointer-events:none}
-
 /* Controls (grana + audio) */
 #eih-vfx-ctl{position:fixed;right:14px;bottom:14px;z-index:9997;display:flex;gap:8px}
 #eih-vfx-ctl button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.18);
@@ -54,10 +51,10 @@
   transition:transform .8s cubic-bezier(.16,1,.3,1),opacity .8s}
 
 @media (hover:none),(pointer:coarse){
-  #eih-vfx-trail,#eih-vfx-ctl{display:none}
+  #eih-vfx-ctl{display:none}
   .eih-tilt{transform:none!important}
 }
 @media (prefers-reduced-motion:reduce){
-  #eih-vfx-grain,#eih-vfx-vignette,#eih-vfx-trail,#eih-vfx-progress{display:none}
+  #eih-vfx-grain,#eih-vfx-vignette,#eih-vfx-progress{display:none}
   [data-vfx-split] .eih-word>span{transform:none;opacity:1}
 }
