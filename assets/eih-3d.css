@@ -1,0 +1,34 @@
+/* Easy Italia Hub — 3D layer (Three.js). Progressive: nasconde sotto reduced-motion. */
+.eih-3d-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+/* Hero spline: canvas dietro il contenuto */
+[data-eih-hero3d]{position:absolute;inset:0;z-index:0;pointer-events:none;
+  opacity:0;transition:opacity 1.2s ease}
+[data-eih-hero3d].ready{opacity:.9}
+.hero{position:relative}
+.hero .hero-left,.hero .hero-right{position:relative;z-index:1}
+
+/* Mappa Italia 3D */
+.eih-map3d-section{padding:var(--sp-6,4rem) var(--sp-3,1.5rem);text-align:center}
+[data-eih-map3d]{position:relative;max-width:760px;height:min(70vh,620px);margin:2rem auto 0;
+  cursor:grab;border-radius:var(--radius-lg,20px);overflow:hidden;
+  background:radial-gradient(120% 100% at 50% 30%,rgba(247,127,0,.06),transparent 70%)}
+[data-eih-map3d] .eih-3d-canvas{cursor:grab}
+[data-eih-map3d] .eih-3d-canvas.grabbing{cursor:grabbing}
+[data-eih-map3d]::after{content:"↻ Trascina per ruotare";position:absolute;left:50%;bottom:12px;
+  transform:translateX(-50%);font-size:.72rem;letter-spacing:.04em;color:var(--fg-muted,#9aa0aa);
+  opacity:0;transition:opacity .5s;pointer-events:none}
+[data-eih-map3d].ready::after{opacity:.8}
+
+.eih-3d-tip{position:absolute;transform:translate(-50%,-140%);padding:.35rem .6rem;border-radius:8px;
+  background:rgba(20,16,32,.92);color:#fff;font-size:.78rem;font-weight:500;white-space:nowrap;
+  pointer-events:none;opacity:0;transition:opacity .15s;z-index:3;
+  border:1px solid rgba(247,127,0,.4);backdrop-filter:blur(6px)}
+.eih-3d-tip.on{opacity:1}
+
+.eih-map3d-loading{position:absolute;inset:0;display:grid;place-items:center;
+  font-size:.85rem;color:var(--fg-muted,#9aa0aa)}
+
+@media (prefers-reduced-motion:reduce){
+  [data-eih-hero3d],.eih-map3d-section{display:none}
+}

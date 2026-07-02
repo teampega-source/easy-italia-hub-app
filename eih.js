@@ -401,4 +401,5 @@
   if(!document.getElementById('chat-btn')){var _cw=document.createElement('script');_cw.src='/eih-chat-widget.js';document.head.appendChild(_cw);}
   if(!window.__eihSearch){var _se=document.createElement('script');_se.src='/eih-search.js';document.head.appendChild(_se);}
   if(!window.__eihVfx){var _vf=document.createElement('script');_vf.src='/assets/eih-vfx.js';_vf.defer=true;document.head.appendChild(_vf);}
+  if(!window.__eih3d&&document.querySelector('[data-eih-hero3d],[data-eih-map3d]')){var _td=document.createElement('script');_td.src='/assets/eih-3d.js';_td.defer=true;document.head.appendChild(_td);}
 })();
