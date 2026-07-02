@@ -39,22 +39,31 @@
         new T.Vector3(0,0,18),new T.Vector3(3,1.5,10),new T.Vector3(-3,-1,2),
         new T.Vector3(2,2,-6),new T.Vector3(-2,-2,-14),new T.Vector3(0,0,-22)]);
 
-      // Campo di frammenti fluttuanti nei colori del tricolore
-      var grp=new T.Group();sc.add(grp);
-      var geos=[new T.IcosahedronGeometry(0.5,0),new T.TetrahedronGeometry(0.55),new T.OctahedronGeometry(0.5)];
-      var cols=[CORAL,ORANGE,GOLD,0x2a9d72,0x4f76c7];
-      for(var i=0;i<46;i++){
-        var m=new T.Mesh(geos[i%geos.length],
-          new T.MeshStandardMaterial({color:cols[i%cols.length],roughness:.35,metalness:.5,
-            transparent:true,opacity:.85,flatShading:true}));
-        m.position.set((Math.random()-.5)*22,(Math.random()-.5)*14,4-Math.random()*30);
-        var s=.5+Math.random()*1.1;m.scale.setScalar(s);
-        m.userData.rs=(Math.random()-.5)*.01;m.userData.f=Math.random()*6;
-        grp.add(m);
+      // Sprite morbido (gradiente radiale) per particelle bokeh
+      function dot(){var c=document.createElement('canvas');c.width=c.height=64;var x=c.getContext('2d');
+        var g=x.createRadialGradient(32,32,0,32,32,32);
+        g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.25,'rgba(255,255,255,.85)');
+        g.addColorStop(.55,'rgba(255,255,255,.25)');g.addColorStop(1,'rgba(255,255,255,0)');
+        x.fillStyle=g;x.fillRect(0,0,64,64);var t=new T.CanvasTexture(c);return t;}
+      // Campo di polvere luminosa: palette calda armonica (tricolore + bianco caldo)
+      var N=520,pos=new Float32Array(N*3),col=new Float32Array(N*3),spd=new Float32Array(N);
+      var pal=[[.902,.224,.275],[.969,.498,0],[1,.718,.012],[1,.93,.82]]; // CORAL,ORANGE,GOLD,warm
+      var c3=new T.Color();
+      for(var i=0;i<N;i++){
+        pos[i*3]=(Math.random()-.5)*30;pos[i*3+1]=(Math.random()-.5)*20;pos[i*3+2]=6-Math.random()*34;
+        var p=pal[i%pal.length];col[i*3]=p[0];col[i*3+1]=p[1];col[i*3+2]=p[2];
+        spd[i]=.002+Math.random()*.006;
       }
-      sc.add(new T.AmbientLight(0xffffff,.6));
-      var key=new T.DirectionalLight(0xffffff,1.1);key.position.set(4,6,8);sc.add(key);
-      var rim=new T.PointLight(ORANGE,2,40);rim.position.set(-6,-4,6);sc.add(rim);
+      var pg=new T.BufferGeometry();
+      pg.setAttribute('position',new T.BufferAttribute(pos,3));
+      pg.setAttribute('color',new T.BufferAttribute(col,3));
+      var grp=new T.Points(pg,new T.PointsMaterial({size:.42,map:dot(),vertexColors:true,
+        transparent:true,opacity:.9,depthWrite:false,blending:T.AdditiveBlending,sizeAttenuation:true}));
+      sc.add(grp);
+      // Alone diffuso al centro per profondità cinematografica
+      var glow=new T.Mesh(new T.PlaneGeometry(60,40),new T.MeshBasicMaterial({map:dot(),color:ORANGE,
+        transparent:true,opacity:.14,depthWrite:false,blending:T.AdditiveBlending}));
+      glow.position.set(0,0,-16);sc.add(glow);
 
       var prog=0,tgt=0,mx=0,my=0;
       function scrollP(){
@@ -75,9 +84,12 @@
         var p=curve.getPointAt(prog*0.96);
         cam.position.set(p.x+mx*2,p.y-my*2,p.z);
         curve.getPointAt(Math.min(1,prog*0.96+0.04),tmp);cam.lookAt(tmp);
-        for(var i=0;i<grp.children.length;i++){var o=grp.children[i];
-          o.rotation.x+=o.userData.rs;o.rotation.y+=o.userData.rs*1.3;
-          o.position.y+=Math.sin(t*0.0006+o.userData.f)*0.004;}
+        // drift lento verso l'alto + rientro; lieve rotazione parallasse
+        var a=pg.attributes.position.array;
+        for(var i=0;i<N;i++){var y=a[i*3+1]+spd[i];if(y>10)y=-10;a[i*3+1]=y;}
+        pg.attributes.position.needsUpdate=true;
+        grp.rotation.y=Math.sin(t*0.00008)*0.15+mx*0.3;
+        glow.position.x=mx*4;glow.position.y=-my*3;
         rnd.render(sc,cam);
       }
       raf=requestAnimationFrame(loop);
