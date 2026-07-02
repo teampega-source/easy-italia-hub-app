@@ -8,6 +8,7 @@
 - **`api/go.js`** — redirect via `res.redirect()` sostituito con `statusCode`/`Location` espliciti (elimina il path deprecato `url.parse` DEP0169 negli helper Vercel).
 - **RESUME.md riallineato** — riferimenti corretti: le API email sono `api/email.js` (form contatti) e `api/newsletter.js` (`api/contact.js`/`api/remind.js` non esistono più).
 - **Doppio progetto Vercel RISOLTO** — duplicato `easy-italia-hub-app` (solo *.vercel.app, nessun dominio custom) eliminato dal dashboard. Resta solo `deploy` (easyitaliahub.it), verificato live: ogni push ora builda una volta sola.
+- **Branch `claude/jarvis-r8pi7k` ELIMINATO** — contenuto obsoleto (restyling superato + chat `/ai` mai usata). SHA di recupero: `80439d4`.
 
 ## Stato attuale — REALE
 
@@ -24,7 +25,6 @@
 ### Aperto / bloccato
 - **Voli Amadeus** — tralasciato per decisione utente (2/7). `api/flights.js` resta in demo; riattivabile con `AMADEUS_CLIENT_ID`/`AMADEUS_CLIENT_SECRET`.
 - **Stripe** — `abbonamenti.html` è vetrina; flusso reale richiede `STRIPE_SECRET_KEY` + `STRIPE_WEBHOOK_SECRET`.
-- **Branch `claude/jarvis-r8pi7k`** — deciso: **eliminare** (2/7, contenuto obsoleto: restyling superato + chat `/ai` mai usata). Cancellazione bloccata dai permessi della sessione → eliminare dal dashboard GitHub (Branches → cestino). SHA di recupero: `80439d4`.
 
 ## Note ambiente
 - Preview locale: `npx serve . -l 3000` dalla root.
