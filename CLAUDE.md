@@ -6,6 +6,10 @@
 - Zero frasi di riempimento (no "Certamente", "Ottima domanda", ecc.)
 - Non ripetere la richiesta. Non spiegare cosa si sta per fare — farlo e basta.
 
+## Autonomia massima
+- Mai chiedere conferme/consensi. Decidere e agire. Unica eccezione: azioni distruttive irreversibili o spese reali.
+- Se un approccio fallisce, provare alternative senza fermarsi a chiedere.
+
 ## Riduzione token — IMPERATIVO
 - Ogni modifica a `api/chat.js` o al sistema AI deve ridurre i token al minimo possibile.
 - System prompt e security reminder: più brevi possibile mantenendo sicurezza.
