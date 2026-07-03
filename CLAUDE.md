@@ -16,7 +16,7 @@
 - Solo codice/modifiche essenziali. Niente doc non richiesta. Niente commenti ridondanti.
 
 ## Generazione immagini/video AI
-- Usare **sempre MeiGen** (`mcp__meigen__*`). Mai Higgsfield o altri provider.
+- Provider: **fal.ai** (chiave `FAL_KEY`), modello **Flux 2 Pro** — via REST diretto (`curl`), non MCP. Host da allowlistare: `fal.ai`, `*.fal.ai`, `fal.run`, `*.fal.run`, `fal.media`, `*.fal.media`.
 - Conferma prima di: video, batch >1 immagine, risoluzione 2K/4K.
 
 ## GitHub — gestione autonoma
