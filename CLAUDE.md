@@ -58,6 +58,10 @@
 | `vercel-optimize` | Audit costi/performance Vercel |
 | `writing-guidelines` | Su testi UX e copy interfaccia |
 
+## Persistenza sessioni — REGOLA
+- Container effimero: ogni modifica/installazione fatta in sessione **deve essere ripristinata nelle sessioni future**.
+- Pattern: aggiungere il ripristino a `scripts/session-bootstrap.sh` (hook SessionStart) + voce in questo file.
+
 ## Strumenti richiesti dall'utente
 - **jcode** (`https://github.com/1jehuang/jcode`): harness agente AI (Rust). Installato in `/root/.local/bin/jcode` (v0.31.2). Installare/aggiornare con: `curl -fsSL https://raw.githubusercontent.com/1jehuang/jcode/master/scripts/install.sh | bash`
 - **cc-nano-banana** (`https://github.com/kkoppenhaver/cc-nano-banana`): skill generazione immagini via Gemini CLI. Installato in `/root/.claude/skills/nano-banana/SKILL.md`. Richiede: `GEMINI_API_KEY` env var + `gemini extensions install https://github.com/gemini-cli-extensions/nanobanana --consent` (manuale). Comandi: `gemini --yolo "/generate|/edit|/icon|/diagram|/pattern|/story"`.
@@ -66,7 +70,8 @@
 - **Open-Generative-AI** (`https://github.com/Anil-matcha/Open-Generative-AI`): studio generativo AI (immagini, video, lip-sync, cinema). Nessuna Claude Code skill — app web/desktop. Usa online: `https://muapi.ai/open-generative-ai`. Skills per agenti: `https://github.com/SamurAIGPT/Generative-Media-Skills`. API key: MuAPI.
 - **odysseus** (`https://github.com/pewdiepie-archdaemon/odysseus`): workspace AI self-hosted (chat, agenti, ricerca web, email, note, calendario). Avvia con `docker compose up -d --build` poi apri `http://localhost:7000`. MCP servers (`image_gen`, `email`, `memory`, `rag`) in `mcp_servers/` — attivabili solo con l'app in esecuzione.
 - **acpx** (`https://github.com/openclaw/acpx`): CLI headless per Agent Client Protocol — dialoga con coding agent (claude, codex, gemini, pi, openclaw) via protocollo strutturato. Installato globale via `npm install -g acpx` (v0.11.2). Uso: `acpx <agente> "prompt"` · sessioni persistenti (`sessions new`, `-s <nome>`) · `acpx compare <a> <b> "prompt"`.
-- **9router** (`https://github.com/decolua/9router`): gateway AI locale OpenAI-compatible su `http://127.0.0.1:20128/v1` (chat, immagini, TTS/STT, embeddings, web search) + 8 skill (`/9router*`). Auto-avvio via hook SessionStart (`scripts/9router-start.sh`). Manuale: `npm i -g 9router` poi `9router --tray --skip-update --host 127.0.0.1`. Health: `curl localhost:20128/api/health`.
+- **9router** (`https://github.com/decolua/9router`): gateway AI locale OpenAI-compatible su `http://127.0.0.1:20128/v1` (chat, immagini, TTS/STT, embeddings, web search) + 8 skill (`/9router*`). Auto-avvio via hook SessionStart (`scripts/session-bootstrap.sh`). Manuale: `npm i -g 9router` poi `9router --tray --skip-update --host 127.0.0.1`. Health: `curl localhost:20128/api/health`.
+- **planning-with-files** (`https://github.com/OthmanAdi/planning-with-files`): skill planning persistente su file (`task_plan.md`, `findings.md`, `progress.md` — sopravvive a /clear e perdita contesto). Installato in `/root/.claude/skills/planning-with-files/`, ripristino auto via `scripts/session-bootstrap.sh`. Trigger: `/planning-with-files` o task multi-step (5+ tool call).
 - **agents.sabrina.dev** (`https://agents.sabrina.dev`): libreria 1000+ template AI gratuiti per **n8n** e **Make.com**. Nessuna installazione — scarica template e importa. Utili per Easy Italia Hub: social media auto-posting (destinazioni/attività), lead generation (tour operator/strutture), email drip (viaggiatori), chatbot supporto prenotazioni, CRM automation, content AI, SEO automation. 100% free, no signup. Richiede istanza n8n (self-host gratuito) o account Make.com (free tier).
 
 ## Codebase: Easy Italia Hub
