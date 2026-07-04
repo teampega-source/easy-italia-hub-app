@@ -203,8 +203,13 @@ function saveData(data){
 }
 
 var data = loadData();
+data.remoteReplies = data.remoteReplies || {}; // risposte anonime a thread remoti, per post_id
 var activeFilter = 'tutti';
 var currentThreadId = null;
+
+var sb = null;           // client Supabase quando configurato, altrimenti null
+var currentUser = null;  // utente Supabase loggato (con .id) o null
+var remoteThreads = [];  // thread pubblicati da community_posts
 
 function escHtml(s){
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -228,21 +233,68 @@ function catLabel(cat){
   return labels[cat] || cat;
 }
 
+function mapPost(p){
+  return {id:p.id, cat:p.category||'altro', title:p.title, body:p.body||'', author:p.author||'Anonimo',
+    ts:Date.parse(p.created_at)||Date.now(), helpful:0, replies:null, remote:true};
+}
+
+function mapReply(r){
+  return {body:r.body, author:r.author||'Anonimo', ts:Date.parse(r.created_at)||Date.now(), isAI:!!r.is_ai};
+}
+
+function threadById(id){
+  return remoteThreads.find(function(x){ return x.id===id; }) ||
+         data.threads.find(function(x){ return x.id===id; });
+}
+
+// Thread visibili: remoti + locali. Con contenuti reali nel DB i seed demo (id s1-s5) spariscono.
+function visibleThreads(){
+  var locals = data.threads;
+  if(remoteThreads.length) locals = locals.filter(function(t){ return !/^s\d+$/.test(t.id); });
+  return remoteThreads.concat(locals);
+}
+
+function authorName(){
+  if(currentUser){
+    var m = currentUser.user_metadata || {};
+    return m.name || m.full_name || (currentUser.email||'').split('@')[0] || 'Utente';
+  }
+  return 'Anonimo';
+}
+
+function persistReply(t, r){
+  if(!t.remote){ saveData(data); return; }
+  if(sb && currentUser){
+    sb.from('community_replies').insert({
+      post_id:t.id, user_id:currentUser.id,
+      author:r.isAI?'AI Consigliere':authorName(), body:r.body, is_ai:r.isAI
+    }).then(function(res){ if(res.error) persistOverlay(t, r); });
+  } else {
+    persistOverlay(t, r); // anonimo: risposta solo locale
+  }
+}
+
+function persistOverlay(t, r){
+  (data.remoteReplies[t.id] = data.remoteReplies[t.id] || []).push(r);
+  saveData(data);
+}
+
 function renderList(){
   var list = document.getElementById('thread-list');
-  var threads = data.threads.filter(function(t){ return activeFilter==='tutti'||t.cat===activeFilter; });
+  var threads = visibleThreads().filter(function(t){ return activeFilter==='tutti'||t.cat===activeFilter; });
   threads = threads.slice().sort(function(a,b){ return b.ts - a.ts; });
   if(!threads.length){
     list.innerHTML = '<div class="empty-forum">Nessuna discussione in questa categoria.<br/>Sii il primo a postare!</div>';
     return;
   }
   list.innerHTML = threads.map(function(t){
+    var rc = t.replies ? t.replies.length : 0;
     return '<div class="thread-card" data-tid="'+escHtml(t.id)+'">' +
       '<div class="tc-header"><span class="tc-cat '+escHtml(t.cat)+'">'+escHtml(catLabel(t.cat))+'</span></div>'+
       '<div class="tc-title">'+escHtml(t.title)+'</div>'+
       '<div class="tc-body">'+escHtml(t.body)+'</div>'+
       '<div class="tc-meta"><b>'+escHtml(t.author||'Anonimo')+'</b> · '+relTime(t.ts)+' · '+
-      '<b>'+t.replies.length+'</b> risposta'+(t.replies.length!==1?'':'')+'e · '+
+      '<b>'+rc+'</b> risposta'+(rc!==1?'':'')+'e · '+
       '<b>'+t.helpful+'</b> utile</div>'+
     '</div>';
   }).join('');
@@ -252,9 +304,22 @@ function renderList(){
 }
 
 function openThread(id){
-  var t = data.threads.find(function(x){ return x.id===id; });
+  var t = threadById(id);
   if(!t) return;
   currentThreadId = id;
+  if(t.remote && t.replies === null){
+    t.replies = [];
+    if(sb){
+      sb.from('community_replies').select('*').eq('post_id', t.id).order('created_at')
+        .then(function(res){
+          if(res.error || !res.data) return;
+          t.replies = res.data.map(mapReply).concat(data.remoteReplies[t.id]||[]);
+          if(currentThreadId === t.id) renderReplies(t);
+        });
+    } else {
+      t.replies = (data.remoteReplies[t.id]||[]).slice();
+    }
+  }
   document.getElementById('list-view').style.display = 'none';
   document.getElementById('thread-detail').style.display = 'block';
   var catEl = document.getElementById('td-cat');
@@ -315,18 +380,38 @@ document.getElementById('modal-submit').addEventListener('click', function(){
   var body = document.getElementById('nt-body').value.trim();
   var author = document.getElementById('nt-author').value.trim() || 'Anonimo';
   if(!title || !body){ alert('Compila titolo e testo.'); return; }
-  var newThread = {
-    id: 't' + Date.now(),
-    cat: cat, title: title, body: body, author: author,
-    ts: Date.now(), helpful: 0, replies: []
-  };
-  data.threads.unshift(newThread);
-  saveData(data);
-  document.getElementById('modal-overlay').classList.remove('open');
-  document.getElementById('nt-title').value = '';
-  document.getElementById('nt-body').value = '';
-  document.getElementById('nt-author').value = '';
-  openThread(newThread.id);
+  function closeModal(){
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.getElementById('nt-title').value = '';
+    document.getElementById('nt-body').value = '';
+    document.getElementById('nt-author').value = '';
+  }
+  function createLocal(){
+    var newThread = {
+      id: 't' + Date.now(),
+      cat: cat, title: title, body: body, author: author,
+      ts: Date.now(), helpful: 0, replies: []
+    };
+    data.threads.unshift(newThread);
+    saveData(data);
+    closeModal();
+    openThread(newThread.id);
+  }
+  if(sb && currentUser){
+    sb.from('community_posts').insert({
+      user_id: currentUser.id, title: title, body: body,
+      category: cat, author: author, status: 'published'
+    }).select().single().then(function(res){
+      if(res.error || !res.data){ createLocal(); return; }
+      var t = mapPost(res.data);
+      t.replies = [];
+      remoteThreads.unshift(t);
+      closeModal();
+      openThread(t.id);
+    });
+  } else {
+    createLocal();
+  }
 });
 
 var askBtn = document.getElementById('ai-ask-btn');
@@ -344,12 +429,13 @@ askInput.addEventListener('input', function(){
 function sendReply(){
   var text = askInput.value.trim();
   if(!text || !currentThreadId) return;
-  var t = data.threads.find(function(x){ return x.id===currentThreadId; });
+  var t = threadById(currentThreadId);
   if(!t) return;
+  if(!t.replies) t.replies = [];
 
   var userReply = {body:text, author:'Tu', ts:Date.now(), isAI:false};
   t.replies.push(userReply);
-  saveData(data);
+  persistReply(t, userReply);
   renderReplies(t);
   askInput.value = '';
   askInput.style.height = '';
@@ -374,16 +460,32 @@ function sendReply(){
     askBtn.textContent = 'Invia';
     var aiReply = {body:res.reply||'Risposta non disponibile.', author:'AI Consigliere', ts:Date.now(), isAI:true};
     t.replies.push(aiReply);
-    saveData(data);
+    persistReply(t, aiReply);
     renderReplies(t);
   })
   .catch(function(){
     askBtn.disabled = false;
     askBtn.textContent = 'Invia';
-    t.replies.push({body:'Errore di connessione. Riprova tra qualche istante.',author:'AI Consigliere',ts:Date.now(),isAI:true});
-    saveData(data);
+    var errReply = {body:'Errore di connessione. Riprova tra qualche istante.',author:'AI Consigliere',ts:Date.now(),isAI:true};
+    t.replies.push(errReply);
+    persistReply(t, errReply);
     renderReplies(t);
   });
+}
+
+if(window.EIH_AUTH){
+  EIH_AUTH.ready.then(function(){
+    sb = EIH_AUTH.client && EIH_AUTH.client();
+    if(!sb) return;
+    EIH_AUTH.getUser().then(function(u){ currentUser = (u && u.id) ? u : null; });
+    sb.from('community_posts').select('*').eq('status','published')
+      .order('created_at',{ascending:false}).limit(100)
+      .then(function(res){
+        if(res.error || !res.data || !res.data.length) return;
+        remoteThreads = res.data.map(mapPost);
+        renderList();
+      });
+  }).catch(function(){});
 }
 
 renderList();
