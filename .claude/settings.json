@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/9router-start.sh\"",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/session-bootstrap.sh\"",
             "timeout": 120
           }
         ]
