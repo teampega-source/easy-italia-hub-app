@@ -27,4 +27,18 @@ install_skill https://github.com/decolua/9router.git 'skills/*' 9router
 # planning-with-files: planning persistente su file
 install_skill https://github.com/OthmanAdi/planning-with-files.git 'skills/planning-with-files' planning-with-files
 
+# agency-agents: 220+ agenti specializzati in /root/.claude/agents
+A=/root/.claude/agents
+if [ ! -f "$A/sales-coach.md" ]; then
+  T=$(mktemp -d)
+  if git clone --depth 1 https://github.com/msitarzewski/agency-agents.git "$T/r" >/dev/null 2>&1; then
+    mkdir -p "$A"
+    for d in "$T"/r/*/; do
+      case "$(basename "$d")" in examples|scripts|integrations|.github) continue;; esac
+      cp "$d"*.md "$A/" 2>/dev/null
+    done
+  fi
+  rm -rf "$T"
+fi
+
 exit 0
