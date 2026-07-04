@@ -205,6 +205,10 @@
     isConfigured: function () { return configured; },
     isDemo: function () { return demo; },
 
+    // Raw Supabase client (REAL mode only; null in demo). For pages that need
+    // queries beyond the EIH_DB helpers. Accurate after `ready` resolves.
+    client: function () { return supabase; },
+
     /**
      * Register a user.
      *  REAL: supabase.auth.signUp; optional `meta` stored in user_metadata.
