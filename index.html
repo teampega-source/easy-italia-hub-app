@@ -3457,14 +3457,46 @@ footer{
   </div>
 </section>
 
-<!-- ─── MAPPA ITALIA 3D — community srilankese ─── -->
+<!-- ─── CITTÀ COMMUNITY — giostra 3D ─── -->
+<style>
+.eih-cityring-section{position:relative;z-index:1;padding:var(--sp-6) var(--sp-3);text-align:center;overflow:hidden}
+.eih-cityring{position:relative;max-width:760px;height:340px;margin:2.5rem auto 0;perspective:1100px}
+.cr-ring{position:absolute;inset:0;transform-style:preserve-3d;animation:cr-spin 42s linear infinite}
+.eih-cityring:hover .cr-ring{animation-play-state:paused}
+.cr-card{position:absolute;top:50%;left:50%;width:200px;height:220px;margin:-110px 0 0 -100px;
+  transform:rotateY(calc(var(--i)*60deg)) translateZ(300px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;
+  background:var(--bg-elevated);border:1px solid var(--border-bright);border-radius:16px;
+  box-shadow:0 18px 40px -22px rgba(22,20,18,.25);backface-visibility:hidden}
+.cr-pin{width:10px;height:10px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 5px rgba(124,130,140,.14)}
+.cr-city{font-family:'Clash Grotesk',sans-serif;font-size:1.35rem;font-weight:600;color:var(--fg);margin:0}
+.cr-region{font-size:.8rem;color:var(--fg-muted);margin:0;letter-spacing:.04em}
+@keyframes cr-spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+@media(prefers-reduced-motion:reduce){
+  .eih-cityring{height:auto;perspective:none}
+  .cr-ring{position:static;animation:none;transform:none;display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+  .cr-card{position:static;margin:0;transform:none;width:150px;height:150px}
+}
+@media(max-width:640px){
+  .eih-cityring{height:260px}
+  .cr-card{width:140px;height:160px;margin:-80px 0 0 -70px;transform:rotateY(calc(var(--i)*60deg)) translateZ(210px)}
+  .cr-city{font-size:1.05rem}
+}
+</style>
 <div class="divider" aria-hidden="true"></div>
-<section class="eih-map3d-section" aria-labelledby="map3d-heading">
+<section class="eih-cityring-section" aria-labelledby="cityring-heading">
   <p class="section-label" data-i18n="map3d.label">Sulla mappa</p>
-  <h2 id="map3d-heading" class="section-title" data-i18n-html="map3d.title">La community <em>in tutta Italia</em></h2>
-  <p class="section-sub" data-i18n="map3d.sub">Srilankesi da Nord a Sud. Trascina la mappa 3D ed esplora le città dove la community cresce.</p>
-  <div data-eih-map3d role="img" aria-label="Mappa 3D interattiva dell'Italia con le città della community srilankese">
-    <div class="eih-map3d-loading" data-eih-loading>Caricamento mappa 3D…</div>
+  <h2 id="cityring-heading" class="section-title" data-i18n-html="map3d.title">La community <em>in tutta Italia</em></h2>
+  <p class="section-sub" data-i18n="map3d.sub">Srilankesi da Nord a Sud: le città dove la community cresce.</p>
+  <div class="eih-cityring" role="list" aria-label="Città della community in Italia">
+    <div class="cr-ring">
+      <article class="cr-card" role="listitem" style="--i:0"><span class="cr-pin" aria-hidden="true"></span><h3 class="cr-city">Roma</h3><p class="cr-region">Lazio</p></article>
+      <article class="cr-card" role="listitem" style="--i:1"><span class="cr-pin" aria-hidden="true"></span><h3 class="cr-city">Milano</h3><p class="cr-region">Lombardia</p></article>
+      <article class="cr-card" role="listitem" style="--i:2"><span class="cr-pin" aria-hidden="true"></span><h3 class="cr-city">Torino</h3><p class="cr-region">Piemonte</p></article>
+      <article class="cr-card" role="listitem" style="--i:3"><span class="cr-pin" aria-hidden="true"></span><h3 class="cr-city">Firenze</h3><p class="cr-region">Toscana</p></article>
+      <article class="cr-card" role="listitem" style="--i:4"><span class="cr-pin" aria-hidden="true"></span><h3 class="cr-city">Bologna</h3><p class="cr-region">Emilia-Romagna</p></article>
+      <article class="cr-card" role="listitem" style="--i:5"><span class="cr-pin" aria-hidden="true"></span><h3 class="cr-city">Napoli</h3><p class="cr-region">Campania</p></article>
+    </div>
   </div>
 </section>
 
