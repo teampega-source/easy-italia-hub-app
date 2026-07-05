@@ -3467,7 +3467,28 @@ footer{
   transform:rotateY(calc(var(--i)*60deg)) translateZ(300px);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;
   background:var(--bg-elevated);border:1px solid var(--border-bright);border-radius:16px;
-  box-shadow:0 18px 40px -22px rgba(22,20,18,.25);backface-visibility:hidden}
+  box-shadow:0 18px 40px -22px rgba(22,20,18,.25);backface-visibility:hidden;
+  font:inherit;color:inherit;cursor:pointer;transition:border-color .25s}
+.cr-card:hover,.cr-card:focus-visible,.cr-card[aria-expanded=true]{border-color:var(--coral)}
+.eih-cityring-section.open .cr-ring{animation-play-state:paused}
+.cr-hint{font-size:.8rem;color:var(--fg-muted);margin:1rem 0 0}
+.cr-panel{max-width:760px;margin:1.5rem auto 0;padding:1.4rem 1.5rem;text-align:left;
+  background:var(--bg-elevated);border:1px solid var(--border-bright);border-radius:16px}
+.cr-panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.cr-panel-head h3{font-family:'Clash Grotesk',sans-serif;font-size:1.4rem;margin:0}
+.cr-panel-head h3 small{font-size:.85rem;font-weight:400;color:var(--fg-muted);margin-left:.5rem}
+.cr-close{background:none;border:0;font-size:1.5rem;line-height:1;cursor:pointer;color:var(--fg-muted)}
+.cr-desc{color:var(--fg-muted);margin:.6rem 0 1rem;line-height:1.6;font-size:.95rem}
+.cr-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.9rem}
+.cr-tab{padding:.35rem .95rem;border-radius:999px;border:1px solid var(--border-bright);
+  background:none;font:inherit;font-size:.85rem;cursor:pointer;color:var(--fg-muted)}
+.cr-tab[aria-selected=true]{background:var(--coral);border-color:var(--coral);color:#fff}
+.cr-links{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.cr-links a{display:flex;justify-content:space-between;align-items:baseline;gap:.8rem;
+  padding:.6rem .85rem;border:1px solid var(--border);border-radius:10px;
+  text-decoration:none;color:var(--fg);font-size:.92rem;transition:border-color .2s}
+.cr-links a:hover{border-color:var(--coral)}
+.cr-links a small{color:var(--fg-muted);text-align:right}
 .cr-pin{width:10px;height:10px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 5px rgba(124,130,140,.14)}
 .cr-city{font-family:'Clash Grotesk',sans-serif;font-size:1.35rem;font-weight:600;color:var(--fg);margin:0}
 .cr-region{font-size:.8rem;color:var(--fg-muted);margin:0;letter-spacing:.04em}
@@ -3488,17 +3509,97 @@ footer{
   <p class="section-label" data-i18n="map3d.label">Sulla mappa</p>
   <h2 id="cityring-heading" class="section-title" data-i18n-html="map3d.title">La community <em>in tutta Italia</em></h2>
   <p class="section-sub" data-i18n="map3d.sub">Srilankesi da Nord a Sud: le città dove la community cresce.</p>
-  <div class="eih-cityring" role="list" aria-label="Città della community in Italia">
+  <div class="eih-cityring" aria-label="Città della community in Italia">
     <div class="cr-ring">
-      <article class="cr-card" role="listitem" style="--i:0"><span class="cr-pin" aria-hidden="true"></span><h3 class="cr-city">Roma</h3><p class="cr-region">Lazio</p></article>
-      <article class="cr-card" role="listitem" style="--i:1"><span class="cr-pin" aria-hidden="true"></span><h3 class="cr-city">Milano</h3><p class="cr-region">Lombardia</p></article>
-      <article class="cr-card" role="listitem" style="--i:2"><span class="cr-pin" aria-hidden="true"></span><h3 class="cr-city">Torino</h3><p class="cr-region">Piemonte</p></article>
-      <article class="cr-card" role="listitem" style="--i:3"><span class="cr-pin" aria-hidden="true"></span><h3 class="cr-city">Firenze</h3><p class="cr-region">Toscana</p></article>
-      <article class="cr-card" role="listitem" style="--i:4"><span class="cr-pin" aria-hidden="true"></span><h3 class="cr-city">Bologna</h3><p class="cr-region">Emilia-Romagna</p></article>
-      <article class="cr-card" role="listitem" style="--i:5"><span class="cr-pin" aria-hidden="true"></span><h3 class="cr-city">Napoli</h3><p class="cr-region">Campania</p></article>
+      <button type="button" class="cr-card" style="--i:0" data-c="roma" aria-expanded="false"><span class="cr-pin" aria-hidden="true"></span><span class="cr-city">Roma</span><span class="cr-region">Lazio</span></button>
+      <button type="button" class="cr-card" style="--i:1" data-c="milano" aria-expanded="false"><span class="cr-pin" aria-hidden="true"></span><span class="cr-city">Milano</span><span class="cr-region">Lombardia</span></button>
+      <button type="button" class="cr-card" style="--i:2" data-c="torino" aria-expanded="false"><span class="cr-pin" aria-hidden="true"></span><span class="cr-city">Torino</span><span class="cr-region">Piemonte</span></button>
+      <button type="button" class="cr-card" style="--i:3" data-c="firenze" aria-expanded="false"><span class="cr-pin" aria-hidden="true"></span><span class="cr-city">Firenze</span><span class="cr-region">Toscana</span></button>
+      <button type="button" class="cr-card" style="--i:4" data-c="bologna" aria-expanded="false"><span class="cr-pin" aria-hidden="true"></span><span class="cr-city">Bologna</span><span class="cr-region">Emilia-Romagna</span></button>
+      <button type="button" class="cr-card" style="--i:5" data-c="napoli" aria-expanded="false"><span class="cr-pin" aria-hidden="true"></span><span class="cr-city">Napoli</span><span class="cr-region">Campania</span></button>
     </div>
   </div>
+  <p class="cr-hint">Tocca una città per scoprire community, servizi e uffici utili.</p>
+  <div class="cr-panel" id="cr-panel" hidden role="region" aria-live="polite" aria-label="Dettaglio città">
+    <div class="cr-panel-head">
+      <h3><span id="cr-title"></span><small id="cr-reg"></small></h3>
+      <button type="button" class="cr-close" aria-label="Chiudi pannello">×</button>
+    </div>
+    <p class="cr-desc" id="cr-desc"></p>
+    <div class="cr-tabs" role="tablist" id="cr-tabs"></div>
+    <ul class="cr-links" id="cr-links"></ul>
+  </div>
 </section>
+<script>
+(function(){
+  var gm=function(q){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);};
+  var COMM=[['Forum della community','forum.html','discussioni e consigli'],
+            ['Community & gruppi','community.html','gruppi locali'],
+            ['Calendario eventi','calendario.html','feste ed eventi'],
+            ['Associazioni','associazioni.html','realtà attive in città']];
+  var SERV=[['Documenti e permessi','documenti.html','guide passo-passo'],
+            ['Percorso guidato','percorso.html','il tuo piano personale'],
+            ['Money transfer','money-transfer.html','inviare denaro in Sri Lanka'],
+            ['Numeri di emergenza','emergenze.html','sanità e sicurezza']];
+  function uff(c){return [
+    ['Prefettura di '+c,gm('Prefettura '+c),'permessi e cittadinanza'],
+    ['Questura di '+c,gm('Questura '+c),'permesso di soggiorno'],
+    ['Patronati a '+c,gm('Patronato CAF '+c),'assistenza gratuita']];}
+  var D={
+    roma:{n:'Roma',r:'Lazio',d:'Sede dell’Ambasciata dello Sri Lanka e di una delle comunità srilankesi più grandi e storiche d’Italia. Qui trovi servizi consolari completi, patronati multilingue e le principali celebrazioni della community, dal Vesak al Capodanno singalese e tamil.',
+      u:[['Ambasciata dello Sri Lanka',gm('Ambasciata Sri Lanka Roma'),'passaporti e atti consolari']].concat(uff('Roma'))},
+    milano:{n:'Milano',r:'Lombardia',d:'La comunità srilankese più numerosa d’Italia, con Consolato Generale, associazioni molto attive e una fitta rete di negozi e ristoranti tipici tra Porta Venezia e Loreto. Ideale per chi cerca lavoro e contatti.',
+      u:[['Consolato Generale dello Sri Lanka',gm('Consolato Sri Lanka Milano'),'passaporti e documenti']].concat(uff('Milano'))},
+    torino:{n:'Torino',r:'Piemonte',d:'Una community in forte crescita, con associazioni culturali, corsi di italiano accessibili e un buon equilibrio tra costo della vita e opportunità di lavoro nel settore dei servizi.',
+      u:uff('Torino')},
+    firenze:{n:'Firenze',r:'Toscana',d:'Comunità storica e radicata: molte famiglie srilankesi lavorano qui da generazioni. Rete solidale, feste tradizionali partecipate e servizi di orientamento consolidati.',
+      u:uff('Firenze')},
+    bologna:{n:'Bologna',r:'Emilia-Romagna',d:'Hub per studio e lavoro: università, corsi professionali e servizi comunali di integrazione tra i migliori d’Italia. Community giovane e in espansione.',
+      u:uff('Bologna')},
+    napoli:{n:'Napoli',r:'Campania',d:'Una delle comunità srilankesi più antiche d’Italia, concentrata nel centro storico. Rete di mutuo aiuto fortissima, negozi tipici e celebrazioni molto sentite.',
+      u:uff('Napoli')}
+  };
+  var sec=document.querySelector('.eih-cityring-section'),panel=document.getElementById('cr-panel');
+  if(!sec||!panel)return;
+  var TABS=[['Community',function(){return COMM;}],['Servizi',function(){return SERV;}],['Uffici utili',function(c){return c.u;}]];
+  var cur=null;
+  function links(list){
+    document.getElementById('cr-links').innerHTML=list.map(function(l){
+      var ext=/^https?:/.test(l[1]);
+      return '<li><a href="'+l[1]+'"'+(ext?' target="_blank" rel="noopener"':'')+'><span>'+l[0]+'</span><small>'+l[2]+'</small></a></li>';
+    }).join('');
+  }
+  function tab(i){
+    var bs=document.getElementById('cr-tabs').children;
+    for(var j=0;j<bs.length;j++)bs[j].setAttribute('aria-selected',j===i);
+    links(TABS[i][1](cur));
+  }
+  function open(key,btn){
+    cur=D[key];if(!cur)return;
+    document.getElementById('cr-title').textContent=cur.n;
+    document.getElementById('cr-reg').textContent=cur.r;
+    document.getElementById('cr-desc').textContent=cur.d;
+    document.getElementById('cr-tabs').innerHTML=TABS.map(function(t,i){
+      return '<button type="button" class="cr-tab" role="tab" aria-selected="'+(i===0)+'">'+t[0]+'</button>';}).join('');
+    tab(0);
+    panel.hidden=false;sec.classList.add('open');
+    sec.querySelectorAll('.cr-card').forEach(function(b){b.setAttribute('aria-expanded',b===btn);});
+    panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  function close(){
+    panel.hidden=true;sec.classList.remove('open');cur=null;
+    sec.querySelectorAll('.cr-card').forEach(function(b){b.setAttribute('aria-expanded','false');});
+  }
+  sec.addEventListener('click',function(e){
+    var card=e.target.closest('.cr-card');
+    if(card){card.getAttribute('aria-expanded')==='true'?close():open(card.dataset.c,card);return;}
+    if(e.target.closest('.cr-close')){close();return;}
+    var t=e.target.closest('.cr-tab');
+    if(t)tab([].indexOf.call(t.parentNode.children,t));
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden)close();});
+})();
+</script>
 
 <!-- ─── TESTIMONIANZE ─── -->
 <section class="testimonials-section" aria-labelledby="testimonials-heading">
