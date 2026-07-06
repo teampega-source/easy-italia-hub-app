@@ -34,7 +34,7 @@
     var scene=new T.Scene();
     scene.fog=new T.FogExp2(0x05070f,0.045);
     var cam=new T.PerspectiveCamera(52,W/H,0.01,200);
-    cam.position.set(0,0,1.32);
+    cam.position.set(0,0,2.1);
 
     var rnd=new T.WebGLRenderer({antialias:!coarse,alpha:false,powerPreference:'high-performance'});
     rnd.setPixelRatio(Math.min(devicePixelRatio,coarse?1.5:2));
@@ -46,8 +46,8 @@
 
     // ── Luci ──
     var sunDir=new T.Vector3(5,2.2,3.2).normalize();
-    var sun=new T.DirectionalLight(0xfff2df,2.1);sun.position.copy(sunDir);scene.add(sun);
-    scene.add(new T.AmbientLight(0x33405f,0.55));
+    var sun=new T.DirectionalLight(0xfff2df,2.4);sun.position.copy(sunDir);scene.add(sun);
+    scene.add(new T.AmbientLight(0x3a4a6b,0.85));
 
     // ── Stelle ──
     (function(){
@@ -91,9 +91,9 @@
       return new T.Vector3(-r*Math.sin(phi)*Math.cos(th),r*Math.cos(phi),r*Math.sin(phi)*Math.sin(th));}
     var pSL=ll(7.5,80.7,1),pIT=ll(41.9,12.5,1);
     function pin(pos,color){
-      var m=new T.Mesh(new T.SphereGeometry(0.014,16,16),new T.MeshBasicMaterial({color:color}));
-      m.position.copy(pos.clone().multiplyScalar(1.01));globe.add(m);
-      var halo=new T.Mesh(new T.SphereGeometry(0.03,16,16),new T.MeshBasicMaterial({color:color,transparent:true,opacity:.35,blending:T.AdditiveBlending,depthWrite:false}));
+      var m=new T.Mesh(new T.SphereGeometry(0.008,16,16),new T.MeshBasicMaterial({color:color}));
+      m.position.copy(pos.clone().multiplyScalar(1.008));globe.add(m);
+      var halo=new T.Mesh(new T.SphereGeometry(0.016,16,16),new T.MeshBasicMaterial({color:color,transparent:true,opacity:.28,blending:T.AdditiveBlending,depthWrite:false}));
       halo.position.copy(m.position);globe.add(halo);return halo;
     }
     var haloSL=pin(pSL,0xff5a3c),haloIT=pin(pIT,0x35c07a);
@@ -165,10 +165,10 @@
       if(!running)return;raf=requestAnimationFrame(frame);
       var p=progress;
 
-      // Camera: grazing → orbitale → grazing su Italia
+      // Camera: dal finestrino (globo riconoscibile) → orbitale → discesa su Italia
       var dist;
-      if(p<0.58)dist=lerp(1.32,3.25,smooth(0.05,0.58,p));
-      else dist=lerp(3.25,1.30,smooth(0.74,1.0,p));
+      if(p<0.58)dist=lerp(2.1,3.5,smooth(0.05,0.58,p));
+      else dist=lerp(3.5,1.85,smooth(0.74,1.0,p));
       var vib=(p<0.28)?Math.sin(t*0.05)*0.006*(1-smooth(0.12,0.28,p)):0; // vibrazioni al decollo
       cam.position.set(vib,vib*0.6,dist);
       cam.lookAt(0,0,0);
