@@ -30,4 +30,16 @@
 .ei-bar{position:absolute;left:0;top:0;height:3px;width:100%;transform-origin:0 0;transform:scaleX(0);
   background:linear-gradient(90deg,#f77f00,#ffb703);z-index:5}
 
+/* Durante l'intro: nascondi i controlli flottanti e i pop-up della home,
+   compaiono solo quando l'intro finisce (o viene saltata). */
+#to-top,#chat-btn,#eihp-fab,#eiht-fab,#eih-vfx-ctl,#smart-toast{transition:opacity .5s ease}
+html.eih-intro-on #to-top,
+html.eih-intro-on #chat-btn,
+html.eih-intro-on #chat-panel,
+html.eih-intro-on #eih-mascot,
+html.eih-intro-on #eihp-fab,
+html.eih-intro-on #eiht-fab,
+html.eih-intro-on #eih-vfx-ctl,
+html.eih-intro-on #smart-toast{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+
 @media (prefers-reduced-motion:reduce){#eih-intro{display:none}}

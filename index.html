@@ -2818,7 +2818,7 @@ footer{
 <section id="eih-intro" aria-label="Intro: il viaggio dallo Sri Lanka all'Italia">
   <div class="ei-stage">
     <div class="ei-bar" aria-hidden="true"></div>
-    <button type="button" class="ei-skip" onclick="document.getElementById('eih-intro').remove();location.hash='#hero-heading';">Salta intro ↓</button>
+    <button type="button" class="ei-skip" onclick="document.documentElement.classList.remove('eih-intro-on');document.getElementById('eih-intro').remove();location.hash='#hero-heading';">Salta intro ↓</button>
     <div class="ei-window" aria-hidden="true"></div>
     <div class="ei-caption"><p class="t">Dallo Sri Lanka</p><p class="s">Il viaggio comincia dal finestrino</p></div>
     <div class="ei-hint" aria-hidden="true">Scorri</div>
