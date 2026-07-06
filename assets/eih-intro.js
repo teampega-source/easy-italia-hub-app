@@ -9,6 +9,9 @@
   function webgl(){try{var c=document.createElement('canvas');return!!(window.WebGLRenderingContext&&(c.getContext('webgl2')||c.getContext('webgl')));}catch(e){return false;}}
   if(reduce||!webgl()){root.remove();return;} // niente intro: la landing parte diretta
 
+  // Nascondi subito i controlli flottanti/pop-up della home finché l'intro è attiva
+  document.documentElement.classList.add('eih-intro-on');
+
   var stage=root.querySelector('.ei-stage');
   var fadeEl=root.querySelector('.ei-fade');
   var barEl=root.querySelector('.ei-bar');
@@ -197,6 +200,9 @@
       // Fade finale verso la landing
       if(fadeEl)fadeEl.style.opacity=smooth(0.93,1.0,p).toFixed(3);
       if(barEl)barEl.style.transform='scaleX('+p.toFixed(4)+')';
+
+      // Controlli/pop-up della home: nascosti durante l'intro, compaiono verso la fine
+      document.documentElement.classList.toggle('eih-intro-on',p<0.92);
 
       setCap(p);
       rnd.render(scene,cam);
