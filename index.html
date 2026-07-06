@@ -2813,6 +2813,20 @@ footer{
 
 <main id="main-content">
 
+<!-- ─── INTRO 3D CINEMATOGRAFICA (scroll-driven, Sri Lanka → Italia) ─── -->
+<link rel="stylesheet" href="/assets/eih-intro.css">
+<section id="eih-intro" aria-label="Intro: il viaggio dallo Sri Lanka all'Italia">
+  <div class="ei-stage">
+    <div class="ei-bar" aria-hidden="true"></div>
+    <button type="button" class="ei-skip" onclick="document.getElementById('eih-intro').remove();location.hash='#hero-heading';">Salta intro ↓</button>
+    <div class="ei-window" aria-hidden="true"></div>
+    <div class="ei-caption"><p class="t">Dallo Sri Lanka</p><p class="s">Il viaggio comincia dal finestrino</p></div>
+    <div class="ei-hint" aria-hidden="true">Scorri</div>
+    <div class="ei-fade" aria-hidden="true"></div>
+  </div>
+</section>
+<script src="/assets/eih-intro.js" defer></script>
+
 <!-- ─── HERO ─── -->
 <section class="hero" aria-labelledby="hero-heading">
   <div data-eih-hero3d aria-hidden="true"></div>
