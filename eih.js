@@ -145,6 +145,10 @@
   const navHost=document.getElementById('site-nav'); if(navHost)navHost.innerHTML=navHTML();
   const footHost=document.getElementById('site-footer'); if(footHost)footHost.innerHTML=footHTML();
 
+  // stato auth nella nav (Accedi/Registrati → Dashboard/Esci se loggato)
+  if(!window.__eihNavAuth&&!document.querySelector('script[src*="eih-navauth"]')){
+    var _na=document.createElement('script');_na.src='/assets/eih-navauth.js';_na.defer=true;document.body.appendChild(_na);}
+
   // inject breadcrumbs on secondary pages
   const BREADCRUMBS={
     'guide':[['Guide','/guide','nav.guide']],

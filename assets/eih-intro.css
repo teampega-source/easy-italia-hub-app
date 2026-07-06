@@ -32,7 +32,8 @@
 
 /* Durante l'intro: nascondi i controlli flottanti e i pop-up della home,
    compaiono solo quando l'intro finisce (o viene saltata). */
-#to-top,#chat-btn,#eihp-fab,#eiht-fab,#eih-vfx-ctl,#smart-toast{transition:opacity .5s ease}
+.site-nav,#to-top,#chat-btn,#eihp-fab,#eiht-fab,#eih-vfx-ctl,#smart-toast{transition:opacity .5s ease}
+html.eih-intro-on .site-nav,
 html.eih-intro-on #to-top,
 html.eih-intro-on #chat-btn,
 html.eih-intro-on #chat-panel,
