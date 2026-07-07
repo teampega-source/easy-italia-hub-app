@@ -20,128 +20,117 @@
   var capS=root.querySelector('.ei-caption .s');
   var capBox=root.querySelector('.ei-caption');
   var hintEl=root.querySelector('.ei-hint');
+  var skipEl=root.querySelector('.ei-skip');
   var coarse=matchMedia('(hover:none),(pointer:coarse)').matches;
   var TEX='/assets/vendor/planets/';
 
   var CAPS=[ // [soglia, titolo, sottotitolo]
-    [0.00,'Dallo Sri Lanka','Il viaggio comincia dal finestrino'],
-    [0.20,'Il decollo','Si sale sopra l’oceano'],
-    [0.40,'Vista dall’alto','Rotta verso Nord-Ovest'],
-    [0.58,'Il pianeta intero','Ottomila chilometri in pochi istanti'],
-    [0.74,'Verso l’Italia','La nuova casa si avvicina'],
-    [0.90,'Benvenuto in Italia','Easy Italia Hub']
+    [0.00,'Dallo Sri Lanka','Dove comincia ogni viaggio'],
+    [0.22,'Il decollo','Si sale sopra l’oceano'],
+    [0.44,'Ottomila chilometri','Una rotta verso Nord-Ovest'],
+    [0.62,'La rotta si disegna','Dallo Sri Lanka all’Italia'],
+    [0.80,'L’arrivo','La nuova casa si avvicina'],
+    [0.92,'Benvenuto in Italia','Easy Italia Hub']
   ];
 
   import('/assets/vendor/three.module.min.js').then(function(T){
     var W=stage.clientWidth,H=stage.clientHeight;
     var scene=new T.Scene();
-    scene.fog=new T.FogExp2(0x05070f,0.045);
-    var cam=new T.PerspectiveCamera(52,W/H,0.01,200);
-    cam.position.set(0,0,2.1);
+    var cam=new T.PerspectiveCamera(46,W/H,0.01,300);
+    cam.position.set(0,0,1.9);
 
     var rnd=new T.WebGLRenderer({antialias:!coarse,alpha:false,powerPreference:'high-performance'});
     rnd.setPixelRatio(Math.min(devicePixelRatio,coarse?1.5:2));
     rnd.setSize(W,H);
-    rnd.toneMapping=T.ACESFilmicToneMapping;rnd.toneMappingExposure=1.12;
+    rnd.toneMapping=T.ACESFilmicToneMapping;rnd.toneMappingExposure=1.02;
     rnd.outputColorSpace=T.SRGBColorSpace;
-    rnd.setClearColor(0x05070f,1);
+    rnd.setClearColor(0x03060f,1);
     stage.insertBefore(rnd.domElement,stage.firstChild);
 
-    // ── Luci ──
-    var sunDir=new T.Vector3(5,2.2,3.2).normalize();
-    var sun=new T.DirectionalLight(0xfff2df,2.4);sun.position.copy(sunDir);scene.add(sun);
-    scene.add(new T.AmbientLight(0x3a4a6b,0.85));
+    // ── Luci: key calda quasi frontale (disco visibile ben illuminato) + fill freddo + rim ──
+    var sunDir=new T.Vector3(-0.55,0.4,0.78).normalize();
+    var sun=new T.DirectionalLight(0xfff1dc,3.1);sun.position.copy(sunDir);scene.add(sun);
+    scene.add(new T.HemisphereLight(0x9fc0ff,0x1a2336,0.55));
+    scene.add(new T.AmbientLight(0x2a3a5c,0.25));
+    var rim=new T.DirectionalLight(0x6ea8ff,0.6);rim.position.set(0.6,-0.2,-0.9);scene.add(rim);
 
-    // ── Stelle ──
+    // ── Campo stellare (profondità, colori tenui) ──
     (function(){
-      var N=coarse?900:1800,p=new Float32Array(N*3),c=new Float32Array(N*3),col=new T.Color();
+      var N=coarse?1100:2200,p=new Float32Array(N*3),c=new Float32Array(N*3),sz=new Float32Array(N),col=new T.Color();
       for(var i=0;i<N;i++){
-        var v=new T.Vector3((Math.random()-.5),(Math.random()-.5),(Math.random()-.5)).normalize().multiplyScalar(60+Math.random()*40);
+        var v=new T.Vector3((Math.random()-.5),(Math.random()-.5),(Math.random()-.5)).normalize().multiplyScalar(70+Math.random()*60);
         p[i*3]=v.x;p[i*3+1]=v.y;p[i*3+2]=v.z;
-        col.setHSL(0.55+Math.random()*0.12,0.4,0.7+Math.random()*0.3);
-        c[i*3]=col.r;c[i*3+1]=col.g;c[i*3+2]=col.b;
+        col.setHSL(0.56+Math.random()*0.12,0.35,0.72+Math.random()*0.28);
+        c[i*3]=col.r;c[i*3+1]=col.g;c[i*3+2]=col.b;sz[i]=Math.random();
       }
       var g=new T.BufferGeometry();
       g.setAttribute('position',new T.BufferAttribute(p,3));
       g.setAttribute('color',new T.BufferAttribute(c,3));
-      scene.add(new T.Points(g,new T.PointsMaterial({size:0.13,vertexColors:true,transparent:true,opacity:.9,depthWrite:false})));
+      scene.add(new T.Points(g,new T.PointsMaterial({size:0.14,vertexColors:true,transparent:true,opacity:.85,depthWrite:false,sizeAttenuation:true})));
     })();
 
     // ── Terra (gruppo ruotabile) ──
     var globe=new T.Group();scene.add(globe);
     var loader=new T.TextureLoader();
-    function tex(f,cb){return loader.load(TEX+f,function(t){t.colorSpace=T.SRGBColorSpace;if(cb)cb(t);},undefined,function(){});}
-    var earthMat=new T.MeshStandardMaterial({color:0x8aa2c8,roughness:1,metalness:0});
+    function tex(f,cb){return loader.load(TEX+f,function(t){t.colorSpace=T.SRGBColorSpace;t.anisotropy=Math.min(8,rnd.capabilities.getMaxAnisotropy());if(cb)cb(t);},undefined,function(){});}
+    var earthMat=new T.MeshStandardMaterial({color:0x6f86ad,roughness:0.86,metalness:0.0});
     tex('earth_atmos_2048.jpg',function(t){earthMat.map=t;earthMat.color.set(0xffffff);earthMat.needsUpdate=true;});
-    var lights=loader.load(TEX+'earth_lights_2048.png',function(){},undefined,function(){});
-    earthMat.emissive=new T.Color(0xffd27f);earthMat.emissiveMap=lights;earthMat.emissiveIntensity=1.1;
-    var earth=new T.Mesh(new T.SphereGeometry(1,64,64),earthMat);globe.add(earth);
+    // Luci notturne discrete: solo un lieve scintillio sul lato in ombra
+    var lights=loader.load(TEX+'earth_lights_2048.png',function(t){t.colorSpace=T.SRGBColorSpace;},undefined,function(){});
+    earthMat.emissive=new T.Color(0xffca7a);earthMat.emissiveMap=lights;earthMat.emissiveIntensity=0.32;
+    var earth=new T.Mesh(new T.SphereGeometry(1,96,96),earthMat);globe.add(earth);
 
-    // Nuvole
-    var cloudMat=new T.MeshLambertMaterial({transparent:true,opacity:.55,depthWrite:false});
-    tex('earth_clouds_1024.png',function(t){cloudMat.map=t;cloudMat.alphaMap=t;cloudMat.needsUpdate=true;});
-    var clouds=new T.Mesh(new T.SphereGeometry(1.012,48,48),cloudMat);globe.add(clouds);
-
-    // Atmosfera (Fresnel rim)
-    var atmo=new T.Mesh(new T.SphereGeometry(1.09,48,48),new T.ShaderMaterial({
+    // Atmosfera (Fresnel rim, blu pulito)
+    var atmo=new T.Mesh(new T.SphereGeometry(1.055,64,64),new T.ShaderMaterial({
       transparent:true,side:T.BackSide,blending:T.AdditiveBlending,depthWrite:false,
       vertexShader:'varying vec3 vN;void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',
-      fragmentShader:'varying vec3 vN;void main(){float i=pow(0.72-dot(vN,vec3(0.0,0.0,1.0)),3.0);i=clamp(i,0.0,1.0);gl_FragColor=vec4(0.35,0.6,1.0,1.0)*i;}'
+      fragmentShader:'varying vec3 vN;void main(){float i=pow(0.68-dot(vN,vec3(0.0,0.0,1.0)),2.6);i=clamp(i,0.0,1.0);gl_FragColor=vec4(0.30,0.56,1.0,1.0)*i*1.15;}'
     }));globe.add(atmo);
 
     // ── Marker + arco Sri Lanka → Italia ──
     function ll(lat,lon,r){var phi=(90-lat)*Math.PI/180,th=(lon+180)*Math.PI/180;
       return new T.Vector3(-r*Math.sin(phi)*Math.cos(th),r*Math.cos(phi),r*Math.sin(phi)*Math.sin(th));}
     var pSL=ll(7.5,80.7,1),pIT=ll(41.9,12.5,1);
-    function pin(pos,color){
-      var m=new T.Mesh(new T.SphereGeometry(0.008,16,16),new T.MeshBasicMaterial({color:color}));
-      m.position.copy(pos.clone().multiplyScalar(1.008));globe.add(m);
-      var halo=new T.Mesh(new T.SphereGeometry(0.016,16,16),new T.MeshBasicMaterial({color:color,transparent:true,opacity:.28,blending:T.AdditiveBlending,depthWrite:false}));
-      halo.position.copy(m.position);globe.add(halo);return halo;
-    }
-    var haloSL=pin(pSL,0xff5a3c),haloIT=pin(pIT,0x35c07a);
-    // Arco
-    var mid=pSL.clone().add(pIT).multiplyScalar(0.5).normalize().multiplyScalar(1.28);
-    var curve=new T.QuadraticBezierCurve3(pSL.clone().multiplyScalar(1.01),mid,pIT.clone().multiplyScalar(1.01));
-    var pts=curve.getPoints(80);
-    var arcGeo=new T.BufferGeometry().setFromPoints(pts);
-    var arc=new T.Line(arcGeo,new T.LineBasicMaterial({color:0xffb703,transparent:true,opacity:.9}));
-    arc.geometry.setDrawRange(0,0);globe.add(arc);
 
-    // Quaternion per portare un punto verso la camera (+Z)
-    function faceQ(v){var q=new T.Quaternion();q.setFromUnitVectors(v.clone().normalize(),new T.Vector3(0,0,1));return q;}
-    var qSL=faceQ(pSL),qIT=faceQ(pIT);
-    globe.quaternion.copy(qSL);
-
-    // ── Nuvole volumetriche per l'attraversamento ──
-    var flak=[];
-    (function(){
-      var cv=document.createElement('canvas');cv.width=cv.height=128;var x=cv.getContext('2d');
-      var g=x.createRadialGradient(64,64,4,64,64,64);
-      g.addColorStop(0,'rgba(255,255,255,.95)');g.addColorStop(.5,'rgba(240,244,255,.5)');g.addColorStop(1,'rgba(255,255,255,0)');
-      x.fillStyle=g;x.fillRect(0,0,128,128);
-      var ct=new T.CanvasTexture(cv);
-      for(var i=0;i<7;i++){
-        var s=new T.Sprite(new T.SpriteMaterial({map:ct,transparent:true,opacity:0,depthWrite:false,blending:T.NormalBlending}));
-        s.scale.setScalar(0.8+Math.random()*0.9);
-        s.position.set((Math.random()-.5)*1.6,(Math.random()-.5)*1.0,0.6+Math.random()*0.6);
-        s.userData.z0=s.position.z;scene.add(s);flak.push(s);
-      }
-    })();
-
-    // Sole / lens-flare fittizio
-    var flare;(function(){
+    // texture radiale riutilizzabile (glow morbido)
+    function glowTex(inner,mid){
       var cv=document.createElement('canvas');cv.width=cv.height=128;var x=cv.getContext('2d');
       var g=x.createRadialGradient(64,64,0,64,64,64);
-      g.addColorStop(0,'rgba(255,244,214,1)');g.addColorStop(.3,'rgba(255,214,140,.6)');g.addColorStop(1,'rgba(255,200,120,0)');
-      x.fillStyle=g;x.fillRect(0,0,128,128);
-      flare=new T.Sprite(new T.SpriteMaterial({map:new T.CanvasTexture(cv),transparent:true,opacity:.9,depthWrite:false,blending:T.AdditiveBlending}));
-      flare.scale.setScalar(1.4);flare.position.copy(sunDir.clone().multiplyScalar(6));scene.add(flare);
-    })();
+      g.addColorStop(0,inner);g.addColorStop(.35,mid);g.addColorStop(1,'rgba(0,0,0,0)');
+      x.fillStyle=g;x.fillRect(0,0,128,128);return new T.CanvasTexture(cv);
+    }
+    var haloTexOrange=glowTex('rgba(255,190,120,1)','rgba(255,120,60,.55)');
+    var haloTexGreen=glowTex('rgba(150,255,200,1)','rgba(40,200,120,.5)');
+    var cometTex=glowTex('rgba(255,246,220,1)','rgba(255,196,110,.7)');
+
+    function pin(pos,tx){
+      var s=new T.Sprite(new T.SpriteMaterial({map:tx,transparent:true,opacity:0,depthWrite:false,blending:T.AdditiveBlending}));
+      s.scale.setScalar(0.14);s.position.copy(pos.clone().multiplyScalar(1.012));globe.add(s);return s;
+    }
+    var haloSL=pin(pSL,haloTexOrange),haloIT=pin(pIT,haloTexGreen);
+
+    // Arco: curva bézier che si stacca dalla superficie
+    var mid=pSL.clone().add(pIT).multiplyScalar(0.5).normalize().multiplyScalar(1.32);
+    var curve=new T.QuadraticBezierCurve3(pSL.clone().multiplyScalar(1.01),mid,pIT.clone().multiplyScalar(1.01));
+    var ARC_SEG=96;
+    var pts=curve.getPoints(ARC_SEG);
+    var arcGeo=new T.BufferGeometry().setFromPoints(pts);
+    var arc=new T.Line(arcGeo,new T.LineBasicMaterial({color:0xffc247,transparent:true,opacity:0.95,blending:T.AdditiveBlending,depthWrite:false}));
+    arc.geometry.setDrawRange(0,0);globe.add(arc);
+    // Cometa che percorre l'arco
+    var comet=new T.Sprite(new T.SpriteMaterial({map:cometTex,transparent:true,opacity:0,depthWrite:false,blending:T.AdditiveBlending}));
+    comet.scale.setScalar(0.2);globe.add(comet);
+
+    // Quaternion per portare un punto verso la camera (+Z), con inclinazione naturale
+    function faceQ(v){var q=new T.Quaternion();q.setFromUnitVectors(v.clone().normalize(),new T.Vector3(0,0,1));return q;}
+    var tilt=new T.Quaternion().setFromAxisAngle(new T.Vector3(1,0,0),0.14);
+    var qSL=faceQ(pSL).premultiply(tilt),qIT=faceQ(pIT).premultiply(tilt);
+    globe.quaternion.copy(qSL);
 
     // ── Helpers timeline ──
     function clamp(v,a,b){return v<a?a:v>b?b:v;}
     function smooth(a,b,t){t=clamp((t-a)/(b-a),0,1);return t*t*(3-2*t);}
+    function easeInOut(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
     function lerp(a,b,t){return a+(b-a)*t;}
 
     var progress=0;
@@ -155,56 +144,66 @@
     function resize(){W=stage.clientWidth;H=stage.clientHeight;cam.aspect=W/H;cam.updateProjectionMatrix();rnd.setSize(W,H);}
     addEventListener('resize',resize);
 
-    // Didascalie
+    // Didascalie con transizione morbida (fade+rise)
     var curCap=-1;
     function setCap(p){
       var idx=0;for(var i=0;i<CAPS.length;i++){if(p>=CAPS[i][0])idx=i;}
-      if(idx!==curCap){curCap=idx;capT.textContent=CAPS[idx][1];capS.textContent=CAPS[idx][2];
-        capBox.style.opacity=0;requestAnimationFrame(function(){capBox.style.transition='opacity .6s ease';capBox.style.opacity=1;});}
+      if(idx!==curCap){curCap=idx;
+        capBox.style.transition='none';capBox.style.opacity=0;capBox.style.transform='translateY(14px)';
+        capT.textContent=CAPS[idx][1];capS.textContent=CAPS[idx][2];
+        requestAnimationFrame(function(){capBox.style.transition='opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1)';capBox.style.opacity=1;capBox.style.transform='translateY(0)';});
+      }
     }
 
-    var running=true,raf;
+    var running=true,raf,smoothP=0;
     function frame(t){
       if(!running)return;raf=requestAnimationFrame(frame);
-      var p=progress;
+      smoothP+=(progress-smoothP)*0.12; // scrubbing morbido
+      var p=smoothP;
 
-      // Camera: dal finestrino (globo riconoscibile) → orbitale → discesa su Italia
+      // Camera: finestrino (vicino) → orbita che rivela l'arco → discesa su Italia
       var dist;
-      if(p<0.58)dist=lerp(2.1,3.5,smooth(0.05,0.58,p));
-      else dist=lerp(3.5,1.85,smooth(0.74,1.0,p));
-      var vib=(p<0.28)?Math.sin(t*0.05)*0.006*(1-smooth(0.12,0.28,p)):0; // vibrazioni al decollo
-      cam.position.set(vib,vib*0.6,dist);
+      if(p<0.62)dist=lerp(1.9,3.25,easeInOut(smooth(0.04,0.62,p)));
+      else dist=lerp(3.25,1.86,easeInOut(smooth(0.62,1.0,p)));
+      var vib=(p<0.22)?Math.sin(t*0.05)*0.004*(1-smooth(0.10,0.22,p)):0; // micro-tremolio al decollo
+      var drift=Math.sin(t*0.00016)*0.05*smooth(0.2,0.6,p)*(1-smooth(0.78,1,p)); // parallasse lenta
+      cam.position.set(vib+drift,vib*0.6,dist);
       cam.lookAt(0,0,0);
 
-      // Rotazione globo: Sri Lanka → Italia (0.55–0.80)
-      globe.quaternion.slerpQuaternions(qSL,qIT,smooth(0.55,0.80,p));
-      clouds.rotation.y+=0.0006; // drift indipendente
+      // Rotazione globo: Sri Lanka → Italia (0.46–0.82)
+      var rot=easeInOut(smooth(0.46,0.82,p));
+      globe.quaternion.slerpQuaternions(qSL,qIT,rot);
 
-      // Arco disegnato progressivamente durante la rotta
-      var da=smooth(0.55,0.80,p);
-      arc.geometry.setDrawRange(0,Math.floor(da*81));
-      var pulse=0.35+Math.sin(t*0.004)*0.2;
-      haloSL.material.opacity=pulse*(1-smooth(0.55,0.72,p));
-      haloIT.material.opacity=pulse*smooth(0.6,0.82,p);
+      // Arco disegnato progressivamente + cometa in testa
+      var da=smooth(0.48,0.82,p);
+      var drawCount=Math.floor(da*(ARC_SEG+1));
+      arc.geometry.setDrawRange(0,drawCount);
+      arc.material.opacity=0.55+0.4*smooth(0.46,0.6,p);
+      if(da>0.001&&da<0.999){
+        comet.position.copy(curve.getPoint(clamp(da,0,1)));
+        comet.material.opacity=0.9;comet.scale.setScalar(0.16+Math.sin(t*0.01)*0.02);
+      }else{comet.material.opacity=0;}
 
-      // Finestrino: sparisce dopo il decollo
-      if(winEl)winEl.style.opacity=(1-smooth(0.10,0.26,p)).toFixed(3);
+      var pulse=0.7+Math.sin(t*0.005)*0.3;
+      haloSL.material.opacity=pulse*smooth(0.02,0.14,p)*(1-smooth(0.5,0.7,p))*0.9+0.15*(1-smooth(0.5,0.7,p));
+      haloSL.scale.setScalar(0.12+0.03*pulse);
+      haloIT.material.opacity=pulse*smooth(0.62,0.84,p);
+      haloIT.scale.setScalar(0.13+0.035*pulse);
+
+      // Finestrino aereo: si dissolve dopo il decollo
+      if(winEl)winEl.style.opacity=(1-smooth(0.08,0.24,p)).toFixed(3);
       if(hintEl)hintEl.style.opacity=(1-smooth(0.02,0.12,p)).toFixed(3);
 
-      // Nuvole volumetriche 0.80–0.94
-      var cf=smooth(0.80,0.90,p)*(1-smooth(0.90,0.98,p));
-      for(var i=0;i<flak.length;i++){var s=flak[i];
-        s.material.opacity=cf*0.8;
-        s.position.z=lerp(s.userData.z0,1.25,smooth(0.80,0.98,p));}
+      // Fade finale caldo verso la landing (su progress grezza: copre il globo in tempo)
+      var fade=smooth(0.88,0.995,progress);
+      if(fadeEl)fadeEl.style.opacity=fade.toFixed(3);
+      if(skipEl)skipEl.style.opacity=(1-smooth(0.86,0.96,progress)).toFixed(3);
+      if(barEl)barEl.style.transform='scaleX('+progress.toFixed(4)+')';
 
-      // Fade finale verso la landing
-      if(fadeEl)fadeEl.style.opacity=smooth(0.93,1.0,p).toFixed(3);
-      if(barEl)barEl.style.transform='scaleX('+p.toFixed(4)+')';
+      // Home/chrome nascosti finché il fade non copre il globo (evita sovrapposizioni)
+      document.documentElement.classList.toggle('eih-intro-on',fade<0.6);
 
-      // Controlli/pop-up della home: nascosti durante l'intro, compaiono verso la fine
-      document.documentElement.classList.toggle('eih-intro-on',p<0.92);
-
-      setCap(p);
+      setCap(progress);
       rnd.render(scene,cam);
     }
     raf=requestAnimationFrame(frame);

@@ -1,38 +1,50 @@
 /* Easy Italia Hub — intro 3D scroll (Sri Lanka → Italia) */
-#eih-intro{position:relative;height:560vh;background:#060913}
+#eih-intro{position:relative;height:560vh;background:#03060f}
 #eih-intro .ei-stage{position:sticky;top:0;height:100vh;overflow:hidden}
 #eih-intro canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 
-/* Finestrino aereo: foro ovale + cabina scura tutt'attorno */
-.ei-window{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center}
-.ei-window::before{content:"";width:min(46vmin,420px);height:min(64vmin,600px);
-  border-radius:48% 48% 46% 46%/50%;
-  box-shadow:0 0 0 6px #2b2f38,0 0 0 26px #14171e,0 0 0 200vmax #0b0d12,inset 0 0 60px rgba(140,180,255,.18)}
+/* Vignettatura cinematografica + scrim in basso per le didascalie */
+#eih-intro .ei-stage::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:
+    radial-gradient(130% 100% at 50% 42%,transparent 52%,rgba(3,6,15,.55) 100%),
+    linear-gradient(to top,rgba(3,6,15,.78) 0%,rgba(3,6,15,.28) 22%,transparent 40%)}
+
+/* Oblò dell'aereo: foro arrotondato + cabina scura tutt'attorno + riflesso */
+.ei-window{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;z-index:3}
+.ei-window::before{content:"";width:min(52vmin,440px);height:min(76vmin,660px);
+  border-radius:min(26vmin,190px);
+  box-shadow:0 0 0 3px rgba(210,220,235,.10),0 0 0 10px #262b34,0 0 0 30px #12151c,0 0 0 200vmax #070a11,
+    inset 0 0 80px rgba(120,160,240,.14),inset 0 22px 60px rgba(180,205,255,.10)}
+.ei-window::after{content:"";position:absolute;width:min(52vmin,440px);height:min(76vmin,660px);
+  border-radius:min(26vmin,190px);pointer-events:none;
+  background:linear-gradient(150deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 30%)}
 
 /* Didascalie */
-.ei-caption{position:absolute;left:0;right:0;bottom:14vh;text-align:center;pointer-events:none;
-  color:#f5efe4;text-shadow:0 2px 24px rgba(0,0,0,.65);padding:0 1.2rem}
-.ei-caption .t{font-family:'Clash Grotesk',sans-serif;font-size:clamp(1.6rem,4.5vw,3rem);font-weight:600;margin:0;letter-spacing:.01em}
-.ei-caption .s{font-size:clamp(.9rem,1.6vw,1.05rem);margin:.5rem 0 0;opacity:.85}
+.ei-caption{position:absolute;left:0;right:0;bottom:15vh;text-align:center;pointer-events:none;z-index:4;
+  color:#f6f1e7;padding:0 1.4rem;will-change:opacity,transform}
+.ei-caption .t{font-family:'Clash Grotesk',sans-serif;font-size:clamp(1.7rem,4.4vw,3.1rem);font-weight:600;
+  margin:0;letter-spacing:-.01em;line-height:1.05;text-shadow:0 2px 30px rgba(0,0,0,.6)}
+.ei-caption .s{font-size:clamp(.86rem,1.5vw,1.05rem);margin:.55rem 0 0;color:#cfd6e2;font-weight:400;
+  letter-spacing:.02em;text-shadow:0 1px 16px rgba(0,0,0,.7)}
 
 /* Fade finale caldo verso la landing */
-.ei-fade{position:absolute;inset:0;background:var(--bg-base,#fff);opacity:0;pointer-events:none}
+.ei-fade{position:absolute;inset:0;background:var(--bg-base,#fff);opacity:0;pointer-events:none;z-index:6}
 
 /* Controlli */
-.ei-skip{position:absolute;top:5.2rem;right:1.2rem;z-index:5;padding:.5rem 1.1rem;border-radius:999px;
-  border:1px solid rgba(245,239,228,.35);background:rgba(6,9,19,.5);color:#f5efe4;font:inherit;
-  font-size:.85rem;cursor:pointer;backdrop-filter:blur(6px)}
-.ei-skip:hover{border-color:#f5efe4}
-.ei-hint{position:absolute;left:50%;bottom:2.2rem;transform:translateX(-50%);color:#f5efe4;
-  font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;opacity:.75;pointer-events:none;
+.ei-skip{position:absolute;top:5.2rem;right:1.2rem;z-index:7;padding:.5rem 1.1rem;border-radius:999px;
+  border:1px solid rgba(246,241,231,.32);background:rgba(6,9,19,.42);color:#f6f1e7;font:inherit;
+  font-size:.82rem;letter-spacing:.02em;cursor:pointer;backdrop-filter:blur(8px);transition:border-color .25s,background .25s}
+.ei-skip:hover{border-color:#f6f1e7;background:rgba(6,9,19,.62)}
+.ei-hint{position:absolute;left:50%;bottom:2.2rem;transform:translateX(-50%);color:#f6f1e7;z-index:4;
+  font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;opacity:.7;pointer-events:none;
   animation:ei-bob 2.2s ease-in-out infinite}
 @keyframes ei-bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
-.ei-bar{position:absolute;left:0;top:0;height:3px;width:100%;transform-origin:0 0;transform:scaleX(0);
-  background:linear-gradient(90deg,#f77f00,#ffb703);z-index:5}
+.ei-bar{position:absolute;left:0;top:0;height:2px;width:100%;transform-origin:0 0;transform:scaleX(0);
+  background:linear-gradient(90deg,#f77f00,#ffc247);z-index:7;box-shadow:0 0 12px rgba(255,183,3,.5)}
 
-/* Durante l'intro: nascondi i controlli flottanti e i pop-up della home,
+/* Durante l'intro: nascondi controlli flottanti, pop-up e banner cookie della home;
    compaiono solo quando l'intro finisce (o viene saltata). */
-.site-nav,#to-top,#chat-btn,#eihp-fab,#eiht-fab,#eih-vfx-ctl,#smart-toast{transition:opacity .5s ease}
+.site-nav,#to-top,#chat-btn,#eihp-fab,#eiht-fab,#eih-vfx-ctl,#smart-toast,#eih-consent{transition:opacity .5s ease}
 html.eih-intro-on .site-nav,
 html.eih-intro-on #to-top,
 html.eih-intro-on #chat-btn,
@@ -41,6 +53,7 @@ html.eih-intro-on #eih-mascot,
 html.eih-intro-on #eihp-fab,
 html.eih-intro-on #eiht-fab,
 html.eih-intro-on #eih-vfx-ctl,
+html.eih-intro-on #eih-consent,
 html.eih-intro-on #smart-toast{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 
 @media (prefers-reduced-motion:reduce){#eih-intro{display:none}}
