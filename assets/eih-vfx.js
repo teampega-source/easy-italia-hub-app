@@ -63,7 +63,7 @@
 
     // ---- 3D tilt cards ----
     if(fine && !reduce){
-      var cards=document.querySelectorAll('.card,.icard,.pcard,.svc-card,.tm-card,.roadmap-card,.nr-opp-card,.eih-card,.sol-card,.screenshot-card,[data-tilt]');
+      var cards=document.querySelectorAll('.card,.feat,.icard,.pcard,.svc-card,.tm-card,.roadmap-card,.nr-opp-card,.eih-card,.sol-card,.screenshot-card,[data-tilt]');
       cards.forEach(function(c){
         if(c.hasAttribute('data-no-tilt')||c.closest('[data-no-tilt]'))return;
         var cs=getComputedStyle(c);if(cs.position==='static')c.style.position='relative';
@@ -72,7 +72,7 @@
         c.addEventListener('mousemove',function(e){
           var r=c.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
           var rx=(py-.5)*-7,ry=(px-.5)*9;
-          c.style.transform='perspective(900px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateZ(6px)';
+          c.style.transform='perspective(900px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateZ(6px) scale(1.02)';
           glow.style.setProperty('--gx',px*100+'%');glow.style.setProperty('--gy',py*100+'%');});
         c.addEventListener('mouseleave',function(){c.style.transform='';});
       });
