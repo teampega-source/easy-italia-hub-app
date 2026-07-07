@@ -155,19 +155,21 @@
       }
     }
 
-    var running=true,raf,smoothP=0;
+    var running=true,raf,smoothP=0,last=0;
+    var TAU=0.26; // costante di tempo dello smoothing (s): più alto = più inerzia/serico
     function frame(t){
       if(!running)return;raf=requestAnimationFrame(frame);
-      smoothP+=(progress-smoothP)*0.12; // scrubbing morbido
+      // Smoothing esponenziale indipendente dal frame-rate (inerzia costante su 60/120Hz)
+      var dt=last?Math.min((t-last)/1000,0.05):0.016;last=t;
+      smoothP+=(progress-smoothP)*(1-Math.exp(-dt/TAU));
       var p=smoothP;
 
       // Camera: finestrino (vicino) → orbita che rivela l'arco → discesa su Italia
       var dist;
       if(p<0.62)dist=lerp(1.9,3.25,easeInOut(smooth(0.04,0.62,p)));
       else dist=lerp(3.25,1.86,easeInOut(smooth(0.62,1.0,p)));
-      var vib=(p<0.22)?Math.sin(t*0.05)*0.004*(1-smooth(0.10,0.22,p)):0; // micro-tremolio al decollo
       var drift=Math.sin(t*0.00016)*0.05*smooth(0.2,0.6,p)*(1-smooth(0.78,1,p)); // parallasse lenta
-      cam.position.set(vib+drift,vib*0.6,dist);
+      cam.position.set(drift,0,dist);
       cam.lookAt(0,0,0);
 
       // Rotazione globo: Sri Lanka → Italia (0.46–0.82)
@@ -211,7 +213,7 @@
     // Pausa GPU quando l'intro è fuori viewport
     new IntersectionObserver(function(es){
       running=es[0].isIntersecting;
-      if(running){cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);}
+      if(running){last=0;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);}
     },{threshold:0}).observe(stage);
 
     root.classList.add('ready');
