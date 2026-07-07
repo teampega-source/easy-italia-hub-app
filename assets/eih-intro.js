@@ -47,8 +47,8 @@
     rnd.setClearColor(0x03060f,1);
     stage.insertBefore(rnd.domElement,stage.firstChild);
 
-    // ── Luci: key calda quasi frontale (disco visibile ben illuminato) + fill freddo + rim ──
-    var sunDir=new T.Vector3(-0.55,0.4,0.78).normalize();
+    // ── Luci: key calda quasi frontale (fronte del globo ben illuminato = geografia visibile) ──
+    var sunDir=new T.Vector3(-0.24,0.26,0.93).normalize();
     var sun=new T.DirectionalLight(0xfff1dc,3.1);sun.position.copy(sunDir);scene.add(sun);
     scene.add(new T.HemisphereLight(0x9fc0ff,0x1a2336,0.55));
     scene.add(new T.AmbientLight(0x2a3a5c,0.25));
@@ -123,7 +123,7 @@
 
     // Quaternion per portare un punto verso la camera (+Z), con inclinazione naturale
     function faceQ(v){var q=new T.Quaternion();q.setFromUnitVectors(v.clone().normalize(),new T.Vector3(0,0,1));return q;}
-    var tilt=new T.Quaternion().setFromAxisAngle(new T.Vector3(1,0,0),0.14);
+    var tilt=new T.Quaternion().setFromAxisAngle(new T.Vector3(1,0,0),-0.02);
     var qSL=faceQ(pSL).premultiply(tilt),qIT=faceQ(pIT).premultiply(tilt);
     globe.quaternion.copy(qSL);
 
