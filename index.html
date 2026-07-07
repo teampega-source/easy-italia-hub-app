@@ -268,7 +268,7 @@ body{
 /* ─── NAV ─── */
 .site-nav{
   position:fixed;top:0;left:0;right:0;z-index:200;
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);
   padding:var(--sp-2) var(--sp-5);
   /* Liquid Glass nav */
   background:rgba(255,255,255,0.72);
@@ -300,12 +300,24 @@ body{
 .nav-links a{
   font-size:var(--text-sm);font-weight:400;
   color:var(--fg-muted);text-decoration:none;
-  letter-spacing:.05em;
+  letter-spacing:.05em;white-space:nowrap;
   transition:color var(--dur-micro) var(--ease-enter);
   cursor:pointer;
 }
 .nav-links a:hover{color:var(--fg)}
 .nav-links a:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:3px}
+/* Dropdown sotto-menù */
+.nav-item{position:relative}
+.nav-has-sub{display:flex;align-items:center;gap:1px}
+.nav-sub-btn{display:inline-flex;align-items:center;justify-content:center;padding:2px;border:none;background:none;color:var(--fg-muted);cursor:pointer;border-radius:6px}
+.nav-chevron{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--dur-std) var(--ease-spring)}
+.nav-has-sub:hover .nav-chevron,.nav-has-sub:focus-within .nav-chevron,.nav-has-sub.sub-open .nav-chevron{transform:rotate(180deg)}
+.nav-has-sub:hover .nav-sub-btn,.nav-has-sub:focus-within .nav-sub-btn{color:var(--fg)}
+.nav-sub{position:absolute;top:calc(100% + 12px);left:-8px;min-width:212px;display:flex;flex-direction:column;gap:1px;padding:7px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:14px;box-shadow:0 18px 44px rgba(20,30,48,.15);opacity:0;transform:translateY(-8px) scale(.97);transform-origin:top left;pointer-events:none;transition:opacity var(--dur-micro) var(--ease-enter),transform var(--dur-std) var(--ease-spring);z-index:210}
+.nav-sub::before{content:'';position:absolute;top:-12px;left:0;right:0;height:12px}
+.nav-has-sub:hover .nav-sub,.nav-has-sub:focus-within .nav-sub,.nav-has-sub.sub-open .nav-sub{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.nav-sub a{display:block;padding:.52rem .72rem;border-radius:9px;font-size:var(--text-sm);font-weight:400;color:var(--fg-secondary);letter-spacing:.02em;white-space:nowrap;transition:background var(--dur-micro),color var(--dur-micro)}
+.nav-sub a:hover,.nav-sub a:focus-visible{background:var(--surface-hover);color:var(--fg);outline:none}
 .nav-cta{
   padding:.55rem 1.4rem;border-radius:var(--radius-full);
   font-size:var(--text-sm);font-weight:500;letter-spacing:.03em;
@@ -1551,6 +1563,8 @@ footer{
   .nav-links{flex-direction:column;gap:0}
   .nav-links li{border-bottom:1px solid var(--border)}
   .nav-links a{display:block;padding:.85rem .25rem;font-size:var(--text-base)}
+  .nav-has-sub{display:block}
+  .nav-sub-btn,.nav-sub{display:none}
   .nav-right{flex-direction:column;align-items:stretch;gap:var(--sp-1);margin-top:var(--sp-1)}
   .nav-login,.nav-cta{width:100%;text-align:center;padding:.75rem 1rem;min-height:44px}
   .nav-collapse{max-height:calc(100vh - 64px);overflow-y:auto}
@@ -2478,11 +2492,36 @@ footer{
   </button>
   <div class="nav-collapse" id="nav-collapse">
     <ul class="nav-links">
-      <li><a href="/guide" data-i18n="nav.guide">Guide</a></li>
-      <li><a href="/community" data-i18n="nav.community">Community</a></li>
-      <li><a href="/percorso" class="nav-journey" data-i18n="nav.journey">Il Mio Percorso</a></li>
+      <li class="nav-item nav-has-sub"><a href="/guide" data-i18n="nav.guide">Guide</a><button type="button" class="nav-sub-btn" aria-expanded="false" aria-label="Sottomenu Guide" tabindex="-1"><svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="nav-sub" role="menu">
+        <a role="menuitem" href="/guide" data-i18n="feat1.title">Guide burocratiche</a>
+        <a role="menuitem" href="/moduli" data-i18n="m.templates">Moduli e Lettere</a>
+        <a role="menuitem" href="/guida-conti" data-i18n="m.openaccount">Aprire un Conto</a>
+        <a role="menuitem" href="/assegno-unico" data-i18n="m.assegno">Calcol. Assegno Unico</a>
+        <a role="menuitem" href="/diritti-inps" data-i18n="m.inps">Verifica Diritti INPS</a>
+        <a role="menuitem" href="/riconoscimento-titoli" data-i18n="m.titles">Riconosc. Titoli</a>
+        <a role="menuitem" href="/dizionario-medico" data-i18n="m.medical">Dizionario Medico</a>
+      </div></li>
+      <li class="nav-item nav-has-sub"><a href="/community" data-i18n="nav.community">Community</a><button type="button" class="nav-sub-btn" aria-expanded="false" aria-label="Sottomenu Community" tabindex="-1"><svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="nav-sub" role="menu">
+        <a role="menuitem" href="/community" data-i18n="nav.community">Community</a>
+        <a role="menuitem" href="/corsi" data-i18n="m.languages">Corsi di Lingue</a>
+        <a role="menuitem" href="/opportunita" data-i18n="m.opportunities">Opportunità</a>
+        <a role="menuitem" href="/chi-siamo" data-i18n="f.about">Chi siamo</a>
+      </div></li>
+      <li class="nav-item nav-has-sub"><a href="/percorso" class="nav-journey" data-i18n="nav.journey">Il Mio Percorso</a><button type="button" class="nav-sub-btn" aria-expanded="false" aria-label="Sottomenu Percorso" tabindex="-1"><svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="nav-sub" role="menu">
+        <a role="menuitem" href="/percorso" data-i18n="nav.journey">Il Mio Percorso</a>
+        <a role="menuitem" href="/dashboard" data-i18n="m.dashboard">La mia Dashboard</a>
+        <a role="menuitem" href="/permesso-tracker" data-i18n="m.tracker">Tracker Permesso</a>
+        <a role="menuitem" href="/cv-builder" data-i18n="m.cvbuilder">CV Builder</a>
+        <a role="menuitem" href="/documenti" data-i18n="m.docs">Archivio Documenti</a>
+        <a role="menuitem" href="/abbonamenti" data-i18n="f.subscriptions">Abbonamenti</a>
+      </div></li>
       <li><a href="/news" data-i18n="nav.news">News</a></li>
-      <li><a href="/voli" data-i18n="nav.voli">Voli</a></li>
+      <li class="nav-item nav-has-sub"><a href="/voli" data-i18n="nav.voli">Voli</a><button type="button" class="nav-sub-btn" aria-expanded="false" aria-label="Sottomenu Voli" tabindex="-1"><svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="nav-sub" role="menu">
+        <a role="menuitem" href="/voli" data-i18n="m.flights">Voli Sri Lanka</a>
+        <a role="menuitem" href="/cargo" data-i18n="m.cargo">Spedizioni Cargo</a>
+        <a role="menuitem" href="/travel-sri-lanka">Travel Hub Sri Lanka</a>
+        <a role="menuitem" href="/money-transfer">Money Transfer</a>
+      </div></li>
       <li><a href="/mappa" data-i18n="nav.map">Mappa</a></li>
       <li><a href="/contatti" data-i18n="nav.contact">Contattaci</a></li>
     </ul>
@@ -4424,6 +4463,7 @@ if(!mediaQ.matches){
 const I18N={
   it:{
     "nav.guide":"Guide","nav.community":"Community","nav.ai":"AI Assistant","nav.news":"News","nav.map":"Mappa","nav.contact":"Contattaci","nav.journey":"Il Mio Percorso","nav.login":"Accedi","nav.signup":"Registrati gratis",
+    "m.templates":"Moduli e Lettere","m.openaccount":"Aprire un Conto","m.assegno":"Calcol. Assegno Unico","m.inps":"Verifica Diritti INPS","m.titles":"Riconosc. Titoli","m.medical":"Dizionario Medico","m.languages":"Corsi di Lingue","m.opportunities":"Opportunità","m.dashboard":"La mia Dashboard","m.tracker":"Tracker Permesso","m.cvbuilder":"CV Builder","m.docs":"Archivio Documenti","m.flights":"Voli Sri Lanka","m.cargo":"Spedizioni Cargo","f.about":"Chi siamo","f.subscriptions":"Abbonamenti",
     "hero.eyebrow":"Guide · Assistente AI · Community","hero.title":"<span class='ln'><span>La comunità</span></span><span class='ln'><span><em>srilankese</em></span></span><span class='ln'><span>in Italia</span></span>","hero.sub":"Guide burocratiche, assistente AI multilingua, community di supporto e news aggiornate — in italiano, inglese, sinhala e tamil.","hero.cta1":"Inizia gratis","hero.cta2":"Esplora le guide","hero.stat1":"Fasi del percorso","hero.stat2":"Guide pratiche","hero.stat3":"Città sulla mappa","hero.stat4":"Lingue dell'interfaccia","hero.stat5":"Strumenti e servizi","hero.stat6":"Passi concreti",
     "card1.tag":"Burocrazia","card1.title":"Permesso di Soggiorno","card1.sub":"Guida completa al rinnovo","card2.tag":"AI","card2.title":"Assistente AI","card2.sub":"Risposte multilingua 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"Confronto e supporto tra pari","card4.tag":"Finanza","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
     "ad.label":"Pubblicità","ad.lead":"Fai crescere il tuo brand: raggiungi ogni giorno la community srilankese in Italia.","ad.buy":"Prenota lo spazio","ad.sponsor":"Sponsorizzato","ad.slot":"Spazio ad — 300×250","ad.book":"Prenota →",
@@ -4446,6 +4486,7 @@ const I18N={
   },
   en:{
     "nav.guide":"Guides","nav.community":"Community","nav.ai":"AI Assistant","nav.news":"News","nav.map":"Map","nav.contact":"Contact us","nav.journey":"My Journey","nav.login":"Log in","nav.signup":"Sign up free",
+    "m.templates":"Forms & Letters","m.openaccount":"Open a Bank Account","m.assegno":"Assegno Unico Calc.","m.inps":"INPS Rights Check","m.titles":"Qual. Recognition","m.medical":"Medical Dictionary","m.languages":"Language Courses","m.opportunities":"Opportunities","m.dashboard":"My Dashboard","m.tracker":"Permit Tracker","m.cvbuilder":"CV Builder","m.docs":"Document Archive","m.flights":"Sri Lanka Flights","m.cargo":"Cargo Shipping","f.about":"About us","f.subscriptions":"Subscriptions",
     "hero.eyebrow":"Guides · AI Assistant · Community","hero.title":"<span class='ln'><span>The Sri Lankan</span></span><span class='ln'><span><em>community</em></span></span><span class='ln'><span>in Italy</span></span>","hero.sub":"Bureaucratic guides, multilingual AI assistant, support community and up-to-date news — in Italian, English, Sinhala and Tamil.","hero.cta1":"Start free","hero.cta2":"Explore the guides","hero.stat1":"Journey phases","hero.stat2":"Practical guides","hero.stat3":"Cities on the map","hero.stat4":"Interface languages","hero.stat5":"Tools and services","hero.stat6":"Concrete steps",
     "card1.tag":"Bureaucracy","card1.title":"Residence Permit","card1.sub":"Complete renewal guide","card2.tag":"AI","card2.title":"AI Assistant","card2.sub":"Multilingual answers 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"Peer-to-peer support","card4.tag":"Finance","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
     "ad.label":"Advertising","ad.lead":"Grow your brand: reach the Sri Lankan community in Italy every day.","ad.buy":"Book this space","ad.sponsor":"Sponsored","ad.slot":"Ad space — 300×250","ad.book":"Book →",
@@ -4468,6 +4509,7 @@ const I18N={
   },
   si:{
     "nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.ai":"AI සහායක","nav.news":"පුවත්","nav.map":"සිතියම","nav.contact":"අපව අමතන්න","nav.journey":"මගේ ගමන","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
+    "m.templates":"ෆෝරම් සහ ලිපි","m.openaccount":"බැංකු ගිණුමක්","m.assegno":"Assegno Unico ගණකය","m.inps":"INPS අයිතිවාසිකම්","m.titles":"සුදුස්සකම් හඳුනාගැනීම","m.medical":"වෛද්‍ය ශබ්දකෝෂය","m.languages":"භාෂා පාඨමාලා","m.opportunities":"අවස්ථා","m.dashboard":"මගේ ඩෑෂ්බෝඩ්","m.tracker":"බලපත්‍ර ලුහුබැඳීම","m.cvbuilder":"CV Builder","m.docs":"ලේඛනාගාරය","m.flights":"ශ්‍රී ලංකා ගුවන් ගමන්","m.cargo":"ගෙවල් ගෙනයාම","f.about":"අප ගැන","f.subscriptions":"දායකත්ව",
     "hero.eyebrow":"මාර්ගෝපදේශ · AI සහායක · ප්‍රජාව","hero.title":"<span class='ln'><span>ඉතාලියේ</span></span><span class='ln'><span><em>ශ්‍රී ලාංකික</em></span></span><span class='ln'><span>ප්‍රජාව</span></span>","hero.sub":"නිලධාරී මාර්ගෝපදේශ, බහුභාෂා AI සහායක, සහාය ප්‍රජාව සහ යාවත්කාලීන පුවත් — ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින්.","hero.cta1":"නොමිලේ අරඹන්න","hero.cta2":"මාර්ගෝපදේශ ගවේෂණය කරන්න","hero.stat1":"ගමනේ අදියර","hero.stat2":"ප්‍රායෝගික මාර්ගෝපදේශ","hero.stat3":"සිතියමේ නගර","hero.stat4":"අතුරුමුහුණත් භාෂා","hero.stat5":"මෙවලම් සහ සේවා","hero.stat6":"සැබෑ පියවර",
     "card1.tag":"නිලධාරිවාදය","card1.title":"පදිංචි බලපත්‍රය","card1.sub":"සම්පූර්ණ අලුත් කිරීමේ මාර්ගෝපදේශය","card2.tag":"AI","card2.title":"AI සහායක","card2.sub":"බහුභාෂා පිළිතුරු 24/7","card3.tag":"ප්‍රජාව","card3.title":"ප්‍රජාව","card3.sub":"සම වයසේ අයගේ සහාය","card4.tag":"මුල්‍ය","card4.title":"මුදල් හුවමාරුව","card4.sub":"Wise, Ria, Western Union",
     "ad.label":"දැන්වීම්","ad.lead":"ඔබේ වෙළඳ නාමය වර්ධනය කරන්න: සෑම දිනකම ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව වෙත ළඟා වන්න.","ad.buy":"අවකාශය වෙන්කරවා ගන්න","ad.sponsor":"අනුග්‍රාහක","ad.slot":"දැන්වීම් අවකාශය — 300×250","ad.book":"වෙන්කරවා ගන්න →",
@@ -4490,6 +4532,7 @@ const I18N={
   }
   ,ta:{
     "nav.guide":"வழிகாட்டிகள்","nav.community":"சமூகம்","nav.ai":"AI உதவியாளர்","nav.news":"செய்திகள்","nav.map":"வரைபடம்","nav.contact":"தொடர்பு கொள்ளுங்கள்","nav.journey":"என் பயணம்","nav.login":"உள்நுழைய","nav.signup":"இலவசமாக பதிவு",
+    "m.templates":"படிவங்கள் & கடிதங்கள்","m.openaccount":"வங்கி கணக்கு திறக்க","m.assegno":"Assegno Unico கணக்கு","m.inps":"INPS உரிமைகள்","m.titles":"தகுதி அங்கீகாரம்","m.medical":"மருத்துவ அகராதி","m.languages":"மொழி வகுப்புகள்","m.opportunities":"வாய்ப்புகள்","m.dashboard":"என் டாஷ்போர்டு","m.tracker":"அனுமதி கண்காணிப்பு","m.cvbuilder":"CV Builder","m.docs":"ஆவண காப்பகம்","m.flights":"இலங்கை விமானங்கள்","m.cargo":"சரக்கு அனுப்புதல்","f.about":"எங்களைப் பற்றி","f.subscriptions":"சந்தாக்கள்",
     "hero.eyebrow":"வழிகாட்டிகள் · AI உதவியாளர் · சமூகம்","hero.title":"<span class='ln'><span>இத்தாலியில்</span></span><span class='ln'><span><em>இலங்கை</em></span></span><span class='ln'><span>சமூகம்</span></span>","hero.sub":"அதிகாரபூர்வ வழிகாட்டிகள், பன்மொழி AI உதவியாளர், ஆதரவு சமூகம் மற்றும் புதிய செய்திகள் — இத்தாலியம், ஆங்கிலம், சிங்களம் மற்றும் தமிழில்.","hero.cta1":"இலவசமாக தொடங்குங்கள்","hero.cta2":"வழிகாட்டிகளை ஆராயுங்கள்","hero.stat1":"பயண நிலைகள்","hero.stat2":"நடைமுறை வழிகாட்டிகள்","hero.stat3":"வரைபடத்தில் நகரங்கள்","hero.stat4":"இடைமுக மொழிகள்","hero.stat5":"கருவிகள் & சேவைகள்","hero.stat6":"உறுதியான படிகள்",
     "card1.tag":"அதிகாரத்துவம்","card1.title":"வசிப்பிட அனுமதி","card1.sub":"முழுமையான புதுப்பித்தல் வழிகாட்டி","card2.tag":"AI","card2.title":"AI உதவியாளர்","card2.sub":"பன்மொழி பதில்கள் 24/7","card3.tag":"சமூகம்","card3.title":"சமூகம்","card3.sub":"சக ஆதரவு","card4.tag":"நிதி","card4.title":"பண பரிமாற்றம்","card4.sub":"Wise, Ria, Western Union",
     "ad.label":"விளம்பரம்","ad.lead":"உங்கள் பிராண்டை வளர்த்துக் கொள்ளுங்கள்: இத்தாலியில் உள்ள இலங்கை சமூகத்தை தினமும் சென்றடையுங்கள்.","ad.buy":"இந்த இடத்தை முன்பதிவு செய்யுங்கள்","ad.sponsor":"விளம்பரதாரர்","ad.slot":"விளம்பர இடம் — 300×250","ad.book":"முன்பதிவு →",
@@ -4675,6 +4718,15 @@ document.getElementById('nav-collapse').addEventListener('click',e=>{
   if(e.target.closest('a,button'))closeMenu();
 });
 window.addEventListener('resize',()=>{if(window.innerWidth>=1024)closeMenu();},{passive:true});
+
+/* ── Nav dropdown sotto-menù (toggle touch/click + Esc) ── */
+(function(){
+  const nav=document.querySelector('.site-nav');if(!nav)return;
+  function closeSubs(except){nav.querySelectorAll('.nav-has-sub.sub-open').forEach(x=>{if(x===except)return;x.classList.remove('sub-open');const b=x.querySelector('.nav-sub-btn');if(b)b.setAttribute('aria-expanded','false');});}
+  nav.addEventListener('click',e=>{const b=e.target.closest('.nav-sub-btn');if(!b)return;e.preventDefault();const li=b.closest('.nav-has-sub'),o=!li.classList.contains('sub-open');closeSubs(li);li.classList.toggle('sub-open',o);b.setAttribute('aria-expanded',o);});
+  document.addEventListener('click',e=>{if(!e.target.closest('.nav-has-sub'))closeSubs();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSubs();});
+})();
 
 /* ── Smart toast (once per user, varied topics, bottom-right) ── */
 (function(){
