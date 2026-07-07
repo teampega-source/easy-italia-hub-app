@@ -9,15 +9,36 @@
     radial-gradient(130% 100% at 50% 42%,transparent 52%,rgba(3,6,15,.55) 100%),
     linear-gradient(to top,rgba(3,6,15,.78) 0%,rgba(3,6,15,.28) 22%,transparent 40%)}
 
-/* Oblò dell'aereo: foro arrotondato + cabina scura tutt'attorno + riflesso */
-.ei-window{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;z-index:3}
-.ei-window::before{content:"";width:min(52vmin,440px);height:min(76vmin,660px);
-  border-radius:min(26vmin,190px);
-  box-shadow:0 0 0 3px rgba(210,220,235,.10),0 0 0 10px #262b34,0 0 0 30px #12151c,0 0 0 200vmax #070a11,
-    inset 0 0 80px rgba(120,160,240,.14),inset 0 22px 60px rgba(180,205,255,.10)}
-.ei-window::after{content:"";position:absolute;width:min(52vmin,440px);height:min(76vmin,660px);
-  border-radius:min(26vmin,190px);pointer-events:none;
-  background:linear-gradient(150deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 30%)}
+/* Oblò dell'aereo dentro la cabina (CSS puro): parete sfumata, cornice modellata,
+   tendina ritratta in alto, forellino di sfiato in basso, riflesso sul vetro */
+.ei-window{position:absolute;inset:0;pointer-events:none;z-index:3}
+.ei-porthole{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(52vmin,440px);height:min(76vmin,660px);border-radius:min(26vmin,190px);
+  /* riflesso + glow vetro (inset) e cornice→parete curva sfumata (spread + blur) */
+  box-shadow:
+    inset 0 0 90px rgba(120,160,240,.14),
+    inset 0 26px 60px rgba(180,205,255,.10),
+    0 0 0 3px rgba(214,224,238,.12),          /* filo interno luminoso */
+    0 0 0 12px #2b313c,                        /* plastica cornice */
+    0 3px 7px 12px rgba(255,255,255,.05),      /* luce sul bordo alto */
+    0 0 0 15px rgba(0,0,0,.55),                /* ombra incassata */
+    0 0 0 40px #1a1e26,                        /* ghiera esterna */
+    0 34px 70px 30px rgba(0,0,0,.55),          /* ombra morbida sulla parete */
+    0 0 0 220px #14171e,                       /* parete vicina */
+    0 0 260px 240px #0a0c12,                   /* parete lontana (blur → sfumatura) */
+    0 0 0 200vmax #07090e}                     /* riempimento fino ai bordi */
+/* riflesso sul vetro */
+.ei-porthole::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(152deg,rgba(255,255,255,.15) 0%,rgba(255,255,255,0) 30%)}
+/* tendina/oscurante ritratto in cima */
+.ei-shade{position:absolute;left:-2px;right:-2px;top:-1px;height:11%;
+  border-radius:min(26vmin,190px) min(26vmin,190px) 40% 40%/100% 100% 60% 60%;
+  background:linear-gradient(180deg,#242832 0%,#191d25 55%,rgba(20,23,30,0) 100%)}
+/* forellino di sfiato */
+.ei-breather{position:absolute;left:50%;bottom:5.5%;transform:translateX(-50%);
+  width:13px;height:13px;border-radius:50%;
+  background:radial-gradient(circle at 40% 34%,#474d58,#0c0e13);
+  box-shadow:inset 0 1px 2px rgba(255,255,255,.18),0 1px 2px rgba(0,0,0,.6)}
 
 /* Didascalie */
 .ei-caption{position:absolute;left:0;right:0;bottom:15vh;text-align:center;pointer-events:none;z-index:4;
