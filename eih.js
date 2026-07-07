@@ -33,19 +33,28 @@
   if(!I18N[lang])lang='it';
   const active=document.body.getAttribute('data-page')||'';
 
+  function navSub(items){
+    return '<button type="button" class="nav-sub-btn" aria-expanded="false" aria-label="Sottomenu" tabindex="-1"><svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>'+
+      '<div class="nav-sub" role="menu">'+items.map(function(it){
+        return '<a role="menuitem" href="'+it[0]+'"'+(it[1]?' data-i18n="'+it[1]+'"':'')+'>'+it[2]+'</a>';
+      }).join('')+'</div>';
+  }
+  function navLink(key,href,i18n,label,sub){
+    return '<li class="nav-item'+(sub?' nav-has-sub':'')+'"><a href="'+href+'" data-i18n="'+i18n+'"'+(active===key?' class="active"':'')+'>'+label+'</a>'+(sub?navSub(sub):'')+'</li>';
+  }
   function navHTML(){
     return '<nav class="site-nav" aria-label="Navigazione principale">'+
       '<a href="/" class="nav-logo"><img src="/assets/img/logo-symbol.jpg" alt="" class="nav-logo-img" style="height:36px;width:auto;display:block;flex-shrink:0">Easy <span class="accent">Italia</span> Hub</a>'+
       '<button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" onclick="EIH.toggleMenu()"><span></span><span></span><span></span></button>'+
       '<div class="nav-collapse" id="nav-collapse">'+
         '<ul class="nav-links">'+
-          '<li><a href="/guide" data-i18n="nav.guide"'+(active==='guide'?' class="active"':'')+'>Guide</a></li>'+
-          '<li><a href="/community" data-i18n="nav.community"'+(active==='community'?' class="active"':'')+'>Community</a></li>'+
-          '<li><a href="/percorso" data-i18n="nav.journey"'+(active==='percorso'?' class="active"':'')+'>Il Mio Percorso</a></li>'+
-          '<li><a href="/news" data-i18n="nav.news"'+(active==='news'?' class="active"':'')+'>News</a></li>'+
-          '<li><a href="/voli" data-i18n="nav.voli"'+(active==='voli'?' class="active"':'')+'>Voli</a></li>'+
-          '<li><a href="/mappa" data-i18n="nav.map"'+(active==='mappa'?' class="active"':'')+'>Mappa</a></li>'+
-          '<li><a href="/contatti" data-i18n="nav.contact"'+(active==='contatti'?' class="active"':'')+'>Contattaci</a></li>'+
+          navLink('guide','/guide','nav.guide','Guide',[['/guide','','Guide burocratiche'],['/moduli','m.templates','Moduli e Lettere'],['/guida-conti','m.openaccount','Aprire un Conto'],['/assegno-unico','m.assegno','Calcol. Assegno Unico'],['/diritti-inps','m.inps','Verifica Diritti INPS'],['/riconoscimento-titoli','m.titles','Riconosc. Titoli'],['/dizionario-medico','m.medical','Dizionario Medico']])+
+          navLink('community','/community','nav.community','Community',[['/community','nav.community','Community'],['/corsi','m.languages','Corsi di Lingue'],['/opportunita','m.opportunities','Opportunità'],['/chi-siamo','f.about','Chi siamo']])+
+          navLink('percorso','/percorso','nav.journey','Il Mio Percorso',[['/percorso','nav.journey','Il Mio Percorso'],['/dashboard','m.dashboard','La mia Dashboard'],['/permesso-tracker','m.tracker','Tracker Permesso'],['/cv-builder','m.cvbuilder','CV Builder'],['/documenti','m.docs','Archivio Documenti'],['/abbonamenti','f.subscriptions','Abbonamenti']])+
+          navLink('news','/news','nav.news','News')+
+          navLink('voli','/voli','nav.voli','Voli',[['/voli','m.flights','Voli Sri Lanka'],['/cargo','m.cargo','Spedizioni Cargo'],['/travel-sri-lanka','','Travel Hub Sri Lanka'],['/money-transfer','','Money Transfer']])+
+          navLink('mappa','/mappa','nav.map','Mappa')+
+          navLink('contatti','/contatti','nav.contact','Contattaci')+
         '</ul>'+
         '<div class="nav-right">'+
           '<a href="/cerca" class="nav-search-btn" aria-label="Cerca" title="Cerca"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>'+
@@ -143,6 +152,12 @@
 
   // inject nav + footer
   const navHost=document.getElementById('site-nav'); if(navHost)navHost.innerHTML=navHTML();
+  if(navHost){
+    function closeSubs(except){navHost.querySelectorAll('.nav-has-sub.sub-open').forEach(function(x){if(x===except)return;x.classList.remove('sub-open');var b=x.querySelector('.nav-sub-btn');if(b)b.setAttribute('aria-expanded','false');});}
+    navHost.addEventListener('click',function(e){var b=e.target.closest('.nav-sub-btn');if(!b)return;e.preventDefault();var li=b.closest('.nav-has-sub'),o=!li.classList.contains('sub-open');closeSubs(li);li.classList.toggle('sub-open',o);b.setAttribute('aria-expanded',o);});
+    document.addEventListener('click',function(e){if(!e.target.closest('.nav-has-sub'))closeSubs();});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSubs();});
+  }
   const footHost=document.getElementById('site-footer'); if(footHost)footHost.innerHTML=footHTML();
 
   // stato auth nella nav (Accedi/Registrati → Dashboard/Esci se loggato)
