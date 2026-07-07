@@ -1,7 +1,14 @@
-/* Easy Italia Hub — intro 3D scroll (Sri Lanka → Italia) */
-#eih-intro{position:relative;height:560vh;background:#03060f}
+/* Easy Italia Hub — intro 3D scroll (Colombo → Sri Lanka → Italia) */
+#eih-intro{position:relative;height:660vh;background:#03060f}
 #eih-intro .ei-stage{position:sticky;top:0;height:100vh;overflow:hidden}
 #eih-intro canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+/* Apertura: Colombo dal satellite (zoom-out) che dissolve sul globo */
+.ei-colombo{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:#0a1420 url(/assets/img/colombo-s2.jpg) no-repeat 34% 46%;background-size:cover;
+  transform-origin:34% 46%;will-change:transform,opacity}
+.ei-credit{position:absolute;left:1rem;bottom:1rem;z-index:6;color:rgba(246,241,231,.55);
+  font-size:.6rem;letter-spacing:.06em;pointer-events:none;text-shadow:0 1px 4px rgba(0,0,0,.6)}
 
 /* Vignettatura cinematografica + scrim in basso per le didascalie */
 #eih-intro .ei-stage::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
@@ -16,20 +23,26 @@
   width:min(50vmin,420px);height:min(74vmin,640px);border-radius:min(25vmin,185px);
   /* cornice CHIARA (aereo) + parete grigio-calda illuminata e sfumata (spread+blur) */
   box-shadow:
-    inset 0 0 90px rgba(130,165,235,.13),
-    inset 0 26px 60px rgba(180,205,255,.09),
-    0 0 0 2px rgba(255,248,235,.12),            /* filo interno vetro */
-    0 0 0 15px #dccaa4,                          /* cornice crema calda (surround aereo) */
-    0 3px 5px 15px rgba(255,246,225,.4),         /* luce calda sul bordo alto */
-    0 0 0 17px rgba(40,26,12,.35),               /* ombra sottile cornice→parete */
-    0 0 0 46px #7a6c56,                          /* vano-finestrino caldo (reveal) */
-    0 30px 55px 26px rgba(20,12,4,.42),          /* ombra morbida sotto il vano */
-    0 0 0 240px #514637,                          /* parete vicina calda (illuminata) */
-    0 0 320px 260px #221910,                      /* parete lontana calda (blur → fusoliera) */
-    0 0 0 200vmax #17110b}                         /* bordi caldi */
-/* riflesso sul vetro */
+    inset 0 0 26px rgba(225,232,245,.10),        /* foschia bordo (acrilico graffiato) */
+    inset 0 0 90px rgba(130,165,235,.12),
+    inset 0 26px 60px rgba(180,205,255,.08),
+    0 0 0 3px rgba(18,12,6,.6),                   /* guarnizione scura attorno al vetro */
+    0 0 0 5px rgba(255,248,235,.10),
+    0 0 0 17px #dccaa4,                            /* cornice crema calda (surround aereo) */
+    0 3px 5px 17px rgba(255,246,225,.42),         /* luce calda sul bordo alto */
+    0 -2px 4px 17px rgba(40,26,12,.28),           /* ombra sotto la cornice */
+    0 0 0 19px rgba(40,26,12,.4),                 /* ombra sottile cornice→parete */
+    0 0 0 48px #7a6c56,                            /* vano-finestrino caldo (reveal) */
+    0 30px 55px 28px rgba(20,12,4,.42),           /* ombra morbida sotto il vano */
+    0 0 0 242px #514637,                           /* parete vicina calda (illuminata) */
+    0 0 320px 260px #221910,                       /* parete lontana calda (blur → fusoliera) */
+    0 0 0 200vmax #17110b}                          /* bordi caldi */
+/* riflessi sul vetro: sheen alto-sx + cielo riflesso in cima */
 .ei-porthole::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:linear-gradient(152deg,rgba(255,250,238,.15) 0%,rgba(255,250,238,0) 30%)}
+  background:
+    linear-gradient(156deg,rgba(255,251,240,.17) 0%,rgba(255,251,240,.03) 23%,transparent 42%),
+    radial-gradient(130% 55% at 54% -8%,rgba(180,205,255,.11),transparent 56%),
+    radial-gradient(90% 40% at 22% 96%,rgba(255,244,222,.05),transparent 60%)}
 /* forellino di sfiato */
 .ei-breather{position:absolute;left:50%;bottom:5%;transform:translateX(-50%);
   width:12px;height:12px;border-radius:50%;
@@ -40,7 +53,7 @@
   transform:translateY(-50%);width:min(24vmin,190px);height:min(68vmin,580px);
   border-radius:min(13vmin,95px);z-index:3;pointer-events:none;
   background:linear-gradient(160deg,#5a4d3b 0%,#352c20 60%,#281f16 100%);
-  box-shadow:0 0 0 12px #dccaa4,0 3px 5px 12px rgba(255,246,225,.34),0 0 0 14px rgba(40,26,12,.32),
+  box-shadow:0 0 0 3px rgba(18,12,6,.55),0 0 0 12px #dccaa4,0 3px 5px 12px rgba(255,246,225,.32),0 0 0 14px rgba(40,26,12,.3),
     inset 0 30px 50px rgba(20,12,4,.42)}
 /* tenue luce di lettura ambrata (calore cabina), non copre il finestrino */
 .ei-window::after{content:"";position:absolute;inset:0;pointer-events:none;
