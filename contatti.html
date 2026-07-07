@@ -120,7 +120,8 @@
                 name:document.getElementById('c-name').value,
                 email:document.getElementById('c-email').value,
                 message:document.getElementById('c-msg').value,
-                website:document.getElementById('c-website').value})});
+                website:document.getElementById('c-website').value,
+                lang:(function(){try{return localStorage.getItem('eih-lang')||document.documentElement.lang||'it';}catch(e){return document.documentElement.lang||'it';}})()})});
             var data=await r.json().catch(function(){return{};});
             if(r.ok&&!data.error){
               if(data.demo){demo.hidden=false;}else{ok.hidden=false;this.reset();}

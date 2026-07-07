@@ -69,6 +69,24 @@ async function handleContact(req, res, body, type) {
     return res.status(500).json({ error: 'Errore invio. Riprova più tardi.' });
   }
 
+  // Conferma automatica al mittente (best-effort: non blocca la risposta).
+  if (type === 'contact') {
+    try {
+      const c = confirmStrings(body.lang);
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: 'Easy Italia Hub <notifiche@easyitaliahub.it>',
+          to: [email],
+          reply_to: TO,
+          subject: c.subject,
+          html: buildConfirmHtml(name, message, c),
+        }),
+      });
+    } catch (e) { console.error('[email/contact] confirm send failed', e); }
+  }
+
   return res.status(200).json({ ok: true });
 }
 
@@ -152,6 +170,26 @@ function buildContactHtml(name, email, message) {
     <p style="margin:0 0 4px;font-size:13px;color:#a89070;">Messaggio</p>
     <p style="margin:0;font-size:14px;color:#e8dcc8;line-height:1.7;white-space:pre-wrap;">${escHtml(message)}</p>
     <p style="margin:24px 0 0;font-size:12px;color:#7d7058;">Rispondi a questa email per scrivere direttamente al mittente.</p>`);
+}
+
+function confirmStrings(lang) {
+  const S = {
+    it: { subject: 'Abbiamo ricevuto il tuo messaggio ✓', title: 'Messaggio ricevuto', hi: 'Ciao', body: 'Grazie per averci scritto. Abbiamo ricevuto il tuo messaggio e ti risponderemo al più presto, di solito entro 1–2 giorni lavorativi.', copy: 'La tua copia del messaggio', note: 'Questa è una conferma automatica. Se non hai scritto tu, ignora questa email.' },
+    en: { subject: 'We received your message ✓', title: 'Message received', hi: 'Hi', body: 'Thanks for reaching out. We have received your message and will reply as soon as possible, usually within 1–2 business days.', copy: 'Your copy of the message', note: 'This is an automatic confirmation. If you did not contact us, please ignore this email.' },
+    si: { subject: 'අපි ඔබගේ පණිවිඩය ලැබුණා ✓', title: 'පණිවිඩය ලැබුණා', hi: 'ආයුබෝවන්', body: 'අප හා සම්බන්ධ වීම ගැන ස්තූතියි. ඔබගේ පණිවිඩය අපට ලැබී ඇති අතර, සාමාන්‍යයෙන් වැඩ කරන දින 1–2ක් ඇතුළත පිළිතුරු දෙන්නෙමු.', copy: 'ඔබගේ පණිවිඩයේ පිටපත', note: 'මෙය ස්වයංක්‍රීය තහවුරු කිරීමකි. ඔබ අප හා සම්බන්ධ නොවූයේ නම්, මෙය නොසලකා හරින්න.' },
+    ta: { subject: 'உங்கள் செய்தியை நாங்கள் பெற்றோம் ✓', title: 'செய்தி பெறப்பட்டது', hi: 'வணக்கம்', body: 'எங்களைத் தொடர்பு கொண்டதற்கு நன்றி. உங்கள் செய்தியை நாங்கள் பெற்றுள்ளோம், பொதுவாக 1–2 வேலை நாட்களுக்குள் பதிலளிப்போம்.', copy: 'உங்கள் செய்தியின் நகல்', note: 'இது தானியங்கி உறுதிப்படுத்தல். நீங்கள் தொடர்பு கொள்ளவில்லை என்றால், இதைப் புறக்கணிக்கவும்.' },
+  };
+  return S[['it', 'en', 'si', 'ta'].includes(lang) ? lang : 'it'];
+}
+
+function buildConfirmHtml(name, message, c) {
+  const greeting = name ? `${c.hi} ${escHtml(name)},` : `${c.hi},`;
+  return wrap(c.title, `
+    <p style="margin:0 0 16px;font-size:15px;color:#e8dcc8;font-weight:600;">${greeting}</p>
+    <p style="margin:0 0 22px;font-size:14px;color:#c9bba0;line-height:1.7;">${escHtml(c.body)}</p>
+    <p style="margin:0 0 6px;font-size:13px;color:#a89070;">${escHtml(c.copy)}</p>
+    <p style="margin:0;font-size:14px;color:#e8dcc8;line-height:1.7;white-space:pre-wrap;border-left:2px solid #c8a96e;padding-left:14px;">${escHtml(message)}</p>
+    <p style="margin:24px 0 0;font-size:12px;color:#7d7058;">${escHtml(c.note)}</p>`);
 }
 
 function buildNewsletterHtml(name, email) {
