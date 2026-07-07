@@ -176,10 +176,11 @@
       smoothP+=(progress-smoothP)*(1-Math.exp(-dt/TAU));
       var p=smoothP;
 
-      // Camera: finestrino (vicino) → orbita che rivela l'arco → discesa su Italia
+      // Camera: hero shot sull'isola (lento push-in) → decollo/allontanamento → discesa su Italia
       var dist;
-      if(p<0.62)dist=lerp(1.9,3.25,easeInOut(smooth(0.04,0.62,p)));
-      else dist=lerp(3.25,1.86,easeInOut(smooth(0.62,1.0,p)));
+      if(p<0.12)dist=lerp(1.66,1.55,easeInOut(smooth(0,0.12,p)));            // hero: l'isola protagonista
+      else if(p<0.62)dist=lerp(1.55,3.25,easeInOut(smooth(0.12,0.62,p)));    // decollo
+      else dist=lerp(3.25,1.86,easeInOut(smooth(0.62,1.0,p)));              // discesa su Italia
       var drift=Math.sin(t*0.00016)*0.05*smooth(0.2,0.6,p)*(1-smooth(0.78,1,p)); // parallasse lenta
       cam.position.set(drift,0,dist);
       cam.lookAt(0,0,0);
@@ -204,8 +205,8 @@
       }else{comet.material.opacity=0;}
 
       var pulse=0.7+Math.sin(t*0.005)*0.3;
-      haloSL.material.opacity=pulse*smooth(0.02,0.14,p)*(1-smooth(0.5,0.7,p))*0.9+0.15*(1-smooth(0.5,0.7,p));
-      haloSL.scale.setScalar(0.12+0.03*pulse);
+      haloSL.material.opacity=(pulse*smooth(0.02,0.14,p)*0.5+0.14)*(1-smooth(0.44,0.64,p));
+      haloSL.scale.setScalar(0.085+0.02*pulse);
       haloIT.material.opacity=pulse*smooth(0.62,0.84,p);
       haloIT.scale.setScalar(0.13+0.035*pulse);
 
