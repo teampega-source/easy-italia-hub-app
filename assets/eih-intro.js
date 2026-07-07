@@ -21,19 +21,16 @@
   var capBox=root.querySelector('.ei-caption');
   var hintEl=root.querySelector('.ei-hint');
   var skipEl=root.querySelector('.ei-skip');
-  var colomboEl=root.querySelector('.ei-colombo');
-  var creditEl=root.querySelector('.ei-credit');
   var coarse=matchMedia('(hover:none),(pointer:coarse)').matches;
   var TEX='/assets/vendor/planets/';
 
   var CAPS=[ // [soglia, titolo, sottotitolo]
-    [0.00,'Colombo','Dove tutto ha inizio'],
-    [0.10,'Dallo Sri Lanka','Dove comincia ogni viaggio'],
-    [0.30,'Il decollo','Si sale sopra l’oceano'],
-    [0.48,'Ottomila chilometri','Una rotta verso Nord-Ovest'],
-    [0.64,'La rotta si disegna','Dallo Sri Lanka all’Italia'],
-    [0.82,'L’arrivo','La nuova casa si avvicina'],
-    [0.93,'Benvenuto in Italia','Easy Italia Hub']
+    [0.00,'Dallo Sri Lanka','Dove comincia ogni viaggio'],
+    [0.22,'Il decollo','Si sale sopra l’oceano'],
+    [0.44,'Ottomila chilometri','Una rotta verso Nord-Ovest'],
+    [0.62,'La rotta si disegna','Dallo Sri Lanka all’Italia'],
+    [0.80,'L’arrivo','La nuova casa si avvicina'],
+    [0.92,'Benvenuto in Italia','Easy Italia Hub']
   ];
 
   import('/assets/vendor/three.module.min.js').then(function(T){
@@ -172,23 +169,11 @@
 
     var running=true,raf,smoothP=0,last=0;
     var TAU=0.26; // costante di tempo dello smoothing (s): più alto = più inerzia/serico
-    var J0=0.16; // frazione iniziale dedicata a Colombo→isola→comparsa oblò
     function frame(t){
       if(!running)return;raf=requestAnimationFrame(frame);
-      // Apertura: Colombo dal satellite fa zoom-out e dissolve sul globo
-      if(colomboEl){
-        var cscale=lerp(2.9,1.02,easeInOut(smooth(0,0.11,progress)));
-        var cop=1-smooth(0.045,0.092,progress);
-        colomboEl.style.transform='scale('+cscale.toFixed(3)+')';
-        colomboEl.style.opacity=cop.toFixed(3);
-      }
-      if(creditEl)creditEl.style.opacity=(0.55*(1-smooth(0.045,0.092,progress))).toFixed(3);
-
-      // La "journey" (globo, arco, discesa) parte dopo l'apertura; smoothing su journeyRaw
-      var journeyRaw=clamp((progress-J0)/(1-J0),0,1);
       // Smoothing esponenziale indipendente dal frame-rate (inerzia costante su 60/120Hz)
       var dt=last?Math.min((t-last)/1000,0.05):0.016;last=t;
-      smoothP+=(journeyRaw-smoothP)*(1-Math.exp(-dt/TAU));
+      smoothP+=(progress-smoothP)*(1-Math.exp(-dt/TAU));
       var p=smoothP;
 
       // Camera: hero shot sull'isola (lento push-in) → decollo/allontanamento → discesa su Italia
@@ -225,15 +210,14 @@
       haloIT.material.opacity=pulse*smooth(0.62,0.84,p);
       haloIT.scale.setScalar(0.13+0.035*pulse);
 
-      // Oblò: compare mentre Colombo dissolve, poi si dissolve al decollo
-      var winIn=smooth(0.088,0.16,progress);
-      if(winEl)winEl.style.opacity=(winIn*(1-smooth(0.06,0.26,p))).toFixed(3);
-      if(hintEl)hintEl.style.opacity=(1-smooth(0.02,0.10,progress)).toFixed(3);
+      // Finestrino aereo: si dissolve dopo il decollo
+      if(winEl)winEl.style.opacity=(1-smooth(0.08,0.24,p)).toFixed(3);
+      if(hintEl)hintEl.style.opacity=(1-smooth(0.02,0.12,p)).toFixed(3);
 
-      // Fade finale caldo verso la landing (su journeyRaw: copre il globo in tempo)
-      var fade=smooth(0.86,0.995,journeyRaw);
+      // Fade finale caldo verso la landing (su progress grezza: copre il globo in tempo)
+      var fade=smooth(0.88,0.995,progress);
       if(fadeEl)fadeEl.style.opacity=fade.toFixed(3);
-      if(skipEl)skipEl.style.opacity=(1-smooth(0.84,0.96,journeyRaw)).toFixed(3);
+      if(skipEl)skipEl.style.opacity=(1-smooth(0.86,0.96,progress)).toFixed(3);
       if(barEl)barEl.style.transform='scaleX('+progress.toFixed(4)+')';
 
       // Home/chrome nascosti finché il fade non copre il globo (evita sovrapposizioni)
