@@ -101,7 +101,19 @@
     }
     var haloTexOrange=glowTex('rgba(255,190,120,1)','rgba(255,120,60,.55)');
     var haloTexGreen=glowTex('rgba(150,255,200,1)','rgba(40,200,120,.5)');
-    var cometTex=glowTex('rgba(255,246,220,1)','rgba(255,196,110,.7)');
+    // Piccolo aereo (vista dall'alto, muso verso l'alto) con lieve alone caldo
+    function planeTexture(){
+      var cv=document.createElement('canvas');cv.width=cv.height=128;var x=cv.getContext('2d');
+      x.translate(64,64);x.shadowColor='rgba(255,232,185,.85)';x.shadowBlur=6;x.fillStyle='#fdf7ea';
+      x.beginPath();x.moveTo(0,-42);x.quadraticCurveTo(7,-30,7,2);x.lineTo(6,34);
+        x.quadraticCurveTo(0,44,-6,34);x.lineTo(-7,2);x.quadraticCurveTo(-7,-30,0,-42);x.closePath();x.fill(); // fusoliera
+      x.beginPath();x.moveTo(0,-8);x.lineTo(44,20);x.lineTo(44,29);x.lineTo(0,11);
+        x.lineTo(-44,29);x.lineTo(-44,20);x.closePath();x.fill(); // ali principali
+      x.beginPath();x.moveTo(0,26);x.lineTo(19,41);x.lineTo(19,46);x.lineTo(0,37);
+        x.lineTo(-19,46);x.lineTo(-19,41);x.closePath();x.fill(); // piani di coda
+      return new T.CanvasTexture(cv);
+    }
+    var planeTex=planeTexture();
 
     function pin(pos,tx){
       var s=new T.Sprite(new T.SpriteMaterial({map:tx,transparent:true,opacity:0,depthWrite:false,blending:T.AdditiveBlending}));
@@ -117,9 +129,9 @@
     var arcGeo=new T.BufferGeometry().setFromPoints(pts);
     var arc=new T.Line(arcGeo,new T.LineBasicMaterial({color:0xffc247,transparent:true,opacity:0.95,blending:T.AdditiveBlending,depthWrite:false}));
     arc.geometry.setDrawRange(0,0);globe.add(arc);
-    // Cometa che percorre l'arco
-    var comet=new T.Sprite(new T.SpriteMaterial({map:cometTex,transparent:true,opacity:0,depthWrite:false,blending:T.AdditiveBlending}));
-    comet.scale.setScalar(0.2);globe.add(comet);
+    // Aereo che percorre l'arco (orientato lungo la rotta)
+    var comet=new T.Sprite(new T.SpriteMaterial({map:planeTex,transparent:true,opacity:0,depthWrite:false,depthTest:false}));
+    comet.scale.setScalar(0.16);comet.renderOrder=10;globe.add(comet);
 
     // Quaternion per portare un punto verso la camera (+Z), con inclinazione naturale
     function faceQ(v){var q=new T.Quaternion();q.setFromUnitVectors(v.clone().normalize(),new T.Vector3(0,0,1));return q;}
@@ -176,14 +188,19 @@
       var rot=easeInOut(smooth(0.46,0.82,p));
       globe.quaternion.slerpQuaternions(qSL,qIT,rot);
 
-      // Arco disegnato progressivamente + cometa in testa
+      // Arco disegnato progressivamente + aereo in testa (orientato lungo la rotta)
       var da=smooth(0.48,0.82,p);
       var drawCount=Math.floor(da*(ARC_SEG+1));
       arc.geometry.setDrawRange(0,drawCount);
       arc.material.opacity=0.55+0.4*smooth(0.46,0.6,p);
-      if(da>0.001&&da<0.999){
-        comet.position.copy(curve.getPoint(clamp(da,0,1)));
-        comet.material.opacity=0.9;comet.scale.setScalar(0.16+Math.sin(t*0.01)*0.02);
+      if(da>0.001&&da<0.997){
+        var pa=curve.getPoint(clamp(da,0,1)),pb=curve.getPoint(clamp(da+0.012,0,1));
+        comet.position.copy(pa);
+        globe.updateMatrixWorld();
+        var wa=pa.clone().applyMatrix4(globe.matrixWorld).project(cam);
+        var wb=pb.clone().applyMatrix4(globe.matrixWorld).project(cam);
+        comet.material.rotation=Math.atan2((wb.y-wa.y)*H,(wb.x-wa.x)*W)-Math.PI/2;
+        comet.material.opacity=1;comet.scale.setScalar(0.2);
       }else{comet.material.opacity=0;}
 
       var pulse=0.7+Math.sin(t*0.005)*0.3;
