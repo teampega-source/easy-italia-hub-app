@@ -1,5 +1,7 @@
-/* Easy Italia Hub — Intro cinematografica 3D scroll-driven (Sri Lanka → Italia)
-   Three.js r160 (vendorizzato). Scroll = timeline. Progressive enhancement:
+/* Easy Italia Hub — Intro cinematografica 3D auto-play (Sri Lanka → Italia)
+   Three.js r160 (vendorizzato). Timeline a tempo (parte e finisce da sola, come
+   un video): closeup Sri Lanka → zoom-out lento poi veloce → stop sul globo →
+   l'aereo percorre la rotta → arrivo in Italia. Progressive enhancement:
    no-op sotto prefers-reduced-motion o senza WebGL. Zero dipendenze extra. */
 (function(){
   if(window.__eihIntro)return;window.__eihIntro=1;
@@ -9,35 +11,39 @@
   function webgl(){try{var c=document.createElement('canvas');return!!(window.WebGLRenderingContext&&(c.getContext('webgl2')||c.getContext('webgl')));}catch(e){return false;}}
   if(reduce||!webgl()){root.remove();return;} // niente intro: la landing parte diretta
 
-  // Nascondi subito i controlli flottanti/pop-up della home finché l'intro è attiva
+  // Intro attiva: nascondi chrome della home e blocca lo scroll (è un video)
   document.documentElement.classList.add('eih-intro-on');
+  var _prevHtmlOv=document.documentElement.style.overflow,_prevBodyOv=document.body.style.overflow;
+  document.documentElement.style.overflow='hidden';document.body.style.overflow='hidden';
 
   var stage=root.querySelector('.ei-stage');
   var fadeEl=root.querySelector('.ei-fade');
-  var barEl=root.querySelector('.ei-bar');
-  var winEl=root.querySelector('.ei-window');
   var capT=root.querySelector('.ei-caption .t');
   var capS=root.querySelector('.ei-caption .s');
   var capBox=root.querySelector('.ei-caption');
-  var hintEl=root.querySelector('.ei-hint');
   var skipEl=root.querySelector('.ei-skip');
   var coarse=matchMedia('(hover:none),(pointer:coarse)').matches;
   var TEX='/assets/vendor/planets/';
 
+  var DUR=coarse?14.5:16.0;        // durata totale intro (s)
+  var START_DIST=1.28;             // closeup su Sri Lanka (bilanciato con texture 2K)
+  var GLOBE_DIST=3.0;              // globo intero visibile
+  var ARRIVE_DIST=2.4;            // leggero avvicinamento all'arrivo
+
   var CAPS=[ // [soglia, titolo, sottotitolo]
     [0.00,'Dallo Sri Lanka','Dove comincia ogni viaggio'],
-    [0.22,'Il decollo','Si sale sopra l’oceano'],
-    [0.44,'Ottomila chilometri','Una rotta verso Nord-Ovest'],
-    [0.62,'La rotta si disegna','Dallo Sri Lanka all’Italia'],
-    [0.80,'L’arrivo','La nuova casa si avvicina'],
-    [0.92,'Benvenuto in Italia','Easy Italia Hub']
+    [0.12,'Si prende quota','Sopra l’oceano Indiano'],
+    [0.36,'Ottomila chilometri','Una rotta verso Nord-Ovest'],
+    [0.55,'La rotta si disegna','Dallo Sri Lanka all’Italia'],
+    [0.82,'L’arrivo','La nuova casa si avvicina'],
+    [0.93,'Benvenuto in Italia','Easy Italia Hub']
   ];
 
   import('/assets/vendor/three.module.min.js').then(function(T){
     var W=stage.clientWidth,H=stage.clientHeight;
     var scene=new T.Scene();
     var cam=new T.PerspectiveCamera(46,W/H,0.01,300);
-    cam.position.set(0,0,1.9);
+    cam.position.set(0,0,START_DIST);
 
     var rnd=new T.WebGLRenderer({antialias:!coarse,alpha:false,powerPreference:'high-performance'});
     rnd.setPixelRatio(Math.min(devicePixelRatio,coarse?1.5:2));
@@ -145,14 +151,6 @@
     function easeInOut(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
     function lerp(a,b,t){return a+(b-a)*t;}
 
-    var progress=0;
-    function readProgress(){
-      var r=root.getBoundingClientRect();
-      var span=root.offsetHeight-innerHeight;
-      progress=clamp(-r.top/(span||1),0,1);
-    }
-    addEventListener('scroll',readProgress,{passive:true});readProgress();
-
     function resize(){W=stage.clientWidth;H=stage.clientHeight;cam.aspect=W/H;cam.updateProjectionMatrix();rnd.setSize(W,H);}
     addEventListener('resize',resize);
 
@@ -167,33 +165,45 @@
       }
     }
 
-    var running=true,raf,smoothP=0,last=0;
-    var TAU=0.26; // costante di tempo dello smoothing (s): più alto = più inerzia/serico
+    // ── Cleanup (fine intro o skip): ripristina scroll e chrome, rimuove overlay ──
+    var ended=false,endTimer=null;
+    function endIntro(){
+      if(ended)return;ended=true;running=false;cancelAnimationFrame(raf);
+      document.documentElement.classList.remove('eih-intro-on');
+      document.documentElement.style.overflow=_prevHtmlOv;document.body.style.overflow=_prevBodyOv;
+      try{rnd.dispose();}catch(e){}
+      root.remove();
+    }
+    window.__eihIntroEnd=endIntro; // il bottone "Salta" lo chiama
+
+    var running=true,raf,elapsed=0,last=0;
     function frame(t){
       if(!running)return;raf=requestAnimationFrame(frame);
-      // Smoothing esponenziale indipendente dal frame-rate (inerzia costante su 60/120Hz)
       var dt=last?Math.min((t-last)/1000,0.05):0.016;last=t;
-      smoothP+=(progress-smoothP)*(1-Math.exp(-dt/TAU));
-      var p=smoothP;
+      elapsed+=dt;
+      var p=clamp(elapsed/DUR,0,1);
 
-      // Camera: hero shot sull'isola (lento push-in) → decollo/allontanamento → discesa su Italia
+      // ── Camera timeline ──
+      // 0.00–0.10 closeup Sri Lanka (lievissimo push-in) · 0.10–0.34 zoom-out
+      // lento→veloce (ease-in) · 0.34–0.46 stop sul globo · 0.46–1.0 rotta+arrivo
       var dist;
-      if(p<0.12)dist=lerp(1.66,1.55,easeInOut(smooth(0,0.12,p)));            // hero: l'isola protagonista
-      else if(p<0.62)dist=lerp(1.55,3.25,easeInOut(smooth(0.12,0.62,p)));    // decollo
-      else dist=lerp(3.25,1.86,easeInOut(smooth(0.62,1.0,p)));              // discesa su Italia
-      var drift=Math.sin(t*0.00016)*0.05*smooth(0.2,0.6,p)*(1-smooth(0.78,1,p)); // parallasse lenta
+      if(p<0.10){dist=lerp(START_DIST+0.04,START_DIST,smooth(0,0.10,p));}
+      else if(p<0.34){var z=smooth(0.10,0.34,p);z=z*z;dist=lerp(START_DIST,GLOBE_DIST,z);} // lento poi veloce
+      else if(p<0.46){dist=GLOBE_DIST;}                                                    // stop sul globo
+      else dist=lerp(GLOBE_DIST,ARRIVE_DIST,easeInOut(smooth(0.80,1.0,p)));               // rotta a distanza globo, poi avvicina
+      var drift=Math.sin(t*0.00016)*0.05*smooth(0.34,0.6,p)*(1-smooth(0.9,1,p));
       cam.position.set(drift,0,dist);
       cam.lookAt(0,0,0);
 
-      // Rotazione globo: Sri Lanka → Italia (0.46–0.82)
-      var rot=easeInOut(smooth(0.46,0.82,p));
+      // Rotazione globo: Sri Lanka → Italia durante la rotta
+      var rot=easeInOut(smooth(0.50,0.90,p));
       globe.quaternion.slerpQuaternions(qSL,qIT,rot);
 
       // Arco disegnato progressivamente + aereo in testa (orientato lungo la rotta)
-      var da=smooth(0.48,0.82,p);
+      var da=smooth(0.52,0.90,p);
       var drawCount=Math.floor(da*(ARC_SEG+1));
       arc.geometry.setDrawRange(0,drawCount);
-      arc.material.opacity=0.55+0.4*smooth(0.46,0.6,p);
+      arc.material.opacity=0.55+0.4*smooth(0.50,0.64,p);
       if(da>0.001&&da<0.997){
         var pa=curve.getPoint(clamp(da,0,1)),pb=curve.getPoint(clamp(da+0.012,0,1));
         comet.position.copy(pa);
@@ -205,35 +215,34 @@
       }else{comet.material.opacity=0;}
 
       var pulse=0.7+Math.sin(t*0.005)*0.3;
-      haloSL.material.opacity=(pulse*smooth(0.02,0.14,p)*0.5+0.14)*(1-smooth(0.44,0.64,p));
+      haloSL.material.opacity=(0.16+0.14*pulse)*smooth(0.08,0.14,p)*(1-smooth(0.24,0.34,p));
       haloSL.scale.setScalar(0.085+0.02*pulse);
-      haloIT.material.opacity=pulse*smooth(0.62,0.84,p);
+      haloIT.material.opacity=pulse*smooth(0.80,0.92,p);
       haloIT.scale.setScalar(0.13+0.035*pulse);
 
-      // Finestrino aereo: si dissolve dopo il decollo
-      if(winEl)winEl.style.opacity=(1-smooth(0.08,0.24,p)).toFixed(3);
-      if(hintEl)hintEl.style.opacity=(1-smooth(0.02,0.12,p)).toFixed(3);
-
-      // Fade finale caldo verso la landing (su progress grezza: copre il globo in tempo)
-      var fade=smooth(0.88,0.995,progress);
+      // Fade finale caldo verso la landing
+      var fade=smooth(0.90,1.0,p);
       if(fadeEl)fadeEl.style.opacity=fade.toFixed(3);
-      if(skipEl)skipEl.style.opacity=(1-smooth(0.86,0.96,progress)).toFixed(3);
-      if(barEl)barEl.style.transform='scaleX('+progress.toFixed(4)+')';
-
-      // Home/chrome nascosti finché il fade non copre il globo (evita sovrapposizioni)
+      if(skipEl)skipEl.style.opacity=(1-smooth(0.86,0.96,p)).toFixed(3);
       document.documentElement.classList.toggle('eih-intro-on',fade<0.6);
 
-      setCap(progress);
+      setCap(p);
       rnd.render(scene,cam);
+
+      if(p>=1&&!endTimer)endTimer=setTimeout(endIntro,220);
     }
     raf=requestAnimationFrame(frame);
 
-    // Pausa GPU quando l'intro è fuori viewport
+    // Pausa GPU quando l'intro è fuori viewport (es. tab in background)
     new IntersectionObserver(function(es){
-      running=es[0].isIntersecting;
+      if(ended)return;running=es[0].isIntersecting;
       if(running){last=0;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);}
     },{threshold:0}).observe(stage);
 
     root.classList.add('ready');
-  }).catch(function(){root.remove();}); // fallback totale: landing diretta
+  }).catch(function(){ // fallback totale: ripristina scroll/chrome e vai diretto alla landing
+    document.documentElement.classList.remove('eih-intro-on');
+    document.documentElement.style.overflow=_prevHtmlOv;document.body.style.overflow=_prevBodyOv;
+    root.remove();
+  });
 })();

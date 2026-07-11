@@ -1,6 +1,6 @@
-/* Easy Italia Hub — intro 3D scroll (Sri Lanka → Italia) */
-#eih-intro{position:relative;height:560vh;background:#03060f}
-#eih-intro .ei-stage{position:sticky;top:0;height:100vh;overflow:hidden}
+/* Easy Italia Hub — intro 3D auto-play (Sri Lanka → Italia) */
+#eih-intro{position:fixed;inset:0;height:100vh;height:100dvh;background:#03060f;z-index:9999}
+#eih-intro .ei-stage{position:absolute;inset:0;overflow:hidden}
 #eih-intro canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 
 /* Vignettatura cinematografica + scrim in basso per le didascalie */
@@ -8,44 +8,6 @@
   background:
     radial-gradient(130% 100% at 50% 42%,transparent 52%,rgba(3,6,15,.55) 100%),
     linear-gradient(to top,rgba(3,6,15,.78) 0%,rgba(3,6,15,.28) 22%,transparent 40%)}
-
-/* Oblò dell'aereo dentro la cabina (CSS puro): parete sfumata, cornice modellata,
-   tendina ritratta in alto, forellino di sfiato in basso, riflesso sul vetro */
-.ei-window{position:absolute;inset:0;pointer-events:none;z-index:3}
-.ei-porthole{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:min(50vmin,420px);height:min(74vmin,640px);border-radius:min(25vmin,185px);
-  /* cornice CHIARA (aereo) + parete grigio-calda illuminata e sfumata (spread+blur) */
-  box-shadow:
-    inset 0 0 90px rgba(130,165,235,.13),
-    inset 0 26px 60px rgba(180,205,255,.09),
-    0 0 0 2px rgba(255,248,235,.12),            /* filo interno vetro */
-    0 0 0 15px #dccaa4,                          /* cornice crema calda (surround aereo) */
-    0 3px 5px 15px rgba(255,246,225,.4),         /* luce calda sul bordo alto */
-    0 0 0 17px rgba(40,26,12,.35),               /* ombra sottile cornice→parete */
-    0 0 0 46px #7a6c56,                          /* vano-finestrino caldo (reveal) */
-    0 30px 55px 26px rgba(20,12,4,.42),          /* ombra morbida sotto il vano */
-    0 0 0 240px #514637,                          /* parete vicina calda (illuminata) */
-    0 0 320px 260px #221910,                      /* parete lontana calda (blur → fusoliera) */
-    0 0 0 200vmax #17110b}                         /* bordi caldi */
-/* riflesso sul vetro */
-.ei-porthole::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:linear-gradient(152deg,rgba(255,250,238,.15) 0%,rgba(255,250,238,0) 30%)}
-/* forellino di sfiato */
-.ei-breather{position:absolute;left:50%;bottom:5%;transform:translateX(-50%);
-  width:12px;height:12px;border-radius:50%;
-  background:radial-gradient(circle at 40% 34%,#5a4d3a,#140f09);
-  box-shadow:inset 0 1px 2px rgba(255,240,215,.22),0 1px 2px rgba(0,0,0,.5)}
-/* finestrino adiacente (tendina abbassata) — riga di finestrini = segnale "aereo" */
-.ei-porthole2{position:absolute;top:50%;left:calc(50% + min(50vmin,420px)/2 + min(5vmin,34px));
-  transform:translateY(-50%);width:min(24vmin,190px);height:min(68vmin,580px);
-  border-radius:min(13vmin,95px);z-index:3;pointer-events:none;
-  background:linear-gradient(160deg,#5a4d3b 0%,#352c20 60%,#281f16 100%);
-  box-shadow:0 0 0 12px #dccaa4,0 3px 5px 12px rgba(255,246,225,.34),0 0 0 14px rgba(40,26,12,.32),
-    inset 0 30px 50px rgba(20,12,4,.42)}
-/* tenue luce di lettura ambrata (calore cabina), non copre il finestrino */
-.ei-window::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(42% 34% at 84% 16%,rgba(255,196,120,.14),transparent 60%),
-    radial-gradient(50% 40% at 12% 88%,rgba(255,170,90,.08),transparent 60%)}
 
 /* Didascalie */
 .ei-caption{position:absolute;left:0;right:0;bottom:15vh;text-align:center;pointer-events:none;z-index:4;
@@ -63,12 +25,6 @@
   border:1px solid rgba(246,241,231,.32);background:rgba(6,9,19,.42);color:#f6f1e7;font:inherit;
   font-size:.82rem;letter-spacing:.02em;cursor:pointer;backdrop-filter:blur(8px);transition:border-color .25s,background .25s}
 .ei-skip:hover{border-color:#f6f1e7;background:rgba(6,9,19,.62)}
-.ei-hint{position:absolute;left:50%;bottom:2.2rem;transform:translateX(-50%);color:#f6f1e7;z-index:4;
-  font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;opacity:.7;pointer-events:none;
-  animation:ei-bob 2.2s ease-in-out infinite}
-@keyframes ei-bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
-.ei-bar{position:absolute;left:0;top:0;height:2px;width:100%;transform-origin:0 0;transform:scaleX(0);
-  background:linear-gradient(90deg,#f77f00,#ffc247);z-index:7;box-shadow:0 0 12px rgba(255,183,3,.5)}
 
 /* Durante l'intro: nascondi controlli flottanti, pop-up e banner cookie della home;
    compaiono solo quando l'intro finisce (o viene saltata). */
