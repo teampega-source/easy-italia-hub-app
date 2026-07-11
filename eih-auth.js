@@ -296,6 +296,25 @@
     },
 
     /**
+     * Sign in with Google (OAuth).
+     *  REAL: supabase.auth.signInWithOAuth → redirect to Google, back to `redirectTo`.
+     *  DEMO: no real provider; returns { demo:true } so the caller can inform the user.
+     */
+    signInWithGoogle: function (redirectTo) {
+      return ready.then(function () {
+        if (configured && supabase) {
+          return supabase.auth.signInWithOAuth({
+            provider: "google",
+            options: { redirectTo: redirectTo || (window.location.origin + "/dashboard") }
+          }).then(function (res) {
+            return { error: (res && res.error) || null };
+          });
+        }
+        return { demo: true, error: null };
+      });
+    },
+
+    /**
      * Sign out.
      *  REAL: supabase.auth.signOut.
      *  DEMO: clears the local registered gate + demo profile.
