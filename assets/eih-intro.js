@@ -11,6 +11,12 @@
   function webgl(){try{var c=document.createElement('canvas');return!!(window.WebGLRenderingContext&&(c.getContext('webgl2')||c.getContext('webgl')));}catch(e){return false;}}
   if(reduce||!webgl()){root.remove();return;} // niente intro: la landing parte diretta
 
+  // Una sola volta per scheda del browser: se già vista in questa sessione, salta.
+  // sessionStorage persiste a reload/navigazione ma si azzera chiudendo la scheda,
+  // quindi l'intro riparte solo chiudendo e riaprendo la pagina.
+  try{if(sessionStorage.getItem('eih-intro-seen')){root.remove();return;}}catch(e){}
+  try{sessionStorage.setItem('eih-intro-seen','1');}catch(e){}
+
   // Intro attiva: nascondi chrome della home e blocca lo scroll (è un video)
   document.documentElement.classList.add('eih-intro-on');
   var _prevHtmlOv=document.documentElement.style.overflow,_prevBodyOv=document.body.style.overflow;
