@@ -148,7 +148,9 @@
     // Quaternion per portare un punto verso la camera (+Z), con inclinazione naturale
     function faceQ(v){var q=new T.Quaternion();q.setFromUnitVectors(v.clone().normalize(),new T.Vector3(0,0,1));return q;}
     var tilt=new T.Quaternion().setFromAxisAngle(new T.Vector3(1,0,0),-0.02);
-    var qSL=faceQ(pSL).premultiply(tilt),qIT=faceQ(pIT).premultiply(tilt);
+    // Roll di 45° a destra (attorno all'asse di vista): orienta i paesi in modo naturale
+    var roll=new T.Quaternion().setFromAxisAngle(new T.Vector3(0,0,1),-Math.PI/4);
+    var qSL=faceQ(pSL).premultiply(tilt).premultiply(roll),qIT=faceQ(pIT).premultiply(tilt).premultiply(roll);
     globe.quaternion.copy(qSL);
 
     // ── Helpers timeline ──
