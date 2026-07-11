@@ -137,11 +137,10 @@
           return false;
         }
         // 3) Configured → dynamically import the Supabase client from the CDN.
-        //    `new Function` keeps the dynamic import() out of the way of any
-        //    bundler/older parser that might choke on the syntax; this file is
-        //    served as-is to the browser, so a native dynamic import is fine.
-        var dynImport = new Function("u", "return import(u);");
-        return dynImport(SUPABASE_ESM)
+        //    Native dynamic import(): la CSP del sito non abilita 'unsafe-eval',
+        //    quindi `new Function` verrebbe bloccato → il client non si caricava
+        //    e il sito ricadeva in demo. import() diretto è consentito.
+        return import(SUPABASE_ESM)
           .then(function (mod) {
             var createClient = mod && mod.createClient;
             if (typeof createClient !== "function") {
