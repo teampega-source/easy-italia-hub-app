@@ -32,7 +32,7 @@
   var TEX='/assets/vendor/planets/';
 
   var DUR=coarse?14.5:16.0;        // durata totale intro (s)
-  var START_DIST=1.2;              // closeup ravvicinato su Sri Lanka (texture 4K)
+  var START_DIST=coarse?1.5:1.2;   // mobile: closeup meno spinto (2K più nitida) · desktop: ravvicinato (4K)
   var GLOBE_DIST=3.0;              // globo intero visibile
   var ARRIVE_DIST=2.4;            // leggero avvicinamento all'arrivo
 
@@ -52,7 +52,7 @@
     cam.position.set(0,0,START_DIST);
 
     var rnd=new T.WebGLRenderer({antialias:!coarse,alpha:false,powerPreference:'high-performance'});
-    rnd.setPixelRatio(Math.min(devicePixelRatio,coarse?1.5:2));
+    rnd.setPixelRatio(Math.min(devicePixelRatio,coarse?1.25:2));
     rnd.setSize(W,H);
     rnd.toneMapping=T.ACESFilmicToneMapping;rnd.toneMappingExposure=1.02;
     rnd.outputColorSpace=T.SRGBColorSpace;
@@ -68,7 +68,7 @@
 
     // ── Campo stellare (profondità, colori tenui) ──
     (function(){
-      var N=coarse?1100:2200,p=new Float32Array(N*3),c=new Float32Array(N*3),sz=new Float32Array(N),col=new T.Color();
+      var N=coarse?700:2200,p=new Float32Array(N*3),c=new Float32Array(N*3),sz=new Float32Array(N),col=new T.Color();
       for(var i=0;i<N;i++){
         var v=new T.Vector3((Math.random()-.5),(Math.random()-.5),(Math.random()-.5)).normalize().multiplyScalar(70+Math.random()*60);
         p[i*3]=v.x;p[i*3+1]=v.y;p[i*3+2]=v.z;
@@ -86,20 +86,27 @@
     var loader=new T.TextureLoader();
     function tex(f,cb){return loader.load(TEX+f,function(t){t.colorSpace=T.SRGBColorSpace;t.anisotropy=Math.min(8,rnd.capabilities.getMaxAnisotropy());if(cb)cb(t);},undefined,function(){});}
     var earthMat=new T.MeshStandardMaterial({color:0x6f86ad,roughness:0.86,metalness:0.0});
+    var texReady=false; // la timeline parte solo a texture pronta (upload GPU mascherato sul fermo iniziale)
     // Texture Terra 4K (closeup nitido su Sri Lanka) con fallback al 2K se non carica
     function loadEarth(file,fallback){
       loader.load(TEX+file,function(t){t.colorSpace=T.SRGBColorSpace;t.anisotropy=Math.min(8,rnd.capabilities.getMaxAnisotropy());
-        earthMat.map=t;earthMat.color.set(0xffffff);earthMat.needsUpdate=true;},undefined,
-        function(){if(fallback)loadEarth(fallback,null);});
+        earthMat.map=t;earthMat.color.set(0xffffff);earthMat.needsUpdate=true;texReady=true;},undefined,
+        function(){if(fallback)loadEarth(fallback,null);else texReady=true;});
     }
-    loadEarth('earth_atmos_4096.jpg','earth_atmos_2048.jpg');
-    // Luci notturne discrete: solo un lieve scintillio sul lato in ombra
-    var lights=loader.load(TEX+'earth_lights_2048.png',function(t){t.colorSpace=T.SRGBColorSpace;},undefined,function(){});
-    earthMat.emissive=new T.Color(0xffca7a);earthMat.emissiveMap=lights;earthMat.emissiveIntensity=0.32;
-    var earth=new T.Mesh(new T.SphereGeometry(1,96,96),earthMat);globe.add(earth);
+    setTimeout(function(){texReady=true;},3000); // safety: parti comunque
+    // Su mobile: texture 2K (decode/upload molto più leggero → niente stall durante lo
+    // zoom) e nessuna mappa luci notturne. Desktop: 4K con fallback al 2K.
+    if(coarse){loadEarth('earth_atmos_2048.jpg',null);}
+    else{
+      loadEarth('earth_atmos_4096.jpg','earth_atmos_2048.jpg');
+      // Luci notturne discrete: solo un lieve scintillio sul lato in ombra
+      var lights=loader.load(TEX+'earth_lights_2048.png',function(t){t.colorSpace=T.SRGBColorSpace;},undefined,function(){});
+      earthMat.emissive=new T.Color(0xffca7a);earthMat.emissiveMap=lights;earthMat.emissiveIntensity=0.32;
+    }
+    var earth=new T.Mesh(new T.SphereGeometry(1,coarse?64:96,coarse?64:96),earthMat);globe.add(earth);
 
     // Atmosfera (Fresnel rim, blu pulito)
-    var atmo=new T.Mesh(new T.SphereGeometry(1.055,64,64),new T.ShaderMaterial({
+    var atmo=new T.Mesh(new T.SphereGeometry(1.055,coarse?40:64,coarse?40:64),new T.ShaderMaterial({
       transparent:true,side:T.BackSide,blending:T.AdditiveBlending,depthWrite:false,
       vertexShader:'varying vec3 vN;void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',
       fragmentShader:'varying vec3 vN;void main(){float i=pow(0.68-dot(vN,vec3(0.0,0.0,1.0)),2.6);i=clamp(i,0.0,1.0);gl_FragColor=vec4(0.30,0.56,1.0,1.0)*i*1.15;}'
@@ -194,17 +201,17 @@
     function frame(t){
       if(!running)return;raf=requestAnimationFrame(frame);
       var dt=last?Math.min((t-last)/1000,0.05):0.016;last=t;
-      elapsed+=dt;
+      if(texReady)elapsed+=dt; // non avanzare finché la texture non è pronta
       var p=clamp(elapsed/DUR,0,1);
 
       // ── Camera timeline ──
       // 0.00–0.10 closeup Sri Lanka (lievissimo push-in) · 0.10–0.34 zoom-out
-      // lento→veloce (ease-in) · 0.34–0.46 stop sul globo · 0.46–1.0 rotta+arrivo
+      // lento→veloce con atterraggio morbido · 0.34–0.46 stop · 0.46–1.0 rotta+arrivo
       var dist;
       if(p<0.10){dist=lerp(START_DIST+0.04,START_DIST,smooth(0,0.10,p));}
-      else if(p<0.34){var z=smooth(0.10,0.34,p);z=z*z;dist=lerp(START_DIST,GLOBE_DIST,z);} // lento poi veloce
-      else if(p<0.46){dist=GLOBE_DIST;}                                                    // stop sul globo
-      else dist=lerp(GLOBE_DIST,ARRIVE_DIST,easeInOut(smooth(0.80,1.0,p)));               // rotta a distanza globo, poi avvicina
+      else if(p<0.34){dist=lerp(START_DIST,GLOBE_DIST,smooth(0.10,0.34,p));} // ease morbido: niente stacco meccanico
+      else if(p<0.46){dist=GLOBE_DIST;}                                       // stop sul globo
+      else dist=lerp(GLOBE_DIST,ARRIVE_DIST,easeInOut(smooth(0.80,1.0,p)));  // rotta a distanza globo, poi avvicina
       var drift=Math.sin(t*0.00016)*0.05*smooth(0.34,0.6,p)*(1-smooth(0.9,1,p));
       cam.position.set(drift,0,dist);
       cam.lookAt(0,0,0);
