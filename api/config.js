@@ -37,9 +37,14 @@ module.exports = async (req, res) => {
   const url = process.env.SUPABASE_URL || null;
   const anonKey = process.env.SUPABASE_ANON_KEY || null;
 
+  // Turnstile (verifica bot/human alla registrazione). La site key è PUBBLICA
+  // per definizione; il secret resta solo lato Supabase. Assente = check inattivo.
+  const turnstileSiteKey = process.env.TURNSTILE_SITE_KEY || null;
+
   return res.status(200).json({
     configured: Boolean(url && anonKey),
     url,
     anonKey,
+    turnstileSiteKey,
   });
 };

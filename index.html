@@ -4293,6 +4293,7 @@ async function subscribeNewsletter(){
         <label for="auth-pass" style="font-size:var(--text-xs);color:var(--fg-secondary);font-weight:500">Password</label>
         <input id="auth-pass" type="password" class="ch-in" style="min-height:42px" placeholder="••••••••" autocomplete="current-password" required/>
       </div>
+      <div id="auth-turnstile" style="display:none;margin-top:.2rem"></div>
       <button type="submit" class="btn-primary" style="justify-content:center;margin-top:.5rem" id="auth-submit">Accedi</button>
       <p id="auth-error-msg" role="alert" style="color:#e53e3e;font-size:var(--text-xs);text-align:center;min-height:1em;margin-top:.25rem"></p>
       <p id="auth-forgot-row" style="text-align:center;font-size:var(--text-xs);color:var(--fg-muted);margin-top:.1rem">
@@ -4849,6 +4850,11 @@ function applyAuthMode(){
   document.getElementById('auth-submit').textContent=signup?'Registrati gratis':'Accedi';
   document.getElementById('name-field').style.display=signup?'flex':'none';
   document.getElementById('auth-pass').setAttribute('autocomplete',signup?'new-password':'current-password');
+  var tsBox=document.getElementById('auth-turnstile');
+  if(tsBox&&window.EIH_AUTH&&window.EIH_AUTH.captchaEnabled&&window.EIH_AUTH.captchaEnabled()){
+    tsBox.style.display=signup?'block':'none';
+    if(signup)window.EIH_AUTH.renderCaptcha(tsBox);
+  }else if(tsBox){tsBox.style.display='none';}
   document.getElementById('auth-switch-text').textContent=signup?'Hai già un account?':'Non hai un account?';
   document.getElementById('auth-switch').textContent=signup?'Accedi':'Registrati';
   const forgotRow=document.getElementById('auth-forgot-row');
@@ -4867,11 +4873,19 @@ async function eihSubmitAuth(){
     try{
       await window.EIH_AUTH.ready;
       let res;
-      if(authMode==='signup'){res=await window.EIH_AUTH.signUp(email,pass,{name:name});}
+      if(authMode==='signup'){
+        let captchaToken='';
+        if(window.EIH_AUTH.captchaEnabled&&window.EIH_AUTH.captchaEnabled()){
+          captchaToken=window.EIH_AUTH.getCaptchaToken();
+          if(!captchaToken){if(errEl)errEl.textContent='Completa la verifica anti-bot.';if(btn){btn.disabled=false;btn.textContent='Registrati gratis';}return;}
+        }
+        res=await window.EIH_AUTH.signUp(email,pass,{name:name},captchaToken);
+      }
       else{res=await window.EIH_AUTH.signIn(email,pass);}
       if(res&&res.error){authErr=res.error;}
       else if(res&&!res.demo&&res.user&&!res.session){needConfirm=true;}
     }catch(e){authErr=e;}
+    if(authErr&&window.EIH_AUTH.resetCaptcha)window.EIH_AUTH.resetCaptcha();
   }else{
     try{localStorage.setItem('eih-registered','1');}catch(e){}
   }

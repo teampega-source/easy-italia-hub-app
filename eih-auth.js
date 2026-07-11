@@ -68,6 +68,23 @@
   var configured = false;  // true once we know a real backend is wired up
   var demo = true;         // default to demo; flipped off only on success
 
+  // ── Turnstile (verifica bot/human alla registrazione) ─────────────────────
+  var _tsWidget = null, _tsLoading = null;
+  function tsSiteKey() { try { return (typeof window !== "undefined" && window.EIH_TURNSTILE_SITEKEY) || null; } catch (e) { return null; } }
+  function tsLoadScript() {
+    if (typeof window !== "undefined" && window.turnstile) return Promise.resolve();
+    if (_tsLoading) return _tsLoading;
+    _tsLoading = new Promise(function (resolve) {
+      var s = document.createElement("script");
+      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      s.async = true; s.defer = true;
+      s.onload = function () { resolve(); };
+      s.onerror = function () { resolve(); };
+      document.head.appendChild(s);
+    });
+    return _tsLoading;
+  }
+
   // ── tiny, never-throwing localStorage helpers ─────────────────────────────
   function lsGet(key) {
     try { return localStorage.getItem(key); } catch (e) { return null; }
@@ -112,6 +129,8 @@
         });
       })
       .then(function (cfg) {
+        // Site key Turnstile (pubblica) per la verifica bot alla registrazione.
+        try { if (typeof window !== "undefined") window.EIH_TURNSTILE_SITEKEY = (cfg && cfg.turnstileSiteKey) || null; } catch (e) {}
         // 2) Not configured (today) → stay in demo mode, import nothing.
         if (!cfg || !cfg.configured || !cfg.url || !cfg.anonKey) {
           console.info("[EIH] Demo mode: no Supabase backend configured yet — using local storage.");
@@ -209,17 +228,39 @@
     // queries beyond the EIH_DB helpers. Accurate after `ready` resolves.
     client: function () { return supabase; },
 
+    /** Verifica bot attiva? (site key Turnstile presente) */
+    captchaEnabled: function () { return !!tsSiteKey(); },
+    /** Monta il widget Turnstile nel container dato (idempotente). */
+    renderCaptcha: function (el) {
+      var key = tsSiteKey();
+      if (!key || !el) return Promise.resolve(null);
+      return tsLoadScript().then(function () {
+        if (typeof window === "undefined" || !window.turnstile) return null;
+        if (_tsWidget != null) { try { window.turnstile.reset(_tsWidget); } catch (e) {} return _tsWidget; }
+        try { _tsWidget = window.turnstile.render(el, { sitekey: key, theme: "auto" }); } catch (e) { _tsWidget = null; }
+        return _tsWidget;
+      });
+    },
+    /** Token corrente del widget ('' se non ancora risolto). */
+    getCaptchaToken: function () {
+      try { return (window.turnstile && _tsWidget != null) ? (window.turnstile.getResponse(_tsWidget) || "") : ""; } catch (e) { return ""; }
+    },
+    /** Reset del widget (i token sono monouso). */
+    resetCaptcha: function () { try { if (window.turnstile && _tsWidget != null) window.turnstile.reset(_tsWidget); } catch (e) {} },
+
     /**
      * Register a user.
      *  REAL: supabase.auth.signUp; optional `meta` stored in user_metadata.
      *  DEMO: marks the local demo "account" so the existing gated pages work.
      * Returns { user, session, error } (REAL) or { user, demo:true } (DEMO).
      */
-    signUp: function (email, password, meta) {
+    signUp: function (email, password, meta, captchaToken) {
       return ready.then(function () {
         if (configured && supabase) {
+          var opts = { data: meta || {} };
+          if (captchaToken) opts.captchaToken = captchaToken;
           return supabase.auth
-            .signUp({ email: email, password: password, options: { data: meta || {} } })
+            .signUp({ email: email, password: password, options: opts })
             .then(function (res) {
               return { user: (res.data && res.data.user) || null, session: (res.data && res.data.session) || null, error: res.error || null };
             });
