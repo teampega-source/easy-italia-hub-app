@@ -26,7 +26,7 @@
   var TEX='/assets/vendor/planets/';
 
   var DUR=coarse?14.5:16.0;        // durata totale intro (s)
-  var START_DIST=1.28;             // closeup su Sri Lanka (bilanciato con texture 2K)
+  var START_DIST=1.2;              // closeup ravvicinato su Sri Lanka (texture 4K)
   var GLOBE_DIST=3.0;              // globo intero visibile
   var ARRIVE_DIST=2.4;            // leggero avvicinamento all'arrivo
 
@@ -80,7 +80,13 @@
     var loader=new T.TextureLoader();
     function tex(f,cb){return loader.load(TEX+f,function(t){t.colorSpace=T.SRGBColorSpace;t.anisotropy=Math.min(8,rnd.capabilities.getMaxAnisotropy());if(cb)cb(t);},undefined,function(){});}
     var earthMat=new T.MeshStandardMaterial({color:0x6f86ad,roughness:0.86,metalness:0.0});
-    tex('earth_atmos_2048.jpg',function(t){earthMat.map=t;earthMat.color.set(0xffffff);earthMat.needsUpdate=true;});
+    // Texture Terra 4K (closeup nitido su Sri Lanka) con fallback al 2K se non carica
+    function loadEarth(file,fallback){
+      loader.load(TEX+file,function(t){t.colorSpace=T.SRGBColorSpace;t.anisotropy=Math.min(8,rnd.capabilities.getMaxAnisotropy());
+        earthMat.map=t;earthMat.color.set(0xffffff);earthMat.needsUpdate=true;},undefined,
+        function(){if(fallback)loadEarth(fallback,null);});
+    }
+    loadEarth('earth_atmos_4096.jpg','earth_atmos_2048.jpg');
     // Luci notturne discrete: solo un lieve scintillio sul lato in ombra
     var lights=loader.load(TEX+'earth_lights_2048.png',function(t){t.colorSpace=T.SRGBColorSpace;},undefined,function(){});
     earthMat.emissive=new T.Color(0xffca7a);earthMat.emissiveMap=lights;earthMat.emissiveIntensity=0.32;
