@@ -2853,11 +2853,23 @@ footer{
 <main id="main-content">
 
 <!-- ─── HERO ─── -->
+<style>
+/* Testo lucido: sheen che scorre sul testo (adattamento vanilla di "Shiny Pill") */
+.eih-shiny{
+  background:linear-gradient(110deg,currentColor 42%,#fff 50%,currentColor 58%);
+  background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:eihShine 3.2s linear infinite}
+@keyframes eihShine{to{background-position:-220% 0}}
+@media (prefers-reduced-motion:reduce){
+  .eih-shiny{animation:none;background:none;-webkit-text-fill-color:currentColor}}
+</style>
 <section class="hero" aria-labelledby="hero-heading">
   <div class="hero-left">
     <p class="eyebrow">
       <span class="eyebrow-line" aria-hidden="true"></span>
-      <span data-i18n="hero.eyebrow">Guide · Assistente AI · Community</span>
+      <span class="eih-shiny" data-i18n="hero.eyebrow">Guide · Assistente AI · Community</span>
       <span class="eyebrow-line" aria-hidden="true"></span>
     </p>
 
