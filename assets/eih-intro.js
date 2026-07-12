@@ -32,7 +32,7 @@
   var TEX='/assets/vendor/planets/';
 
   var DUR=coarse?14.5:16.0;        // durata totale intro (s)
-  var START_DIST=coarse?1.5:1.2;   // mobile: closeup meno spinto (2K più nitida) · desktop: ravvicinato (4K)
+  var START_DIST=1.14;             // closeup vicinissimo su Sri Lanka (4K, sharp)
   var GLOBE_DIST=3.0;              // globo intero visibile
   var ARRIVE_DIST=2.4;            // leggero avvicinamento all'arrivo
 
@@ -94,16 +94,14 @@
         function(){if(fallback)loadEarth(fallback,null);else texReady=true;});
     }
     setTimeout(function(){texReady=true;},3000); // safety: parti comunque
-    // Su mobile: texture 2K (decode/upload molto più leggero → niente stall durante lo
-    // zoom) e nessuna mappa luci notturne. Desktop: 4K con fallback al 2K.
-    if(coarse){loadEarth('earth_atmos_2048.jpg',null);}
-    else{
-      loadEarth('earth_atmos_4096.jpg','earth_atmos_2048.jpg');
-      // Luci notturne discrete: solo un lieve scintillio sul lato in ombra
+    // Texture 4K su tutti i dispositivi (closeup nitido); lo stall di upload è mascherato
+    // dal fermo iniziale (texReady). Mappa luci notturne solo su desktop (upload extra).
+    loadEarth('earth_atmos_4096.jpg','earth_atmos_2048.jpg');
+    if(!coarse){
       var lights=loader.load(TEX+'earth_lights_2048.png',function(t){t.colorSpace=T.SRGBColorSpace;},undefined,function(){});
       earthMat.emissive=new T.Color(0xffca7a);earthMat.emissiveMap=lights;earthMat.emissiveIntensity=0.32;
     }
-    var earth=new T.Mesh(new T.SphereGeometry(1,coarse?64:96,coarse?64:96),earthMat);globe.add(earth);
+    var earth=new T.Mesh(new T.SphereGeometry(1,coarse?72:96,coarse?72:96),earthMat);globe.add(earth);
 
     // Atmosfera (Fresnel rim, blu pulito)
     var atmo=new T.Mesh(new T.SphereGeometry(1.055,coarse?40:64,coarse?40:64),new T.ShaderMaterial({
@@ -169,6 +167,8 @@
     // ── Helpers timeline ──
     function clamp(v,a,b){return v<a?a:v>b?b:v;}
     function smooth(a,b,t){t=clamp((t-a)/(b-a),0,1);return t*t*(3-2*t);}
+    // smootherstep (Perlin): derivata 1ª e 2ª nulle agli estremi → partenza/arrivo serici
+    function smoother(a,b,t){t=clamp((t-a)/(b-a),0,1);return t*t*t*(t*(t*6-15)+10);}
     function easeInOut(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
     function lerp(a,b,t){return a+(b-a)*t;}
 
@@ -204,24 +204,25 @@
       if(texReady)elapsed+=dt; // non avanzare finché la texture non è pronta
       var p=clamp(elapsed/DUR,0,1);
 
-      // ── Camera timeline ──
-      // 0.00–0.10 closeup Sri Lanka (lievissimo push-in) · 0.10–0.34 zoom-out
-      // lento→veloce con atterraggio morbido · 0.34–0.46 stop · 0.46–1.0 rotta+arrivo
+      // ── Camera timeline (flusso continuo, no stacchi) ──
+      // Breve respiro sul closeup → zoom-out serico (smootherstep) fino al globo →
+      // leggero avvicinamento all'arrivo. Nessuno stop netto: un'unica curva morbida.
       var dist;
-      if(p<0.10){dist=lerp(START_DIST+0.04,START_DIST,smooth(0,0.10,p));}
-      else if(p<0.34){dist=lerp(START_DIST,GLOBE_DIST,smooth(0.10,0.34,p));} // ease morbido: niente stacco meccanico
-      else if(p<0.46){dist=GLOBE_DIST;}                                       // stop sul globo
-      else dist=lerp(GLOBE_DIST,ARRIVE_DIST,easeInOut(smooth(0.80,1.0,p)));  // rotta a distanza globo, poi avvicina
-      var drift=Math.sin(t*0.00016)*0.05*smooth(0.34,0.6,p)*(1-smooth(0.9,1,p));
-      cam.position.set(drift,0,dist);
+      if(p<0.46){dist=lerp(START_DIST,GLOBE_DIST,smoother(0.06,0.46,p));}     // zoom-out ultra-morbido
+      else dist=lerp(GLOBE_DIST,ARRIVE_DIST,smoother(0.78,1.0,p));            // avvicinamento finale morbido
+      // Sway continuo (handheld leggero) così la scena è sempre "viva", mai congelata
+      var alive=smoother(0.04,0.22,p);
+      var driftX=Math.sin(t*0.00019)*0.055*alive;
+      var driftY=Math.cos(t*0.00015)*0.03*alive;
+      cam.position.set(driftX,driftY,dist);
       cam.lookAt(0,0,0);
 
-      // Rotazione globo: Sri Lanka → Italia durante la rotta
-      var rot=easeInOut(smooth(0.50,0.90,p));
+      // Rotazione globo Sri Lanka → Italia: parte dolce e si posa dolce (smootherstep)
+      var rot=smoother(0.46,0.94,p);
       globe.quaternion.slerpQuaternions(qSL,qIT,rot);
 
       // Arco disegnato progressivamente + aereo in testa (orientato lungo la rotta)
-      var da=smooth(0.52,0.90,p);
+      var da=smoother(0.50,0.92,p);
       var drawCount=Math.floor(da*(ARC_SEG+1));
       arc.geometry.setDrawRange(0,drawCount);
       arc.material.opacity=0.55+0.4*smooth(0.50,0.64,p);
