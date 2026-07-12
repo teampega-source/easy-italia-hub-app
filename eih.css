@@ -84,6 +84,18 @@ html.returning #preloader{display:none}
 .nav-logo{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:600;color:var(--ink);display:flex;align-items:center;gap:.55rem;letter-spacing:-.01em;text-decoration:none}
 .nav-logo .accent{color:var(--taupe)}
 .nav-logo-img{height:36px;width:auto;display:block;flex-shrink:0}
+/* Logo "Easy Italia Hub": testo lucido con glint dorato che scorre (ShinyPill) */
+.nav-logo-txt{
+  background:linear-gradient(110deg,var(--ink) 40%,#e8c874 50%,var(--ink) 60%);
+  background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:eihLogoShine 3.6s linear infinite}
+.nav-logo-txt .accent{-webkit-text-fill-color:transparent}
+@keyframes eihLogoShine{to{background-position:-220% 0}}
+@media (prefers-reduced-motion:reduce){
+  .nav-logo-txt{animation:none;background:none;-webkit-text-fill-color:var(--ink)}
+  .nav-logo-txt .accent{-webkit-text-fill-color:var(--taupe)}}
 .footer-logo-img{height:90px;width:auto;display:block;margin-bottom:var(--sp-2)}
 .nav-collapse{display:contents}
 .nav-links{display:flex;gap:var(--sp-3);list-style:none}
