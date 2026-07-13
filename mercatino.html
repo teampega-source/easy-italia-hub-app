@@ -259,7 +259,7 @@ window.EIH_I18N_EXTRA = {
       return row;
     }
     if(!loggedIn()){
-      var a = el('a','','Accedi per vedere il contatto'); a.href = '/percorso?auth=login&next=/mercatino';
+      var a = el('a','','Accedi per vedere il contatto'); a.href = '/registrati?mode=login&next=/mercatino';
       row.appendChild(a); return row;
     }
     var btn = el('button','','📞 Mostra contatto');
@@ -305,7 +305,7 @@ window.EIH_I18N_EXTRA = {
   // Pubblicazione riservata agli iscritti: chi non è loggato va alla registrazione
   var overlay = document.getElementById('modal-overlay');
   document.getElementById('btn-open-modal').addEventListener('click', function(){
-    if(!loggedIn()){ location.href = '/percorso?auth=signup&next=/mercatino'; return; }
+    if(!loggedIn()){ location.href = '/registrati?next=/mercatino'; return; }
     overlay.classList.add('open');
     document.getElementById('f-cat').focus();
   });
@@ -326,7 +326,7 @@ window.EIH_I18N_EXTRA = {
 
   document.getElementById('listing-form').addEventListener('submit', function(e){
     e.preventDefault();
-    if(!loggedIn()){ location.href = '/percorso?auth=signup&next=/mercatino'; return; }
+    if(!loggedIn()){ location.href = '/registrati?next=/mercatino'; return; }
     var f = function(id){ return document.getElementById(id).value.trim(); };
     var cat=f('f-cat'), title=f('f-title'), desc=f('f-desc'),
         price=f('f-price'), city=f('f-city'), contact=f('f-contact');

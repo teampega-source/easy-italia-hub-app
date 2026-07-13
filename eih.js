@@ -60,8 +60,8 @@
           '<a href="/cerca" class="nav-search-btn" aria-label="Cerca" title="Cerca"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>'+
           '<div class="lang-switch"><button class="lang-btn" id="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Lingua" onclick="EIH.toggleLang(event)"><span class="lang-flag" id="lang-flag">🇮🇹</span><span class="lang-code" id="lang-code">IT</span><svg class="lang-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>'+
             '<ul class="lang-menu" id="lang-menu" role="menu"><li><button role="menuitem" onclick="EIH.setLang(\'it\')"><span>🇮🇹</span> Italiano</button></li><li><button role="menuitem" onclick="EIH.setLang(\'en\')"><span>🇬🇧</span> English</button></li><li><button role="menuitem" onclick="EIH.setLang(\'si\')"><span>🇱🇰</span> සිංහල</button></li><li><button role="menuitem" onclick="EIH.setLang(\'ta\')"><span>🇱🇰</span> தமிழ்</button></li></ul></div>'+
-          '<button class="nav-login" data-i18n="nav.login" onclick="openAuth(\'login\')">Accedi</button>'+
-          '<button class="nav-cta" data-i18n="nav.signup" onclick="openAuth(\'signup\')">Registrati gratis</button>'+
+          '<button class="nav-login" data-i18n="nav.login" onclick="location.href=\'/registrati?mode=login\'">Accedi</button>'+
+          '<button class="nav-cta" data-i18n="nav.signup" onclick="location.href=\'/registrati\'">Registrati gratis</button>'+
         '</div>'+
         '<div class="nav-mobile-extra">'+
           '<div class="nav-m-sect">'+
