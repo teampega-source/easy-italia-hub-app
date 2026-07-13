@@ -9,7 +9,7 @@ html[data-theme="dark"]{
   --surface-hover:rgba(244,246,249,0.09);
   --border:rgba(188,193,201,0.16);
   --border-bright:rgba(188,193,201,0.32);
-  --taupe:#aab0b9;
+  --taupe:#d0b478; /* argento dorato: visibile su fondo scuro */
   --coral:#9aa0aa;
   --gold:#bcc1c9;--gold-dim:rgba(195,200,208,0.16);
   --blue:#bcc1c9;--blue-deep:#d6d9df;--blue-glow:rgba(195,200,208,0.20);
