@@ -16,20 +16,30 @@
     '.kw{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em}' +
     '.kwi{display:inline-block;will-change:transform}';
   document.head.appendChild(style);
-  document.documentElement.classList.add('has-lenis');
 
-  var lenis = new Lenis({ duration: 1.1, smoothWheel: true });
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
-  gsap.ticker.lagSmoothing(0);
+  // Su touch lo scroll resta 100% nativo: il loop RAF di Lenis e le animazioni
+  // scrub ruberebbero frame e farebbero scattare lo scrolling.
+  var TOUCH = window.matchMedia('(pointer:coarse)').matches;
+  var lenis = null;
+  if (!TOUCH) {
+    document.documentElement.classList.add('has-lenis');
+    lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
 
-  // Ancore interne via Lenis (compensa l'header fisso)
+  // Ancore interne (compensa l'header fisso)
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
       var id = a.getAttribute('href');
       if (id.length > 1) {
         var el = document.querySelector(id);
-        if (el) { e.preventDefault(); lenis.scrollTo(el, { offset: -72 }); }
+        if (el) {
+          e.preventDefault();
+          if (lenis) lenis.scrollTo(el, { offset: -72 });
+          else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 72, behavior: 'smooth' });
+        }
       }
     });
   });
@@ -117,7 +127,7 @@
   // Marquee reattivo: la velocità di scroll accelera lo scorrimento dei temi
   function initMarqueeVelocity() {
     var track = document.querySelector('.marquee-track');
-    if (!(track && track.getAnimations)) return;
+    if (!(lenis && track && track.getAnimations)) return;
     lenis.on('scroll', function () {
       var anim = track.getAnimations()[0];
       if (anim) anim.playbackRate = Math.min(4, 1 + Math.abs(lenis.velocity) * 0.10);
@@ -135,10 +145,8 @@
   }
 
   function initAll() {
-    initHeroParallax();
+    if (!TOUCH) { initHeroParallax(); initCardImageParallax(); initMarqueeVelocity(); }
     initKineticHeadings();
-    initMarqueeVelocity();
-    initCardImageParallax();
     ScrollTrigger.refresh();
   }
   // Su index il ritardo copre l'entrance CSS dell'hero; le pagine interne partono subito dopo il wipe
