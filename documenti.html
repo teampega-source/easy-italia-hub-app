@@ -182,7 +182,7 @@
         <div class="panel-head">
           <div>
             <h2 id="add-h" data-i18n="do.add_h">Aggiungi documento</h2>
-            <p class="panel-sub">Il file resta sul tuo dispositivo, non viene caricato.</p>
+            <p class="panel-sub" id="add-sub">Il file resta sul tuo dispositivo, non viene caricato.</p>
           </div>
         </div>
 
@@ -286,13 +286,13 @@
 <script src="eih.js"></script>
 <script>
 /* ═══════════════════════════════════════════════════════════
-   Archivio Documenti — storage 100% client-side.
-   Nessun backend, nessuna chiamata di rete: i FILE (Blob) e i
-   metadati vivono in IndexedDB nel browser, su questo dispositivo.
-   DB:    'eih-docs'  (v1)
-   Store: 'documents' keyPath 'id', autoIncrement
-          index 'categoria', index 'createdAt'
-   Record: { id, name, categoria, size, type, createdAt, expiry, blob }
+   Archivio Documenti — doppio binario.
+   REALE (utente loggato + Supabase): file nel bucket privato
+   'documents' (path <user_id>/…, RLS owner-only) + metadati
+   nella tabella public.documents. Apri/Scarica via signed URL.
+   DEMO (fallback): IndexedDB 'eih-docs' su questo dispositivo.
+   Record cache: { id, name, categoria, size, type, createdAt,
+                   expiry, [path, remote] }
    ═══════════════════════════════════════════════════════════ */
 (function(){
   "use strict";
@@ -344,6 +344,12 @@
   var db = null;
   var docs = [];                    // in-memory metadata cache (no blobs)
   var liveURLs = [];                // object URLs to revoke on unload
+  var sb = null;                    // client Supabase (null in demo)
+  var currentUser = null;           // utente loggato o null
+  var remoteMode = false;           // true = archivio cloud attivo
+
+  function docById(id){ return docs.find(function(d){ return d.id === id; }); }
+  function whereTxt(){ return remoteMode ? 'nel tuo account' : 'su questo dispositivo'; }
 
   function announce(msg){ if(elLive){ elLive.textContent=''; elLive.textContent = msg; } }
 
@@ -461,6 +467,43 @@
       req.onsuccess = function(){ resolve(); };
       req.onerror   = function(){ reject(req.error || new Error('delete failed')); };
     });
+  }
+
+  // ── Supabase layer (modo reale) ──────────────────────────
+  function mapRow(r){
+    return { id:r.id, name:r.name, categoria:r.categoria||'Altro', size:r.size_bytes,
+      type:r.mime||'', createdAt:Date.parse(r.created_at)||Date.now(),
+      expiry:r.expiry||'', path:r.storage_path, remote:true };
+  }
+  function remoteList(){
+    return sb.from('documents').select('*').order('created_at',{ascending:false})
+      .then(function(res){ return (res.data||[]).map(mapRow); });
+  }
+  function remoteAdd(file, meta){
+    var safe = file.name.replace(/[^\w.\-]+/g,'_').slice(-80);
+    var path = currentUser.id + '/' + Date.now().toString(36) + '-' + safe;
+    return sb.storage.from('documents').upload(path, file, {contentType:file.type||undefined})
+      .then(function(up){
+        if(up.error) throw up.error;
+        return sb.from('documents').insert({
+          user_id: currentUser.id, name: meta.name, categoria: meta.categoria,
+          mime: meta.type, size_bytes: meta.size, storage_path: path,
+          expiry: meta.expiry || null
+        }).select().single();
+      })
+      .then(function(res){
+        if(res.error){ sb.storage.from('documents').remove([path]); throw res.error; }
+        return mapRow(res.data);
+      });
+  }
+  function signedUrl(rec, downloadName){
+    var opts = downloadName ? {download: downloadName} : undefined;
+    return sb.storage.from('documents').createSignedUrl(rec.path, 300, opts)
+      .then(function(res){ return res.data && res.data.signedUrl; });
+  }
+  function remoteDelete(rec){
+    return sb.storage.from('documents').remove([rec.path])
+      .then(function(){ return sb.from('documents').delete().eq('id', rec.id); });
   }
 
   // ── object-URL helpers (revoke to avoid leaks) ───────────
@@ -598,15 +641,25 @@
 
     // lazy image thumbnail (kept cheap; revoked on unload)
     if(isImage(d.type)){
-      dbGet(d.id).then(function(full){
-        if(full && full.blob){
+      if(d.remote){
+        signedUrl(d).then(function(url){
+          if(!url) return;
           var img = document.createElement('img');
-          img.alt = '';
-          img.src = makeURL(full.blob);
+          img.alt = ''; img.src = url;
           thumb.textContent = '';
           thumb.appendChild(img);
-        }
-      }).catch(function(){ /* keep emoji fallback */ });
+        }).catch(function(){});
+      } else {
+        dbGet(d.id).then(function(full){
+          if(full && full.blob){
+            var img = document.createElement('img');
+            img.alt = '';
+            img.src = makeURL(full.blob);
+            thumb.textContent = '';
+            thumb.appendChild(img);
+          }
+        }).catch(function(){ /* keep emoji fallback */ });
+      }
     }
 
     return li;
@@ -619,7 +672,7 @@
     if(total === 0){
       var li = document.createElement('li');
       li.className = 'doc-empty';
-      li.innerHTML = 'Nessun documento ancora. Usa <strong>“Aggiungi documento”</strong> qui a sinistra: scegli un file, dai un nome e una categoria, e resterà al sicuro su questo dispositivo.';
+      li.innerHTML = 'Nessun documento ancora. Usa <strong>“Aggiungi documento”</strong> qui a sinistra: scegli un file, dai un nome e una categoria, e resterà al sicuro ' + whereTxt() + '.';
       elList.appendChild(li);
       renderCount(0, 0);
       return;
@@ -643,6 +696,15 @@
 
   // ── actions: open / download / delete ────────────────────
   function openDoc(id){
+    var meta = docById(id);
+    if(meta && meta.remote){
+      signedUrl(meta).then(function(url){
+        if(!url){ announce('Documento non trovato.'); return; }
+        window.open(url, '_blank', 'noopener');
+        announce('Documento aperto in una nuova scheda.');
+      }).catch(function(){ announce('Impossibile aprire il documento.'); });
+      return;
+    }
     dbGet(id).then(function(rec){
       if(!rec || !rec.blob){ announce('Documento non trovato.'); return; }
       var url = makeURL(rec.blob);
@@ -662,6 +724,16 @@
   }
 
   function downloadDoc(id){
+    var meta = docById(id);
+    if(meta && meta.remote){
+      signedUrl(meta, suggestFilename(meta)).then(function(url){
+        if(!url){ announce('Documento non trovato.'); return; }
+        var a = document.createElement('a');
+        a.href = url; document.body.appendChild(a); a.click(); a.remove();
+        announce('Download avviato.');
+      }).catch(function(){ announce('Impossibile scaricare il documento.'); });
+      return;
+    }
     dbGet(id).then(function(rec){
       if(!rec || !rec.blob){ announce('Documento non trovato.'); return; }
       var url = URL.createObjectURL(rec.blob);
@@ -692,8 +764,10 @@
 
   function deleteDoc(id, name){
     var label = name ? '“' + name + '”' : 'questo documento';
-    if(!window.confirm('Eliminare ' + label + ' da questo dispositivo?\n\nL\'operazione non può essere annullata.')) return;
-    dbDelete(id).then(function(){
+    if(!window.confirm('Eliminare ' + label + '?\n\nL\'operazione non può essere annullata.')) return;
+    var meta = docById(id);
+    var op = (meta && meta.remote) ? remoteDelete(meta) : dbDelete(id);
+    op.then(function(){
       docs = docs.filter(function(d){ return d.id !== id; });
       renderList();
       reflectPermission(); // keep reminder copy honest about count
@@ -729,23 +803,26 @@
     };
 
     elSubmit.disabled = true;
-    dbAdd(record).then(function(newId){
-      record.id = newId;
-      // push lightweight meta into cache (no blob)
-      docs.push({
-        id:newId, name:record.name, categoria:record.categoria,
-        size:record.size, type:record.type, createdAt:record.createdAt, expiry:record.expiry
-      });
+    function done(rec){
+      docs.push(rec);
       elForm.reset();
       showFile(null);
       setErr('');
       renderList();
       reflectPermission();
-      announce('Documento “' + record.name + '” salvato su questo dispositivo.');
+      announce('Documento “' + rec.name + '” salvato ' + whereTxt() + '.');
       // gentle notify if it expires soon and reminders are on
-      maybeNotifyOne(record);
-    }).catch(function(err){
-      setErr('Salvataggio non riuscito. Lo spazio del browser potrebbe essere pieno.');
+      maybeNotifyOne(rec);
+    }
+    var op = remoteMode
+      ? remoteAdd(file, record).then(done)
+      : dbAdd(record).then(function(newId){
+          done({ id:newId, name:record.name, categoria:record.categoria,
+            size:record.size, type:record.type, createdAt:record.createdAt, expiry:record.expiry });
+        });
+    op.catch(function(err){
+      setErr(remoteMode ? 'Caricamento non riuscito. Controlla la connessione e riprova.'
+                        : 'Salvataggio non riuscito. Lo spazio del browser potrebbe essere pieno.');
     }).then(function(){
       elSubmit.disabled = false;
     });
@@ -877,26 +954,7 @@
   // ── INIT ─────────────────────────────────────────────────
   checkRegistered();
 
-  if(!idbSupported()){
-    elUnsup.classList.add('show');
-    // disable the form gracefully
-    elSubmit.disabled = true;
-    elFile.disabled = true;
-    elList.innerHTML = '';
-    var li = document.createElement('li');
-    li.className = 'doc-empty';
-    li.textContent = 'Archiviazione locale non disponibile su questo browser.';
-    elList.appendChild(li);
-    reflectPermission();
-    return;
-  }
-
-  openDB().then(function(database){
-    db = database;
-    // older tab opened a newer version, etc. — handle version change
-    db.onversionchange = function(){ try{ db.close(); }catch(e){} };
-    return dbGetAllMeta();
-  }).then(function(meta){
+  function afterLoad(meta){
     docs = meta || [];
     renderList();
     reflectPermission();
@@ -904,14 +962,55 @@
     if(notifSupported() && Notification.permission === 'granted'){
       setTimeout(showSoonNotifications, 1400);
     }
-  }).catch(function(err){
-    // open failed (e.g. private mode blocking IDB) → treat as unsupported
-    elUnsup.classList.add('show');
-    elSubmit.disabled = true;
-    elFile.disabled = true;
-    renderCount(0,0);
-    reflectPermission();
-  });
+  }
+
+  function initLocal(){
+    if(!idbSupported()){
+      elUnsup.classList.add('show');
+      // disable the form gracefully
+      elSubmit.disabled = true;
+      elFile.disabled = true;
+      elList.innerHTML = '';
+      var li = document.createElement('li');
+      li.className = 'doc-empty';
+      li.textContent = 'Archiviazione locale non disponibile su questo browser.';
+      elList.appendChild(li);
+      reflectPermission();
+      return;
+    }
+    openDB().then(function(database){
+      db = database;
+      // older tab opened a newer version, etc. — handle version change
+      db.onversionchange = function(){ try{ db.close(); }catch(e){} };
+      return dbGetAllMeta();
+    }).then(afterLoad).catch(function(err){
+      // open failed (e.g. private mode blocking IDB) → treat as unsupported
+      elUnsup.classList.add('show');
+      elSubmit.disabled = true;
+      elFile.disabled = true;
+      renderCount(0,0);
+      reflectPermission();
+    });
+  }
+
+  // eih-auth.js è caricato dopo questo script: si parte a DOM pronto.
+  function boot(){
+    if(!window.EIH_AUTH){ initLocal(); return; }
+    EIH_AUTH.ready.then(function(){
+      sb = EIH_AUTH.client && EIH_AUTH.client();
+      if(!sb){ initLocal(); return; }
+      EIH_AUTH.getUser().then(function(u){
+        currentUser = (u && u.id) ? u : null;
+        if(!currentUser){ initLocal(); return; }
+        remoteMode = true;
+        var sub = document.getElementById('add-sub');
+        if(sub) sub.textContent = 'Il file viene salvato nel tuo archivio privato: solo tu puoi vederlo.';
+        remoteList().then(afterLoad).catch(function(){ initLocal(); });
+      });
+    }).catch(initLocal);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
 })();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
