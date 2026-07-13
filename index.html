@@ -2656,7 +2656,7 @@ footer{
   </div>
   <!-- CTAs -->
   <div class="nr-cta">
-    <a class="nr-cta-btn nr-cta-primary" href="/percorso" onclick="if(typeof openAuth==='function'){openAuth('signup');return false;}">
+    <a class="nr-cta-btn nr-cta-primary" href="/registrati">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       Unisciti gratis
     </a>
@@ -2711,8 +2711,8 @@ footer{
       <div class="nr-nav-sect" style="padding-bottom:.5rem">
         <p class="nr-nav-sh">Account</p>
         <ul class="nr-nav-ul">
-          <li><button class="nr-nav-lnk" onclick="openAuth('login')">Accedi</button></li>
-          <li><button class="nr-nav-lnk" onclick="openAuth('signup')">Registrati</button></li>
+          <li><button class="nr-nav-lnk" onclick="location.href='/registrati?mode=login'">Accedi</button></li>
+          <li><button class="nr-nav-lnk" onclick="location.href='/registrati'">Registrati</button></li>
           <li><a href="/abbonamenti">Abbonamenti</a></li>
         </ul>
       </div>
@@ -2724,8 +2724,8 @@ footer{
   <div class="nr-foot"><a href="/news">Tutte le news &rarr;</a></div>
   <!-- ─── Account footer (desktop ≥1280px only) ─── -->
   <div class="nr-sidebar-footer">
-    <button class="nr-sidebar-btn nr-sidebar-btn-primary" onclick="openAuth('signup')">Registrati gratis</button>
-    <button class="nr-sidebar-btn nr-sidebar-btn-ghost" onclick="openAuth('login')">Accedi</button>
+    <button class="nr-sidebar-btn nr-sidebar-btn-primary" onclick="location.href='/registrati'">Registrati gratis</button>
+    <button class="nr-sidebar-btn nr-sidebar-btn-ghost" onclick="location.href='/registrati?mode=login'">Accedi</button>
   </div>
 </aside>
 <script>
@@ -2880,7 +2880,7 @@ footer{
     <p class="hero-sub" data-i18n="hero.sub">Guide burocratiche, assistente AI multilingua, community di supporto e news aggiornate — in italiano, inglese, sinhala e tamil.</p>
 
     <div class="hero-actions">
-      <a href="/percorso" class="btn-primary btn-accent" onclick="if(typeof openAuth==='function'){openAuth('signup');return false;}">
+      <a href="/registrati" class="btn-primary btn-accent">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         <span data-i18n="hero.cta1">Inizia gratis</span>
       </a>
@@ -3107,7 +3107,7 @@ footer{
     <h2 id="cta-heading" class="cta-title" data-i18n-html="cta.title">Pronto a iniziare<br/><em style="font-style:italic;color:var(--gold)">il tuo percorso?</em></h2>
     <p class="cta-sub" data-i18n="cta.sub">Registrati gratis. Nessuna carta di credito richiesta.</p>
     <div class="cta-btns">
-      <a href="/percorso" class="btn-primary btn-accent" data-i18n="cta.btn1" onclick="if(typeof openAuth==='function'){openAuth('signup');return false;}">Crea il tuo account gratuito <span class="btn-arrow" aria-hidden="true">↗</span></a>
+      <a href="/registrati" class="btn-primary btn-accent" data-i18n="cta.btn1">Crea il tuo account gratuito <span class="btn-arrow" aria-hidden="true">↗</span></a>
       <a href="/chi-siamo" class="btn-ghost" data-i18n="cta.btn2">Scopri come funziona <span class="btn-arrow" aria-hidden="true">→</span></a>
     </div>
   </div>
@@ -4251,8 +4251,8 @@ async function subscribeNewsletter(){
     <div class="footer-col">
       <h4 data-i18n="footer.account">Account</h4>
       <ul>
-        <li><button class="nav-login" style="padding:0" onclick="openAuth('login')" data-i18n="nav.login">Accedi</button></li>
-        <li><button class="nav-login" style="padding:0" onclick="openAuth('signup')" data-i18n="footer.register">Registrati</button></li>
+        <li><button class="nav-login" style="padding:0" onclick="location.href='/registrati?mode=login'" data-i18n="nav.login">Accedi</button></li>
+        <li><button class="nav-login" style="padding:0" onclick="location.href='/registrati'" data-i18n="footer.register">Registrati</button></li>
         <li><a href="/abbonamenti" data-i18n="footer.subscriptions">Abbonamenti</a></li>
       </ul>
     </div>
@@ -4948,7 +4948,7 @@ function openPricing(){openModal('pricing-modal')}
 function closePricing(){closeModal('pricing-modal')}
 function startTrial(plan){
   closePricing();
-  openAuth('signup');
+  location.href='/registrati';
 }
 
 /* ── Keyboard: ESC closes, Tab is trapped inside the active modal ── */
