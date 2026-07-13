@@ -64,7 +64,7 @@
   // Tipografia cinetica: titoli sezione spezzati in parole rivelate in cascata.
   // I titoli usano data-i18n-html (il cambio lingua riscrive l'innerHTML):
   // un MutationObserver ri-spezza il testo dopo ogni traduzione.
-  var KIN_SEL = '.features .section-title, #faq-heading, .cta-title, #how-heading, #preview-heading, #testimonials-heading, #mission-heading, #roadmap-heading';
+  var KIN_SEL = '.features .section-title, #faq-heading, .cta-title, #how-heading, #preview-heading, #testimonials-heading, #mission-heading, #roadmap-heading, main h1:not(#hero-heading), .section-h2';
 
   function splitWords(el) {
     var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
@@ -141,6 +141,8 @@
     initCardImageParallax();
     ScrollTrigger.refresh();
   }
-  if (document.readyState === 'complete') setTimeout(initAll, 1300);
-  else window.addEventListener('load', function () { setTimeout(initAll, 1300); });
+  // Su index il ritardo copre l'entrance CSS dell'hero; le pagine interne partono subito dopo il wipe
+  var DELAY = document.querySelector('.hero') ? 1300 : 400;
+  if (document.readyState === 'complete') setTimeout(initAll, DELAY);
+  else window.addEventListener('load', function () { setTimeout(initAll, DELAY); });
 })();
