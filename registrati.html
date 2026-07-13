@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Registrati — Easy Italia Hub</title>
+<meta name="description" content="Crea il tuo account gratuito Easy Italia Hub: guide burocratiche, assistente AI multilingua, community e strumenti per la comunità srilankese in Italia."/>
+<meta name="robots" content="noindex"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="stylesheet" href="/eih.css"/>
+<style>
+  html,body{height:100%}
+  body{margin:0;overflow:hidden}
+  .reg-wrap{display:flex;height:100vh;height:100dvh}
+  /* ── colonna sinistra: iscrizione ── */
+  .reg-left{flex:0 0 46%;max-width:560px;display:flex;flex-direction:column;padding:2rem 3rem;overflow-y:auto;background:var(--bg-base,#fff)}
+  .reg-logo{display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--ink);font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:1.05rem;margin-bottom:2.2rem}
+  .reg-logo img{height:30px;width:auto}
+  .reg-main{margin:auto 0;max-width:400px;width:100%;align-self:center}
+  .reg-h1{font-family:'Clash Grotesk',sans-serif;font-size:clamp(1.6rem,2.6vw,2.1rem);font-weight:600;color:var(--ink);letter-spacing:-.02em;margin:0 0 .4rem}
+  .reg-sub{font-size:.92rem;color:var(--fg-secondary);margin:0 0 1.6rem;line-height:1.55}
+  .reg-google{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:.78rem 1rem;border:1px solid var(--border-bright);border-radius:var(--radius-full);background:var(--bg-elevated,#fff);color:var(--ink);font-size:.9rem;font-weight:500;cursor:pointer;transition:border-color .15s,background .15s}
+  .reg-google:hover{border-color:var(--gold)}
+  .reg-div{display:flex;align-items:center;gap:.8rem;margin:1.2rem 0;color:var(--fg-muted);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}
+  .reg-div::before,.reg-div::after{content:'';flex:1;height:1px;background:var(--border)}
+  .reg-field{display:flex;flex-direction:column;gap:.3rem;margin-bottom: .9rem}
+  .reg-field label{font-size:.78rem;font-weight:600;color:var(--fg-secondary)}
+  .reg-field input{padding:.7rem .9rem;border:1px solid var(--border-bright);border-radius:var(--radius);background:var(--bg-elevated,#fff);color:var(--fg);font-size:.92rem;outline:none;transition:border-color .15s}
+  .reg-field input:focus{border-color:var(--gold)}
+  .reg-submit{width:100%;padding:.82rem 1rem;border:none;border-radius:var(--radius-full);background:var(--gold);color:#fff;font-family:'Clash Grotesk',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;margin-top:.3rem;transition:opacity .15s}
+  .reg-submit:hover{opacity:.9}
+  .reg-submit:disabled{opacity:.55;cursor:default}
+  .reg-err{color:#c0392b;font-size:.82rem;min-height:1.1em;margin:.5rem 0 0}
+  .reg-switch{font-size:.85rem;color:var(--fg-secondary);margin-top:1.2rem;text-align:center}
+  .reg-switch button{background:none;border:none;padding:0;color:var(--gold);font-weight:600;cursor:pointer;font-size:.85rem}
+  .reg-note{font-size:.72rem;color:var(--fg-muted);line-height:1.5;margin-top:1.6rem;text-align:center}
+  .reg-note a{color:var(--fg-muted)}
+  #reg-turnstile{margin: .4rem 0}
+  /* ── colonna destra: video demo ── */
+  .reg-right{flex:1;position:relative;background:#12100e;overflow:hidden}
+  .reg-right video,.reg-right img.poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .reg-right .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.06) 40%,rgba(0,0,0,.55));pointer-events:none}
+  .reg-claim{position:absolute;left:2.4rem;right:2.4rem;bottom:2.2rem;color:#fff;pointer-events:none}
+  .reg-claim h2{font-family:'Clash Grotesk',sans-serif;font-size:clamp(1.3rem,2.2vw,1.9rem);font-weight:600;letter-spacing:-.02em;margin:0 0 .4rem;text-shadow:0 2px 18px rgba(0,0,0,.45)}
+  .reg-claim p{font-size:.92rem;opacity:.92;margin:0;max-width:520px;line-height:1.55;text-shadow:0 1px 12px rgba(0,0,0,.5)}
+  @media (max-width:880px){
+    body{overflow:auto}
+    .reg-wrap{flex-direction:column;height:auto;min-height:100dvh}
+    .reg-right{order:-1;flex:none;height:34vh;min-height:200px}
+    .reg-claim{left:1.2rem;right:1.2rem;bottom:1.1rem}
+    .reg-left{flex:none;max-width:none;padding:1.6rem 1.3rem 2.4rem}
+  }
+  html[data-theme="dark"] .reg-left{background:var(--bg-base)}
+</style>
+</head>
+<body data-page="registrati">
+<div class="reg-wrap">
+
+  <div class="reg-left">
+    <a class="reg-logo" href="/"><img src="/assets/img/logo-symbol.jpg" alt=""/>Easy Italia Hub</a>
+    <div class="reg-main">
+      <h1 class="reg-h1" id="reg-title">Crea il tuo account gratuito</h1>
+      <p class="reg-sub" id="reg-sub">Guide passo-passo, Consigliere AI in 4 lingue, documenti al sicuro e la community srilankese in Italia. Gratis.</p>
+
+      <button type="button" class="reg-google" id="reg-google">
+        <svg width="17" height="17" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3l5.7-5.7C34.3 6.1 29.4 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3l5.7-5.7C34.3 6.1 29.4 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.6-5.2l-6.3-5.3C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.5l6.3 5.3C41.4 34.9 44 30 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
+        Continua con Google
+      </button>
+
+      <div class="reg-div">oppure</div>
+
+      <form id="reg-form" novalidate>
+        <div class="reg-field" id="reg-name-field">
+          <label for="reg-name">Nome completo</label>
+          <input id="reg-name" type="text" placeholder="Mario Rossi" autocomplete="name"/>
+        </div>
+        <div class="reg-field">
+          <label for="reg-email">Email</label>
+          <input id="reg-email" type="email" placeholder="nome@email.com" autocomplete="email" required/>
+        </div>
+        <div class="reg-field">
+          <label for="reg-pass">Password</label>
+          <input id="reg-pass" type="password" placeholder="••••••••" autocomplete="new-password" required minlength="8"/>
+        </div>
+        <div id="reg-turnstile"></div>
+        <button type="submit" class="reg-submit" id="reg-submit">Registrati gratis</button>
+        <p class="reg-err" id="reg-err" role="alert"></p>
+      </form>
+
+      <p class="reg-switch"><span id="reg-switch-text">Hai già un account?</span> <button type="button" id="reg-switch">Accedi</button></p>
+      <p class="reg-note">Registrandoti accetti i <a href="/termini">Termini di Servizio</a> e la <a href="/privacy">Privacy Policy</a>.</p>
+    </div>
+  </div>
+
+  <div class="reg-right" aria-hidden="true">
+    <img class="poster" src="/assets/img/community-welcome.webp" alt=""/>
+    <video id="reg-video" autoplay muted loop playsinline preload="metadata" poster="/assets/img/community-welcome.webp" style="display:none">
+      <source src="/assets/video/signup-demo.mp4" type="video/mp4"/>
+    </video>
+    <div class="shade"></div>
+    <div class="reg-claim">
+      <h2>Tutta l'Italia, spiegata semplice.</h2>
+      <p>Permesso di soggiorno, lavoro, casa, sanità: guide verificate, un assistente AI che parla la tua lingua e una community che ti capisce.</p>
+    </div>
+  </div>
+
+</div>
+
+<script src="/eih-auth.js" defer></script>
+<script>
+(function(){
+  'use strict';
+  var mode = 'signup';
+  var params = new URLSearchParams(location.search);
+  if(params.get('mode') === 'login') mode = 'login';
+  var next = params.get('next');
+  var dest = (next && next.startsWith('/') && !next.startsWith('//')) ? next : '/dashboard';
+
+  var el = function(id){ return document.getElementById(id); };
+
+  function applyMode(){
+    var s = mode === 'signup';
+    el('reg-title').textContent = s ? 'Crea il tuo account gratuito' : 'Bentornato';
+    el('reg-sub').textContent = s ? 'Guide passo-passo, Consigliere AI in 4 lingue, documenti al sicuro e la community srilankese in Italia. Gratis.'
+                                  : 'Accedi al tuo account Easy Italia Hub.';
+    el('reg-name-field').style.display = s ? '' : 'none';
+    el('reg-submit').textContent = s ? 'Registrati gratis' : 'Accedi';
+    el('reg-switch-text').textContent = s ? 'Hai già un account?' : 'Non hai un account?';
+    el('reg-switch').textContent = s ? 'Accedi' : 'Registrati';
+    el('reg-pass').setAttribute('autocomplete', s ? 'new-password' : 'current-password');
+    var ts = el('reg-turnstile');
+    if(window.EIH_AUTH && EIH_AUTH.captchaEnabled && EIH_AUTH.captchaEnabled()){
+      ts.style.display = s ? '' : 'none';
+      if(s) EIH_AUTH.renderCaptcha(ts);
+    } else { ts.style.display = 'none'; }
+  }
+
+  el('reg-switch').addEventListener('click', function(){ mode = mode==='signup'?'login':'signup'; el('reg-err').textContent=''; applyMode(); });
+
+  el('reg-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var email=el('reg-email').value.trim(), pass=el('reg-pass').value, name=el('reg-name').value.trim();
+    var btn=el('reg-submit'), err=el('reg-err');
+    err.textContent='';
+    if(!email || !pass){ err.textContent='Inserisci email e password.'; return; }
+    btn.disabled=true;
+    var restore=function(){ btn.disabled=false; applyMode(); };
+
+    if(!window.EIH_AUTH){ try{localStorage.setItem('eih-registered','1');}catch(_){} location.href=dest; return; }
+    EIH_AUTH.ready.then(function(){
+      if(mode==='signup'){
+        var tok='';
+        if(EIH_AUTH.captchaEnabled && EIH_AUTH.captchaEnabled()){
+          tok = EIH_AUTH.getCaptchaToken();
+          if(!tok){ err.textContent='Completa la verifica anti-bot.'; restore(); return; }
+        }
+        return EIH_AUTH.signUp(email, pass, {name:name}, tok).then(handle);
+      }
+      return EIH_AUTH.signIn(email, pass).then(handle);
+    }).catch(function(){ err.textContent='Errore imprevisto. Riprova.'; restore(); });
+
+    function handle(res){
+      if(res && res.error){
+        if(EIH_AUTH.resetCaptcha) EIH_AUTH.resetCaptcha();
+        var m=(res.error.message||'').toLowerCase();
+        err.textContent = mode==='signup'
+          ? (m.includes('already')||m.includes('registered') ? 'Indirizzo già in uso. Prova ad accedere.' : 'Registrazione non riuscita. Riprova.')
+          : 'Email o password non corretti.';
+        restore(); return;
+      }
+      if(res && !res.demo && res.user && !res.session){
+        document.querySelector('.reg-main').innerHTML =
+          '<div style="text-align:center;padding:2rem 0"><div style="font-size:2.5rem;margin-bottom:1rem">📧</div>'+
+          '<h1 class="reg-h1">Controlla la tua email</h1>'+
+          '<p class="reg-sub">Abbiamo inviato un link a <strong>'+email.replace(/[<>&]/g,'')+'</strong>. Clicca sul link per attivare il tuo account, poi accedi.</p></div>';
+        return;
+      }
+      location.href = dest;
+    }
+  });
+
+  el('reg-google').addEventListener('click', function(){
+    var err=el('reg-err'); err.textContent='';
+    if(!window.EIH_AUTH){ err.textContent='Accesso Google non disponibile in modalità demo.'; return; }
+    EIH_AUTH.ready.then(function(){
+      return EIH_AUTH.signInWithGoogle(location.origin + dest);
+    }).then(function(res){
+      if(res && res.demo) err.textContent='Accesso Google non disponibile in modalità demo.';
+      else if(res && res.error) err.textContent='Accesso con Google non riuscito. Riprova.';
+    }).catch(function(){ err.textContent='Accesso con Google non riuscito. Riprova.'; });
+  });
+
+  // Se già loggato → vai direttamente a destinazione
+  function boot(){
+    applyMode();
+    if(window.EIH_AUTH){
+      EIH_AUTH.ready.then(function(){ return EIH_AUTH.getUser(); })
+        .then(function(u){ if(u && u.id) location.href = dest; })
+        .catch(function(){});
+    }
+    // Video: mostralo solo se il file esiste e può partire
+    var v = el('reg-video');
+    v.addEventListener('canplay', function(){ v.style.display='block'; });
+    v.load();
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+</body>
+</html>
