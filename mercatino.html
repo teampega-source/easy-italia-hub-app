@@ -64,6 +64,12 @@
     [data-page="mercatino"] .listing-city{font-size:var(--text-xs);color:var(--fg-muted)}
     [data-page="mercatino"] .listing-date{font-size:var(--text-xs);color:var(--fg-muted)}
     [data-page="mercatino"] .listings-empty{margin-top:var(--sp-3);padding:var(--sp-5);text-align:center;font-size:var(--text-base);color:var(--fg-muted);border:1px dashed var(--border-bright);border-radius:var(--radius)}
+    [data-page="mercatino"] .listing-contact{margin-top:.4rem;font-size:var(--text-sm)}
+    [data-page="mercatino"] .listing-contact button{background:none;border:none;padding:0;color:var(--gold);font-weight:600;cursor:pointer;font-size:var(--text-sm);text-decoration:underline}
+    [data-page="mercatino"] .listing-contact a{color:var(--gold);font-weight:600;text-decoration:none;word-break:break-all}
+    [data-page="mercatino"] .listing-contact .muted{color:var(--fg-muted);font-weight:400}
+    [data-page="mercatino"] .listing-card.featured{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold-dim)}
+    [data-page="mercatino"] .listing-feat{display:inline-block;font-size:var(--text-xs);font-weight:700;letter-spacing:.06em;color:var(--gold);text-transform:uppercase;margin-left:.4rem}
     [data-page="mercatino"] .cta-publish{background:var(--gold);color:#fff;border:none;padding:.75rem 1.5rem;border-radius:var(--radius-full);font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;cursor:pointer;transition:opacity .15s}
     [data-page="mercatino"] .cta-publish:hover{opacity:.88}
     [data-page="mercatino"] .publish-box{background:rgba(255,253,249,0.6);backdrop-filter:blur(16px);border:1px solid var(--border-bright);border-radius:calc(var(--radius)*1.5);padding:var(--sp-5);text-align:center;margin-top:var(--sp-4)}
@@ -203,10 +209,16 @@ window.EIH_I18N_EXTRA = {
   var empty = document.getElementById('listings-empty');
   var curCat = 'all';
 
+  var sb = null;           // client Supabase (null in demo mode)
+  var currentUser = null;  // utente loggato (con .id) o null
+  var ads = [];            // annunci correnti (remoti o locali)
+
   function loggedIn(){
+    if(currentUser) return true;
     try{ return localStorage.getItem('eih-registered')==='1'; }catch(e){ return false; }
   }
-  function load(){
+  // ── Fallback locale (solo demo mode, senza backend) ──
+  function loadLocal(){
     try{
       var all = JSON.parse(localStorage.getItem(LS_KEY)||'[]');
       var live = all.filter(function(l){ return Date.now()-l.ts < TTL; });
@@ -214,12 +226,20 @@ window.EIH_I18N_EXTRA = {
       return live;
     }catch(e){ return []; }
   }
+  // Normalizza una riga di marketplace_ads nel formato della card
+  function mapRow(r){
+    return { id:r.id, cat:r.category||'community', title:r.title, desc:r.body||'',
+      price:r.price_text||'', city:r.city||'', ts:Date.parse(r.created_at)||Date.now(),
+      featured: r.featured_until && Date.parse(r.featured_until) > Date.now(), remote:true };
+  }
+
   function el(tag, cls, text){
     var n = document.createElement(tag); n.className = cls; if(text) n.textContent = text; return n;
   }
   function card(l){
-    var c = el('div','listing-card'); c.dataset.cat = l.cat;
+    var c = el('div','listing-card' + (l.featured?' featured':'')); c.dataset.cat = l.cat;
     var badge = el('span','listing-badge badge-'+l.cat, (CAT_LABEL[l.cat]||l.cat).replace(/^\S+\s/,''));
+    if(l.featured) badge.appendChild(el('span','listing-feat','★ In evidenza'));
     var meta = el('div','listing-meta');
     meta.appendChild(el('span','listing-price', l.price||'—'));
     meta.appendChild(el('span','listing-city','📍 '+l.city));
@@ -227,12 +247,40 @@ window.EIH_I18N_EXTRA = {
     c.appendChild(el('div','listing-title', l.title));
     c.appendChild(el('div','listing-desc', l.desc));
     c.appendChild(meta);
+    c.appendChild(contactRow(l));
     c.appendChild(el('div','listing-date','Pubblicato: '+new Date(l.ts).toLocaleDateString('it-IT',{day:'numeric',month:'short',year:'numeric'})));
     return c;
   }
+  // Contatto: visibile solo ai membri loggati; anonimi vedono l'invito ad accedere.
+  function contactRow(l){
+    var row = el('div','listing-contact');
+    if(!l.remote){ // demo locale: contatto salvato nel record
+      if(l.contact){ row.appendChild(el('span','muted','Contatto: ')); row.appendChild(el('a','', l.contact)); }
+      return row;
+    }
+    if(!loggedIn()){
+      var a = el('a','','Accedi per vedere il contatto'); a.href = '/percorso?auth=login&next=/mercatino';
+      row.appendChild(a); return row;
+    }
+    var btn = el('button','','📞 Mostra contatto');
+    btn.addEventListener('click', function(){
+      btn.disabled = true; btn.textContent = '…';
+      sb.from('marketplace_ads').select('contact').eq('id', l.id).single().then(function(res){
+        row.innerHTML = '';
+        var val = res.data && res.data.contact;
+        if(val){ row.appendChild(el('span','muted','Contatto: ')); row.appendChild(el('a','', val)); }
+        else { row.appendChild(el('span','muted','Contatto non disponibile.')); }
+      });
+    });
+    row.appendChild(btn);
+    return row;
+  }
   function render(){
     grid.innerHTML = '';
-    load().sort(function(a,b){ return b.ts-a.ts; }).forEach(function(l){ grid.appendChild(card(l)); });
+    ads.slice().sort(function(a,b){
+      if(!!b.featured !== !!a.featured) return (b.featured?1:0)-(a.featured?1:0);
+      return b.ts-a.ts;
+    }).forEach(function(l){ grid.appendChild(card(l)); });
     applyFilter();
   }
   function applyFilter(){
@@ -267,25 +315,82 @@ window.EIH_I18N_EXTRA = {
   overlay.addEventListener('click', function(e){
     if(e.target === overlay) overlay.classList.remove('open');
   });
-  document.getElementById('listing-form').addEventListener('submit', function(e){
-    e.preventDefault();
-    if(!loggedIn()){ location.href = '/percorso?auth=signup&next=/mercatino'; return; }
-    var f = function(id){ return document.getElementById(id).value.trim(); };
-    var l = { id: Date.now().toString(36)+Math.random().toString(36).slice(2,7),
-      cat: f('f-cat'), title: f('f-title'), desc: f('f-desc'),
-      price: f('f-price'), city: f('f-city'), contact: f('f-contact'), ts: Date.now() };
-    if(!(l.cat && l.title && l.desc && l.city && l.contact)) return;
-    var all = load(); all.push(l);
-    try{ localStorage.setItem(LS_KEY, JSON.stringify(all)); }catch(err){}
-    this.reset();
+
+  function publishedOk(){
     overlay.classList.remove('open');
     render();
     var pb = document.getElementById('publish-box');
     var old = pb.querySelector('.publish-title');
     if(old) old.textContent = '✅ Annuncio pubblicato! È già visibile qui sopra.';
+  }
+
+  document.getElementById('listing-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!loggedIn()){ location.href = '/percorso?auth=signup&next=/mercatino'; return; }
+    var f = function(id){ return document.getElementById(id).value.trim(); };
+    var cat=f('f-cat'), title=f('f-title'), desc=f('f-desc'),
+        price=f('f-price'), city=f('f-city'), contact=f('f-contact');
+    if(!(cat && title && desc && city && contact)) return;
+    var form = this;
+
+    if(sb && currentUser){
+      var exp = new Date(Date.now()+TTL).toISOString();
+      sb.from('marketplace_ads').insert({
+        user_id: currentUser.id, category: cat, title: title, body: desc,
+        price_text: price, city: city, contact: contact,
+        status: 'published', expires_at: exp
+      }).select().single().then(function(res){
+        if(res.error || !res.data){ alert('Pubblicazione non riuscita. Riprova.'); return; }
+        form.reset();
+        ads.unshift(mapRow(res.data));
+        publishedOk();
+      });
+    } else {
+      // Demo mode (nessun backend): salva in locale
+      var l = { id: Date.now().toString(36)+Math.random().toString(36).slice(2,7),
+        cat: cat, title: title, desc: desc, price: price, city: city, contact: contact, ts: Date.now() };
+      var all = loadLocal(); all.push(l);
+      try{ localStorage.setItem(LS_KEY, JSON.stringify(all)); }catch(err){}
+      form.reset();
+      ads.unshift(l);
+      publishedOk();
+    }
   });
 
-  render();
+  // ── Init: se il backend è configurato, carica gli annunci pubblicati ──
+  function loadRemote(){
+    var nowIso = new Date().toISOString();
+    // Colonne esplicite: "contact" non è concesso al ruolo anon (PII protetta)
+    sb.from('marketplace_ads')
+      .select('id,category,title,body,price_text,city,created_at,featured_until,expires_at')
+      .eq('status','published')
+      .or('expires_at.gt.'+nowIso+',expires_at.is.null')
+      .order('featured_until',{ascending:false,nullsFirst:false})
+      .order('created_at',{ascending:false}).limit(200)
+      .then(function(res){
+        if(res.error || !res.data){ ads = []; render(); return; }
+        ads = res.data.map(mapRow);
+        render();
+      });
+  }
+
+  // eih-auth.js è caricato con defer: disponibile solo da DOMContentLoaded in poi.
+  function init(){
+    if(window.EIH_AUTH){
+      EIH_AUTH.ready.then(function(){
+        sb = EIH_AUTH.client && EIH_AUTH.client();
+        if(!sb){ ads = loadLocal(); render(); return; } // demo mode
+        EIH_AUTH.getUser().then(function(u){
+          currentUser = (u && u.id) ? u : null;
+          loadRemote();
+        });
+      }).catch(function(){ ads = loadLocal(); render(); });
+    } else {
+      ads = loadLocal(); render();
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
 </script>
 
