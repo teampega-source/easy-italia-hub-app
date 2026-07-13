@@ -37,6 +37,56 @@
 <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="eih.css"/>
 <style>
+/* ── Packaging hero: warm-on-warm, grana carta, prodotto fluttuante ── */
+.pkg-hero{position:relative;width:100vw;margin:calc(-1*var(--sp-5,4rem)) 0 var(--sp-5) calc(50% - 50vw);min-height:640px;overflow:hidden;
+  background:linear-gradient(180deg,#ffffff,#f2efe9 70%,#ece7dd);border-radius:0 0 28px 28px;border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:minmax(320px,540px) 1fr;align-items:center;gap:2rem;
+  padding:110px clamp(1.5rem,6vw,5.5rem) 70px}
+.pkg-glow{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(700px 540px at 70% 32%, rgba(185,153,92,.16), transparent 70%),
+             radial-gradient(900px 700px at 16% 92%, rgba(160,170,182,.14), transparent 70%)}
+.pkg-grain{position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23p)' opacity='.9'/%3E%3C/svg%3E")}
+.pkg-copy{position:relative;z-index:2}
+.pkg-copy .eyebrow{color:var(--gold);opacity:1}
+.pkg-copy .eyebrow-line{background:var(--gold)}
+.pkg-copy h1{color:var(--ink);font-size:clamp(2.5rem,4.6vw,4rem)}
+.pkg-copy h1 em{color:#b9995c;font-style:normal}
+.pkg-copy .lead{color:var(--fg-secondary);max-width:440px}
+.pkg-copy .lead strong{color:#8a6a30}
+.pkg-cta{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.4rem;background:var(--ink);color:#fff;
+  font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:1rem;padding:.85rem 1.9rem;border-radius:999px;text-decoration:none;
+  box-shadow:0 12px 34px rgba(22,20,18,.22);transition:transform .2s cubic-bezier(.16,1,.3,1)}
+.pkg-cta:hover{transform:translateY(-3px)}
+/* palco del prodotto */
+.pkg-stage{position:relative;z-index:2;height:460px;display:grid;place-items:center}
+.pkg-card{position:relative;width:280px;height:370px;border-radius:22px;will-change:transform;
+  background:linear-gradient(158deg,#d5bc8a 0%,#b9995c 48%,#9a7d45 100%);
+  border:1px solid rgba(255,240,205,.4);
+  box-shadow:0 26px 60px rgba(60,48,24,.28), inset 0 1px 0 rgba(255,248,230,.55);
+  display:flex;flex-direction:column;align-items:center;padding:34px 26px;color:#fff7e6}
+.pkg-card::after{content:'';position:absolute;inset:0;border-radius:22px;pointer-events:none;
+  background:linear-gradient(115deg,transparent 42%,rgba(255,248,225,.22) 50%,transparent 58%)}
+.pkg-card img{height:52px;border-radius:12px;margin-bottom:14px;box-shadow:0 6px 18px rgba(30,18,4,.3)}
+.pkg-card .pk-brand{font-family:'Clash Grotesk',sans-serif;font-size:.95rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#ffedc4}
+.pkg-card .pk-rule{width:44px;height:1px;background:rgba(255,240,205,.55);margin:18px 0}
+.pkg-card .pk-name{font-family:'Clash Grotesk',sans-serif;font-size:2.15rem;font-weight:600;letter-spacing:.04em}
+.pkg-card .pk-price{font-family:Satoshi,sans-serif;font-size:1rem;color:#ffe7b0;margin-top:6px}
+.pkg-card .pk-feats{margin-top:auto;font-family:Satoshi,sans-serif;font-size:.8rem;line-height:1.9;color:#f4e2ba;text-align:center}
+.pkg-shadow{position:absolute;bottom:28px;width:220px;height:34px;border-radius:50%;background:rgba(60,48,24,.25);filter:blur(14px);will-change:transform,opacity}
+.pkg-chip{position:absolute;background:#fff;color:#5d4a2c;border:1px solid var(--border-bright);font-family:Satoshi,sans-serif;font-size:.82rem;font-weight:600;
+  padding:.55rem 1rem;border-radius:999px;box-shadow:0 10px 26px rgba(60,48,24,.18);will-change:transform;white-space:nowrap}
+.pkg-chip.c1{top:12%;left:4%}
+.pkg-chip.c2{bottom:20%;right:2%}
+.pkg-chip.c3{top:22%;right:6%}
+@media (max-width:920px){
+  .pkg-hero{grid-template-columns:1fr;min-height:0;padding:96px 1.4rem 40px;gap:.6rem}
+  .pkg-stage{height:400px;transform:scale(.88)}
+  .pkg-chip.c1{left:0;top:2%}.pkg-chip.c2{right:0;bottom:4%}
+  .pkg-chip.c3{display:none}
+}
+@media (prefers-reduced-motion:reduce){.pkg-card,.pkg-chip,.pkg-shadow{transform:none!important}}
+
 .plan{padding:var(--sp-3);border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);display:flex;flex-direction:column;position:relative}
 .plan.featured{border-color:rgba(125,112,88,.5);background:rgba(125,112,88,.06)}
 .plan .flag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:.22rem .7rem;border-radius:99px;font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,var(--blue-deep),var(--blue));white-space:nowrap}
@@ -55,7 +105,6 @@
 </style>
 <script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
 <script>window.EIH_I18N_EXTRA={"en": {"page.h1": "Grow with<br/><em>an extra gear.</em>", "page.lead": "The information side — guides, news, community — stays <strong>free forever</strong>. Premium adds the tools that make the difference. Never pay for essential information.", "pl.base": "Base", "pl.prem": "Premium", "pl.pro": "Pro / Partner", "ab.1": "Free", "ab.2": "All the essential information, forever.", "ab.3": "Bureaucratic guides from official sources", "ab.4": "AI Advisor (~20 messages/day, 4 languages)", "ab.5": "My Journey (9 phases, 36 steps)", "ab.7": "Start free", "ab.8": "Most popular", "ab.9": "/month", "ab.10": "For those who are serious.", "ab.11": "Everything in Base", "ab.16": "Try Premium", "ab.18": "For tax-help centres, associations and employers.", "ab.22": "Multilingual support", "ab.23": "Contact us", "ab.24": "⚠️ Indicative prices for demo purposes. The guiding principle stays the same: <strong>earning by helping you grow, never from your hardship</strong>. No predatory ads, no high-interest loans.", "ab.25": "forever", "ab.26": "Map of cities and services", "ab.27": "Community and news", "ab.28": "1 deadline tracker", "ab.29": "or €39/year", "ab.30": "Unlimited AI Advisor with memory", "ab.31": "Unlimited deadline trackers with notifications", "ab.32": "Pre-filled PDF forms", "ab.33": "Full translator and medical dictionary", "ab.34": "Multi-member family profile", "ab.35": "Multi-client dashboard", "ab.36": "White-label tools", "ab.37": "Dedicated training and onboarding", "ab.soon": "coming soon"}, "si": {"page.h1": "වැඩෙන්න<br/><em>අමතර වේගයකින්.</em>", "page.lead": "තොරතුරු කොටස — මාර්ගෝපදේශ, පුවත්, ප්‍රජාව — <strong>සදහටම නොමිලේ</strong>. Premium මඟින් වෙනස ඇති කරන මෙවලම් එක් වේ. අත්‍යවශ්‍ය තොරතුරු සඳහා කිසිදා ගෙවන්න එපා.", "pl.base": "Base", "pl.prem": "Premium", "pl.pro": "Pro / Partner", "ab.1": "නොමිලේ", "ab.2": "අත්‍යවශ්‍ය තොරතුරු සියල්ල, සදහටම.", "ab.3": "නිල මූලාශ්‍රවලින් මාර්ගෝපදේශ", "ab.4": "AI උපදේශක (දිනකට පණිවිඩ ~20, භාෂා 4)", "ab.5": "මගේ ගමන (අදියර 9, පියවර 36)", "ab.7": "නොමිලේ අරඹන්න", "ab.8": "වඩාත් ජනප්‍රිය", "ab.9": "/මසකට", "ab.10": "බැරෑරුම් අයට.", "ab.11": "Base සැලැස්මේ සියල්ල", "ab.16": "Premium අත්හදා බලන්න", "ab.18": "CAF, සංගම් සහ සේවායෝජකයින් සඳහා.", "ab.22": "බහුභාෂා සහාය", "ab.23": "අප අමතන්න", "ab.24": "⚠️ මිල ගණන් ආදර්ශන අරමුණු සඳහා පමණි. මූලධර්මය එකයි: <strong>ඔබව වර්ධනය කිරීමෙන් උපයමු, කිසිදා ඔබේ දුෂ්කරතාවයෙන් නොවේ</strong>. කොල්ලකාරී දැන්වීම් නැත, අධික පොලී ණය නැත.", "ab.25": "සදහටම", "ab.26": "නගර සහ සේවා සිතියම", "ab.27": "ප්‍රජාව සහ පුවත්", "ab.28": "කල් ඉකුත්වීම් ට්‍රැකර 1ක්", "ab.29": "හෝ €39/වසරකට", "ab.30": "මතකය සහිත අසීමිත AI උපදේශක", "ab.31": "දැනුම්දීම් සහිත අසීමිත කල් ඉකුත්වීම් ට්‍රැකර", "ab.32": "පෙර පුරවන ලද PDF පෝරම", "ab.33": "සම්පූර්ණ පරිවර්තකය සහ වෛද්‍ය ශබ්දකෝෂය", "ab.34": "පවුල සඳහා බහු-සාමාජික පැතිකඩ", "ab.35": "බහු-සේවාදායක උපකරණ පුවරුව", "ab.36": "White-label මෙවලම්", "ab.37": "කැප වූ පුහුණුව සහ onboarding", "ab.soon": "ළඟදීම"}, "ta": {"page.h1": "வளருங்கள்<br/><em>கூடுதல் வேகத்துடன்.</em>", "page.lead": "தகவல் பகுதி — வழிகாட்டிகள், செய்திகள், சமூகம் — <strong>என்றும் இலவசம்</strong>. Premium வித்தியாசத்தை உருவாக்கும் கருவிகளைச் சேர்க்கிறது. அத்தியாவசிய தகவலுக்கு ஒருபோதும் பணம் செலுத்த வேண்டாம்.", "pl.base": "Base", "pl.prem": "Premium", "pl.pro": "Pro / Partner", "ab.1": "இலவசம்", "ab.2": "அத்தியாவசிய தகவல் அனைத்தும், என்றும்.", "ab.3": "அதிகாரப்பூர்வ மூலங்களிலிருந்து வழிகாட்டிகள்", "ab.4": "AI ஆலோசகர் (ஒரு நாளைக்கு ~20 செய்திகள், 4 மொழிகள்)", "ab.5": "என் பயணம் (9 கட்டங்கள், 36 படிகள்)", "ab.7": "இலவசமாகத் தொடங்கு", "ab.8": "மிகவும் பிரபலம்", "ab.9": "/மாதம்", "ab.10": "தீவிரமானவர்களுக்கு.", "ab.11": "Base திட்டத்தின் அனைத்தும்", "ab.16": "Premium முயற்சி செய்", "ab.18": "வரி உதவி மையங்கள், சங்கங்கள் மற்றும் முதலாளிகளுக்கு.", "ab.22": "பன்மொழி ஆதரவு", "ab.23": "எங்களைத் தொடர்பு கொள்ளுங்கள்", "ab.24": "⚠️ விலைகள் மாதிரி நோக்கங்களுக்காக மட்டுமே. வழிகாட்டும் கொள்கை ஒன்றே: <strong>உங்கள் வளர்ச்சிக்கு உதவி சம்பாதிப்போம், ஒருபோதும் உங்கள் கஷ்டத்திலிருந்து அல்ல</strong>. கொள்ளையடிக்கும் விளம்பரங்கள் இல்லை, அதிக வட்டிக் கடன்கள் இல்லை.", "ab.25": "என்றும்", "ab.26": "நகரங்கள் மற்றும் சேவைகளின் வரைபடம்", "ab.27": "சமூகம் மற்றும் செய்திகள்", "ab.28": "1 காலக்கெடு டிராக்கர்", "ab.29": "அல்லது €39/ஆண்டு", "ab.30": "நினைவகத்துடன் வரம்பற்ற AI ஆலோசகர்", "ab.31": "அறிவிப்புகளுடன் வரம்பற்ற காலக்கெடு டிராக்கர்கள்", "ab.32": "முன்பூர்த்தி செய்யப்பட்ட PDF படிவங்கள்", "ab.33": "முழு மொழிபெயர்ப்பாளர் மற்றும் மருத்துவ அகராதி", "ab.34": "பல உறுப்பினர் குடும்ப சுயவிவரம்", "ab.35": "பல-வாடிக்கையாளர் டாஷ்போர்டு", "ab.36": "White-label கருவிகள்", "ab.37": "பிரத்யேக பயிற்சி மற்றும் onboarding", "ab.soon": "விரைவில்"}};</script>
-  <link rel="stylesheet" href="/assets/eih-hero3d.css"/>
 </head>
 <body data-page="abbonamenti">
 <a href="#main" class="skip-link">Salta al contenuto</a>
@@ -67,11 +116,50 @@
 
 <main id="main">
   <div class="page">
-    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Abbonamenti</p>
-    <h1 class="reveal" data-i18n-html="page.h1">Cresci con<br/><em>una marcia in più.</em></h1>
-    <p class="lead reveal" data-i18n-html="page.lead">La parte informativa — guide, news, community — resta <strong>gratis per sempre</strong>. Premium aggiunge gli strumenti che fanno la differenza. Mai pagare per le informazioni essenziali.</p>
+    <section class="pkg-hero" aria-label="Premium">
+      <div class="pkg-glow" aria-hidden="true"></div>
+      <div class="pkg-grain" aria-hidden="true"></div>
+      <div class="pkg-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> Abbonamenti</p>
+        <h1 data-i18n-html="page.h1">Cresci con<br/><em>una marcia in più.</em></h1>
+        <p class="lead" data-i18n-html="page.lead">La parte informativa — guide, news, community — resta <strong>gratis per sempre</strong>. Premium aggiunge gli strumenti che fanno la differenza. Mai pagare per le informazioni essenziali.</p>
+        <a class="pkg-cta" href="#plans">Scopri i piani <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="pkg-stage" aria-hidden="true">
+        <div class="pkg-shadow" id="pkg-shadow"></div>
+        <div class="pkg-card" id="pkg-card">
+          <img src="/assets/img/logo-symbol.jpg" alt=""/>
+          <div class="pk-brand">Easy Italia Hub</div>
+          <div class="pk-rule"></div>
+          <div class="pk-name">Premium</div>
+          <div class="pk-price">€4,99/mese · o €39/anno</div>
+          <div class="pk-feats">Consigliere AI illimitato<br/>Promemoria scadenze<br/>Moduli PDF precompilati</div>
+        </div>
+        <div class="pkg-chip c1" id="pkg-c1">🤖 AI illimitato</div>
+        <div class="pkg-chip c2" id="pkg-c2">⏰ Promemoria scadenze</div>
+        <div class="pkg-chip c3" id="pkg-c3">📄 Moduli PDF</div>
+      </div>
+    </section>
+    <script>
+    /* Gentle float: y = ampiezza · sin(tempo · velocità) — fasi diverse per profondità */
+    (function(){
+      if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var card=document.getElementById('pkg-card'), sh=document.getElementById('pkg-shadow');
+      var chips=[[document.getElementById('pkg-c1'),7,.0011,0],[document.getElementById('pkg-c2'),9,.0009,2.1],[document.getElementById('pkg-c3'),6,.0013,4.2]];
+      function tick(t){
+        var y = 12 * Math.sin(t * .0008);
+        card.style.transform = 'translateY(' + y + 'px) rotate(' + (1.4 * Math.sin(t * .0005)) + 'deg)';
+        var k = (y + 12) / 24; /* 0=alto, 1=basso: l'ombra respira in controfase */
+        sh.style.transform = 'scale(' + (0.82 + k * 0.24) + ')';
+        sh.style.opacity = 0.30 + k * 0.22;
+        chips.forEach(function(c){ c[0].style.transform = 'translateY(' + (c[1] * Math.sin(t * c[2] + c[3])) + 'px)'; });
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+    </script>
 
-    <div class="card-grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));align-items:stretch;margin-top:var(--sp-4)">
+    <div class="card-grid reveal" id="plans" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));align-items:stretch;margin-top:var(--sp-4)">
       <div class="plan">
         <div class="pname" data-i18n="pl.base">Base</div>
         <div class="price"><span class="amt" data-i18n="ab.1">Gratis</span><span class="per" data-i18n="ab.25">per sempre</span></div>
@@ -152,7 +240,6 @@ async function startCheckout(){
   }
 })();
 </script>
-  <script src="/assets/eih-hero3d.js" defer></script>
 <script src="/assets/vendor/lenis.min.js" defer></script>
 <script src="/assets/vendor/gsap.min.js" defer></script>
 <script src="/assets/vendor/ScrollTrigger.min.js" defer></script>
