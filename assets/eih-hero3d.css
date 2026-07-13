@@ -4,7 +4,8 @@
 .eih-h3d *{box-sizing:border-box}
 @media(min-width:1024px){.eih-h3d{display:block}}
 
-.eih-h3d .h3d-glow{position:absolute;left:50%;top:50%;width:82%;height:82%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--h3d-accent,var(--gold)) 38%,transparent),transparent 70%);filter:blur(16px);opacity:.65}
+.eih-h3d .h3d-glow{position:absolute;left:50%;top:50%;width:82%;height:82%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--h3d-accent,var(--gold)) 26%,transparent),transparent 70%);filter:blur(16px);opacity:.42}
+.eih-h3d .h3d-shadow{position:absolute;left:50%;bottom:3%;width:50%;height:6%;transform:translateX(-50%);border-radius:50%;background:rgba(58,50,36,.20);filter:blur(10px);opacity:.24}
 
 /* ---- card scene ---- */
 .h3d-card{position:absolute;left:50%;top:50%;width:56%;height:70%;transform:translate(-50%,-50%) rotateY(-15deg) rotateX(6deg);transform-style:preserve-3d;border-radius:22px;background:linear-gradient(155deg,color-mix(in srgb,var(--surface) 86%,var(--h3d-accent,var(--gold)) 8%),var(--bg-elevated));border:1px solid var(--border-bright);box-shadow:0 26px 50px -18px rgba(20,30,48,.5),inset 0 1px 0 rgba(255,255,255,.4);display:grid;place-items:center;animation:h3dCard 9s ease-in-out infinite}

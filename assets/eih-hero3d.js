@@ -62,6 +62,7 @@
       '<div class="h3d-lens"><span class="m-tex"></span><span class="l-glass"></span><span class="l-handle"></span></div>';
   }else{
     html='<span class="h3d-glow"></span>'+
+      '<span class="h3d-shadow"></span>'+
       '<div class="h3d-card"><svg viewBox="0 0 24 24" aria-hidden="true">'+(G[glyph]||G.spark)+'</svg></div>'+
       '<span class="h3d-ring"></span>';
   }
@@ -91,7 +92,27 @@
         .from(stage.querySelectorAll('.h3d-glow,.h3d-ring,.h3d-orbit,.h3d-pin,.h3d-plane,.h3d-lens,.m-pin'),{opacity:0,duration:.5,stagger:.05,ease:'power2.out'},'-=.6');
     }else stage.classList.add('in');
   }
+  // Float sinusoidale (y = A·sin(t·v)) con ombra in controfase.
+  // Tre varianti, assegnate per pagina: 0 galleggia+ruota, 1 ondeggia in
+  // prospettiva, 2 respira. Sostituisce la keyframe CSS della card.
+  function initFloat(){
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+    var card=stage.querySelector('.h3d-card');if(!card)return;
+    var sh=stage.querySelector('.h3d-shadow');
+    var hash=0;for(var i=0;i<page.length;i++)hash=(hash*31+page.charCodeAt(i))>>>0;
+    var v=hash%3;
+    card.style.animation='none';
+    function frame(t){
+      var y=10*Math.sin(t*.0008);
+      if(v===0)card.style.transform='translate(-50%,-50%) rotateY(-12deg) rotateX(5deg) translateY('+y+'px) rotateZ('+(1.2*Math.sin(t*.0005))+'deg)';
+      else if(v===1)card.style.transform='translate(-50%,-50%) rotateY('+(-14+10*Math.sin(t*.0006))+'deg) rotateX('+(5-3*Math.sin(t*.0008))+'deg) translateY('+(y*.5)+'px)';
+      else card.style.transform='translate(-50%,-50%) rotateY(-12deg) rotateX(5deg) translateY('+y+'px) scale('+(1+.014*Math.sin(t*.0007))+')';
+      if(sh){var k=(y+10)/20;sh.style.transform='translateX(-50%) scale('+(0.85+k*0.25)+')';sh.style.opacity=0.16+k*0.14;}
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
   place();
-  requestAnimationFrame(function(){place();reveal();});
+  requestAnimationFrame(function(){place();reveal();initFloat();});
   addEventListener('resize',place,{passive:true});
 })();
