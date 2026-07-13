@@ -192,18 +192,34 @@
     }).catch(function(){ err.textContent='Accesso con Google non riuscito. Riprova.'; });
   });
 
-  // Se già loggato → vai direttamente a destinazione
   function boot(){
     applyMode();
+    // Già loggato: niente redirect automatico, solo un invito alla dashboard
     if(window.EIH_AUTH){
       EIH_AUTH.ready.then(function(){ return EIH_AUTH.getUser(); })
-        .then(function(u){ if(u && u.id) location.href = dest; })
-        .catch(function(){});
+        .then(function(u){
+          if(u && u.id){
+            var n = document.createElement('p');
+            n.className = 'reg-switch';
+            n.innerHTML = 'Sei già registrato. <a href="'+dest+'" style="color:var(--gold);font-weight:600">Vai alla tua area →</a>';
+            document.querySelector('.reg-main').prepend(n);
+          }
+        }).catch(function(){});
     }
-    // Video: mostralo solo se il file esiste e può partire
+    // Video: mostralo appena è decodificabile (robusto anche se gli eventi
+    // sono già passati o l'autoplay parte in ritardo su mobile)
     var v = el('reg-video');
-    v.addEventListener('canplay', function(){ v.style.display='block'; });
-    v.load();
+    function show(){
+      if(v.style.display !== 'block'){ v.style.display = 'block'; }
+      var p = v.play(); if(p && p.catch) p.catch(function(){});
+    }
+    ['canplay','canplaythrough','loadeddata'].forEach(function(ev){ v.addEventListener(ev, show); });
+    if(v.readyState >= 2) show();
+    var tries = 0;
+    var iv = setInterval(function(){
+      if(v.readyState >= 2){ show(); clearInterval(iv); }
+      else if(++tries > 40) clearInterval(iv);
+    }, 250);
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
