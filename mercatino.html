@@ -63,6 +63,7 @@
     [data-page="mercatino"] .listing-price{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;color:var(--gold)}
     [data-page="mercatino"] .listing-city{font-size:var(--text-xs);color:var(--fg-muted)}
     [data-page="mercatino"] .listing-date{font-size:var(--text-xs);color:var(--fg-muted)}
+    [data-page="mercatino"] .listings-empty{margin-top:var(--sp-3);padding:var(--sp-5);text-align:center;font-size:var(--text-base);color:var(--fg-muted);border:1px dashed var(--border-bright);border-radius:var(--radius)}
     [data-page="mercatino"] .cta-publish{background:var(--gold);color:#fff;border:none;padding:.75rem 1.5rem;border-radius:var(--radius-full);font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;cursor:pointer;transition:opacity .15s}
     [data-page="mercatino"] .cta-publish:hover{opacity:.88}
     [data-page="mercatino"] .publish-box{background:rgba(255,253,249,0.6);backdrop-filter:blur(16px);border:1px solid var(--border-bright);border-radius:calc(var(--radius)*1.5);padding:var(--sp-5);text-align:center;margin-top:var(--sp-4)}
@@ -91,7 +92,7 @@
     <p class="lead reveal" data-i18n="page.lead">Annunci gratuiti della comunità srilankese in Italia. Lavoro, servizi, oggetti usati, alloggi e molto altro.</p>
 
     <div class="draft-banner reveal" role="note">
-      <strong>Mercatino in fase beta.</strong> Gli annunci vengono verificati prima della pubblicazione. Inserzione gratuita — nessun account richiesto per ora.
+      <strong>Mercatino in fase beta.</strong> Per pubblicare serve un account gratuito. Gli annunci vanno subito online e restano visibili per 30 giorni.
     </div>
 
     <!-- FILTRI -->
@@ -106,113 +107,13 @@
     </div>
 
     <!-- LISTINGS -->
-    <div class="listings-grid reveal" id="listings-grid">
-
-      <div class="listing-card" data-cat="servizi">
-        <span class="listing-badge badge-servizi">Servizi</span>
-        <div class="listing-title">Traduttore / interprete srilankese-italiano</div>
-        <div class="listing-desc">Disponibile per accompagnamento in uffici pubblici, questura, ospedale. Sinhala e Tamil. Disponibile dal lunedì al sabato.</div>
-        <div class="listing-meta">
-          <span class="listing-price">€20/ora</span>
-          <span class="listing-city">📍 Milano</span>
-        </div>
-        <div class="listing-date">Pubblicato: 20 giu 2025</div>
-      </div>
-
-      <div class="listing-card" data-cat="lavoro">
-        <span class="listing-badge badge-lavoro">Lavoro</span>
-        <div class="listing-title">Cerco babysitter/badante part-time</div>
-        <div class="listing-desc">Famiglia italiana cerca persona di fiducia per assistere anziana non autosufficiente. Pomeriggi e week-end. Contratto regolare.</div>
-        <div class="listing-meta">
-          <span class="listing-price">€1.100/mese</span>
-          <span class="listing-city">📍 Roma</span>
-        </div>
-        <div class="listing-date">Pubblicato: 18 giu 2025</div>
-      </div>
-
-      <div class="listing-card" data-cat="alloggi">
-        <span class="listing-badge badge-alloggi">Alloggi</span>
-        <div class="listing-title">Stanza singola disponibile da luglio</div>
-        <div class="listing-desc">Appartamento condiviso, 3 camere. Zona ben collegata. Cucina e bagno in comune. Ambiente tranquillo, preferibilmente donna.</div>
-        <div class="listing-meta">
-          <span class="listing-price">€420/mese</span>
-          <span class="listing-city">📍 Torino</span>
-        </div>
-        <div class="listing-date">Pubblicato: 17 giu 2025</div>
-      </div>
-
-      <div class="listing-card" data-cat="oggetti">
-        <span class="listing-badge badge-oggetti">Oggetti</span>
-        <div class="listing-title">Lavatrice Samsung 7kg — ottime condizioni</div>
-        <div class="listing-desc">Usata 2 anni, funziona perfettamente. Vendo perché mi trasferisco. Ritiro a mano, disponibile sabato mattina.</div>
-        <div class="listing-meta">
-          <span class="listing-price">€120</span>
-          <span class="listing-city">📍 Genova</span>
-        </div>
-        <div class="listing-date">Pubblicato: 15 giu 2025</div>
-      </div>
-
-      <div class="listing-card" data-cat="servizi">
-        <span class="listing-badge badge-servizi">Servizi</span>
-        <div class="listing-title">Spedizioni Sri Lanka — raccolte mensili</div>
-        <div class="listing-desc">Raccolta pacchi ogni primo venerdì del mese. Consegna porta a porta in Sri Lanka. Assicurazione inclusa. Prezzi a chilo.</div>
-        <div class="listing-meta">
-          <span class="listing-price">€6/kg</span>
-          <span class="listing-city">📍 Bergamo</span>
-        </div>
-        <div class="listing-date">Pubblicato: 12 giu 2025</div>
-      </div>
-
-      <div class="listing-card" data-cat="lavoro">
-        <span class="listing-badge badge-lavoro">Lavoro</span>
-        <div class="listing-title">Cuoco srilankese cerca lavoro</div>
-        <div class="listing-desc">10 anni di esperienza in cucina italiana e asiatica. Disponibile full-time. Permesso di soggiorno valido, referenze disponibili.</div>
-        <div class="listing-meta">
-          <span class="listing-price">Trattabile</span>
-          <span class="listing-city">📍 Bologna</span>
-        </div>
-        <div class="listing-date">Pubblicato: 10 giu 2025</div>
-      </div>
-
-      <div class="listing-card" data-cat="auto">
-        <span class="listing-badge badge-auto">Auto/Moto</span>
-        <div class="listing-title">Fiat Panda 2018 — benzina</div>
-        <div class="listing-desc">90.000 km, revisione appena fatta, aria condizionata. Motivo vendita: acquisto auto più grande. Disponibile a visionare il week-end.</div>
-        <div class="listing-meta">
-          <span class="listing-price">€5.800</span>
-          <span class="listing-city">📍 Napoli</span>
-        </div>
-        <div class="listing-date">Pubblicato: 8 giu 2025</div>
-      </div>
-
-      <div class="listing-card" data-cat="community">
-        <span class="listing-badge badge-community">Community</span>
-        <div class="listing-title">Lezioni sinhala per bambini — domenica</div>
-        <div class="listing-desc">Classe sinhala ogni domenica mattina per bambini 5-12 anni. Associazione culturale srilankese. Quota simbolica €10/mese.</div>
-        <div class="listing-meta">
-          <span class="listing-price">€10/mese</span>
-          <span class="listing-city">📍 Milano</span>
-        </div>
-        <div class="listing-date">Pubblicato: 5 giu 2025</div>
-      </div>
-
-      <div class="listing-card" data-cat="servizi">
-        <span class="listing-badge badge-servizi">Servizi</span>
-        <div class="listing-title">Contabile per dichiarazioni dei redditi</div>
-        <div class="listing-desc">Commercialista con esperienza con lavoratori stranieri. Dichiarazione 730, ISEE, apertura Partita IVA. Consulenza anche online.</div>
-        <div class="listing-meta">
-          <span class="listing-price">da €80</span>
-          <span class="listing-city">📍 Roma</span>
-        </div>
-        <div class="listing-date">Pubblicato: 3 giu 2025</div>
-      </div>
-
-    </div>
+    <div class="listings-grid reveal" id="listings-grid"></div>
+    <p class="listings-empty" id="listings-empty" data-i18n="list.empty" hidden>Non ci sono annunci per il momento.</p>
 
     <!-- PUBBLICA ANNUNCIO -->
     <div class="publish-box reveal" id="publish-box">
       <div class="publish-title" data-i18n="publish.title">Hai qualcosa da offrire o cercare?</div>
-      <p class="publish-desc" data-i18n="publish.desc">Pubblica il tuo annuncio gratuitamente. Viene verificato entro 24 ore e rimane visibile per 30 giorni.</p>
+      <p class="publish-desc" data-i18n="publish.desc">Pubblica il tuo annuncio gratuitamente: va subito online e resta visibile per 30 giorni. Serve un account gratuito.</p>
       <button class="cta-publish" id="btn-open-modal" data-i18n="publish.cta">Pubblica annuncio</button>
     </div>
 
@@ -257,7 +158,7 @@
         </div>
         <div class="modal-actions">
           <button type="button" class="btn-cancel" id="btn-cancel">Annulla</button>
-          <button type="submit" class="btn-submit">Invia per revisione</button>
+          <button type="submit" class="btn-submit">Pubblica</button>
         </div>
       </form>
     </div>
@@ -271,45 +172,92 @@ window.EIH_I18N_EXTRA = {
     "page.h1": "Community<br><em>Marketplace</em>",
     "page.lead": "Free classifieds from the Sri Lankan community in Italy. Jobs, services, used goods, housing and more.",
     "publish.title": "Have something to offer or looking for something?",
-    "publish.desc": "Post your ad for free. It will be reviewed within 24 hours and stays visible for 30 days.",
-    "publish.cta": "Post an ad"
+    "publish.desc": "Post your ad for free: it goes live right away and stays visible for 30 days. A free account is required.",
+    "publish.cta": "Post an ad",
+    "list.empty": "No listings at the moment."
   },
   si: {
     "page.eyebrow": "ප්‍රජාව",
     "page.h1": "ප්‍රජා<br><em>වෙළඳසැල</em>",
     "page.lead": "ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාවේ නොමිලේ දැන්වීම්. රැකියා, සේවා, භාවිතා කළ භාණ්ඩ, නිවාස සහ තවත් බොහෝ දේ.",
     "publish.title": "කිසිවක් ඉදිරිපත් කිරීමට හෝ සෙවීමට තිබේද?",
-    "publish.desc": "ඔබේ දැන්වීම නොමිලේ ඉදිරිපත් කරන්න. දිනක් ඇතුළත සමාලෝචනය වේ.",
-    "publish.cta": "දැන්වීම ලිවීමට"
+    "publish.desc": "ඔබේ දැන්වීම නොමිලේ පළ කරන්න: එය වහාම සජීවී වේ, දින 30ක් පෙනේ. නොමිලේ ගිණුමක් අවශ්‍යයි.",
+    "publish.cta": "දැන්වීම ලිවීමට",
+    "list.empty": "දැනට දැන්වීම් නොමැත."
   },
   ta: {
     "page.eyebrow": "சமூகம்",
     "page.h1": "சமூக<br><em>சந்தை</em>",
     "page.lead": "இத்தாலியில் உள்ள இலங்கை சமூகத்தின் இலவச விளம்பரங்கள். வேலை, சேவைகள், பயன்படுத்திய பொருட்கள், வீடு மற்றும் பலவற்றை கண்டறியவும்.",
     "publish.title": "வழங்க அல்லது தேட ஏதாவது இருக்கிறதா?",
-    "publish.desc": "உங்கள் விளம்பரத்தை இலவசமாக பதிவிடுங்கள். 24 மணி நேரத்தில் ஆய்வு செய்யப்படும்.",
-    "publish.cta": "விளம்பரம் பதிவிடுக"
+    "publish.desc": "உங்கள் விளம்பரத்தை இலவசமாக பதிவிடுங்கள்: உடனே வெளியாகும், 30 நாட்கள் காணப்படும். இலவச கணக்கு தேவை.",
+    "publish.cta": "விளம்பரம் பதிவிடுக",
+    "list.empty": "தற்போது விளம்பரங்கள் இல்லை."
   }
 };
 
-// Category filter
 (function(){
-  var filter = document.getElementById('cat-filter');
-  var cards = document.querySelectorAll('.listing-card');
-  filter.addEventListener('click', function(e){
+  var LS_KEY = 'eih-listings', TTL = 30*24*3600*1000;
+  var CAT_LABEL = {lavoro:'💼 Lavoro',servizi:'🛠️ Servizi',oggetti:'📦 Oggetti',alloggi:'🏠 Alloggi',auto:'🚗 Auto/Moto',community:'❤️ Community'};
+  var grid = document.getElementById('listings-grid');
+  var empty = document.getElementById('listings-empty');
+  var curCat = 'all';
+
+  function loggedIn(){
+    try{ return localStorage.getItem('eih-registered')==='1'; }catch(e){ return false; }
+  }
+  function load(){
+    try{
+      var all = JSON.parse(localStorage.getItem(LS_KEY)||'[]');
+      var live = all.filter(function(l){ return Date.now()-l.ts < TTL; });
+      if(live.length !== all.length) localStorage.setItem(LS_KEY, JSON.stringify(live));
+      return live;
+    }catch(e){ return []; }
+  }
+  function el(tag, cls, text){
+    var n = document.createElement(tag); n.className = cls; if(text) n.textContent = text; return n;
+  }
+  function card(l){
+    var c = el('div','listing-card'); c.dataset.cat = l.cat;
+    var badge = el('span','listing-badge badge-'+l.cat, (CAT_LABEL[l.cat]||l.cat).replace(/^\S+\s/,''));
+    var meta = el('div','listing-meta');
+    meta.appendChild(el('span','listing-price', l.price||'—'));
+    meta.appendChild(el('span','listing-city','📍 '+l.city));
+    c.appendChild(badge);
+    c.appendChild(el('div','listing-title', l.title));
+    c.appendChild(el('div','listing-desc', l.desc));
+    c.appendChild(meta);
+    c.appendChild(el('div','listing-date','Pubblicato: '+new Date(l.ts).toLocaleDateString('it-IT',{day:'numeric',month:'short',year:'numeric'})));
+    return c;
+  }
+  function render(){
+    grid.innerHTML = '';
+    load().sort(function(a,b){ return b.ts-a.ts; }).forEach(function(l){ grid.appendChild(card(l)); });
+    applyFilter();
+  }
+  function applyFilter(){
+    var visible = 0;
+    grid.querySelectorAll('.listing-card').forEach(function(c){
+      var show = (curCat==='all' || c.dataset.cat===curCat);
+      c.style.display = show ? '' : 'none';
+      if(show) visible++;
+    });
+    empty.hidden = visible > 0;
+  }
+
+  document.getElementById('cat-filter').addEventListener('click', function(e){
     var btn = e.target.closest('.cat-btn');
     if(!btn) return;
-    filter.querySelectorAll('.cat-btn').forEach(function(b){ b.classList.remove('active'); });
+    this.querySelectorAll('.cat-btn').forEach(function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
-    var cat = btn.dataset.cat;
-    cards.forEach(function(c){
-      c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
-    });
+    curCat = btn.dataset.cat;
+    applyFilter();
   });
 
-  // Modal
+  // Pubblicazione riservata agli iscritti: chi non è loggato va alla registrazione
   var overlay = document.getElementById('modal-overlay');
   document.getElementById('btn-open-modal').addEventListener('click', function(){
+    if(!loggedIn()){ location.href = '/percorso?auth=signup&next=/mercatino'; return; }
     overlay.classList.add('open');
     document.getElementById('f-cat').focus();
   });
@@ -321,10 +269,23 @@ window.EIH_I18N_EXTRA = {
   });
   document.getElementById('listing-form').addEventListener('submit', function(e){
     e.preventDefault();
+    if(!loggedIn()){ location.href = '/percorso?auth=signup&next=/mercatino'; return; }
+    var f = function(id){ return document.getElementById(id).value.trim(); };
+    var l = { id: Date.now().toString(36)+Math.random().toString(36).slice(2,7),
+      cat: f('f-cat'), title: f('f-title'), desc: f('f-desc'),
+      price: f('f-price'), city: f('f-city'), contact: f('f-contact'), ts: Date.now() };
+    if(!(l.cat && l.title && l.desc && l.city && l.contact)) return;
+    var all = load(); all.push(l);
+    try{ localStorage.setItem(LS_KEY, JSON.stringify(all)); }catch(err){}
+    this.reset();
     overlay.classList.remove('open');
+    render();
     var pb = document.getElementById('publish-box');
-    pb.innerHTML = '<div class="publish-title">✅ Annuncio inviato!</div><p class="publish-desc">Il tuo annuncio è in revisione e sarà pubblicato entro 24 ore. Grazie per contribuire alla community!</p>';
+    var old = pb.querySelector('.publish-title');
+    if(old) old.textContent = '✅ Annuncio pubblicato! È già visibile qui sopra.';
   });
+
+  render();
 })();
 </script>
 

@@ -825,9 +825,20 @@ function completeAuth(){
   state.registered=true; saveState(state);
   try{localStorage.setItem('eih-registered','1');}catch(e){}
   closeAuth(); renderPhases();
+  // Arrivo da pagina gated (?next=/pagina): torna lì dopo l'iscrizione
+  const next=new URLSearchParams(location.search).get('next');
+  if(next && next.startsWith('/') && !next.startsWith('//')){location.href=next;return;}
   // First-time signup → run onboarding to personalize the starting phase
   if(authMode==='signup' && !state.onboarded){ setTimeout(openOnboarding,350); }
 }
+// Apertura auth via URL (?auth=signup|login), es. dal Mercatino
+(function(){
+  const run=()=>{
+    const m=new URLSearchParams(location.search).get('auth');
+    if((m==='signup'||m==='login') && !isRegistered()) setTimeout(()=>openAuth(m),400);
+  };
+  if(document.readyState==='loading') addEventListener('DOMContentLoaded',run); else run();
+})();
 
 /* ═══ Onboarding (sets starting phase) ═══ */
 const ONB_MAP=[['onb.o1',1],['onb.o2',2],['onb.o3',3],['onb.o4',4],['onb.o5',6]];
