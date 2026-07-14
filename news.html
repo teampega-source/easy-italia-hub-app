@@ -354,6 +354,8 @@
 
   // ── State ──
   var state = { filter:'all', savedOnly:false, saved:loadSaved() };
+  try{var qc=new URLSearchParams(location.search).get('cat');var qtab=qc&&document.querySelector('.ftab[data-filter="'+qc+'"]');
+  if(qtab){state.filter=qc;document.querySelectorAll('.ftab').forEach(function(b){var on=b===qtab;b.classList.toggle('is-active',on);b.setAttribute('aria-selected',on?'true':'false');});}}catch(e){}
 
   function loadSaved(){
     try {

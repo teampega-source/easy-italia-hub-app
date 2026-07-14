@@ -39,7 +39,8 @@
   #reg-turnstile{margin: .4rem 0}
   /* ── colonna destra: video demo ── */
   .reg-right{flex:1;position:relative;background:#12100e;overflow:hidden}
-  .reg-right video,.reg-right img.poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .reg-right img.poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .reg-right video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#14110e}
   .reg-right .shade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.72));pointer-events:none}
   .reg-claim{position:absolute;left:2.4rem;right:2.4rem;bottom:1.1rem;color:#fff;pointer-events:none}
   .reg-claim h2{font-family:'Clash Grotesk',sans-serif;font-size:clamp(1.3rem,2.2vw,1.9rem);font-weight:600;letter-spacing:-.02em;margin:0 0 .4rem;text-shadow:0 2px 18px rgba(0,0,0,.45)}
