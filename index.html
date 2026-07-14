@@ -574,7 +574,28 @@ body{
 .card-sub{font-size:.7rem;color:var(--fg-muted);margin-top:.16rem;font-weight:400;line-height:1.45}
 
 /* ─── FX TEASER (compact editorial card → comparator lives on money-transfer.html) ─── */
-.tools-section{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:var(--sp-6,6rem) var(--sp-5) var(--sp-5)}
+/* ── "Cosa facciamo": card tematiche con tilt 3D che segue il mouse ── */
+.does-section{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:var(--sp-6,6rem) var(--sp-5) var(--sp-3)}
+.does-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--sp-3);margin-top:var(--sp-4);perspective:1200px}
+.does-card{position:relative;display:flex;flex-direction:column;gap:.6rem;padding:1.8rem 1.7rem 1.6rem;border-radius:calc(var(--radius)*1.2);
+  background:linear-gradient(165deg,color-mix(in srgb,var(--dc,#c9a25e) 7%,var(--bg-elevated)),var(--bg-elevated));
+  border:1px solid var(--border);text-decoration:none;overflow:hidden;transform-style:preserve-3d;
+  transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s cubic-bezier(.16,1,.3,1),border-color var(--dur-std);will-change:transform}
+.does-card::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(120% 120% at 50% -20%,color-mix(in srgb,var(--dc,#c9a25e) 22%,transparent),transparent 60%);opacity:.6}
+.does-card.tilt{box-shadow:0 30px 60px -24px color-mix(in srgb,var(--dc,#c9a25e) 55%,rgba(20,17,14,.5));border-color:color-mix(in srgb,var(--dc,#c9a25e) 45%,var(--border))}
+.dc-glare{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.35),transparent 45%);mix-blend-mode:soft-light}
+.does-card.tilt .dc-glare{opacity:1}
+.dc-ic{font-size:2.2rem;line-height:1;transform:translateZ(38px)}
+.dc-h{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:600;color:var(--ink);transform:translateZ(26px)}
+.dc-p{font-size:var(--text-sm);line-height:1.6;color:var(--fg-secondary);flex:1;transform:translateZ(16px)}
+.dc-go{font-size:var(--text-sm);font-weight:600;color:var(--dc,var(--gold));letter-spacing:.02em;transform:translateZ(26px);transition:gap .2s}
+.does-card:hover .dc-go{padding-left:.2rem}
+@media(hover:none){.does-card{transform:none!important}}
+@media(prefers-reduced-motion:reduce){.does-card,.dc-glare{transition:none}.does-card{transform:none!important}}
+@media(max-width:767px){.does-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}}
+.tools-section{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:var(--sp-4) var(--sp-5) var(--sp-5)}
 .tools-wall{display:flex;flex-direction:column;gap:var(--sp-3);margin-top:var(--sp-4)}
 .tw-h{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:.7rem}
 .tw-chips{display:flex;flex-wrap:wrap;gap:.55rem}
@@ -3368,6 +3389,56 @@ footer{
 </section>
 
 <!-- ─── TOOLS WALL — tutti gli strumenti della piattaforma ─── -->
+<section class="does-section" aria-labelledby="does-heading">
+  <p class="section-label reveal" data-i18n="does.label">Cosa facciamo</p>
+  <h2 id="does-heading" class="section-title reveal" data-i18n-html="does.title">Un'unica piattaforma,<br/><em>tutta la tua vita in Italia</em></h2>
+  <p class="section-sub reveal" data-i18n="does.sub">Dai primi documenti al lavoro, dalla lingua alla community: sei aree, un solo posto, quattro lingue.</p>
+  <div class="does-grid" id="does-grid">
+    <a class="does-card reveal" href="/guide" style="--dc:#3b82f6">
+      <span class="dc-glare" aria-hidden="true"></span>
+      <span class="dc-ic" aria-hidden="true">📄</span>
+      <h3 class="dc-h" data-i18n="does.c1.t">Documenti &amp; burocrazia</h3>
+      <p class="dc-p" data-i18n="does.c1.p">Guide passo-passo, archivio documenti cifrato, moduli PDF pronti e tracker del permesso con promemoria.</p>
+      <span class="dc-go" aria-hidden="true">Esplora →</span>
+    </a>
+    <a class="does-card reveal" href="/academy" style="--dc:#8b5cf6">
+      <span class="dc-glare" aria-hidden="true"></span>
+      <span class="dc-ic" aria-hidden="true">🗣️</span>
+      <h3 class="dc-h" data-i18n="does.c2.t">Lingua &amp; formazione</h3>
+      <p class="dc-p" data-i18n="does.c2.p">Academy, corsi, preparazione alle certificazioni A2–B2, AI Teacher e il tuo Language Score con attestato.</p>
+      <span class="dc-go" aria-hidden="true">Esplora →</span>
+    </a>
+    <a class="does-card reveal" href="/percorso" style="--dc:#c9a25e">
+      <span class="dc-glare" aria-hidden="true"></span>
+      <span class="dc-ic" aria-hidden="true">🤖</span>
+      <h3 class="dc-h" data-i18n="does.c3.t">Consigliere AI</h3>
+      <p class="dc-p" data-i18n="does.c3.p">Assistente multilingua 24 ore su 24 e traduzione delle lettere ufficiali in italiano, inglese, sinhala e tamil.</p>
+      <span class="dc-go" aria-hidden="true">Esplora →</span>
+    </a>
+    <a class="does-card reveal" href="/percorso" style="--dc:#10b981">
+      <span class="dc-glare" aria-hidden="true"></span>
+      <span class="dc-ic" aria-hidden="true">🧭</span>
+      <h3 class="dc-h" data-i18n="does.c4.t">Il Mio Percorso</h3>
+      <p class="dc-p" data-i18n="does.c4.p">Nove fasi di vita in Italia — arrivo, regolarizzazione, lavoro, casa, famiglia — con il prossimo passo sempre chiaro.</p>
+      <span class="dc-go" aria-hidden="true">Esplora →</span>
+    </a>
+    <a class="does-card reveal" href="/community" style="--dc:#ec4899">
+      <span class="dc-glare" aria-hidden="true"></span>
+      <span class="dc-ic" aria-hidden="true">❤️</span>
+      <h3 class="dc-h" data-i18n="does.c5.t">Community &amp; servizi</h3>
+      <p class="dc-p" data-i18n="does.c5.p">Forum, mercatino, mappa dei servizi, news verificate e comparatore per le rimesse verso lo Sri Lanka.</p>
+      <span class="dc-go" aria-hidden="true">Esplora →</span>
+    </a>
+    <a class="does-card reveal" href="/professionisti" style="--dc:#f59e0b">
+      <span class="dc-glare" aria-hidden="true"></span>
+      <span class="dc-ic" aria-hidden="true">👔</span>
+      <h3 class="dc-h" data-i18n="does.c6.t">Professionisti verificati</h3>
+      <p class="dc-p" data-i18n="does.c6.p">Avvocati, commercialisti, interpreti e mediatori verificati, che parlano la tua lingua.</p>
+      <span class="dc-go" aria-hidden="true">Esplora →</span>
+    </a>
+  </div>
+</section>
+
 <section class="tools-section" aria-labelledby="tools-heading">
   <p class="section-label reveal" data-i18n="tools.label">La cassetta degli attrezzi</p>
   <h2 id="tools-heading" class="section-title reveal" data-i18n-html="tools.title">Tutti gli strumenti,<br/><em>a portata di mano</em></h2>
@@ -4530,7 +4601,7 @@ const I18N={
     "hero.eyebrow":"Guide · Assistente AI · Community","hero.title":"<span class='ln'><span>La comunità</span></span><span class='ln'><span><em>srilankese</em></span></span><span class='ln'><span>in Italia</span></span>","hero.sub":"Guide burocratiche, assistente AI multilingua, community di supporto e news aggiornate — in italiano, inglese, sinhala e tamil.","hero.cta1":"Inizia gratis","hero.cta2":"Esplora le guide","hero.stat1":"Fasi del percorso","hero.stat2":"Guide pratiche","hero.stat3":"Città sulla mappa","hero.stat4":"Lingue dell'interfaccia","hero.stat5":"Strumenti e servizi","hero.stat6":"Passi concreti",
     "card1.tag":"Burocrazia","card1.title":"Permesso di Soggiorno","card1.sub":"Guida completa al rinnovo","card2.tag":"AI","card2.title":"Assistente AI","card2.sub":"Risposte multilingua 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"Confronto e supporto tra pari","card4.tag":"Finanza","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
     "ad.label":"Pubblicità","ad.lead":"Fai crescere il tuo brand: raggiungi ogni giorno la community srilankese in Italia.","ad.buy":"Prenota lo spazio","ad.sponsor":"Sponsorizzato","ad.slot":"Spazio ad — 300×250","ad.book":"Prenota →",
-    "tools.label":"La cassetta degli attrezzi","tools.title":"Tutti gli strumenti,<br/><em>a portata di mano</em>","tools.sub":"Oltre 30 strumenti e guide gratuiti, pensati per la vita reale in Italia. Scegli quello che ti serve oggi.","feat.label":"Cosa offriamo","feat.heading":"Tutto ciò di cui hai bisogno,<br/><em>in un unico posto</em>","feat.sub":"Dalla burocrazia all'integrazione quotidiana — ti supportiamo in ogni passo del tuo percorso.",
+    "does.label":"Cosa facciamo","does.title":"Un'unica piattaforma,<br/><em>tutta la tua vita in Italia</em>","does.sub":"Dai primi documenti al lavoro, dalla lingua alla community: sei aree, un solo posto, quattro lingue.","does.c1.t":"Documenti & burocrazia","does.c1.p":"Guide passo-passo, archivio documenti cifrato, moduli PDF pronti e tracker del permesso con promemoria.","does.c2.t":"Lingua & formazione","does.c2.p":"Academy, corsi, preparazione alle certificazioni A2–B2, AI Teacher e il tuo Language Score con attestato.","does.c3.t":"Consigliere AI","does.c3.p":"Assistente multilingua 24 ore su 24 e traduzione delle lettere ufficiali in italiano, inglese, sinhala e tamil.","does.c4.t":"Il Mio Percorso","does.c4.p":"Nove fasi di vita in Italia — arrivo, regolarizzazione, lavoro, casa, famiglia — con il prossimo passo sempre chiaro.","does.c5.t":"Community & servizi","does.c5.p":"Forum, mercatino, mappa dei servizi, news verificate e comparatore per le rimesse verso lo Sri Lanka.","does.c6.t":"Professionisti verificati","does.c6.p":"Avvocati, commercialisti, interpreti e mediatori verificati, che parlano la tua lingua.","tools.label":"La cassetta degli attrezzi","tools.title":"Tutti gli strumenti,<br/><em>a portata di mano</em>","tools.sub":"Oltre 30 strumenti e guide gratuiti, pensati per la vita reale in Italia. Scegli quello che ti serve oggi.","feat.label":"Cosa offriamo","feat.heading":"Tutto ciò di cui hai bisogno,<br/><em>in un unico posto</em>","feat.sub":"Dalla burocrazia all'integrazione quotidiana — ti supportiamo in ogni passo del tuo percorso.",
     "feat1.title":"Guide Burocratiche","feat1.desc":"Permesso di soggiorno, codice fiscale, SPID, residenza — guide passo-passo con checklist scaricabili.","feat2.title":"Assistente AI Multilingua","feat2.desc":"Risposte immediate in italiano, inglese, sinhala e tamil. Disponibile 24 ore su 24, 7 giorni su 7.","feat3.title":"Community Attiva","feat3.desc":"Uno spazio dove srilankesi in Italia si supportano a vicenda. Trova risposte, condividi esperienze, cresci insieme.","feat4.title":"Money Transfer","feat4.desc":"Confronta Wise, Western Union e Ria in tempo reale. Risparmia sulle rimesse verso lo Sri Lanka.","feat5.title":"Mappa dei Servizi","feat5.desc":"CAF, patronati, negozi e luoghi di culto srilankesi nelle principali città italiane.","feat6.title":"News Aggiornate","feat6.desc":"Leggi, decreti e opportunità per la comunità srilankese. Aggiornato ogni giorno.",
     "members.count":"<strong>La community srilankese</strong> che si aiuta in Italia","members.sub":"Unisciti a chi vive e lavora in Italia e affronta gli stessi passaggi. Insieme è più facile.",
     "cta.intro.tag":"Il Mio Percorso","cta.intro.desc":"La mappa delle 9 fasi per costruire la tua vita in Italia — dalla burocrazia all'integrazione quotidiana. Sai sempre dove sei e qual è il prossimo passo, con il Consigliere AI al tuo fianco.","cta.intro.pill1":"9 fasi strutturate","cta.intro.pill2":"Consigliere AI incluso","cta.intro.pill3":"Progressi salvati",
@@ -4553,7 +4624,7 @@ const I18N={
     "hero.eyebrow":"Guides · AI Assistant · Community","hero.title":"<span class='ln'><span>The Sri Lankan</span></span><span class='ln'><span><em>community</em></span></span><span class='ln'><span>in Italy</span></span>","hero.sub":"Bureaucratic guides, multilingual AI assistant, support community and up-to-date news — in Italian, English, Sinhala and Tamil.","hero.cta1":"Start free","hero.cta2":"Explore the guides","hero.stat1":"Journey phases","hero.stat2":"Practical guides","hero.stat3":"Cities on the map","hero.stat4":"Interface languages","hero.stat5":"Tools and services","hero.stat6":"Concrete steps",
     "card1.tag":"Bureaucracy","card1.title":"Residence Permit","card1.sub":"Complete renewal guide","card2.tag":"AI","card2.title":"AI Assistant","card2.sub":"Multilingual answers 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"Peer-to-peer support","card4.tag":"Finance","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
     "ad.label":"Advertising","ad.lead":"Grow your brand: reach the Sri Lankan community in Italy every day.","ad.buy":"Book this space","ad.sponsor":"Sponsored","ad.slot":"Ad space — 300×250","ad.book":"Book →",
-    "tools.label":"The toolbox","tools.title":"Every tool,<br/><em>at your fingertips</em>","tools.sub":"Over 30 free tools and guides, built for real life in Italy. Pick what you need today.","feat.label":"What we offer","feat.heading":"Everything you need,<br/><em>in one place</em>","feat.sub":"From bureaucracy to daily integration — we support you at every step of your journey.",
+    "does.label":"What we do","does.title":"One platform,<br/><em>your whole life in Italy</em>","does.sub":"From your first documents to work, from language to community: six areas, one place, four languages.","does.c1.t":"Documents & bureaucracy","does.c1.p":"Step-by-step guides, encrypted document archive, ready-made PDF forms and a permit tracker with reminders.","does.c2.t":"Language & training","does.c2.p":"Academy, courses, A2–B2 certification prep, AI Teacher and your Language Score with a certificate.","does.c3.t":"AI Advisor","does.c3.p":"A multilingual assistant 24/7 and translation of official letters into Italian, English, Sinhala and Tamil.","does.c4.t":"My Journey","does.c4.p":"Nine life phases in Italy — arrival, regularisation, work, home, family — with the next step always clear.","does.c5.t":"Community & services","does.c5.p":"Forum, marketplace, services map, verified news and a comparator for remittances to Sri Lanka.","does.c6.t":"Verified professionals","does.c6.p":"Lawyers, accountants, interpreters and mediators — verified, and they speak your language.","tools.label":"The toolbox","tools.title":"Every tool,<br/><em>at your fingertips</em>","tools.sub":"Over 30 free tools and guides, built for real life in Italy. Pick what you need today.","feat.label":"What we offer","feat.heading":"Everything you need,<br/><em>in one place</em>","feat.sub":"From bureaucracy to daily integration — we support you at every step of your journey.",
     "feat1.title":"Bureaucratic Guides","feat1.desc":"Residence permit, tax code, SPID, residency — step-by-step guides with downloadable checklists.","feat2.title":"Multilingual AI Assistant","feat2.desc":"Immediate answers in Italian, English, Sinhala and Tamil. Available 24/7.","feat3.title":"Active Community","feat3.desc":"A space where Sri Lankans in Italy support one another. Find answers, share experiences, grow together.","feat4.title":"Money Transfer","feat4.desc":"Compare Wise, Western Union and Ria in real time. Save on remittances to Sri Lanka.","feat5.title":"Services Map","feat5.desc":"CAF offices, patronati, Sri Lankan shops and places of worship in major Italian cities.","feat6.title":"Up-to-date News","feat6.desc":"Laws, decrees and opportunities for the Sri Lankan community. Updated every day.",
     "members.count":"<strong>The Sri Lankan community</strong> helping each other in Italy","members.sub":"Join people living and working in Italy who face the same steps. Together it's easier.",
     "cta.intro.tag":"My Journey","cta.intro.desc":"The map of 9 phases to build your life in Italy — from bureaucracy to daily integration. You always know where you are and what comes next, with the AI Advisor by your side.","cta.intro.pill1":"9 structured phases","cta.intro.pill2":"AI Advisor included","cta.intro.pill3":"Progress always saved",
@@ -4576,7 +4647,7 @@ const I18N={
     "hero.eyebrow":"මාර්ගෝපදේශ · AI සහායක · ප්‍රජාව","hero.title":"<span class='ln'><span>ඉතාලියේ</span></span><span class='ln'><span><em>ශ්‍රී ලාංකික</em></span></span><span class='ln'><span>ප්‍රජාව</span></span>","hero.sub":"නිලධාරී මාර්ගෝපදේශ, බහුභාෂා AI සහායක, සහාය ප්‍රජාව සහ යාවත්කාලීන පුවත් — ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින්.","hero.cta1":"නොමිලේ අරඹන්න","hero.cta2":"මාර්ගෝපදේශ ගවේෂණය කරන්න","hero.stat1":"ගමනේ අදියර","hero.stat2":"ප්‍රායෝගික මාර්ගෝපදේශ","hero.stat3":"සිතියමේ නගර","hero.stat4":"අතුරුමුහුණත් භාෂා","hero.stat5":"මෙවලම් සහ සේවා","hero.stat6":"සැබෑ පියවර",
     "card1.tag":"නිලධාරිවාදය","card1.title":"පදිංචි බලපත්‍රය","card1.sub":"සම්පූර්ණ අලුත් කිරීමේ මාර්ගෝපදේශය","card2.tag":"AI","card2.title":"AI සහායක","card2.sub":"බහුභාෂා පිළිතුරු 24/7","card3.tag":"ප්‍රජාව","card3.title":"ප්‍රජාව","card3.sub":"සම වයසේ අයගේ සහාය","card4.tag":"මුල්‍ය","card4.title":"මුදල් හුවමාරුව","card4.sub":"Wise, Ria, Western Union",
     "ad.label":"දැන්වීම්","ad.lead":"ඔබේ වෙළඳ නාමය වර්ධනය කරන්න: සෑම දිනකම ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව වෙත ළඟා වන්න.","ad.buy":"අවකාශය වෙන්කරවා ගන්න","ad.sponsor":"අනුග්‍රාහක","ad.slot":"දැන්වීම් අවකාශය — 300×250","ad.book":"වෙන්කරවා ගන්න →",
-    "tools.label":"මෙවලම් පෙට්ටිය","tools.title":"සියලුම මෙවලම්,<br/><em>ඔබ අත ළඟ</em>","tools.sub":"ඉතාලියේ සැබෑ ජීවිතය සඳහා නොමිලේ මෙවලම් සහ මාර්ගෝපදේශ 30කට වඩා. අදට අවශ්‍ය දේ තෝරන්න.","feat.label":"අපි පිරිනමන දේ","feat.heading":"ඔබට අවශ්‍ය සියල්ල,<br/><em>එක තැනකින්</em>","feat.sub":"නිලධාරිවාදයේ සිට දෛනික ඒකාබද්ධතාව දක්වා — ඔබේ ගමනේ සෑම පියවරකදීම අපි ඔබට සහාය වෙමු.",
+    "does.label":"අපි කරන දේ","does.title":"එක් වේදිකාවක්,<br/><em>ඉතාලියේ ඔබේ මුළු ජීවිතය</em>","does.sub":"ලේඛනවල සිට රැකියාව දක්වා, භාෂාවේ සිට ප්‍රජාව දක්වා: ක්ෂේත්‍ර හයක්, එක තැනක්, භාෂා හතරක්.","does.c1.t":"ලේඛන සහ නිලධාරිවාදය","does.c1.p":"පියවරෙන් පියවර මාර්ගෝපදේශ, ලේඛනාගාරය, PDF ෆෝරම් සහ බලපත්‍ර ට්‍රැකරය.","does.c2.t":"භාෂාව සහ පුහුණුව","does.c2.p":"Academy, පාඨමාලා, A2–B2 සහතික සූදානම, AI Teacher සහ Language Score.","does.c3.t":"AI උපදේශක","does.c3.p":"පැය 24 බහුභාෂා සහායක සහ නිල ලිපි පරිවර්තනය (ඉතාලි, ඉංග්‍රීසි, සිංහල, දෙමළ).","does.c4.t":"මගේ ගමන","does.c4.p":"ඉතාලියේ ජීවිත අදියර නවයක් — ඊළඟ පියවර සැමවිටම පැහැදිලියි.","does.c5.t":"ප්‍රජාව සහ සේවා","does.c5.p":"සංසදය, වෙළඳසැල, සේවා සිතියම, පුවත් සහ මුදල් යැවීමේ සංසන්දකය.","does.c6.t":"සත්‍යාපිත වෘත්තිකයන්","does.c6.p":"නීතිඥයන්, ගණකාධිකාරීන්, පරිවර්තකයන් — ඔබේ භාෂාව කතා කරන අය.","tools.label":"මෙවලම් පෙට්ටිය","tools.title":"සියලුම මෙවලම්,<br/><em>ඔබ අත ළඟ</em>","tools.sub":"ඉතාලියේ සැබෑ ජීවිතය සඳහා නොමිලේ මෙවලම් සහ මාර්ගෝපදේශ 30කට වඩා. අදට අවශ්‍ය දේ තෝරන්න.","feat.label":"අපි පිරිනමන දේ","feat.heading":"ඔබට අවශ්‍ය සියල්ල,<br/><em>එක තැනකින්</em>","feat.sub":"නිලධාරිවාදයේ සිට දෛනික ඒකාබද්ධතාව දක්වා — ඔබේ ගමනේ සෑම පියවරකදීම අපි ඔබට සහාය වෙමු.",
     "feat1.title":"නිලධාරී මාර්ගෝපදේශ","feat1.desc":"පදිංචි බලපත්‍රය, බදු කේතය, SPID, පදිංචිය — බාගත හැකි පිරික්සුම් ලැයිස්තු සහිත පියවරෙන් පියවර මාර්ගෝපදේශ.","feat2.title":"බහුභාෂා AI සහායක","feat2.desc":"ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින් ක්ෂණික පිළිතුරු. දිනපතා පැය 24 පුරා ලබා ගත හැක.","feat3.title":"සක්‍රිය ප්‍රජාව","feat3.desc":"ඉතාලියේ ශ්‍රී ලාංකිකයන් එකිනෙකාට සහාය වන අවකාශයක්. පිළිතුරු සොයාගන්න, අත්දැකීම් බෙදාගන්න, එකට වර්ධනය වන්න.","feat4.title":"මුදල් හුවමාරුව","feat4.desc":"Wise, Western Union සහ Ria තත්‍ය කාලීනව සසඳන්න. ශ්‍රී ලංකාවට යවන මුදල් වලින් ඉතිරි කරගන්න.","feat5.title":"සේවා සිතියම","feat5.desc":"ප්‍රධාන ඉතාලි නගරවල CAF, patronati, ශ්‍රී ලාංකික වෙළඳසැල් සහ පූජනීය ස්ථාන.","feat6.title":"යාවත්කාලීන පුවත්","feat6.desc":"ශ්‍රී ලාංකික ප්‍රජාව සඳහා නීති, නියෝග සහ අවස්ථා. දිනපතා යාවත්කාලීන වේ.",
     "members.count":"<strong>ශ්‍රී ලාංකික ප්‍රජාව</strong> ඉතාලියේ එකිනෙකාට උදව් කරයි","members.sub":"ඉතාලියේ ජීවත්වන සහ වැඩකරන, එම පියවරම මුහුණ දෙන අය හා එක්වන්න. එකට වඩා පහසුයි.",
     "cta.intro.tag":"මගේ ගමන","cta.intro.desc":"ඉතාලියේ ඔබේ ජීවිතය ගොඩනැගීමට අදියර 9 ක් — නිලධාරිවාදයේ සිට දෛනික ඒකාබද්ධතාව දක්වා. ඔබ කොතැනද, ඊළඟ පියවර කුමක්දැයි සැමවිටම දැනගන්න, AI උපදේශකයා ඔබ අසල.","cta.intro.pill1":"ව්‍යුහගත අදියර 9","cta.intro.pill2":"AI උපදේශකයා ඇතුළත්","cta.intro.pill3":"ප්‍රගතිය සුරකිනු ලැබේ",
@@ -4599,7 +4670,7 @@ const I18N={
     "hero.eyebrow":"வழிகாட்டிகள் · AI உதவியாளர் · சமூகம்","hero.title":"<span class='ln'><span>இத்தாலியில்</span></span><span class='ln'><span><em>இலங்கை</em></span></span><span class='ln'><span>சமூகம்</span></span>","hero.sub":"அதிகாரபூர்வ வழிகாட்டிகள், பன்மொழி AI உதவியாளர், ஆதரவு சமூகம் மற்றும் புதிய செய்திகள் — இத்தாலியம், ஆங்கிலம், சிங்களம் மற்றும் தமிழில்.","hero.cta1":"இலவசமாக தொடங்குங்கள்","hero.cta2":"வழிகாட்டிகளை ஆராயுங்கள்","hero.stat1":"பயண நிலைகள்","hero.stat2":"நடைமுறை வழிகாட்டிகள்","hero.stat3":"வரைபடத்தில் நகரங்கள்","hero.stat4":"இடைமுக மொழிகள்","hero.stat5":"கருவிகள் & சேவைகள்","hero.stat6":"உறுதியான படிகள்",
     "card1.tag":"அதிகாரத்துவம்","card1.title":"வசிப்பிட அனுமதி","card1.sub":"முழுமையான புதுப்பித்தல் வழிகாட்டி","card2.tag":"AI","card2.title":"AI உதவியாளர்","card2.sub":"பன்மொழி பதில்கள் 24/7","card3.tag":"சமூகம்","card3.title":"சமூகம்","card3.sub":"சக ஆதரவு","card4.tag":"நிதி","card4.title":"பண பரிமாற்றம்","card4.sub":"Wise, Ria, Western Union",
     "ad.label":"விளம்பரம்","ad.lead":"உங்கள் பிராண்டை வளர்த்துக் கொள்ளுங்கள்: இத்தாலியில் உள்ள இலங்கை சமூகத்தை தினமும் சென்றடையுங்கள்.","ad.buy":"இந்த இடத்தை முன்பதிவு செய்யுங்கள்","ad.sponsor":"விளம்பரதாரர்","ad.slot":"விளம்பர இடம் — 300×250","ad.book":"முன்பதிவு →",
-    "tools.label":"கருவிப்பெட்டி","tools.title":"எல்லா கருவிகளும்,<br/><em>உங்கள் கைவசம்</em>","tools.sub":"இத்தாலியின் நிஜ வாழ்க்கைக்காக 30க்கும் மேற்பட்ட இலவச கருவிகள் மற்றும் வழிகாட்டிகள்.","feat.label":"நாங்கள் வழங்குவது","feat.heading":"உங்களுக்குத் தேவையான அனைத்தும்,<br/><em>ஒரே இடத்தில்</em>","feat.sub":"அதிகாரத்துவத்திலிருந்து தினசரி ஒருங்கிணைப்பு வரை — உங்கள் பயணத்தின் ஒவ்வொரு படியிலும் நாங்கள் உங்களுக்கு ஆதரவளிக்கிறோம்.",
+    "does.label":"நாங்கள் செய்வது","does.title":"ஒரே தளம்,<br/><em>இத்தாலியில் உங்கள் முழு வாழ்க்கை</em>","does.sub":"ஆவணங்கள் முதல் வேலை வரை, மொழி முதல் சமூகம் வரை: ஆறு பகுதிகள், ஒரே இடம், நான்கு மொழிகள்.","does.c1.t":"ஆவணங்கள் & அதிகாரத்துவம்","does.c1.p":"படிப்படியான வழிகாட்டிகள், ஆவணக் காப்பகம், PDF படிவங்கள் மற்றும் அனுமதி டிராக்கர்.","does.c2.t":"மொழி & பயிற்சி","does.c2.p":"Academy, படிப்புகள், A2–B2 சான்றிதழ் தயாரிப்பு, AI Teacher மற்றும் Language Score.","does.c3.t":"AI ஆலோசகர்","does.c3.p":"24 மணிநேர பன்மொழி உதவியாளர் மற்றும் அதிகாரப்பூர்வ கடிதங்களின் மொழிபெயர்ப்பு.","does.c4.t":"என் பயணம்","does.c4.p":"இத்தாலியில் ஒன்பது வாழ்க்கை நிலைகள் — அடுத்த படி எப்போதும் தெளிவாக.","does.c5.t":"சமூகம் & சேவைகள்","does.c5.p":"மன்றம், சந்தை, சேவை வரைபடம், செய்திகள் மற்றும் பணப் பரிமாற்ற ஒப்பீட்டாளர்.","does.c6.t":"சரிபார்க்கப்பட்ட நிபுணர்கள்","does.c6.p":"வழக்கறிஞர்கள், கணக்காளர்கள், மொழிபெயர்ப்பாளர்கள் — உங்கள் மொழி பேசுபவர்கள்.","tools.label":"கருவிப்பெட்டி","tools.title":"எல்லா கருவிகளும்,<br/><em>உங்கள் கைவசம்</em>","tools.sub":"இத்தாலியின் நிஜ வாழ்க்கைக்காக 30க்கும் மேற்பட்ட இலவச கருவிகள் மற்றும் வழிகாட்டிகள்.","feat.label":"நாங்கள் வழங்குவது","feat.heading":"உங்களுக்குத் தேவையான அனைத்தும்,<br/><em>ஒரே இடத்தில்</em>","feat.sub":"அதிகாரத்துவத்திலிருந்து தினசரி ஒருங்கிணைப்பு வரை — உங்கள் பயணத்தின் ஒவ்வொரு படியிலும் நாங்கள் உங்களுக்கு ஆதரவளிக்கிறோம்.",
     "feat1.title":"அதிகாரபூர்வ வழிகாட்டிகள்","feat1.desc":"வசிப்பிட அனுமதி, வரி அடையாள எண், SPID, வசிப்பிடம் — பதிவிறக்கக்கூடிய சரிபார்ப்புப் பட்டியல்களுடன் படிப்படியான வழிகாட்டிகள்.","feat2.title":"பன்மொழி AI உதவியாளர்","feat2.desc":"இத்தாலியம், ஆங்கிலம், சிங்களம் மற்றும் தமிழில் உடனடி பதில்கள். 24/7 கிடைக்கும்.","feat3.title":"செயலில் உள்ள சமூகம்","feat3.desc":"இத்தாலியில் உள்ள இலங்கையர்கள் ஒருவருக்கொருவர் ஆதரவளிக்கும் இடம். பதில்களைக் கண்டறியுங்கள், அனுபவங்களைப் பகிருங்கள், ஒன்றாக வளருங்கள்.","feat4.title":"பண பரிமாற்றம்","feat4.desc":"Wise, Western Union மற்றும் Ria ஐ நேரடியாக ஒப்பிடுங்கள். இலங்கைக்கு பணம் அனுப்புவதில் சேமிக்கவும்.","feat5.title":"சேவை வரைபடம்","feat5.desc":"இத்தாலியின் பிரதான நகரங்களில் CAF, patronati, இலங்கை கடைகள் மற்றும் வழிபாட்டுத் தலங்கள்.","feat6.title":"புதுப்பிக்கப்பட்ட செய்திகள்","feat6.desc":"இலங்கை சமூகத்திற்கான சட்டங்கள், ஆணைகள் மற்றும் வாய்ப்புகள். தினமும் புதுப்பிக்கப்படுகிறது.",
     "members.count":"<strong>இலங்கை சமூகம்</strong> இத்தாலியில் ஒருவருக்கொருவர் உதவுகிறது","members.sub":"இத்தாலியில் வாழ்ந்து வேலை செய்து, அதே படிகளை எதிர்கொள்பவர்களுடன் இணையுங்கள். ஒன்றாக எளிதாகும்.",
     "cta.intro.tag":"என் பயணம்","cta.intro.desc":"இத்தாலியில் வாழ்க்கை கட்டமைக்க 9 நிலைகளின் வரைபடம் — அதிகாரத்துவத்திலிருந்து தினசரி ஒருங்கிணைப்பு வரை. நீங்கள் எங்கே இருக்கிறீர்கள், அடுத்த படி என்ன என்பதை எப்போதும் அறிவீர்கள், AI ஆலோசகர் உங்கள் அருகில்.","cta.intro.pill1":"9 கட்டமைக்கப்பட்ட நிலைகள்","cta.intro.pill2":"AI ஆலோசகர் உள்ளடங்கியது","cta.intro.pill3":"சேமிக்கப்பட்ட முன்னேற்றம்",
@@ -4646,7 +4717,7 @@ applyLang(currentLang);
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   // Hero headline reveals via CSS keyframe (lineUp) automatically on load.
   // Scroll-reveal targets (below the fold)
-  const targets=[...document.querySelectorAll('.features .section-label,.features .section-title,.features .section-sub,.feat,.ad-mini-bar,.donate-card,.cta-card,.footer-brand,.footer-col,.svc-card,.plan,.tools-section .section-label,.tools-section .section-title,.tools-section .section-sub,.tw-group')];
+  const targets=[...document.querySelectorAll('.features .section-label,.features .section-title,.features .section-sub,.feat,.ad-mini-bar,.donate-card,.cta-card,.footer-brand,.footer-col,.svc-card,.plan,.tools-section .section-label,.tools-section .section-title,.tools-section .section-sub,.tw-group,.does-section .section-label,.does-section .section-title,.does-section .section-sub,.does-card')];
   document.querySelectorAll('.feat-grid').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--ri',i));});
   targets.forEach(el=>el.classList.add('reveal'));
   if(reduce){targets.forEach(el=>el.classList.add('in'));return;}
@@ -5327,6 +5398,27 @@ function sendSug(el){
     }
   },{threshold:0.2});
   io.observe(msgsEl);
+})();
+</script>
+<script>
+/* Cosa facciamo — tilt 3D che segue il puntatore (solo mouse, no reduced-motion) */
+(function(){
+  if(matchMedia('(hover:none)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var cards=document.querySelectorAll('.does-card');
+  cards.forEach(function(c){
+    c.addEventListener('pointermove',function(e){
+      var r=c.getBoundingClientRect();
+      var px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+      c.classList.add('tilt');
+      c.style.transform='rotateX('+((0.5-py)*9).toFixed(2)+'deg) rotateY('+((px-0.5)*11).toFixed(2)+'deg) translateY(-4px)';
+      c.style.setProperty('--gx',(px*100).toFixed(1)+'%');
+      c.style.setProperty('--gy',(py*100).toFixed(1)+'%');
+    });
+    c.addEventListener('pointerleave',function(){
+      c.classList.remove('tilt');
+      c.style.transform='';
+    });
+  });
 })();
 </script>
 </body>
