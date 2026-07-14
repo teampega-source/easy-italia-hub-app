@@ -23,13 +23,13 @@ const MODEL_CHAIN = [
   "gemini-2.0-flash-lite",
   "gemini-1.5-flash",
 ].filter(Boolean).filter((m, i, a) => a.indexOf(m) === i); // unique, drop empties
-const MAX_TOKENS = 700;
+const MAX_TOKENS = 1600; // traduzioni intere: 700 troncava a metà frase
 
-// ── Input limits (defensive: cap abuse / token blow-ups before hitting Gemini) ──
-const MAX_MESSAGES = 30;        // hard cap on history length before the existing slice(-12)
-const MAX_MSG_CHARS = 4000;     // max chars kept per single message.content (longer is truncated)
-const MAX_TOTAL_CHARS = 16000;  // max combined chars across all messages (oldest trimmed first)
-const TRUNC_MARK = " […]";      // marker appended to a message truncated for length
+// ── Input limits (anti-abuso) ──
+const MAX_MESSAGES = 30;
+const MAX_MSG_CHARS = 4000;
+const MAX_TOTAL_CHARS = 16000;
+const TRUNC_MARK = " […]";
 
 const LANG_NAME = { it: "italiano", en: "English", si: "සිංහල (Sinhala)", ta: "தமிழ் (Tamil)" };
 
