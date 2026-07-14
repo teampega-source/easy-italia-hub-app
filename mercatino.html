@@ -70,6 +70,9 @@
     [data-page="mercatino"] .listing-contact .muted{color:var(--fg-muted);font-weight:400}
     [data-page="mercatino"] .listing-card.featured{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold-dim)}
     [data-page="mercatino"] .listing-feat{display:inline-block;font-size:var(--text-xs);font-weight:700;letter-spacing:.06em;color:var(--gold);text-transform:uppercase;margin-left:.4rem}
+    [data-page="mercatino"] .listing-report{background:none;border:none;padding:0;cursor:pointer;font-size:var(--text-xs);color:var(--fg-muted);transition:color var(--dur-micro)}
+    [data-page="mercatino"] .listing-report:hover{color:var(--coral)}
+    [data-page="mercatino"] .listing-report:disabled{cursor:default;color:var(--green)}
     [data-page="mercatino"] .cta-publish{background:var(--gold);color:#fff;border:none;padding:.75rem 1.5rem;border-radius:var(--radius-full);font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;cursor:pointer;transition:opacity .15s}
     [data-page="mercatino"] .cta-publish:hover{opacity:.88}
     [data-page="mercatino"] .publish-box{background:rgba(255,253,249,0.6);backdrop-filter:blur(16px);border:1px solid var(--border-bright);border-radius:calc(var(--radius)*1.5);padding:var(--sp-5);text-align:center;margin-top:var(--sp-4)}
@@ -248,7 +251,10 @@ window.EIH_I18N_EXTRA = {
     c.appendChild(el('div','listing-desc', l.desc));
     c.appendChild(meta);
     c.appendChild(contactRow(l));
-    c.appendChild(el('div','listing-date','Pubblicato: '+new Date(l.ts).toLocaleDateString('it-IT',{day:'numeric',month:'short',year:'numeric'})));
+    var foot = el('div','listing-meta'); foot.style.borderTop='none'; foot.style.paddingTop='0';
+    foot.appendChild(el('span','listing-date','Pubblicato: '+new Date(l.ts).toLocaleDateString('it-IT',{day:'numeric',month:'short',year:'numeric'})));
+    if(window.EIHModeration) foot.appendChild(EIHModeration.reportButton(function(){ return { area:'mercatino', id:l.id, title:l.title }; }, 'listing-report'));
+    c.appendChild(foot);
     return c;
   }
   // Contatto: visibile solo ai membri loggati; anonimi vedono l'invito ad accedere.
@@ -331,6 +337,7 @@ window.EIH_I18N_EXTRA = {
     var cat=f('f-cat'), title=f('f-title'), desc=f('f-desc'),
         price=f('f-price'), city=f('f-city'), contact=f('f-contact');
     if(!(cat && title && desc && city && contact)) return;
+    if(window.EIHModeration && !EIHModeration.scamGuard(title+' '+desc+' '+contact)) return;
     var form = this;
 
     if(sb && currentUser){
@@ -396,6 +403,7 @@ window.EIH_I18N_EXTRA = {
 
 <script src="eih.js" defer></script>
 <script src="eih-auth.js" defer></script>
+<script src="/assets/eih-moderation.js" defer></script>
   <script src="/assets/eih-hero3d.js" defer></script>
 <script src="/assets/vendor/lenis.min.js" defer></script>
 <script src="/assets/vendor/gsap.min.js" defer></script>
