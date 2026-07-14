@@ -14,8 +14,7 @@
 
 const { retrieve } = require("./_knowledge");
 
-// Try the configured model first, then fall back across free-tier models on
-// quota/availability errors (429/404) so a single deploy can find one that works.
+// Modello configurato, poi fallback free-tier su 429/404.
 const MODEL_CHAIN = [
   process.env.GEMINI_MODEL,
   "gemini-2.5-flash",      // known to have free-tier quota for this project
@@ -215,7 +214,7 @@ module.exports = async (req, res) => {
     const payload = JSON.stringify({
       system_instruction: { parts: [{ text: systemText }] },
       contents,
-      generationConfig: { maxOutputTokens: MAX_TOKENS, temperature: 0.6, topP: 0.95 },
+      generationConfig: trTo ? { maxOutputTokens: 4000, temperature: 0.3 } : { maxOutputTokens: MAX_TOKENS, temperature: 0.6, topP: 0.95 },
       safetySettings: [
         { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_ONLY_HIGH" },
         { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_ONLY_HIGH" },
