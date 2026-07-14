@@ -54,11 +54,8 @@ function buildHtml(rows) {
     `<p style="color:#999;font-size:12px;margin-top:24px">Ricevi questa email perché hai salvato scadenze su Easy Italia Hub con promemoria attivi. Verifica sempre date e requisiti sulla fonte ufficiale.</p></div>`;
 }
 
-module.exports = async (req, res) => {
-  const secret = process.env.CRON_SECRET;
-  if (!secret || req.headers['authorization'] !== `Bearer ${secret}`) {
-    return res.status(401).json({ error: 'unauthorized' });
-  }
+// Eseguito dal cron via api/email.js (GET autenticato). Vedi vercel.json.
+module.exports.run = async (req, res) => {
   if (!SB_URL || !SB_KEY || !RESEND) return res.status(200).json({ demo: true });
 
   try {

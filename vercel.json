@@ -8,7 +8,7 @@
       "schedule": "0 7 * * *"
     },
     {
-      "path": "/api/deadline-digest",
+      "path": "/api/email",
       "schedule": "30 7 * * *"
     }
   ],
