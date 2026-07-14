@@ -48,6 +48,6 @@ module.exports = async (req, res) => {
     anonKey,
     turnstileSiteKey,
     // Chiave PUBBLICA VAPID (Web Push): pensata per il client, come l'anon key.
-    vapidPublicKey: process.env.VAPID_PUBLIC_KEY || null,
+    vapidPublicKey: process.env.VAPID_PUBLIC_KEY || 'BCc8XfmXq8bB7i1fZ0KANNUjsRibQRG1B2PyOejJj48r37quwVLB12WejnIP3eRxDpEkxVdT1lYISwRvqAN_hY4',
   });
 };
