@@ -100,7 +100,7 @@
           <input type="number" class="calc-num" id="au-isee" min="0" max="200000" value="20000" placeholder="es. 20000"/>
           <span class="calc-euro" data-i18n="au.isee_unit">€/anno</span>
         </div>
-        <span class="calc-note">Se non hai ISEE o supera €43.240, viene applicato l'importo minimo di €57,00/mese per figlio.</span>
+        <span class="calc-note">Se non hai ISEE o supera €46.582,71, viene applicato l'importo minimo di €58,30/mese per figlio.</span>
       </div>
 
       <!-- Number of children -->
@@ -176,7 +176,7 @@
       <div class="req-card">
         <span class="req-icon">📊</span>
         <div class="req-title">ISEE (consigliato)</div>
-        <div class="req-desc">Non è obbligatorio presentare l'ISEE, ma senza di esso ricevi solo l'importo minimo (€57/mese per figlio). Con ISEE puoi ricevere fino a €203,81.</div>
+        <div class="req-desc">Non è obbligatorio presentare l'ISEE, ma senza di esso ricevi solo l'importo minimo (€58,30/mese per figlio). Con ISEE puoi ricevere fino a €203,80.</div>
       </div>
     </div>
 
@@ -204,7 +204,7 @@
 
     <script>
     (function(){
-      var SOGLIA_MIN=17468.51,SOGLIA_MAX=43240,IMP_MAX=203.81,IMP_MIN=57.00;
+      var SOGLIA_MIN=17468.51,SOGLIA_MAX=46582.71,IMP_MAX=203.80,IMP_MIN=58.30;
       function calcBase(isee){
         if(isee<=SOGLIA_MIN)return IMP_MAX;
         if(isee>=SOGLIA_MAX)return IMP_MIN;
