@@ -107,13 +107,6 @@ var textarea = document.getElementById('doc-text');
 var resultArea = document.getElementById('result-area');
 var buttons = document.querySelectorAll('.act-btn');
 
-var prompts = {
-  si: function(text){ return 'Traduci in sinhala questo testo italiano da una lettera ufficiale o documento burocratico. Usa un sinhala chiaro e comprensibile. Testo:\n\n' + text; },
-  ta: function(text){ return 'Traduci in tamil questo testo italiano da una lettera ufficiale o documento burocratico. Usa un tamil chiaro e comprensibile. Testo:\n\n' + text; },
-  en: function(text){ return 'Translate this Italian official letter or bureaucratic document into clear, simple English. Text:\n\n' + text; },
-  simple: function(text){ return 'Spiega in italiano semplice (livello A2) cosa dice questo documento ufficiale italiano. Elenca i punti chiave e cosa deve fare il destinatario. Testo:\n\n' + text; }
-};
-
 var labels = {
   si: 'Traduzione in sinhala',
   ta: 'Traduzione in tamil',
@@ -174,11 +167,10 @@ buttons.forEach(function(btn) {
     var label = btn.getAttribute('data-label');
     showSpinner(label);
     setLoading(true);
-    var prompt = prompts[lang](text);
     fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({ task: 'translate', to: lang, messages: [{ role: 'user', content: text }] })
     })
     .then(function(r){ return r.json(); })
     .then(function(data){
