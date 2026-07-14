@@ -71,8 +71,42 @@ module.exports.run = async (req, res) => {
       byUser.get(r.user_id).push(r);
     }
 
-    let sent = 0;
+    // web-push è opzionale: senza chiavi VAPID si inviano solo le email.
+    let webpush = null;
+    if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
+      try {
+        webpush = require('web-push');
+        webpush.setVapidDetails('mailto:info@easyitaliahub.it',
+          process.env.VAPID_PUBLIC_KEY, process.env.VAPID_PRIVATE_KEY);
+      } catch (e) { webpush = null; }
+    }
+
+    let sent = 0, pushed = 0;
     for (const [uid, list] of byUser) {
+      if (webpush) {
+        try {
+          const subs = await sb(`push_subscriptions?select=endpoint,p256dh,auth&user_id=eq.${uid}`);
+          const next = list[0];
+          const payload = JSON.stringify({
+            title: next.days <= 1 ? '⏰ Scadenza domani!' : `⏰ ${list.length > 1 ? list.length + ' scadenze' : 'Scadenza'} in arrivo`,
+            body: `${next.title} — ${next.days === 1 ? 'domani' : 'tra ' + next.days + ' giorni'}${list.length > 1 ? ` (+${list.length - 1})` : ''}`,
+            url: '/dashboard', tag: 'eih-deadline',
+          });
+          for (const su of subs) {
+            try {
+              await webpush.sendNotification({ endpoint: su.endpoint, keys: { p256dh: su.p256dh, auth: su.auth } }, payload);
+              pushed++;
+            } catch (err) {
+              // 404/410 = abbonamento morto: pulizia
+              if (err.statusCode === 404 || err.statusCode === 410) {
+                await fetch(`${SB_URL}/rest/v1/push_subscriptions?endpoint=eq.${encodeURIComponent(su.endpoint)}`, {
+                  method: 'DELETE', headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` },
+                });
+              }
+            }
+          }
+        } catch (e) { /* le push non devono mai bloccare le email */ }
+      }
       const email = await userEmail(uid);
       if (!email) continue;
       const r = await fetch('https://api.resend.com/emails', {
@@ -86,7 +120,7 @@ module.exports.run = async (req, res) => {
       });
       if (r.ok) sent++;
     }
-    return res.status(200).json({ ok: true, users: byUser.size, sent });
+    return res.status(200).json({ ok: true, users: byUser.size, sent, pushed });
   } catch (e) {
     return res.status(200).json({ ok: false, error: String(e.message || e) });
   }

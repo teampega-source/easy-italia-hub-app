@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@vercel/og": "^0.6.3",
+    "web-push": "^3.6.7",
     "@vercel/speed-insights": "^2.0.0"
   },
   "devDependencies": {
