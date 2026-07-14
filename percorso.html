@@ -358,8 +358,8 @@ html.returning #preloader{display:none}
           <li><button role="menuitem" onclick="setLang('ta')"><span>🇱🇰</span> தமிழ்</button></li>
         </ul>
       </div>
-      <button class="nav-login" onclick="openAuth('login')" data-i18n="nav.login">Accedi</button>
-      <button class="nav-cta" onclick="openAuth('signup')" data-i18n="nav.signup">Registrati gratis</button>
+      <button class="nav-login" onclick="location.href='/registrati?mode=login&next=/percorso'" data-i18n="nav.login">Accedi</button>
+      <button class="nav-cta" onclick="location.href='/registrati?next=/percorso'" data-i18n="nav.signup">Registrati gratis</button>
     </div>
     <div class="nav-mobile-extra">
       <div class="nav-m-sect">
@@ -438,7 +438,7 @@ html.returning #preloader{display:none}
     <div class="gate-card">
       <h2 data-i18n="gate.title">Continua il tuo percorso</h2>
       <p data-i18n="gate.text">La prima fase è libera. Registrati gratis per sbloccare tutte e 9 le fasi, salvare i tuoi progressi e ricevere consigli su misura dal Consigliere AI.</p>
-      <button class="btn-cta" onclick="openAuth('signup')"><span data-i18n="gate.cta">Registrati gratis e sblocca</span></button>
+      <button class="btn-cta" onclick="location.href='/registrati?next=/percorso'"><span data-i18n="gate.cta">Registrati gratis e sblocca</span></button>
     </div>
   </div>
 </main>
@@ -798,11 +798,11 @@ function revealPhases(){
 }
 function togglePhase(n){state._open=(state._open===n?0:n);renderPhases();}
 function toggleStep(n,i){
-  if(n>1 && !isRegistered()){openAuth('signup');return;}
+  if(n>1 && !isRegistered()){location.href='/registrati?next=/percorso';return;}
   const k=n+'-'+i; state.completed[k]=!state.completed[k]; saveState(state); state._open=n; renderPhases();
 }
 function setCurrent(n){
-  if(n>1 && !isRegistered()){openAuth('signup');return;}
+  if(n>1 && !isRegistered()){location.href='/registrati?next=/percorso';return;}
   state.current=n; saveState(state); state._open=n; renderPhases();
 }
 
