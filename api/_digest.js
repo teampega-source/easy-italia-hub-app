@@ -71,15 +71,20 @@ module.exports.run = async (req, res) => {
       byUser.get(r.user_id).push(r);
     }
 
-    // web-push è opzionale: senza chiavi VAPID si inviano solo le email.
+    // web-push: chiavi da env oppure da app_secrets (tabella leggibile solo
+    // dal service role — RLS senza policy). Senza chiavi: solo email.
     let webpush = null;
-    if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
-      try {
+    try {
+      let pub = process.env.VAPID_PUBLIC_KEY, priv = process.env.VAPID_PRIVATE_KEY;
+      if (!pub || !priv) {
+        const rows = await sb('app_secrets?select=key,value&key=in.(vapid_public,vapid_private)');
+        for (const r of rows) { if (r.key === 'vapid_public') pub = r.value; if (r.key === 'vapid_private') priv = r.value; }
+      }
+      if (pub && priv) {
         webpush = require('web-push');
-        webpush.setVapidDetails('mailto:info@easyitaliahub.it',
-          process.env.VAPID_PUBLIC_KEY, process.env.VAPID_PRIVATE_KEY);
-      } catch (e) { webpush = null; }
-    }
+        webpush.setVapidDetails('mailto:info@easyitaliahub.it', pub, priv);
+      }
+    } catch (e) { webpush = null; }
 
     let sent = 0, pushed = 0;
     for (const [uid, list] of byUser) {
