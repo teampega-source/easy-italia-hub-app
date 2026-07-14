@@ -8,6 +8,13 @@ const MAX_NAME = 120;
 const MAX_MSG  = 5000;
 
 module.exports = async function handler(req, res) {
+  // Cron Vercel (GET + Bearer CRON_SECRET): digest scadenze → email automatiche
+  if (req.method === 'GET') {
+    const secret = process.env.CRON_SECRET;
+    if (!secret || req.headers['authorization'] !== `Bearer ${secret}`)
+      return res.status(401).json({ error: 'unauthorized' });
+    return require('./_digest').run(req, res);
+  }
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   let body;
