@@ -176,6 +176,7 @@
 <div id="site-footer"></div>
 <script src="eih.js"></script>
 <script src="eih-auth.js" defer></script>
+<script src="/assets/eih-moderation.js" defer></script>
 <script>
 (function(){
 'use strict';
@@ -326,7 +327,13 @@ function openThread(id){
   catEl.className = 'tc-cat '+t.cat;
   catEl.textContent = catLabel(t.cat);
   document.getElementById('td-title').textContent = t.title;
-  document.getElementById('td-meta').textContent = 'Da ' + (t.author||'Anonimo') + ' · ' + relTime(t.ts);
+  var metaEl = document.getElementById('td-meta');
+  metaEl.textContent = 'Da ' + (t.author||'Anonimo') + ' · ' + relTime(t.ts) + ' ';
+  if(window.EIHModeration){
+    var rb = EIHModeration.reportButton(function(){ return { area:'forum', id:t.id, title:t.title }; }, 'td-report');
+    rb.style.cssText = 'background:none;border:none;padding:0;margin-left:.4rem;cursor:pointer;font-size:var(--text-xs);color:var(--fg-muted)';
+    metaEl.appendChild(rb);
+  }
   document.getElementById('td-body').textContent = t.body;
   renderReplies(t);
   window.scrollTo({top:0, behavior:'smooth'});
@@ -380,6 +387,7 @@ document.getElementById('modal-submit').addEventListener('click', function(){
   var body = document.getElementById('nt-body').value.trim();
   var author = document.getElementById('nt-author').value.trim() || 'Anonimo';
   if(!title || !body){ alert('Compila titolo e testo.'); return; }
+  if(window.EIHModeration && !EIHModeration.scamGuard(title+' '+body)) return;
   function closeModal(){
     document.getElementById('modal-overlay').classList.remove('open');
     document.getElementById('nt-title').value = '';
