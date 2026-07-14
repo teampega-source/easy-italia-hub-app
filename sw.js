@@ -4,7 +4,7 @@
    Le API (/api/) e le richieste cross-origin non vengono mai intercettate. */
 'use strict';
 
-const CACHE = 'eih-v36';
+const CACHE = 'eih-v37';
 const CORE = [
   '/',
   '/eih.css',
@@ -72,4 +72,25 @@ self.addEventListener('fetch', (e) => {
       return hit || refresh;
     })
   );
+});
+
+/* ── Web Push: mostra la notifica e apri la pagina giusta al tocco ── */
+self.addEventListener('push', (e) => {
+  let d = {};
+  try { d = e.data ? e.data.json() : {}; } catch (err) {}
+  e.waitUntil(self.registration.showNotification(d.title || 'Easy Italia Hub', {
+    body: d.body || '',
+    icon: '/assets/icon-192.png',
+    badge: '/assets/favicon-32.png',
+    tag: d.tag || 'eih',
+    data: { url: d.url || '/dashboard' },
+  }));
+});
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || '/dashboard';
+  e.waitUntil(clients.matchAll({ type: 'window', includeUncontrolled: true }).then((ws) => {
+    for (const w of ws) { if (new URL(w.url).pathname === url && 'focus' in w) return w.focus(); }
+    return clients.openWindow(url);
+  }));
 });
