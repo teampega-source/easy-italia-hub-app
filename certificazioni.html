@@ -92,6 +92,25 @@
   [data-page="certificazioni"] .correction-text{font-size:var(--text-sm);line-height:1.75;white-space:pre-wrap}
   [data-page="certificazioni"] .spinner{display:inline-block;width:1.1rem;height:1.1rem;border:2px solid var(--border-bright);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:.4rem}
   @keyframes spin{to{transform:rotate(360deg)}}
+
+.score-panel{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:var(--sp-3);margin-bottom:var(--sp-3)}
+.sp-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:.8rem}
+.sp-title{font-family:'Clash Grotesk',sans-serif;font-weight:600;color:var(--ink)}
+.sp-hint{font-size:var(--text-xs);color:var(--fg-muted)}
+.sp-grid{display:flex;gap:1.4rem;flex-wrap:wrap}
+.sp-cell b{display:block;font-family:'Clash Grotesk',sans-serif;font-size:1.5rem;color:var(--gold)}
+.sp-cell span{font-size:var(--text-xs);color:var(--fg-muted);letter-spacing:.05em;text-transform:uppercase}
+#attestato{display:none}
+@media print{
+  body>*{display:none!important}
+  #attestato{display:block!important;position:fixed;inset:0;background:#fff;color:#1c1a17;font-family:Georgia,serif;padding:60px;text-align:center}
+  #attestato .ab{border:3px double #9a7d45;height:100%;padding:50px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+  #attestato h1{font-size:30px;color:#9a7d45;letter-spacing:.12em;text-transform:uppercase}
+  #attestato .an{font-size:26px;font-weight:bold}
+  #attestato .al{font-size:20px}
+  #attestato .as{font-size:16px;color:#555}
+  #attestato .ad{font-size:12px;color:#888;margin-top:18px;max-width:540px;margin-left:auto;margin-right:auto}
+}
 </style>
 
 <section class="page-hero">
@@ -125,6 +144,13 @@
     </button>
   </div>
 
+  <!-- Language Score -->
+  <div class="score-panel reveal" id="score-panel">
+    <div class="sp-head"><span class="sp-title">📊 Il tuo Language Score</span><span class="sp-hint">Si costruisce con gli esercizi corretti — salvato su questo dispositivo</span></div>
+    <div class="sp-grid" id="sp-grid"></div>
+    <button class="gen-btn" id="att-btn" style="display:none">🎓 Scarica l'attestato (PDF)</button>
+  </div>
+
   <!-- Exercise area -->
   <div class="exercise-area reveal" id="exercise-area">
     <div class="area-title" id="area-title">Tipo di esercizio</div>
@@ -149,6 +175,15 @@
     </div>
   </div>
 </div>
+<div id="attestato" aria-hidden="true"><div class="ab">
+  <h1>Attestato di esercitazione</h1>
+  <p class="as">Easy Italia Hub — Preparazione certificazioni di lingua italiana</p>
+  <p class="an" id="att-nome"></p>
+  <p class="al">ha completato <span id="att-n"></span> esercizi di livello <strong id="att-liv"></strong></p>
+  <p class="al">con un Language Score di <strong id="att-score"></strong>/100</p>
+  <p class="as" id="att-data"></p>
+  <p class="ad">Attestato di esercitazione generato automaticamente sulla base delle correzioni dell'assistente AI. Non è una certificazione linguistica ufficiale (CILS/CELI) e non ha valore legale.</p>
+</div></div>
 </main>
 
 <div id="site-footer"></div>
@@ -260,6 +295,7 @@ correctBtn.addEventListener('click', function(){
       var starsMatch = reply.match(/[★☆]{1,5}/);
       if (starsMatch) {
         starsDisplay.textContent = starsMatch[0];
+        recordScore((starsMatch[0].match(/★/g)||[]).length);
       } else {
         starsDisplay.textContent = '';
       }
@@ -279,6 +315,48 @@ correctBtn.addEventListener('click', function(){
     correctionBlock.classList.add('visible');
   });
 });
+
+// ── Language Score (locale) + attestato stampabile ──
+var LS_SCORE = 'eih-langscore';
+function loadScores(){ try{ return JSON.parse(localStorage.getItem(LS_SCORE)||'[]'); }catch(e){ return []; } }
+function recordScore(stars){
+  if(!stars || !currentLevel) return;
+  var all = loadScores();
+  all.push({ level: currentLevel, type: currentType, stars: stars, ts: Date.now() });
+  try{ localStorage.setItem(LS_SCORE, JSON.stringify(all.slice(-200))); }catch(e){}
+  renderScore();
+}
+function levelStats(level){
+  var rows = loadScores().filter(function(r){ return r.level === level; });
+  if(!rows.length) return null;
+  var avg = rows.reduce(function(n,r){ return n + r.stars; }, 0) / rows.length;
+  return { n: rows.length, score: Math.round(avg * 20) };
+}
+function renderScore(){
+  var grid = document.getElementById('sp-grid');
+  var levels = ['A2','B1','B2','Test cittadinanza'];
+  var html = '', best = null;
+  levels.forEach(function(lv){
+    var st = levelStats(lv);
+    if(!st) return;
+    html += '<div class="sp-cell"><b>' + st.score + '</b><span>' + escHtml(lv) + ' · ' + st.n + ' esercizi</span></div>';
+    if(st.n >= 5 && st.score >= 70 && (!best || st.score > best.score)) best = { level: lv, n: st.n, score: st.score };
+  });
+  grid.innerHTML = html || '<span class="sp-hint">Completa il primo esercizio con correzione per iniziare.</span>';
+  var btn = document.getElementById('att-btn');
+  btn.style.display = best ? '' : 'none';
+  btn.onclick = best ? function(){
+    var nome = prompt('Nome e cognome da riportare sull\'attestato:');
+    if(!nome) return;
+    document.getElementById('att-nome').textContent = nome.slice(0,80);
+    document.getElementById('att-liv').textContent = best.level;
+    document.getElementById('att-n').textContent = best.n;
+    document.getElementById('att-score').textContent = best.score;
+    document.getElementById('att-data').textContent = 'Rilasciato il ' + new Date().toLocaleDateString('it-IT', { day:'numeric', month:'long', year:'numeric' });
+    window.print();
+  } : null;
+}
+renderScore();
 })();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>

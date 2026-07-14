@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<meta charset="UTF-8"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="manifest" href="/manifest.json"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Professionisti Verificati — Easy Italia Hub</title>
+<meta name="description" content="Directory di professionisti verificati che parlano la tua lingua: avvocati, commercialisti, interpreti e mediatori per la comunità srilankese in Italia."/>
+<link rel="canonical" href="https://easyitaliahub.it/professionisti"/>
+<meta property="og:title" content="Professionisti Verificati — Easy Italia Hub"/>
+<meta property="og:description" content="Avvocati, commercialisti, interpreti e mediatori che parlano la tua lingua."/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+<style>
+.pro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--sp-2);margin-top:var(--sp-3)}
+.pro-cat{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:var(--sp-3);text-align:center}
+.pro-cat .pc-ic{font-size:2rem;display:block;margin-bottom:.5rem}
+.pro-cat h3{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);color:var(--ink);margin-bottom:.3rem}
+.pro-cat p{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.55}
+.pro-empty{margin-top:var(--sp-3);padding:var(--sp-4);text-align:center;border:1px dashed var(--border-bright);border-radius:var(--radius);color:var(--fg-muted);font-size:var(--text-sm);line-height:1.7}
+.pro-form{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:var(--sp-3);margin-top:var(--sp-4)}
+.pro-form h2{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xl);color:var(--ink);margin-bottom:.4rem}
+.pro-form p{font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:1rem}
+.pro-form .row{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.6rem}
+.pro-form input,.pro-form select,.pro-form textarea{flex:1;min-width:200px;padding:.65rem .8rem;border:1px solid var(--border-bright);border-radius:var(--radius-sm);background:var(--bg-base);color:var(--fg);font-size:var(--text-sm);font-family:inherit}
+.pro-form textarea{width:100%;min-height:90px;resize:vertical}
+.pro-send{background:var(--gold);color:#fff;border:none;padding:.7rem 1.6rem;border-radius:var(--radius-full);font-family:'Clash Grotesk',sans-serif;font-weight:600;cursor:pointer}
+.pro-status{font-size:var(--text-sm);margin-left:.8rem}
+</style>
+</head>
+<body data-page="professionisti">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <div class="page">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Servizi</p>
+    <h1 class="reveal">Professionisti<br/><em>verificati.</em></h1>
+    <p class="lead reveal">Avvocati, commercialisti, interpreti e mediatori che parlano la tua lingua. Verificati da noi, scelti per la community.</p>
+
+    <div class="pro-grid reveal">
+      <div class="pro-cat"><span class="pc-ic">⚖️</span><h3>Consulenza Legale</h3><p>Permessi, ricorsi, diritto del lavoro e famiglia</p></div>
+      <div class="pro-cat"><span class="pc-ic">🧾</span><h3>Consulenza Fiscale</h3><p>730, partita IVA, ISEE e pratiche CAF</p></div>
+      <div class="pro-cat"><span class="pc-ic">🗣️</span><h3>Interpretariato</h3><p>IT ↔ SI · EN per uffici, ospedali e scuole</p></div>
+      <div class="pro-cat"><span class="pc-ic">🤝</span><h3>Mediazione</h3><p>Supporto culturale e integrazione sociale</p></div>
+    </div>
+
+    <div class="pro-empty reveal" id="pro-empty">
+      La directory è aperta: stiamo verificando i primi professionisti.<br/>
+      <strong>Ti serve un professionista adesso?</strong> Chiedi al <a class="inline" href="/percorso">Consigliere AI</a> o alla <a class="inline" href="/community">community</a> — oppure lascia i tuoi recapiti nel form qui sotto e ti mettiamo in contatto appena verificato il primo esperto della categoria.
+    </div>
+
+    <div class="pro-form reveal" id="pro-form">
+      <h2>Sei un professionista? Candidati</h2>
+      <p>Lavori con la comunità srilankese in Italia? Entra nella directory: verifica gratuita, contatti diretti dai clienti, visibilità nella tua lingua. Anche chi <strong>cerca</strong> un professionista può scriverci da qui.</p>
+      <form id="pf">
+        <div class="row">
+          <input type="text" id="pfn" placeholder="Nome e cognome *" required maxlength="80"/>
+          <input type="email" id="pfe" placeholder="Email *" required maxlength="120"/>
+        </div>
+        <div class="row">
+          <select id="pfc"><option value="">Categoria…</option><option>Consulenza Legale</option><option>Consulenza Fiscale</option><option>Interpretariato</option><option>Mediazione</option><option>Altro</option></select>
+          <input type="text" id="pfw" placeholder="Città" maxlength="60"/>
+        </div>
+        <textarea id="pfm" placeholder="Presentati in due righe: esperienza, lingue parlate, come aiuti la community… *" required maxlength="1000"></textarea>
+        <input type="text" id="website" style="display:none" tabindex="-1" autocomplete="off"/>
+        <div style="margin-top:.8rem">
+          <button type="submit" class="pro-send" id="pro-send">Invia candidatura</button>
+          <span class="pro-status" id="pro-status" role="status"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script src="eih-auth.js" defer></script>
+<script>
+(function(){
+'use strict';
+document.getElementById('pf').addEventListener('submit', function(e){
+  e.preventDefault();
+  var st = document.getElementById('pro-status'), btn = document.getElementById('pro-send');
+  var name = document.getElementById('pfn').value.trim();
+  var email = document.getElementById('pfe').value.trim();
+  var msg = document.getElementById('pfm').value.trim();
+  if(!name || !email || !msg){ st.textContent = 'Compila i campi obbligatori.'; return; }
+  btn.disabled = true; st.textContent = 'Invio…';
+  var full = '[Candidatura professionista]\nCategoria: ' + (document.getElementById('pfc').value || '—') +
+    '\nCittà: ' + (document.getElementById('pfw').value || '—') + '\n\n' + msg;
+  fetch('/api/email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'contact', name: name, email: email, message: full, website: document.getElementById('website').value })
+  }).then(function(r){ return r.json(); }).then(function(d){
+    btn.disabled = false;
+    st.textContent = (d && (d.ok || d.demo)) ? '✓ Ricevuta! Ti ricontattiamo presto.' : (d.error || 'Errore. Riprova.');
+    if(d && (d.ok || d.demo)) document.getElementById('pf').reset();
+  }).catch(function(){ btn.disabled = false; st.textContent = 'Errore di connessione.'; });
+});
+})();
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="assets/eih-atmosphere.js" defer></script>
+<script src="assets/eih-palette.js" defer></script>
+<script src="assets/eih-theme.js" defer></script>
+<script src="assets/eih-consent.js" defer></script>
+<script src="/assets/eih-hero3d.js" defer></script>
+<script src="/assets/vendor/lenis.min.js" defer></script>
+<script src="/assets/vendor/gsap.min.js" defer></script>
+<script src="/assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="/assets/eih-motion.js" defer></script>
+</body>
+</html>

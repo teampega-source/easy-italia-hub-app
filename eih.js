@@ -457,3 +457,18 @@
   if(!window.__eihSearch){var _se=document.createElement('script');_se.src='/eih-search.js';document.head.appendChild(_se);}
   if(!window.__eihVfx){var _vf=document.createElement('script');_vf.src='/assets/eih-vfx.js';_vf.defer=true;document.head.appendChild(_vf);}
 })();
+/* ── PWA: pulsante "Installa l'app" quando il browser lo consente ── */
+(function(){
+  var deferred=null;
+  addEventListener('beforeinstallprompt',function(e){
+    e.preventDefault();deferred=e;
+    if(document.getElementById('eih-install'))return;
+    var b=document.createElement('button');
+    b.id='eih-install';b.textContent='📲 Installa l\'app';
+    b.style.cssText='position:fixed;bottom:1.75rem;left:50%;transform:translateX(-50%);z-index:398;padding:.6rem 1.3rem;border-radius:999px;border:1px solid var(--border-bright);background:var(--bg-elevated);color:var(--ink);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;box-shadow:0 10px 30px rgba(20,17,14,.18)';
+    b.onclick=function(){if(!deferred)return;deferred.prompt();deferred.userChoice.then(function(){b.remove();deferred=null;});};
+    document.body.appendChild(b);
+    setTimeout(function(){if(b.parentNode)b.remove();},20000);
+  });
+})();
+

@@ -82,6 +82,17 @@
 [data-page="profili"] .danger-zone p{font-size:var(--text-sm);color:var(--fg-secondary);margin:0 0 .8rem;line-height:1.6}
 [data-page="profili"] .reset-btn{cursor:pointer;border:1px solid #d94f3d;background:none;color:#d94f3d;font:inherit;font-size:var(--text-sm);font-weight:600;padding:.55rem 1.1rem;border-radius:var(--radius-full);transition:background var(--dur-micro),color var(--dur-micro)}
 [data-page="profili"] .reset-btn:hover{background:#d94f3d;color:#fff}
+
+.fam-form{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem}
+.fam-form input,.fam-form select{flex:1;min-width:130px;padding:.55rem .7rem;border:1px solid var(--border-bright);border-radius:var(--radius-sm);background:var(--bg-elevated);color:var(--fg);font-size:var(--text-sm)}
+.fam-row{display:flex;align-items:center;gap:.7rem;padding:.6rem 0;border-bottom:1px solid var(--border);font-size:var(--text-sm)}
+.fam-row b{color:var(--ink)}
+.fam-row .fr-rel{color:var(--fg-muted)}
+.fam-row .fr-exp{margin-left:auto;white-space:nowrap}
+.fam-row .fr-exp.warn{color:#b9772a;font-weight:600}
+.fam-row .fr-exp.due{color:#c0392b;font-weight:600}
+.fam-row button{background:none;border:none;cursor:pointer;color:var(--fg-muted);font-size:1rem}
+.fam-row button:hover{color:#c0392b}
 </style>
   <link rel="stylesheet" href="/assets/eih-hero3d.css"/>
 </head>
@@ -178,6 +189,20 @@
   <!-- deadlines preview -->
   <h2 class="section-title reveal">Prossime scadenze</h2>
   <div class="info-card reveal" id="deadlines-preview"></div>
+
+  <!-- famiglia -->
+  <h2 class="section-title reveal">La mia famiglia</h2>
+  <div class="info-card reveal" id="family-card">
+    <p style="font-size:var(--text-sm);color:var(--fg-muted);margin-bottom:.8rem">Aggiungi i membri della famiglia con le scadenze dei loro documenti: le vedi qui e nella Dashboard. Salvato su questo dispositivo.</p>
+    <div id="family-list"></div>
+    <div class="fam-form" id="fam-form">
+      <input type="text" id="fam-name" placeholder="Nome" maxlength="40"/>
+      <select id="fam-rel"><option value="">Relazione…</option><option>Coniuge</option><option>Figlio/a</option><option>Genitore</option><option>Fratello/Sorella</option><option>Altro</option></select>
+      <input type="text" id="fam-doc" placeholder="Documento (es. permesso)" maxlength="40"/>
+      <input type="date" id="fam-exp"/>
+      <button class="save-btn" id="fam-add" type="button">+ Aggiungi</button>
+    </div>
+  </div>
 
   <!-- quick access -->
   <h2 class="section-title reveal">Accesso rapido</h2>
@@ -328,9 +353,48 @@ document.getElementById('save-profile-btn').addEventListener('click', function()
   setTimeout(function(){ ok.classList.remove('show'); }, 2500);
 });
 
+  // ── Famiglia multi-membro (locale) ──
+  var LS_FAM = 'eih-family';
+  function famLoad(){ try{ return JSON.parse(localStorage.getItem(LS_FAM)||'[]'); }catch(e){ return []; } }
+  function famSave(a){ try{ localStorage.setItem(LS_FAM, JSON.stringify(a)); }catch(e){} }
+  function famRender(){
+    var list = document.getElementById('family-list');
+    var rows = famLoad();
+    if(!rows.length){ list.innerHTML = '<p style="font-size:var(--text-sm);color:var(--fg-muted)">Nessun membro aggiunto.</p>'; return; }
+    list.innerHTML = rows.map(function(m, i){
+      var exp = '';
+      if(m.exp){
+        var days = Math.round((new Date(m.exp) - new Date()) / 86400000);
+        var cls = days <= 30 ? (days <= 7 ? 'due' : 'warn') : '';
+        exp = '<span class="fr-exp ' + cls + '">' + (m.doc ? esc(m.doc) + ' · ' : '') +
+          (days < 0 ? 'scaduto' : days === 0 ? 'scade oggi' : 'scade tra ' + days + ' gg') + '</span>';
+      }
+      return '<div class="fam-row"><b>' + esc(m.name) + '</b><span class="fr-rel">' + esc(m.rel || '') + '</span>' + exp +
+        '<button data-fi="' + i + '" aria-label="Rimuovi ' + esc(m.name) + '">✕</button></div>';
+    }).join('');
+    list.querySelectorAll('button[data-fi]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var a = famLoad(); a.splice(+b.getAttribute('data-fi'), 1); famSave(a); famRender();
+      });
+    });
+  }
+  function esc(x){ return String(x == null ? '' : x).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
+  document.getElementById('fam-add').addEventListener('click', function(){
+    var name = document.getElementById('fam-name').value.trim();
+    if(!name) return;
+    var a = famLoad();
+    a.push({ name: name, rel: document.getElementById('fam-rel').value,
+      doc: document.getElementById('fam-doc').value.trim(), exp: document.getElementById('fam-exp').value });
+    famSave(a); famRender();
+    ['fam-name','fam-doc','fam-exp'].forEach(function(id){ document.getElementById(id).value=''; });
+    document.getElementById('fam-rel').value='';
+  });
+  famRender();
+
+
 document.getElementById('reset-btn').addEventListener('click', function(){
   if(!confirm('Sei sicuro? Tutti i dati salvati su questo dispositivo verranno cancellati.')) return;
-  var keys = ['eih-profile','eih-deadlines','eih-documents','eih-permesso','eih-forum-v1','eih-first-visit','eih-lang','eih-theme','eih-community-rsvp'];
+  var keys = ['eih-profile','eih-family','eih-deadlines','eih-documents','eih-permesso','eih-forum-v1','eih-first-visit','eih-lang','eih-theme','eih-community-rsvp'];
   keys.forEach(function(k){ try{ localStorage.removeItem(k); }catch(e){} });
   render();
 });
