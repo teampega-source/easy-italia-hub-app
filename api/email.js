@@ -51,7 +51,8 @@ async function handleContact(req, res, body, type) {
     return res.status(400).json({ error: 'Nome e messaggio sono obbligatori.' });
 
   if (!RESEND_KEY) {
-    return res.status(200).json({ demo: true, message: 'Demo: RESEND_API_KEY non impostato.' });
+    console.error('[email/contact] RESEND_API_KEY mancante — impossibile inviare.');
+    return res.status(500).json({ error: 'Servizio email momentaneamente non disponibile. Scrivi a info@easyitaliahub.it.' });
   }
 
   const subject = type === 'newsletter'
