@@ -168,7 +168,7 @@
     </div>
 
     <!-- HONEST privacy banner -->
-    <div class="draft-banner reveal">🔒 <span><strong>Privacy:</strong> senza account i tuoi documenti restano <strong>SOLO nel tuo browser, su questo dispositivo</strong> — non vengono caricati su nessun server, e svuotando i dati del browser si perdono. Registrati per attivare il backup cloud cifrato e l'accesso multi-dispositivo.</span></div>
+    <div class="draft-banner reveal">🔒 <span><strong>Privacy:</strong> i tuoi documenti restano <strong>SOLO nel tuo browser, su questo dispositivo</strong> — non vengono caricati su nessun server, e svuotando i dati del browser si perdono. Il backup cloud cifrato sarà riattivato al termine degli adeguamenti legali e privacy.</span></div>
 
     <!-- IndexedDB unsupported notice (shown by JS only when needed) -->
     <div id="unsupported" class="unsupported reveal" role="alert">
@@ -182,18 +182,23 @@
         <div class="panel-head">
           <div>
             <h2 id="add-h" data-i18n="do.add_h">Aggiungi documento</h2>
-            <p class="panel-sub" id="add-sub">Il file resta sul tuo dispositivo, non viene caricato.</p>
+            <p class="panel-sub" id="add-sub" data-i18n="do.add_sub2">Caricamento temporaneamente sospeso.</p>
           </div>
         </div>
 
-        <form class="doc-form" id="doc-form" aria-label="Aggiungi un documento">
+        <div class="susp-notice" role="note" style="display:flex;gap:.7rem;align-items:flex-start;padding:1rem 1.1rem;margin:.2rem 0 .3rem;border:1px solid var(--gold-dim);border-left:3px solid var(--gold);border-radius:12px;background:var(--gold-dim);font-size:.86rem;line-height:1.6;color:var(--fg-secondary)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;color:var(--gold);margin-top:.15rem"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span data-i18n-html="do.suspended"><strong>Caricamento documenti temporaneamente sospeso.</strong> Per tutelare i tuoi dati, la possibilità di caricare documenti sensibili (passaporto, permesso di soggiorno, contratti…) è disattivata finché non completiamo gli adeguamenti legali e la Privacy Policy a norma. I documenti già salvati restano accessibili qui sotto. Per assistenza scrivi a <a class="inline" href="mailto:info@easyitaliahub.it">info@easyitaliahub.it</a>.</span>
+        </div>
+
+        <form class="doc-form" id="doc-form" aria-label="Aggiungi un documento" hidden>
           <label id="file-label" for="doc-file" data-i18n-html="do.file_label">File <span class="muted">(PDF o immagine, max 20 MB)</span></label>
           <div class="file-zone" id="file-zone">
             <span class="fz-ic" aria-hidden="true">📄</span>
             <span class="fz-main">Scegli un file o trascinalo qui</span>
             <span class="fz-sub">PDF, JPG, PNG, HEIC…</span>
             <span class="fz-file" id="fz-file"></span>
-            <input type="file" id="doc-file" name="file" accept="application/pdf,image/*" aria-labelledby="file-label"/>
+            <input type="file" id="doc-file" name="file" accept="application/pdf,image/*" aria-labelledby="file-label" disabled/>
           </div>
 
           <label for="doc-name" data-i18n="do.name_label">Nome / etichetta</label>
@@ -217,7 +222,7 @@
           <p class="form-err" id="form-err" role="alert"></p>
 
           <div class="df-actions">
-            <button type="submit" class="btn-primary" id="doc-submit" data-i18n="do.save">Salva documento</button>
+            <button type="submit" class="btn-primary" id="doc-submit" data-i18n="do.save" disabled>Salva documento</button>
             <button type="button" class="df-reset" id="doc-reset">Svuota campi</button>
           </div>
         </form>
