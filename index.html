@@ -3351,12 +3351,10 @@ footer{
   text-decoration:none;color:var(--fg);font-size:.92rem;transition:border-color .2s}
 .cr-links a:hover{border-color:var(--coral)}
 .cr-links a small{color:var(--fg-muted);text-align:right}
-.cr-ico{color:var(--cc);margin-bottom:.35rem;line-height:0}
-.cr-ico svg{width:60px;height:60px}
-.cr-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.1;z-index:0;pointer-events:none}
+.cr-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.1;z-index:0;pointer-events:none;filter:sepia(.18) saturate(.9)}
 .cr-card--photo:hover .cr-photo,.cr-card--photo[aria-expanded=true] .cr-photo{opacity:.16}
 .cr-card::before{z-index:1}
-.cr-ico,.cr-city,.cr-region,.cr-tag{position:relative;z-index:1}
+.cr-city,.cr-region,.cr-tag{position:relative;z-index:1}
 .cr-city{font-family:'Clash Grotesk',sans-serif;font-size:1.35rem;font-weight:600;color:var(--fg);margin:0}
 .cr-region{font-size:.8rem;color:var(--fg-muted);margin:0;letter-spacing:.04em}
 .cr-tag{margin-top:.5rem;padding:.2rem .7rem;border-radius:999px;font-size:.68rem;font-weight:600;
@@ -3372,7 +3370,6 @@ footer{
   .eih-cityring{height:250px}
   .cr-card{width:150px;height:180px;margin:-90px 0 0 -75px;padding:.9rem;transform:rotateY(calc(var(--i)*60deg)) translateZ(215px)}
   .cr-city{font-size:1.05rem}
-  .cr-ico svg{width:46px;height:46px}
   .cr-tag{margin-top:.35rem}
 }
 </style>
@@ -3384,11 +3381,11 @@ footer{
   <div class="eih-cityring" aria-label="Città della community in Italia">
     <div class="cr-ring">
       <button type="button" class="cr-card cr-card--photo" style="--i:0;--cc:#b4763a" data-c="roma" aria-expanded="false"><img class="cr-photo" src="/assets/img/roma-colosseo.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Roma</span><span class="cr-region">Lazio</span><span class="cr-tag">Ambasciata</span></button>
-      <button type="button" class="cr-card" style="--i:1;--cc:#7c8aa0" data-c="milano" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h36"/><path d="M9 40V25l4-3 3 3v15M39 40V25l-4-3-3 3v15"/><path d="M18 40V16l6-9 6 9v24"/><path d="M24 7V3M13 22v-4M35 22v-4"/></svg></span><span class="cr-city">Milano</span><span class="cr-region">Lombardia</span><span class="cr-tag">Consolato</span></button>
-      <button type="button" class="cr-card" style="--i:2;--cc:#8a6d9c" data-c="torino" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 40h24"/><path d="M17 40V27h14v13"/><path d="M20 27l4-13 4 13"/><path d="M24 14V4"/><circle cx="24" cy="14" r="2"/></svg></span><span class="cr-city">Torino</span><span class="cr-region">Piemonte</span><span class="cr-tag">In crescita</span></button>
-      <button type="button" class="cr-card" style="--i:3;--cc:#9c7b3a" data-c="firenze" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h36"/><path d="M9 40V21h5v19"/><path d="M17 40V27"/><path d="M35 40V27"/><path d="M16 27a10 10 0 0 1 20 0"/><path d="M23 27v-4h4v4M26 19h-4"/></svg></span><span class="cr-city">Firenze</span><span class="cr-region">Toscana</span><span class="cr-tag">Storica</span></button>
-      <button type="button" class="cr-card" style="--i:4;--cc:#a8543f" data-c="bologna" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 40h30"/><path d="M15 40V11h5v29M17 11V7"/><path d="M27 40l1-19 5 .5-.7 18.5"/></svg></span><span class="cr-city">Bologna</span><span class="cr-region">Emilia-Romagna</span><span class="cr-tag">Studio &amp; lavoro</span></button>
-      <button type="button" class="cr-card" style="--i:5;--cc:#3f8a8a" data-c="napoli" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 33 18 17l3 4 3-4 10 16"/><path d="M4 39q4-2.5 8 0t8 0 8 0 8 0 8 0"/></svg></span><span class="cr-city">Napoli</span><span class="cr-region">Campania</span><span class="cr-tag">Storica</span></button>
+      <button type="button" class="cr-card cr-card--photo" style="--i:1;--cc:#7c8aa0" data-c="milano" aria-expanded="false"><img class="cr-photo" src="/assets/img/milano-city.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Milano</span><span class="cr-region">Lombardia</span><span class="cr-tag">Consolato</span></button>
+      <button type="button" class="cr-card cr-card--photo" style="--i:2;--cc:#8a6d9c" data-c="torino" aria-expanded="false"><img class="cr-photo" src="/assets/img/torino-city.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Torino</span><span class="cr-region">Piemonte</span><span class="cr-tag">In crescita</span></button>
+      <button type="button" class="cr-card cr-card--photo" style="--i:3;--cc:#9c7b3a" data-c="firenze" aria-expanded="false"><img class="cr-photo" src="/assets/img/firenze-city.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Firenze</span><span class="cr-region">Toscana</span><span class="cr-tag">Storica</span></button>
+      <button type="button" class="cr-card cr-card--photo" style="--i:4;--cc:#a8543f" data-c="bologna" aria-expanded="false"><img class="cr-photo" src="/assets/img/bologna-city.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Bologna</span><span class="cr-region">Emilia-Romagna</span><span class="cr-tag">Studio &amp; lavoro</span></button>
+      <button type="button" class="cr-card cr-card--photo" style="--i:5;--cc:#3f8a8a" data-c="napoli" aria-expanded="false"><img class="cr-photo" src="/assets/img/napoli-city.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Napoli</span><span class="cr-region">Campania</span><span class="cr-tag">Storica</span></button>
     </div>
   </div>
   <p class="cr-hint">Tocca una città per scoprire community, servizi e uffici utili.</p>
