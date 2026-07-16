@@ -587,7 +587,8 @@ body{
 .dc-glare{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;
   background:radial-gradient(circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.35),transparent 45%);mix-blend-mode:soft-light}
 .does-card.tilt .dc-glare{opacity:1}
-.dc-ic{font-size:2.2rem;line-height:1;transform:translateZ(38px)}
+.dc-ic{color:var(--dc,#c9a25e);line-height:0;transform:translateZ(38px)}
+.dc-ic svg{width:34px;height:34px}
 .dc-h{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-lg);font-weight:600;color:var(--ink);transform:translateZ(26px)}
 .dc-p{font-size:var(--text-sm);line-height:1.6;color:var(--fg-secondary);flex:1;transform:translateZ(16px)}
 .dc-go{font-size:var(--text-sm);font-weight:600;color:var(--dc,var(--gold));letter-spacing:.02em;transform:translateZ(26px);transition:gap .2s}
@@ -1972,7 +1973,8 @@ footer{
   transition:border-color var(--dur-micro),background var(--dur-micro);
 }
 .mission-value:hover{background:var(--surface-hover);border-color:var(--border-bright)}
-.mission-value-icon{font-size:1.2rem;margin-bottom:.4rem;line-height:1;display:block}
+.mission-value-icon{color:var(--gold);margin-bottom:.45rem;line-height:0;display:block}
+.mission-value-icon svg{width:22px;height:22px}
 .mission-value h4{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:500;color:var(--ink);margin-bottom:.2rem}
 .mission-value p{font-size:var(--text-xs);color:var(--fg-muted);line-height:1.5;font-weight:300}
 .mission-visual{
@@ -2743,22 +2745,22 @@ footer{
       <p style="font-size:var(--text-sm);color:var(--fg-muted);line-height:1.7;font-weight:300;margin-bottom:var(--sp-4)" data-i18n="mission.desc">La nostra missione è semplice: rendere l'integrazione più rapida, meno stressante e più dignitosa. Perché ogni persona merita di capire i propri diritti nella propria lingua.</p>
       <div class="mission-values">
         <div class="mission-value">
-          <span class="mission-value-icon" aria-hidden="true">🌐</span>
+          <span class="mission-value-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg></span>
           <h4 data-i18n="mission.val1.h">Multilingua</h4>
           <p data-i18n="mission.val1.p">Italiano, inglese, sinhala e tamil</p>
         </div>
         <div class="mission-value">
-          <span class="mission-value-icon" aria-hidden="true">🔓</span>
+          <span class="mission-value-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></span>
           <h4 data-i18n="mission.val2.h">Accessibile</h4>
           <p data-i18n="mission.val2.p">Gratuito, senza barriere d'accesso</p>
         </div>
         <div class="mission-value">
-          <span class="mission-value-icon" aria-hidden="true">🤝</span>
+          <span class="mission-value-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
           <h4 data-i18n="mission.val3.h">Community</h4>
           <p data-i18n="mission.val3.p">Costruito insieme alla comunità</p>
         </div>
         <div class="mission-value">
-          <span class="mission-value-icon" aria-hidden="true">🛡️</span>
+          <span class="mission-value-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
           <h4 data-i18n="mission.val4.h">Affidabile</h4>
           <p data-i18n="mission.val4.p">Fonti ufficiali sempre verificate</p>
         </div>
@@ -3081,42 +3083,42 @@ footer{
   <div class="does-grid" id="does-grid">
     <a class="does-card reveal" href="/guide" style="--dc:#3b82f6">
       <span class="dc-glare" aria-hidden="true"></span>
-      <span class="dc-ic" aria-hidden="true">📄</span>
+      <span class="dc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
       <h3 class="dc-h" data-i18n="does.c1.t">Documenti &amp; burocrazia</h3>
       <p class="dc-p" data-i18n="does.c1.p">Guide passo-passo, archivio documenti cifrato, moduli PDF pronti e tracker del permesso con promemoria.</p>
       <span class="dc-go" aria-hidden="true">Esplora →</span>
     </a>
     <a class="does-card reveal" href="/academy" style="--dc:#8b5cf6">
       <span class="dc-glare" aria-hidden="true"></span>
-      <span class="dc-ic" aria-hidden="true">🗣️</span>
+      <span class="dc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/><path d="M22 10v6"/></svg></span>
       <h3 class="dc-h" data-i18n="does.c2.t">Lingua &amp; formazione</h3>
       <p class="dc-p" data-i18n="does.c2.p">Academy, corsi, preparazione alle certificazioni A2–B2, AI Teacher e il tuo Language Score con attestato.</p>
       <span class="dc-go" aria-hidden="true">Esplora →</span>
     </a>
     <a class="does-card reveal" href="/percorso" style="--dc:#c9a25e">
       <span class="dc-glare" aria-hidden="true"></span>
-      <span class="dc-ic" aria-hidden="true">🤖</span>
+      <span class="dc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4H8"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M9 13v2"/><path d="M15 13v2"/></svg></span>
       <h3 class="dc-h" data-i18n="does.c3.t">Consigliere AI</h3>
       <p class="dc-p" data-i18n="does.c3.p">Assistente multilingua 24 ore su 24 e traduzione delle lettere ufficiali in italiano, inglese, sinhala e tamil.</p>
       <span class="dc-go" aria-hidden="true">Esplora →</span>
     </a>
     <a class="does-card reveal" href="/percorso" style="--dc:#10b981">
       <span class="dc-glare" aria-hidden="true"></span>
-      <span class="dc-ic" aria-hidden="true">🧭</span>
+      <span class="dc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span>
       <h3 class="dc-h" data-i18n="does.c4.t">Il Mio Percorso</h3>
       <p class="dc-p" data-i18n="does.c4.p">Nove fasi di vita in Italia — arrivo, regolarizzazione, lavoro, casa, famiglia — con il prossimo passo sempre chiaro.</p>
       <span class="dc-go" aria-hidden="true">Esplora →</span>
     </a>
     <a class="does-card reveal" href="/community" style="--dc:#ec4899">
       <span class="dc-glare" aria-hidden="true"></span>
-      <span class="dc-ic" aria-hidden="true">❤️</span>
+      <span class="dc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
       <h3 class="dc-h" data-i18n="does.c5.t">Community &amp; servizi</h3>
       <p class="dc-p" data-i18n="does.c5.p">Forum, mercatino, mappa dei servizi, news verificate e comparatore per le rimesse verso lo Sri Lanka.</p>
       <span class="dc-go" aria-hidden="true">Esplora →</span>
     </a>
     <a class="does-card reveal" href="/professionisti" style="--dc:#f59e0b">
       <span class="dc-glare" aria-hidden="true"></span>
-      <span class="dc-ic" aria-hidden="true">👔</span>
+      <span class="dc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
       <h3 class="dc-h" data-i18n="does.c6.t">Professionisti verificati</h3>
       <p class="dc-p" data-i18n="does.c6.p">Avvocati, commercialisti, interpreti e mediatori verificati, che parlano la tua lingua.</p>
       <span class="dc-go" aria-hidden="true">Esplora →</span>
@@ -3351,6 +3353,10 @@ footer{
 .cr-links a small{color:var(--fg-muted);text-align:right}
 .cr-ico{color:var(--cc);margin-bottom:.35rem;line-height:0}
 .cr-ico svg{width:60px;height:60px}
+.cr-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.1;z-index:0;pointer-events:none}
+.cr-card--photo:hover .cr-photo,.cr-card--photo[aria-expanded=true] .cr-photo{opacity:.16}
+.cr-card::before{z-index:1}
+.cr-ico,.cr-city,.cr-region,.cr-tag{position:relative;z-index:1}
 .cr-city{font-family:'Clash Grotesk',sans-serif;font-size:1.35rem;font-weight:600;color:var(--fg);margin:0}
 .cr-region{font-size:.8rem;color:var(--fg-muted);margin:0;letter-spacing:.04em}
 .cr-tag{margin-top:.5rem;padding:.2rem .7rem;border-radius:999px;font-size:.68rem;font-weight:600;
@@ -3377,7 +3383,7 @@ footer{
   <p class="section-sub" data-i18n="map3d.sub">Srilankesi da Nord a Sud: le città dove la community cresce.</p>
   <div class="eih-cityring" aria-label="Città della community in Italia">
     <div class="cr-ring">
-      <button type="button" class="cr-card" style="--i:0;--cc:#b4763a" data-c="roma" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18Q24 11 41 18L41 37Q24 43 7 37Z"/><path d="M7 27h34"/><path d="M14 21v14M21 20v16M27 20v16M34 21v14"/></svg></span><span class="cr-city">Roma</span><span class="cr-region">Lazio</span><span class="cr-tag">Ambasciata 🇱🇰</span></button>
+      <button type="button" class="cr-card cr-card--photo" style="--i:0;--cc:#b4763a" data-c="roma" aria-expanded="false"><img class="cr-photo" src="/assets/img/roma-colosseo.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Roma</span><span class="cr-region">Lazio</span><span class="cr-tag">Ambasciata</span></button>
       <button type="button" class="cr-card" style="--i:1;--cc:#7c8aa0" data-c="milano" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h36"/><path d="M9 40V25l4-3 3 3v15M39 40V25l-4-3-3 3v15"/><path d="M18 40V16l6-9 6 9v24"/><path d="M24 7V3M13 22v-4M35 22v-4"/></svg></span><span class="cr-city">Milano</span><span class="cr-region">Lombardia</span><span class="cr-tag">Consolato</span></button>
       <button type="button" class="cr-card" style="--i:2;--cc:#8a6d9c" data-c="torino" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 40h24"/><path d="M17 40V27h14v13"/><path d="M20 27l4-13 4 13"/><path d="M24 14V4"/><circle cx="24" cy="14" r="2"/></svg></span><span class="cr-city">Torino</span><span class="cr-region">Piemonte</span><span class="cr-tag">In crescita</span></button>
       <button type="button" class="cr-card" style="--i:3;--cc:#9c7b3a" data-c="firenze" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h36"/><path d="M9 40V21h5v19"/><path d="M17 40V27"/><path d="M35 40V27"/><path d="M16 27a10 10 0 0 1 20 0"/><path d="M23 27v-4h4v4M26 19h-4"/></svg></span><span class="cr-city">Firenze</span><span class="cr-region">Toscana</span><span class="cr-tag">Storica</span></button>
