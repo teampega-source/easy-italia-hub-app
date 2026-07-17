@@ -2299,7 +2299,19 @@ footer{
     <p class="bg-note" id="bg-note"></p>
   </div>
 </div>
+<!-- ── Intro / preloader video (una volta per sessione) ── -->
+<div id="intro-ov" aria-hidden="true">
+  <video id="intro-vid" playsinline preload="auto" src="/assets/intro.mp4"></video>
+  <button type="button" id="intro-skip">Salta →</button>
+</div>
 <style>
+#intro-ov{position:fixed;inset:0;z-index:100001;background:#0e0b09;display:none;align-items:center;justify-content:center;opacity:1;transition:opacity .5s ease}
+#intro-ov.on{display:flex}
+#intro-ov.fade{opacity:0;pointer-events:none}
+#intro-vid{width:100%;height:100%;object-fit:cover}
+#intro-skip{position:fixed;bottom:1.3rem;right:1.3rem;z-index:100002;padding:.5rem 1.05rem;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.4);color:#fff;border-radius:999px;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:background .2s}
+#intro-skip:hover{background:rgba(0,0,0,.6)}
+#intro-skip:focus-visible{outline:2px solid #f0e7d6;outline-offset:2px}
 #beta-gate{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:radial-gradient(120% 120% at 50% 0%,#241d16,#0e0b09);opacity:1;transition:opacity .4s ease}
 #beta-gate.bg-hide{opacity:0;pointer-events:none}
 #beta-gate .bg-card{max-width:520px;text-align:center;font-family:'Satoshi',system-ui,sans-serif}
@@ -2339,13 +2351,47 @@ footer{
   render(lang);
   for(var i=0;i<btns.length;i++)btns[i].addEventListener('click',function(){
     var l=this.getAttribute('data-l');try{localStorage.setItem('eih-lang',l);}catch(e){}render(l);});
-  try{if(localStorage.getItem('eih-beta-ack')==='1'){g.parentNode.removeChild(g);return;}}catch(e){}
-  var htmlEl=document.documentElement;htmlEl.style.overflow='hidden';
+
+  // ── Intro video (preloader, una volta per sessione) ──
+  var htmlEl=document.documentElement;
+  var iov=document.getElementById('intro-ov'),ivid=document.getElementById('intro-vid'),iskip=document.getElementById('intro-skip');
+  var SKIP={it:'Salta →',en:'Skip →',si:'මඟ හරින්න →',ta:'தவிர் →'};
+  function introSeen(){try{return sessionStorage.getItem('eih-intro-seen')==='1';}catch(e){return false;}}
+  var done=false;
+  function endIntro(){
+    if(done)return;done=true;
+    try{sessionStorage.setItem('eih-intro-seen','1');}catch(e){}
+    try{ivid.pause();}catch(e){}
+    iov.classList.add('fade');
+    setTimeout(function(){iov.classList.remove('on','fade');iov.style.display='none';htmlEl.style.overflow='';},520);
+  }
+  function playIntro(unmuted){
+    if(!iov||!ivid||introSeen()){htmlEl.style.overflow='';return;}
+    iskip.textContent=SKIP[lang]||SKIP.it;
+    htmlEl.style.overflow='hidden';iov.classList.add('on');
+    ivid.muted=!unmuted;try{ivid.currentTime=0;}catch(e){}
+    ivid.addEventListener('ended',endIntro,{once:true});
+    ivid.addEventListener('error',endIntro,{once:true});
+    iskip.addEventListener('click',endIntro,{once:true});
+    var p=ivid.play();
+    if(p&&p.catch)p.catch(function(){ivid.muted=true;var q=ivid.play();if(q&&q.catch)q.catch(endIntro);});
+    setTimeout(endIntro,13000); // backstop di sicurezza
+  }
+
+  var acked=false;try{acked=localStorage.getItem('eih-beta-ack')==='1';}catch(e){}
+  if(acked){
+    if(g.parentNode)g.parentNode.removeChild(g);
+    playIntro(false); // rientro senza gesto → muto in autoplay
+    return;
+  }
+  htmlEl.style.overflow='hidden';
   try{enter.focus();}catch(e){}
   enter.addEventListener('click',function(){
     try{localStorage.setItem('eih-beta-ack','1');}catch(e){}
-    g.classList.add('bg-hide');htmlEl.style.overflow='';
+    g.classList.add('bg-hide');
     setTimeout(function(){if(g.parentNode)g.parentNode.removeChild(g);},450);
+    if(!introSeen())playIntro(true); // gesto utente → con audio
+    else htmlEl.style.overflow='';
   });
 })();
 </script>
