@@ -2283,6 +2283,47 @@ footer{
 
 <a href="#main-content" class="skip-link">Salta al contenuto</a>
 
+<!-- ── Beta / maintenance gate (prima della home, ricordato via localStorage) ── -->
+<div id="beta-gate" role="dialog" aria-modal="true" aria-labelledby="bg-title">
+  <div class="bg-card">
+    <span class="bg-logo">Easy <em>Italia</em> Hub<span class="bg-tag">Beta</span></span>
+    <h1 id="bg-title">Sito in manutenzione</h1>
+    <p>È in corso la <strong>regolarizzazione fiscale e societaria</strong> di Easy Italia Hub. Puoi comunque esplorare la piattaforma in <strong>versione beta</strong>, ancora in fase di sviluppo: alcune funzioni potrebbero cambiare.</p>
+    <button type="button" id="bg-enter">Voglio visitarlo →</button>
+    <p class="bg-note">Continuando accetti di navigare un sito in fase di sviluppo.</p>
+  </div>
+</div>
+<style>
+#beta-gate{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:radial-gradient(120% 120% at 50% 0%,#241d16,#0e0b09);opacity:1;transition:opacity .4s ease}
+#beta-gate.bg-hide{opacity:0;pointer-events:none}
+#beta-gate .bg-card{max-width:520px;text-align:center;font-family:'Satoshi',system-ui,sans-serif}
+#beta-gate .bg-logo{font-family:'Clash Grotesk','Satoshi',sans-serif;font-size:1.15rem;letter-spacing:.02em;color:#e8dcc8}
+#beta-gate .bg-logo em{font-style:italic;color:#c8a96e}
+#beta-gate .bg-tag{display:inline-block;margin-left:.55rem;padding:.14rem .55rem;border:1px solid rgba(200,169,110,.5);border-radius:999px;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#c8a96e;vertical-align:middle}
+#beta-gate h1{font-family:'Clash Grotesk','Satoshi',sans-serif;font-weight:600;font-size:clamp(1.7rem,5vw,2.4rem);margin:1.6rem 0 .85rem;line-height:1.12;color:#f0e7d6}
+#beta-gate p{font-size:.98rem;line-height:1.65;color:#c9bba0;margin:0 auto;max-width:44ch}
+#beta-gate #bg-enter{margin-top:1.9rem;padding:.9rem 2.1rem;border:none;border-radius:999px;cursor:pointer;font:inherit;font-weight:600;font-size:1rem;color:#0e0b09;background:linear-gradient(135deg,#e5c98a,#c8a96e);box-shadow:0 12px 34px rgba(200,169,110,.32);transition:transform .2s,box-shadow .2s}
+#beta-gate #bg-enter:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(200,169,110,.45)}
+#beta-gate #bg-enter:active{transform:scale(.97)}
+#beta-gate #bg-enter:focus-visible{outline:2px solid #f0e7d6;outline-offset:3px}
+#beta-gate .bg-note{margin-top:1.15rem;font-size:.72rem;color:#8a7d66}
+@media(prefers-reduced-motion:reduce){#beta-gate,#beta-gate #bg-enter{transition:none}}
+</style>
+<script>
+(function(){
+  var g=document.getElementById('beta-gate');if(!g)return;
+  try{if(localStorage.getItem('eih-beta-ack')==='1'){g.parentNode.removeChild(g);return;}}catch(e){}
+  var html=document.documentElement;html.style.overflow='hidden';
+  var b=document.getElementById('bg-enter');
+  try{b.focus();}catch(e){}
+  b.addEventListener('click',function(){
+    try{localStorage.setItem('eih-beta-ack','1');}catch(e){}
+    g.classList.add('bg-hide');html.style.overflow='';
+    setTimeout(function(){if(g.parentNode)g.parentNode.removeChild(g);},450);
+  });
+})();
+</script>
+
 <!-- Smart toast (once per user, bottom-right) -->
 <div id="smart-toast" role="status" aria-live="polite">
   <button class="st-x" id="st-x" aria-label="Chiudi">
