@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Esame & Badge — Easy Italia Hub</title>
+<meta name="description" content="Studia con i corsi, supera l'esame sulla vita in Italia e ottieni il tuo badge (Bronzo, Argento, Oro, Platino). I badge di livello alto sbloccano funzioni avanzate."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/esame"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Easy Italia Hub"/>
+<meta property="og:title" content="Esame & Badge — Easy Italia Hub"/>
+<meta property="og:description" content="Supera l'esame sulla vita in Italia e ottieni il tuo badge. I livelli alti sbloccano funzioni avanzate."/>
+<meta property="og:url" content="https://easyitaliahub.it/esame"/>
+<meta property="og:image" content="https://easyitaliahub.it/api/og?t=Esame%20%26%20Badge&amp;s=Supera%20l%27esame%2C%20ottieni%20il%20tuo%20badge"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="it_IT"/>
+<meta property="og:locale:alternate" content="en_US"/>
+<meta property="og:locale:alternate" content="si_LK"/>
+<meta property="og:locale:alternate" content="ta_IN"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Esame & Badge — Easy Italia Hub"/>
+<meta name="twitter:description" content="Supera l'esame sulla vita in Italia e ottieni il tuo badge."/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+<link rel="stylesheet" href="/assets/eih-hero3d.css"/>
+</head>
+<body data-page="esame">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+<style>
+  [data-page="esame"] .wrap{max-width:920px;margin:0 auto;padding:calc(var(--sp-6) + 2.5rem) var(--sp-3) var(--sp-6)}
+  [data-page="esame"] .section-label{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem}
+  [data-page="esame"] h1{font-family:'Clash Grotesk',sans-serif;font-size:clamp(2.1rem,5vw,3.2rem);font-weight:600;letter-spacing:-.02em;line-height:1.06;margin:0 0 1rem}
+  [data-page="esame"] h1 em{font-style:italic;color:var(--gold)}
+  [data-page="esame"] .lead{max-width:64ch;color:var(--fg-secondary);font-size:var(--text-lg);line-height:1.65}
+  [data-page="esame"] .card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.6rem}
+  [data-page="esame"] .mybadge{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:var(--sp-4)}
+  [data-page="esame"] .mybadge .mb-t{font-size:var(--text-sm);color:var(--fg-secondary)}
+  /* ladder */
+  [data-page="esame"] .ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-2);margin-top:var(--sp-3)}
+  [data-page="esame"] .lv{position:relative;border:1px solid var(--border);border-top:3px solid var(--lc);border-radius:14px;padding:1.1rem 1rem;background:var(--surface)}
+  [data-page="esame"] .lv-h{display:flex;align-items:center;gap:.5rem;font-family:'Clash Grotesk',sans-serif;font-weight:600;color:var(--ink)}
+  [data-page="esame"] .lv-dot{width:12px;height:12px;border-radius:50%;background:var(--lc);flex-shrink:0}
+  [data-page="esame"] .lv-min{font-size:.72rem;color:var(--fg-muted);margin:.15rem 0 .6rem}
+  [data-page="esame"] .lv ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.35rem}
+  [data-page="esame"] .lv li{font-size:.8rem;line-height:1.4;color:var(--fg-secondary);padding-left:1.1rem;position:relative}
+  [data-page="esame"] .lv li::before{content:"";position:absolute;left:0;top:.45rem;width:6px;height:6px;border-radius:50%;background:var(--lc)}
+  [data-page="esame"] .lv.reached{background:color-mix(in srgb,var(--lc) 9%,var(--bg-elevated))}
+  [data-page="esame"] .lv .lv-you{position:absolute;top:.7rem;right:.7rem;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--lc)}
+  /* quiz */
+  [data-page="esame"] .q{border-bottom:1px solid var(--border);padding:1.1rem 0}
+  [data-page="esame"] .q:last-child{border-bottom:none}
+  [data-page="esame"] .q-t{font-weight:600;color:var(--ink);margin:0 0 .7rem;line-height:1.45}
+  [data-page="esame"] .q-t .n{color:var(--gold);margin-right:.35rem}
+  [data-page="esame"] .opt{display:flex;align-items:flex-start;gap:.6rem;padding:.6rem .8rem;border:1px solid var(--border);border-radius:10px;margin-bottom:.5rem;cursor:pointer;transition:border-color .2s,background .2s;font-size:.92rem;line-height:1.4}
+  [data-page="esame"] .opt:hover{border-color:var(--gold)}
+  [data-page="esame"] .opt input{margin-top:.15rem;accent-color:var(--gold);flex-shrink:0}
+  [data-page="esame"] .opt.ok{border-color:#1f9d55;background:rgba(31,157,85,.08)}
+  [data-page="esame"] .opt.no{border-color:var(--coral);background:rgba(235,89,57,.08)}
+  [data-page="esame"] .btn-cta{margin-top:var(--sp-3);padding:.85rem 2rem;border:none;border-radius:999px;cursor:pointer;font:inherit;font-weight:600;font-size:1rem;color:#0e0b09;background:linear-gradient(135deg,#e5c98a,#c8a96e);box-shadow:0 12px 30px rgba(200,169,110,.28);transition:transform .2s}
+  [data-page="esame"] .btn-cta:hover{transform:translateY(-2px)}
+  [data-page="esame"] .btn-ghost2{margin-top:var(--sp-2);padding:.7rem 1.4rem;border:1px solid var(--border);background:transparent;border-radius:999px;cursor:pointer;font:inherit;font-weight:600;font-size:.9rem;color:var(--ink)}
+  [data-page="esame"] .result{text-align:center;padding:var(--sp-4) var(--sp-3)}
+  [data-page="esame"] .result .rp{font-size:clamp(2.6rem,7vw,3.6rem);font-family:'Clash Grotesk',sans-serif;font-weight:600;line-height:1}
+  [data-page="esame"] .result .rlvl{margin:.8rem 0}
+  [data-page="esame"] .result ul{list-style:none;padding:0;margin:1rem auto 0;max-width:440px;text-align:left;display:flex;flex-direction:column;gap:.4rem}
+  [data-page="esame"] .result li{font-size:.9rem;color:var(--fg-secondary);padding-left:1.4rem;position:relative}
+  [data-page="esame"] .result li::before{content:"✓";position:absolute;left:0;color:#1f9d55;font-weight:700}
+  [data-page="esame"] .hint{font-size:.8rem;color:var(--fg-muted);margin-top:.5rem}
+  [data-page="esame"] .disc{font-size:.74rem;color:var(--fg-muted);line-height:1.55;margin-top:var(--sp-3)}
+  @media(max-width:760px){[data-page="esame"] .ladder{grid-template-columns:1fr 1fr}}
+  @media(max-width:460px){[data-page="esame"] .ladder{grid-template-columns:1fr}}
+  /* attestato stampabile */
+  #cert{display:none}
+  @media print{body>*:not(#cert){display:none!important}#cert{display:block!important;padding:3rem}
+    #cert .c-box{border:3px solid #c8a96e;border-radius:16px;padding:2.5rem;text-align:center;font-family:'Clash Grotesk',sans-serif}
+    #cert h2{font-size:2rem;margin:.2rem 0}#cert .c-name{font-size:1.6rem;font-weight:700;margin:1rem 0}
+    #cert .c-lv{font-size:1.2rem;color:#8a6d2f}}
+</style>
+
+<div class="wrap">
+  <p class="section-label reveal" data-i18n="ex.eyebrow">Corsi · Esame · Badge</p>
+  <h1 class="reveal" data-i18n-html="ex.h1">Studia, supera l'esame,<br/><em>ottieni il tuo badge.</em></h1>
+  <p class="lead reveal" data-i18n="ex.lead">Impara con i nostri corsi e le guide, poi supera un breve esame sulla vita in Italia. In base al punteggio ottieni un badge — e i livelli più alti sbloccano funzioni avanzate. Disponibile in italiano, inglese, singalese e tamil.</p>
+
+  <div class="card reveal" style="margin-top:var(--sp-4)">
+    <div class="mybadge">
+      <span class="mb-t" data-i18n="ex.your">Il tuo badge attuale:</span>
+      <span id="my-badge"></span>
+    </div>
+  </div>
+
+  <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5)" data-i18n="ex.levels">I livelli e cosa sbloccano</h2>
+  <div class="ladder reveal" id="ladder"></div>
+
+  <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5)" data-i18n="ex.exam">L'esame</h2>
+  <p class="lead" style="font-size:var(--text-base)" data-i18n="ex.examsub">15 domande a risposta multipla sulla vita e la burocrazia in Italia. Difficoltà media. Puoi ripeterlo quando vuoi: si tiene il punteggio migliore.</p>
+
+  <div class="card reveal" id="quiz-card" style="margin-top:var(--sp-3)">
+    <div id="quiz-locked" style="display:none;text-align:center;padding:var(--sp-2) 0">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-bottom:.6rem"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <p style="color:var(--fg-secondary);margin:0 0 1rem;max-width:52ch;margin-left:auto;margin-right:auto" data-i18n="ex.locked">Per accedere all'esame devi prima completare i Corsi di formazione. Studia le lezioni, poi torna qui per ottenere il tuo badge.</p>
+      <a href="/corsi" class="btn-cta" style="display:inline-block;text-decoration:none" data-i18n="ex.gocourses">Vai ai corsi →</a>
+    </div>
+    <div id="quiz-intro">
+      <p style="color:var(--fg-secondary);margin:0 0 .3rem" data-i18n="ex.ready">Corsi completati ✓ — pronto? L'esame richiede circa 5 minuti.</p>
+      <button class="btn-cta" id="start-btn" data-i18n="ex.start">Inizia l'esame →</button>
+    </div>
+    <form id="quiz-form" style="display:none"></form>
+    <div id="quiz-actions" style="display:none">
+      <button class="btn-cta" id="submit-btn" data-i18n="ex.submit">Consegna →</button>
+    </div>
+    <div id="quiz-result" style="display:none"></div>
+  </div>
+
+  <p class="disc" data-i18n="ex.disc">L'esame e i badge di Easy Italia Hub hanno finalità informative e di orientamento. Non sono titoli ufficiali né certificazioni linguistiche (es. CILS/CELI) e non hanno valore legale.</p>
+</div>
+
+<!-- attestato stampabile -->
+<div id="cert"><div class="c-box">
+  <p style="letter-spacing:.2em;color:#8a6d2f;font-size:.8rem">EASY ITALIA HUB</p>
+  <h2>Attestato di superamento</h2>
+  <p>Si attesta che</p>
+  <p class="c-name" id="cert-name"></p>
+  <p>ha superato l'Esame sulla vita in Italia ottenendo il badge</p>
+  <p class="c-lv"><span id="cert-lv"></span> — <span id="cert-score"></span>/100</p>
+  <p style="margin-top:1.5rem;font-size:.85rem;color:#666" id="cert-date"></p>
+  <p style="margin-top:1rem;font-size:.7rem;color:#999">Attestato informativo. Non è una certificazione ufficiale né ha valore legale.</p>
+</div></div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script src="eih-auth.js" defer></script>
+<script src="/assets/eih-badges.js"></script>
+<script>window.EIH_I18N_EXTRA={
+"en":{"ex.eyebrow":"Courses · Exam · Badge","ex.h1":"Study, pass the exam,<br/><em>earn your badge.</em>","ex.lead":"Learn with our courses and guides, then pass a short exam about life in Italy. Based on your score you earn a badge — and higher levels unlock advanced features. Available in Italian, English, Sinhala and Tamil.","ex.your":"Your current badge:","ex.levels":"Levels and what they unlock","ex.exam":"The exam","ex.examsub":"15 multiple-choice questions about life and bureaucracy in Italy. Medium difficulty. You can retake it anytime — your best score is kept.","ex.ready":"Courses completed ✓ — ready? The exam takes about 5 minutes.","ex.locked":"To take the exam you must first complete the training courses. Study the lessons, then come back here to earn your badge.","ex.gocourses":"Go to the courses →","ex.start":"Start the exam →","ex.submit":"Submit →","ex.disc":"The exam and badges of Easy Italia Hub are for information and guidance only. They are not official qualifications or language certifications (e.g. CILS/CELI) and have no legal value.","ex.none":"No badge yet — take the exam to earn one.","ex.min":"from","ex.you":"You","ex.reached":"Reached","ex.passed":"Passed!","ex.failed":"Not passed yet","ex.your_score":"Your score","ex.earned":"You earned the badge","ex.unlocks":"You unlocked:","ex.retry":"Retry the exam","ex.retryfail":"You need at least 60/100 for the Bronze badge. Review the guides and try again.","ex.print":"Print certificate","ex.name_q":"Full name to print on the certificate:","ex.review":"Review your answers below.","ex.correct":"Correct answer"},
+"si":{"ex.eyebrow":"පාඨමාලා · විභාගය · බැජ්","ex.h1":"ඉගෙන ගන්න, විභාගය සමත් වන්න,<br/><em>ඔබේ බැජ් ලබා ගන්න.</em>","ex.lead":"අපගේ පාඨමාලා සහ මාර්ගෝපදේශ සමඟ ඉගෙන ගෙන, ඉතාලියේ ජීවිතය පිළිබඳ කෙටි විභාගයක් සමත් වන්න. ඔබේ ලකුණු අනුව බැජ් එකක් ලැබේ — ඉහළ මට්ටම් උසස් විශේෂාංග අගුළු හරියි. ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවෙන් ලබා ගත හැක.","ex.your":"ඔබේ වත්මන් බැජ්:","ex.levels":"මට්ටම් සහ ඒවා අගුළු හරින දේ","ex.exam":"විභාගය","ex.examsub":"ඉතාලියේ ජීවිතය හා නිලධාරිත්වය පිළිබඳ බහුවරණ ප්‍රශ්න 15ක්. මධ්‍යම දුෂ්කරතාව. ඕනෑම වේලාවක නැවත කළ හැක — හොඳම ලකුණු තබා ගැනේ.","ex.ready":"පාඨමාලා සම්පූර්ණයි ✓ — සූදානම්ද? විභාගයට මිනිත්තු 5ක් පමණ ගතවේ.","ex.locked":"විභාගයට පෙර ඔබ පුහුණු පාඨමාලා සම්පූර්ණ කළ යුතුය. පාඩම් ඉගෙන ගෙන, ඔබේ බැජ් ලබා ගැනීමට නැවත මෙහි එන්න.","ex.gocourses":"පාඨමාලා වෙත යන්න →","ex.start":"විභාගය අරඹන්න →","ex.submit":"ඉදිරිපත් කරන්න →","ex.disc":"Easy Italia Hub හි විභාගය සහ බැජ් තොරතුරු හා මඟ පෙන්වීම සඳහා පමණි. ඒවා නිල සුදුසුකම් හෝ භාෂා සහතික (උදා. CILS/CELI) නොවේ; නෛතික වටිනාකමක් නැත.","ex.none":"තවම බැජ් නැත — ලබා ගැනීමට විභාගය කරන්න.","ex.min":"සිට","ex.you":"ඔබ","ex.reached":"ලබා ඇත","ex.passed":"සමත්!","ex.failed":"තවම සමත් නැත","ex.your_score":"ඔබේ ලකුණු","ex.earned":"ඔබ ලැබූ බැජ්","ex.unlocks":"ඔබ අගුළු හැරියේ:","ex.retry":"විභාගය නැවත කරන්න","ex.retryfail":"ලෝකඩ බැජ් සඳහා අවම වශයෙන් 60/100ක් අවශ්‍යයි. මාර්ගෝපදේශ නැවත බලා උත්සාහ කරන්න.","ex.print":"සහතිකය මුද්‍රණය කරන්න","ex.name_q":"සහතිකයේ මුද්‍රණය කිරීමට සම්පූර්ණ නම:","ex.review":"පහත ඔබේ පිළිතුරු බලන්න.","ex.correct":"නිවැරදි පිළිතුර"},
+"ta":{"ex.eyebrow":"பாடநெறிகள் · தேர்வு · பேட்ஜ்","ex.h1":"கற்றுக்கொள், தேர்வில் தேர்ச்சி பெறு,<br/><em>உன் பேட்ஜைப் பெறு.</em>","ex.lead":"எங்கள் பாடநெறிகள் மற்றும் வழிகாட்டிகளுடன் கற்று, இத்தாலியில் வாழ்க்கை பற்றிய குறுகிய தேர்வில் தேர்ச்சி பெறுங்கள். உங்கள் மதிப்பெண்ணின் அடிப்படையில் ஒரு பேட்ஜ் கிடைக்கும் — உயர் நிலைகள் மேம்பட்ட அம்சங்களைத் திறக்கும். இத்தாலியம், ஆங்கிலம், சிங்களம், தமிழில் கிடைக்கும்.","ex.your":"உங்கள் தற்போதைய பேட்ஜ்:","ex.levels":"நிலைகளும் அவை திறப்பவையும்","ex.exam":"தேர்வு","ex.examsub":"இத்தாலியில் வாழ்க்கை மற்றும் அதிகாரத்துவம் பற்றிய 15 பலவுள் தேர்வு கேள்விகள். நடுத்தர சிரமம். எப்போது வேண்டுமானாலும் மீண்டும் எழுதலாம் — சிறந்த மதிப்பெண் வைக்கப்படும்.","ex.ready":"பாடநெறிகள் முடிந்தது ✓ — தயாரா? தேர்வு சுமார் 5 நிமிடங்கள் ஆகும்.","ex.locked":"தேர்வு எழுத முதலில் பயிற்சி பாடநெறிகளை முடிக்க வேண்டும். பாடங்களைக் கற்று, உங்கள் பேட்ஜைப் பெற இங்கு திரும்பி வாருங்கள்.","ex.gocourses":"பாடநெறிகளுக்குச் செல் →","ex.start":"தேர்வைத் தொடங்கு →","ex.submit":"சமர்ப்பி →","ex.disc":"Easy Italia Hub இன் தேர்வும் பேட்ஜுகளும் தகவல் மற்றும் வழிகாட்டலுக்கு மட்டுமே. இவை அதிகாரப்பூர்வ தகுதிகள் அல்லது மொழிச் சான்றிதழ்கள் (எ.கா. CILS/CELI) அல்ல; சட்டப்பூர்வ மதிப்பு இல்லை.","ex.none":"இன்னும் பேட்ஜ் இல்லை — பெற தேர்வை எழுதுங்கள்.","ex.min":"முதல்","ex.you":"நீங்கள்","ex.reached":"அடைந்தது","ex.passed":"தேர்ச்சி!","ex.failed":"இன்னும் தேர்ச்சி இல்லை","ex.your_score":"உங்கள் மதிப்பெண்","ex.earned":"நீங்கள் பெற்ற பேட்ஜ்","ex.unlocks":"நீங்கள் திறந்தது:","ex.retry":"தேர்வை மீண்டும் எழுது","ex.retryfail":"வெண்கல பேட்ஜுக்கு குறைந்தது 60/100 தேவை. வழிகாட்டிகளை மீண்டும் பார்த்து முயற்சிக்கவும்.","ex.print":"சான்றிதழை அச்சிடு","ex.name_q":"சான்றிதழில் அச்சிட முழுப் பெயர்:","ex.review":"கீழே உங்கள் பதில்களைப் பாருங்கள்.","ex.correct":"சரியான பதில்"}
+};</script>
+<script>
+(function(){
+  'use strict';
+  function lang(){ try{return localStorage.getItem('eih-lang')||document.documentElement.lang||'it';}catch(e){return 'it';} }
+  function t(o){ var l=lang(); return o[l]||o.it; }
+  var UI={
+    none:{it:"Nessun badge ancora — fai l'esame per ottenerlo.",en:"No badge yet — take the exam to earn one.",si:"තවම බැජ් නැත — ලබා ගැනීමට විභාගය කරන්න.",ta:"இன்னும் பேட்ஜ் இல்லை — பெற தேர்வை எழுதுங்கள்."},
+    min:{it:"da",en:"from",si:"සිට",ta:"முதல்"}, you:{it:"Tu",en:"You",si:"ඔබ",ta:"நீங்கள்"}, reached:{it:"Raggiunto",en:"Reached",si:"ලබා ඇත",ta:"அடைந்தது"},
+    passed:{it:"Superato!",en:"Passed!",si:"සමත්!",ta:"தேர்ச்சி!"}, failed:{it:"Non ancora superato",en:"Not passed yet",si:"තවම සමත් නැත",ta:"இன்னும் தேர்ச்சி இல்லை"},
+    yourscore:{it:"Il tuo punteggio",en:"Your score",si:"ඔබේ ලකුණු",ta:"உங்கள் மதிப்பெண்"},
+    earned:{it:"Hai ottenuto il badge",en:"You earned the badge",si:"ඔබ ලැබූ බැජ්",ta:"நீங்கள் பெற்ற பேட்ஜ்"},
+    unlocks:{it:"Hai sbloccato:",en:"You unlocked:",si:"ඔබ අගුළු හැරියේ:",ta:"நீங்கள் திறந்தது:"},
+    retry:{it:"Ripeti l'esame",en:"Retry the exam",si:"විභාගය නැවත කරන්න",ta:"தேர்வை மீண்டும் எழுது"},
+    retryfail:{it:"Servono almeno 60/100 per il badge Bronzo. Ripassa le guide e riprova.",en:"You need at least 60/100 for the Bronze badge. Review the guides and try again.",si:"ලෝකඩ බැජ් සඳහා අවම වශයෙන් 60/100ක් අවශ්‍යයි. මාර්ගෝපදේශ නැවත බලා උත්සාහ කරන්න.",ta:"வெண்கல பேட்ஜுக்கு குறைந்தது 60/100 தேவை. வழிகாட்டிகளை மீண்டும் பார்த்து முயற்சிக்கவும்."},
+    print:{it:"Stampa l'attestato",en:"Print certificate",si:"සහතිකය මුද්‍රණය කරන්න",ta:"சான்றிதழை அச்சிடு"},
+    nameq:{it:"Nome e cognome da riportare sull'attestato:",en:"Full name to print on the certificate:",si:"සහතිකයේ මුද්‍රණය කිරීමට සම්පූර්ණ නම:",ta:"சான்றிதழில் அச்சிட முழுப் பெயர்:"},
+    review:{it:"Rivedi le tue risposte qui sotto.",en:"Review your answers below.",si:"පහත ඔබේ පිළිතුරු බලන්න.",ta:"கீழே உங்கள் பதில்களைப் பாருங்கள்."},
+    correct:{it:"Risposta corretta",en:"Correct answer",si:"නිවැරදි පිළිතුර",ta:"சரியான பதில்"}
+  };
+
+  // ── Domande (8) — vita e burocrazia in Italia, difficoltà media ──
+  var QUIZ=[
+    {q:{it:"Entro quanto tempo conviene chiedere il rinnovo del permesso di soggiorno?",en:"How early should you request a residence permit renewal?",si:"පදිංචි බලපත්‍රය අලුත් කිරීම කොපමණ කලින් ඉල්ලිය යුතුද?",ta:"குடியிருப்பு அனுமதியைப் புதுப்பிக்க எவ்வளவு முன்னதாகக் கோர வேண்டும்?"},
+     o:[{it:"Circa 60 giorni prima della scadenza",en:"About 60 days before it expires",si:"කල් ඉකුත්වීමට දින 60කට පමණ පෙර",ta:"காலாவதியாவதற்கு சுமார் 60 நாட்களுக்கு முன்"},
+        {it:"Il giorno stesso della scadenza",en:"On the expiry day itself",si:"කල් ඉකුත්වන දිනයේම",ta:"காலாவதியாகும் அன்றே"},
+        {it:"Solo dopo la scadenza",en:"Only after it expires",si:"කල් ඉකුත් වූ පසු පමණි",ta:"காலாவதியான பிறகு மட்டும்"},
+        {it:"Non serve rinnovarlo",en:"No renewal needed",si:"අලුත් කිරීම අවශ්‍ය නැත",ta:"புதுப்பிக்கத் தேவையில்லை"}],c:0},
+    {q:{it:"Che cos'è il codice fiscale?",en:"What is the codice fiscale (tax code)?",si:"codice fiscale (බදු කේතය) යනු කුමක්ද?",ta:"codice fiscale (வரி குறியீடு) என்றால் என்ன?"},
+     o:[{it:"Un codice personale per identificarti con la Pubblica Amministrazione",en:"A personal code that identifies you to the public administration",si:"රාජ්‍ය පරිපාලනයට ඔබව හඳුනාගැනීමේ පුද්ගලික කේතයක්",ta:"பொது நிர்வாகத்திற்கு உங்களை அடையாளம் காணும் தனிப்பட்ட குறியீடு"},
+        {it:"Una carta di credito",en:"A credit card",si:"ණයපතක්",ta:"ஒரு கடன் அட்டை"},
+        {it:"Un permesso di lavoro",en:"A work permit",si:"රැකියා බලපත්‍රයක්",ta:"வேலை அனுமதி"},
+        {it:"Un documento di viaggio",en:"A travel document",si:"ගමන් ලේඛනයක්",ta:"பயண ஆவணம்"}],c:0},
+    {q:{it:"A cosa serve lo SPID?",en:"What is SPID used for?",si:"SPID භාවිතා කරන්නේ කුමකටද?",ta:"SPID எதற்குப் பயன்படுகிறது?"},
+     o:[{it:"È l'identità digitale per accedere ai servizi online della PA",en:"It's the digital identity to access online public services",si:"රාජ්‍ය සේවා ඔන්ලයින් ප්‍රවේශය සඳහා ඩිජිටල් අනන්‍යතාව",ta:"ஆன்லைன் பொதுச் சேவைகளை அணுகும் டிஜிட்டல் அடையாளம்"},
+        {it:"È un tipo di permesso di soggiorno",en:"It's a type of residence permit",si:"පදිංචි බලපත්‍ර වර්ගයක්",ta:"ஒரு வகை குடியிருப்பு அனுமதி"},
+        {it:"È una tassa annuale",en:"It's an annual tax",si:"වාර්ෂික බද්දක්",ta:"வருடாந்திர வரி"},
+        {it:"È un'assicurazione sanitaria",en:"It's a health insurance",si:"සෞඛ්‍ය රක්ෂණයක්",ta:"சுகாதார காப்பீடு"}],c:0},
+    {q:{it:"Dove puoi avere aiuto gratuito con l'ISEE e molte pratiche?",en:"Where can you get free help with the ISEE and many procedures?",si:"ISEE සහ බොහෝ ක්‍රියාවලි සඳහා නොමිලේ උදව් ලබාගත හැක්කේ කොහෙන්ද?",ta:"ISEE மற்றும் பல நடைமுறைகளுக்கு இலவச உதவியை எங்கே பெறலாம்?"},
+     o:[{it:"Presso un CAF o un patronato",en:"At a CAF or a patronato",si:"CAF හෝ patronato එකකින්",ta:"CAF அல்லது patronato இல்"},
+        {it:"In banca",en:"At the bank",si:"බැංකුවෙන්",ta:"வங்கியில்"},
+        {it:"Alla posta",en:"At the post office",si:"තැපැල් කාර්යාලයෙන්",ta:"அஞ்சல் அலுவலகத்தில்"},
+        {it:"Dal datore di lavoro",en:"From your employer",si:"සේවා යෝජකයාගෙන්",ta:"உங்கள் முதலாளியிடம்"}],c:0},
+    {q:{it:"Cosa serve per iscriverti al Servizio Sanitario Nazionale (medico di base)?",en:"What do you need to enrol in the National Health Service (family doctor)?",si:"ජාතික සෞඛ්‍ය සේවයට (පවුල් වෛද්‍යවරයා) ලියාපදිංචි වීමට අවශ්‍ය කුමක්ද?",ta:"தேசிய சுகாதார சேவையில் (குடும்ப மருத்துவர்) சேர என்ன தேவை?"},
+     o:[{it:"La residenza (o iscrizione) e il codice fiscale",en:"Residency (or registration) and the tax code",si:"පදිංචිය (හෝ ලියාපදිංචිය) සහ බදු කේතය",ta:"வதிவிடம் (அல்லது பதிவு) மற்றும் வரி குறியீடு"},
+        {it:"Solo il passaporto",en:"Only the passport",si:"ගමන් බලපත්‍රය පමණි",ta:"கடவுச்சீட்டு மட்டும்"},
+        {it:"Una polizza privata obbligatoria",en:"A compulsory private policy",si:"අනිවාර්ය පෞද්ගලික රක්ෂණයක්",ta:"கட்டாய தனியார் காப்பீடு"},
+        {it:"Niente, è automatico",en:"Nothing, it's automatic",si:"කිසිවක් නැත, ස්වයංක්‍රීයයි",ta:"எதுவும் இல்லை, தானாகவே"}],c:0},
+    {q:{it:"A chi va richiesto l'Assegno Unico per i figli?",en:"Who do you apply to for the Assegno Unico (child allowance)?",si:"දරුවන් සඳහා Assegno Unico ඉල්ලිය යුත්තේ කාගෙන්ද?",ta:"குழந்தைகளுக்கான Assegno Unico யை யாரிடம் விண்ணப்பிப்பது?"},
+     o:[{it:"All'INPS (anche tramite CAF o patronato)",en:"To INPS (also via a CAF or patronato)",si:"INPS වෙත (CAF හෝ patronato හරහා ද)",ta:"INPS இடம் (CAF அல்லது patronato மூலமாகவும்)"},
+        {it:"Al Comune",en:"To the municipality",si:"නගර සභාවට",ta:"நகராட்சிக்கு"},
+        {it:"Alla Questura",en:"To the police headquarters (Questura)",si:"Questura වෙත",ta:"Questura விற்கு"},
+        {it:"Al datore di lavoro",en:"To your employer",si:"සේවා යෝජකයාට",ta:"முதலாளிக்கு"}],c:0},
+    {q:{it:"Che cos'è la residenza (iscrizione anagrafica)?",en:"What is 'residenza' (registration with the registry office)?",si:"'residenza' (ජනගහන ලේඛනයේ ලියාපදිංචිය) යනු කුමක්ද?",ta:"'residenza' (பதிவேட்டில் பதிவு) என்றால் என்ன?"},
+     o:[{it:"La registrazione ufficiale, al Comune, di dove vivi abitualmente",en:"The official registration, at the municipality, of where you habitually live",si:"ඔබ සාමාන්‍යයෙන් ජීවත් වන ස්ථානය නගර සභාවේ නිල ලියාපදිංචිය",ta:"நீங்கள் வழக்கமாக வசிக்கும் இடத்தை நகராட்சியில் அதிகாரப்பூர்வமாகப் பதிவு செய்தல்"},
+        {it:"Un permesso di lavoro speciale",en:"A special work permit",si:"විශේෂ රැකියා බලපත්‍රයක්",ta:"சிறப்பு வேலை அனுமதி"},
+        {it:"Una tassa sulla casa",en:"A tax on the house",si:"නිවස මත බද්දක්",ta:"வீட்டின் மீதான வரி"},
+        {it:"Un tipo di contratto d'affitto",en:"A type of rental contract",si:"කුලී ගිවිසුම් වර්ගයක්",ta:"ஒரு வகை வாடகை ஒப்பந்தம்"}],c:0},
+    {q:{it:"Qual è il numero unico per le emergenze in Italia?",en:"What is the single emergency number in Italy?",si:"ඉතාලියේ හදිසි ඇමතුම් සඳහා තනි අංකය කුමක්ද?",ta:"இத்தாலியில் அவசர அழைப்புக்கான ஒற்றை எண் எது?"},
+     o:[{it:"112",en:"112",si:"112",ta:"112"},
+        {it:"911",en:"911",si:"911",ta:"911"},
+        {it:"199",en:"199",si:"199",ta:"199"},
+        {it:"060",en:"060",si:"060",ta:"060"}],c:0},
+    {q:{it:"Ogni quanto si rinnova di solito la Carta d'Identità Elettronica (CIE) per un adulto?",en:"How often is the Electronic ID Card (CIE) usually renewed for an adult?",si:"වැඩිහිටියෙකුට Electronic ID Card (CIE) සාමාන්‍යයෙන් කොපමණ කලකට වරක් අලුත් කරයිද?",ta:"ஒரு பெரியவருக்கு மின்னணு அடையாள அட்டை (CIE) பொதுவாக எத்தனை காலத்திற்கு ஒருமுறை புதுப்பிக்கப்படுகிறது?"},
+     o:[{it:"Ogni 10 anni",en:"Every 10 years",si:"වසර 10කට වරක්",ta:"10 ஆண்டுகளுக்கு ஒருமுறை"},
+        {it:"Ogni anno",en:"Every year",si:"සෑම වසරකම",ta:"ஒவ்வொரு ஆண்டும்"},
+        {it:"Ogni 2 anni",en:"Every 2 years",si:"වසර 2කට වරක්",ta:"2 ஆண்டுகளுக்கு ஒருமுறை"},
+        {it:"Non scade mai",en:"It never expires",si:"කිසිදා කල් ඉකුත් නොවේ",ta:"ஒருபோதும் காலாவதியாகாது"}],c:0},
+    {q:{it:"Cosa dimostra la busta paga?",en:"What does the payslip (busta paga) prove?",si:"වැටුප් පත්‍රිකාව (busta paga) පෙන්වන්නේ කුමක්ද?",ta:"ஊதியச் சீட்டு (busta paga) எதை நிரூபிக்கிறது?"},
+     o:[{it:"Lo stipendio e i contributi versati dal datore di lavoro",en:"Your salary and the contributions paid by the employer",si:"වැටුප සහ සේවා යෝජකයා ගෙවූ දායක මුදල්",ta:"உங்கள் சம்பளம் மற்றும் முதலாளி செலுத்திய பங்களிப்புகள்"},
+        {it:"Il permesso di soggiorno",en:"The residence permit",si:"පදිංචි බලපත්‍රය",ta:"குடியிருப்பு அனுமதி"},
+        {it:"La residenza",en:"Your residency",si:"පදිංචිය",ta:"வதிவிடம்"},
+        {it:"Il codice fiscale",en:"The tax code",si:"බදු කේතය",ta:"வரி குறியீடு"}],c:0},
+    {q:{it:"I figli minori che vivono in Italia possono andare a scuola?",en:"Can minor children living in Italy attend school?",si:"ඉතාලියේ ජීවත්වන බාල දරුවන්ට පාසල් යා හැකිද?",ta:"இத்தாலியில் வாழும் சிறார்கள் பள்ளிக்குச் செல்ல முடியுமா?"},
+     o:[{it:"Sì: l'istruzione è un diritto e un obbligo, anche senza permesso in regola",en:"Yes: education is a right and a duty, even without a valid permit",si:"ඔව්: අධ්‍යාපනය අයිතියක් හා යුතුකමක්, වලංගු බලපත්‍රයක් නොමැතිව වුවද",ta:"ஆம்: கல்வி ஒரு உரிமையும் கடமையும், செல்லுபடியாகும் அனுமதி இல்லாவிட்டாலும்"},
+        {it:"No, solo i cittadini italiani",en:"No, only Italian citizens",si:"නැත, ඉතාලි පුරවැසියන් පමණි",ta:"இல்லை, இத்தாலிய குடிமக்கள் மட்டும்"},
+        {it:"Solo pagando una retta",en:"Only by paying a fee",si:"ගාස්තුවක් ගෙවා පමණි",ta:"கட்டணம் செலுத்தினால் மட்டும்"},
+        {it:"Solo dopo i 14 anni",en:"Only after age 14",si:"වයස 14න් පසු පමණි",ta:"14 வயதுக்குப் பிறகு மட்டும்"}],c:0},
+    {q:{it:"Un contratto d'affitto regolare come dovrebbe essere?",en:"How should a proper rental contract be?",si:"නිසි කුලී ගිවිසුමක් කෙබඳු විය යුතුද?",ta:"முறையான வாடகை ஒப்பந்தம் எப்படி இருக்க வேண்டும்?"},
+     o:[{it:"Scritto e registrato all'Agenzia delle Entrate",en:"Written and registered with the tax agency (Agenzia delle Entrate)",si:"ලිඛිතව හා Agenzia delle Entrate හි ලියාපදිංචිව",ta:"எழுத்துப்பூர்வமாகவும் வரி முகமையில் (Agenzia delle Entrate) பதிவு செய்யப்பட்டும்"},
+        {it:"Solo verbale, a voce",en:"Only verbal",si:"වාචිකව පමණි",ta:"வாய்மொழியாக மட்டும்"},
+        {it:"Valido solo se in inglese",en:"Valid only if in English",si:"ඉංග්‍රීසියෙන් නම් පමණක් වලංගුයි",ta:"ஆங்கிலத்தில் இருந்தால் மட்டும் செல்லுபடியாகும்"},
+        {it:"Registrato in Questura",en:"Registered at the Questura",si:"Questura හි ලියාපදිංචි",ta:"Questura இல் பதிவு செய்யப்பட்டது"}],c:0},
+    {q:{it:"Dopo quanti anni di residenza legale e continuativa un extracomunitario può in genere chiedere la cittadinanza per residenza?",en:"After how many years of legal continuous residence can a non-EU citizen usually apply for citizenship by residence?",si:"නීත්‍යානුකූල අඛණ්ඩ පදිංචි වසර කීයකට පසු EU නොවන පුරවැසියෙකුට සාමාන්‍යයෙන් පදිංචිය මත පුරවැසිභාවය ඉල්ලිය හැකිද?",ta:"சட்டப்பூர்வ தொடர்ச்சியான வதிவிடத்தின் எத்தனை ஆண்டுகளுக்குப் பிறகு ஒரு EU அல்லாத குடிமகன் பொதுவாக வதிவிடம் மூலம் குடியுரிமைக்கு விண்ணப்பிக்கலாம்?"},
+     o:[{it:"10 anni",en:"10 years",si:"වසර 10",ta:"10 ஆண்டுகள்"},
+        {it:"2 anni",en:"2 years",si:"වසර 2",ta:"2 ஆண்டுகள்"},
+        {it:"5 anni",en:"5 years",si:"වසර 5",ta:"5 ஆண்டுகள்"},
+        {it:"20 anni",en:"20 years",si:"වසර 20",ta:"20 ஆண்டுகள்"}],c:0},
+    {q:{it:"Il permesso di soggiorno UE per soggiornanti di lungo periodo si può in genere chiedere dopo quanti anni di soggiorno legale?",en:"The EU long-term residence permit can usually be requested after how many years of legal stay?",si:"දිගුකාලීන පදිංචිකරුවන් සඳහා EU පදිංචි බලපත්‍රය සාමාන්‍යයෙන් නීත්‍යානුකූල වාස වසර කීයකට පසු ඉල්ලිය හැකිද?",ta:"நீண்டகால குடியிருப்பாளர்களுக்கான EU குடியிருப்பு அனுமதியை பொதுவாக எத்தனை ஆண்டுகள் சட்டப்பூர்வ தங்கலுக்குப் பிறகு கோரலாம்?"},
+     o:[{it:"5 anni",en:"5 years",si:"වසර 5",ta:"5 ஆண்டுகள்"},
+        {it:"1 anno",en:"1 year",si:"වසර 1",ta:"1 ஆண்டு"},
+        {it:"10 anni",en:"10 years",si:"වසර 10",ta:"10 ஆண்டுகள்"},
+        {it:"3 anni",en:"3 years",si:"වසර 3",ta:"3 ஆண்டுகள்"}],c:0},
+    {q:{it:"Per lavorare regolarmente in Italia, un cittadino extra-UE deve avere:",en:"To work legally in Italy, a non-EU citizen must have:",si:"ඉතාලියේ නීත්‍යානුකූලව වැඩ කිරීමට EU නොවන පුරවැසියෙකුට තිබිය යුත්තේ:",ta:"இத்தாலியில் சட்டப்பூர்வமாக வேலை செய்ய, ஒரு EU அல்லாத குடிமகனிடம் இருக்க வேண்டியது:"},
+     o:[{it:"Un permesso di soggiorno che consente di lavorare",en:"A residence permit that allows work",si:"වැඩ කිරීමට ඉඩ දෙන පදිංචි බලපත්‍රයක්",ta:"வேலை செய்ய அனுமதிக்கும் குடியிருப்பு அனுமதி"},
+        {it:"Solo il passaporto",en:"Only a passport",si:"ගමන් බලපත්‍රය පමණි",ta:"கடவுச்சீட்டு மட்டும்"},
+        {it:"Solo il codice fiscale",en:"Only the tax code",si:"බදු කේතය පමණි",ta:"வரி குறியீடு மட்டும்"},
+        {it:"Solo la residenza",en:"Only residency",si:"පදිංචිය පමණි",ta:"வதிவிடம் மட்டும்"}],c:0}
+  ];
+
+  var B=window.EIHBadges;
+
+  function renderMyBadge(){
+    var el=document.getElementById('my-badge'); var cur=B.get();
+    if(cur&&cur.level){ el.innerHTML=B.chip(cur.level,lang())+' <span style="color:var(--fg-muted);font-size:.8rem">'+cur.score+'/100</span>'; }
+    else { el.innerHTML='<span style="color:var(--fg-muted);font-size:.85rem">'+t(UI.none)+'</span>'; }
+  }
+
+  function renderLadder(){
+    var cur=B.get(); var curRank=cur&&cur.level?B.rank(cur.level):-1;
+    var html='';
+    B.LEVELS.forEach(function(lv,i){
+      var reached=curRank>=i;
+      var ul='';
+      (B.UNLOCKS[lv.id]||[]).forEach(function(u){ ul+='<li>'+t(u)+'</li>'; });
+      html+='<div class="lv'+(reached?' reached':'')+'" style="--lc:'+lv.color+'">'
+        +(reached?'<span class="lv-you">✓ '+t(UI.reached)+'</span>':'')
+        +'<div class="lv-h"><span class="lv-dot"></span>'+(lv.name[lang()]||lv.name.it)+'</div>'
+        +'<div class="lv-min">'+t(UI.min)+' '+lv.min+'/100</div><ul>'+ul+'</ul></div>';
+    });
+    document.getElementById('ladder').innerHTML=html;
+  }
+
+  var answered={};
+  function renderQuiz(){
+    var f=document.getElementById('quiz-form'); var l=lang(); var h='';
+    QUIZ.forEach(function(item,qi){
+      h+='<div class="q" data-qi="'+qi+'"><p class="q-t"><span class="n">'+(qi+1)+'.</span>'+item.q[l]+'</p>';
+      item.o.forEach(function(opt,oi){
+        h+='<label class="opt"><input type="radio" name="q'+qi+'" value="'+oi+'"><span>'+opt[l]+'</span></label>';
+      });
+      h+='</div>';
+    });
+    f.innerHTML=h;
+  }
+
+  function grade(){
+    var l=lang(); var correct=0;
+    QUIZ.forEach(function(item,qi){
+      var sel=document.querySelector('input[name="q'+qi+'"]:checked');
+      var qEl=document.querySelector('.q[data-qi="'+qi+'"]');
+      var opts=qEl.querySelectorAll('.opt');
+      opts.forEach(function(o){ o.querySelector('input').disabled=true; });
+      if(sel && parseInt(sel.value,10)===item.c){ correct++; opts[item.c].classList.add('ok'); }
+      else { opts[item.c].classList.add('ok'); if(sel) opts[parseInt(sel.value,10)].classList.add('no'); }
+    });
+    var score=Math.round(correct/QUIZ.length*100);
+    var rec=B.award(score);
+    showResult(score, rec);
+  }
+
+  function showResult(score, rec){
+    document.getElementById('quiz-actions').style.display='none';
+    var r=document.getElementById('quiz-result'); r.style.display='block';
+    var lvl=B.levelForScore(score);
+    var h='<div class="result"><div class="rp" style="color:'+(lvl?lvl.color:'var(--coral)')+'">'+score+'<span style="font-size:.4em;color:var(--fg-muted)">/100</span></div>';
+    if(lvl){
+      h+='<p style="font-weight:600;color:#1f9d55;margin:.4rem 0 0">'+t(UI.passed)+'</p>';
+      h+='<div class="rlvl">'+t(UI.earned)+'<br>'+B.chip(lvl.id,lang())+'</div>';
+      var un=B.unlocksUpTo(lvl.id);
+      if(un.length){ h+='<p style="font-weight:600;margin:.8rem 0 0">'+t(UI.unlocks)+'</p><ul>'; un.forEach(function(u){ h+='<li>'+t(u)+'</li>'; }); h+='</ul>'; }
+      h+='<button class="btn-cta" id="print-btn">'+t(UI.print)+'</button><br>';
+    } else {
+      h+='<p style="font-weight:600;color:var(--coral);margin:.4rem 0 0">'+t(UI.failed)+'</p>';
+      h+='<p class="hint">'+t(UI.retryfail)+'</p>';
+    }
+    h+='<button class="btn-ghost2" id="retry-btn">'+t(UI.retry)+'</button>';
+    h+='<p class="hint">'+t(UI.review)+'</p></div>';
+    r.innerHTML=h;
+    r.scrollIntoView({behavior:'smooth',block:'nearest'});
+    renderMyBadge(); renderLadder();
+    var pb=document.getElementById('print-btn');
+    if(pb) pb.onclick=function(){ printCert(rec, lvl); };
+    document.getElementById('retry-btn').onclick=resetQuiz;
+  }
+
+  function printCert(rec, lvl){
+    var name=window.prompt(t(UI.nameq)); if(!name) return;
+    document.getElementById('cert-name').textContent=name.slice(0,80);
+    document.getElementById('cert-lv').textContent=(lvl.name[lang()]||lvl.name.it);
+    document.getElementById('cert-score').textContent=rec.score;
+    document.getElementById('cert-date').textContent=new Date().toLocaleDateString(lang()==='it'?'it-IT':'en-GB',{day:'numeric',month:'long',year:'numeric'});
+    window.print();
+  }
+
+  function startQuiz(){
+    document.getElementById('quiz-intro').style.display='none';
+    document.getElementById('quiz-result').style.display='none';
+    renderQuiz();
+    document.getElementById('quiz-form').style.display='block';
+    document.getElementById('quiz-actions').style.display='block';
+  }
+  function resetQuiz(){
+    document.getElementById('quiz-result').style.display='none';
+    startQuiz();
+    document.getElementById('quiz-card').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  // ── Gate: l'esame è accessibile solo dopo aver completato i corsi ──
+  function applyGate(){
+    var locked=!B.coursesDone();
+    var lk=document.getElementById('quiz-locked'), intro=document.getElementById('quiz-intro');
+    if(lk) lk.style.display=locked?'block':'none';
+    if(intro) intro.style.display=locked?'none':'';
+  }
+  renderMyBadge(); renderLadder(); applyGate();
+  // Sblocco per utenti loggati con progressi corsi salvati in EIH_DB
+  if(!B.coursesDone() && window.EIH_DB && window.EIH_DB.table){
+    try{ window.EIH_DB.table('course-progress').list().then(function(rows){
+      if(!rows||!rows.length) return;
+      var byCourse={};
+      rows.forEach(function(r){ if(r&&r.course&&/-base$/.test(r.course)&&r.lesson){ (byCourse[r.course]=byCourse[r.course]||{})[r.lesson]=1; } });
+      var ok=false; Object.keys(byCourse).forEach(function(c){ if(Object.keys(byCourse[c]).length>=6) ok=true; });
+      if(ok){ B.markCoursesDone(); applyGate(); }
+    }).catch(function(){}); }catch(e){}
+  }
+  document.getElementById('start-btn').addEventListener('click',function(){ if(!B.coursesDone()){applyGate();return;} startQuiz(); });
+  document.getElementById('submit-btn').addEventListener('click',grade);
+})();
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="assets/eih-atmosphere.js" defer></script>
+<script src="assets/eih-palette.js" defer></script>
+<script src="assets/eih-theme.js" defer></script>
+<script src="assets/eih-consent.js" defer></script>
+<script src="/assets/eih-hero3d.js" defer></script>
+<script src="/assets/vendor/lenis.min.js" defer></script>
+<script src="/assets/vendor/gsap.min.js" defer></script>
+<script src="/assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="/assets/eih-motion.js" defer></script>
+</body>
+</html>
