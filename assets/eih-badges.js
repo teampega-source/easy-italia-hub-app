@@ -41,7 +41,55 @@
     }
     var rec = { level: lv.id, score: score, date: new Date().toISOString() };
     try { localStorage.setItem(KEY, JSON.stringify(rec)); } catch (e) {}
+    whenDB(function () { pushRemote(rec); });
     return rec;
+  }
+
+  // Registra un livello già calcolato dall'esame (upgrade-only per rango).
+  // Usato dagli esami a più stadi (base -> Bronzo/Argento, avanzato -> Oro/Platino).
+  function record(level, score) {
+    var cur = get();
+    var newRank = level ? rank(level) : -1;
+    if (newRank < 0) return cur || { level: null, score: score, date: new Date().toISOString() };
+    if (cur && cur.level) {
+      var cr = rank(cur.level);
+      if (cr > newRank) return cur;                                  // non declassare
+      if (cr === newRank && (cur.score || 0) >= score) return cur;   // stesso livello, non peggiorare
+    }
+    var rec = { level: level, score: score, date: new Date().toISOString() };
+    try { localStorage.setItem(KEY, JSON.stringify(rec)); } catch (e) {}
+    whenDB(function () { pushRemote(rec); });
+    return rec;
+  }
+
+  // ── Sync Supabase (via EIH_DB, RLS owner-only). Fallback silenzioso. ──
+  function whenDB(cb, tries) {
+    tries = tries || 0;
+    if (window.EIH_DB && window.EIH_DB.table) { cb(); return; }
+    if (tries > 40) return; // ~10s
+    setTimeout(function () { whenDB(cb, tries + 1); }, 250);
+  }
+  function pushRemote(rec) {
+    if (!rec || !rec.level || !(window.EIH_DB && window.EIH_DB.table)) return;
+    try { var r = window.EIH_DB.table('user_badges').insert({ level: rec.level, score: rec.score }); if (r && r.catch) r.catch(function () {}); } catch (e) {}
+  }
+  // Riconcilia locale <-> remoto tenendo il punteggio migliore. cb() a fine.
+  function sync(cb) {
+    whenDB(function () {
+      try {
+        window.EIH_DB.table('user_badges').list().then(function (rows) {
+          var loc = get();
+          function better(a, b) { if (!b || !b.level) return !!(a && a.level); if (!a || !a.level) return false; return rank(a.level) > rank(b.level) || (rank(a.level) === rank(b.level) && (a.score || 0) > (b.score || 0)); }
+          if (rows && rows.length) {
+            var best = null;
+            rows.forEach(function (r) { if (r && r.level) { var cand = { level: r.level, score: r.score, date: r.created_at || new Date().toISOString() }; if (better(cand, best)) best = cand; } });
+            if (best && better(best, loc)) { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} loc = best; }
+            if (loc && loc.level && better(loc, best)) pushRemote(loc);
+          } else if (loc && loc.level) { pushRemote(loc); }
+          if (cb) cb();
+        }).catch(function () { if (cb) cb(); });
+      } catch (e) { if (cb) cb(); }
+    });
   }
 
   // true se l'utente ha almeno il livello richiesto.
@@ -79,6 +127,6 @@
   g.EIHBadges = {
     LEVELS: LEVELS, UNLOCKS: UNLOCKS, get: get, award: award, has: has, rank: rank,
     levelById: levelById, levelForScore: levelForScore, unlocksUpTo: unlocksUpTo, chip: chip,
-    coursesDone: coursesDone, markCoursesDone: markCoursesDone
+    coursesDone: coursesDone, markCoursesDone: markCoursesDone, sync: sync, record: record
   };
 })(window);

@@ -156,6 +156,7 @@
 <div id="site-footer"></div>
 <script src="eih.js"></script>
 <script src="eih-auth.js" defer></script>
+<script src="/assets/eih-badges.js"></script>
 <script>
 (function(){
 'use strict';
@@ -277,9 +278,12 @@ function isRegistered(){
 
 function renderAdv(key){
   var el = document.getElementById(key+'-adv-list');
+  var byBadge = !!(window.EIHBadges && window.EIHBadges.has && window.EIHBadges.has('oro'));
   el.innerHTML = COURSES[key].adv.map(function(l){
-    return '<a class="adv-card" href="/abbonamenti">'+
-      '<span class="premium-flag">'+lockIco+' Richiede Premium</span>'+
+    var flag = byBadge
+      ? '<span class="premium-flag" style="color:var(--gold)">✓ Sbloccato con il badge Oro</span>'
+      : '<span class="premium-flag">'+lockIco+' Richiede Premium o badge Oro</span>';
+    return '<a class="adv-card" href="'+(byBadge?'/esame':'/abbonamenti')+'">'+flag+
       '<h3>'+l.title+'</h3><p>'+l.desc+'</p></a>';
   }).join('');
 }

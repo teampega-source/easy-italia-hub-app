@@ -76,6 +76,11 @@
   [data-page="esame"] .btn-cta{margin-top:var(--sp-3);padding:.85rem 2rem;border:none;border-radius:999px;cursor:pointer;font:inherit;font-weight:600;font-size:1rem;color:#0e0b09;background:linear-gradient(135deg,#e5c98a,#c8a96e);box-shadow:0 12px 30px rgba(200,169,110,.28);transition:transform .2s}
   [data-page="esame"] .btn-cta:hover{transform:translateY(-2px)}
   [data-page="esame"] .btn-ghost2{margin-top:var(--sp-2);padding:.7rem 1.4rem;border:1px solid var(--border);background:transparent;border-radius:999px;cursor:pointer;font:inherit;font-weight:600;font-size:.9rem;color:var(--ink)}
+  [data-page="esame"] .etabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+  [data-page="esame"] .etab{display:inline-flex;align-items:center;gap:.35rem;padding:.42rem .95rem;border:1px solid var(--border);background:transparent;border-radius:999px;font:inherit;font-weight:600;font-size:.85rem;cursor:pointer;color:var(--fg-secondary)}
+  [data-page="esame"] .etab.on{background:var(--gold);border-color:var(--gold);color:#0e0b09}
+  [data-page="esame"] .etab:disabled{opacity:.55;cursor:not-allowed}
+  [data-page="esame"] .etab svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
   [data-page="esame"] .result{text-align:center;padding:var(--sp-4) var(--sp-3)}
   [data-page="esame"] .result .rp{font-size:clamp(2.6rem,7vw,3.6rem);font-family:'Clash Grotesk',sans-serif;font-weight:600;line-height:1}
   [data-page="esame"] .result .rlvl{margin:.8rem 0}
@@ -110,7 +115,7 @@
   <div class="ladder reveal" id="ladder"></div>
 
   <h2 style="font-family:'Clash Grotesk',sans-serif;margin-top:var(--sp-5)" data-i18n="ex.exam">L'esame</h2>
-  <p class="lead" style="font-size:var(--text-base)" data-i18n="ex.examsub">15 domande a risposta multipla sulla vita e la burocrazia in Italia. Difficoltà media. Puoi ripeterlo quando vuoi: si tiene il punteggio migliore.</p>
+  <p class="lead" style="font-size:var(--text-base)" data-i18n-html="ex.examsub">Due livelli: <strong>Esame Base</strong> (badge Bronzo/Argento) e, sbloccato con l'Argento, <strong>Esame Avanzato</strong> (Oro/Platino). Risposta multipla, difficoltà media. Si tiene il punteggio migliore.</p>
 
   <div class="card reveal" id="quiz-card" style="margin-top:var(--sp-3)">
     <div id="quiz-locked" style="display:none;text-align:center;padding:var(--sp-2) 0">
@@ -118,8 +123,12 @@
       <p style="color:var(--fg-secondary);margin:0 0 1rem;max-width:52ch;margin-left:auto;margin-right:auto" data-i18n="ex.locked">Per accedere all'esame devi prima completare i Corsi di formazione. Studia le lezioni, poi torna qui per ottenere il tuo badge.</p>
       <a href="/corsi" class="btn-cta" style="display:inline-block;text-decoration:none" data-i18n="ex.gocourses">Vai ai corsi →</a>
     </div>
+    <div id="exam-tabs" class="etabs" style="display:none">
+      <button type="button" class="etab on" data-tier="base" data-i18n="ex.tab_base">Esame Base</button>
+      <button type="button" class="etab" data-tier="adv" id="tab-adv"><svg id="tab-adv-lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span data-i18n="ex.tab_adv">Esame Avanzato</span></button>
+    </div>
     <div id="quiz-intro">
-      <p style="color:var(--fg-secondary);margin:0 0 .3rem" data-i18n="ex.ready">Corsi completati ✓ — pronto? L'esame richiede circa 5 minuti.</p>
+      <p style="color:var(--fg-secondary);margin:0 0 .3rem" id="intro-txt">Corsi completati ✓ — pronto? L'esame Base richiede circa 5 minuti.</p>
       <button class="btn-cta" id="start-btn" data-i18n="ex.start">Inizia l'esame →</button>
     </div>
     <form id="quiz-form" style="display:none"></form>
@@ -150,9 +159,9 @@
 <script src="eih-auth.js" defer></script>
 <script src="/assets/eih-badges.js"></script>
 <script>window.EIH_I18N_EXTRA={
-"en":{"ex.eyebrow":"Courses · Exam · Badge","ex.h1":"Study, pass the exam,<br/><em>earn your badge.</em>","ex.lead":"Learn with our courses and guides, then pass a short exam about life in Italy. Based on your score you earn a badge — and higher levels unlock advanced features. Available in Italian, English, Sinhala and Tamil.","ex.your":"Your current badge:","ex.levels":"Levels and what they unlock","ex.exam":"The exam","ex.examsub":"15 multiple-choice questions about life and bureaucracy in Italy. Medium difficulty. You can retake it anytime — your best score is kept.","ex.ready":"Courses completed ✓ — ready? The exam takes about 5 minutes.","ex.locked":"To take the exam you must first complete the training courses. Study the lessons, then come back here to earn your badge.","ex.gocourses":"Go to the courses →","ex.start":"Start the exam →","ex.submit":"Submit →","ex.disc":"The exam and badges of Easy Italia Hub are for information and guidance only. They are not official qualifications or language certifications (e.g. CILS/CELI) and have no legal value.","ex.none":"No badge yet — take the exam to earn one.","ex.min":"from","ex.you":"You","ex.reached":"Reached","ex.passed":"Passed!","ex.failed":"Not passed yet","ex.your_score":"Your score","ex.earned":"You earned the badge","ex.unlocks":"You unlocked:","ex.retry":"Retry the exam","ex.retryfail":"You need at least 60/100 for the Bronze badge. Review the guides and try again.","ex.print":"Print certificate","ex.name_q":"Full name to print on the certificate:","ex.review":"Review your answers below.","ex.correct":"Correct answer"},
-"si":{"ex.eyebrow":"පාඨමාලා · විභාගය · බැජ්","ex.h1":"ඉගෙන ගන්න, විභාගය සමත් වන්න,<br/><em>ඔබේ බැජ් ලබා ගන්න.</em>","ex.lead":"අපගේ පාඨමාලා සහ මාර්ගෝපදේශ සමඟ ඉගෙන ගෙන, ඉතාලියේ ජීවිතය පිළිබඳ කෙටි විභාගයක් සමත් වන්න. ඔබේ ලකුණු අනුව බැජ් එකක් ලැබේ — ඉහළ මට්ටම් උසස් විශේෂාංග අගුළු හරියි. ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවෙන් ලබා ගත හැක.","ex.your":"ඔබේ වත්මන් බැජ්:","ex.levels":"මට්ටම් සහ ඒවා අගුළු හරින දේ","ex.exam":"විභාගය","ex.examsub":"ඉතාලියේ ජීවිතය හා නිලධාරිත්වය පිළිබඳ බහුවරණ ප්‍රශ්න 15ක්. මධ්‍යම දුෂ්කරතාව. ඕනෑම වේලාවක නැවත කළ හැක — හොඳම ලකුණු තබා ගැනේ.","ex.ready":"පාඨමාලා සම්පූර්ණයි ✓ — සූදානම්ද? විභාගයට මිනිත්තු 5ක් පමණ ගතවේ.","ex.locked":"විභාගයට පෙර ඔබ පුහුණු පාඨමාලා සම්පූර්ණ කළ යුතුය. පාඩම් ඉගෙන ගෙන, ඔබේ බැජ් ලබා ගැනීමට නැවත මෙහි එන්න.","ex.gocourses":"පාඨමාලා වෙත යන්න →","ex.start":"විභාගය අරඹන්න →","ex.submit":"ඉදිරිපත් කරන්න →","ex.disc":"Easy Italia Hub හි විභාගය සහ බැජ් තොරතුරු හා මඟ පෙන්වීම සඳහා පමණි. ඒවා නිල සුදුසුකම් හෝ භාෂා සහතික (උදා. CILS/CELI) නොවේ; නෛතික වටිනාකමක් නැත.","ex.none":"තවම බැජ් නැත — ලබා ගැනීමට විභාගය කරන්න.","ex.min":"සිට","ex.you":"ඔබ","ex.reached":"ලබා ඇත","ex.passed":"සමත්!","ex.failed":"තවම සමත් නැත","ex.your_score":"ඔබේ ලකුණු","ex.earned":"ඔබ ලැබූ බැජ්","ex.unlocks":"ඔබ අගුළු හැරියේ:","ex.retry":"විභාගය නැවත කරන්න","ex.retryfail":"ලෝකඩ බැජ් සඳහා අවම වශයෙන් 60/100ක් අවශ්‍යයි. මාර්ගෝපදේශ නැවත බලා උත්සාහ කරන්න.","ex.print":"සහතිකය මුද්‍රණය කරන්න","ex.name_q":"සහතිකයේ මුද්‍රණය කිරීමට සම්පූර්ණ නම:","ex.review":"පහත ඔබේ පිළිතුරු බලන්න.","ex.correct":"නිවැරදි පිළිතුර"},
-"ta":{"ex.eyebrow":"பாடநெறிகள் · தேர்வு · பேட்ஜ்","ex.h1":"கற்றுக்கொள், தேர்வில் தேர்ச்சி பெறு,<br/><em>உன் பேட்ஜைப் பெறு.</em>","ex.lead":"எங்கள் பாடநெறிகள் மற்றும் வழிகாட்டிகளுடன் கற்று, இத்தாலியில் வாழ்க்கை பற்றிய குறுகிய தேர்வில் தேர்ச்சி பெறுங்கள். உங்கள் மதிப்பெண்ணின் அடிப்படையில் ஒரு பேட்ஜ் கிடைக்கும் — உயர் நிலைகள் மேம்பட்ட அம்சங்களைத் திறக்கும். இத்தாலியம், ஆங்கிலம், சிங்களம், தமிழில் கிடைக்கும்.","ex.your":"உங்கள் தற்போதைய பேட்ஜ்:","ex.levels":"நிலைகளும் அவை திறப்பவையும்","ex.exam":"தேர்வு","ex.examsub":"இத்தாலியில் வாழ்க்கை மற்றும் அதிகாரத்துவம் பற்றிய 15 பலவுள் தேர்வு கேள்விகள். நடுத்தர சிரமம். எப்போது வேண்டுமானாலும் மீண்டும் எழுதலாம் — சிறந்த மதிப்பெண் வைக்கப்படும்.","ex.ready":"பாடநெறிகள் முடிந்தது ✓ — தயாரா? தேர்வு சுமார் 5 நிமிடங்கள் ஆகும்.","ex.locked":"தேர்வு எழுத முதலில் பயிற்சி பாடநெறிகளை முடிக்க வேண்டும். பாடங்களைக் கற்று, உங்கள் பேட்ஜைப் பெற இங்கு திரும்பி வாருங்கள்.","ex.gocourses":"பாடநெறிகளுக்குச் செல் →","ex.start":"தேர்வைத் தொடங்கு →","ex.submit":"சமர்ப்பி →","ex.disc":"Easy Italia Hub இன் தேர்வும் பேட்ஜுகளும் தகவல் மற்றும் வழிகாட்டலுக்கு மட்டுமே. இவை அதிகாரப்பூர்வ தகுதிகள் அல்லது மொழிச் சான்றிதழ்கள் (எ.கா. CILS/CELI) அல்ல; சட்டப்பூர்வ மதிப்பு இல்லை.","ex.none":"இன்னும் பேட்ஜ் இல்லை — பெற தேர்வை எழுதுங்கள்.","ex.min":"முதல்","ex.you":"நீங்கள்","ex.reached":"அடைந்தது","ex.passed":"தேர்ச்சி!","ex.failed":"இன்னும் தேர்ச்சி இல்லை","ex.your_score":"உங்கள் மதிப்பெண்","ex.earned":"நீங்கள் பெற்ற பேட்ஜ்","ex.unlocks":"நீங்கள் திறந்தது:","ex.retry":"தேர்வை மீண்டும் எழுது","ex.retryfail":"வெண்கல பேட்ஜுக்கு குறைந்தது 60/100 தேவை. வழிகாட்டிகளை மீண்டும் பார்த்து முயற்சிக்கவும்.","ex.print":"சான்றிதழை அச்சிடு","ex.name_q":"சான்றிதழில் அச்சிட முழுப் பெயர்:","ex.review":"கீழே உங்கள் பதில்களைப் பாருங்கள்.","ex.correct":"சரியான பதில்"}
+"en":{"ex.eyebrow":"Courses · Exam · Badge","ex.h1":"Study, pass the exam,<br/><em>earn your badge.</em>","ex.lead":"Learn with our courses and guides, then pass a short exam about life in Italy. Based on your score you earn a badge — and higher levels unlock advanced features. Available in Italian, English, Sinhala and Tamil.","ex.your":"Your current badge:","ex.levels":"Levels and what they unlock","ex.exam":"The exam","ex.tab_base":"Base Exam","ex.tab_adv":"Advanced Exam","ex.examsub":"Two levels: <strong>Base Exam</strong> (Bronze/Silver badge) and, unlocked with Silver, <strong>Advanced Exam</strong> (Gold/Platinum). Multiple choice, medium difficulty. Your best score is kept.","ex.ready":"Courses completed ✓ — ready? The exam takes about 5 minutes.","ex.locked":"To take the exam you must first complete the training courses. Study the lessons, then come back here to earn your badge.","ex.gocourses":"Go to the courses →","ex.start":"Start the exam →","ex.submit":"Submit →","ex.disc":"The exam and badges of Easy Italia Hub are for information and guidance only. They are not official qualifications or language certifications (e.g. CILS/CELI) and have no legal value.","ex.none":"No badge yet — take the exam to earn one.","ex.min":"from","ex.you":"You","ex.reached":"Reached","ex.passed":"Passed!","ex.failed":"Not passed yet","ex.your_score":"Your score","ex.earned":"You earned the badge","ex.unlocks":"You unlocked:","ex.retry":"Retry the exam","ex.retryfail":"You need at least 60/100 for the Bronze badge. Review the guides and try again.","ex.print":"Print certificate","ex.name_q":"Full name to print on the certificate:","ex.review":"Review your answers below.","ex.correct":"Correct answer"},
+"si":{"ex.eyebrow":"පාඨමාලා · විභාගය · බැජ්","ex.h1":"ඉගෙන ගන්න, විභාගය සමත් වන්න,<br/><em>ඔබේ බැජ් ලබා ගන්න.</em>","ex.lead":"අපගේ පාඨමාලා සහ මාර්ගෝපදේශ සමඟ ඉගෙන ගෙන, ඉතාලියේ ජීවිතය පිළිබඳ කෙටි විභාගයක් සමත් වන්න. ඔබේ ලකුණු අනුව බැජ් එකක් ලැබේ — ඉහළ මට්ටම් උසස් විශේෂාංග අගුළු හරියි. ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවෙන් ලබා ගත හැක.","ex.your":"ඔබේ වත්මන් බැජ්:","ex.levels":"මට්ටම් සහ ඒවා අගුළු හරින දේ","ex.exam":"විභාගය","ex.tab_base":"මූලික විභාගය","ex.tab_adv":"උසස් විභාගය","ex.examsub":"මට්ටම් දෙකක්: <strong>මූලික විභාගය</strong> (ලෝකඩ/රිදී) සහ, රිදී සමඟ අගුළු අරින <strong>උසස් විභාගය</strong> (රන්/ප්ලැටිනම්). බහුවරණ, මධ්‍යම දුෂ්කරතාව. හොඳම ලකුණු තබා ගැනේ.","ex.ready":"පාඨමාලා සම්පූර්ණයි ✓ — සූදානම්ද? විභාගයට මිනිත්තු 5ක් පමණ ගතවේ.","ex.locked":"විභාගයට පෙර ඔබ පුහුණු පාඨමාලා සම්පූර්ණ කළ යුතුය. පාඩම් ඉගෙන ගෙන, ඔබේ බැජ් ලබා ගැනීමට නැවත මෙහි එන්න.","ex.gocourses":"පාඨමාලා වෙත යන්න →","ex.start":"විභාගය අරඹන්න →","ex.submit":"ඉදිරිපත් කරන්න →","ex.disc":"Easy Italia Hub හි විභාගය සහ බැජ් තොරතුරු හා මඟ පෙන්වීම සඳහා පමණි. ඒවා නිල සුදුසුකම් හෝ භාෂා සහතික (උදා. CILS/CELI) නොවේ; නෛතික වටිනාකමක් නැත.","ex.none":"තවම බැජ් නැත — ලබා ගැනීමට විභාගය කරන්න.","ex.min":"සිට","ex.you":"ඔබ","ex.reached":"ලබා ඇත","ex.passed":"සමත්!","ex.failed":"තවම සමත් නැත","ex.your_score":"ඔබේ ලකුණු","ex.earned":"ඔබ ලැබූ බැජ්","ex.unlocks":"ඔබ අගුළු හැරියේ:","ex.retry":"විභාගය නැවත කරන්න","ex.retryfail":"ලෝකඩ බැජ් සඳහා අවම වශයෙන් 60/100ක් අවශ්‍යයි. මාර්ගෝපදේශ නැවත බලා උත්සාහ කරන්න.","ex.print":"සහතිකය මුද්‍රණය කරන්න","ex.name_q":"සහතිකයේ මුද්‍රණය කිරීමට සම්පූර්ණ නම:","ex.review":"පහත ඔබේ පිළිතුරු බලන්න.","ex.correct":"නිවැරදි පිළිතුර"},
+"ta":{"ex.eyebrow":"பாடநெறிகள் · தேர்வு · பேட்ஜ்","ex.h1":"கற்றுக்கொள், தேர்வில் தேர்ச்சி பெறு,<br/><em>உன் பேட்ஜைப் பெறு.</em>","ex.lead":"எங்கள் பாடநெறிகள் மற்றும் வழிகாட்டிகளுடன் கற்று, இத்தாலியில் வாழ்க்கை பற்றிய குறுகிய தேர்வில் தேர்ச்சி பெறுங்கள். உங்கள் மதிப்பெண்ணின் அடிப்படையில் ஒரு பேட்ஜ் கிடைக்கும் — உயர் நிலைகள் மேம்பட்ட அம்சங்களைத் திறக்கும். இத்தாலியம், ஆங்கிலம், சிங்களம், தமிழில் கிடைக்கும்.","ex.your":"உங்கள் தற்போதைய பேட்ஜ்:","ex.levels":"நிலைகளும் அவை திறப்பவையும்","ex.exam":"தேர்வு","ex.tab_base":"அடிப்படைத் தேர்வு","ex.tab_adv":"மேம்பட்ட தேர்வு","ex.examsub":"இரண்டு நிலைகள்: <strong>அடிப்படைத் தேர்வு</strong> (வெண்கலம்/வெள்ளி) மற்றும், வெள்ளியுடன் திறக்கும் <strong>மேம்பட்ட தேர்வு</strong> (தங்கம்/பிளாட்டினம்). பலவுள் தேர்வு, நடுத்தர சிரமம். சிறந்த மதிப்பெண் வைக்கப்படும்.","ex.ready":"பாடநெறிகள் முடிந்தது ✓ — தயாரா? தேர்வு சுமார் 5 நிமிடங்கள் ஆகும்.","ex.locked":"தேர்வு எழுத முதலில் பயிற்சி பாடநெறிகளை முடிக்க வேண்டும். பாடங்களைக் கற்று, உங்கள் பேட்ஜைப் பெற இங்கு திரும்பி வாருங்கள்.","ex.gocourses":"பாடநெறிகளுக்குச் செல் →","ex.start":"தேர்வைத் தொடங்கு →","ex.submit":"சமர்ப்பி →","ex.disc":"Easy Italia Hub இன் தேர்வும் பேட்ஜுகளும் தகவல் மற்றும் வழிகாட்டலுக்கு மட்டுமே. இவை அதிகாரப்பூர்வ தகுதிகள் அல்லது மொழிச் சான்றிதழ்கள் (எ.கா. CILS/CELI) அல்ல; சட்டப்பூர்வ மதிப்பு இல்லை.","ex.none":"இன்னும் பேட்ஜ் இல்லை — பெற தேர்வை எழுதுங்கள்.","ex.min":"முதல்","ex.you":"நீங்கள்","ex.reached":"அடைந்தது","ex.passed":"தேர்ச்சி!","ex.failed":"இன்னும் தேர்ச்சி இல்லை","ex.your_score":"உங்கள் மதிப்பெண்","ex.earned":"நீங்கள் பெற்ற பேட்ஜ்","ex.unlocks":"நீங்கள் திறந்தது:","ex.retry":"தேர்வை மீண்டும் எழுது","ex.retryfail":"வெண்கல பேட்ஜுக்கு குறைந்தது 60/100 தேவை. வழிகாட்டிகளை மீண்டும் பார்த்து முயற்சிக்கவும்.","ex.print":"சான்றிதழை அச்சிடு","ex.name_q":"சான்றிதழில் அச்சிட முழுப் பெயர்:","ex.review":"கீழே உங்கள் பதில்களைப் பாருங்கள்.","ex.correct":"சரியான பதில்"}
 };</script>
 <script>
 (function(){
@@ -253,6 +262,50 @@
         {it:"Solo la residenza",en:"Only residency",si:"පදිංචිය පමණි",ta:"வதிவிடம் மட்டும்"}],c:0}
   ];
 
+  // ── Esame AVANZATO (più difficile) — sblocca Oro/Platino ──
+  var ADV=[
+    {q:{it:"Per il ricongiungimento familiare, quali sono i requisiti principali del richiedente?",en:"For family reunification, what are the applicant's main requirements?",si:"පවුල් එක්සත් කිරීම සඳහා අයදුම්කරුගේ ප්‍රධාන අවශ්‍යතා මොනවාද?",ta:"குடும்ப மறுஇணைப்புக்கு விண்ணப்பதாரரின் முக்கிய தேவைகள் என்ன?"},
+     o:[{it:"Un reddito minimo e un alloggio idoneo",en:"A minimum income and suitable housing",si:"අවම ආදායමක් සහ සුදුසු නිවසක්",ta:"குறைந்தபட்ச வருமானமும் பொருத்தமான வீடும்"},
+        {it:"Solo il passaporto",en:"Only a passport",si:"ගමන් බලපත්‍රය පමණි",ta:"கடவுச்சீட்டு மட்டும்"},
+        {it:"Essere cittadino italiano",en:"Being an Italian citizen",si:"ඉතාලි පුරවැසියෙකු වීම",ta:"இத்தாலிய குடிமகனாக இருத்தல்"},
+        {it:"Avere almeno tre figli",en:"Having at least three children",si:"අවම වශයෙන් දරුවන් තිදෙනෙකු",ta:"குறைந்தது மூன்று குழந்தைகள்"}],c:0},
+    {q:{it:"Chi risiede stabilmente in Italia deve convertire la patente extra-UE entro:",en:"Someone settling in Italy must convert a non-EU driving licence within:",si:"ඉතාලියේ ස්ථිරව පදිංචි අයෙකු EU නොවන රියදුරු බලපත්‍රය පරිවර්තනය කළ යුත්තේ:",ta:"இத்தாலியில் நிரந்தரமாக வசிப்பவர் EU அல்லாத ஓட்டுநர் உரிமத்தை மாற்ற வேண்டியது:"},
+     o:[{it:"1 anno dall'acquisizione della residenza",en:"1 year from getting residency",si:"පදිංචිය ලැබී වසර 1ක් ඇතුළත",ta:"வதிவிடம் பெற்று 1 ஆண்டுக்குள்"},
+        {it:"5 anni",en:"5 years",si:"වසර 5",ta:"5 ஆண்டுகள்"},
+        {it:"Non è mai obbligatorio",en:"It is never required",si:"කිසිදා අවශ්‍ය නැත",ta:"ஒருபோதும் தேவையில்லை"},
+        {it:"10 anni",en:"10 years",si:"වසර 10",ta:"10 ஆண்டுகள்"}],c:0},
+    {q:{it:"La NASpI (indennità di disoccupazione) spetta a chi:",en:"NASpI (unemployment benefit) is for those who:",si:"NASpI (විරැකියා දීමනාව) හිමි වන්නේ:",ta:"NASpI (வேலையின்மை நிதி) யாருக்கு உரியது:"},
+     o:[{it:"Perde il lavoro involontariamente e ha i requisiti contributivi",en:"Lose their job involuntarily and meet contribution requirements",si:"අනිවාර්යයෙන් රැකියාව අහිමි වී දායක අවශ්‍යතා සපුරයි",ta:"தன்னிச்சையின்றி வேலை இழந்து பங்களிப்புத் தகுதிகளைப் பூர்த்திசெய்பவர்"},
+        {it:"Si licenzia volontariamente",en:"Resign voluntarily",si:"ස්වේච්ඡාවෙන් ඉල්ලා අස්වේ",ta:"தானாக விலகுபவர்"},
+        {it:"Qualsiasi straniero, senza requisiti",en:"Any foreigner, with no requirements",si:"ඕනෑම විදේශිකයෙක්, අවශ්‍යතා නොමැතිව",ta:"எந்த வெளிநாட்டவரும், தேவைகள் இன்றி"},
+        {it:"Solo i cittadini italiani",en:"Only Italian citizens",si:"ඉතාලි පුරවැසියන් පමණි",ta:"இத்தாலிய குடிமக்கள் மட்டும்"}],c:0},
+    {q:{it:"Il permesso UE per soggiornanti di lungo periodo (ex carta di soggiorno):",en:"The EU long-term residence permit (former 'carta di soggiorno'):",si:"දිගුකාලීන පදිංචිකරුවන් සඳහා EU බලපත්‍රය (කලින් 'carta di soggiorno'):",ta:"நீண்டகால குடியிருப்பு EU அனுமதி (முன்னாள் 'carta di soggiorno'):"},
+     o:[{it:"È a tempo indeterminato, dopo 5 anni di soggiorno legale",en:"Is open-ended, after 5 years of legal stay",si:"නීත්‍යානුකූල වාස වසර 5කට පසු කාලනිර්ණය රහිතයි",ta:"5 ஆண்டு சட்டப்பூர்வ தங்கலுக்குப் பிறகு காலவரையற்றது"},
+        {it:"Dura solo 1 anno",en:"Lasts only 1 year",si:"වසර 1ක් පමණි",ta:"1 ஆண்டு மட்டுமே"},
+        {it:"Vale solo per turismo",en:"Is only for tourism",si:"සංචාරක සඳහා පමණි",ta:"சுற்றுலாவுக்கு மட்டும்"},
+        {it:"Non esiste più",en:"No longer exists",si:"තවදුරටත් නොපවතී",ta:"இனி இல்லை"}],c:0},
+    {q:{it:"Chi è coniugato con un cittadino italiano e risiede in Italia può chiedere la cittadinanza dopo:",en:"Someone married to an Italian citizen and living in Italy can apply for citizenship after:",si:"ඉතාලි පුරවැසියෙකු සමඟ විවාහ වී ඉතාලියේ පදිංචි අයෙකුට පුරවැසිභාවය ඉල්ලිය හැක්කේ:",ta:"இத்தாலிய குடிமகனை மணந்து இத்தாலியில் வசிப்பவர் குடியுரிமை கோரலாம்:"},
+     o:[{it:"2 anni di matrimonio",en:"2 years of marriage",si:"විවාහ වී වසර 2ක්",ta:"திருமணமாகி 2 ஆண்டுகள்"},
+        {it:"Subito dopo le nozze",en:"Right after the wedding",si:"විවාහයෙන් පසු වහාම",ta:"திருமணத்திற்குப் பிறகு உடனே"},
+        {it:"10 anni",en:"10 years",si:"වසර 10",ta:"10 ஆண்டுகள்"},
+        {it:"6 mesi",en:"6 months",si:"මාස 6",ta:"6 மாதங்கள்"}],c:0},
+    {q:{it:"L'ISEE serve principalmente a:",en:"The ISEE mainly serves to:",si:"ISEE ප්‍රධාන වශයෙන් භාවිතා වන්නේ:",ta:"ISEE முக்கியமாக எதற்குப் பயன்படுகிறது:"},
+     o:[{it:"Misurare la situazione economica per accedere a prestazioni agevolate",en:"Measure your economic situation to access means-tested benefits",si:"සහන ප්‍රතිලාභ සඳහා ආර්ථික තත්ත්වය මැනීමට",ta:"சலுகைப் பலன்களைப் பெற பொருளாதார நிலையை அளவிட"},
+        {it:"Pagare le tasse",en:"Pay taxes",si:"බදු ගෙවීමට",ta:"வரி செலுத்த"},
+        {it:"Ottenere il passaporto",en:"Get a passport",si:"ගමන් බලපත්‍රය ලබා ගැනීමට",ta:"கடவுச்சீட்டு பெற"},
+        {it:"Votare alle elezioni",en:"Vote in elections",si:"ඡන්දය දීමට",ta:"தேர்தலில் வாக்களிக்க"}],c:0},
+    {q:{it:"Contro il diniego di un permesso di soggiorno, di solito si può:",en:"Against a refusal of a residence permit, you can usually:",si:"පදිංචි බලපත්‍රයක් ප්‍රතික්ෂේප කිරීමට එරෙහිව සාමාන්‍යයෙන්:",ta:"குடியிருப்பு அனுமதி மறுப்புக்கு எதிராக பொதுவாக:"},
+     o:[{it:"Presentare ricorso al giudice competente entro i termini",en:"File an appeal to the competent court within the deadline",si:"නියමිත කාලය තුළ නිසි අධිකරණයට අභියාචනයක්",ta:"காலக்கெடுவுக்குள் தகுந்த நீதிமன்றத்தில் மேல்முறையீடு"},
+        {it:"Non fare nulla",en:"Do nothing",si:"කිසිවක් නොකරන්න",ta:"எதுவும் செய்யாதே"},
+        {it:"Aspettare 10 anni",en:"Wait 10 years",si:"වසර 10ක් රැඳී සිටින්න",ta:"10 ஆண்டுகள் காத்திரு"},
+        {it:"Reclamare alla posta",en:"Complain at the post office",si:"තැපැල් කාර්යාලයට පැමිණිලි කරන්න",ta:"அஞ்சல் அலுவலகத்தில் புகார்"}],c:0},
+    {q:{it:"Il contratto di lavoro subordinato a tempo indeterminato:",en:"A permanent (open-ended) employment contract:",si:"ස්ථිර (කාලනිර්ණය රහිත) රැකියා ගිවිසුමක්:",ta:"நிரந்தர (காலவரையற்ற) வேலை ஒப்பந்தம்:"},
+     o:[{it:"Non ha una data di fine e dà maggiori tutele",en:"Has no end date and gives greater protections",si:"අවසන් දිනයක් නැත, වැඩි ආරක්ෂාවක් දෙයි",ta:"முடிவுத் தேதி இல்லை, அதிக பாதுகாப்பு தரும்"},
+        {it:"Dura sempre 3 mesi",en:"Always lasts 3 months",si:"සැම විටම මාස 3ක්",ta:"எப்போதும் 3 மாதங்கள்"},
+        {it:"Non prevede contributi",en:"Has no contributions",si:"දායක මුදල් නැත",ta:"பங்களிப்புகள் இல்லை"},
+        {it:"È valido solo a voce",en:"Is valid only verbally",si:"වාචිකව පමණක් වලංගුයි",ta:"வாய்மொழியாக மட்டும் செல்லுபடியாகும்"}],c:0}
+  ];
+
   var B=window.EIHBadges;
 
   function renderMyBadge(){
@@ -276,69 +329,100 @@
     document.getElementById('ladder').innerHTML=html;
   }
 
-  var answered={};
+  var MSG={
+    baseready:{it:"Corsi completati ✓ — pronto? L'Esame Base richiede circa 5 minuti.",en:"Courses completed ✓ — ready? The Base Exam takes about 5 minutes.",si:"පාඨමාලා සම්පූර්ණයි ✓ — සූදානම්ද? මූලික විභාගයට මිනිත්තු 5ක් පමණ.",ta:"பாடநெறிகள் முடிந்தது ✓ — தயாரா? அடிப்படைத் தேர்வு சுமார் 5 நிமிடங்கள்."},
+    advready:{it:"Esame Avanzato — domande più difficili per i badge Oro e Platino.",en:"Advanced Exam — harder questions for the Gold and Platinum badges.",si:"උසස් විභාගය — රන් සහ ප්ලැටිනම් බැජ් සඳහා දුෂ්කර ප්‍රශ්න.",ta:"மேம்பட்ட தேர்வு — தங்கம் மற்றும் பிளாட்டினம் பேட்ஜுகளுக்கான கடினமான கேள்விகள்."},
+    advlocked:{it:"L'Esame Avanzato si sblocca quando raggiungi il badge Argento nell'Esame Base.",en:"The Advanced Exam unlocks once you reach the Silver badge in the Base Exam.",si:"මූලික විභාගයේ රිදී බැජ් ලබා ගත් විට උසස් විභාගය අගුළු ඇරේ.",ta:"அடிப்படைத் தேர்வில் வெள்ளி பேட்ஜைப் பெற்றால் மேம்பட்ட தேர்வு திறக்கும்."},
+    retryfailadv:{it:"Per l'Oro servono almeno 85/100 in questo esame avanzato. Riprova.",en:"You need at least 85/100 in this advanced exam for Gold. Try again.",si:"රන් සඳහා මෙම උසස් විභාගයේ අවම වශයෙන් 85/100 අවශ්‍යයි. නැවත උත්සාහ කරන්න.",ta:"தங்கத்திற்கு இந்த மேம்பட்ட தேர்வில் குறைந்தது 85/100 தேவை. மீண்டும் முயற்சிக்கவும்."}
+  };
+  var currentTier='base';
+  function activeSet(){ return currentTier==='adv'?ADV:QUIZ; }
+  function levelForTier(tier,score){
+    if(tier==='adv'){ if(score>=95) return 'platino'; if(score>=85) return 'oro'; return null; }
+    if(score>=75) return 'argento'; if(score>=60) return 'bronzo'; return null;
+  }
+  function advUnlocked(){ return B.has('argento'); }
+
   function renderQuiz(){
-    var f=document.getElementById('quiz-form'); var l=lang(); var h='';
-    QUIZ.forEach(function(item,qi){
+    var f=document.getElementById('quiz-form'); var l=lang(); var set=activeSet(); var h='';
+    set.forEach(function(item,qi){
       h+='<div class="q" data-qi="'+qi+'"><p class="q-t"><span class="n">'+(qi+1)+'.</span>'+item.q[l]+'</p>';
-      item.o.forEach(function(opt,oi){
-        h+='<label class="opt"><input type="radio" name="q'+qi+'" value="'+oi+'"><span>'+opt[l]+'</span></label>';
-      });
+      item.o.forEach(function(opt,oi){ h+='<label class="opt"><input type="radio" name="q'+qi+'" value="'+oi+'"><span>'+opt[l]+'</span></label>'; });
       h+='</div>';
     });
     f.innerHTML=h;
   }
 
   function grade(){
-    var l=lang(); var correct=0;
-    QUIZ.forEach(function(item,qi){
+    var set=activeSet(); var correct=0;
+    set.forEach(function(item,qi){
       var sel=document.querySelector('input[name="q'+qi+'"]:checked');
-      var qEl=document.querySelector('.q[data-qi="'+qi+'"]');
-      var opts=qEl.querySelectorAll('.opt');
+      var opts=document.querySelector('.q[data-qi="'+qi+'"]').querySelectorAll('.opt');
       opts.forEach(function(o){ o.querySelector('input').disabled=true; });
       if(sel && parseInt(sel.value,10)===item.c){ correct++; opts[item.c].classList.add('ok'); }
       else { opts[item.c].classList.add('ok'); if(sel) opts[parseInt(sel.value,10)].classList.add('no'); }
     });
-    var score=Math.round(correct/QUIZ.length*100);
-    var rec=B.award(score);
-    showResult(score, rec);
+    var score=Math.round(correct/set.length*100);
+    var level=levelForTier(currentTier,score);
+    if(level) B.record(level,score);
+    showResult(score, level);
   }
 
-  function showResult(score, rec){
+  function showResult(score, level){
     document.getElementById('quiz-actions').style.display='none';
     var r=document.getElementById('quiz-result'); r.style.display='block';
-    var lvl=B.levelForScore(score);
+    var lvl=level?B.levelById(level):null; var cur=B.get();
     var h='<div class="result"><div class="rp" style="color:'+(lvl?lvl.color:'var(--coral)')+'">'+score+'<span style="font-size:.4em;color:var(--fg-muted)">/100</span></div>';
     if(lvl){
+      var badgeId=(cur&&cur.level)?cur.level:level;
       h+='<p style="font-weight:600;color:#1f9d55;margin:.4rem 0 0">'+t(UI.passed)+'</p>';
-      h+='<div class="rlvl">'+t(UI.earned)+'<br>'+B.chip(lvl.id,lang())+'</div>';
-      var un=B.unlocksUpTo(lvl.id);
+      h+='<div class="rlvl">'+t(UI.earned)+'<br>'+B.chip(badgeId,lang())+'</div>';
+      var un=B.unlocksUpTo(badgeId);
       if(un.length){ h+='<p style="font-weight:600;margin:.8rem 0 0">'+t(UI.unlocks)+'</p><ul>'; un.forEach(function(u){ h+='<li>'+t(u)+'</li>'; }); h+='</ul>'; }
       h+='<button class="btn-cta" id="print-btn">'+t(UI.print)+'</button><br>';
     } else {
       h+='<p style="font-weight:600;color:var(--coral);margin:.4rem 0 0">'+t(UI.failed)+'</p>';
-      h+='<p class="hint">'+t(UI.retryfail)+'</p>';
+      h+='<p class="hint">'+t(currentTier==='adv'?MSG.retryfailadv:UI.retryfail)+'</p>';
     }
     h+='<button class="btn-ghost2" id="retry-btn">'+t(UI.retry)+'</button>';
     h+='<p class="hint">'+t(UI.review)+'</p></div>';
     r.innerHTML=h;
     r.scrollIntoView({behavior:'smooth',block:'nearest'});
-    renderMyBadge(); renderLadder();
-    var pb=document.getElementById('print-btn');
-    if(pb) pb.onclick=function(){ printCert(rec, lvl); };
+    renderMyBadge(); renderLadder(); refreshTabs();
+    var pb=document.getElementById('print-btn'); if(pb) pb.onclick=printCert;
     document.getElementById('retry-btn').onclick=resetQuiz;
   }
 
-  function printCert(rec, lvl){
+  function printCert(){
+    var cur=B.get(); if(!cur||!cur.level) return; var lvl=B.levelById(cur.level);
     var name=window.prompt(t(UI.nameq)); if(!name) return;
     document.getElementById('cert-name').textContent=name.slice(0,80);
     document.getElementById('cert-lv').textContent=(lvl.name[lang()]||lvl.name.it);
-    document.getElementById('cert-score').textContent=rec.score;
+    document.getElementById('cert-score').textContent=cur.score;
     document.getElementById('cert-date').textContent=new Date().toLocaleDateString(lang()==='it'?'it-IT':'en-GB',{day:'numeric',month:'long',year:'numeric'});
     window.print();
   }
 
+  function updateIntro(){
+    var txt=document.getElementById('intro-txt'), sb=document.getElementById('start-btn');
+    if(currentTier==='adv' && !advUnlocked()){ txt.textContent=t(MSG.advlocked); sb.style.display='none'; }
+    else { txt.textContent = currentTier==='adv' ? t(MSG.advready) : t(MSG.baseready); sb.style.display=''; }
+  }
+  function refreshTabs(){
+    var lockSvg=document.getElementById('tab-adv-lock');
+    if(lockSvg) lockSvg.style.display=advUnlocked()?'none':'';
+  }
+  function selectTier(tier){
+    currentTier=tier;
+    document.querySelectorAll('.etab').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-tier')===tier); });
+    document.getElementById('quiz-result').style.display='none';
+    document.getElementById('quiz-form').style.display='none';
+    document.getElementById('quiz-actions').style.display='none';
+    document.getElementById('quiz-intro').style.display='';
+    updateIntro();
+  }
   function startQuiz(){
+    if(currentTier==='adv' && !advUnlocked()){ updateIntro(); return; }
     document.getElementById('quiz-intro').style.display='none';
     document.getElementById('quiz-result').style.display='none';
     renderQuiz();
@@ -347,18 +431,20 @@
   }
   function resetQuiz(){
     document.getElementById('quiz-result').style.display='none';
-    startQuiz();
+    selectTier(currentTier);
     document.getElementById('quiz-card').scrollIntoView({behavior:'smooth',block:'start'});
   }
 
   // ── Gate: l'esame è accessibile solo dopo aver completato i corsi ──
   function applyGate(){
     var locked=!B.coursesDone();
-    var lk=document.getElementById('quiz-locked'), intro=document.getElementById('quiz-intro');
-    if(lk) lk.style.display=locked?'block':'none';
-    if(intro) intro.style.display=locked?'none':'';
+    document.getElementById('quiz-locked').style.display=locked?'block':'none';
+    document.getElementById('exam-tabs').style.display=locked?'none':'flex';
+    document.getElementById('quiz-intro').style.display=locked?'none':'';
+    if(!locked){ refreshTabs(); updateIntro(); }
   }
   renderMyBadge(); renderLadder(); applyGate();
+  if(B.sync) B.sync(function(){ renderMyBadge(); renderLadder(); refreshTabs(); updateIntro(); });
   // Sblocco per utenti loggati con progressi corsi salvati in EIH_DB
   if(!B.coursesDone() && window.EIH_DB && window.EIH_DB.table){
     try{ window.EIH_DB.table('course-progress').list().then(function(rows){
@@ -369,6 +455,7 @@
       if(ok){ B.markCoursesDone(); applyGate(); }
     }).catch(function(){}); }catch(e){}
   }
+  document.querySelectorAll('.etab').forEach(function(b){ b.addEventListener('click',function(){ if(!B.coursesDone())return; selectTier(this.getAttribute('data-tier')); }); });
   document.getElementById('start-btn').addEventListener('click',function(){ if(!B.coursesDone()){applyGate();return;} startQuiz(); });
   document.getElementById('submit-btn').addEventListener('click',grade);
 })();

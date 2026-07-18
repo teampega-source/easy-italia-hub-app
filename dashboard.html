@@ -399,9 +399,13 @@
   var el=document.getElementById('dash-badge'); if(!el||!window.EIHBadges) return;
   var L={it:{y:'Il tuo badge:',n:'Nessun badge — fai l’esame',go:'Esame & Badge →'},en:{y:'Your badge:',n:'No badge yet — take the exam',go:'Exam & Badge →'},si:{y:'ඔබේ බැජ්:',n:'තවම බැජ් නැත — විභාගය කරන්න',go:'විභාගය සහ බැජ් →'},ta:{y:'உங்கள் பேட்ஜ்:',n:'இன்னும் பேட்ஜ் இல்லை — தேர்வை எழுது',go:'தேர்வு & பேட்ஜ் →'}};
   var lang='it';try{lang=localStorage.getItem('eih-lang')||'it';}catch(e){}var t=L[lang]||L.it;
-  var cur=window.EIHBadges.get();
-  if(cur&&cur.level){ el.innerHTML='<span style="font-size:.85rem;color:var(--fg-secondary)">'+t.y+'</span> '+window.EIHBadges.chip(cur.level,lang)+' <a href="/esame" class="inline" style="font-size:.8rem">'+t.go+'</a>'; }
-  else { el.innerHTML='<a href="/esame" class="inline" style="font-size:.85rem">'+t.n+' '+t.go+'</a>'; }
+  function paint(){
+    var cur=window.EIHBadges.get();
+    if(cur&&cur.level){ el.innerHTML='<span style="font-size:.85rem;color:var(--fg-secondary)">'+t.y+'</span> '+window.EIHBadges.chip(cur.level,lang)+' <a href="/esame" class="inline" style="font-size:.8rem">'+t.go+'</a>'; }
+    else { el.innerHTML='<a href="/esame" class="inline" style="font-size:.85rem">'+t.n+' '+t.go+'</a>'; }
+  }
+  paint();
+  if(window.EIHBadges.sync) window.EIHBadges.sync(paint);
 })();
 </script>
 <script src="/assets/eih-push.js" defer></script>
