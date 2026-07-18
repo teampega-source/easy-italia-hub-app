@@ -201,6 +201,8 @@
     <h1 class="reveal" data-i18n-html="page.h1">La mia <em>Dashboard.</em></h1>
     <p class="lead reveal" data-i18n-html="page.lead">Il tuo spazio personale per non perdere mai una <strong>scadenza</strong>: permesso di soggiorno, appuntamenti in Questura, rinnovi e iscrizioni. Segnali le date sul calendario e ricevi un promemoria quando si avvicinano.</p>
 
+    <div id="dash-badge" class="reveal" style="margin:.4rem 0 0;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap"></div>
+
     <!-- register prompt (shown only if not registered) -->
     <div id="reg-prompt" class="reg-prompt reveal" hidden>
       <span class="reg-ic" aria-hidden="true">👋</span>
@@ -391,6 +393,17 @@
 <div id="site-footer"></div>
 <script src="eih.js"></script>
 <script src="eih-auth.js" defer></script>
+<script src="/assets/eih-badges.js"></script>
+<script>
+(function(){
+  var el=document.getElementById('dash-badge'); if(!el||!window.EIHBadges) return;
+  var L={it:{y:'Il tuo badge:',n:'Nessun badge — fai l’esame',go:'Esame & Badge →'},en:{y:'Your badge:',n:'No badge yet — take the exam',go:'Exam & Badge →'},si:{y:'ඔබේ බැජ්:',n:'තවම බැජ් නැත — විභාගය කරන්න',go:'විභාගය සහ බැජ් →'},ta:{y:'உங்கள் பேட்ஜ்:',n:'இன்னும் பேட்ஜ் இல்லை — தேர்வை எழுது',go:'தேர்வு & பேட்ஜ் →'}};
+  var lang='it';try{lang=localStorage.getItem('eih-lang')||'it';}catch(e){}var t=L[lang]||L.it;
+  var cur=window.EIHBadges.get();
+  if(cur&&cur.level){ el.innerHTML='<span style="font-size:.85rem;color:var(--fg-secondary)">'+t.y+'</span> '+window.EIHBadges.chip(cur.level,lang)+' <a href="/esame" class="inline" style="font-size:.8rem">'+t.go+'</a>'; }
+  else { el.innerHTML='<a href="/esame" class="inline" style="font-size:.85rem">'+t.n+' '+t.go+'</a>'; }
+})();
+</script>
 <script src="/assets/eih-push.js" defer></script>
 <script>
 /* ═══════════════════════════════════════════════════════════

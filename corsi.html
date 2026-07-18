@@ -89,6 +89,7 @@
   <p class="eyebrow reveal"><span class="eyebrow-line"></span> Crescita personale</p>
   <h1 class="reveal" data-i18n-html="page.h1">Corsi di <em>lingua.</em></h1>
   <p class="lead reveal" data-i18n-html="page.lead">Impara l'italiano o l'inglese che ti serve nella vita di tutti i giorni e per il lavoro. Il <strong>Corso Base è gratis</strong> iscrivendoti; il <strong>Corso Avanzato</strong> si sblocca con un abbonamento Premium accessibile.</p>
+  <p class="reveal" style="margin-top:.6rem"><a href="/esame" class="inline" data-i18n="page.examcta">Completato il corso base? Vai all'Esame &amp; Badge per ottenere il tuo livello e sbloccare funzioni →</a></p>
 
   <!-- register prompt (shown only if not registered) -->
   <div id="reg-prompt" class="reg-prompt reveal" hidden style="display:flex;align-items:flex-start;gap:.6rem;background:var(--green-dim);border:1px solid rgba(31,157,85,.28);border-radius:var(--radius-sm);padding:.8rem 1rem;font-size:var(--text-sm);color:var(--ink);margin-bottom:var(--sp-3);line-height:1.6">
@@ -296,6 +297,9 @@ function renderBaseUnlocked(key, done){
   var doneSet = {};
   done.forEach(function(d){ doneSet[d.lesson] = true; });
   document.getElementById(key+'-base-progress').textContent = Object.keys(doneSet).length + '/' + lessons.length + ' lezioni completate';
+  if (lessons.length > 0 && Object.keys(doneSet).length >= lessons.length) {
+    try { localStorage.setItem('eih-corso-completato', '1'); } catch (e) {}
+  }
   var el = document.getElementById(key+'-base-list');
   el.innerHTML = lessons.map(function(l){
     var isDone = !!doneSet[l.id];
