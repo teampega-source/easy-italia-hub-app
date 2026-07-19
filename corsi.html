@@ -113,7 +113,7 @@
     </section>
     <section class="crs-section reveal" aria-labelledby="adv-h-it">
       <div class="crs-head"><h2 id="adv-h-it">Corso Avanzato <span class="soon">Premium</span></h2></div>
-      <p class="muted">Verbi, conversazione e italiano per il lavoro e la burocrazia. Si sblocca con un <a class="inline" href="/abbonamenti">abbonamento Premium</a>.</p>
+      <p class="muted">Verbi, conversazione e italiano per il lavoro e la burocrazia. Si sblocca con un abbonamento Premium.</p>
       <div class="adv-grid" id="it-adv-list"></div>
     </section>
   </div>
@@ -129,7 +129,7 @@
     </section>
     <section class="crs-section reveal" aria-labelledby="adv-h-en">
       <div class="crs-head"><h2 id="adv-h-en">Corso Avanzato <span class="soon">Premium</span></h2></div>
-      <p class="muted">Verbi, conversazione e inglese professionale per colloqui ed esami. Si sblocca con un <a class="inline" href="/abbonamenti">abbonamento Premium</a>.</p>
+      <p class="muted">Verbi, conversazione e inglese professionale per colloqui ed esami. Si sblocca con un abbonamento Premium.</p>
       <div class="adv-grid" id="en-adv-list"></div>
     </section>
   </div>
@@ -283,7 +283,7 @@ function renderAdv(key){
     var flag = byBadge
       ? '<span class="premium-flag" style="color:var(--gold)">✓ Sbloccato con il badge Oro</span>'
       : '<span class="premium-flag">'+lockIco+' Richiede Premium o badge Oro</span>';
-    return '<a class="adv-card" href="'+(byBadge?'/esame':'/abbonamenti')+'">'+flag+
+    return '<a class="adv-card" href="'+'/esame'+'">'+flag+
       '<h3>'+l.title+'</h3><p>'+l.desc+'</p></a>';
   }).join('');
 }
