@@ -131,6 +131,21 @@
           }catch(e){err.hidden=false;}
           btn.disabled=false;btn.classList.remove('btn-loading');
         });
+
+        // Prefill dal CTA "Voglio diventare partner" (/contatti?motivo=partner)
+        try{
+          if(new URLSearchParams(location.search).get('motivo')==='partner'){
+            var L=(function(){try{return localStorage.getItem('eih-lang')||'it';}catch(e){return 'it';}})();
+            var P={
+              it:"Salve, sono un professionista (indicare: avvocato / consulente fiscale / interprete / mediatore culturale / CAF-patronato / consolato) e vorrei aderire al programma partner. Ambito e città:\n",
+              en:"Hello, I'm a professional (specify: lawyer / tax advisor / interpreter / cultural mediator / CAF-patronato / consulate) and I'd like to join the partner program. Field and city:\n",
+              si:"ආයුබෝවන්, මම වෘත්තිකයෙක් (නීතිඥ / බදු උපදේශක / පරිවර්තක / සංස්කෘතික මැදිහත්කරු / CAF / කොන්සල්) වෙමි. හවුල්කාර වැඩසටහනට එක්වීමට කැමතියි. ක්ෂේත්‍රය සහ නගරය:\n",
+              ta:"வணக்கம், நான் ஒரு தொழில் வல்லுநர் (வழக்கறிஞர் / வரி ஆலோசகர் / மொழிபெயர்ப்பாளர் / கலாச்சார மத்தியஸ்தர் / CAF / தூதரகம்). கூட்டாளர் திட்டத்தில் சேர விரும்புகிறேன். துறை மற்றும் நகரம்:\n"
+            };
+            var msg=document.getElementById('c-msg');
+            if(msg&&!msg.value){ msg.value=P[L]||P.it; msg.focus(); msg.setSelectionRange(msg.value.length,msg.value.length); }
+          }
+        }catch(e){}
       })();
       </script>
       <p class="muted" style="margin-top:var(--sp-2)" data-i18n-html="ct.10">Hai bisogno subito di una risposta pratica? Chiedi al <a class="inline" href="/percorso">Consigliere AI</a>, disponibile 24/7.</p>
