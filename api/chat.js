@@ -32,6 +32,13 @@ const TRUNC_MARK = " […]";
 
 const LANG_NAME = { it: "italiano", en: "English", si: "සිංහල (Sinhala)", ta: "தமிழ் (Tamil)" };
 
+// ── Pre-filtro anti-jailbreak: intercetta i tentativi più comuni PRIMA della
+// chiamata a Gemini, così una richiesta ostile non consuma token. Difesa
+// aggiuntiva (il system prompt resta la barriera principale). Pattern stretti
+// per evitare falsi positivi su domande reali di immigrazione. Fail-open.
+const JAILBREAK_RE = /\b(ignore|disregard|forget|override)\b[\s\S]{0,24}\b(instruction|instructions|rules?|prompt|above|previous|system)\b|dimentica[\s\S]{0,24}(istruzion|regole)|sei\s+ora\s+un|act\s+as\s+(?:a\s+)?(?:dan|jailbreak)|\bDAN\s+mode\b|system\s+prompt|reveal[\s\S]{0,30}(prompt|api\s*key|instruction)/i;
+function looksLikeJailbreak(s) { try { return JAILBREAK_RE.test(s); } catch { return false; } }
+
 // ── Best-effort, per-warm-instance rate limiter (FAILS OPEN) ──
 // NOTE: serverless instances are ephemeral and there can be many warm instances
 // in parallel, so this is NOT a hard guarantee — it only blunts bursty abuse from
@@ -168,6 +175,18 @@ module.exports = async (req, res) => {
       ta: "AI உதவியாளர் கிட்டத்தட்ட தயாராக உள்ளது: Gemini விசை அமைக்கப்பட்டவுடன், அதிகாரப்பூர்வ ஆதாரங்களில் சரிபார்க்கப்பட்ட தகவலுடன் பதிலளிப்பேன்.",
     };
     return res.status(200).json({ reply: demo[lang] || demo.it, demo: true });
+  }
+
+  // ── Anti-jailbreak (solo modalità consigliere; salta il traduttore, dove il
+  // testo è solo dato da tradurre). Blocca prima di Gemini → risparmia token. ──
+  if (body?.task !== "translate" && looksLikeJailbreak(query)) {
+    const refuse = {
+      it: "Posso aiutarti solo su immigrazione e vita in Italia. Riformula la domanda e ti do una risposta utile.",
+      en: "I can only help with immigration and life in Italy. Please rephrase and I'll give you a useful answer.",
+      si: "මට උදව් කළ හැක්කේ ආගමනය සහ ඉතාලියේ ජීවිතය ගැන පමණි. නැවත සකසන්න.",
+      ta: "குடியேற்றம் மற்றும் இத்தாலியில் வாழ்க்கை பற்றி மட்டுமே உதவ முடியும். மீண்டும் அமைக்கவும்.",
+    };
+    return res.status(200).json({ reply: refuse[lang] || refuse.it, error: "blocked" });
   }
 
   // ── Rate limit best-effort (solo live; fail-open; sempre HTTP 200) ──
