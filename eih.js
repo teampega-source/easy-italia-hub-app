@@ -50,7 +50,7 @@
         '<ul class="nav-links">'+
           navLink('guide','/guide','nav.guide','Guide',[['/guide','','Guide burocratiche'],['/moduli','m.templates','Moduli e Lettere'],['/guida-conti','m.openaccount','Aprire un Conto'],['/assegno-unico','m.assegno','Calcol. Assegno Unico'],['/diritti-inps','m.inps','Verifica Diritti INPS'],['/riconoscimento-titoli','m.titles','Riconosc. Titoli'],['/dizionario-medico','m.medical','Dizionario Medico']])+
           navLink('community','/community','nav.community','Community',[['/community','nav.community','Community'],['/corsi','m.languages','Corsi di Lingue'],['/esame','m.esame','Esame & Badge'],['/opportunita','m.opportunities','Opportunità'],['/chi-siamo','f.about','Chi siamo']])+
-          navLink('percorso','/percorso','nav.journey','Il Mio Percorso',[['/percorso','nav.journey','Il Mio Percorso'],['/dashboard','m.dashboard','La mia Dashboard'],['/permesso-tracker','m.tracker','Tracker Permesso'],['/cv-builder','m.cvbuilder','CV Builder'],['/documenti','m.docs','Archivio Documenti'],['/abbonamenti','f.subscriptions','Abbonamenti']])+
+          navLink('percorso','/percorso','nav.journey','Il Mio Percorso',[['/percorso','nav.journey','Il Mio Percorso'],['/dashboard','m.dashboard','La mia Dashboard'],['/permesso-tracker','m.tracker','Tracker Permesso'],['/cv-builder','m.cvbuilder','CV Builder'],['/documenti','m.docs','Archivio Documenti']])+
           navLink('news','/news','nav.news','News',[['/news','','Tutte le news'],['/news?cat=leggi','','Leggi e decreti'],['/news?cat=scadenze','','Scadenze'],['/news?cat=opportunita','','Opportunità'],['/news?cat=lavoro','','Lavoro'],['/news?cat=casa','','Casa']])+
           navLink('voli','/voli','nav.voli','Voli',[['/voli','m.flights','Voli Sri Lanka'],['/cargo','m.cargo','Spedizioni Cargo'],['/travel-sri-lanka','','Travel Hub Sri Lanka'],['/money-transfer','','Money Transfer']])+
           navLink('mappa','/mappa','nav.map','Mappa')+
@@ -113,7 +113,7 @@
               '<li><a href="/permesso-tracker" data-i18n="m.tracker">Tracker Permesso</a></li>'+
               '<li><a href="/cv-builder" data-i18n="m.cvbuilder">CV Builder</a></li>'+
               '<li><a href="/documenti" data-i18n="m.docs">Archivio Documenti</a></li>'+
-              '<li><a href="/abbonamenti" data-i18n="f.subscriptions">Abbonamenti</a></li>'+
+              
             '</ul>'+
           '</div>'+
         '</div>'+
@@ -127,7 +127,7 @@
       '<div class="footer-col"><h4 data-i18n="f.company">Azienda</h4><ul>'+
         '<li><a href="/chi-siamo" data-i18n="f.about">Chi siamo</a></li><li><a href="/news" data-i18n="nav.news">News</a></li><li><a href="/contatti" data-i18n="f.advertising">Pubblicità</a></li><li><a href="/contatti" data-i18n="f.contact">Contatti</a></li></ul></div>'+
       '<div class="footer-col"><h4 data-i18n="f.account">Account</h4><ul>'+
-        '<li><a href="/dashboard" data-i18n="m.dashboard">La mia Dashboard</a></li><li><a href="/permesso-tracker" data-i18n="m.tracker">Tracker Permesso</a></li><li><a href="/cv-builder" data-i18n="m.cvbuilder">CV Builder</a></li><li><a href="/documenti" data-i18n="m.docs">Archivio Documenti</a></li><li><a href="/percorso" data-i18n="nav.login">Accedi</a></li><li><a href="/percorso" data-i18n="f.register">Registrati</a></li><li><a href="/abbonamenti" data-i18n="f.subscriptions">Abbonamenti</a></li></ul></div>'+
+        '<li><a href="/dashboard" data-i18n="m.dashboard">La mia Dashboard</a></li><li><a href="/permesso-tracker" data-i18n="m.tracker">Tracker Permesso</a></li><li><a href="/cv-builder" data-i18n="m.cvbuilder">CV Builder</a></li><li><a href="/documenti" data-i18n="m.docs">Archivio Documenti</a></li><li><a href="/percorso" data-i18n="nav.login">Accedi</a></li><li><a href="/percorso" data-i18n="f.register">Registrati</a></li></ul></div>'+
       '</div><div class="footer-bottom"><p class="footer-copy" data-i18n="f.copy"></p>'+
       '<nav class="footer-legal" aria-label="Note legali"><a href="/privacy" data-i18n="f.privacy">Privacy Policy</a><a href="/cookie" data-i18n="f.cookie">Cookie Policy</a><a href="/termini" data-i18n="f.terms">Termini di Servizio</a><a href="/note-legali" data-i18n="f.legal">Note legali</a></nav></div></footer>';
   }
