@@ -37,7 +37,8 @@
 
   // Provider links for getting the REAL, live quote (fees + margin included).
   var PROVIDERS = [
-    { name: "Wise", url: "https://wise.com" },
+    { name: "Wise", url: "/api/go?to=wise&ref=fx", aff: true },
+    { name: "Remitly", url: "/api/go?to=remitly&ref=fx", aff: true },
     { name: "Western Union", url: "https://www.westernunion.com" },
     { name: "Ria", url: "https://www.riamoneytransfer.com" },
   ];
@@ -155,7 +156,7 @@
     // ── Provider links (get the REAL quote) ─────────────────
     var providerIntro = el("div", {
       style: "font-size:.8rem;color:" + C.fgMuted + ";margin-bottom:.45rem;",
-      text: "Ottieni un preventivo reale (commissioni e cambio inclusi):",
+      text: "Ottieni un preventivo reale (commissioni e cambio inclusi). Alcuni link sono affiliati:",
     });
 
     var linkRow = el("div", {
@@ -165,7 +166,7 @@
       var a = el("a", {
         href: p.url,
         target: "_blank",
-        rel: "noopener",
+        rel: p.aff ? "sponsored noopener" : "noopener",
         style:
           "display:inline-flex;align-items:center;text-decoration:none;" +
           "font-size:.82rem;font-weight:500;color:" + C.fg + ";" +

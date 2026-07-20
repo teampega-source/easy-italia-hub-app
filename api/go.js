@@ -1,5 +1,6 @@
 // api/go.js — Redirect engine per affiliate link travel (voli, hotel, transfer, ecc.)
-// Env vars opzionali: AFF_KIWI, AFF_BOOKING, AFF_12GO, AFF_SAFETYWING, AFF_AIRALO, AFF_GYG
+// Env vars opzionali: AFF_KIWI, AFF_BOOKING, AFF_12GO, AFF_SAFETYWING, AFF_AIRALO, AFF_GYG,
+//                     AFF_WISE, AFF_REMITLY (money transfer, network Partnerize)
 'use strict';
 
 const { isRateLimited, clientIp } = require('./_ratelimit');
@@ -11,7 +12,21 @@ const IDS = {
   safetywing: process.env.AFF_SAFETYWING  || '',
   airalo:     process.env.AFF_AIRALO      || '',
   gyg:        process.env.AFF_GYG         || '',
+  wise:       process.env.AFF_WISE        || '',
+  remitly:    process.env.AFF_REMITLY     || '',
 };
+
+// Partnerize deep link (prf.hn). camref = ref campagna dalla dashboard.
+// Vuoto → link semplice (non tracciato). Se incolli un link completo, usato così com'è.
+function partnerize(camref, dest, pubref) {
+  if (!camref) return dest;
+  if (/^https?:\/\//.test(camref)) return camref;
+  const pr = pubref
+    ? '/pubref:' + encodeURIComponent(String(pubref).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40))
+    : '';
+  return 'https://prf.hn/click/camref:' + encodeURIComponent(camref)
+    + pr + '/destination:' + encodeURIComponent(dest);
+}
 
 const AIRPORT_CITY = {
   MXP: 'milan-italy', BGY: 'milan-italy', LIN: 'milan-italy',
@@ -67,6 +82,12 @@ function buildUrl(to, q) {
           ? '?referenceID=' + encodeURIComponent(IDS.safetywing)
             + '&utm_source=' + encodeURIComponent(IDS.safetywing) + '&utm_medium=affiliate'
           : '');
+
+    case 'wise':
+      return partnerize(IDS.wise, 'https://wise.com', q.ref);
+
+    case 'remitly':
+      return partnerize(IDS.remitly, 'https://www.remitly.com', q.ref);
 
     case 'airalo':
       return 'https://www.airalo.com/sri-lanka-esim'
