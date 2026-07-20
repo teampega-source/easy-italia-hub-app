@@ -11,22 +11,22 @@
       "nav.voli":"Soldi & Viaggi","nav.profile":"Profilo",
       "m.quicknav":"Navigazione rapida","m.flights":"Voli Sri Lanka","m.languages":"Corsi di Lingue","m.esame":"Esame & Badge","m.opportunities":"Opportunità","m.cargo":"Spedizioni Cargo","m.templates":"Moduli e Lettere","m.openaccount":"Aprire un Conto","m.assegno":"Calcol. Assegno Unico","m.inps":"Verifica Diritti INPS","m.titles":"Riconosc. Titoli","m.medical":"Dizionario Medico","m.dashboard":"La mia Dashboard","m.tracker":"Tracker Permesso","m.docs":"Archivio Documenti","m.cvbuilder":"CV Builder",
       "f.tag":"Il punto di riferimento della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.",
-      "f.product":"Prodotto","f.aiAssistant":"Assistente AI","f.mapServices":"Mappa servizi","f.company":"Azienda","f.about":"Chi siamo","f.advertising":"Pubblicità","f.contact":"Contatti","f.account":"Account","f.register":"Registrati","f.subscriptions":"Abbonamenti","f.copy":"© 2026 Easy Italia Hub. Tutti i diritti riservati.","f.privacy":"Privacy Policy","f.cookie":"Cookie Policy","f.terms":"Termini di Servizio","f.legal":"Note legali" },
+      "f.product":"Prodotto","f.aiAssistant":"Assistente AI","f.mapServices":"Mappa servizi","f.company":"Azienda","f.about":"Chi siamo","f.rete":"Rete & Affiliazioni","f.whatsapp":"Canale WhatsApp","f.advertising":"Pubblicità","f.contact":"Contatti","f.account":"Account","f.register":"Registrati","f.subscriptions":"Abbonamenti","f.copy":"© 2026 Easy Italia Hub. Tutti i diritti riservati.","f.privacy":"Privacy Policy","f.cookie":"Cookie Policy","f.terms":"Termini di Servizio","f.legal":"Note legali" },
     en:{ "nav.guide":"Guides","nav.community":"Community","nav.journey":"My Journey","nav.news":"News","nav.map":"Map","nav.contact":"Contact us","nav.login":"Log in","nav.signup":"Sign up free",
       "nav.voli":"Money & Travel","nav.profile":"Profile",
       "m.quicknav":"Quick navigation","m.flights":"Sri Lanka Flights","m.languages":"Language Courses","m.esame":"Exam & Badge","m.opportunities":"Opportunities","m.cargo":"Cargo Shipping","m.templates":"Forms & Letters","m.openaccount":"Open a Bank Account","m.assegno":"Assegno Unico Calc.","m.inps":"INPS Rights Check","m.titles":"Qual. Recognition","m.medical":"Medical Dictionary","m.dashboard":"My Dashboard","m.tracker":"Permit Tracker","m.docs":"Document Archive","m.cvbuilder":"CV Builder",
       "f.tag":"The reference point for the Sri Lankan community in Italy. Guides, multilingual AI, community and services — all in one place.",
-      "f.product":"Product","f.aiAssistant":"AI Assistant","f.mapServices":"Services map","f.company":"Company","f.about":"About us","f.advertising":"Advertising","f.contact":"Contact","f.account":"Account","f.register":"Register","f.subscriptions":"Subscriptions","f.copy":"© 2026 Easy Italia Hub. All rights reserved.","f.privacy":"Privacy Policy","f.cookie":"Cookie Policy","f.terms":"Terms of Service","f.legal":"Legal notice" },
+      "f.product":"Product","f.aiAssistant":"AI Assistant","f.mapServices":"Services map","f.company":"Company","f.about":"About us","f.rete":"Network & Partners","f.whatsapp":"WhatsApp channel","f.advertising":"Advertising","f.contact":"Contact","f.account":"Account","f.register":"Register","f.subscriptions":"Subscriptions","f.copy":"© 2026 Easy Italia Hub. All rights reserved.","f.privacy":"Privacy Policy","f.cookie":"Cookie Policy","f.terms":"Terms of Service","f.legal":"Legal notice" },
     si:{ "nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.journey":"මගේ ගමන","nav.news":"පුවත්","nav.map":"සිතියම","nav.contact":"අපව අමතන්න","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
       "nav.voli":"මුදල් සහ ගමන්","nav.profile":"පැතිකඩ",
       "m.quicknav":"ඉක්මන් සොයන","m.flights":"ශ්‍රී ලංකා ගුවන් ගමන්","m.languages":"භාෂා පාඨමාලා","m.esame":"විභාගය සහ බැජ්","m.opportunities":"අවස්ථා","m.cargo":"ගෙවල් ගෙනයාම","m.templates":"ෆෝරම් සහ ලිපි","m.openaccount":"බැංකු ගිණුමක්","m.assegno":"Assegno Unico ගණකය","m.inps":"INPS අයිතිවාසිකම්","m.titles":"සුදුස්සකම් හඳුනාගැනීම","m.medical":"වෛද්‍ය ශබ්දකෝෂය","m.dashboard":"මගේ ඩෑෂ්බෝඩ්","m.tracker":"බලපත්‍ර ලුහුබැඳීම","m.docs":"ලේඛනාගාරය","m.cvbuilder":"CV Builder",
       "f.tag":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාවේ විශ්වාසනීය මධ්‍යස්ථානය. මාර්ගෝපදේශ, බහුභාෂා AI, ප්‍රජාව සහ සේවා — සියල්ල එක තැනක.",
-      "f.product":"නිෂ්පාදනය","f.aiAssistant":"AI සහායක","f.mapServices":"සේවා සිතියම","f.company":"සමාගම","f.about":"අප ගැන","f.advertising":"දැන්වීම්","f.contact":"සම්බන්ධ වන්න","f.account":"ගිණුම","f.register":"ලියාපදිංචි වන්න","f.subscriptions":"දායකත්ව","f.copy":"© 2026 Easy Italia Hub. සියලු හිමිකම් ඇවිරිණි.","f.privacy":"පෞද්ගලිකත්ව ප්‍රතිපත්තිය","f.cookie":"කුකී ප්‍රතිපත්තිය","f.terms":"සේවා කොන්දේසි","f.legal":"නෛතික දැන්වීම" },
+      "f.product":"නිෂ්පාදනය","f.aiAssistant":"AI සහායක","f.mapServices":"සේවා සිතියම","f.company":"සමාගම","f.about":"අප ගැන","f.rete":"ජාලය සහ හවුල්කරුවන්","f.whatsapp":"WhatsApp නාලිකාව","f.advertising":"දැන්වීම්","f.contact":"සම්බන්ධ වන්න","f.account":"ගිණුම","f.register":"ලියාපදිංචි වන්න","f.subscriptions":"දායකත්ව","f.copy":"© 2026 Easy Italia Hub. සියලු හිමිකම් ඇවිරිණි.","f.privacy":"පෞද්ගලිකත්ව ප්‍රතිපත්තිය","f.cookie":"කුකී ප්‍රතිපත්තිය","f.terms":"සේවා කොන්දේසි","f.legal":"නෛතික දැන්වීම" },
     ta:{ "nav.guide":"வழிகாட்டிகள்","nav.community":"சமூகம்","nav.journey":"என் பயணம்","nav.news":"செய்திகள்","nav.map":"வரைபடம்","nav.contact":"தொடர்பு கொள்ளுங்கள்","nav.login":"உள்நுழைய","nav.signup":"இலவசமாக பதிவு",
       "nav.voli":"பணம் & பயணம்","nav.profile":"சுயவிவரம்",
       "m.quicknav":"விரைவு வழிசெலுத்தல்","m.flights":"இலங்கை விமானங்கள்","m.languages":"மொழி வகுப்புகள்","m.esame":"தேர்வு & பேட்ஜ்","m.opportunities":"வாய்ப்புகள்","m.cargo":"சரக்கு அனுப்புதல்","m.templates":"படிவங்கள் & கடிதங்கள்","m.openaccount":"வங்கி கணக்கு திறக்க","m.assegno":"Assegno Unico கணக்கு","m.inps":"INPS உரிமைகள்","m.titles":"தகுதி அங்கீகாரம்","m.medical":"மருத்துவ அகராதி","m.dashboard":"என் டாஷ்போர்டு","m.tracker":"அனுமதி கண்காணிப்பு","m.docs":"ஆவண காப்பகம்","m.cvbuilder":"CV Builder",
       "f.tag":"இத்தாலியில் இலங்கை சமூகத்தின் நம்பகமான மையம். வழிகாட்டிகள், பன்மொழி AI, சமூகம் மற்றும் சேவைகள் — அனைத்தும் ஒரே இடத்தில்.",
-      "f.product":"தயாரிப்பு","f.aiAssistant":"AI உதவியாளர்","f.mapServices":"சேவை வரைபடம்","f.company":"நிறுவனம்","f.about":"எங்களைப் பற்றி","f.advertising":"விளம்பரம்","f.contact":"தொடர்பு","f.account":"கணக்கு","f.register":"பதிவு செய்ய","f.subscriptions":"சந்தாக்கள்","f.copy":"© 2026 Easy Italia Hub. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.","f.privacy":"தனியுரிமைக் கொள்கை","f.cookie":"குக்கீ கொள்கை","f.terms":"சேவை விதிமுறைகள்","f.legal":"சட்டக் குறிப்பு" }
+      "f.product":"தயாரிப்பு","f.aiAssistant":"AI உதவியாளர்","f.mapServices":"சேவை வரைபடம்","f.company":"நிறுவனம்","f.about":"எங்களைப் பற்றி","f.rete":"வலையமைப்பு & பங்குதாரர்கள்","f.whatsapp":"WhatsApp சேனல்","f.advertising":"விளம்பரம்","f.contact":"தொடர்பு","f.account":"கணக்கு","f.register":"பதிவு செய்ய","f.subscriptions":"சந்தாக்கள்","f.copy":"© 2026 Easy Italia Hub. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.","f.privacy":"தனியுரிமைக் கொள்கை","f.cookie":"குக்கீ கொள்கை","f.terms":"சேவை விதிமுறைகள்","f.legal":"சட்டக் குறிப்பு" }
   };
   const LANG_META={it:{flag:"🇮🇹",code:"IT"},en:{flag:"🇬🇧",code:"EN"},si:{flag:"🇱🇰",code:"SI"},ta:{flag:"🇱🇰",code:"TA"}};
   let lang=(function(){try{return localStorage.getItem('eih-lang')}catch(e){return null}})()||'it';
@@ -49,7 +49,7 @@
       '<div class="nav-collapse" id="nav-collapse">'+
         '<ul class="nav-links">'+
           navLink('guide','/guide','nav.guide','Guide',[['/guide','','Guide burocratiche'],['/moduli','m.templates','Moduli e Lettere'],['/guida-conti','m.openaccount','Aprire un Conto'],['/assegno-unico','m.assegno','Calcol. Assegno Unico'],['/diritti-inps','m.inps','Verifica Diritti INPS'],['/riconoscimento-titoli','m.titles','Riconosc. Titoli'],['/dizionario-medico','m.medical','Dizionario Medico']])+
-          navLink('community','/community','nav.community','Community',[['/community','nav.community','Community'],['/corsi','m.languages','Corsi di Lingue'],['/esame','m.esame','Esame & Badge'],['/opportunita','m.opportunities','Opportunità'],['/chi-siamo','f.about','Chi siamo']])+
+          navLink('community','/community','nav.community','Community',[['/community','nav.community','Community'],['/corsi','m.languages','Corsi di Lingue'],['/esame','m.esame','Esame & Badge'],['/opportunita','m.opportunities','Opportunità'],['/rete','f.rete','Rete & Affiliazioni'],['/chi-siamo','f.about','Chi siamo']])+
           navLink('percorso','/percorso','nav.journey','Il Mio Percorso',[['/percorso','nav.journey','Il Mio Percorso'],['/dashboard','m.dashboard','La mia Dashboard'],['/permesso-tracker','m.tracker','Tracker Permesso'],['/cv-builder','m.cvbuilder','CV Builder'],['/documenti','m.docs','Archivio Documenti']])+
           navLink('news','/news','nav.news','News',[['/news','','Tutte le news'],['/news?cat=leggi','','Leggi e decreti'],['/news?cat=scadenze','','Scadenze'],['/news?cat=opportunita','','Opportunità'],['/news?cat=lavoro','','Lavoro'],['/news?cat=casa','','Casa']])+
           navLink('voli','/voli','nav.voli','Voli',[['/voli','m.flights','Voli Sri Lanka'],['/cargo','m.cargo','Spedizioni Cargo'],['/travel-sri-lanka','','Travel Hub Sri Lanka'],['/money-transfer','','Money Transfer']])+
@@ -101,6 +101,7 @@
             '<p class="nav-m-head" data-i18n="f.company">Azienda</p>'+
             '<ul>'+
               '<li><a href="/chi-siamo" data-i18n="f.about">Chi siamo</a></li>'+
+              '<li><a href="/rete" data-i18n="f.rete">Rete &amp; Affiliazioni</a></li>'+
               '<li><a href="/news" data-i18n="nav.news">News</a></li>'+
               '<li><a href="/contatti" data-i18n="f.advertising">Pubblicità</a></li>'+
               '<li><a href="/contatti" data-i18n="f.contact">Contatti</a></li>'+
@@ -121,11 +122,11 @@
   }
   function footHTML(){
     return '<footer><div class="footer-inner">'+
-      '<div class="footer-brand"><a href="/" style="text-decoration:none;display:inline-block"><img src="/assets/img/logo-symbol.jpg" alt="" style="height:80px;width:auto;display:block;margin-bottom:6px"><span style="display:block;font-family:\'Clash Grotesk\',\'Arial Black\',Impact,sans-serif;font-size:13px;font-weight:900;color:#1a2744;letter-spacing:3px">EASY ITALIA HUB</span><span style="display:block;font-size:9px;color:#4a5a72;letter-spacing:5px;margin-top:3px">GUIDES · AI · COMMUNITY</span></a><p class="footer-tag" data-i18n="f.tag"></p></div>'+
+      '<div class="footer-brand"><a href="/" style="text-decoration:none;display:inline-block"><img src="/assets/img/logo-symbol.jpg" alt="" style="height:80px;width:auto;display:block;margin-bottom:6px"><span style="display:block;font-family:\'Clash Grotesk\',\'Arial Black\',Impact,sans-serif;font-size:13px;font-weight:900;color:#1a2744;letter-spacing:3px">EASY ITALIA HUB</span><span style="display:block;font-size:9px;color:#4a5a72;letter-spacing:5px;margin-top:3px">GUIDES · AI · COMMUNITY</span></a><p class="footer-tag" data-i18n="f.tag"></p><a data-eih-wa class="footer-wa" style="display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:9px 15px;border-radius:99px;background:#25D366;color:#08351c;font-weight:700;font-size:13px;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.13c-.24.68-1.42 1.32-1.95 1.36-.5.05-.97.24-3.28-.68-2.77-1.09-4.55-3.9-4.69-4.08-.14-.19-1.13-1.5-1.13-2.86 0-1.36.71-2.03.97-2.31.24-.26.53-.32.71-.32.18 0 .36 0 .51.01.16.01.39-.06.6.46.24.55.82 1.91.89 2.05.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.37-.42.49-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.19-.21.71-.83.9-1.11.19-.28.37-.23.62-.14.26.09 1.64.77 1.92.91.28.14.47.21.53.32.07.12.07.66-.17 1.34Z"/></svg><span data-i18n="f.whatsapp">Canale WhatsApp</span></a></div>'+
       '<div class="footer-col"><h4 data-i18n="f.product">Prodotto</h4><ul>'+
         '<li><a href="/guide" data-i18n="nav.guide">Guide</a></li><li><a href="/percorso" data-i18n="f.aiAssistant">Assistente AI</a></li><li><a href="/community" data-i18n="nav.community">Community</a></li><li><a href="/corsi" data-i18n="m.languages">Corsi di Lingue</a></li><li><a href="/opportunita" data-i18n="m.opportunities">Opportunità</a></li><li><a href="/money-transfer">Money Transfer</a></li><li><a href="/cargo" data-i18n="m.cargo">Spedizioni Cargo</a></li><li><a href="/voli" data-i18n="m.flights">Voli Sri Lanka</a></li><li><a href="/travel-sri-lanka">Travel Hub Sri Lanka</a></li><li><a href="/moduli" data-i18n="m.templates">Moduli e Lettere</a></li><li><a href="/guida-conti" data-i18n="m.openaccount">Aprire un Conto</a></li><li><a href="/assegno-unico" data-i18n="m.assegno">Calcolatore Assegno Unico</a></li><li><a href="/diritti-inps" data-i18n="m.inps">Verifica Diritti INPS</a></li><li><a href="/riconoscimento-titoli" data-i18n="m.titles">Riconoscimento Titoli</a></li><li><a href="/dizionario-medico" data-i18n="m.medical">Dizionario Medico IT-SI</a></li><li><a href="/mappa" data-i18n="f.mapServices">Mappa servizi</a></li></ul></div>'+
       '<div class="footer-col"><h4 data-i18n="f.company">Azienda</h4><ul>'+
-        '<li><a href="/chi-siamo" data-i18n="f.about">Chi siamo</a></li><li><a href="/news" data-i18n="nav.news">News</a></li><li><a href="/contatti" data-i18n="f.advertising">Pubblicità</a></li><li><a href="/contatti" data-i18n="f.contact">Contatti</a></li></ul></div>'+
+        '<li><a href="/chi-siamo" data-i18n="f.about">Chi siamo</a></li><li><a href="/rete" data-i18n="f.rete">Rete &amp; Affiliazioni</a></li><li><a href="/news" data-i18n="nav.news">News</a></li><li><a href="/contatti" data-i18n="f.advertising">Pubblicità</a></li><li><a href="/contatti" data-i18n="f.contact">Contatti</a></li></ul></div>'+
       '<div class="footer-col"><h4 data-i18n="f.account">Account</h4><ul>'+
         '<li><a href="/dashboard" data-i18n="m.dashboard">La mia Dashboard</a></li><li><a href="/permesso-tracker" data-i18n="m.tracker">Tracker Permesso</a></li><li><a href="/cv-builder" data-i18n="m.cvbuilder">CV Builder</a></li><li><a href="/documenti" data-i18n="m.docs">Archivio Documenti</a></li><li><a href="/percorso" data-i18n="nav.login">Accedi</a></li><li><a href="/percorso" data-i18n="f.register">Registrati</a></li></ul></div>'+
       '</div><div class="footer-bottom"><p class="footer-copy" data-i18n="f.copy"></p>'+
@@ -161,6 +162,18 @@
   }
   const footHost=document.getElementById('site-footer'); if(footHost)footHost.innerHTML=footHTML();
 
+  // WhatsApp: link unico per tutto il sito. Imposta window.EIH_WHATSAPP_URL
+  // con il link reale del canale (es. https://whatsapp.com/channel/XXXX) per
+  // attivarlo ovunque; finché non è impostato, i pulsanti rimandano ai Contatti.
+  (function(){
+    var WA=(window.EIH_WHATSAPP_URL||'').trim()||'/contatti?motivo=whatsapp';
+    var ext=/^https?:/i.test(WA);
+    document.querySelectorAll('[data-eih-wa]').forEach(function(a){
+      a.setAttribute('href',WA);
+      if(ext){a.setAttribute('target','_blank');a.setAttribute('rel','noopener noreferrer');}
+    });
+  })();
+
   // stato auth nella nav (Accedi/Registrati → Dashboard/Esci se loggato)
   if(!window.__eihNavAuth&&!document.querySelector('script[src*="eih-navauth"]')){
     var _na=document.createElement('script');_na.src='/assets/eih-navauth.js';_na.defer=true;document.body.appendChild(_na);}
@@ -175,6 +188,7 @@
     'mappa':[['Mappa Servizi','/mappa','f.mapServices']],
     'contatti':[['Contatti','/contatti','nav.contact']],
     'chi-siamo':[['Chi Siamo','/chi-siamo','f.about']],
+    'rete':[['Rete & Affiliazioni','/rete','f.rete']],
     'dashboard':[['Dashboard','/dashboard','m.dashboard']],
     'documenti':[['Archivio Documenti','/documenti','m.docs']],
     'permesso-tracker':[['Tracker Permesso','/permesso-tracker','m.tracker']],
