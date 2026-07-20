@@ -2284,6 +2284,61 @@ footer{
 <a href="#main-content" class="skip-link">Salta al contenuto</a>
 
 <!-- ── Beta / maintenance gate (prima della home, ricordato via localStorage) ── -->
+<!-- ─── INTRO (una sola volta per dispositivo, dopo il gate) ─── -->
+<div id="eih-intro" aria-hidden="true">
+  <video id="eih-intro-vid" muted playsinline preload="auto" poster="/assets/img/eih-intro-poster.jpg">
+    <source src="/assets/eih-intro.mp4" type="video/mp4"/>
+  </video>
+  <button type="button" id="eih-intro-skip">Salta ›</button>
+</div>
+<style>
+#eih-intro{position:fixed;inset:0;z-index:99999;background:#0e0b09;display:none;align-items:center;justify-content:center;opacity:1;transition:opacity .6s ease}
+#eih-intro.on{display:flex}
+#eih-intro.fade{opacity:0;pointer-events:none}
+#eih-intro video{width:100%;height:100%;object-fit:cover}
+#eih-intro-skip{position:absolute;bottom:24px;right:24px;padding:.55rem 1.15rem;border:1px solid rgba(255,255,255,.4);background:rgba(0,0,0,.4);color:#fff;border-radius:999px;font-family:'Satoshi',system-ui,sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:background .2s}
+#eih-intro-skip:hover{background:rgba(0,0,0,.65)}
+#eih-intro-skip:focus-visible{outline:2px solid #f0e7d6;outline-offset:2px}
+</style>
+<script>
+(function(){
+  var KEY='eih-intro-seen';
+  function seen(){try{return localStorage.getItem(KEY)==='1';}catch(e){return true;}}
+  function mark(){try{localStorage.setItem(KEY,'1');}catch(e){}}
+  var reduce=false;try{reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;}catch(e){}
+  window.EIHIntro={play:function(done){
+    done=typeof done==='function'?done:function(){};
+    if(seen()||reduce){mark();done();return;}
+    var ov=document.getElementById('eih-intro'),vid=document.getElementById('eih-intro-vid'),skip=document.getElementById('eih-intro-skip');
+    if(!ov||!vid){mark();done();return;}
+    var lang='it';try{lang=localStorage.getItem('eih-lang')||'it';}catch(e){}
+    var SK={it:'Salta ›',en:'Skip ›',si:'මඟ හරින්න ›',ta:'தவிர் ›'};
+    if(skip)skip.textContent=SK[lang]||SK.it;
+    var htmlEl=document.documentElement;htmlEl.style.overflow='hidden';
+    ov.classList.add('on');ov.setAttribute('aria-hidden','false');
+    var finished=false,started=false,cap;
+    function finish(){
+      if(finished)return;finished=true;mark();clearTimeout(watch);clearTimeout(cap);
+      try{vid.pause();}catch(e){}
+      ov.classList.add('fade');
+      setTimeout(function(){ov.classList.remove('on');ov.setAttribute('aria-hidden','true');htmlEl.style.overflow='';if(ov.parentNode)ov.parentNode.removeChild(ov);},650);
+      done();
+    }
+    // Watchdog: se il video non parte (decode/rete), salta subito invece di bloccare.
+    var watch=setTimeout(function(){if(!started)finish();},4500);
+    vid.addEventListener('playing',function(){started=true;clearTimeout(watch);
+      var d=isFinite(vid.duration)&&vid.duration>0?vid.duration:15;
+      cap=setTimeout(finish,d*1000+2500); // backup all'evento 'ended'
+    });
+    vid.addEventListener('ended',finish);
+    vid.addEventListener('error',finish);
+    if(skip)skip.addEventListener('click',finish);
+    var pr=vid.play();
+    if(pr&&pr.catch)pr.catch(function(){finish();});
+  }};
+})();
+</script>
+
 <div id="beta-gate" role="dialog" aria-modal="true" aria-labelledby="bg-title">
   <div class="bg-card">
     <div class="bg-langs" role="group" aria-label="Lingua / Language">
@@ -2339,13 +2394,14 @@ footer{
   render(lang);
   for(var i=0;i<btns.length;i++)btns[i].addEventListener('click',function(){
     var l=this.getAttribute('data-l');try{localStorage.setItem('eih-lang',l);}catch(e){}render(l);});
-  try{if(localStorage.getItem('eih-beta-ack')==='1'){g.parentNode.removeChild(g);return;}}catch(e){}
+  try{if(localStorage.getItem('eih-beta-ack')==='1'){g.parentNode.removeChild(g);if(window.EIHIntro)window.EIHIntro.play();return;}}catch(e){}
   var htmlEl=document.documentElement;htmlEl.style.overflow='hidden';
   try{enter.focus();}catch(e){}
   enter.addEventListener('click',function(){
     try{localStorage.setItem('eih-beta-ack','1');}catch(e){}
     g.classList.add('bg-hide');htmlEl.style.overflow='';
     setTimeout(function(){if(g.parentNode)g.parentNode.removeChild(g);},450);
+    if(window.EIHIntro)window.EIHIntro.play();
   });
 })();
 </script>
