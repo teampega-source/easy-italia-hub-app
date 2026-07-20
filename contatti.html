@@ -132,18 +132,33 @@
           btn.disabled=false;btn.classList.remove('btn-loading');
         });
 
-        // Prefill dal CTA "Voglio diventare partner" (/contatti?motivo=partner)
+        // Prefill dai CTA (/contatti?motivo=partner|rete|whatsapp)
         try{
-          if(new URLSearchParams(location.search).get('motivo')==='partner'){
-            var L=(function(){try{return localStorage.getItem('eih-lang')||'it';}catch(e){return 'it';}})();
-            var P={
+          var motivo=new URLSearchParams(location.search).get('motivo');
+          var L=(function(){try{return localStorage.getItem('eih-lang')||'it';}catch(e){return 'it';}})();
+          var PRE={
+            partner:{
               it:"Salve, sono un professionista (indicare: avvocato / consulente fiscale / interprete / mediatore culturale / CAF-patronato / consolato) e vorrei aderire al programma partner. Ambito e città:\n",
               en:"Hello, I'm a professional (specify: lawyer / tax advisor / interpreter / cultural mediator / CAF-patronato / consulate) and I'd like to join the partner program. Field and city:\n",
               si:"ආයුබෝවන්, මම වෘත්තිකයෙක් (නීතිඥ / බදු උපදේශක / පරිවර්තක / සංස්කෘතික මැදිහත්කරු / CAF / කොන්සල්) වෙමි. හවුල්කාර වැඩසටහනට එක්වීමට කැමතියි. ක්ෂේත්‍රය සහ නගරය:\n",
               ta:"வணக்கம், நான் ஒரு தொழில் வல்லுநர் (வழக்கறிஞர் / வரி ஆலோசகர் / மொழிபெயர்ப்பாளர் / கலாச்சார மத்தியஸ்தர் / CAF / தூதரகம்). கூட்டாளர் திட்டத்தில் சேர விரும்புகிறேன். துறை மற்றும் நகரம்:\n"
-            };
+            },
+            rete:{
+              it:"Salve, rappresento un'associazione / ente / luogo di culto e vorremmo entrare nella rete di Easy Italia Hub. Nome della realtà, città e come collaboriamo con la comunità:\n",
+              en:"Hello, I represent an association / body / place of worship and we'd like to join the Easy Italia Hub network. Name, city and how we work with the community:\n",
+              si:"ආයුබෝවන්, මම සංගමයක් / ආයතනයක් / පූජනීය ස්ථානයක් නියෝජනය කරමි. Easy Italia Hub ජාලයට එක්වීමට කැමතියි. නම, නගරය සහ ප්‍රජාව සමඟ වැඩ කරන ආකාරය:\n",
+              ta:"வணக்கம், நான் ஒரு சங்கம் / அமைப்பு / வழிபாட்டுத் தலத்தை பிரதிநிதித்துவப்படுத்துகிறேன். Easy Italia Hub வலையமைப்பில் சேர விரும்புகிறோம். பெயர், நகரம் மற்றும் சமூகத்துடன் இணைந்து செயல்படும் விதம்:\n"
+            },
+            whatsapp:{
+              it:"Salve, vorrei ricevere gli aggiornamenti sul canale WhatsApp della community. Il mio numero (con prefisso):\n",
+              en:"Hello, I'd like to receive updates on the community WhatsApp channel. My number (with country code):\n",
+              si:"ආයුබෝවන්, ප්‍රජා WhatsApp නාලිකාවෙන් යාවත්කාලීන ලබාගැනීමට කැමතියි. මගේ අංකය (රට කේතය සමඟ):\n",
+              ta:"வணக்கம், சமூக WhatsApp சேனலின் புதுப்பிப்புகளைப் பெற விரும்புகிறேன். எனது எண் (நாட்டுக் குறியீட்டுடன்):\n"
+            }
+          };
+          if(motivo&&PRE[motivo]){
             var msg=document.getElementById('c-msg');
-            if(msg&&!msg.value){ msg.value=P[L]||P.it; msg.focus(); msg.setSelectionRange(msg.value.length,msg.value.length); }
+            if(msg&&!msg.value){ msg.value=PRE[motivo][L]||PRE[motivo].it; msg.focus(); msg.setSelectionRange(msg.value.length,msg.value.length); }
           }
         }catch(e){}
       })();
