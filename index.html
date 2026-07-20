@@ -3885,7 +3885,7 @@ function voteRoadmap(btn,key){
       <h2 id="wa-heading" style="margin:0 0 6px;color:#fff" data-i18n="wa.title">Uniti anche su WhatsApp</h2>
       <p style="margin:0;color:#c9f5dc;max-width:56ch;font-size:.98rem" data-i18n="wa.sub">Scadenze, novità e opportunità per la comunità srilankese, direttamente dove passi il tuo tempo. Niente spam, disdici quando vuoi.</p>
     </div>
-    <a data-eih-wa href="/contatti?motivo=whatsapp" style="display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:99px;background:#fff;color:#08351c;font-weight:700;text-decoration:none;white-space:nowrap">
+    <a data-eih-wa href="https://whatsapp.com/channel/0029VbDGIikE50Uc7ehitN38" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:99px;background:#fff;color:#08351c;font-weight:700;text-decoration:none;white-space:nowrap">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.13c-.24.68-1.42 1.32-1.95 1.36-.5.05-.97.24-3.28-.68-2.77-1.09-4.55-3.9-4.69-4.08-.14-.19-1.13-1.5-1.13-2.86 0-1.36.71-2.03.97-2.31.24-.26.53-.32.71-.32.18 0 .36 0 .51.01.16.01.39-.06.6.46.24.55.82 1.91.89 2.05.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.37-.42.49-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.19-.21.71-.83.9-1.11.19-.28.37-.23.62-.14.26.09 1.64.77 1.92.91.28.14.47.21.53.32.07.12.07.66-.17 1.34Z"/></svg>
       <span data-i18n="wa.btn">Unisciti al canale</span>
     </a>
@@ -5083,6 +5083,6 @@ function sendSug(el){
 </script>
 <!-- WhatsApp: link unico. Imposta window.EIH_WHATSAPP_URL col link reale del
      canale per attivarlo; senza, il pulsante rimanda ai Contatti. -->
-<script>(function(){var WA=(window.EIH_WHATSAPP_URL||'').trim();if(!WA)return;document.querySelectorAll('[data-eih-wa]').forEach(function(a){a.setAttribute('href',WA);a.setAttribute('target','_blank');a.setAttribute('rel','noopener noreferrer');});})();</script>
+<script>(function(){var WA=(window.EIH_WHATSAPP_URL||'').trim()||'https://whatsapp.com/channel/0029VbDGIikE50Uc7ehitN38';document.querySelectorAll('[data-eih-wa]').forEach(function(a){a.setAttribute('href',WA);a.setAttribute('target','_blank');a.setAttribute('rel','noopener noreferrer');});})();</script>
 </body>
 </html>

@@ -166,7 +166,7 @@
   // con il link reale del canale (es. https://whatsapp.com/channel/XXXX) per
   // attivarlo ovunque; finché non è impostato, i pulsanti rimandano ai Contatti.
   (function(){
-    var WA=(window.EIH_WHATSAPP_URL||'').trim()||'/contatti?motivo=whatsapp';
+    var WA=(window.EIH_WHATSAPP_URL||'').trim()||'https://whatsapp.com/channel/0029VbDGIikE50Uc7ehitN38';
     var ext=/^https?:/i.test(WA);
     document.querySelectorAll('[data-eih-wa]').forEach(function(a){
       a.setAttribute('href',WA);
