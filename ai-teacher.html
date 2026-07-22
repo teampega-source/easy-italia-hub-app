@@ -216,7 +216,7 @@ function send() {
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages: messages })
+    body: JSON.stringify({ task: 'tool', messages: messages })
   })
   .then(function(r){ return r.json(); })
   .then(function(data){
