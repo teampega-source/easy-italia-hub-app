@@ -259,7 +259,7 @@ function openLesson(topic) {
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] })
+    body: JSON.stringify({ task: 'tool', messages: [{ role: 'user', content: prompt }] })
   })
   .then(function(r){ return r.json(); })
   .then(function(data){
@@ -310,7 +310,7 @@ function sendMiniChat() {
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] })
+    body: JSON.stringify({ task: 'tool', messages: [{ role: 'user', content: prompt }] })
   })
   .then(function(r){ return r.json(); })
   .then(function(data){
