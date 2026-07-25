@@ -154,45 +154,176 @@
 
   <section class="crs-section reveal" style="margin-top:var(--sp-6)" aria-labelledby="ml-h">
     <div class="crs-head"><h2 id="ml-h">Corsi gratuiti Easy Italia Hub</h2></div>
-    <p class="muted">Percorsi video <strong>gratuiti</strong> curati da noi per ogni categoria, con lezioni da fonti pubbliche aperte. Nessun costo, nessuna iscrizione a piattaforme esterne.</p>
+    <p class="muted">Un <strong>corso completo e gratuito</strong> per ogni categoria, con lezioni vere da leggere qui sul sito. Nessun costo, nessuna iscrizione. Segna le lezioni completate e approfondisci con i video consigliati.</p>
     <div id="ml-list" style="margin-top:var(--sp-3)"></div>
   </section>
 </main>
 
 <script>
 (function(){
-  var CATS = [
-    { cat:"Programmazione", courses:[
-      { t:"Python da zero", q:"corso python italiano completo principianti" },
-      { t:"Web Design con HTML e CSS", q:"corso html css italiano completo" } ] },
-    { cat:"Lingue", courses:[
-      { t:"Inglese parlato", q:"corso inglese parlato gratis principianti" },
-      { t:"Spagnolo per principianti", q:"corso spagnolo principianti gratis" } ] },
-    { cat:"Ufficio & Business", courses:[
-      { t:"Microsoft Excel", q:"corso excel italiano completo gratis" },
-      { t:"Microsoft Word", q:"corso word italiano completo gratis" } ] },
-    { cat:"Design & Grafica", courses:[
-      { t:"Adobe Photoshop", q:"corso photoshop italiano principianti gratis" },
-      { t:"Logo Design", q:"corso logo design italiano gratis" } ] },
-    { cat:"Marketing Digitale", courses:[
-      { t:"Digital Marketing base", q:"corso digital marketing italiano gratis principianti" },
-      { t:"Content Marketing", q:"corso content marketing italiano gratis" } ] },
-    { cat:"Cybersecurity", courses:[
-      { t:"Introduzione alla Cyber Security", q:"corso cyber security italiano principianti gratis" },
-      { t:"Ethical Hacking base", q:"corso ethical hacking italiano principianti gratis" } ] }
+  var COURSES = [
+    { cat:"Programmazione", title:"Python da zero", yt:"corso python italiano completo principianti", lessons:[
+      { id:'py1', t:"Cos'è Python e primo programma", body:
+        "<p>Python è un linguaggio semplice e leggibile, usato per web, dati e automazione. Si scrive in file <b>.py</b> ed è eseguito da un interprete.</p>"+
+        "<p>Il tuo primo programma:</p><ul><li><code>print(\"Ciao mondo\")</code> — stampa un testo a schermo</li></ul>"+
+        "<p>Puoi provarlo online gratis su <b>replit.com</b> o installando Python da <b>python.org</b>.</p>" },
+      { id:'py2', t:"Variabili e tipi di dato", body:
+        "<p>Una variabile è un contenitore con un nome.</p>"+
+        "<table><tr><td><code>nome = \"Anna\"</code></td><td>testo (str)</td></tr>"+
+        "<tr><td><code>eta = 30</code></td><td>numero intero (int)</td></tr>"+
+        "<tr><td><code>prezzo = 9.99</code></td><td>numero decimale (float)</td></tr>"+
+        "<tr><td><code>attivo = True</code></td><td>vero/falso (bool)</td></tr></table>"+
+        "<p>Leggere input: <code>nome = input(\"Come ti chiami? \")</code></p>" },
+      { id:'py3', t:"Condizioni e cicli", body:
+        "<p>Decidere con <b>if</b>:</p><ul><li><code>if eta &gt;= 18:</code> → <code>print(\"Maggiorenne\")</code></li>"+
+        "<li><code>else:</code> → <code>print(\"Minorenne\")</code></li></ul>"+
+        "<p>Ripetere con <b>for</b>: <code>for i in range(3): print(i)</code> stampa 0,1,2.</p>"+
+        "<p>Ripetere con <b>while</b>: continua finché la condizione è vera.</p>" },
+      { id:'py4', t:"Funzioni e liste", body:
+        "<p>Una <b>lista</b> raccoglie più valori: <code>frutti = [\"mela\",\"pera\"]</code>; il primo è <code>frutti[0]</code>.</p>"+
+        "<p>Una <b>funzione</b> raggruppa codice riutilizzabile:</p>"+
+        "<ul><li><code>def saluta(nome):</code></li><li>&nbsp;&nbsp;<code>return \"Ciao \" + nome</code></li></ul>"+
+        "<p>La richiami con <code>saluta(\"Anna\")</code>.</p>" }
+    ]},
+    { cat:"Lingue", title:"Inglese per il lavoro", yt:"corso inglese per lavoro colloquio principianti", lessons:[
+      { id:'en1', t:"Presentarsi a un colloquio", body:
+        "<table><tr><td>My name is… and I'm from…</td><td>Mi chiamo… e vengo da…</td></tr>"+
+        "<tr><td>I have experience in…</td><td>Ho esperienza in…</td></tr>"+
+        "<tr><td>I'm a hard worker and reliable</td><td>Sono un gran lavoratore e affidabile</td></tr>"+
+        "<tr><td>I'm looking for a job as…</td><td>Cerco un lavoro come…</td></tr></table>" },
+      { id:'en2', t:"Frasi utili sul posto di lavoro", body:
+        "<ul><li>Can you help me, please? — Puoi aiutarmi, per favore?</li>"+
+        "<li>I don't understand, can you repeat? — Non capisco, puoi ripetere?</li>"+
+        "<li>What time do I start? — A che ora inizio?</li>"+
+        "<li>Where is the changing room? — Dov'è lo spogliatoio?</li>"+
+        "<li>I finished the task — Ho finito il compito</li></ul>" },
+      { id:'en3', t:"Email e telefono professionali", body:
+        "<p><b>Email</b>: inizia con <i>Dear Sir/Madam,</i> e chiudi con <i>Best regards, [nome]</i>.</p>"+
+        "<ul><li>I'm writing to apply for… — Scrivo per candidarmi a…</li>"+
+        "<li>Please find my CV attached — In allegato il mio CV</li></ul>"+
+        "<p><b>Telefono</b>: <i>Hello, this is [nome] speaking</i> — Pronto, sono [nome].</p>" }
+    ]},
+    { cat:"Ufficio & Business", title:"Microsoft Excel base", yt:"corso excel italiano completo gratis principianti", lessons:[
+      { id:'xl1', t:"Celle, righe e colonne", body:
+        "<p>Un foglio è una griglia. Ogni <b>cella</b> ha un indirizzo dato da colonna+riga: <b>A1</b>, <b>B2</b>…</p>"+
+        "<p>Scrivi in una cella e premi Invio. Trascina il quadratino in basso a destra per copiare o creare serie (1, 2, 3…).</p>" },
+      { id:'xl2', t:"Le prime formule", body:
+        "<p>Ogni formula inizia con <b>=</b>.</p>"+
+        "<table><tr><td><code>=A1+B1</code></td><td>somma due celle</td></tr>"+
+        "<tr><td><code>=SOMMA(A1:A10)</code></td><td>somma un intervallo</td></tr>"+
+        "<tr><td><code>=MEDIA(A1:A10)</code></td><td>calcola la media</td></tr>"+
+        "<tr><td><code>=MAX(A1:A10)</code></td><td>valore più alto</td></tr></table>" },
+      { id:'xl3', t:"Formattare e ordinare", body:
+        "<ul><li>Grassetto, colori e bordi dalla barra in alto (scheda <i>Home</i>)</li>"+
+        "<li>Formato valuta/percentuale per numeri e prezzi</li>"+
+        "<li><i>Dati → Ordina</i> per mettere in ordine alfabetico o numerico</li>"+
+        "<li><i>Dati → Filtro</i> per mostrare solo alcune righe</li></ul>" },
+      { id:'xl4', t:"Creare un grafico", body:
+        "<p>Seleziona i dati (es. mesi e vendite), poi <i>Inserisci → Grafico</i> e scegli colonne o torta.</p>"+
+        "<p>Il grafico si aggiorna da solo quando cambi i numeri. Puoi usarlo gratis anche con Google Fogli o LibreOffice Calc.</p>" }
+    ]},
+    { cat:"Design & Grafica", title:"Basi del design grafico", yt:"corso design grafico italiano principianti gratis", lessons:[
+      { id:'dg1', t:"I 4 principi fondamentali", body:
+        "<ul><li><b>Allineamento</b>: ogni elemento segue una linea, niente a caso</li>"+
+        "<li><b>Contrasto</b>: differenze nette (grande/piccolo, chiaro/scuro) guidano l'occhio</li>"+
+        "<li><b>Ripetizione</b>: stessi stili per dare unità</li>"+
+        "<li><b>Prossimità</b>: raggruppa ciò che è collegato</li></ul>" },
+      { id:'dg2', t:"Il colore", body:
+        "<p>Usa <b>2-3 colori</b>, non di più. Un colore principale, uno di sfondo neutro e uno per gli accenti.</p>"+
+        "<p>Colori opposti sulla ruota (es. blu/arancione) creano contrasto; colori vicini danno armonia. Strumento gratuito: <b>coolors.co</b>.</p>" },
+      { id:'dg3', t:"La tipografia", body:
+        "<ul><li>Massimo 2 font: uno per i titoli, uno per il testo</li>"+
+        "<li>Testo lungo: font semplici e leggibili</li>"+
+        "<li>Cura la dimensione e lo spazio tra le righe</li></ul>"+
+        "<p>Font gratuiti professionali: <b>Google Fonts</b>.</p>" },
+      { id:'dg4', t:"Strumenti gratuiti", body:
+        "<ul><li><b>Canva</b>: template pronti per social, locandine, CV</li>"+
+        "<li><b>Photopea</b>: come Photoshop, gratis nel browser</li>"+
+        "<li><b>Unsplash</b> / <b>Pexels</b>: foto gratuite senza copyright</li></ul>" }
+    ]},
+    { cat:"Marketing Digitale", title:"Digital Marketing base", yt:"corso digital marketing italiano gratis principianti", lessons:[
+      { id:'mk1', t:"I canali principali", body:
+        "<ul><li><b>Sito/blog</b>: la tua casa online</li>"+
+        "<li><b>Social</b>: Instagram, Facebook, TikTok per farti conoscere</li>"+
+        "<li><b>Email</b>: per parlare a chi già ti segue</li>"+
+        "<li><b>Ricerca (SEO)</b>: farti trovare su Google</li></ul>" },
+      { id:'mk2', t:"SEO: farsi trovare su Google", body:
+        "<ul><li>Scegli le <b>parole chiave</b> che cercano i clienti</li>"+
+        "<li>Usale nel titolo e nei primi paragrafi</li>"+
+        "<li>Scrivi contenuti utili e originali</li>"+
+        "<li>Sito veloce e leggibile da telefono</li></ul>"+
+        "<p>Strumento gratis: <b>Google Search Console</b>.</p>" },
+      { id:'mk3', t:"Social media che funzionano", body:
+        "<ul><li>Pubblica con costanza, meglio poco ma regolare</li>"+
+        "<li>Rispondi ai commenti: crea community</li>"+
+        "<li>Racconta storie e mostra risultati reali</li>"+
+        "<li>Un invito all'azione chiaro (scrivimi, prenota…)</li></ul>" },
+      { id:'mk4', t:"Email marketing", body:
+        "<p>Raccogli le email con il permesso delle persone. Manda contenuti utili, non solo pubblicità.</p>"+
+        "<p>Oggetto breve e chiaro, un solo messaggio per email. Strumenti gratis fino a un certo numero di contatti: <b>Mailchimp</b>, <b>Brevo</b>.</p>" }
+    ]},
+    { cat:"Cybersecurity", title:"Sicurezza informatica di base", yt:"corso sicurezza informatica base italiano gratis", lessons:[
+      { id:'cs1', t:"Password sicure", body:
+        "<ul><li>Almeno <b>12 caratteri</b>, con lettere, numeri e simboli</li>"+
+        "<li>Una password <b>diversa</b> per ogni sito</li>"+
+        "<li>Usa un <b>password manager</b> gratuito (Bitwarden) per ricordarle</li>"+
+        "<li>Mai condividerle via messaggio o email</li></ul>" },
+      { id:'cs2', t:"Riconoscere il phishing", body:
+        "<p>Il phishing è una truffa che imita banche o corrieri per rubare dati.</p>"+
+        "<ul><li>Diffida di urgenze e minacce (\"account bloccato!\")</li>"+
+        "<li>Controlla l'indirizzo del mittente, spesso è strano</li>"+
+        "<li>Non cliccare link sospetti: vai al sito ufficiale a mano</li></ul>" },
+      { id:'cs3', t:"Aggiornamenti e 2FA", body:
+        "<ul><li>Installa sempre gli <b>aggiornamenti</b> di telefono e computer: chiudono le falle</li>"+
+        "<li>Attiva la <b>verifica in due passaggi (2FA)</b> su email e banca</li>"+
+        "<li>Così, anche con la password rubata, il ladro non entra</li></ul>" },
+      { id:'cs4', t:"Backup dei dati", body:
+        "<p>Un backup è una copia dei tuoi file. Ti salva da guasti, furti e virus (ransomware).</p>"+
+        "<ul><li>Regola 3-2-1: 3 copie, 2 supporti diversi, 1 fuori casa (cloud)</li>"+
+        "<li>Cloud gratuiti: Google Drive, OneDrive</li></ul>" }
+    ]}
   ];
+
   var el = document.getElementById('ml-list');
   if(!el) return;
-  el.innerHTML = CATS.map(function(c){
-    return '<h3 style="font-family:\'Clash Grotesk\',sans-serif;font-size:var(--text-base);color:var(--ink);margin:var(--sp-3) 0 .6rem">'+c.cat+'</h3>'+
-      '<div class="adv-grid">'+c.courses.map(function(l){
-        var u = 'https://www.youtube.com/results?search_query='+encodeURIComponent(l.q);
-        return '<a class="adv-card" href="'+u+'" target="_blank" rel="noopener" style="text-decoration:none">'+
-          '<span class="premium-flag" style="background:rgba(31,157,85,.12);color:var(--green);border-color:rgba(31,157,85,.28)">🎓 Gratis</span>'+
-          '<h3 style="font-size:var(--text-base)">'+l.t+'</h3>'+
-          '<p>Percorso video gratuito curato da Easy Italia Hub, da fonti pubbliche aperte.</p></a>';
-      }).join('')+'</div>';
-  }).join('');
+
+  var chev = '<svg class="chev" width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>';
+  var DONE_KEY = 'eih-ml-done';
+  function getDone(){ try{ return JSON.parse(localStorage.getItem(DONE_KEY)||'[]'); }catch(e){ return []; } }
+  function setDone(a){ try{ localStorage.setItem(DONE_KEY, JSON.stringify(a)); }catch(e){} }
+
+  function render(){
+    var done = getDone();
+    el.innerHTML = COURSES.map(function(c){
+      var d = c.lessons.filter(function(l){ return done.indexOf(l.id)>-1; }).length;
+      var yt = 'https://www.youtube.com/results?search_query='+encodeURIComponent(c.yt);
+      return '<div class="crs-section" style="margin-top:var(--sp-4)">'+
+        '<div class="crs-head">'+
+          '<h2 style="font-size:var(--text-lg)">'+c.title+' <span class="soon" style="background:var(--green-dim);color:var(--green);border-color:rgba(31,157,85,.28)">'+c.cat+'</span></h2>'+
+          '<span class="progress-tag">'+d+'/'+c.lessons.length+' lezioni completate</span>'+
+        '</div>'+
+        c.lessons.map(function(l){
+          var isDone = done.indexOf(l.id)>-1;
+          return '<details class="lesson" data-ml="'+l.id+'">'+
+            '<summary><span>'+l.t+'</span>'+(isDone?'<span class="lesson-done-badge">✓ Completata</span>':chev)+'</summary>'+
+            '<div class="lesson-body">'+l.body+
+              '<button type="button" class="lesson-mark" '+(isDone?'disabled':'')+'>'+(isDone?'✓ Completata':'Segna come completata')+'</button>'+
+            '</div></details>';
+        }).join('')+
+        '<p style="margin-top:.6rem"><a class="inline" href="'+yt+'" target="_blank" rel="noopener">▶ Approfondisci con video gratuiti su YouTube</a></p>'+
+      '</div>';
+    }).join('');
+
+    el.querySelectorAll('.lesson-mark').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var id = btn.closest('.lesson').getAttribute('data-ml');
+        var done = getDone();
+        if(done.indexOf(id)===-1){ done.push(id); setDone(done); render();
+          var again = document.querySelector('.lesson[data-ml="'+id+'"]'); if(again) again.open = true; }
+      });
+    });
+  }
+  render();
 })();
 </script>
 
