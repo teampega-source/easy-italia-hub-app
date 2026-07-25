@@ -153,8 +153,8 @@
   </section>
 
   <section class="crs-section reveal" style="margin-top:var(--sp-6)" aria-labelledby="ml-h">
-    <div class="crs-head"><h2 id="ml-h">Corsi gratuiti da Mindluster</h2></div>
-    <p class="muted">Corsi video <strong>gratuiti</strong> per ogni categoria, con certificato opzionale. Selezione curata da <a class="inline" href="https://www.mindluster.com" target="_blank" rel="noopener">Mindluster</a>.</p>
+    <div class="crs-head"><h2 id="ml-h">Corsi gratuiti Easy Italia Hub</h2></div>
+    <p class="muted">Percorsi video <strong>gratuiti</strong> curati da noi per ogni categoria, con lezioni da fonti pubbliche aperte. Nessun costo, nessuna iscrizione a piattaforme esterne.</p>
     <div id="ml-list" style="margin-top:var(--sp-3)"></div>
   </section>
 </main>
@@ -163,33 +163,34 @@
 (function(){
   var CATS = [
     { cat:"Programmazione", courses:[
-      { t:"Python programming language", u:"https://www.mindluster.com/certificate/40/Python-programming-language-video" },
-      { t:"Web Design con HTML e CSS", u:"https://www.mindluster.com/certificate/66/Web-Design-Using-HTML-CSS-video" } ] },
+      { t:"Python da zero", q:"corso python italiano completo principianti" },
+      { t:"Web Design con HTML e CSS", q:"corso html css italiano completo" } ] },
     { cat:"Lingue", courses:[
-      { t:"Learning English Speaking", u:"https://www.mindluster.com/certificate/656/Learning-English-Speaking-video" },
-      { t:"Spagnolo per principianti", u:"https://www.mindluster.com/certificate/164/Spanish-Lessons-for-Beginner-Learners-video" } ] },
+      { t:"Inglese parlato", q:"corso inglese parlato gratis principianti" },
+      { t:"Spagnolo per principianti", q:"corso spagnolo principianti gratis" } ] },
     { cat:"Ufficio & Business", courses:[
-      { t:"MS Excel", u:"https://www.mindluster.com/certificate/8687/MS-Excel-video" },
-      { t:"Microsoft Word", u:"https://www.mindluster.com/certificate/368/Microsoft-Word-video" } ] },
+      { t:"Microsoft Excel", q:"corso excel italiano completo gratis" },
+      { t:"Microsoft Word", q:"corso word italiano completo gratis" } ] },
     { cat:"Design & Grafica", courses:[
-      { t:"Adobe Photoshop", u:"https://www.mindluster.com/certificate/103/Adobe-Photoshop-video" },
-      { t:"Logo Design", u:"https://www.mindluster.com/certificate/98/Logo-Design-video" } ] },
+      { t:"Adobe Photoshop", q:"corso photoshop italiano principianti gratis" },
+      { t:"Logo Design", q:"corso logo design italiano gratis" } ] },
     { cat:"Marketing Digitale", courses:[
-      { t:"Digital Marketing per principianti", u:"https://www.mindluster.com/certificate/8786/Digital-Marketing-video" },
-      { t:"Content Marketing", u:"https://www.mindluster.com/certificate/154/Content-Marketing-video" } ] },
+      { t:"Digital Marketing base", q:"corso digital marketing italiano gratis principianti" },
+      { t:"Content Marketing", q:"corso content marketing italiano gratis" } ] },
     { cat:"Cybersecurity", courses:[
-      { t:"Ethical Hacking", u:"https://www.mindluster.com/certificate/4620/Ethical-Hacking-video" },
-      { t:"Introduzione alla Cyber Security", u:"https://www.mindluster.com/certificate/4619/Introduction-To-Cyber-Security-video" } ] }
+      { t:"Introduzione alla Cyber Security", q:"corso cyber security italiano principianti gratis" },
+      { t:"Ethical Hacking base", q:"corso ethical hacking italiano principianti gratis" } ] }
   ];
   var el = document.getElementById('ml-list');
   if(!el) return;
   el.innerHTML = CATS.map(function(c){
     return '<h3 style="font-family:\'Clash Grotesk\',sans-serif;font-size:var(--text-base);color:var(--ink);margin:var(--sp-3) 0 .6rem">'+c.cat+'</h3>'+
       '<div class="adv-grid">'+c.courses.map(function(l){
-        return '<a class="adv-card" href="'+l.u+'" target="_blank" rel="noopener" style="text-decoration:none">'+
+        var u = 'https://www.youtube.com/results?search_query='+encodeURIComponent(l.q);
+        return '<a class="adv-card" href="'+u+'" target="_blank" rel="noopener" style="text-decoration:none">'+
           '<span class="premium-flag" style="background:rgba(31,157,85,.12);color:var(--green);border-color:rgba(31,157,85,.28)">🎓 Gratis</span>'+
           '<h3 style="font-size:var(--text-base)">'+l.t+'</h3>'+
-          '<p>Corso video gratuito su Mindluster. Certificato PDF opzionale.</p></a>';
+          '<p>Percorso video gratuito curato da Easy Italia Hub, da fonti pubbliche aperte.</p></a>';
       }).join('')+'</div>';
   }).join('');
 })();
