@@ -164,6 +164,17 @@
       return EIH_AUTH.signIn(email, pass).then(handle);
     }).catch(function(){ err.textContent='Errore imprevisto. Riprova.'; restore(); });
 
+    // Benvenuto all'utente e avviso all'admin: l'SMTP integrato di Supabase è
+    // limitato, queste due partono da Resend. Best-effort, non blocca la UI.
+    function notifySignup(){
+      if(mode!=='signup')return;
+      var lang='it';try{lang=localStorage.getItem('eih-lang')||'it';}catch(_){}
+      try{
+        fetch('/api/email',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({type:'signup',email:email,name:name,lang:lang})}).catch(function(){});
+      }catch(_){}
+    }
+
     function handle(res){
       if(res && res.error){
         if(EIH_AUTH.resetCaptcha) EIH_AUTH.resetCaptcha();
@@ -173,6 +184,7 @@
           : 'Email o password non corretti.';
         restore(); return;
       }
+      notifySignup();
       if(res && !res.demo && res.user && !res.session){
         document.querySelector('.reg-main').innerHTML =
           '<div style="text-align:center;padding:2rem 0"><div style="font-size:2.5rem;margin-bottom:1rem">📧</div>'+

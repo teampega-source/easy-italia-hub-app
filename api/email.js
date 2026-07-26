@@ -21,7 +21,7 @@ module.exports = async function handler(req, res) {
   try { body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {}); }
   catch (e) { return res.status(400).json({ error: 'JSON non valido.' }); }
 
-  const type = ['newsletter', 'remind'].includes(body.type) ? body.type : 'contact';
+  const type = ['newsletter', 'remind', 'signup'].includes(body.type) ? body.type : 'contact';
   const ip = clientIp(req);
   const rlName = type === 'remind' ? 'email-remind' : 'email';
   const rlMax  = type === 'remind' ? 2 : 8;
@@ -30,6 +30,7 @@ module.exports = async function handler(req, res) {
   }
 
   if (type === 'remind') return handleRemind(req, res, body);
+  if (type === 'signup') return handleSignup(req, res, body);
   return handleContact(req, res, body, type);
 };
 
@@ -96,6 +97,77 @@ async function handleContact(req, res, body, type) {
   }
 
   return res.status(200).json({ ok: true });
+}
+
+// ── SIGNUP ──────────────────────────────────────────────────────────────────
+// Supabase invia una propria email di conferma, ma il suo SMTP integrato è
+// fortemente limitato e spesso non recapita: benvenuto e avviso all'admin
+// passano quindi da Resend, come il resto delle comunicazioni del sito.
+
+async function handleSignup(req, res, body) {
+  const RESEND_KEY = process.env.RESEND_API_KEY;
+  const ADMIN = process.env.CONTACT_TO_EMAIL || 'info@easyitaliahub.it';
+
+  const email = String(body.email || '').trim().slice(0, 254);
+  const name  = String(body.name  || '').trim().slice(0, MAX_NAME);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    return res.status(400).json({ error: 'Email non valida.' });
+
+  if (!RESEND_KEY) {
+    console.error('[email/signup] RESEND_API_KEY mancante');
+    return res.status(200).json({ ok: false, reason: 'no_key' });
+  }
+
+  const S = signupStrings(body.lang);
+  const greeting = name ? `${S.hi} ${escHtml(name)},` : `${S.hi},`;
+  const userHtml = wrap(S.title, `
+    <p style="margin:0 0 16px;font-size:15px;color:#e8dcc8;font-weight:600;">${greeting}</p>
+    <p style="margin:0 0 22px;font-size:14px;color:#c9bba0;line-height:1.7;">${escHtml(S.body)}</p>
+    <div style="text-align:center;margin:28px 0;">
+      <a href="https://easyitaliahub.it/percorso" style="display:inline-block;background:#c8a96e;color:#0e0b06;text-decoration:none;font-weight:700;font-size:14px;padding:13px 30px;border-radius:99px;">${escHtml(S.cta)} &rarr;</a>
+    </div>
+    <p style="margin:24px 0 0;font-size:12px;color:#7d7058;">${escHtml(S.note)}</p>`);
+
+  const adminHtml = wrap('Nuova iscrizione al sito', `
+    <p style="margin:0 0 4px;font-size:13px;color:#a89070;">Email</p>
+    <p style="margin:0 0 14px;font-size:15px;color:#e8dcc8;font-weight:600;">${escHtml(email)}</p>
+    ${name ? `<p style="margin:0 0 4px;font-size:13px;color:#a89070;">Nome</p><p style="margin:0;font-size:15px;color:#e8dcc8;font-weight:600;">${escHtml(name)}</p>` : ''}
+    <p style="margin:16px 0 0;font-size:12px;color:#7d7058;">Registrazione da easyitaliahub.it.</p>`);
+
+  // Le due email sono indipendenti: se una fallisce l'altra deve partire lo stesso.
+  const send = (to, subject, html, replyTo) => fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(Object.assign(
+      { from: 'Easy Italia Hub <notifiche@easyitaliahub.it>', to: [to], subject, html },
+      replyTo ? { reply_to: replyTo } : {})),
+  }).then((r) => r.ok, () => false);
+
+  const [userOk, adminOk] = await Promise.all([
+    send(email, S.subject, userHtml, ADMIN),
+    send(ADMIN, `Nuova iscrizione — ${email}`, adminHtml, email),
+  ]);
+  if (!userOk || !adminOk) console.error('[email/signup] invio parziale', { userOk, adminOk });
+
+  return res.status(200).json({ ok: userOk && adminOk, userOk, adminOk });
+}
+
+function signupStrings(lang) {
+  const S = {
+    it: { subject: 'Benvenuto in Easy Italia Hub 🇱🇰🇮🇹', title: 'Benvenuto!', hi: 'Ciao', cta: 'Inizia il tuo percorso',
+          body: 'Grazie per esserti iscritto a Easy Italia Hub. Da ora hai accesso ai corsi base, alle guide complete, al Consigliere AI e a tutti gli strumenti per la tua vita in Italia.',
+          note: 'Se non ti sei iscritto tu, ignora questa email.' },
+    en: { subject: 'Welcome to Easy Italia Hub 🇱🇰🇮🇹', title: 'Welcome!', hi: 'Hi', cta: 'Start your journey',
+          body: 'Thanks for joining Easy Italia Hub. You now have access to the base courses, the full guides, the AI Advisor and every tool for your life in Italy.',
+          note: 'If you did not sign up, please ignore this email.' },
+    si: { subject: 'Easy Italia Hub වෙත සාදරයෙන් පිළිගනිමු 🇱🇰🇮🇹', title: 'සාදරයෙන් පිළිගනිමු!', hi: 'ආයුබෝවන්', cta: 'ඔබේ ගමන අරඹන්න',
+          body: 'Easy Italia Hub හා එක්වීම ගැන ස්තූතියි. දැන් ඔබට මූලික පාඨමාලා, සම්පූර්ණ මාර්ගෝපදේශ, AI උපදේශක සහ ඉතාලියේ ජීවිතය සඳහා සියලු මෙවලම් වෙත ප්‍රවේශය ඇත.',
+          note: 'ඔබ ලියාපදිංචි නොවූයේ නම්, මෙය නොසලකා හරින්න.' },
+    ta: { subject: 'Easy Italia Hub-க்கு வரவேற்கிறோம் 🇱🇰🇮🇹', title: 'வரவேற்கிறோம்!', hi: 'வணக்கம்', cta: 'உங்கள் பயணத்தைத் தொடங்குங்கள்',
+          body: 'Easy Italia Hub-இல் இணைந்ததற்கு நன்றி. இப்போது அடிப்படை படிப்புகள், முழு வழிகாட்டிகள், AI ஆலோசகர் மற்றும் இத்தாலியில் உங்கள் வாழ்க்கைக்கான அனைத்து கருவிகளையும் அணுகலாம்.',
+          note: 'நீங்கள் பதிவு செய்யவில்லை என்றால், இதைப் புறக்கணிக்கவும்.' },
+  };
+  return S[['it', 'en', 'si', 'ta'].includes(lang) ? lang : 'it'];
 }
 
 // ── REMIND ──────────────────────────────────────────────────────────────────
