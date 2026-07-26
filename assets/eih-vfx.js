@@ -31,35 +31,12 @@
       grain=document.createElement('div');grain.id='eih-vfx-grain';
       vig=document.createElement('div');vig.id='eih-vfx-vignette';
       document.body.appendChild(grain);document.body.appendChild(vig);
-      if(LS.get('eih-grain','1')==='1'){grain.classList.add('on');vig.classList.add('on');}
+      grain.classList.add('on');vig.classList.add('on');
     }
 
-    // ---- Controls: grana + audio ----
-    var ctl=document.createElement('div');ctl.id='eih-vfx-ctl';
-    var gBtn=document.createElement('button');gBtn.type='button';gBtn.title='Effetto pellicola';
-    gBtn.textContent='🎞️';gBtn.setAttribute('aria-pressed',LS.get('eih-grain','1')==='1'?'true':'false');
-    var sBtn=document.createElement('button');sBtn.type='button';sBtn.title='Audio interfaccia';
-    sBtn.setAttribute('aria-pressed',LS.get('eih-sound','0')==='1'?'true':'false');
-    sBtn.textContent=LS.get('eih-sound','0')==='1'?'🔊':'🔇';
-    if(!reduce)ctl.appendChild(gBtn);ctl.appendChild(sBtn);
-    document.body.appendChild(ctl);
-    gBtn.addEventListener('click',function(){
-      var on=!grain.classList.contains('on');grain.classList.toggle('on',on);vig.classList.toggle('on',on);
-      gBtn.setAttribute('aria-pressed',on?'true':'false');LS.set('eih-grain',on?'1':'0');beep(on?660:440);});
-
-    // ---- Web Audio: feedback tattile opzionale ----
-    var actx=null,soundOn=LS.get('eih-sound','0')==='1';
-    function beep(freq,dur){
-      if(!soundOn)return;
-      try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();
-        var o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.value=freq||520;
-        g.gain.value=.04;o.connect(g);g.connect(actx.destination);var t=actx.currentTime;
-        g.gain.setValueAtTime(.04,t);g.gain.exponentialRampToValueAtTime(.0001,t+(dur||.08));
-        o.start(t);o.stop(t+(dur||.08));}catch(e){}}
-    sBtn.addEventListener('click',function(){
-      soundOn=!soundOn;LS.set('eih-sound',soundOn?'1':'0');
-      sBtn.setAttribute('aria-pressed',soundOn?'true':'false');sBtn.textContent=soundOn?'🔊':'🔇';
-      if(soundOn){try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();}catch(e){}beep(560);}});
+    // I due interruttori flottanti (effetto pellicola e audio interfaccia) sono
+    // stati rimossi: la grana resta attiva di default, l'audio non c'è più.
+    function beep(){}
 
     // ---- 3D tilt cards ----
     if(fine && !reduce){

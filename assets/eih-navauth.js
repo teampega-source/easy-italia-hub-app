@@ -17,7 +17,30 @@
     else done();
   };
 
+  // CTA di pagina marcati [data-auth-cta]: da iscritti "Inizia gratis" non ha senso,
+  // rimanda alla dashboard invece che a una nuova registrazione.
+  var CTA_IN = { it:'Vai alla dashboard', en:'Go to dashboard', si:'ඩෑෂ්බෝඩ් වෙත', ta:'டாஷ்போர்டுக்கு' };
+  function applyCtas(u){
+    var lang;try{lang=localStorage.getItem('eih-lang')||'it';}catch(e){lang='it';}
+    var els=document.querySelectorAll('[data-auth-cta]');
+    for(var i=0;i<els.length;i++){
+      var el=els[i];
+      if(!el.getAttribute('data-auth-cta-html'))el.setAttribute('data-auth-cta-html',el.innerHTML);
+      if(!el.getAttribute('data-auth-cta-href'))el.setAttribute('data-auth-cta-href',el.getAttribute('href')||'');
+      if(u){
+        var lbl=el.querySelector('[data-i18n]')||el;
+        lbl.removeAttribute&&lbl.removeAttribute('data-i18n');
+        lbl.textContent=CTA_IN[lang]||CTA_IN.it;
+        el.setAttribute('href','/dashboard');
+      }else{
+        el.innerHTML=el.getAttribute('data-auth-cta-html');
+        el.setAttribute('href',el.getAttribute('data-auth-cta-href'));
+      }
+    }
+  }
+
   function apply(u){
+    applyCtas(u);
     var rights=document.querySelectorAll('.site-nav .nav-right');
     for(var i=0;i<rights.length;i++){
       var r=rights[i],login=r.querySelector('.nav-login'),cta=r.querySelector('.nav-cta');
