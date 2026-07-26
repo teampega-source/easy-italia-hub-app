@@ -474,16 +474,14 @@
             links(fn) + '</div>';
           return;
         }
-        var kmh = d.velocity != null ? Math.round(d.velocity * 3.6) : null;
-        var alt = d.altitude != null ? Math.round(d.altitude) : null;
         var map = 'https://www.openstreetmap.org/?mlat=' + d.lat + '&mlon=' + d.lon + '#map=6/' + d.lat + '/' + d.lon;
         tkOut.innerHTML = '<div class="tk-card">' +
           '<div class="tk-head"><span class="tk-fn">' + esc(fn) + '</span>' +
           '<span class="tk-badge' + (d.onGround ? ' ground' : '') + '">' + (d.onGround ? 'A terra' : 'In volo') + '</span>' +
-          (d.country ? '<span style="font-size:var(--text-sm);color:var(--fg-muted)">sopra ' + esc(d.country) + '</span>' : '') + '</div>' +
+          (d.aircraft ? '<span style="font-size:var(--text-sm);color:var(--fg-muted)">' + esc(d.aircraft) + (d.registration ? ' · ' + esc(d.registration) : '') + '</span>' : '') + '</div>' +
           '<div class="tk-stats">' +
-            (alt != null ? '<div class="tk-stat"><span>Quota</span><strong>' + alt.toLocaleString('it-IT') + ' m</strong></div>' : '') +
-            (kmh != null ? '<div class="tk-stat"><span>Velocità</span><strong>' + kmh.toLocaleString('it-IT') + ' km/h</strong></div>' : '') +
+            (d.altitude != null ? '<div class="tk-stat"><span>Quota</span><strong>' + d.altitude.toLocaleString('it-IT') + ' m</strong></div>' : '') +
+            (d.speed != null ? '<div class="tk-stat"><span>Velocità</span><strong>' + d.speed.toLocaleString('it-IT') + ' km/h</strong></div>' : '') +
             '<div class="tk-stat"><span>Posizione</span><strong>' + d.lat.toFixed(2) + ', ' + d.lon.toFixed(2) + '</strong></div>' +
           '</div>' +
           '<div class="tk-links"><a href="' + map + '" target="_blank" rel="noopener noreferrer">Vedi sulla mappa ↗</a>' +
