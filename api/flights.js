@@ -42,17 +42,20 @@ const ICAO = {
 };
 
 // L'API anonima di OpenSky ha un budget giornaliero e ogni tanto risponde 503.
-// Lo snapshot globale viene riusato per SNAP_TTL su questa istanza: più utenti
-// che cercano voli diversi nello stesso minuto costano una sola chiamata.
+// Lo snapshot viene riusato per SNAP_TTL su questa istanza: più utenti che
+// cercano voli diversi nello stesso minuto costano una sola chiamata.
+// Il bounding box copre il corridoio Italia ↔ Colombo e dimezza il payload
+// (~470 KB invece di ~880 KB): da Vercel la risposta globale supera il timeout.
 const SNAP_TTL = 45_000;
-const FETCH_TIMEOUT = 6_000;
+const FETCH_TIMEOUT = 8_000;
+const BBOX = 'lamin=0&lomin=0&lamax=60&lomax=95';
 let snapAt = 0, snapData = null, snapPending = null;
 
 async function fetchStates() {
   const ac = new AbortController();
   const timer = setTimeout(() => ac.abort(), FETCH_TIMEOUT);
   try {
-    const r = await fetch('https://opensky-network.org/api/states/all', {
+    const r = await fetch('https://opensky-network.org/api/states/all?' + BBOX, {
       signal: ac.signal,
       headers: { 'User-Agent': 'EasyItaliaHub/1.0 (+https://easyitaliahub.it)' },
     });
