@@ -70,7 +70,7 @@
       <!-- LEFT: city list (works without the map) -->
       <aside class="city-rail" aria-label="Città disponibili">
         <p class="rail-title" data-i18n="mp.2">Città</p>
-        <div class="city-list" id="city-list" role="list"><!-- city buttons injected by script --></div>
+        <div class="city-list" id="city-list" role="list" data-lenis-prevent><!-- city buttons injected by script --></div>
         <button type="button" class="near-btn" id="near-btn">📍 <span>Trova CAF e patronati vicino a me</span></button>
         <div id="near-out" class="near-out" aria-live="polite"></div>
         <p class="muted rail-hint" data-i18n="mp.3">Seleziona una città per centrarla sulla mappa e vedere i servizi.</p>
@@ -121,7 +121,7 @@
   .map-layout{display:grid;grid-template-columns:260px 1fr;gap:1.1rem;align-items:start}
   .city-rail{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;position:sticky;top:90px}
   .rail-title{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin:0 0 .8rem}
-  .city-list{display:flex;flex-direction:column;gap:.4rem}
+  .city-list{display:flex;flex-direction:column;gap:.4rem;max-height:min(48vh,420px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-right:.3rem}
   .city-btn{display:flex;align-items:center;justify-content:space-between;gap:.5rem;width:100%;text-align:left;
     padding:.7rem .85rem;border-radius:var(--radius-sm);border:1px solid transparent;background:var(--surface);
     font-family:inherit;font-size:var(--text-sm);font-weight:500;color:var(--ink);cursor:pointer;min-height:44px;
@@ -185,7 +185,7 @@
     .map-layout{grid-template-columns:1fr}
     .city-rail{position:static;order:2}
     .map-col{order:1}
-    .city-list{flex-direction:row;flex-wrap:wrap}
+    .city-list{flex-direction:row;flex-wrap:wrap;max-height:none;overflow:visible}
     .city-btn{width:auto;flex:1 1 calc(50% - .4rem)}
     #map{height:46vh;min-height:320px}
   }
@@ -220,12 +220,28 @@
 
   /* ── DATA ── real cities + real coordinates ── */
   var CITIES = [
-    { id:'milano',  name:'Milano',  coords:[45.4642, 9.1900],  note:'La più grande comunità srilankese d’Italia: tanti negozi, templi e servizi.' },
-    { id:'roma',    name:'Roma',    coords:[41.9028,12.4964],  note:'Capitale con storica presenza cingalese e tamil, soprattutto nei quartieri est.' },
-    { id:'torino',  name:'Torino',  coords:[45.0703, 7.6869],  note:'Comunità attiva nel nord-ovest, con CAF e patronati ben distribuiti.' },
-    { id:'napoli',  name:'Napoli',  coords:[40.8518,14.2681],  note:'Punto di riferimento per il Sud Italia e per chi arriva via mare.' },
-    { id:'brescia', name:'Brescia', coords:[45.5416,10.2118],  note:'Forte presenza nella zona industriale lombarda, vicino a Milano.' },
-    { id:'palermo', name:'Palermo', coords:[38.1157,13.3613],  note:'Riferimento per la Sicilia e i nuovi arrivi nel Mediterraneo.' }
+    { id:'milano',   name:'Milano',        coords:[45.4642, 9.1900], note:'La comunità più numerosa d’Italia (oltre 17.000 residenti): negozi, templi e servizi in ogni quartiere.' },
+    { id:'napoli',   name:'Napoli',        coords:[40.8518,14.2681], note:'Seconda comunità del Paese (oltre 16.000 residenti) e sede del più grande tempio theravada d’Europa.' },
+    { id:'roma',     name:'Roma',          coords:[41.9028,12.4964], note:'Circa 10.000 residenti, fra comunità cingalese e tamil, soprattutto nei quartieri est e sul litorale.' },
+    { id:'verona',   name:'Verona',        coords:[45.4384,10.9916], note:'Circa 7.500 residenti: la capitale srilankese del Veneto, con il Verona Mahavihara.' },
+    { id:'messina',  name:'Messina',       coords:[38.1938,15.5540], note:'Circa 4.000 residenti e l’associazione Srilankesi Uniti, nata qui nel 2012.' },
+    { id:'catania',  name:'Catania',       coords:[37.5079,15.0830], note:'Quasi 4.000 residenti in provincia; comunità cattolica srilankese attiva in decine di comuni.' },
+    { id:'palermo',  name:'Palermo',       coords:[38.1157,13.3613], note:'Storica presenza tamil e cingalese, con associazioni culturali e linguistiche.' },
+    { id:'siracusa', name:'Siracusa',      coords:[37.0755,15.2866], note:'Circa 1.300 residenti: piccola comunità molto unita nel sud-est della Sicilia.' },
+    { id:'brescia',  name:'Brescia',       coords:[45.5416,10.2118], note:'Forte presenza nella Lombardia industriale, con programmi mensili Mahamevnawa.' },
+    { id:'bergamo',  name:'Bergamo',       coords:[45.6983, 9.6773], note:'Comunità legata alle fabbriche e ai servizi della bassa bergamasca.' },
+    { id:'monza',    name:'Monza',         coords:[45.5845, 9.2744], note:'Cintura milanese: molte famiglie fra Monza, Sesto e la Brianza.' },
+    { id:'torino',   name:'Torino',        coords:[45.0703, 7.6869], note:'Riferimento del nord-ovest, con il Centro Buddista del Piemonte.' },
+    { id:'genova',   name:'Genova',        coords:[44.4056, 8.9463], note:'Comunità legata al porto e ai servizi alla persona.' },
+    { id:'padova',   name:'Padova',        coords:[45.4064,11.8768], note:'Seconda area veneta per presenza, dopo Verona.' },
+    { id:'vicenza',  name:'Vicenza',       coords:[45.5455,11.5354], note:'Presenza diffusa nei distretti manifatturieri vicentini.' },
+    { id:'bologna',  name:'Bologna',       coords:[44.4949,11.3426], note:'Comunità cingalese e tamil con organizzazioni culturali e incontri Mahamevnawa.' },
+    { id:'modena',   name:'Modena',        coords:[44.6471,10.9252], note:'Area emiliana con il centro Maitri Vihara a Spilamberto.' },
+    { id:'reggioemilia', name:'Reggio Emilia', coords:[44.6983,10.6310], note:'Fra le città con più organizzazioni culturali tamil in Italia.' },
+    { id:'firenze',  name:'Firenze',       coords:[43.7696,11.2558], note:'Comunità toscana attiva nei servizi, nella ristorazione e nell’assistenza.' },
+    { id:'lucca',    name:'Lucca',         coords:[43.8430,10.5079], note:'Tempio buddhista a Ponte a Moriano, punto di ritrovo per la Toscana nord.' },
+    { id:'lecce',    name:'Lecce',         coords:[40.3515,18.1750], note:'Comunità tamil del Salento, con associazioni linguistiche e culturali.' },
+    { id:'caserta',  name:'Caserta',       coords:[41.0723,14.3327], note:'Estensione della grande comunità campana verso l’entroterra.' }
   ];
 
   /* ── Official national CAF & patronato networks (verified locator links) ── */
@@ -241,31 +257,80 @@
   var PLACES = {
     milano: {
       worship: [
-        { name:'Tempio Buddhista Lankaramaya', addr:'Via Pienza 8 (area Chiesa Rossa)', note:'Principale centro buddhista della comunità — cerimonie Vesak ogni maggio.' },
-        { name:'Dharma Nikethanaya', addr:'Via Padova 318', note:'Centro culturale e spirituale srilankese.' },
-        { name:'Comunità Tamil (Camnago Faloppio)', addr:'Chiesa di S. Margherita, Camnago Faloppio (CO)', note:'Festività tamil: Pongal, Puthandu. Vicino alla Brianza.' }
+        { name:'Tempio Lankaramaya — Sri Lanka Buddha Sangamaya', addr:'Via Pienza 8, 20142 Milano (Chiesa Rossa)', note:'Il tempio della comunità cingalese di Milano, aperto dal 1997. Cerimonie Vesak ogni maggio.' },
+        { name:'Mahamevnawa Meditation Center', addr:'Via Vincenzo Monti 31, 20016 Pero (MI)', tel:'+39 331 739 1883', email:'mahamevnawaitaly@gmail.com', url:'https://meditationitaly.com', note:'Monastero theravada srilankese: meditazione, Dhamma School per i bambini.' },
+        { name:'Dharma Nikethanaya', addr:'Via Padova 318, Milano', note:'Centro culturale e spirituale srilankese nella zona nord-est.' },
+        { name:'Comunità cattolica tamil', addr:'Chiesa di S. Margherita, Camnago Faloppio (CO)', note:'Festività tamil: Pongal e Puthandu. Riferimento per Brianza e Comasco.' }
       ],
       shop: [
-        { name:'"Little Sri Lanka" — Via Cesare da Sesto', addr:'Via Cesare da Sesto (Piazza Sant\'Agostino)', note:'Oltre 10 attività in 100 metri: alimentari, ristoranti, money transfer, parrucchieri.' }
+        { name:'«Little Sri Lanka» — Via Cesare da Sesto', addr:'Via Cesare da Sesto, Milano (Piazza Sant’Agostino)', note:'Oltre 10 attività in 100 metri: alimentari, ristoranti, money transfer, parrucchieri.' },
+        { name:'Zona Via Padova e Loreto', addr:'Via Padova / Piazzale Loreto, Milano', note:'Seconda area di riferimento: minimarket, phone center e ristoranti della comunità.' }
       ],
       pro: [
-        { name:'Abarekà Nandree (onlus)', addr:'Via Venini, Milano', note:'Mediazione culturale e supporto ai cittadini stranieri. Attiva dal 2002.' }
+        { name:'Abarekà Nandree (onlus)', addr:'Via Venini, Milano', note:'Mediazione culturale e supporto ai cittadini stranieri, attiva dal 2002.' }
       ]
     },
     napoli: {
       worship: [
-        { name:'Napoli Buddhist Vihara', addr:'Via G. Tomasi di Lampedusa 91 (80145 NA)', tel:'+39 081 7407766', url:'http://www.napolibuddhistvihara.net', note:'Dir. spirituale: Ven. Panangala Vajiragnana Thero.' }
-      ]
-    },
-    torino: {
-      worship: [
-        { name:'Centro Buddista del Piemonte', addr:'Via Chambery 119 (10142 TO)', tel:'+39 347 7384565', email:'centrobuddhistapiemonte@gmail.com', note:'Punto di riferimento anche per Verona e Messina.' }
+        { name:'Napoli Buddhist Vihara', addr:'Via Cupa delle Fascine 82, 80145 Napoli', note:'Il più grande tempio buddhista theravada d’Europa, inaugurato nel 2015 dalla comunità srilankese. Guida: Ven. Panangala Vajiragnana Maha Thero.' },
+        { name:'Mahamevnawa Napoli', note:'Incontri e programmi mensili di meditazione della rete Mahamevnawa.', url:'https://meditationitaly.com' }
+      ],
+      shop: [
+        { name:'Zona Stazione Centrale e Vasto', addr:'Quartiere Vasto / Piazza Garibaldi, Napoli', note:'Minimarket, money transfer e ristoranti asiatici usati quotidianamente dalla comunità.' }
       ]
     },
     roma: {
       worship: [
-        { name:'S. Maria dei Pellegrini all\'Infernetto', addr:'Via Castel di Guido, Roma (zona Infernetto)', note:'Festività cattoliche srilankesi — Nostra Signora di Madhu, messa presieduta dal Card. Malcolm Ranjith.' },
-        { name:'Santacittarama', addr:'Loc. Sasso, Poggio Nativo (RI) — vicino Roma', url:'https://santacittarama.org', note:'Monastero Theravada dal 1990, aperto alle comunità thai, srilankese e birmana.' }
+        { name:'Monastero Buddhista di Roma', addr:'Via Mandas 2, 00132 Roma', note:'Comunità Buddhista Theravada in Italia. Responsabile: Ven. Dheerananda Nayaka Thero Molligoda.' },
+        { name:'S. Maria dei Pellegrini all’Infernetto', addr:'Via Castel di Guido, Roma (zona Infernetto)', note:'Festività cattoliche srilankesi, fra cui Nostra Signora di Madhu.' },
+        { name:'Monastero Santacittarama', addr:'Loc. Sasso, Poggio Nativo (RI)', url:'https://santacittarama.org', note:'Monastero theravada dal 1990, aperto alle comunità thai, srilankese e birmana.' },
+        { name:'Mahamevnawa Roma', url:'https://meditationitaly.com', note:'Programmi mensili di meditazione e scuola di Dhamma.' }
+      ]
+    },
+    verona: {
+      worship: [
+        { name:'Verona Mahavihara — Centro Buddhista Veneto', addr:'Via Chioda 94/96, 37136 Verona', tel:'+39 045 950968', note:'Associazione religiosa, educativa e culturale dello Sri Lanka: il punto di riferimento del Veneto.' }
+      ]
+    },
+    torino: {
+      worship: [
+        { name:'Centro Buddista del Piemonte', addr:'Via Chambery 119, 10142 Torino', tel:'+39 347 7384565', email:'centrobuddhistapiemonte@gmail.com', note:'Riferimento anche per Verona e Messina.' }
+      ]
+    },
+    modena: {
+      worship: [
+        { name:'Centro Maitri Vihara', addr:'Via Castelnuovo Rangone 1148, 41057 Spilamberto (MO)', note:'Associazione per la cultura buddhista in Emilia-Romagna, guidata dal monaco Dambadeniye Dhammarama.' }
+      ]
+    },
+    brescia: {
+      worship: [
+        { name:'Mahamevnawa Brescia', url:'https://meditationitaly.com', note:'Incontri mensili di meditazione e scuola di Dhamma per la comunità bresciana.' }
+      ]
+    },
+    catania: {
+      worship: [
+        { name:'Mahamevnawa Catania', url:'https://meditationitaly.com', note:'Programmi mensili di meditazione della rete srilankese Mahamevnawa.' },
+        { name:'Comunità cattolica srilankese di Catania', note:'Cingalesi e tamil attivi nelle parrocchie della Città metropolitana, con la festa di S. Agata.' }
+      ]
+    },
+    bologna: {
+      worship: [
+        { name:'Mahamevnawa Bologna', url:'https://meditationitaly.com', note:'Incontri mensili di meditazione aperti a tutta la comunità emiliana.' }
+      ]
+    },
+    messina: {
+      pro: [
+        { name:'Associazione Srilankesi Uniti', note:'Nata a Messina nel 2012: assistenza, mediazione e rapporti con il consolato mobile dello Sri Lanka.' }
+      ]
+    },
+    palermo: {
+      worship: [
+        { name:'Centro Buddhista Muni Gyana', addr:'Palermo', note:'Centro di riferimento per la pratica buddhista in città.' }
+      ]
+    },
+    lucca: {
+      worship: [
+        { name:'Tempio buddhista di Ponte a Moriano', addr:'Ponte a Moriano, Lucca', note:'Punto di ritrovo della comunità cingalese della Toscana settentrionale.' }
       ]
     }
   };
@@ -386,6 +451,73 @@
         : '<p class="err">Non riesco a rilevare la posizione. Scegli la tua città dall\'elenco.</p>';
     }, { timeout:10000, maximumAge:300000 });
   }
+  /* "lanka" e "ceylon" trovano le insegne della comunità, "money transfer"
+     il servizio che serve più spesso. Una richiesta alla volta: è la regola
+     d'uso di Nominatim. */
+  var SHOP_TERMS = ['lanka', 'ceylon', 'money transfer'];
+  function osmSearch(q, lat, lon, d){
+    return fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=20&bounded=1&q='+
+                 encodeURIComponent(q)+'&viewbox='+(lon-d)+','+(lat+d)+','+(lon+d)+','+(lat-d),
+                 { headers:{ 'Accept':'application/json' } })
+      .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
+      .catch(function(){ return []; });
+  }
+  function osmItems(raw, lat, lon){
+    var seen = {}, out = [];
+    raw.forEach(function(p){
+      var k = p.osm_type+'/'+p.osm_id;
+      if(!p.lat || seen[k]) return;
+      seen[k] = 1;
+      var parts = (p.display_name||'').split(',');
+      out.push({ name:(p.name||parts[0]||'Attività').trim(),
+                 addr:parts.slice(1,4).join(',').trim(),
+                 lat:parseFloat(p.lat), lon:parseFloat(p.lon),
+                 km:distKm(lat, lon, parseFloat(p.lat), parseFloat(p.lon)) });
+    });
+    return out.sort(function(a,b){ return a.km-b.km; });
+  }
+  function listHTML(items){
+    return '<ul>'+items.map(function(i){
+      return '<li><span class="nm">'+esc(i.name)+'</span>'+
+             '<span class="ad">'+esc(i.addr)+'</span> '+
+             '<span class="di">'+i.km.toFixed(1)+' km</span></li>';
+    }).join('')+'</ul>';
+  }
+  function searchCityShops(btn){
+    var city = cityById(btn.getAttribute('data-city'));
+    var out = btn.parentNode.querySelector('.shop-out');
+    btn.disabled = true;
+    out.innerHTML = '<p class="err">Cerco le attività a '+esc(city.name)+'…</p>';
+    var lat = city.coords[0], lon = city.coords[1];
+    // ~12 km attorno al centro città
+    SHOP_TERMS.reduce(function(chain, q){
+      return chain.then(function(acc){
+        return osmSearch(q, lat, lon, 0.11).then(function(r){ return acc.concat(r); });
+      });
+    }, Promise.resolve([])).then(function(raw){
+      btn.disabled = false;
+      var items = osmItems(raw, lat, lon).slice(0, 15);
+      if(!items.length){
+        out.innerHTML = '<p class="err">Nessuna attività mappata su OpenStreetMap a '+esc(city.name)+'. Se ne conosci una, segnalacela: la aggiungiamo all’elenco.</p>';
+        return;
+      }
+      out.innerHTML = listHTML(items)+'<p class="err" style="margin-top:.5rem">Dati da OpenStreetMap: telefona prima di andare, gli orari cambiano spesso.</p>';
+      if(map && window.L){
+        clearNearMarkers();
+        items.forEach(function(i){
+          var m = L.marker([i.lat, i.lon], { title:i.name });
+          m.addTo(map).bindPopup('<strong>'+esc(i.name)+'</strong><br>'+esc(i.addr));
+          nearLayer.push(m);
+        });
+        try{ map.setView(city.coords, 12); }catch(e){}
+      }
+    });
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('.shop-btn') : null;
+    if(b) searchCityShops(b);
+  });
+
   function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 
   /* ── DOM refs ── */
@@ -425,7 +557,18 @@
       }).join('');
       return '<article class="svc">'+head+
         '<div class="place-list">'+items+'</div>'+
+        (cat==='shop'
+          ? '<button type="button" class="near-btn shop-btn" data-city="'+esc(city.id)+'">🔎 Cerca altre attività a '+esc(city.name)+'</button><div class="near-out shop-out" aria-live="polite"></div>'
+          : '')+
         '<a class="svc-cta" href="/contatti">Segnala un altro luogo <span aria-hidden="true">→</span></a>'+
+        '</article>';
+    }
+    if(cat==='shop'){
+      return '<article class="svc">'+head+
+        '<p>Le attività della comunità cambiano in fretta. Cerca in tempo reale su OpenStreetMap i negozi, i ristoranti e i money transfer di '+esc(city.name)+'.</p>'+
+        '<button type="button" class="near-btn shop-btn" data-city="'+esc(city.id)+'">🔎 Cerca le attività a '+esc(city.name)+'</button>'+
+        '<div class="near-out shop-out" aria-live="polite"></div>'+
+        '<a class="svc-cta" href="/contatti">Segnala un’attività <span aria-hidden="true">→</span></a>'+
         '</article>';
     }
     // fallback "in raccolta" per città senza dati ancora verificati
