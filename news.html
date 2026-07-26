@@ -188,6 +188,9 @@
   .nitem-meta{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.45rem}
   .ntag{display:inline-block;font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .55rem;border-radius:99px;border:1px solid transparent}
   .ntag.leggi{color:#6a5fa0;background:rgba(106,95,160,.12);border-color:rgba(106,95,160,.25)}
+  .ndue{font-size:.7rem;font-weight:700;letter-spacing:.02em;padding:.15rem .5rem;border-radius:99px;background:var(--gold-dim);color:var(--gold);border:1px solid rgba(124,112,89,.3)}
+  .ndue.soon{background:rgba(235,89,57,.12);color:var(--coral);border-color:rgba(235,89,57,.3)}
+  .ndue.past{background:var(--surface);color:var(--fg-muted);border-color:var(--border)}
   .ntag.scadenze{color:var(--coral);background:rgba(235,89,57,.1);border-color:rgba(235,89,57,.25)}
   .ntag.opportunita{color:var(--green);background:var(--green-dim);border-color:rgba(31,157,85,.28)}
   .ntag.lavoro{color:var(--gold);background:var(--gold-dim);border-color:rgba(124,112,89,.3)}
@@ -251,11 +254,53 @@
   //    Every source is a real, official domain. No invented URLs. ──
   var ITEMS = [
     {
+      id:'carta-identita-cartacea-2026',
+      cat:'scadenze',
+      date:'2026-07-01',
+      due:'2026-08-03',
+      title:'Dal 3 agosto 2026 la carta d’identità cartacea non vale più',
+      summary:'Il regolamento europeo 2019/1157 manda in pensione la carta d’identità di carta: non è più valida nemmeno se la data stampata sopra è successiva. Serve la CIE.',
+      body:'Dal 3 agosto 2026 le carte d’identità in formato cartaceo cessano di essere valide in tutta l’Unione europea, anche se sul documento c’è una data di scadenza più lontana. Da quel giorno non servono più né per identificarsi in Italia né per viaggiare all’estero. Chi ha ancora il documento di carta deve chiedere al proprio Comune la Carta d’Identità Elettronica (CIE), che si può richiedere in qualsiasi momento: si prenota un appuntamento all’anagrafe, servono una foto tessera, il vecchio documento e il codice fiscale, e la CIE arriva per posta in pochi giorni. Prenota con anticipo: sotto scadenza gli appuntamenti in Comune si esauriscono. La CIE serve anche come identità digitale per entrare nei siti pubblici.',
+      verify:'Le modalità di prenotazione cambiano da Comune a Comune: verifica sul sito del tuo Comune e sul portale ufficiale della CIE.',
+      src:{label:'Ministero dell’Interno — Carta d’Identità Elettronica', url:'https://www.cartaidentita.interno.gov.it/'}
+    },
+    {
+      id:'spid-cie-itwallet-2026',
+      cat:'scadenze',
+      date:'2026-06-15',
+      title:'SPID: resta attivo, ma il futuro è CIE e IT-Wallet',
+      summary:'Le convenzioni con i gestori SPID sono state rinnovate fino al 2027. Nel frattempo alcuni gestori chiedono un canone e lo Stato spinge su CIE e IT-Wallet nell’app IO.',
+      body:'Lo SPID non si spegne: AgID ha rinnovato le convenzioni con i gestori di identità digitale fino al 2027. Cambia però il quadro: alcuni gestori privati hanno introdotto un canone annuale per il rinnovo, mentre lo Stato sta spostando i servizi sulla CIE (la carta d’identità elettronica, che funziona da identità digitale gratuita) e sull’IT-Wallet, il portafoglio di documenti dentro l’app IO. Se il tuo gestore SPID ti chiede di pagare, hai due alternative gratuite: trasferire lo SPID a un altro gestore, oppure attivare la CIE con il PIN ricevuto in Comune. Con una sola di queste identità entri in INPS, Agenzia delle Entrate, Portale Immigrazione e nei servizi del tuo Comune.',
+      verify:'Costi e condizioni cambiano da gestore a gestore: verifica sull’elenco ufficiale dei gestori sul sito AgID.',
+      src:{label:'AgID — Identità digitale', url:'https://www.agid.gov.it/it/piattaforme/spid'}
+    },
+    {
+      id:'permesso-rinnovo-anticipo-2026',
+      cat:'scadenze',
+      date:'2026-05-20',
+      title:'Rinnovo del permesso: presenta la domanda in anticipo',
+      summary:'La domanda va inviata prima che il permesso scada — di regola almeno 60 giorni prima. Chi aspetta l’ultimo giorno rischia settimane senza documento valido.',
+      body:'Il rinnovo del permesso di soggiorno non si presenta il giorno della scadenza: la domanda va inviata prima, di norma almeno 60 giorni prima per i permessi di durata biennale. Si usa il "kit giallo" agli sportelli abilitati di Poste Italiane; la ricevuta dell’assicurata vale come prova del soggiorno regolare mentre la pratica è in corso, e con quel numero si segue lo stato online sull’area stranieri della Polizia di Stato. Prepara in anticipo reddito, contratto di lavoro, alloggio, marca da bollo e passaporto in corso di validità: sono i documenti che fanno perdere più tempo. Dal 2026 le Questure hanno adottato una gestione digitale che riduce i tempi di convocazione, ma i documenti restano gli stessi.',
+      verify:'Termini e documenti variano per tipo di permesso e per Questura: verifica su Portale Immigrazione o con un patronato.',
+      src:{label:'Portale Immigrazione', url:'https://www.portaleimmigrazione.it/'}
+    },
+    {
+      id:'isee-2027-rinnovo',
+      cat:'scadenze',
+      date:'2026-07-01',
+      due:'2026-12-31',
+      title:'ISEE 2026: scade il 31 dicembre, poi va rifatto',
+      summary:'Ogni ISEE vale fino al 31 dicembre dell’anno in cui è stato richiesto. Da gennaio serve una nuova DSU, altrimenti l’Assegno Unico scende all’importo minimo.',
+      body:'L’attestazione ISEE vale fino al 31 dicembre dell’anno in cui la richiedi: dal 1° gennaio serve una nuova DSU (Dichiarazione Sostitutiva Unica). Non è una formalità: senza ISEE aggiornato l’Assegno Unico scende automaticamente all’importo minimo e restano bloccati bonus sociali, rette agevolate di asili e mense, borse di studio e le graduatorie per la casa. La DSU si presenta gratis tramite un CAF o un patronato, oppure online sul sito INPS con SPID o CIE; molti dati sono già precompilati. Conviene farla nelle prime settimane di gennaio, quando le sedi sono meno affollate: serviranno documenti d’identità di tutto il nucleo, codici fiscali, contratto di affitto o dati del mutuo e i saldi dei conti al 31 dicembre di due anni prima.',
+      verify:'Documenti e importi cambiano ogni anno: verifica sul sito INPS o presso un CAF/patronato.',
+      src:{label:'INPS — ISEE', url:'https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.isee-50088.html'}
+    },
+    {
       id:'decreto-flussi-2026',
       cat:'leggi',
       date:'2026-01-15',
-      title:'Decreto Flussi: quote per il lavoro non stagionale',
-      summary:'La programmazione triennale dei flussi fissa le quote di ingresso per lavoro subordinato e autonomo. Le domande si presentano online con click-day dedicati.',
+      title:'Decreto Flussi 2026: i click-day si sono già chiusi',
+      summary:'Le finestre di invio del 2026 (12 gennaio, 9, 16 e 18 febbraio) sono passate. La prossima occasione è il decreto per il 2027: preparati adesso.',
       body:'Il Decreto Flussi stabilisce quante persone possono entrare in Italia per motivi di lavoro (stagionale, non stagionale e autonomo). Le domande (modelli di precompilazione e invio) passano dal portale del Ministero dell’Interno, con date di apertura ("click-day") che cambiano ogni anno. Conviene preparare in anticipo i documenti del datore di lavoro e le credenziali SPID. Le quote, le categorie ammesse e i giorni esatti di invio vengono pubblicati con appositi decreti: verifica numeri e scadenze sulla fonte ufficiale prima di presentare domanda.',
       verify:'Quote, categorie e date dei click-day cambiano ogni anno: verifica i numeri esatti sul portale del Ministero dell’Interno.',
       src:{label:'Ministero dell’Interno', url:'https://www.interno.gov.it/'}
@@ -369,6 +414,18 @@
   }
   function isSaved(id){ return state.saved.indexOf(id) !== -1; }
 
+  // Etichetta "mancano N giorni" sulle voci con una data limite reale.
+  function dueBadge(due){
+    if(!due) return '';
+    var d = Date.parse(due + 'T23:59:59');
+    if(isNaN(d)) return '';
+    var days = Math.ceil((d - Date.now()) / 86400000);
+    if(days < 0) return '<span class="ndue past">scaduta</span>';
+    if(days === 0) return '<span class="ndue soon">scade oggi</span>';
+    var txt = days === 1 ? 'manca 1 giorno' : 'mancano ' + days + ' giorni';
+    return '<span class="ndue' + (days <= 30 ? ' soon' : '') + '">' + txt + '</span>';
+  }
+
   function fmtDate(iso){
     try {
       var d = new Date(iso + 'T00:00:00');
@@ -401,6 +458,7 @@
               '<div class="nitem-meta">'+
                 '<span class="ntag '+esc(it.cat)+'">'+esc(CAT[it.cat]||it.cat)+'</span>'+
                 '<span class="ndate">'+esc(fmtDate(it.date))+'</span>'+
+                dueBadge(it.due)+
               '</div>'+
               '<h3 class="nitem-title">'+esc(it.title)+'</h3>'+
               '<p class="nitem-summary">'+esc(it.summary)+'</p>'+
