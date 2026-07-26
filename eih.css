@@ -306,3 +306,23 @@ footer{position:relative;z-index:1;margin-top:var(--sp-6);border-top:1px solid v
 
 /* Sezioni riservate agli iscritti: [hidden] deve prevalere sul display dei layout */
 [data-members][hidden]{display:none!important}
+
+/* ─── Stampa e "Salva come PDF" ───────────────────────────────────────────
+   Gli strati decorativi (grana, vignetta, atmosfera) e i pulsanti flottanti
+   sono position:fixed: in stampa venivano disegnati sopra il contenuto e la
+   pagina usciva bianca. Qui si nascondono tutti e si annullano le animazioni
+   di comparsa, che altrimenti stampano elementi ancora a opacità zero. */
+@media print{
+  .atmo,#bg,#noise,#wipe,#preloader,
+  #eih-vfx-grain,#eih-vfx-vignette,#eih-vfx-progress,#eih-progress,
+  #chat-btn,#chat-panel,#eih-mascot,#eih-mascot-bubble,
+  #eih-consent,#eih-consent-panel,#jr-cheer,
+  #eihp-fab,#eiht-fab,#eihp-box,.cursor-ring,.cursor-dot,
+  .site-nav,#site-nav,#site-footer,.skip-link,.news-rail,#news-rail{
+    display:none!important}
+  .reveal,.reveal.in,[class*="reveal"]{opacity:1!important;transform:none!important;filter:none!important}
+  html,body{background:#fff!important;color:#000!important}
+  main,.page,.wrap{max-width:none!important;padding:0!important;margin:0!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:1.5cm}
+}
