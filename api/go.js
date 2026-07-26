@@ -43,11 +43,15 @@ function buildUrl(to, q) {
 
   switch (to) {
     case 'kiwi': {
+      // Deep link ufficiale con codici IATA: il vecchio /search/results/<slug-citta>
+      // non è più valido e rimandava alla home.
       const dep = q.date ? String(q.date).replace(/[^0-9-]/g,'').slice(0,10) : null;
       const ret = q.ret  ? String(q.ret).replace(/[^0-9-]/g,'').slice(0,10) : null;
-      const dateSeg = dep ? '/' + dep + '/' + (ret || 'no-return') : '';
-      const aff = IDS.kiwi ? '?affilid=' + encodeURIComponent(IDS.kiwi) : '';
-      return 'https://www.kiwi.com/it/search/results/' + city + '/colombo-sri-lanka' + dateSeg + '/' + aff;
+      let url = 'https://www.kiwi.com/deep?from=' + from + '&to=CMB';
+      if (dep) url += '&departure=' + dep;
+      if (ret) url += '&return=' + ret;
+      if (IDS.kiwi) url += '&affilid=' + encodeURIComponent(IDS.kiwi);
+      return url;
     }
 
     case 'kayak': {
@@ -61,11 +65,12 @@ function buildUrl(to, q) {
     case 'gflights': {
       const dep = q.date ? String(q.date).replace(/[^0-9-]/g,'').slice(0,10) : null;
       const ret = q.ret  ? String(q.ret).replace(/[^0-9-]/g,'').slice(0,10) : null;
-      // Google Flights deep-link format
-      let flight = from + '.CMB';
-      if (dep) flight += '.' + dep;
-      if (ret) flight += '*CMB.' + from + '.' + ret;
-      return `https://www.google.com/travel/flights?hl=it&gl=it#flt=${flight};c:EUR;e:1;sd:1;t:f`;
+      // Ricerca in linguaggio naturale: il vecchio formato #flt= è legacy e
+      // Google lo ignora, aprendo la home invece dei risultati.
+      let q1 = 'Flights from ' + from + ' to CMB';
+      if (dep) q1 += ' on ' + dep;
+      if (ret) q1 += ' through ' + ret;
+      return 'https://www.google.com/travel/flights?hl=it&gl=it&q=' + encodeURIComponent(q1);
     }
 
     case 'booking':
