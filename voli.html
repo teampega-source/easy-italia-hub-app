@@ -455,7 +455,7 @@
     tkOut.innerHTML = '<div class="tk-card">Cerco il volo ' + esc(fn) + '…</div>';
     tkGo.disabled = true;
 
-    fetch('/api/flight-track?fn=' + encodeURIComponent(fn))
+    fetch('/api/flights?fn=' + encodeURIComponent(fn))
       .then(function(r){ return r.json(); })
       .then(function(d){
         if (d.error === 'service_down') {
