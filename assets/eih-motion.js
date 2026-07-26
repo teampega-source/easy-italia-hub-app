@@ -28,6 +28,9 @@
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
     gsap.ticker.lagSmoothing(0);
   }
+  // Le finestre modali devono poter fermare lo scroll morbido, altrimenti
+  // continua a muovere la pagina sotto di loro.
+  window.EIH_LENIS = lenis;
 
   // Ancore interne (compensa l'header fisso)
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
