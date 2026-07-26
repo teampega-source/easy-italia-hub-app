@@ -73,6 +73,25 @@
     [data-page="voli"] .legend-dot.mid{background:#ca8a04}
     [data-page="voli"] .legend-dot.expensive{background:#dc2626}
     [data-page="voli"] .info-box{margin:var(--sp-2) 0 var(--sp-4);padding:1.1rem 1.3rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);border-left:3px solid var(--gold);font-size:var(--text-sm);color:var(--fg-muted)}
+    [data-page="voli"] .track-box{padding:1.2rem 1.3rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);margin-bottom:var(--sp-4)}
+    [data-page="voli"] .track-row{display:flex;gap:.6rem;flex-wrap:wrap}
+    [data-page="voli"] .track-row input{flex:1 1 160px;min-width:0;padding:.7rem 1rem;border-radius:var(--radius-sm);border:1px solid var(--border-bright);background:var(--surface);color:var(--ink);font:inherit;font-size:var(--text-base);text-transform:uppercase}
+    [data-page="voli"] .track-row input:focus{outline:2px solid var(--gold);outline-offset:1px}
+    [data-page="voli"] .track-row .btn-all{width:auto;flex:0 0 auto}
+    [data-page="voli"] .track-chips{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.7rem}
+    [data-page="voli"] .track-chips button{cursor:pointer;font:inherit;font-size:.78rem;font-weight:600;padding:.3rem .7rem;border-radius:99px;border:1px solid var(--border-bright);background:transparent;color:var(--fg-muted)}
+    [data-page="voli"] .track-chips button:hover{border-color:var(--gold);color:var(--gold)}
+    [data-page="voli"] .tk-card{margin-top:1rem;padding:1rem 1.1rem;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold)}
+    [data-page="voli"] .tk-head{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.7rem}
+    [data-page="voli"] .tk-fn{font-family:'Clash Grotesk',sans-serif;font-weight:700;font-size:1.15rem;color:var(--ink)}
+    [data-page="voli"] .tk-badge{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .6rem;border-radius:99px;background:rgba(34,197,94,.15);color:#16a34a}
+    [data-page="voli"] .tk-badge.ground{background:rgba(234,179,8,.18);color:#ca8a04}
+    [data-page="voli"] .tk-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:.8rem;margin-bottom:.9rem}
+    [data-page="voli"] .tk-stat span{display:block;font-size:.7rem;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.06em}
+    [data-page="voli"] .tk-stat strong{font-size:1rem;color:var(--ink);font-weight:600}
+    [data-page="voli"] .tk-links{display:flex;gap:.5rem;flex-wrap:wrap}
+    [data-page="voli"] .tk-links a{font-size:.82rem;font-weight:600;text-decoration:none;padding:.45rem .9rem;border-radius:99px;border:1px solid var(--border-bright);color:var(--ink)}
+    [data-page="voli"] .tk-links a:hover{border-color:var(--gold);color:var(--gold)}
     @media(max-width:640px){[data-page="voli"] .season-grid{grid-template-columns:repeat(6,1fr)}}
 
     /* ── Cerca voli (multi-engine) ── */
@@ -137,6 +156,26 @@
         </button>
       </div>
       <button class="btn-all" id="fs-search-all">✈ Apri tutti e tre i comparatori →</button>
+    </section>
+
+    <!-- ─── FLIGHT TRACKER ─── -->
+    <section id="tracker" class="reveal" aria-labelledby="track-heading">
+      <h2 id="track-heading">Dov'è il volo adesso?</h2>
+      <p style="color:var(--fg-muted);font-size:var(--text-sm);margin-bottom:var(--sp-2)">Stai andando a prendere qualcuno in aeroporto? Inserisci il numero del volo (lo trovi sul biglietto) e vedi dove si trova in questo momento.</p>
+      <div class="track-box">
+        <div class="track-row">
+          <input type="text" id="tk-fn" placeholder="es. UL566" autocomplete="off" spellcheck="false" aria-label="Numero del volo"/>
+          <button class="btn-all" id="tk-go" style="margin:0;white-space:nowrap">Traccia →</button>
+        </div>
+        <div class="track-chips" id="tk-chips">
+          <button type="button" data-fn="UL566">UL566</button>
+          <button type="button" data-fn="UL565">UL565</button>
+          <button type="button" data-fn="EK205">EK205</button>
+          <button type="button" data-fn="QR127">QR127</button>
+          <button type="button" data-fn="TK1877">TK1877</button>
+        </div>
+        <div id="tk-result" aria-live="polite"></div>
+      </div>
     </section>
 
     <!-- ─── ROTTE ─── -->
@@ -393,6 +432,75 @@
           window.open(buildUrl(engine), '_blank', 'noopener,noreferrer');
         }, i * 150);
       });
+    });
+  }
+
+  // ── Flight tracker (posizione live via ADS-B) ──
+  var tkIn = document.getElementById('tk-fn'),
+      tkGo = document.getElementById('tk-go'),
+      tkOut = document.getElementById('tk-result');
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  function links(fn) {
+    return '<div class="tk-links">' +
+      '<a href="https://www.flightradar24.com/data/flights/' + encodeURIComponent(fn.toLowerCase()) + '" target="_blank" rel="noopener noreferrer">Flightradar24 ↗</a>' +
+      '<a href="https://flightaware.com/live/flight/' + encodeURIComponent(fn) + '" target="_blank" rel="noopener noreferrer">FlightAware ↗</a>' +
+      '</div>';
+  }
+
+  function track() {
+    var fn = (tkIn.value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (!fn) { tkIn.focus(); return; }
+    tkOut.innerHTML = '<div class="tk-card">Cerco il volo ' + esc(fn) + '…</div>';
+    tkGo.disabled = true;
+
+    fetch('/api/flight-track?fn=' + encodeURIComponent(fn))
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.error === 'service_down') {
+          tkOut.innerHTML = '<div class="tk-card"><div class="tk-head"><span class="tk-fn">' + esc(fn) + '</span></div>' +
+            '<p style="font-size:var(--text-sm);color:var(--fg-muted);margin-bottom:.9rem">Il radar è momentaneamente non raggiungibile. Riprova tra poco, oppure controlla qui:</p>' +
+            links(fn) + '</div>';
+          return;
+        }
+        if (d.error) {
+          tkOut.innerHTML = '<div class="tk-card">' + esc(d.error) + '</div>';
+          return;
+        }
+        if (!d.found) {
+          tkOut.innerHTML = '<div class="tk-card"><div class="tk-head"><span class="tk-fn">' + esc(fn) + '</span></div>' +
+            '<p style="font-size:var(--text-sm);color:var(--fg-muted);margin-bottom:.9rem">Il volo non risulta in volo in questo momento: potrebbe essere ancora a terra, già atterrato, oppure fuori dalla copertura radar. Controlla lo stato completo qui:</p>' +
+            links(fn) + '</div>';
+          return;
+        }
+        var kmh = d.velocity != null ? Math.round(d.velocity * 3.6) : null;
+        var alt = d.altitude != null ? Math.round(d.altitude) : null;
+        var map = 'https://www.openstreetmap.org/?mlat=' + d.lat + '&mlon=' + d.lon + '#map=6/' + d.lat + '/' + d.lon;
+        tkOut.innerHTML = '<div class="tk-card">' +
+          '<div class="tk-head"><span class="tk-fn">' + esc(fn) + '</span>' +
+          '<span class="tk-badge' + (d.onGround ? ' ground' : '') + '">' + (d.onGround ? 'A terra' : 'In volo') + '</span>' +
+          (d.country ? '<span style="font-size:var(--text-sm);color:var(--fg-muted)">sopra ' + esc(d.country) + '</span>' : '') + '</div>' +
+          '<div class="tk-stats">' +
+            (alt != null ? '<div class="tk-stat"><span>Quota</span><strong>' + alt.toLocaleString('it-IT') + ' m</strong></div>' : '') +
+            (kmh != null ? '<div class="tk-stat"><span>Velocità</span><strong>' + kmh.toLocaleString('it-IT') + ' km/h</strong></div>' : '') +
+            '<div class="tk-stat"><span>Posizione</span><strong>' + d.lat.toFixed(2) + ', ' + d.lon.toFixed(2) + '</strong></div>' +
+          '</div>' +
+          '<div class="tk-links"><a href="' + map + '" target="_blank" rel="noopener noreferrer">Vedi sulla mappa ↗</a>' +
+          links(fn).replace('<div class="tk-links">','').replace('</div>','') + '</div>' +
+          '</div>';
+      })
+      .catch(function(){
+        tkOut.innerHTML = '<div class="tk-card">Servizio momentaneamente non disponibile. ' + links(fn) + '</div>';
+      })
+      .then(function(){ tkGo.disabled = false; });
+  }
+
+  if (tkGo) {
+    tkGo.addEventListener('click', track);
+    tkIn.addEventListener('keydown', function(e){ if (e.key === 'Enter') track(); });
+    document.querySelectorAll('#tk-chips button').forEach(function(b){
+      b.addEventListener('click', function(){ tkIn.value = b.dataset.fn; track(); });
     });
   }
 })();
