@@ -86,15 +86,10 @@
     '.eih-sw span:before{content:"";position:absolute;width:16px;height:16px;left:3px;top:3px;background:#e2e5ea;border-radius:50%;transition:transform .2s}' +
     '.eih-sw input:checked+span{background:#57c5b6}.eih-sw input:checked+span:before{transform:translateX(18px)}' +
     '.eih-sw input:disabled+span{opacity:.55;cursor:not-allowed}' +
-    '#eih-consent-reopen{position:fixed;left:14px;bottom:14px;z-index:9998;width:auto;height:40px;padding:0 14px;' +
-    'display:inline-flex;align-items:center;gap:7px;border-radius:99px;border:1px solid rgba(138,144,154,.3);' +
-    'background:rgba(16,12,7,.85);color:#c4c9d1;font:600 12px/1 system-ui,-apple-system,sans-serif;cursor:pointer;' +
-    'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 8px 24px rgba(0,0,0,.35)}' +
-    '#eih-consent-reopen:hover{color:#e2e5ea;border-color:rgba(138,144,154,.5)}' +
     '@media(prefers-reduced-motion:reduce){#eih-consent,#eih-consent-panel{transition:none}}';
   document.head.appendChild(style);
 
-  var banner, panel, reopenBtn;
+  var banner, panel;
 
   function mount(el) { (document.body || document.documentElement).appendChild(el); }
   function fade(el) {
@@ -103,17 +98,8 @@
     setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 280);
   }
 
-  function showReopen() {
-    if (reopenBtn && reopenBtn.parentNode) return;
-    reopenBtn = document.createElement('button');
-    reopenBtn.id = 'eih-consent-reopen';
-    reopenBtn.type = 'button';
-    reopenBtn.setAttribute('aria-label', t().reopen);
-    reopenBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="10" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="9" r="1.2" fill="currentColor" stroke="none"/><circle cx="14.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg><span>' + t().reopen + '</span>';
-    reopenBtn.addEventListener('click', openPanel);
-    mount(reopenBtn);
-  }
-
+  // Il pannello si riapre dal link "Preferenze cookie" nel footer
+  // (window.EIH_openConsent): nessun bottone flottante permanente.
   function openPanel() {
     if (panel && panel.parentNode) return;
     var L = t();
@@ -146,7 +132,7 @@
       '<label class="eih-sw"><input type="checkbox" id="eih-sw-' + id + '"' + (checked ? ' checked' : '') + (locked ? ' disabled' : '') + '/><span></span></label></div>';
   }
 
-  function close() { fade(panel); showReopen(); }
+  function close() { fade(panel); }
 
   function showBanner() {
     var L = t();
@@ -162,8 +148,8 @@
       '<button type="button" class="eih-c-nec">' + L.rej + '</button>' +
       '<button type="button" class="eih-c-custom">' + L.custom + '</button>' +
       '</div>';
-    banner.querySelector('.eih-c-all').addEventListener('click', function () { persist(true, true); fade(banner); showReopen(); });
-    banner.querySelector('.eih-c-nec').addEventListener('click', function () { persist(false, false); fade(banner); showReopen(); });
+    banner.querySelector('.eih-c-all').addEventListener('click', function () { persist(true, true); fade(banner); });
+    banner.querySelector('.eih-c-nec').addEventListener('click', function () { persist(false, false); fade(banner); });
     banner.querySelector('.eih-c-custom').addEventListener('click', openPanel);
     mount(banner);
   }
@@ -172,8 +158,7 @@
   window.EIH_openConsent = openPanel;
 
   function boot() {
-    if (readConsent()) showReopen();   // already chosen → offer to change
-    else showBanner();                 // first visit → ask
+    if (!readConsent()) showBanner();  // prima visita → chiedi; poi footer link
   }
   if (document.body) boot();
   else document.addEventListener('DOMContentLoaded', boot);
