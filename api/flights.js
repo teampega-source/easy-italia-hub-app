@@ -41,40 +41,34 @@ const ICAO = {
   W6:'WZZ', U2:'EZY', VY:'VLG', NO:'NOS', A3:'AEE', PC:'PGT', XQ:'SXS',
 };
 
-// L'API anonima di OpenSky ha un budget giornaliero e ogni tanto risponde 503.
-// Lo snapshot viene riusato per SNAP_TTL su questa istanza: più utenti che
-// cercano voli diversi nello stesso minuto costano una sola chiamata.
-// Il bounding box copre il corridoio Italia ↔ Colombo e dimezza il payload
-// (~470 KB invece di ~880 KB): da Vercel la risposta globale supera il timeout.
-const SNAP_TTL = 45_000;
-const FETCH_TIMEOUT = 8_000;
-const BBOX = 'lamin=0&lomin=0&lamax=60&lomax=95';
-let snapAt = 0, snapData = null, snapPending = null;
+// Sorgenti ADS-B di comunità: ricerca diretta per callsign, risposta di pochi KB.
+// (OpenSky non è utilizzabile da qui: rallenta gli IP dei datacenter fino al timeout.)
+// Due fonti equivalenti, la seconda copre l'indisponibilità della prima.
+const ADSB = [
+  (cs) => 'https://api.adsb.lol/v2/callsign/' + cs,
+  (cs) => 'https://opendata.adsb.fi/api/v2/callsign/' + cs,
+];
+const FETCH_TIMEOUT = 6_000;
 
-async function fetchStates() {
-  const ac = new AbortController();
-  const timer = setTimeout(() => ac.abort(), FETCH_TIMEOUT);
-  try {
-    const r = await fetch('https://opensky-network.org/api/states/all?' + BBOX, {
-      signal: ac.signal,
-      headers: { 'User-Agent': 'EasyItaliaHub/1.0 (+https://easyitaliahub.it)' },
-    });
-    if (!r.ok) throw new Error('opensky ' + r.status);
-    return (await r.json()).states || [];
-  } finally {
-    clearTimeout(timer);
+async function lookup(callsign) {
+  for (const url of ADSB) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT);
+    try {
+      const r = await fetch(url(callsign), {
+        signal: ctrl.signal,
+        headers: { 'User-Agent': 'EasyItaliaHub/1.0 (+https://easyitaliahub.it)' },
+      });
+      if (!r.ok) throw new Error('http ' + r.status);
+      const ac = (await r.json()).ac;
+      if (Array.isArray(ac)) return ac[0] || null;   // fonte raggiungibile: esito valido
+    } catch (e) {
+      console.error('[flights/track]', url(callsign), e.message);
+    } finally {
+      clearTimeout(timer);
+    }
   }
-}
-
-function snapshot() {
-  if (snapData && Date.now() - snapAt < SNAP_TTL) return Promise.resolve(snapData);
-  if (!snapPending) {
-    snapPending = fetchStates()
-      .then((s) => { snapData = s; snapAt = Date.now(); return s; })
-      .catch((e) => { console.error('[flights/track] opensky error', e.message); return null; })
-      .finally(() => { snapPending = null; });
-  }
-  return snapPending;
+  return undefined;   // nessuna fonte raggiungibile (≠ volo non trovato)
 }
 
 async function handleTrack(req, res, q) {
@@ -86,26 +80,25 @@ async function handleTrack(req, res, q) {
   if (!m) return res.status(400).json({ error: 'Numero di volo non valido. Esempio: UL566' });
 
   const [, iata, num] = m;
-  const states = await snapshot();
-  if (!states) return res.status(200).json({ error: 'service_down', flight: iata + num });
+  const flight = iata + num;
+  const a = await lookup((ICAO[iata] || iata) + num);
 
-  // Il callsign ADS-B è ICAO+numero, con zeri iniziali variabili (ALK566 / ALK0566).
-  const want = new RegExp('^' + (ICAO[iata] || iata) + '0*' + num + '$');
-  const s = states.find((a) => want.test(String(a[1] || '').trim()));
+  if (a === undefined) return res.status(200).json({ error: 'service_down', flight });
 
   res.setHeader('Cache-Control', 'public, s-maxage=45, stale-while-revalidate=30');
-  if (!s) return res.status(200).json({ found: false, flight: iata + num });
+  if (!a) return res.status(200).json({ found: false, flight });
 
+  const feetToM = (f) => (typeof f === 'number' ? Math.round(f * 0.3048) : null);
   return res.status(200).json({
     found: true,
-    flight: iata + num,
-    callsign: String(s[1] || '').trim(),
-    country: s[2] || null,
-    lon: s[5], lat: s[6],
-    altitude: s[13] != null ? s[13] : s[7],   // geometrica, fallback barometrica
-    velocity: s[9],                            // m/s
-    heading: s[10],
-    onGround: !!s[8],
+    flight,
+    callsign: String(a.flight || '').trim(),
+    registration: a.r || null,
+    aircraft: a.desc || a.t || null,
+    lat: a.lat, lon: a.lon,
+    altitude: feetToM(typeof a.alt_geom === 'number' ? a.alt_geom : a.alt_baro),
+    speed: typeof a.gs === 'number' ? Math.round(a.gs * 1.852) : null,   // nodi → km/h
+    onGround: a.alt_baro === 'ground',
   });
 }
 
