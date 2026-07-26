@@ -50,25 +50,48 @@ const ADSB = [
 ];
 const FETCH_TIMEOUT = 6_000;
 
-async function lookup(callsign) {
+// Fra più aerei con lo stesso codice si sceglie quello in volo: l'equipaggio
+// imposta il callsign già al gate, quindi il primo risultato può essere fermo a terra.
+function pickBest(list) {
+  if (!list || !list.length) return null;
+  return list.find((a) => a.alt_baro !== 'ground' && typeof a.lat === 'number') || list[0];
+}
+
+async function fetchCallsign(url) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT);
+  try {
+    const r = await fetch(url, {
+      signal: ctrl.signal,
+      headers: { 'User-Agent': 'EasyItaliaHub/1.0 (+https://easyitaliahub.it)' },
+    });
+    if (!r.ok) throw new Error('http ' + r.status);
+    const ac = (await r.json()).ac;
+    return Array.isArray(ac) ? ac : null;
+  } catch (e) {
+    console.error('[flights/track]', url, e.message);
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// Alcuni transponder trasmettono il numero con zeri iniziali (ALK0566): si provano
+// entrambe le forme prima di dichiarare il volo non trovato.
+async function lookup(prefix, num) {
+  const forms = [prefix + num];
+  if (num.length < 4) forms.push(prefix + num.padStart(4, '0'));
+  let reachable = false;
   for (const url of ADSB) {
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT);
-    try {
-      const r = await fetch(url(callsign), {
-        signal: ctrl.signal,
-        headers: { 'User-Agent': 'EasyItaliaHub/1.0 (+https://easyitaliahub.it)' },
-      });
-      if (!r.ok) throw new Error('http ' + r.status);
-      const ac = (await r.json()).ac;
-      if (Array.isArray(ac)) return ac[0] || null;   // fonte raggiungibile: esito valido
-    } catch (e) {
-      console.error('[flights/track]', url(callsign), e.message);
-    } finally {
-      clearTimeout(timer);
+    for (const cs of forms) {
+      const list = await fetchCallsign(url(cs));
+      if (list === null) continue;                 // fonte non raggiungibile
+      reachable = true;
+      const hit = pickBest(list);
+      if (hit) return hit;
     }
   }
-  return undefined;   // nessuna fonte raggiungibile (≠ volo non trovato)
+  return reachable ? null : undefined;             // null = non trovato · undefined = fonti giù
 }
 
 async function handleTrack(req, res, q) {
@@ -81,7 +104,7 @@ async function handleTrack(req, res, q) {
 
   const [, iata, num] = m;
   const flight = iata + num;
-  const a = await lookup((ICAO[iata] || iata) + num);
+  const a = await lookup(ICAO[iata] || iata, num);
 
   if (a === undefined) return res.status(200).json({ error: 'service_down', flight });
 
