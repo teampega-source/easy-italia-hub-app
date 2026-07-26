@@ -318,6 +318,21 @@ html.returning #preloader{display:none}
 .sim-row b{color:var(--ink);font-variant-numeric:tabular-nums}
 .sim-note{font-size:var(--text-xs);color:var(--fg-muted);margin-top:var(--sp-2);line-height:1.5}
 .sim-go{margin-top:.4rem}
+
+/* ── Incoraggiamento: robot che fa il tifo ── */
+#jr-cheer{position:fixed;left:1.5rem;bottom:1.5rem;z-index:500;display:flex;align-items:center;gap:.85rem;
+  max-width:min(340px,calc(100vw - 3rem));padding:.85rem 1.1rem .85rem .9rem;border-radius:18px;
+  background:var(--bg-elevated,#fff);border:1px solid var(--border-bright,rgba(0,0,0,.12));
+  box-shadow:0 18px 44px rgba(20,30,48,.20);opacity:0;transform:translateY(14px) scale(.94);
+  pointer-events:none;transition:opacity .28s ease,transform .38s cubic-bezier(.2,1.3,.4,1)}
+#jr-cheer.show{opacity:1;transform:translateY(0) scale(1)}
+#jr-cheer .jr-bot{width:44px;height:56px;flex-shrink:0;animation:jrBotJump .62s cubic-bezier(.2,1.3,.4,1)}
+#jr-cheer .jr-bot svg{width:100%;height:100%;display:block;overflow:visible}
+#jr-cheer strong{display:block;font-family:'Clash Grotesk',sans-serif;font-size:1rem;color:var(--ink)}
+#jr-cheer span{display:block;font-size:.86rem;line-height:1.45;color:var(--fg-secondary,#555);margin-top:.15rem}
+@keyframes jrBotJump{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-13px) scale(1.09)}100%{transform:translateY(0) scale(1)}}
+@media(max-width:640px){#jr-cheer{left:.75rem;right:.75rem;bottom:.75rem;max-width:none}}
+@media(prefers-reduced-motion:reduce){#jr-cheer{transition:opacity .2s}#jr-cheer .jr-bot{animation:none}}
 </style>
 <script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
 </head>
@@ -592,7 +607,7 @@ html.returning #preloader{display:none}
 const I18N={
   it:{"nav.guide":"Guide","nav.community":"Community","nav.journey":"Il Mio Percorso","nav.news":"News","nav.login":"Accedi","nav.signup":"Registrati gratis",
     "jr.eyebrow":"La tua piattaforma di percorso","jr.title":"Il Mio <em>Percorso</em>","jr.intro":"Non un elenco di pratiche, ma la mappa della tua vita in Italia. Sai sempre dove sei e qual è il prossimo passo — con il Consigliere AI al tuo fianco, fase dopo fase.","jr.progress":"Il tuo avanzamento","jr.phases":"fasi",
-    "st.done":"Completata","st.current":"In corso","st.todo":"Da fare","st.locked":"Bloccata","st.next":"Prossimo passo","st.ask":"Chiedi al Consigliere","st.markCurrent":"Sono qui ora","st.markDone":"Segna completata","st.lockMsg":"Registrati per sbloccare questa fase.","st.unlock":"Sblocca",
+    "st.done":"Completata","st.current":"In corso","st.todo":"Da fare","st.locked":"Bloccata","st.next":"Prossimo passo","st.ask":"Chiedi al Consigliere","st.markCurrent":"Segna completata","st.markDone":"Segna completata","st.lockMsg":"Registrati per sbloccare questa fase.","st.unlock":"Sblocca",
     "gate.title":"Continua il tuo percorso","gate.text":"La prima fase è libera. Registrati gratis per sbloccare tutte e 9 le fasi, salvare i tuoi progressi e ricevere consigli su misura dal Consigliere AI.","gate.cta":"Registrati gratis e sblocca",
     "chat.name":"Consigliere Easy Italia","chat.status":"Online ora","chat.welcome":"Ciao! Sono il tuo Consigliere di percorso. Dimmi a che punto sei e ti suggerisco il prossimo passo concreto.","chat.now":"Ora","chat.placeholder":"Scrivi un messaggio…","chat.mic":"Inserisci voce","chat.ainote":"L'Intelligenza Artificiale fornisce informazioni generali basate su fonti pubbliche. Non sostituisce in alcun modo la consulenza legale di un avvocato, di un Patronato o di un CAF autorizzato. Easy Italia Hub declina ogni responsabilità per errori o per l'uso improprio delle informazioni.","chat.err":"Al momento non riesco a contattare il Consigliere. Riprova tra poco.",
     "auth.name":"Nome completo","auth.email":"Email","auth.pass":"Password","auth.signup":"Registrati gratis","auth.login":"Accedi","auth.haveAccount":"Hai già un account?","auth.noAccount":"Non hai un account?","auth.createTitle":"Crea il tuo account","auth.createSub":"Registrati gratis e sblocca il tuo percorso","auth.welcomeTitle":"Bentornato","auth.welcomeSub":"Accedi al tuo account Easy Italia Hub",
@@ -603,7 +618,7 @@ const I18N={
     "tool.match":"Abbina la parola","match.title":"Abbina la parola","match.sub":"Scegli il significato giusto del termine. Buon divertimento!","match.prompt":"Cosa significa…","match.next":"Avanti","match.retry":"Riprova","match.correct":"Esatto!","match.wrong":"Quasi! Il significato giusto è:","match.scorePre":"Hai abbinato","match.scorePost":"parole su","match.q":"Parola"},
   en:{"nav.guide":"Guides","nav.community":"Community","nav.journey":"My Journey","nav.news":"News","nav.login":"Log in","nav.signup":"Sign up free",
     "jr.eyebrow":"Your journey platform","jr.title":"My <em>Journey</em>","jr.intro":"Not a list of paperwork, but the map of your life in Italy. You always know where you are and the next step — with the AI Advisor beside you, phase by phase.","jr.progress":"Your progress","jr.phases":"phases",
-    "st.done":"Completed","st.current":"In progress","st.todo":"To do","st.locked":"Locked","st.next":"Next step","st.ask":"Ask the Advisor","st.markCurrent":"I'm here now","st.markDone":"Mark completed","st.lockMsg":"Sign up to unlock this phase.","st.unlock":"Unlock",
+    "st.done":"Completed","st.current":"In progress","st.todo":"To do","st.locked":"Locked","st.next":"Next step","st.ask":"Ask the Advisor","st.markCurrent":"Mark completed","st.markDone":"Mark completed","st.lockMsg":"Sign up to unlock this phase.","st.unlock":"Unlock",
     "gate.title":"Continue your journey","gate.text":"The first phase is free. Sign up for free to unlock all 9 phases, save your progress and get tailored advice from the AI Advisor.","gate.cta":"Sign up free and unlock",
     "chat.name":"Easy Italia Advisor","chat.status":"Online now","chat.welcome":"Hi! I'm your journey Advisor. Tell me where you are and I'll suggest the concrete next step.","chat.now":"Now","chat.placeholder":"Type a message…","chat.mic":"Voice input","chat.ainote":"Artificial Intelligence provides general information based on public sources. It is in no way a substitute for the legal advice of a lawyer, a Patronato or an authorised CAF. Easy Italia Hub accepts no liability for errors or misuse of the information.","chat.err":"I can't reach the Advisor right now. Please try again shortly.",
     "auth.name":"Full name","auth.email":"Email","auth.pass":"Password","auth.signup":"Sign up free","auth.login":"Log in","auth.haveAccount":"Already have an account?","auth.noAccount":"No account yet?","auth.createTitle":"Create your account","auth.createSub":"Sign up free and unlock your journey","auth.welcomeTitle":"Welcome back","auth.welcomeSub":"Log in to your Easy Italia Hub account",
@@ -614,7 +629,7 @@ const I18N={
     "tool.match":"Match the word","match.title":"Match the word","match.sub":"Pick the right meaning of the term. Have fun!","match.prompt":"What does it mean…","match.next":"Next","match.retry":"Try again","match.correct":"Correct!","match.wrong":"Almost! The right meaning is:","match.scorePre":"You matched","match.scorePost":"words out of","match.q":"Word"},
   si:{"nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.journey":"මගේ ගමන","nav.news":"පුවත්","nav.login":"පිවිසෙන්න","nav.signup":"නොමිලේ ලියාපදිංචි වන්න",
     "jr.eyebrow":"ඔබේ ගමන් වේදිකාව","jr.title":"මගේ <em>ගමන</em>","jr.intro":"ලේඛන ලැයිස්තුවක් නොව, ඉතාලියේ ඔබේ ජීවිතයේ සිතියම. ඔබ සිටින තැන සහ මීළඟ පියවර සැමවිටම දැනගන්න — සෑම අදියරකදීම AI උපදේශක ඔබ සමඟ.","jr.progress":"ඔබේ ප්‍රගතිය","jr.phases":"අදියර",
-    "st.done":"සම්පූර්ණයි","st.current":"ක්‍රියාත්මකයි","st.todo":"කළ යුතුයි","st.locked":"අගුලු දමා ඇත","st.next":"මීළඟ පියවර","st.ask":"උපදේශකගෙන් අසන්න","st.markCurrent":"මම දැන් මෙහි","st.markDone":"සම්පූර්ණ ලෙස සලකුණු කරන්න","st.lockMsg":"මෙම අදියර අගුළු ඇරීමට ලියාපදිංචි වන්න.","st.unlock":"අගුළු හරින්න",
+    "st.done":"සම්පූර්ණයි","st.current":"ක්‍රියාත්මකයි","st.todo":"කළ යුතුයි","st.locked":"අගුලු දමා ඇත","st.next":"මීළඟ පියවර","st.ask":"උපදේශකගෙන් අසන්න","st.markCurrent":"සම්පූර්ණ ලෙස සලකුණු කරන්න","st.markDone":"සම්පූර්ණ ලෙස සලකුණු කරන්න","st.lockMsg":"මෙම අදියර අගුළු ඇරීමට ලියාපදිංචි වන්න.","st.unlock":"අගුළු හරින්න",
     "gate.title":"ඔබේ ගමන දිගටම කරගෙන යන්න","gate.text":"පළමු අදියර නොමිලේ. අදියර 9ම අගුළු ඇරීමට, ඔබේ ප්‍රගතිය සුරැකීමට සහ AI උපදේශකගෙන් උපදෙස් ලබා ගැනීමට නොමිලේ ලියාපදිංචි වන්න.","gate.cta":"නොමිලේ ලියාපදිංචි වී අගුළු හරින්න",
     "chat.name":"Easy Italia උපදේශක","chat.status":"දැන් සබැඳිව","chat.welcome":"ආයුබෝවන්! මම ඔබේ ගමන් උපදේශකයා. ඔබ සිටින තැන කියන්න, මම මීළඟ පියවර යෝජනා කරමි.","chat.now":"දැන්","chat.placeholder":"පණිවිඩයක් ටයිප් කරන්න…","chat.mic":"හඬ ආදානය","chat.ainote":"කෘත්‍රිම බුද්ධිය පොදු මූලාශ්‍ර මත පදනම්ව සාමාන්‍ය තොරතුරු සපයයි. එය නීතිඥයෙකුගේ, Patronato එකක හෝ බලයලත් CAF එකක නෛතික උපදෙස් කිසිසේත්ම ආදේශ නොකරයි. තොරතුරුවල දෝෂ හෝ අනිසි භාවිතය සම්බන්ධයෙන් Easy Italia Hub කිසිදු වගකීමක් නොදරයි.","chat.err":"මට දැන් උපදේශක වෙත සම්බන්ධ විය නොහැක. මඳ වේලාවකින් උත්සාහ කරන්න.",
     "auth.name":"සම්පූර්ණ නම","auth.email":"විද්‍යුත් තැපෑල","auth.pass":"මුරපදය","auth.signup":"නොමිලේ ලියාපදිංචි වන්න","auth.login":"පිවිසෙන්න","auth.haveAccount":"දැනටමත් ගිණුමක් තිබේද?","auth.noAccount":"ගිණුමක් නැද්ද?","auth.createTitle":"ඔබේ ගිණුම සාදන්න","auth.createSub":"නොමිලේ ලියාපදිංචි වී ඔබේ ගමන අගුළු හරින්න","auth.welcomeTitle":"නැවත සාදරයෙන් පිළිගනිමු","auth.welcomeSub":"ඔබේ Easy Italia Hub ගිණුමට පිවිසෙන්න",
@@ -625,7 +640,7 @@ const I18N={
     "tool.match":"වචනය ගළපන්න","match.title":"වචනය ගළපන්න","match.sub":"පදයේ නිවැරදි අර්ථය තෝරන්න. සුබ පැතුම්!","match.prompt":"මෙහි අර්ථය කුමක්ද…","match.next":"ඊළඟ","match.retry":"නැවත උත්සාහ කරන්න","match.correct":"හරි!","match.wrong":"පාහේ! නිවැරදි අර්ථය:","match.scorePre":"ඔබ ගැළපුවා","match.scorePost":"න් වචන","match.q":"වචනය"},
   ta:{"nav.guide":"வழிகாட்டிகள்","nav.community":"சமூகம்","nav.journey":"என் பயணம்","nav.news":"செய்திகள்","nav.login":"உள்நுழை","nav.signup":"இலவசமாக பதிவு செய்",
     "jr.eyebrow":"உங்கள் பயண தளம்","jr.title":"என் <em>பயணம்</em>","jr.intro":"ஆவண பட்டியல் மட்டுமல்ல, இத்தாலியில் உங்கள் வாழ்க்கையின் வரைபடம். நீங்கள் எங்கே இருக்கிறீர்கள் என்பதும் அடுத்த படியும் எப்போதும் தெரியும் — ஒவ்வொரு கட்டத்திலும் AI ஆலோசகர் உங்களுடன்.","jr.progress":"உங்கள் முன்னேற்றம்","jr.phases":"கட்டங்கள்",
-    "st.done":"முடிந்தது","st.current":"நடைபெறுகிறது","st.todo":"செய்ய வேண்டியவை","st.locked":"பூட்டப்பட்டது","st.next":"அடுத்த படி","st.ask":"ஆலோசகரிடம் கேளுங்கள்","st.markCurrent":"நான் இப்போது இங்கே","st.markDone":"முடிந்ததாக குறி","st.lockMsg":"இந்த கட்டத்தை திறக்க பதிவு செய்யுங்கள்.","st.unlock":"திறக்கவும்",
+    "st.done":"முடிந்தது","st.current":"நடைபெறுகிறது","st.todo":"செய்ய வேண்டியவை","st.locked":"பூட்டப்பட்டது","st.next":"அடுத்த படி","st.ask":"ஆலோசகரிடம் கேளுங்கள்","st.markCurrent":"முடிந்ததாக குறி","st.markDone":"முடிந்ததாக குறி","st.lockMsg":"இந்த கட்டத்தை திறக்க பதிவு செய்யுங்கள்.","st.unlock":"திறக்கவும்",
     "gate.title":"உங்கள் பயணத்தை தொடருங்கள்","gate.text":"முதல் கட்டம் இலவசம். அனைத்து 9 கட்டங்களையும் திறக்க, முன்னேற்றத்தை சேமிக்க, AI ஆலோசகரிடம் தனிப்பட்ட ஆலோசனை பெற இலவசமாக பதிவு செய்யுங்கள்.","gate.cta":"இலவசமாக பதிவு செய்து திறக்கவும்",
     "chat.name":"Easy Italia ஆலோசகர்","chat.status":"இப்போது ஆன்லைனில்","chat.welcome":"வணக்கம்! நான் உங்கள் பயண ஆலோசகர். நீங்கள் எங்கே இருக்கிறீர்கள் என்று சொல்லுங்கள், அடுத்த நடைமுறை படியை பரிந்துரைக்கிறேன்.","chat.now":"இப்போது","chat.placeholder":"ஒரு செய்தி தட்டச்சு செய்யுங்கள்…","chat.mic":"குரல் உள்ளீடு","chat.ainote":"செயற்கை நுண்ணறிவு பொது ஆதாரங்களின் அடிப்படையில் பொதுவான தகவலை வழங்குகிறது. இது ஒரு வழக்கறிஞர், Patronato அல்லது அங்கீகரிக்கப்பட்ட CAF இன் சட்ட ஆலோசனைக்கு எந்த வகையிலும் மாற்றாகாது. தகவலின் பிழைகள் அல்லது தவறான பயன்பாட்டிற்கு Easy Italia Hub எந்தப் பொறுப்பையும் ஏற்காது.","chat.err":"இப்போது ஆலோசகரை அணுக முடியவில்லை. சிறிது நேரத்தில் மீண்டும் முயற்சிக்கவும்.",
     "auth.name":"முழு பெயர்","auth.email":"மின்னஞ்சல்","auth.pass":"கடவுச்சொல்","auth.signup":"இலவசமாக பதிவு செய்","auth.login":"உள்நுழை","auth.haveAccount":"ஏற்கனவே கணக்கு உள்ளதா?","auth.noAccount":"கணக்கு இல்லையா?","auth.createTitle":"உங்கள் கணக்கை உருவாக்கவும்","auth.createSub":"இலவசமாக பதிவு செய்து உங்கள் பயணத்தை திறக்கவும்","auth.welcomeTitle":"மீண்டும் வரவேற்கிறோம்","auth.welcomeSub":"உங்கள் Easy Italia Hub கணக்கில் உள்நுழையுங்கள்",
@@ -766,7 +781,7 @@ function renderPhases(){
         '<div class="next-step"><span class="ns-ico">→</span><span class="ns-text"><b>'+t('st.next')+':</b> '+next+'</span></div>'+
         '<div class="phase-actions">'+
           '<button class="btn-advisor" onclick="askAdvisor('+n+')"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> '+t('st.ask')+'</button>'+
-          (status!=='current'?'<button class="btn-mark" onclick="setCurrent('+n+')">'+t('st.markCurrent')+'</button>':'')+
+          (status!=='done'?'<button class="btn-mark" onclick="setCurrent('+n+')">'+t('st.markCurrent')+'</button>':'')+
         '</div>';
     }
     el.innerHTML=
@@ -801,11 +816,53 @@ function revealPhases(){
 function togglePhase(n){state._open=(state._open===n?0:n);renderPhases();}
 function toggleStep(n,i){
   if(n>1 && !isRegistered()){location.href='/registrati?next=/percorso';return;}
-  const k=n+'-'+i; state.completed[k]=!state.completed[k]; saveState(state); state._open=n; renderPhases();
+  const k=n+'-'+i, on=!state.completed[k];
+  state.completed[k]=on;
+  if(on)state.current=n;                       // spuntare un passo = sei in questa fase
+  saveState(state); state._open=n; renderPhases();
+  if(!on)return;
+  if(completedPhaseCount()===9)cheer('all');
+  else if(phaseStatus(n)==='done')cheer('phase');
+  else cheer('step');
 }
 function setCurrent(n){
   if(n>1 && !isRegistered()){location.href='/registrati?next=/percorso';return;}
-  state.current=n; saveState(state); state._open=n; renderPhases();
+  PHASES[n-1].steps.forEach((s,i)=>{state.completed[n+'-'+i]=true;});
+  state.current=Math.min(n+1,9); saveState(state); state._open=n; renderPhases();
+  cheer(completedPhaseCount()===9?'all':'phase');
+}
+/* ═══ Incoraggiamento: la mascotte fa il tifo a ogni progresso ═══ */
+const CHEER_MSG={
+  it:{step:[['Bravo!','Un passo in meno. Continua così.'],['Ottimo lavoro!','Stai andando alla grande.'],['Ben fatto!','Ogni passo conta davvero.'],['Avanti così!','Sei sulla strada giusta.']],
+      phase:['Fase completata! 🎉','Grande traguardo. Sei più vicino alla tua meta.'],
+      all:['Percorso completato! 🏆','Hai finito tutte le fasi. Complimenti davvero.']},
+  en:{step:[['Well done!','One step closer. Keep going.'],['Great job!','You are doing really well.'],['Nice one!','Every step counts.'],['Keep it up!','You are on the right track.']],
+      phase:['Phase completed! 🎉','A real milestone. You are closer to your goal.'],
+      all:['Journey completed! 🏆','You finished every phase. Congratulations.']},
+  si:{step:[['සුපිරි!','තව එක් පියවරක්. දිගටම කරගෙන යන්න.'],['හොඳ වැඩක්!','ඔබ ඉතා හොඳින් කරගෙන යනවා.'],['නියමයි!','සෑම පියවරක්ම වැදගත්.'],['ඉදිරියට!','ඔබ නිවැරදි මාර්ගයේ.']],
+      phase:['අදියර සම්පූර්ණයි! 🎉','විශිෂ්ට ජයග්‍රහණයක්. ඔබ ඉලක්කයට තව ළං වී ඇත.'],
+      all:['ගමන සම්පූර්ණයි! 🏆','ඔබ සියලු අදියර නිම කළා. සුබ පැතුම්!']},
+  ta:{step:[['அருமை!','ஒரு படி நெருக்கம். தொடருங்கள்.'],['நல்ல வேலை!','நீங்கள் சிறப்பாக செய்கிறீர்கள்.'],['பலே!','ஒவ்வொரு படியும் முக்கியம்.'],['தொடருங்கள்!','நீங்கள் சரியான பாதையில்.']],
+      phase:['கட்டம் முடிந்தது! 🎉','ஒரு பெரிய மைல்கல். இலக்குக்கு நெருக்கமாகிவிட்டீர்கள்.'],
+      all:['பயணம் முடிந்தது! 🏆','அனைத்து கட்டங்களையும் முடித்தீர்கள். வாழ்த்துக்கள்.']}
+};
+let _cheerEl=null,_cheerT=null;
+function cheer(kind){
+  const m=CHEER_MSG[currentLang]||CHEER_MSG.it;
+  const pair=kind==='step'?m.step[Math.floor(Math.random()*m.step.length)]:m[kind];
+  if(!_cheerEl){
+    _cheerEl=document.createElement('div');
+    _cheerEl.id='jr-cheer';_cheerEl.setAttribute('role','status');_cheerEl.setAttribute('aria-live','polite');
+    _cheerEl.innerHTML='<div class="jr-bot"><svg viewBox="0 0 62 80" aria-hidden="true"><defs><linearGradient id="jrMg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--blue)"/><stop offset="1" stop-color="var(--blue-deep)"/></linearGradient></defs><line x1="31" y1="15" x2="31" y2="6" stroke="var(--taupe)" stroke-width="2" stroke-linecap="round"/><circle cx="31" cy="5" r="3.2" fill="var(--gold)"/><rect x="13" y="14" width="36" height="30" rx="12" fill="url(#jrMg)"/><rect x="17" y="19" width="28" height="20" rx="8" fill="#0e2746"/><ellipse class="eih-m-eye" cx="26" cy="29" rx="3" ry="4" fill="#bfe0ff"/><ellipse class="eih-m-eye" cx="36" cy="29" rx="3" ry="4" fill="#bfe0ff"/><path d="M25 34q6 4 12 0" stroke="#7fc6ff" stroke-width="1.6" fill="none" stroke-linecap="round"/><rect x="20" y="44" width="7.3" height="5" rx="1" fill="#2e9e5b"/><rect x="27.3" y="44" width="7.4" height="5" rx="1" fill="#f4f4f0"/><rect x="34.7" y="44" width="7.3" height="5" rx="1" fill="#d64550"/><rect x="18" y="48" width="26" height="24" rx="10" fill="url(#jrMg)"/><rect x="24" y="55" width="14" height="9" rx="4" fill="#0e2746" opacity=".5"/><g class="eih-m-arm"><rect x="42" y="50" width="6" height="15" rx="3" fill="var(--blue-deep)"/><circle cx="45" cy="50" r="4" fill="var(--gold)"/></g></svg></div><div><strong></strong><span></span></div>';
+    document.body.appendChild(_cheerEl);
+  }
+  _cheerEl.querySelector('strong').textContent=pair[0];
+  _cheerEl.querySelector('span').textContent=pair[1];
+  const bot=_cheerEl.querySelector('.jr-bot');
+  bot.style.animation='none';void bot.offsetWidth;bot.style.animation='';
+  _cheerEl.classList.add('show');
+  clearTimeout(_cheerT);
+  _cheerT=setTimeout(()=>{_cheerEl.classList.remove('show');},kind==='step'?3200:4600);
 }
 
 /* ═══ Auth (demo: signup sets registered flag in localStorage) ═══ */
