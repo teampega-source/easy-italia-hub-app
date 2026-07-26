@@ -71,6 +71,8 @@
       <aside class="city-rail" aria-label="Città disponibili">
         <p class="rail-title" data-i18n="mp.2">Città</p>
         <div class="city-list" id="city-list" role="list"><!-- city buttons injected by script --></div>
+        <button type="button" class="near-btn" id="near-btn">📍 <span>Trova CAF e patronati vicino a me</span></button>
+        <div id="near-out" class="near-out" aria-live="polite"></div>
         <p class="muted rail-hint" data-i18n="mp.3">Seleziona una città per centrarla sulla mappa e vedere i servizi.</p>
       </aside>
 
@@ -190,6 +192,20 @@
   @media(max-width:480px){
     .city-btn{flex:1 1 100%}
   }
+
+  /* Ricerca per posizione */
+  [data-page="mappa"] .near-btn{width:100%;margin:.6rem 0 .2rem;padding:.7rem 1rem;border-radius:var(--radius-sm);
+    border:1px solid var(--border-bright);background:var(--surface);color:var(--ink);font:inherit;font-size:var(--text-sm);
+    font-weight:600;cursor:pointer;text-align:left;transition:border-color var(--dur-micro),background var(--dur-micro)}
+  [data-page="mappa"] .near-btn:hover{border-color:var(--gold);background:var(--surface-hover,var(--surface))}
+  [data-page="mappa"] .near-btn[disabled]{opacity:.6;cursor:default}
+  [data-page="mappa"] .near-out{font-size:var(--text-sm);color:var(--fg-secondary)}
+  [data-page="mappa"] .near-out ul{list-style:none;margin:.5rem 0 0;padding:0;display:flex;flex-direction:column;gap:.5rem}
+  [data-page="mappa"] .near-out li{padding:.55rem .7rem;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--border)}
+  [data-page="mappa"] .near-out .nm{font-weight:600;color:var(--ink);display:block}
+  [data-page="mappa"] .near-out .ad{font-size:.82rem;color:var(--fg-muted)}
+  [data-page="mappa"] .near-out .di{font-size:.78rem;color:var(--gold);font-weight:600}
+  [data-page="mappa"] .near-out .err{color:var(--fg-muted)}
 </style>
 
 <!-- ░░ LEAFLET (exact CSP-allowed URLs) ░░ -->
@@ -265,6 +281,112 @@
   /* ── STATE ── */
   var state = { cat:'all', city:CITIES[0].id };
   var map = null, markers = {};
+  var nearLayer = [];
+
+  /* Ricerca in tempo reale dei CAF/patronati attorno alla posizione dell'utente.
+     I dati arrivano da Nominatim (OpenStreetMap): niente chiave, ma va usato con
+     parsimonia — una richiesta per clic. Se la posizione è negata o la ricerca
+     non risponde, si resta sull'elenco curato delle città. */
+  function distKm(a, b, c, d){
+    var R=6371, p=Math.PI/180;
+    var dLat=(c-a)*p, dLon=(d-b)*p;
+    var x=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(a*p)*Math.cos(c*p)*Math.sin(dLon/2)*Math.sin(dLon/2);
+    return R*2*Math.atan2(Math.sqrt(x), Math.sqrt(1-x));
+  }
+  function nearestCity(lat, lon){
+    var best=null, bd=Infinity;
+    CITIES.forEach(function(c){
+      var d=distKm(lat, lon, c.coords[0], c.coords[1]);
+      if(d<bd){ bd=d; best=c; }
+    });
+    return { city: best, km: bd };
+  }
+  function clearNearMarkers(){
+    nearLayer.forEach(function(m){ try{ map.removeLayer(m); }catch(e){} });
+    nearLayer = [];
+  }
+  function findNearMe(){
+    var btn=document.getElementById('near-btn'), out=document.getElementById('near-out');
+    if(!navigator.geolocation){ out.innerHTML='<p class="err">Il tuo browser non permette la geolocalizzazione.</p>'; return; }
+    btn.disabled=true; out.innerHTML='<p class="err">Cerco la tua posizione…</p>';
+
+    navigator.geolocation.getCurrentPosition(function(pos){
+      var lat=pos.coords.latitude, lon=pos.coords.longitude;
+      var near=nearestCity(lat, lon);
+      if(near.city) selectCity(near.city.id);
+      out.innerHTML='<p class="err">Cerco i CAF e i patronati vicino a te…</p>';
+
+      // riquadro di ~15 km attorno all'utente
+      var d=0.14;
+      var box='&viewbox='+(lon-d)+','+(lat+d)+','+(lon+d)+','+(lat-d);
+      function query(q){
+        return fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=20&bounded=1&q='+
+                     encodeURIComponent(q)+box, { headers:{ 'Accept':'application/json' } })
+          .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
+          .catch(function(){ return []; });
+      }
+      // Due ricerche distinte: "patronato" e "CAF" restituiscono insiemi diversi
+      // e insieme coprono quasi tutti gli sportelli mappati. Una alla volta,
+      // come chiede il regolamento d'uso di Nominatim.
+      query('patronato')
+        .then(function(a){ return query('CAF').then(function(b){ return a.concat(b); }); })
+        .then(function(raw){
+          var seen={}, list=[];
+          raw.forEach(function(p){
+            var k=p.osm_type+'/'+p.osm_id;
+            if(p.lat && !seen[k]){ seen[k]=1; list.push(p); }
+          });
+          return list;
+        })
+        .then(function(list){
+          btn.disabled=false;
+          if(!list || !list.length){
+            out.innerHTML='<p class="err">Nessun ufficio trovato nel raggio di 15 km. Sotto trovi i recapiti delle reti nazionali, che coprono tutta Italia.</p>';
+            return;
+          }
+          var items=list.map(function(p){
+            var km=distKm(lat, lon, parseFloat(p.lat), parseFloat(p.lon));
+            var parts=(p.display_name||'').split(',');
+            return { name:(p.name||parts[0]||'Ufficio').trim(),
+                     addr:parts.slice(1,4).join(',').trim(),
+                     lat:parseFloat(p.lat), lon:parseFloat(p.lon), km:km };
+          }).filter(function(i){ return i.km<=15; })
+            .sort(function(a,b){ return a.km-b.km; })
+            .slice(0,10);
+
+          if(!items.length){
+            out.innerHTML='<p class="err">Nessun ufficio trovato nel raggio di 15 km. Sotto trovi i recapiti delle reti nazionali, che coprono tutta Italia.</p>';
+            return;
+          }
+
+          out.innerHTML='<ul>'+items.map(function(i){
+            return '<li><span class="nm">'+esc(i.name)+'</span>'+
+                   '<span class="ad">'+esc(i.addr)+'</span> '+
+                   '<span class="di">'+i.km.toFixed(1)+' km</span></li>';
+          }).join('')+'</ul>';
+
+          if(map && window.L){
+            clearNearMarkers();
+            items.forEach(function(i){
+              var m=L.marker([i.lat, i.lon], { title:i.name });
+              m.addTo(map).bindPopup('<strong>'+esc(i.name)+'</strong><br>'+esc(i.addr));
+              nearLayer.push(m);
+            });
+            try{ map.setView([lat, lon], 12); }catch(e){}
+          }
+        })
+        .catch(function(){
+          btn.disabled=false;
+          out.innerHTML='<p class="err">Ricerca non disponibile in questo momento. Usa i recapiti delle reti nazionali qui sotto.</p>';
+        });
+    }, function(err){
+      btn.disabled=false;
+      out.innerHTML = err && err.code===1
+        ? '<p class="err">Per cercare vicino a te serve il permesso di accedere alla posizione. Puoi comunque scegliere la tua città dall\'elenco.</p>'
+        : '<p class="err">Non riesco a rilevare la posizione. Scegli la tua città dall\'elenco.</p>';
+    }, { timeout:10000, maximumAge:300000 });
+  }
+  function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 
   /* ── DOM refs ── */
   var cityListEl = document.getElementById('city-list');
@@ -335,6 +457,8 @@
   }
 
   /* ── select a city (directory + map) ── */
+  (function(){ var b=document.getElementById('near-btn'); if(b) b.addEventListener('click', findNearMe); })();
+
   function selectCity(id, fromMap){
     state.city = id;
     // update city button active state
