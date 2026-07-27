@@ -4052,12 +4052,14 @@ function applyLang(lang){
   try{localStorage.setItem('eih-lang',lang);}catch(e){}
 }
 /* Nastro sinhala e tamil: serve a chi arriva e non sa che il sito parla la sua
-   lingua. Chi ha gia scelto italiano o inglese non lo vede; chi lo chiude nemmeno. */
+   lingua. Lo vedono tutti, tranne chi lo ha chiuso.
+   La chiave porta la versione: il nastro e cambiato (ora c'e anche il tamil),
+   quindi chi aveva chiuso quello vecchio lo rivede una volta. */
 (function(){
   var bar = document.getElementById('si-bar');
   if(!bar) return;
   var chiuso = null;
-  try{ chiuso = localStorage.getItem('eih-si-bar'); }catch(e){}
+  try{ chiuso = localStorage.getItem('eih-si-bar-2'); }catch(e){}
   if(chiuso === 'off') return;
   bar.hidden = false;
   document.body.classList.add('has-si-bar');
@@ -4066,7 +4068,7 @@ function applyLang(lang){
   if(close) close.addEventListener('click', function(){
     bar.hidden = true;
     document.body.classList.remove('has-si-bar');
-    try{ localStorage.setItem('eih-si-bar','off'); }catch(e){}
+    try{ localStorage.setItem('eih-si-bar-2','off'); }catch(e){}
   });
 
   // il pulsante del nastro apre lo stesso menu della barra in alto
