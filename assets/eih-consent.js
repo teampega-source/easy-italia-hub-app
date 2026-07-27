@@ -123,7 +123,7 @@
       close();
     });
     panel.querySelector('.eih-p-rej').addEventListener('click', function () { persist(false, false); close(); });
-    fade(banner);
+    chiudiFascia();
     mount(panel);
   }
 
@@ -133,6 +133,11 @@
   }
 
   function close() { fade(panel); }
+  function chiudiFascia() {
+    fade(banner);
+    document.body.classList.remove('eih-consent-open');
+    document.body.style.removeProperty('--eih-consent-h');
+  }
 
   function showBanner() {
     var L = t();
@@ -148,17 +153,31 @@
       '<button type="button" class="eih-c-nec">' + L.rej + '</button>' +
       '<button type="button" class="eih-c-custom">' + L.custom + '</button>' +
       '</div>';
-    banner.querySelector('.eih-c-all').addEventListener('click', function () { persist(true, true); fade(banner); });
-    banner.querySelector('.eih-c-nec').addEventListener('click', function () { persist(false, false); fade(banner); });
+    banner.querySelector('.eih-c-all').addEventListener('click', function () { persist(true, true); chiudiFascia(); });
+    banner.querySelector('.eih-c-nec').addEventListener('click', function () { persist(false, false); chiudiFascia(); });
     banner.querySelector('.eih-c-custom').addEventListener('click', openPanel);
     mount(banner);
+    // l'altezza della fascia varia con la lingua e con la larghezza dello
+    // schermo: la pubblichiamo, cosi chi sta in basso puo scansarsi
+    document.body.classList.add('eih-consent-open');
+    var misura = function () {
+      if (!banner || !banner.parentNode) return;
+      document.body.style.setProperty('--eih-consent-h', Math.ceil(banner.getBoundingClientRect().height) + 'px');
+    };
+    misura();
+    window.addEventListener('resize', misura);
   }
 
   // Public: reopen the preferences from anywhere (e.g. a link in the footer).
   window.EIH_openConsent = openPanel;
 
+  // Cinque secondi di respiro: arrivare su una pagina e trovarsi subito
+  // addosso la richiesta cookie e la cosa piu invasiva che ci sia.
+  var RITARDO = 5000;
+
   function boot() {
-    if (!readConsent()) showBanner();  // prima visita → chiedi; poi footer link
+    if (readConsent()) return;              // prima visita → chiedi; poi footer link
+    setTimeout(showBanner, RITARDO);
   }
   if (document.body) boot();
   else document.addEventListener('DOMContentLoaded', boot);
