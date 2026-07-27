@@ -4,7 +4,7 @@
    Le API (/api/) e le richieste cross-origin non vengono mai intercettate. */
 'use strict';
 
-const CACHE = 'eih-v61';
+const CACHE = 'eih-v62';
 const CORE = [
   '/',
   '/eih.css',

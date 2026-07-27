@@ -1,5 +1,7 @@
-/* Monta la nuova foto della hero: converte, pesa e aggiorna il testo alternativo.
-   Uso: node monta-hero.js <file-immagine> "<testo alternativo>" */
+/* Ottimizza una foto per il sito: ritaglia a 5:4, converte in WebP e la pesa.
+   Uso: node monta-hero.js <file-immagine> "<testo alternativo>" <destinazione>
+   La hero mostra l'anteprima del Consigliere AI, non piu una foto: questo
+   script serve quando si vuole rimettere una foto vera da qualche parte. */
 const sharp = require('sharp');   // npm i sharp
 const fs = require('fs');
 const path = require('path');
