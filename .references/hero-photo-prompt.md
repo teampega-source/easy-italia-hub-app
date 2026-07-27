@@ -1,12 +1,14 @@
 # Foto «vera» — prompt anti «sembra fatta con l'AI»
 
-> **Aggiornamento 27/07/2026** — la hero non mostra piu una foto: al suo posto
-> c'e l'anteprima del Consigliere AI. Questo prompt resta valido per quando si
-> vorra una foto autentica altrove (sezione missione, pagine interne, social).
+> **Aggiornamento 27/07/2026** — la hero mostra ora `assets/img/hero-community.webp`,
+> fornita dall'utente: una stretta di mano in piazza, luce invernale piatta,
+> piumini veri, folla sullo sfondo. Molto piu credibile della precedente.
+> Il prompt qui sotto resta valido per le prossime immagini.
 
-L'immagine attuale (`assets/img/community-welcome.webp`) si riconosce subito come
-generata: luce da studio, pelle senza pori, sorrisi simmetrici, bandierine tenute
-in posa, sfondo di palazzo di vetro anonimo. È la classica resa da pubblicità.
+La vecchia immagine (`assets/img/community-welcome.webp`, ora solo poster del
+video in `registrati.html`) si riconosceva subito come generata: luce da studio,
+pelle senza pori, sorrisi simmetrici, bandierine tenute in posa, sfondo di
+palazzo di vetro anonimo. È la classica resa da pubblicità.
 
 Questo prompt è costruito per ottenere l'opposto: **uno scatto rubato**, non una
 posa. Le regole che seguono contano più del soggetto.
