@@ -151,7 +151,7 @@
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
 <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&display=swap" rel="stylesheet"/>
 <style>
 /* ─── TOKENS ─────────────────────────────────────────────── */
 :root{
@@ -2182,13 +2182,19 @@ body.has-si-bar .hero{padding-top:var(--sp-4)}
 .si-viewport{flex:1;overflow:hidden;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 3rem,#000 calc(100% - 3rem),transparent);
   mask-image:linear-gradient(90deg,transparent,#000 3rem,#000 calc(100% - 3rem),transparent)}
-.si-track{display:flex;width:max-content;animation:si-scroll 70s linear infinite}
+.si-track{display:flex;width:max-content;animation:si-scroll 140s linear infinite}
 .si-bar:hover .si-track,.si-bar:focus-within .si-track{animation-play-state:paused}
 .si-run{display:inline-flex;align-items:center;gap:1.6rem;padding-right:1.6rem;white-space:nowrap;
   font-size:.86rem;line-height:1.9;color:var(--fg-secondary)}
 .si-seg{display:inline-flex;align-items:center;gap:.45rem}
 .si-ic{font-size:.95rem;line-height:1}
 .si-dot{color:var(--gold);opacity:.55}
+.si-tag{flex:none;font-size:.68rem;font-weight:600;letter-spacing:.04em;color:var(--gold);
+  background:rgba(124,112,89,.14);border-radius:99px;padding:.14rem .55rem;margin-right:.2rem}
+.si-sep{color:var(--gold);opacity:.5;font-size:.78rem}
+.si-si{font-family:'Noto Sans Sinhala',sans-serif}
+.si-ta{font-family:'Noto Sans Tamil',sans-serif}
+.si-bar{font-family:'Noto Sans Sinhala','Noto Sans Tamil','Satoshi',system-ui,sans-serif}
 .si-close{flex:none;cursor:pointer;background:transparent;border:0;padding:.3rem;border-radius:50%;
   color:var(--fg-muted);display:inline-flex;transition:color var(--dur-micro),background var(--dur-micro)}
 .si-close:hover{color:var(--ink);background:rgba(124,112,89,.14)}
@@ -2656,17 +2662,17 @@ body.has-si-bar .hero{padding-top:var(--sp-4)}
 
 <!-- ─── NASTRO DI BENVENUTO IN SINHALA ─── -->
 <div class="si-bar" id="si-bar" hidden>
-  <button type="button" class="si-lang" id="si-lang" aria-label="භාෂාව තෝරන්න — Scegli la lingua">
+  <button type="button" class="si-lang" id="si-lang" aria-label="භාෂාව තෝරන්න · மொழியைத் தேர்ந்தெடுங்கள் · Scegli la lingua">
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
-    <span>සිංහල</span>
+    <span>සිංහල · தமிழ்</span>
   </button>
   <div class="si-viewport">
     <div class="si-track" aria-hidden="true">
-      <span class="si-run"><span class="si-seg"><span class="si-ic" aria-hidden="true">👋</span>සාදරයෙන් පිළිගනිමු</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">📄</span>පදිංචි බලපත්‍රය, SPID, බදු අංකය සහ පදිංචිය — පියවරෙන් පියවර මාර්ගෝපදේශ</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">🤖</span>සිංහලෙන් පිළිතුරු දෙන AI සහායක</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">🎓</span>නොමිලේ ඉතාලි සහ ඉංග්‍රීසි පාඨමාලා</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">🗺️</span>ඔබේ නගරයේ CAF සහ patronato — සිතියම</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">💼</span>රැකියා අවස්ථා, නිවාස සහ ප්‍රජා සංසදය</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">✈️</span>ශ්‍රී ලංකා ගුවන් ගමන් සහ මුදල් යැවීම</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">🔔</span>ලේඛනාගාරය සහ නියමිත දින සඳහා මතක් කිරීම්</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">🌐</span>ඉහත 🌐 බොත්තමෙන් ඔබේ භාෂාව තෝරන්න — සිංහල · தமிழ் · English · Italiano</span></span>
-      <span class="si-run"><span class="si-seg"><span class="si-ic" aria-hidden="true">👋</span>සාදරයෙන් පිළිගනිමු</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">📄</span>පදිංචි බලපත්‍රය, SPID, බදු අංකය සහ පදිංචිය — පියවරෙන් පියවර මාර්ගෝපදේශ</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">🤖</span>සිංහලෙන් පිළිතුරු දෙන AI සහායක</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">🎓</span>නොමිලේ ඉතාලි සහ ඉංග්‍රීසි පාඨමාලා</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">🗺️</span>ඔබේ නගරයේ CAF සහ patronato — සිතියම</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">💼</span>රැකියා අවස්ථා, නිවාස සහ ප්‍රජා සංසදය</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">✈️</span>ශ්‍රී ලංකා ගුවන් ගමන් සහ මුදල් යැවීම</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">🔔</span>ලේඛනාගාරය සහ නියමිත දින සඳහා මතක් කිරීම්</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic" aria-hidden="true">🌐</span>ඉහත 🌐 බොත්තමෙන් ඔබේ භාෂාව තෝරන්න — සිංහල · தமிழ் · English · Italiano</span></span>
+      <span class="si-run"><span class="si-tag si-si">සිංහල</span><span class="si-seg"><span class="si-ic">👋</span>සාදරයෙන් පිළිගනිමු</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">📄</span>පදිංචි බලපත්‍රය, SPID, බදු අංකය සහ පදිංචිය — පියවරෙන් පියවර මාර්ගෝපදේශ</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🤖</span>සිංහලෙන් පිළිතුරු දෙන AI සහායක</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🎓</span>නොමිලේ ඉතාලි සහ ඉංග්‍රීසි පාඨමාලා</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🗺️</span>ඔබේ නගරයේ CAF සහ patronato — සිතියම</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">💼</span>රැකියා අවස්ථා, නිවාස සහ ප්‍රජා සංසදය</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">✈️</span>ශ්‍රී ලංකා ගුවන් ගමන් සහ මුදල් යැවීම</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🔔</span>ලේඛනාගාරය සහ නියමිත දින සඳහා මතක් කිරීම්</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🌐</span>ඉහත 🌐 බොත්තමෙන් ඔබේ භාෂාව තෝරන්න</span><span class="si-sep">✦</span><span class="si-tag si-ta">தமிழ்</span><span class="si-seg"><span class="si-ic">👋</span>வரவேற்கிறோம்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">📄</span>வதிவிட அனுமதி, SPID, வரி எண் மற்றும் வசிப்பிடம் — படிப்படியாக வழிகாட்டிகள்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🤖</span>தமிழில் பதிலளிக்கும் AI உதவியாளர்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🎓</span>இலவச இத்தாலிய மற்றும் ஆங்கிலப் படிப்புகள்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🗺️</span>உங்கள் நகரத்தில் CAF மற்றும் patronato — வரைபடம்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">💼</span>வேலை வாய்ப்புகள், வீடு மற்றும் சமூக மன்றம்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">✈️</span>இலங்கை விமானங்கள் மற்றும் பணம் அனுப்புதல்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🔔</span>ஆவண காப்பகம் மற்றும் காலக்கெடு நினைவூட்டல்கள்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🌐</span>மேலே உள்ள 🌐 பொத்தானில் உங்கள் மொழியைத் தேர்ந்தெடுங்கள்</span><span class="si-sep">✦</span></span>
+      <span class="si-run"><span class="si-tag si-si">සිංහල</span><span class="si-seg"><span class="si-ic">👋</span>සාදරයෙන් පිළිගනිමු</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">📄</span>පදිංචි බලපත්‍රය, SPID, බදු අංකය සහ පදිංචිය — පියවරෙන් පියවර මාර්ගෝපදේශ</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🤖</span>සිංහලෙන් පිළිතුරු දෙන AI සහායක</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🎓</span>නොමිලේ ඉතාලි සහ ඉංග්‍රීසි පාඨමාලා</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🗺️</span>ඔබේ නගරයේ CAF සහ patronato — සිතියම</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">💼</span>රැකියා අවස්ථා, නිවාස සහ ප්‍රජා සංසදය</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">✈️</span>ශ්‍රී ලංකා ගුවන් ගමන් සහ මුදල් යැවීම</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🔔</span>ලේඛනාගාරය සහ නියමිත දින සඳහා මතක් කිරීම්</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🌐</span>ඉහත 🌐 බොත්තමෙන් ඔබේ භාෂාව තෝරන්න</span><span class="si-sep">✦</span><span class="si-tag si-ta">தமிழ்</span><span class="si-seg"><span class="si-ic">👋</span>வரவேற்கிறோம்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">📄</span>வதிவிட அனுமதி, SPID, வரி எண் மற்றும் வசிப்பிடம் — படிப்படியாக வழிகாட்டிகள்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🤖</span>தமிழில் பதிலளிக்கும் AI உதவியாளர்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🎓</span>இலவச இத்தாலிய மற்றும் ஆங்கிலப் படிப்புகள்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🗺️</span>உங்கள் நகரத்தில் CAF மற்றும் patronato — வரைபடம்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">💼</span>வேலை வாய்ப்புகள், வீடு மற்றும் சமூக மன்றம்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">✈️</span>இலங்கை விமானங்கள் மற்றும் பணம் அனுப்புதல்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🔔</span>ஆவண காப்பகம் மற்றும் காலக்கெடு நினைவூட்டல்கள்</span><span class="si-dot" aria-hidden="true">•</span><span class="si-seg"><span class="si-ic">🌐</span>மேலே உள்ள 🌐 பொத்தானில் உங்கள் மொழியைத் தேர்ந்தெடுங்கள்</span><span class="si-sep">✦</span></span>
     </div>
   </div>
-  <p class="si-sr">Messaggio di benvenuto in sinhala: guide su permesso di soggiorno, SPID, codice fiscale e residenza; assistente AI che risponde in sinhala; corsi gratuiti di italiano e inglese; mappa di CAF e patronati; lavoro, casa e forum della community; voli per lo Sri Lanka e money transfer; archivio documenti e promemoria delle scadenze. Puoi cambiare lingua con il pulsante in alto a destra.</p>
+  <p class="si-sr">Messaggio di benvenuto in sinhala e in tamil: guide su permesso di soggiorno, SPID, codice fiscale e residenza; assistente AI che risponde nella tua lingua; corsi gratuiti di italiano e inglese; mappa di CAF e patronati; lavoro, casa e forum della community; voli per lo Sri Lanka e money transfer; archivio documenti e promemoria delle scadenze. Puoi cambiare lingua con il pulsante in alto a destra.</p>
   <button type="button" class="si-close" id="si-close" aria-label="Chiudi questo messaggio">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
   </button>
@@ -4039,14 +4045,14 @@ function applyLang(lang){
   document.querySelectorAll('#lang-menu button').forEach(b=>b.setAttribute('aria-current',b.getAttribute('onclick').includes("'"+lang+"'")?'true':'false'));
   try{localStorage.setItem('eih-lang',lang);}catch(e){}
 }
-/* Nastro sinhala: serve a chi arriva e non sa che il sito parla la sua lingua.
-   Chi ha gia scelto italiano, inglese o tamil non lo vede; chi lo chiude nemmeno. */
+/* Nastro sinhala e tamil: serve a chi arriva e non sa che il sito parla la sua
+   lingua. Chi ha gia scelto italiano o inglese non lo vede; chi lo chiude nemmeno. */
 (function(){
   var bar = document.getElementById('si-bar');
   if(!bar) return;
   var lang = null, chiuso = null;
   try{ lang = localStorage.getItem('eih-lang'); chiuso = localStorage.getItem('eih-si-bar'); }catch(e){}
-  if(chiuso === 'off' || (lang && lang !== 'si')) return;
+  if(chiuso === 'off' || (lang && lang !== 'si' && lang !== 'ta')) return;
   bar.hidden = false;
   document.body.classList.add('has-si-bar');
 
