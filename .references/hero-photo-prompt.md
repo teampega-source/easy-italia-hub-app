@@ -74,3 +74,31 @@ Guardala a schermo intero e chiediti: **la pubblicherei come foto di cronaca?**
 Se la risposta è no, si rigenera. I punti che di solito saltano: mani (dita in
 più, dita fuse), scritte sui cartelli (lettere inventate), orecchini spaiati,
 riflessi incoerenti nelle vetrine, sfondo troppo ordinato.
+
+## Come si genera (verificato il 27/07/2026)
+
+Il server MCP **meigen** è già armato in `.mcp.json` e si avvia senza problemi,
+ma la generazione si ferma qui:
+
+> `No image generation providers configured. Get a MeiGen API token at
+> https://www.meigen.ai (sign in → Settings → API Keys), then set
+> MEIGEN_API_TOKEN in your environment or MCP config and restart the host.`
+
+Serve quindi **una** di queste due chiavi nelle variabili d'ambiente:
+
+- `MEIGEN_API_TOKEN` — da meigen.ai, Settings → API Keys
+- `OPENAI_API_KEY` — meigen accetta qualunque endpoint compatibile OpenAI
+
+Una volta impostata, alla sessione successiva la generazione parte da sola.
+
+## Come si monta l'immagine
+
+```
+npm i sharp
+node scripts/monta-hero.js <file-immagine> "<testo alternativo>"
+```
+
+Ritaglia a 5:4, converte in WebP (qualità 82, avvisa se supera i 150 KB),
+sostituisce `assets/img/community-welcome.webp` e aggiorna dimensioni e testo
+alternativo in `index.html`. Va bene per qualsiasi immagine, anche una foto
+scattata col telefono.
