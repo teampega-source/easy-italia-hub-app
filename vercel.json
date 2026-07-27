@@ -23,6 +23,11 @@
       ],
       "destination": "https://easyitaliahub.it/$1",
       "permanent": true
+    },
+    {
+      "source": "/abbonamenti",
+      "destination": "/",
+      "permanent": false
     }
   ],
   "rewrites": [

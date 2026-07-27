@@ -20,7 +20,6 @@
     { href: '/guida-conti', it: 'Aprire un Conto in Banca', en: 'Open a bank account', k: 'conto corrente bancario poste iban hype n26 revolut stranieri' },
     { href: '/dizionario-medico', it: 'Dizionario Medico IT-Singalese', en: 'Medical dictionary IT-Sinhala', k: 'sintomi medico farmacia singalese sinhala frasi traduzione pronto soccorso' },
     { href: '/opportunita', it: 'Opportunità', en: 'Opportunities', k: 'lavoro corsi borse offerte' },
-    { href: '/abbonamenti', it: 'Abbonamenti', en: 'Plans', k: 'premium prezzi pacchetti' },
     { href: '/chi-siamo', it: 'Chi siamo', en: 'About us', k: 'missione team contawho' },
     { href: '/contatti', it: 'Contatti', en: 'Contact', k: 'email scrivici supporto aiuto' },
     { href: '/privacy', it: 'Privacy', en: 'Privacy', k: 'dati gdpr' },
