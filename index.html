@@ -2125,41 +2125,7 @@ footer{
 })();
 </script>
 
-<div id="beta-gate" role="dialog" aria-modal="true" aria-labelledby="bg-title">
-  <div class="bg-card">
-    <div class="bg-langs" role="group" aria-label="Lingua / Language">
-      <button type="button" data-l="it">IT</button>
-      <button type="button" data-l="en">EN</button>
-      <button type="button" data-l="si" lang="si">සිං</button>
-      <button type="button" data-l="ta" lang="ta">தமிழ்</button>
-    </div>
-    <span class="bg-logo">Easy <em>Italia</em> Hub<span class="bg-tag">Beta</span></span>
-    <h1 id="bg-title"></h1>
-    <p id="bg-body"></p>
-    <button type="button" id="bg-enter"></button>
-    <p class="bg-note" id="bg-note"></p>
-  </div>
-</div>
 <style>
-#beta-gate{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:radial-gradient(120% 120% at 50% 0%,#241d16,#0e0b09);opacity:1;transition:opacity .4s ease}
-#beta-gate.bg-hide{opacity:0;pointer-events:none}
-#beta-gate .bg-card{max-width:520px;text-align:center;font-family:'Satoshi',system-ui,sans-serif}
-#beta-gate .bg-langs{display:flex;gap:.4rem;justify-content:center;margin-bottom:1.6rem}
-#beta-gate .bg-langs button{padding:.3rem .7rem;border:1px solid rgba(200,169,110,.35);background:transparent;color:#c9bba0;border-radius:999px;font:inherit;font-size:.75rem;font-weight:600;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
-#beta-gate .bg-langs button:hover{border-color:rgba(200,169,110,.75);color:#f0e7d6}
-#beta-gate .bg-langs button.on{background:#c8a96e;border-color:#c8a96e;color:#0e0b09}
-#beta-gate .bg-langs button:focus-visible{outline:2px solid #f0e7d6;outline-offset:2px}
-#beta-gate .bg-logo{font-family:'Clash Grotesk','Satoshi',sans-serif;font-size:1.15rem;letter-spacing:.02em;color:#e8dcc8}
-#beta-gate .bg-logo em{font-style:italic;color:#c8a96e}
-#beta-gate .bg-tag{display:inline-block;margin-left:.55rem;padding:.14rem .55rem;border:1px solid rgba(200,169,110,.5);border-radius:999px;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#c8a96e;vertical-align:middle}
-#beta-gate h1{font-family:'Clash Grotesk','Satoshi',sans-serif;font-weight:600;font-size:clamp(1.7rem,5vw,2.4rem);margin:1.6rem 0 .85rem;line-height:1.12;color:#f0e7d6}
-#beta-gate p{font-size:.98rem;line-height:1.65;color:#c9bba0;margin:0 auto;max-width:44ch}
-#beta-gate #bg-enter{margin-top:1.9rem;padding:.9rem 2.1rem;border:none;border-radius:999px;cursor:pointer;font:inherit;font-weight:600;font-size:1rem;color:#0e0b09;background:linear-gradient(135deg,#e5c98a,#c8a96e);box-shadow:0 12px 34px rgba(200,169,110,.32);transition:transform .2s,box-shadow .2s}
-#beta-gate #bg-enter:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(200,169,110,.45)}
-#beta-gate #bg-enter:active{transform:scale(.97)}
-#beta-gate #bg-enter:focus-visible{outline:2px solid #f0e7d6;outline-offset:3px}
-#beta-gate .bg-note{margin-top:1.15rem;font-size:.72rem;color:#8a7d66}
-@media(prefers-reduced-motion:reduce){#beta-gate,#beta-gate #bg-enter{transition:none}}
 
 /* ─── Nastro di benvenuto in sinhala ───
    Sta sotto la barra fissa e scorre via con la pagina: si legge una volta e
@@ -2218,33 +2184,10 @@ body.has-si-bar .hero{padding-top:var(--sp-4)}
 }
 </style>
 <script>
+/* Il riquadro "sito in beta" e stato tolto: era anche lui ad avviare il
+   filmato d'ingresso, quindi ora lo avviamo direttamente. */
 (function(){
-  var g=document.getElementById('beta-gate');if(!g)return;
-  var T={
-    it:{t:'Sito in manutenzione',b:'È in corso la <strong>regolarizzazione fiscale</strong> di Easy Italia Hub. Puoi comunque esplorare la piattaforma in <strong>versione beta</strong>, ancora in fase di sviluppo: alcune funzioni potrebbero cambiare.',c:'Voglio visitarlo →',n:'Continuando accetti di navigare un sito in fase di sviluppo.'},
-    en:{t:'Site under maintenance',b:'Easy Italia Hub is completing its <strong>tax registration</strong>. You can still explore the platform in <strong>beta version</strong>, still under development: some features may change.',c:'I want to visit it →',n:'By continuing you agree to browse a site under development.'},
-    si:{t:'වෙබ් අඩවිය නඩත්තුවේ පවතී',b:'Easy Italia Hub හි <strong>බදු ලියාපදිංචිය</strong> සිදුවෙමින් පවතී. ඔබට තවමත් සංවර්ධනය වෙමින් පවතින <strong>බීටා අනුවාදයෙන්</strong> වේදිකාව ගවේෂණය කළ හැක: සමහර විශේෂාංග වෙනස් විය හැක.',c:'මට එය නැරඹීමට අවශ්‍යයි →',n:'ඉදිරියට යාමෙන් ඔබ සංවර්ධනය වෙමින් පවතින අඩවියක් බැලීමට එකඟ වේ.'},
-    ta:{t:'தளம் பராமரிப்பில் உள்ளது',b:'Easy Italia Hub இன் <strong>வரிப் பதிவு</strong> நடைபெற்று வருகிறது. நீங்கள் இன்னும் உருவாக்கத்தில் உள்ள <strong>பீட்டா பதிப்பில்</strong> தளத்தை ஆராயலாம்: சில அம்சங்கள் மாறக்கூடும்.',c:'நான் அதைப் பார்வையிட விரும்புகிறேன் →',n:'தொடர்வதன் மூலம் உருவாக்கத்தில் உள்ள தளத்தை உலாவ ஒப்புக்கொள்கிறீர்கள்.'}
-  };
-  var title=document.getElementById('bg-title'),body=document.getElementById('bg-body'),
-      enter=document.getElementById('bg-enter'),note=document.getElementById('bg-note'),
-      btns=g.querySelectorAll('.bg-langs button');
-  var lang='it';try{lang=localStorage.getItem('eih-lang')||'it';}catch(e){}
-  if(!T[lang])lang='it';
-  function render(l){var d=T[l];title.textContent=d.t;body.innerHTML=d.b;enter.textContent=d.c;note.textContent=d.n;g.setAttribute('lang',l);
-    for(var i=0;i<btns.length;i++)btns[i].classList.toggle('on',btns[i].getAttribute('data-l')===l);}
-  render(lang);
-  for(var i=0;i<btns.length;i++)btns[i].addEventListener('click',function(){
-    var l=this.getAttribute('data-l');try{localStorage.setItem('eih-lang',l);}catch(e){}render(l);});
-  try{if(localStorage.getItem('eih-beta-ack')==='1'){g.parentNode.removeChild(g);if(window.EIHIntro)window.EIHIntro.play();return;}}catch(e){}
-  var htmlEl=document.documentElement;htmlEl.style.overflow='hidden';
-  try{enter.focus();}catch(e){}
-  enter.addEventListener('click',function(){
-    try{localStorage.setItem('eih-beta-ack','1');}catch(e){}
-    g.classList.add('bg-hide');htmlEl.style.overflow='';
-    setTimeout(function(){if(g.parentNode)g.parentNode.removeChild(g);},450);
-    if(window.EIHIntro)window.EIHIntro.play();
-  });
+  if(window.EIHIntro) window.EIHIntro.play();
 })();
 </script>
 
