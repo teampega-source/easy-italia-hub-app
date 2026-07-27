@@ -38,6 +38,7 @@
 <link rel="stylesheet" href="eih.css"/>
 <script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
   <link rel="stylesheet" href="/assets/eih-hero3d.css"/>
+<script src="/assets/eih-lang-url.js"></script>
 </head>
 <body data-page="diritti-inps">
 <a href="#main" class="skip-link">Salta al contenuto</a>
@@ -285,7 +286,7 @@
       <div class="link-utili-grid">
         <a class="lu-link" href="https://www.inps.it" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>INPS.it</a>
         <a class="lu-link" href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-unico-e-universale-per-i-figli-a-carico-55984.assegno-unico-e-universale-per-i-figli-a-carico.html" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Assegno Unico INPS</a>
-        <a class="lu-link" href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.naspi.naspi.html" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>NASpI — info ufficiali</a>
+        <a class="lu-link" href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>NASpI — info ufficiali</a>
         <a class="lu-link" href="tel:803164"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>INPS: 803 164 (gratuito)</a>
         <a class="lu-link" href="https://www.patronato.acli.it" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Patronato ACLI</a>
         <a class="lu-link" href="https://www.inca.it" rel="noopener noreferrer" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Patronato INCA-CGIL</a>
@@ -320,7 +321,7 @@
         icon:'💶',
         name:'NASpI — Disoccupazione',
         desc:'Indennità mensile per i lavoratori dipendenti che perdono involontariamente il lavoro. Importo: 75% della retribuzione media mensile (fino a €1.352/mese) per la metà delle settimane lavorate negli ultimi 4 anni.',
-        cta:{url:'https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.naspi.naspi.html',label:'Domanda NASpI su INPS'},
+        cta:{url:'https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html',label:'Domanda NASpI su INPS'},
         check:function(a){
           if(a.lavoro==='dipendente'||a.lavoro==='disoccupato'){
             if(a.mesi==='1a5anni'||a.mesi==='oltre5') return 'yes';
@@ -354,7 +355,7 @@
         icon:'🍼',
         name:'Indennità di Maternità / Paternità',
         desc:'Sostituisce la retribuzione durante il congedo obbligatorio (5 mesi per la madre, 10 giorni per il padre). Importo: 80% della retribuzione per le dipendenti, tasso diverso per le autonome.',
-        cta:{url:'https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.indennita-di-maternita.indennita-di-maternita.html',label:'Info maternità INPS'},
+        cta:{url:'https://www.inps.it/prestazioni-servizi/servizi?testolibero=maternit%C3%A0',label:'Info maternità INPS'},
         check:function(a){
           if(a.lavoro==='dipendente'){
             if(a.mesi==='1a5anni'||a.mesi==='oltre5'||a.mesi==='3a12') return 'yes';
@@ -371,7 +372,7 @@
         icon:'🏥',
         name:'Indennità di Malattia',
         desc:'Indennità giornaliera (dal 4° giorno di malattia) pari al 50% della retribuzione (4°–20° giorno) e al 66,66% dal 21° giorno in poi. Il datore integra spesso fino al 100% con il CCNL.',
-        cta:{url:'https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.indennita-di-malattia-per-i-lavoratori-dipendenti.indennita-di-malattia-per-i-lavoratori-dipendenti.html',label:'Info malattia INPS'},
+        cta:{url:'https://www.inps.it/prestazioni-servizi/servizi?testolibero=indennit%C3%A0+di+malattia',label:'Info malattia INPS'},
         check:function(a){
           if(a.lavoro==='dipendente') return 'yes';
           return 'no';
@@ -385,7 +386,7 @@
         icon:'🧓',
         name:'Assegno Sociale',
         desc:'Prestazione assistenziale (€534,41/mese nel 2026) per chi ha almeno 67 anni, un reddito molto basso e risiede legalmente in Italia da almeno 10 anni ininterrotti.',
-        cta:{url:'https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-sociale.assegno-sociale.html',label:'Assegno Sociale INPS'},
+        cta:{url:'https://www.inps.it/prestazioni-servizi/servizi?testolibero=assegno+sociale',label:'Assegno Sociale INPS'},
         check:function(a){
           if(a.permesso==='lungo'||a.permesso==='protezione'){
             if(a.mesi==='oltre5') return 'partial';
@@ -401,7 +402,7 @@
         icon:'🏦',
         name:'Pensione (totalizzazione IT–SL)',
         desc:'Grazie alla convenzione bilaterale Italia–Sri Lanka, i contributi versati in entrambi i paesi si sommano per raggiungere il minimo pensionistico (20 anni). La pensione viene poi liquidata pro-quota dai due paesi.',
-        cta:{url:'https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.totalizzazione-internazionale.totalizzazione-internazionale.html',label:'Totalizzazione INPS'},
+        cta:{url:'https://www.inps.it/prestazioni-servizi/servizi?testolibero=totalizzazione+internazionale',label:'Totalizzazione INPS'},
         check:function(a){
           if(a.mesi==='oltre5') return 'partial';
           if(a.mesi==='1a5anni') return 'partial';

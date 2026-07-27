@@ -39,6 +39,7 @@
 <link rel="stylesheet" href="eih.css"/>
 <script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
   <link rel="stylesheet" href="/assets/eih-hero3d.css"/>
+<script src="/assets/eih-lang-url.js"></script>
 </head>
 <body data-page="academy">
 <a href="#main" class="skip-link">Salta al contenuto</a>
@@ -78,15 +79,29 @@
   [data-page="academy"] .start-btn{align-self:flex-start;cursor:pointer;border:0;font:inherit;font-size:var(--text-sm);font-weight:600;padding:.5rem 1rem;border-radius:var(--radius-full);background:var(--ink);color:var(--bg-deep);transition:opacity var(--dur-std)}
   [data-page="academy"] .start-btn:hover{opacity:.8}
   /* Modal/lesson panel */
-  [data-page="academy"] .lesson-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:900;align-items:center;justify-content:center;padding:1rem}
+  [data-page="academy"] .lesson-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1200;align-items:center;justify-content:center;padding:1rem}
   [data-page="academy"] .lesson-overlay.open{display:flex}
   [data-page="academy"] .lesson-panel{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:680px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
   [data-page="academy"] .lesson-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.3rem;border-bottom:1px solid var(--border)}
   [data-page="academy"] .lesson-head h2{font-family:'Clash Grotesk',sans-serif;font-size:1.1rem;font-weight:600;margin:0}
   [data-page="academy"] .close-lesson{cursor:pointer;border:0;background:none;color:var(--fg-muted);font-size:1.3rem;line-height:1;padding:.2rem .4rem;border-radius:var(--radius-sm)}
   [data-page="academy"] .close-lesson:hover{background:var(--bg-deep)}
-  [data-page="academy"] .lesson-body{flex:1;overflow-y:auto;padding:1.3rem}
-  [data-page="academy"] .lesson-content{font-size:var(--text-sm);line-height:1.75;color:var(--fg);white-space:pre-wrap}
+  [data-page="academy"] .lesson-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:1.3rem}
+  /* Testo della lezione: pensato per chi legge in una lingua che non è la sua,
+     quindi corpo grande, righe larghe e molta aria fra i blocchi. */
+  [data-page="academy"] .lesson-content{font-family:'Satoshi','Inter',system-ui,sans-serif;font-size:1.05rem;line-height:1.85;color:var(--fg);letter-spacing:.005em;max-width:60ch}
+  [data-page="academy"] .lesson-content h3{font-family:'Clash Grotesk',sans-serif;font-size:1.05rem;font-weight:600;color:var(--ink);margin:1.5rem 0 .5rem;line-height:1.35}
+  [data-page="academy"] .lesson-content h3:first-child{margin-top:0}
+  [data-page="academy"] .lesson-content p{margin:0 0 .9rem}
+  [data-page="academy"] .lesson-content ul{margin:0 0 .9rem;padding-left:1.1rem}
+  [data-page="academy"] .lesson-content li{margin-bottom:.55rem}
+  [data-page="academy"] .lesson-content strong{color:var(--ink);font-weight:700}
+  /* Riga tradotta: sinhala e tamil hanno segni sopra e sotto la riga, servono
+     più corpo e più interlinea per restare leggibili. */
+  [data-page="academy"] .tr{display:block;font-size:1.12rem;line-height:2;color:var(--gold);margin-top:.15rem}
+  [data-page="academy"] .mini-msg-ai p,[data-page="academy"] .mini-msg-ai ul{margin:0 0 .45rem}
+  [data-page="academy"] .mini-msg-ai p:last-child{margin-bottom:0}
+  [data-page="academy"] .lang-note{font-size:.78rem;color:var(--fg-muted);margin:0 0 1rem;padding-bottom:.7rem;border-bottom:1px solid var(--border)}
   [data-page="academy"] .lesson-footer{padding:1rem 1.3rem;border-top:1px solid var(--border);display:flex;gap:.7rem;flex-wrap:wrap}
   /* Mini-chat in lesson */
   [data-page="academy"] .mini-chat{display:none;flex-direction:column;gap:.7rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
@@ -197,6 +212,8 @@
   </div>
 </div>
 
+</main>
+
 <!-- Lesson modal -->
 <div class="lesson-overlay" id="lesson-overlay" role="dialog" aria-modal="true" aria-labelledby="lesson-title">
   <div class="lesson-panel">
@@ -204,11 +221,11 @@
       <h2 id="lesson-title">Lezione</h2>
       <button class="close-lesson" id="close-lesson" aria-label="Chiudi">&times;</button>
     </div>
-    <div class="lesson-body" id="lesson-body">
+    <div class="lesson-body" id="lesson-body" data-lenis-prevent>
       <div class="lesson-content" id="lesson-content"></div>
       <!-- Mini chat -->
       <div class="mini-chat" id="mini-chat">
-        <div class="mini-thread" id="mini-thread"></div>
+        <div class="mini-thread" id="mini-thread" data-lenis-prevent></div>
         <div class="mini-input-row">
           <input type="text" class="mini-input" id="mini-input" placeholder="Fai una domanda su questo argomento..." aria-label="Domanda sulla lezione"/>
           <button class="mini-send" id="mini-send">Invia</button>
@@ -220,7 +237,6 @@
     </div>
   </div>
 </div>
-</main>
 
 <div id="site-footer"></div>
 <script src="eih.js"></script>
@@ -244,18 +260,94 @@ var currentTopic = '';
 function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br/>');
 }
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* Lingua della lezione: chi legge in sinhala studia l'italiano, chi legge in
+   tamil studia sull'inglese. Da qui la coppia spiegazione + traduzione. */
+function lessonLang() {
+  var l = 'it';
+  try { l = localStorage.getItem('eih-lang') || 'it'; } catch (e) {}
+  return (l === 'en' || l === 'ta')
+    ? { teach: 'inglese', tr: 'tamil', note: 'Lesson in English with Tamil translation.', wait: 'Loading the lesson…',
+        ask: '💬 Ask a question about this topic', ph: 'Ask about this lesson…', send: 'Send' }
+    : { teach: 'italiano', tr: 'sinhala', note: 'Lezione in italiano con traduzione in sinhala.', wait: 'Carico la lezione…',
+        ask: '💬 Fai una domanda su questo argomento', ph: 'Fai una domanda su questo argomento…', send: 'Invia' };
+}
+
+/* Il modello risponde in testo semplice: qui diventa HTML leggibile.
+   Le righe marcate con ">" sono la traduzione e vanno evidenziate. */
+function render(txt) {
+  var out = '', ul = false;
+  String(txt).split('\n').forEach(function (raw) {
+    var line = raw.trim();
+    if (!line) { if (ul) { out += '</ul>'; ul = false; } return; }
+    var tr = /^>\s?/.test(line);
+    line = line.replace(/^>\s?/, '');
+    var head = /^#{1,6}\s/.test(line);
+    line = line.replace(/^#{1,6}\s*/, '');
+    var item = /^[-*•]\s+/.test(line);
+    line = esc(line.replace(/^[-*•]\s+/, ''))
+             .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    if (tr) line = '<span class="tr">' + line + '</span>';
+    if (head) { if (ul) { out += '</ul>'; ul = false; } out += '<h3>' + line + '</h3>'; return; }
+    if (item) { if (!ul) { out += '<ul>'; ul = true; } out += '<li>' + line + '</li>'; return; }
+    if (ul) { out += '</ul>'; ul = false; }
+    out += '<p>' + line + '</p>';
+  });
+  return out + (ul ? '</ul>' : '');
+}
+
+/* Blocco dello sfondo: senza fermare Lenis la pagina continua a scorrere
+   sotto la finestra, e su iOS serve anche il body fissato. */
+var lockY = 0;
+function lockPage() {
+  lockY = window.scrollY || 0;
+  try { if (window.EIH_LENIS) window.EIH_LENIS.stop(); } catch (e) {}
+  document.body.style.position = 'fixed';
+  document.body.style.top = -lockY + 'px';
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.overflow = 'hidden';
+}
+function unlockPage() {
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.overflow = '';
+  window.scrollTo(0, lockY);
+  try { if (window.EIH_LENIS) window.EIH_LENIS.start(); } catch (e) {}
+}
 
 function openLesson(topic) {
   currentTopic = topic;
+  var L = lessonLang();
   lessonTitle.textContent = topic.split(':')[0];
-  lessonContent.innerHTML = '<span class="spinner"></span> Carico la lezione&hellip;';
+  lessonContent.innerHTML = '<span class="spinner"></span> ' + esc(L.wait);
   lessonFooter.style.display = '';
+  askBtn.textContent = L.ask;
+  miniInput.placeholder = L.ph;
+  miniSend.textContent = L.send;
   miniChat.classList.remove('open');
   miniThread.innerHTML = '';
   overlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
+  lockPage();
+  document.getElementById('lesson-body').scrollTop = 0;
 
-  var prompt = 'Sei un insegnante di italiano per stranieri. Crea una lezione breve (massimo 300 parole) su "' + topic + '" per qualcuno che vive in Italia. Includi: 5-8 parole o frasi chiave con traduzione in inglese, un esempio di dialogo reale (2-3 battute), e un consiglio pratico. Formato: usa sezioni chiare con emoji.';
+  // Una lezione generata è identica per tutta la sessione: si tiene da parte
+  // invece di richiederla di nuovo a ogni apertura.
+  var key = 'eih-lez:' + L.tr + ':' + topic;
+  var cached = null;
+  try { cached = sessionStorage.getItem(key); } catch (e) {}
+  if (cached) { lessonContent.innerHTML = '<p class="lang-note">' + esc(L.note) + '</p>' + render(cached); return; }
+
+  var prompt = 'Sei un insegnante di ' + L.teach + ' per stranieri. Crea una lezione breve (max 280 parole) su "' + topic +
+    '" per chi vive in Italia. Struttura: titoli di sezione con "## " ed emoji; 6 parole o frasi chiave in elenco "- "; ' +
+    'un dialogo reale di 3 battute; un consiglio pratico finale. ' +
+    'REGOLA: dopo ogni frase chiave e ogni battuta di dialogo scrivi la traduzione in ' + L.tr +
+    ' su una riga a parte che inizia con "> ". Nessun altro commento.';
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -264,7 +356,8 @@ function openLesson(topic) {
   .then(function(r){ return r.json(); })
   .then(function(data){
     if (data && data.reply) {
-      lessonContent.innerHTML = escHtml(data.reply);
+      try { sessionStorage.setItem(key, data.reply); } catch (e) {}
+      lessonContent.innerHTML = '<p class="lang-note">' + esc(L.note) + '</p>' + render(data.reply);
     } else {
       lessonContent.innerHTML = '<span style="color:var(--fg-muted)">Lezione non disponibile. Riprova tra qualche istante.</span>';
     }
@@ -275,8 +368,9 @@ function openLesson(topic) {
 }
 
 function closeLesson() {
+  if (!overlay.classList.contains('open')) return;
   overlay.classList.remove('open');
-  document.body.style.overflow = '';
+  unlockPage();
 }
 
 closeBtn.addEventListener('click', closeLesson);
@@ -306,7 +400,10 @@ function sendMiniChat() {
   miniThread.appendChild(loadDiv);
   miniThread.scrollTop = miniThread.scrollHeight;
 
-  var prompt = 'Sei un insegnante di italiano. L\'utente ha appena letto una lezione su "' + currentTopic + '". Rispondi a questa domanda in modo chiaro e utile: ' + text;
+  var L = lessonLang();
+  var prompt = 'Sei un insegnante di ' + L.teach + '. L\'utente ha appena letto una lezione su "' + currentTopic +
+    '". Rispondi in modo chiaro e breve, poi ripeti la risposta tradotta in ' + L.tr +
+    ' su una riga che inizia con "> ". Domanda: ' + text;
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -315,7 +412,7 @@ function sendMiniChat() {
   .then(function(r){ return r.json(); })
   .then(function(data){
     miniSend.disabled = false;
-    loadDiv.innerHTML = escHtml(data && data.reply ? data.reply : 'Risposta non disponibile.');
+    loadDiv.innerHTML = data && data.reply ? render(data.reply) : 'Risposta non disponibile.';
     miniThread.scrollTop = miniThread.scrollHeight;
   })
   .catch(function(){

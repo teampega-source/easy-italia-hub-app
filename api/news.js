@@ -1,12 +1,14 @@
 'use strict';
 
+const crypto = require('crypto');
 const { isRateLimited, clientIp } = require('./_ratelimit');
 
 const FEEDS = [
-  { url: 'https://www.interno.gov.it/it/stampa-e-comunicazione/comunicati/rss.xml', src: 'Interno.gov.it', cat: 'leggi' },
-  { url: 'https://www.lavoro.gov.it/rss/Pages/default.aspx', src: 'Lavoro.gov.it', cat: 'lavoro' },
-  { url: 'https://www.inps.it/it/it/dettaglio-scheda.schede-di-servizio.2020.rss.html', src: 'INPS', cat: 'lavoro' },
-  { url: 'https://www.governo.it/it/articoli/rss', src: 'Governo.it', cat: 'leggi' },
+  { url: 'https://www.interno.gov.it/it/rss/news.xml', src: 'Ministero dell\'Interno', cat: 'leggi' },
+  { url: 'https://www.governo.it/it/rss.xml', src: 'Governo.it', cat: 'leggi' },
+  { url: 'https://www.inps.it/it/it.rss.news.xml', src: 'INPS', cat: 'lavoro' },
+  { url: 'https://www.lavoro.gov.it/_layouts/15/Lavoro.Web/AppPages/RSS', src: 'Ministero del Lavoro', cat: 'lavoro' },
+  { url: 'https://www.agenziaentrate.gov.it/portale/c/portal/rss/entrate?idrss=79b071d0-a537-4a3d-86cc-7a7d5a36f2a9', src: 'Agenzia delle Entrate', cat: 'scadenze' },
 ];
 
 const VERIFY = 'Verificare sempre le informazioni sul sito ufficiale prima di agire.';
@@ -29,7 +31,7 @@ function tagOf(b, name) {
 function parseFeed(xml, meta) {
   var blocks = xml.match(/<item\b[\s\S]*?<\/item>/gi) || xml.match(/<entry\b[\s\S]*?<\/entry>/gi) || [];
   var out = [];
-  for (var i = 0; i < blocks.length && out.length < 6; i++) {
+  for (var i = 0; i < blocks.length && out.length < 4; i++) {
     var b = blocks[i];
     var title = clean(tagOf(b, 'title'));
     var link = clean(tagOf(b, 'link'));
@@ -42,7 +44,10 @@ function parseFeed(xml, meta) {
     var dateRaw = tagOf(b, 'pubDate') || tagOf(b, 'dc:date') || tagOf(b, 'updated') || tagOf(b, 'published');
     var ts = dateRaw ? Date.parse(clean(dateRaw)) : NaN;
     if (!title || !/^https?:\/\//i.test(link)) continue;
-    var id = 'live-' + Buffer.from(link).toString('base64').slice(0, 24).replace(/[+/=]/g, '');
+    // L'id nasce dall'impronta dell'intero link: prendendo solo i primi
+    // caratteri del base64 tutte le notizie dello stesso sito collidevano
+    // e ne sopravviveva una sola per feed.
+    var id = 'live-' + crypto.createHash('sha1').update(link).digest('hex').slice(0, 16);
     out.push({
       id: id,
       cat: meta.cat,
