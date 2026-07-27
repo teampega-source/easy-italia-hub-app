@@ -3,6 +3,16 @@
     "higgsfield": {
       "type": "http",
       "url": "https://mcp.higgsfield.ai/mcp"
+    },
+    "meigen": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "meigen@latest"
+      ],
+      "env": {
+        "MEIGEN_API_TOKEN": "${MEIGEN_API_TOKEN}"
+      }
     }
   }
 }
