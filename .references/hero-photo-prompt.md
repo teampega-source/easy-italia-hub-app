@@ -1,4 +1,8 @@
-# Foto della hero — prompt anti «sembra fatta con l'AI»
+# Foto «vera» — prompt anti «sembra fatta con l'AI»
+
+> **Aggiornamento 27/07/2026** — la hero non mostra piu una foto: al suo posto
+> c'e l'anteprima del Consigliere AI. Questo prompt resta valido per quando si
+> vorra una foto autentica altrove (sezione missione, pagine interne, social).
 
 L'immagine attuale (`assets/img/community-welcome.webp`) si riconosce subito come
 generata: luce da studio, pelle senza pori, sorrisi simmetrici, bandierine tenute
