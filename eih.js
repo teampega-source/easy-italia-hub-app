@@ -343,6 +343,12 @@
         if(errEl){var msg=(authErr.message||'').toLowerCase();errEl.textContent=_authMode==='signup'?(msg.includes('already')||msg.includes('registered')?'Indirizzo già in uso. Prova ad accedere.':'Registrazione non riuscita. Riprova.'):'Email o password non corretti.';}
         return;
       }
+      // Benvenuto + avviso admin via Resend: l'SMTP di Supabase è limitato.
+      if(_authMode==='signup'){
+        var lg='it';try{lg=localStorage.getItem('eih-lang')||'it';}catch(e){}
+        try{fetch('/api/email',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({type:'signup',email:email,name:name,lang:lg})}).catch(function(){});}catch(e){}
+      }
       if(needConfirm){
         var mo=document.querySelector('#auth-modal .modal');
         if(mo)mo.innerHTML='<div style="text-align:center;padding:2rem 1.5rem"><div style="font-size:2.5rem;margin-bottom:1rem">📧</div><h2 style="font-size:1.5rem;margin-bottom:1rem">Controlla la tua email</h2><p style="color:var(--fg-secondary);font-size:.875rem">Abbiamo inviato un link a <strong>'+email+'</strong>. Clicca sul link per attivare il tuo account.</p><button class="btn-primary" style="margin-top:1.5rem;width:100%;justify-content:center" onclick="closeAuth()">OK</button></div>';
