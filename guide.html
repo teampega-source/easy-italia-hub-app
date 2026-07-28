@@ -54,6 +54,16 @@
     /* scoped to the guide page — keeps the jump-nav and anchors tidy without touching eih.css */
     [data-page="guide"] .page section{scroll-margin-top:6rem}
     [data-page="guide"] .page section:first-of-type h2{margin-top:var(--sp-4)}
+    [data-page="guide"] .altre-guide{margin:0 0 var(--sp-4);padding:1.4rem 1.5rem;border-radius:var(--radius);background:var(--gold-dim);border:1px solid rgba(124,112,89,.25)}
+    [data-page="guide"] .altre-guide-t{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:0 0 .5rem}
+    [data-page="guide"] .altre-guide-s{font-size:var(--text-sm);color:var(--fg-secondary);margin:0 0 1.1rem;max-width:70ch;line-height:1.65}
+    [data-page="guide"] .altre-guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.8rem}
+    [data-page="guide"] .ag-card{display:flex;flex-direction:column;gap:.35rem;padding:1rem 1.1rem;border-radius:var(--radius-sm);background:var(--bg-elevated);border:1px solid var(--border);text-decoration:none;transition:transform var(--dur-std) var(--ease-spring),border-color var(--dur-std)}
+    [data-page="guide"] .ag-card:hover{transform:translateY(-3px);border-color:var(--gold)}
+    [data-page="guide"] .ag-ic{font-size:1.3rem;line-height:1}
+    [data-page="guide"] .ag-n{font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:var(--text-base);color:var(--ink)}
+    [data-page="guide"] .ag-d{font-size:.82rem;color:var(--fg-muted);line-height:1.55}
+    [data-page="guide"] .ag-c{font-size:.75rem;font-weight:600;color:var(--gold);margin-top:.2rem}
     [data-page="guide"] .jump-nav{margin:0 0 var(--sp-3);padding:1.1rem 1.3rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border)}
     [data-page="guide"] .jump-nav .jump-title{margin:0 0 .6rem;font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
     [data-page="guide"] .jump-nav ul{list-style:none;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.4rem .9rem}
@@ -74,6 +84,16 @@
     <img src="/assets/img/gal-documenti.webp" alt="Persona compila la domanda di permesso di soggiorno alla scrivania" loading="lazy" decoding="async" width="1000" height="545" style="width:100%;max-width:960px;height:auto;display:block;margin:var(--sp-4) auto 0;border-radius:16px;border:1px solid var(--border)"/>
 
     <div class="draft-banner reveal">ℹ️ <span data-i18n-html="g.1">Informazioni a scopo orientativo, basate su fonti ufficiali (link in ogni sezione). Costi, tempi e documenti possono cambiare: verifica sempre sulla fonte ufficiale e, per casi specifici, rivolgiti a un <strong>patronato o CAF gratuito</strong>.</span></div>
+
+    <div class="altre-guide reveal">
+      <p class="altre-guide-t">Oltre le basi</p>
+      <p class="altre-guide-s">Queste dieci guide sono i documenti che servono a tutti. Ma la maggior parte dei problemi veri arriva dopo, e su quelli non trovi quasi niente in italiano.</p>
+      <div class="altre-guide-grid">
+        <a class="ag-card" href="/lavoro-diritti"><span class="ag-ic" aria-hidden="true">⚖️</span><span class="ag-n">Lavoro e diritti</span><span class="ag-d">Ore non dichiarate, fogli firmati in fretta, infortuni senza contratto, maternità, truffe sul nulla osta, sfruttamento, sicurezza.</span><span class="ag-c">7 guide →</span></a>
+        <a class="ag-card" href="/italia-srilanka"><span class="ag-ic" aria-hidden="true">🇱🇰</span><span class="ag-n">Fra Italia e Sri Lanka</span><span class="ag-d">Doppia cittadinanza, la casa al villaggio nell'ISEE, i contributi versati in due paesi, documenti da far valere qui.</span><span class="ag-c">4 guide →</span></a>
+        <a class="ag-card" href="/costruire-futuro"><span class="ag-ic" aria-hidden="true">🏡</span><span class="ag-n">Costruire il futuro</span><span class="ag-d">I 18 anni dei figli e la cittadinanza, comprare casa da straniero, e cosa fare quando muore qualcuno lontano da casa.</span><span class="ag-c">3 guide →</span></a>
+      </div>
+    </div>
 
     <nav class="jump-nav reveal" aria-label="In questa guida">
       <p class="jump-title" data-i18n="g.2">In questa guida</p>
