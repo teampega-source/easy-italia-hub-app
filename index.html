@@ -4299,6 +4299,13 @@ function applyAuthMode(){
   const forgotRow=document.getElementById('auth-forgot-row');
   if(forgotRow)forgotRow.style.display=signup?'none':'';
 }
+// Benvenuto all'utente e avviso all'admin via Resend: l'SMTP di Supabase è
+// limitato. Best-effort, non blocca la UI.
+function eihNotifySignup(email,name){
+  let lang='it';try{lang=localStorage.getItem('eih-lang')||'it';}catch(e){}
+  try{fetch('/api/email',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({type:'signup',email:email,name:name,lang:lang})}).catch(function(){});}catch(e){}
+}
 async function eihSubmitAuth(){
   const email=(document.getElementById('auth-email')||{}).value||'';
   const pass=(document.getElementById('auth-pass')||{}).value||'';
@@ -4342,6 +4349,7 @@ async function eihSubmitAuth(){
     }
     return;
   }
+  if(authMode==='signup')eihNotifySignup(email,name);
   if(needConfirm){
     const modal=document.querySelector('#auth-modal .modal');
     if(modal)modal.innerHTML='<div style="text-align:center;padding:var(--sp-4) var(--sp-3)"><div style="font-size:2.5rem;margin-bottom:var(--sp-2)">📧</div><h2 style="font-size:var(--text-xl);margin-bottom:var(--sp-2)">Controlla la tua email</h2><p style="color:var(--fg-secondary);font-size:var(--text-sm)">Abbiamo inviato un link a <strong>'+email+'</strong>. Clicca sul link per attivare il tuo account, poi accedi normalmente.</p><button class="btn-primary" style="margin-top:var(--sp-3);width:100%;justify-content:center" onclick="closeAuth()">OK</button></div>';
