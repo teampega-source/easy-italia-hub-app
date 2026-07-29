@@ -2596,7 +2596,25 @@ body.has-si-bar .hero{padding-top:var(--sp-4)}
         +'<a class="eih-fest-toast-cta" href="/guide">Esplora le guide →</a>'
         +'</div>';
       document.body.appendChild(t);
-      setTimeout(function(){t.classList.add('is-shown');},5000);   // era 1500: troppo addosso
+      // Non più a tempo: compare solo quando l'utente ha davvero iniziato a
+      // leggere, e mai sopra il banner cookie.
+      (function(){
+        var soglia=Math.max(600,Math.round(innerHeight*0.8)),fatto=false,iv;
+        function prova(){
+          if(fatto)return;
+          if(document.body.classList.contains('eih-consent-open'))return;
+          if((window.scrollY||document.documentElement.scrollTop||0)<soglia)return;
+          fatto=true;
+          removeEventListener('scroll',prova);
+          clearInterval(iv);
+          t.classList.add('is-shown');
+        }
+        addEventListener('scroll',prova,{passive:true});
+        // Il consenso può chiudersi quando si è già oltre la soglia: lo scroll
+        // non riparte da solo, serve un controllo periodico.
+        iv=setInterval(prova,1000);
+        setTimeout(function(){clearInterval(iv);},180000);
+      })();
     }
   }
 })();
