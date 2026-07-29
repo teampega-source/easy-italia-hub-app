@@ -391,7 +391,7 @@ footer{position:relative;z-index:1;margin-top:var(--sp-6);border-top:1px solid v
    per tutto il tempo, anche quando l'elemento non si vede. */
 @media(max-width:900px){
   .mission-visual-img{animation:none !important}
-  .atmo-beam,.atmo-dust,.atmo-dust2,.atmo-ring{animation:none !important}
+  .atmo-beam,.atmo-dust,.atmo-dust2,.atmo-ring,.atmo-orb{animation:none !important}
   .nr-live{animation:none !important}
 }
 
