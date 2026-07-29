@@ -52,7 +52,9 @@
     '#eihp-emp{padding:1.1rem;text-align:center;color:#888d96;font:500 .9rem Satoshi,sans-serif;display:none}' +
     '#eihp-ft{display:flex;gap:1rem;padding:.6rem 1rem;border-top:1px solid rgba(118,118,118,.2);color:#888d96;font:500 .72rem Satoshi,sans-serif}' +
     '#eihp-ft b{font-weight:700;background:rgba(22,20,18,.07);border-radius:5px;padding:.1rem .35rem}' +
-    '@media(max-width:640px){#eihp-fab{right:14px;bottom:184px}}';
+    '/* Da telefono si aggancia alla barra in alto invece di stare a meta schermo */'+
+  '@media(max-width:640px){#eihp-fab{right:60px;bottom:auto;top:calc(var(--eih-nav-h,76px)/2 - 19px);width:38px;height:38px;box-shadow:none;background:transparent;border-color:transparent;backdrop-filter:none}'+
+  '#eihp-fab svg{width:21px;height:21px}#eihp-fab::before{display:none}#eihp-fab:hover{transform:none}#eihp-fab:active{transform:scale(.92)}}';
 
   var st = document.createElement('style');
   st.textContent = css;
@@ -73,6 +75,22 @@
   fab.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>';
 
   function mount() { document.body.appendChild(ov); document.body.appendChild(fab); }
+
+  // Alcune pagine caricano la palette ma non eih-theme.js: la misura della
+  // barra serve comunque per agganciare il pulsante da telefono.
+  if (!window.__eihNavH) {
+    window.__eihNavH = true;
+    var misuraNav = function () {
+      var n = document.querySelector('.site-nav') || document.querySelector('#site-nav nav');
+      if (!n) return;
+      var h = Math.round(n.getBoundingClientRect().height);
+      if (h > 0) document.documentElement.style.setProperty('--eih-nav-h', h + 'px');
+    };
+    addEventListener('load', misuraNav);
+    addEventListener('resize', misuraNav);
+    setTimeout(misuraNav, 400);
+    setTimeout(misuraNav, 1600);
+  }
   if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
 
   var input, list, empty, sel = 0, results = [];

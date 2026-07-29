@@ -340,3 +340,27 @@ footer{position:relative;z-index:1;margin-top:var(--sp-6);border-top:1px solid v
   .nav-logo-txt{display:none}
   .nav-links>li>a{font-size:.83rem;padding-left:.4rem;padding-right:.4rem}
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Rifinitura mobile: il telefono è il modo principale in cui la
+   community usa il sito. Testi sotto la soglia di leggibilità e
+   aree toccabili troppo basse, misurate a 375px.
+   ───────────────────────────────────────────────────────────── */
+@media(max-width:640px){
+  /* 9,6px nel menu: illeggibile */
+  .nav-m-head{font-size:.72rem;letter-spacing:.08em;margin-bottom:.55rem}
+
+  /* link legali del footer: erano alti 14px, sotto il dito */
+  .footer-legal{gap:.35rem var(--sp-2);row-gap:.15rem}
+  .footer-legal a{display:inline-flex;align-items:center;min-height:40px;padding:.1rem 0}
+
+  /* schede "link utili" delle guide: 26px di altezza */
+  .lu-link{min-height:44px;padding-top:.55rem;padding-bottom:.55rem;line-height:1.35}
+
+  /* pillola "Fonte: …" in cima alle guide */
+  .guide-meta-fonte{display:inline-flex;align-items:center;min-height:36px;padding:.3rem .8rem}
+
+  /* pulsanti della chat: suggerimenti e chiusura */
+  .sug{min-height:36px;padding:.45rem .85rem}
+  .ch-x{width:36px;height:36px;min-height:36px}
+}

@@ -33,4 +33,21 @@
 
   function mount() { document.body.appendChild(fab); syncMeta(); }
   if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
+
+  // La barra in alto non ha la stessa altezza su tutte le pagine (62px sulla
+  // home, 77px altrove). Pubblicarla permette di centrare con precisione i
+  // pulsanti che da telefono si agganciano alla barra.
+  if (!window.__eihNavH) {
+    window.__eihNavH = true;
+    var misura = function () {
+      var n = document.querySelector('.site-nav') || document.querySelector('#site-nav nav');
+      if (!n) return;
+      var h = Math.round(n.getBoundingClientRect().height);
+      if (h > 0) document.documentElement.style.setProperty('--eih-nav-h', h + 'px');
+    };
+    addEventListener('load', misura);
+    addEventListener('resize', misura);
+    setTimeout(misura, 400);
+    setTimeout(misura, 1600);
+  }
 })();

@@ -40,7 +40,16 @@ html[data-theme="dark"] .eihp-it{color:#eceae4}
 #eiht-fab .sun{display:none}
 html[data-theme="dark"] #eiht-fab .sun{display:block}
 html[data-theme="dark"] #eiht-fab .moon{display:none}
-@media(max-width:640px){#eiht-fab{right:14px;bottom:136px}}
+/* Da telefono i pulsanti flottanti finivano a metà schermo, sopra testo e
+   foto. Ricerca e tema si agganciano alla barra in alto, dove l'utente li
+   cerca, e liberano del tutto l'area dei contenuti. */
+@media(max-width:640px){
+  #eiht-fab{right:104px;bottom:auto;top:calc(var(--eih-nav-h,76px)/2 - 19px);width:38px;height:38px;
+    box-shadow:none;background:transparent;border-color:transparent;backdrop-filter:none}
+  #eiht-fab svg{width:21px;height:21px}
+  #eiht-fab:hover{transform:none}
+  #eiht-fab:active{transform:scale(.92)}
+}
 
 /* ─── nuove sezioni: dark mode overrides ─── */
 html[data-theme="dark"] .problem-section{background:#0d0c0a}

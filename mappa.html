@@ -117,6 +117,17 @@
   .filter-btn:hover{background:var(--surface-hover);color:var(--ink);transform:translateY(-2px)}
   .filter-btn.is-active{background:linear-gradient(135deg,var(--blue-deep),var(--blue));color:#fff;border-color:transparent;box-shadow:0 6px 20px var(--blue-glow)}
   .filter-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  /* Da telefono i cinque filtri occupavano quattro righe prima della mappa:
+     diventano una fila unica che scorre in orizzontale. */
+  @media(max-width:640px){
+    .map-filters{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;
+      -webkit-overflow-scrolling:touch;scrollbar-width:none;
+      margin-left:calc(var(--sp-2) * -1);margin-right:calc(var(--sp-2) * -1);
+      padding:.25rem var(--sp-2)}
+    .map-filters::-webkit-scrollbar{display:none}
+    .filter-btn{flex:0 0 auto;white-space:nowrap;padding:.5rem .9rem}
+    .filter-btn:hover{transform:none}
+  }
 
   /* ── map + directory layout ── */
   .map-layout{display:grid;grid-template-columns:260px 1fr;gap:1.1rem;align-items:start}

@@ -1109,6 +1109,8 @@ body{
 .ch-ai-note[open] summary::after{transform:rotate(180deg)}
 .ch-ai-note .ch-ai-warn{color:#b45309;flex-shrink:0}
 .ch-ai-note p{margin:.45rem 0 .2rem}
+/* Da telefono .62rem sono 9,9px: sotto la soglia di leggibilita' */
+@media(max-width:640px){.ch-ai-note{font-size:.78rem;padding:.55rem var(--sp-2)}}
 .ch-msgs{
   flex:1;overflow-y:auto;padding:var(--sp-2) var(--sp-2);
   display:flex;flex-direction:column;gap:.7rem;
@@ -1404,6 +1406,15 @@ footer{
   .nav-m-sect:first-child{grid-column:1/-1}
   .nav-m-sect:first-child ul{column-count:2;column-gap:var(--sp-3)}
   .nav-m-head{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-muted);margin:0 0 .45rem}
+/* Rifinitura mobile: testi sotto la soglia di leggibilita' e aree
+   toccabili troppo basse, misurate a 375px. */
+@media(max-width:640px){
+  .nav-m-head{font-size:.72rem;letter-spacing:.08em;margin-bottom:.55rem}
+  .footer-legal{row-gap:.15rem}
+  .footer-legal a{display:inline-flex;align-items:center;min-height:40px;padding:.1rem 0}
+  .sug{min-height:36px;padding:.45rem .85rem}
+  .ch-x{width:36px;height:36px;min-height:36px}
+}
   .nav-m-sect ul{list-style:none;padding:0;margin:0}
   .nav-mobile-extra a{font-size:var(--text-sm);color:var(--fg-secondary);text-decoration:none;display:block;padding:.28rem 0;transition:color var(--dur-micro)}
   .nav-mobile-extra a:hover{color:var(--ink)}
@@ -3673,7 +3684,7 @@ async function subscribeNewsletter(){
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="/" style="text-decoration:none;display:inline-block"><img src="/assets/img/logo-symbol.jpg" alt="" style="height:80px;width:auto;display:block;margin-bottom:6px"><span style="display:block;font-family:'Clash Grotesk','Arial Black',Impact,sans-serif;font-size:13px;font-weight:900;color:#1a2744;letter-spacing:3px">EASY ITALIA HUB</span><span style="display:block;font-size:9px;color:#4a5a72;letter-spacing:5px;margin-top:3px">GUIDES · AI · COMMUNITY</span></a>
+      <a href="/" style="text-decoration:none;display:inline-block"><img src="/assets/img/logo-symbol.jpg" alt="" style="height:80px;width:auto;display:block;margin-bottom:6px"><span style="display:block;font-family:'Clash Grotesk','Arial Black',Impact,sans-serif;font-size:13px;font-weight:900;color:#1a2744;letter-spacing:3px">EASY ITALIA HUB</span><span style="display:block;font-size:11px;color:#41506a;letter-spacing:3.5px;margin-top:3px">GUIDES · AI · COMMUNITY</span></a>
       <p class="footer-tag" data-i18n="footer.tag">Il punto di riferimento della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.</p>
       <div class="footer-social" style="display:flex;gap:.75rem;margin-top:1rem">
         <a href="https://whatsapp.com/channel/0029VbDGIikE50Uc7ehitN38" aria-label="WhatsApp" style="color:var(--fg-secondary);display:flex;align-items:center;transition:color .2s" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color=''" rel="noopener noreferrer" target="_blank">
