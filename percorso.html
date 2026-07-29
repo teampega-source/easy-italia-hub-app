@@ -272,6 +272,13 @@ main{position:relative;z-index:1}
   .nav-m-sect:first-child{grid-column:1/-1}
   .nav-m-sect:first-child ul{column-count:2;column-gap:var(--sp-3)}
   .nav-m-head{font-size:var(--text-xs);font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--fg-secondary);margin:0 0 .4rem}
+  /* Rifinitura mobile: aree toccabili sotto il dito */
+  @media(max-width:640px){
+    .footer-legal a{display:inline-flex;align-items:center;min-height:40px;padding:.1rem 0}
+    .sug{min-height:36px;padding:.45rem .85rem}
+    .ch-x{width:36px;height:36px;min-height:36px}
+    .ad-cta{display:inline-flex;align-items:center;min-height:36px}
+  }
   .nav-m-sect ul{list-style:none;padding:0;margin:0}
   .nav-mobile-extra a{font-size:var(--text-sm);color:var(--fg-secondary);text-decoration:none;display:block;padding:.28rem 0;transition:color var(--dur-micro)}
   .nav-mobile-extra a:hover{color:var(--ink)}
@@ -482,7 +489,7 @@ html.returning #preloader{display:none}
 <footer class="pf" aria-label="Piè di pagina">
   <div class="pf-inner">
     <div class="pf-brand">
-      <a href="/" style="text-decoration:none;display:inline-block"><img src="/assets/img/logo-symbol.jpg" alt="" style="height:80px;width:auto;display:block;margin-bottom:6px"><span style="display:block;font-family:'Clash Grotesk','Arial Black',Impact,sans-serif;font-size:13px;font-weight:900;color:#1a2744;letter-spacing:3px">EASY ITALIA HUB</span><span style="display:block;font-size:9px;color:#4a5a72;letter-spacing:5px;margin-top:3px">GUIDES · AI · COMMUNITY</span></a>
+      <a href="/" style="text-decoration:none;display:inline-block"><img src="/assets/img/logo-symbol.jpg" alt="" style="height:80px;width:auto;display:block;margin-bottom:6px"><span style="display:block;font-family:'Clash Grotesk','Arial Black',Impact,sans-serif;font-size:13px;font-weight:900;color:#1a2744;letter-spacing:3px">EASY ITALIA HUB</span><span style="display:block;font-size:11px;color:#41506a;letter-spacing:3.5px;margin-top:3px">GUIDES · AI · COMMUNITY</span></a>
       <p class="pf-tag">La casa digitale della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — in un unico posto.</p>
     </div>
     <div class="pf-col">
@@ -526,7 +533,7 @@ html.returning #preloader{display:none}
     <div><div class="ch-name" data-i18n="chat.name">Consigliere Easy Italia</div><div class="ch-status" data-i18n="chat.status">Online ora</div></div>
     <button class="ch-x" onclick="toggleChat()" aria-label="Chiudi"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
-  <div class="ch-ai-note" data-i18n="chat.ainote" style="flex-shrink:0;padding:.5rem 1rem;font-size:.66rem;line-height:1.5;color:var(--fg-muted);background:var(--surface);border-bottom:1px solid var(--border)">L'Intelligenza Artificiale fornisce informazioni generali basate su fonti pubbliche. Non sostituisce in alcun modo la consulenza legale di un avvocato, di un Patronato o di un CAF autorizzato. Easy Italia Hub declina ogni responsabilità per errori o per l'uso improprio delle informazioni.</div>
+  <div class="ch-ai-note" data-i18n="chat.ainote" style="flex-shrink:0;padding:.5rem 1rem;font-size:.78rem;line-height:1.5;color:var(--fg-muted);background:var(--surface);border-bottom:1px solid var(--border)">L'Intelligenza Artificiale fornisce informazioni generali basate su fonti pubbliche. Non sostituisce in alcun modo la consulenza legale di un avvocato, di un Patronato o di un CAF autorizzato. Easy Italia Hub declina ogni responsabilità per errori o per l'uso improprio delle informazioni.</div>
   <div class="ch-msgs" id="ch-msgs" role="log">
     <div class="msg bot"><div class="bubble" data-i18n="chat.welcome">Ciao! Sono il tuo Consigliere di percorso. Dimmi a che punto sei e ti suggerisco il prossimo passo concreto.</div><div class="ts" data-i18n="chat.now">Ora</div></div>
   </div>

@@ -69,7 +69,13 @@
   [data-page="dizionario-medico"] .dm-hidden{display:none}
   [data-page="dizionario-medico"] .dm-no-results{text-align:center;color:var(--fg-muted);font-size:var(--text-sm);padding:var(--sp-5) 0;display:none}
   [data-page="dizionario-medico"] .cta-box{margin-top:var(--sp-6);padding:var(--sp-5);background:linear-gradient(135deg,rgba(185,170,141,.12),rgba(185,170,141,.05));border:1px solid rgba(185,170,141,.25);border-radius:calc(var(--radius)*2);text-align:center}
-  @media(max-width:640px){[data-page="dizionario-medico"] .dm-table th:last-child,[data-page="dizionario-medico"] .dm-table td:last-child{display:none}}
+  @media(max-width:640px){
+    [data-page="dizionario-medico"] .dm-table th:last-child,[data-page="dizionario-medico"] .dm-table td:last-child{display:none}
+    /* La tabella scorre dentro il proprio riquadro invece di allargare la pagina */
+    [data-page="dizionario-medico"] .dm-table{display:block;overflow-x:auto;overflow-y:visible;
+      overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+    [data-page="dizionario-medico"] .dm-table th,[data-page="dizionario-medico"] .dm-table td{padding:.6rem .7rem}
+  }
 </style>
 
 <div class="page page-wide">
