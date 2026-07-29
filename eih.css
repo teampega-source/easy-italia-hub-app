@@ -363,4 +363,7 @@ footer{position:relative;z-index:1;margin-top:var(--sp-6);border-top:1px solid v
   /* pulsanti della chat: suggerimenti e chiusura */
   .sug{min-height:36px;padding:.45rem .85rem}
   .ch-x{width:36px;height:36px;min-height:36px}
+
+  /* pulsanti testuali ("Registrati", "Accedi"): alti 14px */
+  .ad-cta{display:inline-flex;align-items:center;min-height:36px}
 }

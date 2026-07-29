@@ -26,6 +26,13 @@
     line-height: 1.6;
   }
 
+  /* Da telefono le tabelle sporgevano di 90px allargando tutta la pagina:
+     scorrono dentro il proprio riquadro. */
+  @media (max-width: 640px) {
+    table { display: block; overflow-x: auto; overscroll-behavior-x: contain;
+      -webkit-overflow-scrolling: touch; }
+  }
+
   /* PRINT */
   @media print {
     .no-print { display: none; }

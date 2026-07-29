@@ -64,6 +64,9 @@
     [data-page="housing"] .info-title{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:600;color:var(--ink);margin-bottom:.3rem}
     [data-page="housing"] .info-text{font-size:var(--text-xs);color:var(--fg-muted);line-height:1.55}
     [data-page="housing"] .cost-table{width:100%;border-collapse:collapse;margin-top:var(--sp-3);font-size:var(--text-sm)}
+  /* Da telefono la tabella scorre dentro il proprio riquadro */
+  @media(max-width:640px){[data-page="housing"] .cost-table{display:block;overflow-x:auto;
+    overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}}
     [data-page="housing"] .cost-table th{text-align:left;padding:.55rem .8rem;border-bottom:2px solid var(--border-bright);font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:var(--text-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
     [data-page="housing"] .cost-table td{padding:.55rem .8rem;border-bottom:1px solid var(--border);color:var(--fg-secondary);vertical-align:top}
     [data-page="housing"] .cost-table tr:last-child td{border-bottom:none}
