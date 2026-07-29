@@ -1523,13 +1523,17 @@ footer{
 /* ═══ TIER-1 ENHANCEMENTS ═══ */
 
 /* 1) Scroll reveal (staggered) — hidden state gated behind html.anim so no-JS shows everything */
-.anim .reveal{opacity:0;transform:translateY(22px);filter:blur(5px);transition:opacity .75s var(--ease-enter),transform .75s var(--ease-enter),filter .6s var(--ease-enter);transition-delay:calc(var(--ri,0)*70ms)}
-.anim .reveal.in{opacity:1;transform:none;filter:blur(0)}
+/* Niente blur qui: una sfocatura va ri-disegnata a ogni fotogramma e su
+   questa pagina ce n'erano decine, alcune grandi mezzo schermo. Era la
+   causa principale dello scorrimento a scatti. Restano opacita' e
+   spostamento, che il compositore gestisce senza ridisegnare. */
+.anim .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s var(--ease-enter),transform .6s var(--ease-enter);transition-delay:calc(var(--ri,0)*70ms)}
+.anim .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.anim .reveal{filter:none;transform:none}}
 
 /* 1b) FadeContent (React Bits port) — opacity + blur reveal on scroll */
-.anim .fade-content{opacity:var(--fc-o,0);filter:blur(10px);transition:opacity 1s var(--ease-enter),filter 1s var(--ease-enter);transition-delay:calc(var(--fi,0)*130ms);will-change:opacity,filter}
-.anim .fade-content.in{opacity:1;filter:blur(0)}
+.anim .fade-content{opacity:var(--fc-o,0);transform:translateY(14px);transition:opacity .8s var(--ease-enter),transform .8s var(--ease-enter);transition-delay:calc(var(--fi,0)*130ms)}
+.anim .fade-content.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.anim .fade-content{filter:none;opacity:1}}
 
 /* 2) Hero masked line reveal (keyframe on load — deterministic) */
@@ -2080,6 +2084,57 @@ footer{
   border:1px solid var(--border);border-radius:var(--radius-full);
   padding:.28rem .72rem;background:rgba(255,255,255,.03);
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   Fluidità dello scorrimento
+   backdrop-filter costa una sfocatura ricalcolata a ogni fotogramma.
+   Sugli elementi che scorrono era la causa principale degli scatti:
+   resta solo sulle superfici fisse — barra, modali, avvisi — dove il
+   costo è limitato e l'effetto si nota davvero.
+   ═══════════════════════════════════════════════════════════════ */
+.btn-ghost,.percorso-pill,.step,.cta-card,.partner-inner,footer,
+.sol-card,.does-card,.pcard,.card,.plan,.svc-card,.screenshot-card,
+.testimonial,.ag-card,.lu-link,.link-utili,.jump-nav,.intro-nota,
+.guide-card,.tw-group,.mission-visual,.filter-btn,.city-list,
+.news-card,.post,.forum-card,.pro-card,.opp-card{
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+/* Animazioni decorative continue: da telefono tengono la CPU occupata
+   per tutto il tempo, anche quando l'elemento non si vede. */
+@media(max-width:900px){
+  .mission-visual-img{animation:none !important}
+  .atmo-beam,.atmo-dust,.atmo-dust2,.atmo-ring{animation:none !important}
+  .nr-live{animation:none !important}
+}
+
+/* ── Overlay chiusi ───────────────────────────────────────────────
+   Menu mobile, modali, pannello chat e ricerca restano nel documento
+   anche da chiusi: sono nascosti con l'opacità, non con display:none.
+   Finché conservano una sfocatura, il browser la ricalcola a ogni
+   fotogramma su tutto lo schermo — anche se non si vede nulla. Era il
+   costo maggiore durante lo scorrimento. */
+.modal-overlay:not(.open),
+.nav-collapse:not(.open),
+#chat-panel:not(.open),
+#eihp-ov:not(.open),
+.eih-srch-ov:not(.on),
+#eih-intro:not(.on),
+.eih-fest-toast:not(.is-shown){
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+/* ── Barra in alto ────────────────────────────────────────────────
+   È fissa e il contenuto le scorre sotto: la sfocatura andava rifatta
+   a ogni fotogramma. Sfondo pieno, resa quasi identica. */
+.site-nav{
+  background:#fbfaf8;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+html[data-theme="dark"] .site-nav{background:#1c1916}
 </style>
 <script>/* enable reveal/intro states only when JS runs (no-JS shows content) */document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
 <script src="/assets/eih-lang-url.js"></script>
@@ -4660,6 +4715,7 @@ function sendSug(el){
 <script src="assets/eih-vfx.js" defer></script>
 <script src="assets/eih-navauth.js" defer></script>
 <script src="assets/eih-install.js" defer></script>
+<script src="assets/eih-anim-pause.js" defer></script>
 
 <script>
 /* Cosa facciamo — tilt 3D che segue il puntatore (solo mouse, no reduced-motion) */
