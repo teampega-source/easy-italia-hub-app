@@ -504,5 +504,7 @@
   if(window.__eihInstall)return;
   var s=document.createElement('script');s.src='/assets/eih-install.js';s.defer=true;
   document.head.appendChild(s);
+  var a=document.createElement('script');a.src='/assets/eih-anim-pause.js';a.defer=true;
+  document.head.appendChild(a);
 })();
 
