@@ -2089,3 +2089,29 @@ h3.section-title--sub{font-size:clamp(1.3rem,3.2vw,1.75rem);margin-top:var(--sp-
   .cr-ico svg{width:46px;height:46px}
   .cr-tag{margin-top:.35rem}
 }
+
+/* ── Foto della città in filigrana, con trasparenza variabile ───────
+   La foto si vede in alto, dietro l'icona del monumento, e sfuma verso
+   il basso proprio dove stanno nome, regione ed etichetta: la
+   trasparenza cambia dove serve leggibilità invece di essere piatta.
+   Immagini di pubblico dominio (Library of Congress). */
+.cr-photo{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  z-index:0;pointer-events:none;
+  opacity:.20;filter:sepia(.24) saturate(.82) contrast(1.04);
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.92) 32%,rgba(0,0,0,.28) 62%,transparent 86%);
+          mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.92) 32%,rgba(0,0,0,.28) 62%,transparent 86%);
+  transition:opacity .35s ease;
+}
+/* velo del colore della città: lega la foto alla card invece di lasciarla staccata */
+.cr-card::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(168deg,color-mix(in srgb,var(--cc) 22%,transparent),transparent 58%);
+}
+/* icona e testo sopra la filigrana */
+.cr-ico,.cr-city,.cr-region,.cr-tag{position:relative;z-index:1}
+/* la card in primo piano lascia respirare un po' più la foto */
+.cr-card:hover .cr-photo,
+.cr-card:focus-visible .cr-photo,
+.cr-card[aria-expanded=true] .cr-photo{opacity:.34}
+@media(prefers-reduced-motion:reduce){.cr-photo{transition:none}}
