@@ -269,7 +269,14 @@ body.has-si-bar .hero{padding-top:var(--sp-4)}
       </div></li>
           <li class="nav-item"><a href="/servizi" data-i18n="nav.services">Servizi</a></li>
           <li class="nav-item"><a href="/community" data-i18n="nav.community">Community</a></li>
-          <li class="nav-item"><a href="/corsi" data-i18n="nav.academy">Academy</a></li>
+          <li class="nav-item nav-has-sub"><a href="/academy" data-i18n="nav.academy">Academy</a><button type="button" class="nav-sub-btn" aria-expanded="false" aria-label="Sottomenu Academy" tabindex="-1"><svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="nav-sub" role="menu">
+        <a role="menuitem" href="/academy" data-i18n="m.academy">Lezioni Academy</a>
+        <a role="menuitem" href="/corsi" data-i18n="nav.courses">Corsi di lingua</a>
+        <a role="menuitem" href="/certificazioni" data-i18n="m.certprep">Preparazione certificazioni</a>
+        <a role="menuitem" href="/ai-teacher" data-i18n="m.aiteacher">Insegnante AI</a>
+        <a role="menuitem" href="/esame" data-i18n="m.esame">Esame e Badge</a>
+        <a role="menuitem" href="/scuola" data-i18n="m.school">Scuola e studio</a>
+      </div></li>
           <li class="nav-item"><a href="/percorso" class="nav-journey" data-i18n="nav.journey">Percorso</a></li>
           <li class="nav-item"><a href="/news" data-i18n="nav.news">News</a></li>
       <li><a href="/mappa" data-i18n="nav.map">Mappa</a></li>
@@ -1669,6 +1676,9 @@ body.has-si-bar .hero{padding-top:var(--sp-4)}
 <script src="assets/eih-anim-pause.js" defer></script>
 <script src="assets/eih-bottom-nav.js" defer></script>
 <script src="assets/eih-iscritti.js" defer></script>
+<script>/* traduzione del corpo pagina: si carica solo fuori dall'italiano */
+(function(){try{if((localStorage.getItem('eih-lang')||'it')!=='it'){
+  var s=document.createElement('script');s.src='/assets/eih-i18n-page.js';s.defer=true;document.head.appendChild(s);}}catch(e){}})();</script>
 
 <script>
 /* Cosa facciamo — tilt 3D che segue il puntatore (solo mouse, no reduced-motion) */
