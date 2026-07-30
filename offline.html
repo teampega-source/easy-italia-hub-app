@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sei offline — Easy Italia Hub</title>
+<meta name="robots" content="noindex"/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<style>
+:root{--bg:#e9e6e0;--ink:#161412;--muted:#565049;--gold:#7c7059;--border:rgba(118,118,118,.25)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;
+  background:linear-gradient(160deg,#f3f1ec,#e9e6e0 60%,#dfdad1);color:var(--ink);
+  font-family:'Satoshi',system-ui,-apple-system,sans-serif}
+main{text-align:center;max-width:520px}
+.ic{font-size:3rem;line-height:1;margin-bottom:1rem}
+h1{font-family:'Clash Grotesk',system-ui,sans-serif;font-weight:600;font-size:1.6rem;letter-spacing:-.01em}
+p{color:var(--muted);margin-top:.85rem;font-size:1rem;line-height:1.65}
+.si{display:block;margin-top:.6rem;font-size:.9rem}
+ul{list-style:none;margin-top:1.6rem;display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
+a{display:inline-flex;align-items:center;min-height:44px;padding:.7rem 1.3rem;border-radius:9999px;
+  text-decoration:none;font-weight:700;font-size:.95rem;border:1px solid var(--border);
+  color:var(--ink);background:rgba(255,255,255,.6)}
+a.primary{background:var(--ink);color:#f3f1ec;border-color:var(--ink)}
+.nota{margin-top:1.8rem;font-size:.8rem;color:var(--gold)}
+@media(prefers-color-scheme:dark){
+  body{background:linear-gradient(160deg,#1c1916,#161412);color:#f4f6f9}
+  p{color:#b9bec6} a{color:#f4f6f9;background:rgba(255,255,255,.06);border-color:rgba(188,193,201,.28)}
+  a.primary{background:#f4f6f9;color:#161412;border-color:#f4f6f9}
+}
+</style>
+</head>
+<body>
+<main>
+  <div class="ic" aria-hidden="true">📡</div>
+  <h1>Sei offline</h1>
+  <p>Non c'è connessione in questo momento. Le pagine che hai già visitato restano disponibili: prova ad aprirne una qui sotto.
+  <span class="si">ඔබ දැන් අන්තර්ජාලයෙන් විසන්ධි වී ඇත · நீங்கள் இணையத்தில் இல்லை</span></p>
+  <ul>
+    <li><a class="primary" href="/">Home</a></li>
+    <li><a href="/guide">Guide</a></li>
+    <li><a href="/emergenze">Numeri di emergenza</a></li>
+  </ul>
+  <p class="nota">In caso di emergenza chiama il <strong>112</strong>: funziona anche senza credito e senza dati.</p>
+</main>
+<script>
+  // Appena la rete torna, si riprova da soli.
+  addEventListener('online', function () { location.reload(); });
+</script>
+</body>
+</html>

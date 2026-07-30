@@ -37,7 +37,9 @@
 
 <link rel="preconnect" href="https://api.fontshare.com"/>
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
-<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" media="print" onload="this.media='all'"/>
+<noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/></noscript>
 <style>
 /* ─── TOKENS (shared with the main site) ─── */
 :root{
@@ -407,7 +409,7 @@ html[data-theme="dark"] .site-nav{background:#1c1916}
 
 <!-- NAV -->
 <nav class="site-nav" aria-label="Navigazione principale">
-  <a href="/" class="nav-logo"><img src="/assets/img/logo-symbol.jpg" alt="" class="nav-logo-img" style="height:36px;width:auto;display:block;flex-shrink:0">Easy <span class="accent">Italia</span> Hub</a>
+  <a href="/" class="nav-logo"><img src="/assets/img/logo-symbol.webp" alt="" class="nav-logo-img" style="height:36px;width:auto;display:block;flex-shrink:0">Easy <span class="accent">Italia</span> Hub</a>
   <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-collapse" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   <div class="nav-collapse" id="nav-collapse">
     <ul class="nav-links">
@@ -540,7 +542,7 @@ html[data-theme="dark"] .site-nav{background:#1c1916}
 <footer class="pf" aria-label="Piè di pagina">
   <div class="pf-inner">
     <div class="pf-brand">
-      <a href="/" style="text-decoration:none;display:inline-block"><img src="/assets/img/logo-symbol.jpg" alt="" style="height:80px;width:auto;display:block;margin-bottom:6px"><span style="display:block;font-family:'Clash Grotesk','Arial Black',Impact,sans-serif;font-size:13px;font-weight:900;color:#1a2744;letter-spacing:3px">EASY ITALIA HUB</span><span style="display:block;font-size:11px;color:#41506a;letter-spacing:3.5px;margin-top:3px">GUIDES · AI · COMMUNITY</span></a>
+      <a href="/" style="text-decoration:none;display:inline-block"><img src="/assets/img/logo-symbol.webp" alt="" style="height:80px;width:auto;display:block;margin-bottom:6px"><span style="display:block;font-family:'Clash Grotesk','Arial Black',Impact,sans-serif;font-size:13px;font-weight:900;color:#1a2744;letter-spacing:3px">EASY ITALIA HUB</span><span style="display:block;font-size:11px;color:#41506a;letter-spacing:3.5px;margin-top:3px">GUIDES · AI · COMMUNITY</span></a>
       <p class="pf-tag">La casa digitale della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — in un unico posto.</p>
     </div>
     <div class="pf-col">

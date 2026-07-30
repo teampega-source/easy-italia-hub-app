@@ -4,24 +4,39 @@
    Le API (/api/) e le richieste cross-origin non vengono mai intercettate. */
 'use strict';
 
-const CACHE = 'eih-v77';
+const CACHE = 'eih-v78';
+const OFFLINE = '/offline.html';
 const CORE = [
   '/',
+  OFFLINE,
   '/eih.css',
   '/eih.js',
   '/eih-chat-widget.js',
   '/eih-auth.js',
+  '/assets/eih-theme.css',
+  '/assets/eih-atmosphere.css',
+  '/assets/eih-theme.js',
+  '/assets/eih-palette.js',
   '/assets/eih-motion.js',
+  '/assets/eih-consent.js',
+  '/assets/eih-install.js',
+  '/assets/eih-anim-pause.js',
+  '/assets/eih-lang-url.js',
   '/assets/vendor/lenis.min.js',
   '/assets/vendor/gsap.min.js',
   '/assets/vendor/ScrollTrigger.min.js',
   '/assets/favicon-32.png',
-  '/assets/icon-192.png'
+  '/assets/icon-192.png',
+  '/assets/img/logo-symbol.webp',
+  '/manifest.json'
 ];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting())
+    caches.open(CACHE)
+      // addAll fallisce in blocco se un solo file non risponde: uno per uno.
+      .then((c) => Promise.all(CORE.map((u) => c.add(u).catch(() => null))))
+      .then(() => self.skipWaiting())
   );
 });
 
@@ -52,7 +67,9 @@ self.addEventListener('fetch', (e) => {
           caches.open(CACHE).then((c) => c.put(req, copy));
           return res;
         })
-        .catch(() => caches.match(req).then((hit) => hit || caches.match('/')))
+        .catch(() => caches.match(req)
+          .then((hit) => hit || caches.match('/'))
+          .then((hit) => hit || caches.match(OFFLINE)))
     );
     return;
   }

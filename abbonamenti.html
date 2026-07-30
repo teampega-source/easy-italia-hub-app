@@ -35,7 +35,9 @@
 <meta name="twitter:image" content="https://easyitaliahub.it/api/og?t=Abbonamenti&amp;s=Info%20gratis%20per%20sempre%20%C2%B7%20Premium%20%E2%82%AC4%2C99"/>
 
 <link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
-<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" media="print" onload="this.media='all'"/>
+<noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/></noscript>
 <link rel="stylesheet" href="eih.css"/>
 <style>
 /* ── Packaging hero: warm-on-warm, grana carta, prodotto fluttuante ── */
@@ -130,7 +132,7 @@
       <div class="pkg-stage" aria-hidden="true">
         <div class="pkg-shadow" id="pkg-shadow"></div>
         <div class="pkg-card" id="pkg-card">
-          <img src="/assets/img/logo-symbol.jpg" alt=""/>
+          <img src="/assets/img/logo-symbol.webp" alt=""/>
           <div class="pk-brand">Easy Italia Hub</div>
           <div class="pk-rule"></div>
           <div class="pk-name">Premium</div>

@@ -19,7 +19,9 @@
 <meta property="og:url" content="https://easyitaliahub.it/cerca"/>
 <meta property="og:locale" content="it_IT"/>
 <link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
-<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet"/>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" media="print" onload="this.media='all'"/>
+<noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/></noscript>
 <link rel="stylesheet" href="eih.css"/>
 <script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
 <style>
@@ -117,9 +119,9 @@
     {url:'/academy',emoji:'🎓',cat:'Formazione',title:'Academy',desc:'Corsi online su burocrazia italiana, diritti del lavoratore, italiano per stranieri.',keys:'academy corsi formazione online burocrazia diritti lavoratore'},
     {url:'/ai-teacher',emoji:'🤖',cat:'Formazione',title:'AI Teacher',desc:'Insegnante virtuale AI per imparare l\'italiano con conversazioni simulate.',keys:'ai teacher insegnante italiano imparare conversazione pratica'},
     {url:'/profili',emoji:'👤',cat:'Formazione',title:'Profili Utente',desc:'Percorsi personalizzati in base alla tua situazione: lavoratore, studente, familiare.',keys:'profilo utente percorso personalizzato lavoratore studente studente familiare'},
-    {url:'/news',emoji:'📰',cat:'Azienda',title:'News',desc:'Aggiornamenti su burocrazia, leggi per immigrati, novità di Easy Italia Hub.',keys:'news notizie aggiornamenti leggi novità'},
-    {url:'/chi-siamo',emoji:'🙋',cat:'Azienda',title:'Chi siamo',desc:'La storia e il team di Easy Italia Hub, nata per aiutare la comunità srilankese in Italia.',keys:'chi siamo storia team missione comunità srilankese'},
-    {url:'/contatti',emoji:'✉️',cat:'Azienda',title:'Contatti',desc:'Scrivici per domande, segnalazioni, collaborazioni e pubblicità.',keys:'contatti scrivici email collaborazione pubblicità segnalazione'},
+    {url:'/news',emoji:'📰',cat:'Il progetto',title:'News',desc:'Aggiornamenti su burocrazia, leggi per immigrati, novità di Easy Italia Hub.',keys:'news notizie aggiornamenti leggi novità'},
+    {url:'/chi-siamo',emoji:'🙋',cat:'Il progetto',title:'Chi siamo',desc:'La storia e il team di Easy Italia Hub, nata per aiutare la comunità srilankese in Italia.',keys:'chi siamo storia team missione comunità srilankese'},
+    {url:'/contatti',emoji:'✉️',cat:'Il progetto',title:'Contatti',desc:'Scrivici per domande, segnalazioni, collaborazioni e pubblicità.',keys:'contatti scrivici email collaborazione pubblicità segnalazione'},
     {url:'/privacy',emoji:'🔒',cat:'Legal',title:'Privacy Policy',desc:'Come trattiamo i tuoi dati personali in conformità al GDPR.',keys:'privacy gdpr dati personali cookie trattamento'},
     {url:'/termini',emoji:'📑',cat:'Legal',title:'Termini di Servizio',desc:'Condizioni d\'uso della piattaforma Easy Italia Hub.',keys:'termini servizio condizioni uso legale'},
     {url:'/cookie',emoji:'🍪',cat:'Legal',title:'Cookie Policy',desc:'Informativa sull\'uso dei cookie su Easy Italia Hub.',keys:'cookie policy informativa tracciamento'},
