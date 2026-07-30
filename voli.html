@@ -369,7 +369,7 @@
     .catch(function(){
       msg.style.display = 'block';
       msg.style.borderLeft = '3px solid var(--coral)';
-      msg.textContent = 'Errore di rete. Riprova.';
+      msg.textContent = EIH.msg('msg.netErr','Errore di rete. Riprova.');
       btn.disabled = false; btn.textContent = 'Iscrivimi';
     });
   });

@@ -712,26 +712,26 @@
 
   function reflectPermission(){
     if(!notifSupported()){
-      elRemSt.textContent = 'Notifiche non supportate da questo browser';
+      elRemSt.textContent = EIH.msg('msg.notifKo','Notifiche non supportate da questo browser');
       elRemSt.className = 'remind-status denied';
       elRemBtn.disabled = true;
-      elRemBtn.textContent = 'Non disponibile';
+      elRemBtn.textContent = EIH.msg('msg.unavail','Non disponibile');
       elRemTxt.textContent = 'Questo browser non supporta le notifiche. Le scadenze restano comunque visibili qui nella dashboard.';
       return;
     }
     var p = Notification.permission;
     if(p === 'granted'){
-      elRemSt.textContent = '✓ Promemoria attivi su questo dispositivo';
+      elRemSt.textContent = EIH.msg('msg.remindOk','✓ Promemoria attivi su questo dispositivo');
       elRemSt.className = 'remind-status ok';
       elRemBtn.textContent = 'Controlla scadenze vicine';
     } else if(p === 'denied'){
-      elRemSt.textContent = 'Notifiche bloccate dal browser — sbloccale dalle impostazioni del sito';
+      elRemSt.textContent = EIH.msg('msg.notifBlock','Notifiche bloccate dal browser — sbloccale dalle impostazioni del sito');
       elRemSt.className = 'remind-status denied';
-      elRemBtn.textContent = 'Attiva promemoria nel browser';
+      elRemBtn.textContent = EIH.msg('msg.remindOn','Attiva promemoria nel browser');
     } else {
-      elRemSt.textContent = 'Promemoria non attivi';
+      elRemSt.textContent = EIH.msg('msg.remindOff','Promemoria non attivi');
       elRemSt.className = 'remind-status off';
-      elRemBtn.textContent = 'Attiva promemoria nel browser';
+      elRemBtn.textContent = EIH.msg('msg.remindOn','Attiva promemoria nel browser');
     }
   }
 
@@ -999,7 +999,7 @@
     elEmailBtn.addEventListener('click', async function() {
       var email = (elEmailInput ? elEmailInput.value : '').trim();
       if (!email) {
-        if (elEmailStatus) elEmailStatus.textContent = 'Inserisci la tua email.';
+        if (elEmailStatus) elEmailStatus.textContent = EIH.msg('msg.emailNeed','Inserisci la tua email.');
         return;
       }
       elEmailBtn.disabled = true;
@@ -1021,7 +1021,7 @@
           if (elEmailStatus) { elEmailStatus.textContent = data.error || 'Errore. Riprova.'; elEmailStatus.style.color = 'var(--coral)'; }
         }
       } catch(e) {
-        if (elEmailStatus) { elEmailStatus.textContent = 'Errore di rete. Riprova.'; elEmailStatus.style.color = 'var(--coral)'; }
+        if (elEmailStatus) { elEmailStatus.textContent = EIH.msg('msg.netErr','Errore di rete. Riprova.'); elEmailStatus.style.color = 'var(--coral)'; }
       }
       elEmailBtn.disabled = false;
       elEmailBtn.textContent = 'Invia via email';

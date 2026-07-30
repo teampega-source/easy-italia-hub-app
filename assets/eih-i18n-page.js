@@ -117,6 +117,11 @@
       // testata che in singalese o tamil ha un ordine delle parole diverso
       if (t === undefined || t === null) continue;
       presi++;
+      // si marca chi e' stato tradotto: dopo la sostituzione il testo non e'
+      // piu' italiano e la sua impronta non si ritrova nel dizionario, quindi
+      // senza marcatura un secondo controllo lo scambierebbe per non tradotto
+      var portante = v.attr ? v.el : v.nodo.parentElement;
+      if (portante) portante.setAttribute('data-tr-ok', '');
       if (v.attr) v.el.setAttribute(v.attr, t);
       else v.nodo.nodeValue = v.nodo.nodeValue.replace(/^(\s*).*?(\s*)$/s, '$1' + t.replace(/\$/g, '$$$$') + '$2');
     }
@@ -130,12 +135,26 @@
     fetch('/assets/i18n/' + pg + '.' + lg + '.json', { cache: 'no-cache' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (d) {
-        // niente dizionario: si avvisa solo se resta davvero molto italiano
-        if (!d) { if (raccogli().length > 12) avviso(lg, false); return; }
-        delete d._meta;
-        var e = applica(d);
-        document.documentElement.setAttribute('data-tr', e.presi + '/' + e.totale);
-        if (e.totale > 6 && e.presi / e.totale < 0.55) avviso(lg, true);
+        if (d) { delete d._meta; applica(d); }
+        // Il giudizio sulla copertura si dà a pagina ferma: molte pagine
+        // costruiscono pezzi di sé con JavaScript, e misurare troppo presto
+        // fa comparire l'avviso anche dove la traduzione poi arriva.
+        setTimeout(function () {
+          if (d) applica(d);   // recupera i pezzi nati da JavaScript nel frattempo
+          var voci = raccogli(), residuo = 0;
+          for (var i = 0; i < voci.length; i++) {
+            var v = voci[i], portante = v.attr ? v.el : v.nodo.parentElement;
+            if (portante && portante.hasAttribute('data-tr-ok')) continue;
+            if (d && d[impronta(v.testo)] !== undefined) continue;
+            residuo++;
+          }
+          document.documentElement.setAttribute('data-tr', (voci.length - residuo) + '/' + voci.length);
+          // Si avvisa solo se resta parecchio italiano, non per due parole.
+          // In inglese non si distingue l'italiano dall'inglese guardando
+          // l'alfabeto: lì l'avviso vale solo quando manca tutto il dizionario.
+          var attendibile = lg !== 'en' || !d;
+          if (attendibile && residuo > 12 && residuo / Math.max(1, voci.length) > 0.45) avviso(lg, !!d);
+        }, 1400);
       })
       .catch(function () {});
   }
