@@ -4,8 +4,8 @@
    Le API (/api/) e le richieste cross-origin non vengono mai intercettate. */
 'use strict';
 
-const CACHE = 'eih-v78';
-const OFFLINE = '/offline.html';
+const CACHE = 'eih-v79';
+const OFFLINE = '/offline';
 const CORE = [
   '/',
   OFFLINE,

@@ -720,7 +720,7 @@ body{
   #news-rail{
     display:flex;flex-direction:column;
     position:fixed;right:0;left:auto;top:0;
-    transform:translateX(246px);
+    transform:translateX(230px);
     transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std);
     width:260px;height:100vh;max-height:none;z-index:150;
     background:rgba(255,253,250,0.96);
@@ -729,13 +729,10 @@ body{
     box-shadow:-4px 0 24px rgba(20,30,48,.08);overflow:hidden;
   }
   /* maniglia/sliver sempre visibile che indica la barra */
-  #news-rail::before{
-    content:"";position:absolute;left:3px;top:50%;transform:translateY(-50%);
-    width:5px;height:46px;border-radius:6px;z-index:2;
-    background:linear-gradient(180deg,var(--coral),var(--gold));
-    box-shadow:0 0 10px rgba(124,130,140,.30);
-    opacity:.9;transition:opacity var(--dur-micro);pointer-events:none;
-  }
+  #news-rail::before{content:"";position:absolute;left:9px;top:50%;transform:translateY(-50%);width:6px;height:74px;border-radius:6px;z-index:2;background:linear-gradient(180deg,var(--coral),var(--gold));box-shadow:0 0 12px rgba(124,130,140,.45);opacity:1;transition:opacity var(--dur-micro);pointer-events:none}
+/* freccia: rende evidente che il pannello si apre */
+#news-rail::after{content:"‹";position:absolute;left:20px;top:50%;transform:translateY(-50%);z-index:2;font-size:1.35rem;line-height:1;color:var(--fg-muted);opacity:.85;transition:opacity var(--dur-micro);pointer-events:none}
+#news-rail:hover::after,#news-rail:focus-within::after{opacity:0}
   #news-rail:hover,#news-rail:focus-within{transform:translateX(0)}
   #news-rail:hover::before,#news-rail:focus-within::before{opacity:0}
 }
