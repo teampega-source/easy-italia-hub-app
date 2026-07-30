@@ -18,7 +18,7 @@
 /* ---- globe scene (Terra) ---- */
 .h3d-globe{position:absolute;left:50%;top:50%;width:66%;height:66%;transform:translate(-50%,-50%) rotate(-12deg);border-radius:50%;overflow:hidden;box-shadow:0 0 0 1px color-mix(in srgb,var(--h3d-accent,var(--blue)) 30%,transparent),0 0 30px 4px color-mix(in srgb,var(--h3d-accent,var(--blue)) 30%,transparent),inset -14px -16px 38px rgba(0,0,0,.55)}
 .h3d-globe .g-ocean{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 36% 30%,#3a86c4,#1f5e96 40%,#123f6c 66%,#0a2547)}
-.h3d-globe .g-strip{position:absolute;top:0;bottom:0;left:0;width:400%;background:url("/assets/earth-blue-marble.jpg") repeat-x;background-size:50% 100%;animation:h3dSpin 34s linear infinite}
+.h3d-globe .g-strip{position:absolute;top:0;bottom:0;left:0;width:400%;background:url("/assets/earth-blue-marble.webp") repeat-x;background-size:50% 100%;animation:h3dSpin 34s linear infinite}
 .h3d-globe .g-shade{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse 32% 26% at 31% 26%,rgba(255,255,255,.45),rgba(255,255,255,0) 70%),linear-gradient(108deg,transparent 40%,rgba(3,10,22,.55) 82%),radial-gradient(circle at 50% 50%,transparent 50%,rgba(3,10,22,.42) 74%,rgba(2,7,16,.82) 100%)}
 .h3d-globe .g-atmo{position:absolute;inset:-1px;border-radius:50%;box-shadow:inset 0 0 14px color-mix(in srgb,#bcdcff 70%,transparent)}
 .h3d-orbit{position:absolute;left:50%;top:50%;width:98%;height:98%;transform:translate(-50%,-50%);animation:h3dRing2 13s linear infinite}
@@ -32,12 +32,12 @@
 
 /* ---- mapsq scene (mappa quadrata + lente) ---- */
 .h3d-mapsq{position:absolute;left:50%;top:50%;width:88%;height:88%;transform:translate(-50%,-50%);border-radius:18px;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,#000 18%,#000 82%,transparent),linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(to right,transparent,#000 18%,#000 82%,transparent),linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent);-webkit-mask-composite:source-in;mask-composite:intersect}
-.h3d-mapsq .m-tex{position:absolute;inset:-6%;background:url("/assets/earth-blue-marble.jpg") no-repeat;background-size:340% auto;background-position:53% 27%;animation:h3dMapZoom 22s ease-in-out infinite}
+.h3d-mapsq .m-tex{position:absolute;inset:-6%;background:url("/assets/earth-blue-marble.webp") no-repeat;background-size:340% auto;background-position:53% 27%;animation:h3dMapZoom 22s ease-in-out infinite}
 .h3d-mapsq .m-grid{position:absolute;inset:0;background:linear-gradient(color-mix(in srgb,var(--h3d-accent,var(--green)) 16%,transparent) 1px,transparent 1px) 0 0/100% 18%,linear-gradient(90deg,color-mix(in srgb,var(--h3d-accent,var(--green)) 16%,transparent) 1px,transparent 1px) 0 0/18% 100%;opacity:.5}
 .h3d-mapsq .m-pin{position:absolute;width:8px;height:8px;border-radius:50% 50% 50% 0;background:var(--coral);transform:rotate(-45deg);box-shadow:0 0 9px color-mix(in srgb,var(--coral) 70%,transparent)}
 .h3d-mapsq .m-pin.a{top:38%;left:46%}.h3d-mapsq .m-pin.b{top:54%;left:58%}.h3d-mapsq .m-pin.c{top:30%;left:60%}
 .h3d-lens{position:absolute;top:18%;right:8%;width:40%;height:40%;border-radius:50%;overflow:hidden;box-shadow:0 14px 30px -8px rgba(20,30,48,.55),0 0 0 5px color-mix(in srgb,var(--surface) 90%,transparent),0 0 0 7px var(--border-bright),inset 0 0 0 1px rgba(255,255,255,.5);animation:h3dLensBob 6s ease-in-out infinite}
-.h3d-lens .m-tex{position:absolute;inset:-30%;background:url("/assets/earth-blue-marble.jpg") no-repeat;background-size:760% auto;background-position:54% 26%}
+.h3d-lens .m-tex{position:absolute;inset:-30%;background:url("/assets/earth-blue-marble.webp") no-repeat;background-size:760% auto;background-position:54% 26%}
 .h3d-lens .l-glass{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.55),rgba(255,255,255,0) 46%),radial-gradient(circle at 70% 78%,rgba(7,18,34,.32),transparent 50%)}
 .h3d-lens .l-handle{position:absolute;right:-13%;bottom:-13%;width:34%;height:11%;border-radius:6px;background:linear-gradient(90deg,color-mix(in srgb,var(--taupe) 70%,#000),var(--taupe));transform:rotate(45deg);transform-origin:left center;box-shadow:0 3px 8px rgba(20,30,48,.4)}
 @keyframes h3dMapZoom{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
