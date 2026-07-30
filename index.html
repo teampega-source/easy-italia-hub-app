@@ -163,61 +163,7 @@
 <a href="#main-content" class="skip-link">Salta al contenuto</a>
 
 <!-- ── Beta / maintenance gate (prima della home, ricordato via localStorage) ── -->
-<!-- ─── INTRO (una sola volta per dispositivo, dopo il gate) ─── -->
-<div id="eih-intro" aria-hidden="true">
-  <video id="eih-intro-vid" muted playsinline preload="none" data-src="/assets/eih-intro.mp4"
-         poster="/assets/img/eih-intro-poster.webp"></video>
-  <button type="button" id="eih-intro-skip">Salta ›</button>
-</div>
-<style>
-#eih-intro{position:fixed;inset:0;z-index:99999;background:#0e0b09;display:none;align-items:center;justify-content:center;opacity:1;transition:opacity .6s ease}
-#eih-intro.on{display:flex}
-#eih-intro.fade{opacity:0;pointer-events:none}
-#eih-intro video{width:100%;height:100%;object-fit:cover}
-#eih-intro-skip{position:absolute;bottom:24px;right:24px;padding:.55rem 1.15rem;border:1px solid rgba(255,255,255,.4);background:rgba(0,0,0,.4);color:#fff;border-radius:999px;font-family:'Satoshi',system-ui,sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:background .2s}
-#eih-intro-skip:hover{background:rgba(0,0,0,.65)}
-#eih-intro-skip:focus-visible{outline:2px solid #f0e7d6;outline-offset:2px}
-</style>
-<script>
-(function(){
-  var KEY='eih-intro-seen';
-  function seen(){try{return localStorage.getItem(KEY)==='1';}catch(e){return true;}}
-  function mark(){try{localStorage.setItem(KEY,'1');}catch(e){}}
-  var reduce=false;try{reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;}catch(e){}
-  window.EIHIntro={play:function(done){
-    done=typeof done==='function'?done:function(){};
-    if(seen()||reduce){mark();done();return;}
-    var ov=document.getElementById('eih-intro'),vid=document.getElementById('eih-intro-vid'),skip=document.getElementById('eih-intro-skip');
-    if(!ov||!vid){mark();done();return;}
-    var lang='it';try{lang=localStorage.getItem('eih-lang')||'it';}catch(e){}
-    var SK={it:'Salta ›',en:'Skip ›',si:'මඟ හරින්න ›',ta:'தவிர் ›'};
-    if(skip)skip.textContent=SK[lang]||SK.it;
-    var htmlEl=document.documentElement;htmlEl.style.overflow='hidden';
-    ov.classList.add('on');ov.setAttribute('aria-hidden','false');
-    var finished=false,started=false,cap;
-    function finish(){
-      if(finished)return;finished=true;mark();clearTimeout(watch);clearTimeout(cap);
-      try{vid.pause();}catch(e){}
-      ov.classList.add('fade');
-      setTimeout(function(){ov.classList.remove('on');ov.setAttribute('aria-hidden','true');htmlEl.style.overflow='';if(ov.parentNode)ov.parentNode.removeChild(ov);},650);
-      done();
-    }
-    // Watchdog: se il video non parte (decode/rete), salta subito invece di bloccare.
-    var watch=setTimeout(function(){if(!started)finish();},4500);
-    vid.addEventListener('playing',function(){started=true;clearTimeout(watch);
-      var d=isFinite(vid.duration)&&vid.duration>0?vid.duration:15;
-      cap=setTimeout(finish,d*1000+2500); // backup all'evento 'ended'
-    });
-    vid.addEventListener('ended',finish);
-    vid.addEventListener('error',finish);
-    if(skip)skip.addEventListener('click',finish);
-    // Sorgente assegnata solo ora: chi ha gia' visto l'intro non scarica nulla.
-    if(!vid.src){var sorgente=vid.getAttribute('data-src');if(sorgente){vid.src=sorgente;try{vid.load();}catch(e){}}}
-    var pr=vid.play();
-    if(pr&&pr.catch)pr.catch(function(){finish();});
-  }};
-})();
-</script>
+
 
 <style>
 
@@ -277,14 +223,6 @@ body.has-si-bar .hero{padding-top:var(--sp-4)}
     mask-image:linear-gradient(90deg,transparent,#000 1.2rem,#000 calc(100% - 1.2rem),transparent)}
 }
 </style>
-<script>
-/* Il riquadro "sito in beta" e stato tolto: era anche lui ad avviare il
-   filmato d'ingresso, quindi ora lo avviamo direttamente. */
-(function(){
-  if(window.EIHIntro) window.EIHIntro.play();
-})();
-</script>
-
 <!-- Smart toast (once per user, bottom-right) -->
 <div id="smart-toast" role="status" aria-live="polite">
   <button class="st-x" id="st-x" aria-label="Chiudi">
@@ -1122,12 +1060,12 @@ body.has-si-bar .hero{padding-top:var(--sp-4)}
   <p class="section-sub" data-i18n="map3d.sub">Srilankesi da Nord a Sud: le città dove la community cresce.</p>
   <div class="eih-cityring" aria-label="Città della community in Italia">
     <div class="cr-ring">
-      <button type="button" class="cr-card cr-card--photo" style="--i:0;--cc:#b4763a" data-c="roma" aria-expanded="false"><img class="cr-photo" src="/assets/img/roma-colosseo.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Roma</span><span class="cr-region">Lazio</span><span class="cr-tag">Ambasciata</span></button>
-      <button type="button" class="cr-card cr-card--photo" style="--i:1;--cc:#7c8aa0" data-c="milano" aria-expanded="false"><img class="cr-photo" src="/assets/img/milano-city.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Milano</span><span class="cr-region">Lombardia</span><span class="cr-tag">Consolato</span></button>
-      <button type="button" class="cr-card cr-card--photo" style="--i:2;--cc:#8a6d9c" data-c="torino" aria-expanded="false"><img class="cr-photo" src="/assets/img/torino-city.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Torino</span><span class="cr-region">Piemonte</span><span class="cr-tag">In crescita</span></button>
-      <button type="button" class="cr-card cr-card--photo" style="--i:3;--cc:#9c7b3a" data-c="firenze" aria-expanded="false"><img class="cr-photo" src="/assets/img/firenze-city.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Firenze</span><span class="cr-region">Toscana</span><span class="cr-tag">Storica</span></button>
-      <button type="button" class="cr-card cr-card--photo" style="--i:4;--cc:#a8543f" data-c="bologna" aria-expanded="false"><img class="cr-photo" src="/assets/img/bologna-city.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Bologna</span><span class="cr-region">Emilia-Romagna</span><span class="cr-tag">Studio &amp; lavoro</span></button>
-      <button type="button" class="cr-card cr-card--photo" style="--i:5;--cc:#3f8a8a" data-c="napoli" aria-expanded="false"><img class="cr-photo" src="/assets/img/napoli-city.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"/><span class="cr-city">Napoli</span><span class="cr-region">Campania</span><span class="cr-tag">Storica</span></button>
+      <button type="button" class="cr-card" style="--i:0;--cc:#b4763a" data-c="roma" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18Q24 11 41 18L41 37Q24 43 7 37Z"/><path d="M7 27h34"/><path d="M14 21v14M21 20v16M27 20v16M34 21v14"/></svg></span><span class="cr-city">Roma</span><span class="cr-region">Lazio</span><span class="cr-tag">Ambasciata 🇱🇰</span></button>
+      <button type="button" class="cr-card" style="--i:1;--cc:#7c8aa0" data-c="milano" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h36"/><path d="M9 40V25l4-3 3 3v15M39 40V25l-4-3-3 3v15"/><path d="M18 40V16l6-9 6 9v24"/><path d="M24 7V3M13 22v-4M35 22v-4"/></svg></span><span class="cr-city">Milano</span><span class="cr-region">Lombardia</span><span class="cr-tag">Consolato</span></button>
+      <button type="button" class="cr-card" style="--i:2;--cc:#8a6d9c" data-c="torino" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 40h24"/><path d="M17 40V27h14v13"/><path d="M20 27l4-13 4 13"/><path d="M24 14V4"/><circle cx="24" cy="14" r="2"/></svg></span><span class="cr-city">Torino</span><span class="cr-region">Piemonte</span><span class="cr-tag">In crescita</span></button>
+      <button type="button" class="cr-card" style="--i:3;--cc:#9c7b3a" data-c="firenze" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h36"/><path d="M9 40V21h5v19"/><path d="M17 40V27"/><path d="M35 40V27"/><path d="M16 27a10 10 0 0 1 20 0"/><path d="M23 27v-4h4v4M26 19h-4"/></svg></span><span class="cr-city">Firenze</span><span class="cr-region">Toscana</span><span class="cr-tag">Storica</span></button>
+      <button type="button" class="cr-card" style="--i:4;--cc:#a8543f" data-c="bologna" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 40h30"/><path d="M15 40V11h5v29M17 11V7"/><path d="M27 40l1-19 5 .5-.7 18.5"/></svg></span><span class="cr-city">Bologna</span><span class="cr-region">Emilia-Romagna</span><span class="cr-tag">Studio &amp; lavoro</span></button>
+      <button type="button" class="cr-card" style="--i:5;--cc:#3f8a8a" data-c="napoli" aria-expanded="false"><span class="cr-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 33 18 17l3 4 3-4 10 16"/><path d="M4 39q4-2.5 8 0t8 0 8 0 8 0 8 0"/></svg></span><span class="cr-city">Napoli</span><span class="cr-region">Campania</span><span class="cr-tag">Storica</span></button>
     </div>
   </div>
   <p class="cr-hint">Tocca una città per scoprire community, servizi e uffici utili.</p>
