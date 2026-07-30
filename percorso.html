@@ -1331,5 +1331,8 @@ renderPhases();
 <script src="/assets/eih-motion.js" defer></script>
 <script src="/assets/eih-anim-pause.js" defer></script>
 <script src="/assets/eih-bottom-nav.js" defer></script>
+<script>/* traduzione del corpo pagina: si carica solo fuori dall'italiano */
+(function(){try{if((localStorage.getItem('eih-lang')||'it')!=='it'){
+  var s=document.createElement('script');s.src='/assets/eih-i18n-page.js';s.defer=true;document.head.appendChild(s);}}catch(e){}})();</script>
 </body>
 </html>

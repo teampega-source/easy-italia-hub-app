@@ -515,5 +515,12 @@
   document.head.appendChild(a);
   var bn=document.createElement('script');bn.src='/assets/eih-bottom-nav.js';bn.defer=true;
   document.head.appendChild(bn);
+  // traduzione del corpo pagina: serve solo a chi non naviga in italiano
+  try{
+    if((localStorage.getItem('eih-lang')||'it')!=='it'){
+      var tp=document.createElement('script');tp.src='/assets/eih-i18n-page.js';tp.defer=true;
+      document.head.appendChild(tp);
+    }
+  }catch(e){}
 })();
 
