@@ -1958,3 +1958,21 @@ html[data-theme="dark"] .site-nav{background:#1c1916}
 }
 /* il sottotitolo deve vincere su .section-title, che ha la stessa specificita' */
 h3.section-title--sub{font-size:clamp(1.3rem,3.2vw,1.75rem);margin-top:var(--sp-5)}
+
+/* Badge di fiducia sotto i pulsanti dell'hero: rispondono alle tre domande
+   che si fa chi arriva — quanto costa, mi chiedete la carta, chi ve lo dice. */
+.hero-trust{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem 1.15rem;margin:var(--sp-2) 0 0;padding:0}
+.hero-trust li{display:inline-flex;align-items:center;gap:.35rem;font-size:var(--text-xs);
+  font-weight:500;color:var(--fg-secondary);white-space:nowrap}
+.hero-trust li span[aria-hidden]{color:var(--green,#1f9d55);font-weight:700}
+@media(max-width:640px){.hero-trust{gap:.35rem .9rem;justify-content:center}}
+
+/* Il suggerimento contestuale stava a 230px dal fondo: su un telefono
+   finiva in mezzo allo schermo, proprio sopra i due pulsanti dell'hero.
+   Da mobile si aggancia in basso, sopra la barra di navigazione. */
+@media(max-width:900px){
+  #smart-toast{
+    bottom:calc(var(--eih-bnav-h,60px) + 52px + 1.5rem);
+    right:.75rem;left:.75rem;width:auto;max-width:none;
+  }
+}
