@@ -32,15 +32,24 @@ def monta(pagina, lingua):
     tradotto = os.path.join(RADICE, 'traduzioni', '%s.%s.json' % (pagina, lingua))
     if not os.path.exists(tradotto):
         return pagina, lingua, 'nessuna traduzione'
-    voci = json.load(io.open(tradotto, encoding='utf-8'))
+    # le frasi che ricorrono su piu' pagine (avvertenza AI, bottoni) stanno in
+    # _comuni e valgono ovunque; la traduzione di pagina ha comunque la meglio
+    voci, generiche = {}, set()
+    comuni = os.path.join(RADICE, 'traduzioni', '_comuni.%s.json' % lingua)
+    if os.path.exists(comuni):
+        voci.update(json.load(io.open(comuni, encoding='utf-8')))
+        generiche = set(voci)
+    voci.update(json.load(io.open(tradotto, encoding='utf-8')))
 
     fuori, orfane = {}, []
     for it, tr in voci.items():
         k = per_testo.get(normalizza(it))
         if k is None:
-            orfane.append(it[:44])
+            if it not in generiche:   # le frasi comuni mancano quasi ovunque: normale
+                orfane.append(it[:44])
             continue
-        if tr and normalizza(tr) != normalizza(it):
+        # la stringa vuota e' voluta (spezzoni di testata da svuotare)
+        if tr == '' or (tr and normalizza(tr) != normalizza(it)):
             fuori[k] = tr
 
     dest = os.path.join(RADICE, 'assets', 'i18n')

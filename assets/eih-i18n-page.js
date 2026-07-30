@@ -113,7 +113,9 @@
     var voci = raccogli(), presi = 0;
     for (var i = 0; i < voci.length; i++) {
       var v = voci[i], t = dizionario[impronta(v.testo)];
-      if (!t) continue;
+      // "" e' una traduzione valida: serve a svuotare gli spezzoni di una
+      // testata che in singalese o tamil ha un ordine delle parole diverso
+      if (t === undefined || t === null) continue;
       presi++;
       if (v.attr) v.el.setAttribute(v.attr, t);
       else v.nodo.nodeValue = v.nodo.nodeValue.replace(/^(\s*).*?(\s*)$/s, '$1' + t.replace(/\$/g, '$$$$') + '$2');
