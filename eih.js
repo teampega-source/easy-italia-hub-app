@@ -44,7 +44,10 @@
       }).join('')+'</div>';
   }
   function navLink(key,href,i18n,label,sub){
-    return '<li class="nav-item'+(sub?' nav-has-sub':'')+'"><a href="'+href+'" data-i18n="'+i18n+'"'+(active===key?' class="active"':'')+'>'+label+'</a>'+(sub?navSub(sub):'')+'</li>';
+    // key puo' essere una stringa o un elenco: cosi' anche le pagine figlie
+    // di un menu a tendina evidenziano la voce padre
+    const acceso=Array.isArray(key)?key.indexOf(active)>-1:active===key;
+    return '<li class="nav-item'+(sub?' nav-has-sub':'')+'"><a href="'+href+'" data-i18n="'+i18n+'"'+(acceso?' class="active"':'')+'>'+label+'</a>'+(sub?navSub(sub):'')+'</li>';
   }
   function navHTML(){
     return '<nav class="site-nav" aria-label="Navigazione principale">'+
@@ -52,10 +55,10 @@
       '<button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" onclick="EIH.toggleMenu()"><span></span><span></span><span></span></button>'+
       '<div class="nav-collapse" id="nav-collapse">'+
         '<ul class="nav-links">'+
-          navLink('guide','/guide','nav.guide','Guide',[['/guide','','Guide burocratiche'],['/lavoro-diritti','m.lavdir','Lavoro e diritti'],['/italia-srilanka','m.duesponde','Fra Italia e Sri Lanka'],['/costruire-futuro','m.costruire','Costruire il futuro'],['/moduli','m.templates','Moduli e Lettere'],['/guida-conti','m.openaccount','Aprire un Conto'],['/assegno-unico','m.assegno','Calcol. Assegno Unico'],['/diritti-inps','m.inps','Verifica Diritti INPS'],['/riconoscimento-titoli','m.titles','Riconosc. Titoli'],['/dizionario-medico','m.medical','Dizionario Medico']])+
+          navLink(['guide','lavoro-diritti','italia-srilanka','costruire-futuro','moduli','guida-conti','assegno-unico','diritti-inps','riconoscimento-titoli','dizionario-medico'],'/guide','nav.guide','Guide',[['/guide','','Guide burocratiche'],['/lavoro-diritti','m.lavdir','Lavoro e diritti'],['/italia-srilanka','m.duesponde','Fra Italia e Sri Lanka'],['/costruire-futuro','m.costruire','Costruire il futuro'],['/moduli','m.templates','Moduli e Lettere'],['/guida-conti','m.openaccount','Aprire un Conto'],['/assegno-unico','m.assegno','Calcol. Assegno Unico'],['/diritti-inps','m.inps','Verifica Diritti INPS'],['/riconoscimento-titoli','m.titles','Riconosc. Titoli'],['/dizionario-medico','m.medical','Dizionario Medico']])+
           navLink('servizi','/servizi','nav.services','Servizi')+
           navLink('community','/community','nav.community','Community')+
-          navLink('corsi','/corsi','nav.academy','Academy')+
+          navLink(['corsi','academy','certificazioni','ai-teacher','esame','scuola'],'/academy','nav.academy','Academy',[['/academy','m.academy','Lezioni Academy'],['/corsi','nav.courses','Corsi di lingua'],['/certificazioni','m.certprep','Preparazione certificazioni'],['/ai-teacher','m.aiteacher','Insegnante AI'],['/esame','m.esame','Esame e Badge'],['/scuola','m.school','Scuola e studio']])+
           navLink('percorso','/percorso','nav.journey','Percorso')+
           navLink('news','/news','nav.news','News')+
           navLink('mappa','/mappa','nav.map','Mappa')+
@@ -86,8 +89,12 @@
               '<li><a href="/guide" data-i18n="nav.guide">Guide</a></li>'+
               '<li><a href="/percorso" data-i18n="f.aiAssistant">Assistente AI</a></li>'+
               '<li><a href="/community" data-i18n="nav.community">Community</a></li>'+
+              '<li><a href="/academy" data-i18n="m.academy">Lezioni Academy</a></li>'+
               '<li><a href="/corsi" data-i18n="m.languages">Corsi di Lingue</a></li>'+
+              '<li><a href="/certificazioni" data-i18n="m.certprep">Preparazione certificazioni</a></li>'+
+              '<li><a href="/ai-teacher" data-i18n="m.aiteacher">Insegnante AI</a></li>'+
               '<li><a href="/esame" data-i18n="m.esame">Esame &amp; Badge</a></li>'+
+              '<li><a href="/scuola" data-i18n="m.school">Scuola e studio</a></li>'+
               '<li><a href="/opportunita" data-i18n="m.opportunities">Opportunità</a></li>'+
               '<li><a href="/money-transfer">Money Transfer</a></li>'+
               '<li><a href="/cargo" data-i18n="m.cargo">Spedizioni Cargo</a></li>'+

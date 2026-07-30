@@ -339,9 +339,10 @@ footer{position:relative;z-index:1;margin-top:var(--sp-6);border-top:1px solid v
   .nav-login,.nav-cta{padding-left:.85rem;padding-right:.85rem;font-size:.82rem;white-space:nowrap}
   .nav-logo-txt{font-size:.98rem}
 }
+/* Il nome del sito non si nasconde piu': serviva quando la barra aveva nove
+   voci con i menu a tendina, ora lo spazio abbonda. */
 @media(min-width:1250px) and (max-width:1400px){
-  .nav-logo-txt{display:none}
-  .nav-links>li>a{font-size:.83rem;padding-left:.4rem;padding-right:.4rem}
+  .nav-links>li>a{font-size:.85rem;padding-left:.45rem;padding-right:.45rem}
 }
 
 /* ─────────────────────────────────────────────────────────────
