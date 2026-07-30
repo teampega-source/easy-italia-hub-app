@@ -421,3 +421,58 @@ footer{position:relative;z-index:1;margin-top:var(--sp-6);border-top:1px solid v
   -webkit-backdrop-filter:none;
 }
 html[data-theme="dark"] .site-nav{background:#1c1916}
+
+/* ── Roadmap pubblica (vive su /chi-siamo) ──────────────────── */
+.roadmap-section{
+  position:relative;z-index:1;
+  padding:var(--sp-5) var(--sp-5) var(--sp-6);max-width:1380px;margin:0 auto;
+}
+.roadmap-track{
+  display:flex;flex-direction:column;gap:var(--sp-2);
+  margin-top:var(--sp-5);max-width:740px;margin-left:auto;margin-right:auto;
+}
+.roadmap-item{
+  display:grid;grid-template-columns:80px 1fr;gap:var(--sp-2);
+  align-items:flex-start;
+}
+.roadmap-quarter{
+  font-family:'Clash Grotesk',sans-serif;
+  font-size:var(--text-xs);font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--fg-muted);padding-top:.68rem;text-align:right;
+  padding-right:var(--sp-2);border-right:2px solid var(--border);line-height:1.2;
+}
+.roadmap-item.done .roadmap-quarter{color:var(--gold);border-right-color:var(--gold)}
+.roadmap-item.now .roadmap-quarter{color:var(--coral);border-right-color:var(--coral)}
+.roadmap-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:var(--sp-2) var(--sp-3);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);
+  transition:border-color var(--dur-micro),background var(--dur-micro);
+}
+.roadmap-item.done .roadmap-card{box-shadow:inset 2px 0 0 var(--gold)}
+.roadmap-item.now .roadmap-card{box-shadow:inset 2px 0 0 var(--coral);background:var(--surface-hover)}
+.roadmap-card:hover{background:var(--surface-hover)}
+.roadmap-card-text{flex:1;min-width:0}
+.roadmap-card h4{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:500;color:var(--ink);margin-bottom:.2rem}
+.roadmap-card p{font-size:var(--text-xs);color:var(--fg-muted);line-height:1.5;font-weight:300}
+.roadmap-badge{
+  flex-shrink:0;padding:.24rem .65rem;border-radius:var(--radius-full);
+  font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;
+}
+.roadmap-badge--done{background:rgba(132,138,148,.12);color:var(--gold)}
+.roadmap-badge--now{background:rgba(124,130,140,.12);color:var(--coral)}
+.roadmap-vote{
+  flex-shrink:0;display:flex;align-items:center;gap:.4rem;
+  padding:.3rem .65rem;border-radius:var(--radius-full);
+  border:1px solid var(--border);background:none;cursor:pointer;
+  font-family:'Satoshi',sans-serif;font-size:var(--text-xs);font-weight:500;
+  color:var(--fg-secondary);white-space:nowrap;
+  transition:border-color var(--dur-micro),background var(--dur-micro),color var(--dur-micro);
+}
+.roadmap-vote:hover{border-color:var(--border-bright);background:var(--surface-hover);color:var(--ink)}
+.roadmap-vote.voted{border-color:var(--coral);color:var(--coral);background:rgba(124,130,140,.06)}
+.roadmap-vote:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:var(--radius-full)}
+.roadmap-vote svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  .roadmap-item{grid-template-columns:56px 1fr}
+  .roadmap-quarter{font-size:.58rem;padding-right:var(--sp-1)}
+  .roadmap-section,.testimonials-section,.pricing-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
