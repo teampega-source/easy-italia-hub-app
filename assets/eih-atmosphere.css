@@ -44,18 +44,8 @@
   transform:rotate(16deg);opacity:.5;animation:atmoBeam 18s ease-in-out infinite alternate}
 @keyframes atmoBeam{from{transform:rotate(16deg) translateX(0)}to{transform:rotate(13deg) translateX(7vw)}}
 
-/* ── L4: pulviscolo luminoso (punti via box-shadow, twinkle in opacity) ── */
-.atmo-dust,.atmo-dust2{width:3px;height:3px;border-radius:50%;background:transparent}
-.atmo-dust{top:0;left:0;
-  box-shadow:12vw 18vh 0 rgba(132,138,148,.5),28vw 64vh 0 rgba(132,138,148,.38),46vw 26vh 0 rgba(124,130,140,.42),
-    63vw 72vh 0 rgba(132,138,148,.45),78vw 38vh 0 rgba(132,138,148,.34),88vw 80vh 0 rgba(124,130,140,.32),
-    8vw 86vh 0 rgba(132,138,148,.36),55vw 8vh 0 rgba(132,138,148,.30);
-  animation:atmoTwinkle 7s ease-in-out infinite alternate}
-.atmo-dust2{top:0;left:0;width:2px;height:2px;
-  box-shadow:20vw 40vh 0 rgba(31,157,85,.36),38vw 84vh 0 rgba(132,138,148,.32),70vw 16vh 0 rgba(132,138,148,.38),
-    92vw 52vh 0 rgba(31,157,85,.30),5vw 56vh 0 rgba(124,130,140,.30),50vw 50vh 0 rgba(132,138,148,.26);
-  animation:atmoTwinkle 9s ease-in-out infinite alternate-reverse}
-@keyframes atmoTwinkle{from{opacity:.35}55%{opacity:.9}to{opacity:.5}}
+/* L4 (pulviscolo luminoso) rimosso: due strati di punti che pulsavano
+   di continuo, su telefono sempre accesi. */
 
 /* ── dark mode: stessa architettura, luci più profonde ── */
 html[data-theme="dark"] .atmo-o1{background:radial-gradient(circle at 38% 38%,rgba(195,200,208,.18),rgba(195,200,208,.07) 42%,rgba(195,200,208,.02) 62%,transparent 78%)}
@@ -69,8 +59,11 @@ html[data-theme="dark"] .atmo-grid{background:linear-gradient(rgba(195,200,208,.
 
 /* ── responsive & accessibilità ── */
 @media(max-width:768px){
-  .atmo-beam,.atmo-r2,.atmo-dust2{display:none}     /* meno layer su mobile */
+  .atmo-beam,.atmo-r2{display:none}     /* meno layer su mobile */
   .atmo-grid{height:30vh}
+  /* Su telefono le sfere restano come sfondo ma non si muovono piu': erano
+     tre animazioni da 22-32 secondi sempre in corso su superfici enormi. */
+  .atmo-orb{animation:none}
 }
 @media(prefers-reduced-motion:reduce){
   .atmo *{animation:none!important}
@@ -81,5 +74,5 @@ html[data-theme="dark"] .atmo-grid{background:linear-gradient(rgba(195,200,208,.
 
 /* ── modalità lite: attivata dal governatore FPS sui dispositivi lenti ── */
 html.atmo-lite .atmo-beam,html.atmo-lite .atmo-ring,
-html.atmo-lite .atmo-dust,html.atmo-lite .atmo-dust2,html.atmo-lite .atmo-grid{display:none}
+html.atmo-lite .atmo-grid{display:none}
 html.atmo-lite .atmo-orb{animation:none}

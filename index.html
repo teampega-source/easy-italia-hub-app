@@ -830,7 +830,7 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
   <style>
   .eih-demo{display:flex;justify-content:center;margin:1.8rem 0 2.8rem;position:relative;isolation:isolate}
   .eih-strands{position:absolute;inset:-8% -4%;width:108%;height:116%;z-index:-1;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse 60% 70% at 50% 50%,#000 35%,transparent 78%);mask-image:radial-gradient(ellipse 60% 70% at 50% 50%,#000 35%,transparent 78%)}
-  .eih-phone{width:240px;height:476px;background:#1c1c1e;border-radius:40px;padding:10px;box-shadow:0 28px 56px rgba(0,0,0,.26),0 6px 12px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07);position:relative;z-index:1;animation:eih-float 5s ease-in-out infinite}
+  .eih-phone{width:240px;height:476px;background:#1c1c1e;border-radius:40px;padding:10px;box-shadow:0 28px 56px rgba(0,0,0,.26),0 6px 12px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.07);position:relative;z-index:1}
   .eih-phone::before{content:'';position:absolute;top:15px;left:50%;transform:translateX(-50%);width:58px;height:6px;background:#111;border-radius:4px;z-index:10}
   .eih-screen{width:100%;height:100%;background:#faf8f5;border-radius:32px;overflow:hidden;position:relative}
   .eih-slide{position:absolute;inset:0;padding:30px 18px 22px;display:flex;flex-direction:column;opacity:0}
@@ -860,7 +860,6 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
   .eih-dots .d1{animation:eih-d1 9s infinite}
   .eih-dots .d2{animation:eih-d2 9s infinite}
   .eih-dots .d3{animation:eih-d3 9s infinite}
-  @keyframes eih-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
   @keyframes eih-k1{0%,30%{opacity:1;transform:translateY(0)}38%,100%{opacity:0;transform:translateY(-9px)}}
   @keyframes eih-k2{0%,33%{opacity:0;transform:translateY(9px)}40%,63%{opacity:1;transform:translateY(0)}71%,100%{opacity:0;transform:translateY(-9px)}}
   @keyframes eih-k3{0%,66%{opacity:0;transform:translateY(9px)}73%,100%{opacity:1;transform:translateY(0)}}
