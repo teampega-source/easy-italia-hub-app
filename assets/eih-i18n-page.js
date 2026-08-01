@@ -51,10 +51,13 @@
   }
 
   var SALTA = /^(SCRIPT|STYLE|CODE|PRE|NOSCRIPT|TEXTAREA|SVG|NAV|FOOTER|TEMPLATE)$/;
+  // Menu, piede, barra laterale e modali stanno fuori da <main>: li traduce il
+  // dizionario condiviso _ui, che vale per tutte le pagine.
+  var SALTA_UI = /^(SCRIPT|STYLE|CODE|PRE|NOSCRIPT|TEXTAREA|SVG|TEMPLATE|MAIN)$/;
 
-  function daSaltare(el) {
+  function daSaltare(el, salta) {
     for (var n = el; n && n !== document.body; n = n.parentElement) {
-      if (SALTA.test(n.tagName)) return true;
+      if ((salta || SALTA).test(n.tagName)) return true;
       if (n.hasAttribute && (n.hasAttribute('data-i18n') || n.hasAttribute('data-i18n-html') || n.hasAttribute('data-no-tr'))) return true;
       if (n.classList && n.classList.contains('eih-no-tr')) return true;
     }
@@ -66,13 +69,18 @@
   /* Con `dentro` si limita la raccolta a un pezzo di pagina appena arrivato:
      mentre l'HTML e' ancora in streaming conviene tradurre solo il nuovo,
      non rifare ogni volta il giro di tutto il documento. */
-  function raccogli(dentro) {
+  /* `ui` rovescia l'ambito: invece del corpo pagina si guarda tutto il resto —
+     testata, piede, barra laterale, modali — che e' uguale su ogni pagina. */
+  function raccogli(dentro, ui) {
+    var salta = ui ? SALTA_UI : SALTA;
     var radici;
-    if (dentro) radici = dentro.closest && dentro.closest('main') ? [dentro] : [];
-    else radici = document.querySelectorAll('main');
-    if (!dentro && !radici.length) radici = document.body ? [document.body] : [];
+    var interno = dentro && dentro.closest && dentro.closest('main');
+    if (dentro) radici = ui ? (interno ? [] : [dentro]) : (interno ? [dentro] : []);
+    else radici = ui ? (document.body ? [document.body] : []) : document.querySelectorAll('main');
+    if (!dentro && !ui && !radici.length) radici = document.body ? [document.body] : [];
     var fuori = [];
     for (var r = 0; r < radici.length; r++) {
+      if (ui && radici[r].tagName === 'MAIN') continue;
       /* Si scarta l'intero sottoalbero appena si incontra un elemento da
          saltare, invece di visitare ogni nodo di testo e poi risalire gli
          antenati uno per uno. Sulla home, che e' grande, la sola scansione
@@ -80,7 +88,7 @@
       var camm = document.createTreeWalker(radici[r], NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, {
         acceptNode: function (nodo) {
           if (nodo.nodeType === 1) {
-            if (SALTA.test(nodo.tagName)) return NodeFilter.FILTER_REJECT;
+            if (salta.test(nodo.tagName)) return NodeFilter.FILTER_REJECT;
             if (nodo.hasAttribute('data-i18n') || nodo.hasAttribute('data-i18n-html') || nodo.hasAttribute('data-no-tr'))
               return NodeFilter.FILTER_REJECT;
             if (nodo.classList.contains('eih-no-tr')) return NodeFilter.FILTER_REJECT;
@@ -101,7 +109,7 @@
       var camp = radici[r].querySelectorAll('[placeholder],[aria-label],[title]');
       for (var i = 0; i < camp.length; i++) {
         var el = camp[i];
-        if (daSaltare(el)) continue;
+        if (daSaltare(el, salta)) continue;
         ['placeholder', 'aria-label', 'title'].forEach(function (a) {
           var v = el.getAttribute(a);
           if (!v) return;
@@ -136,8 +144,8 @@
     radice.insertBefore(d, radice.firstChild);
   }
 
-  function applica(dizionario, dentro) {
-    var voci = raccogli(dentro), presi = 0;
+  function applica(dizionario, dentro, ui) {
+    var voci = raccogli(dentro, ui), presi = 0;
     for (var i = 0; i < voci.length; i++) {
       var v = voci[i], t = dizionario[impronta(v.testo)];
       // "" e' una traduzione valida: serve a svuotare gli spezzoni di una
@@ -164,9 +172,39 @@
     // dal <head>, prima ancora che questo script esista. Si riusa quella
     // richiesta; si riparte da zero solo se manca o riguarda un'altra pagina.
     var anticipato = window.__eihTrad;
-    var attesa = (anticipato && anticipato.pagina === pg && anticipato.lingua === lg)
+    var buono = anticipato && anticipato.pagina === pg && anticipato.lingua === lg;
+    var attesa = buono
       ? anticipato.promessa
       : fetch('/assets/i18n/' + pg + '.' + lg + '.json').then(function (r) { return r.ok ? r.json() : null; });
+    // Testata, piede, barra laterale e modali: stesso testo su ogni pagina,
+    // quindi un dizionario solo, scaricato una volta e tenuto in cache.
+    var attesaUi = (buono && anticipato.promessaUi)
+      ? anticipato.promessaUi
+      : fetch('/assets/i18n/_ui.' + lg + '.json').then(function (r) { return r.ok ? r.json() : null; });
+    var u = null, spiaUi = null;
+    attesaUi.then(function (x) {
+      u = x;
+      if (!u) return;
+      if (document.body) applica(u, null, true);
+      /* Menu, piede e barra laterale non sono nell'HTML: li costruisce eih.js
+         a documento pronto, e in parte piu' tardi ancora (news, festivita').
+         Un osservatore li traduce appena nascono, finche' la pagina non si
+         ferma; poi basta il passaggio finale. */
+      if (!window.MutationObserver) return;
+      spiaUi = new MutationObserver(function (m) {
+        for (var i = 0; i < m.length; i++)
+          for (var j = 0; j < m[i].addedNodes.length; j++)
+            if (m[i].addedNodes[j].nodeType === 1) applica(u, m[i].addedNodes[j], true);
+      });
+      spiaUi.observe(document.documentElement, { childList: true, subtree: true });
+      /* La barra laterale arriva tardi: le news dopo la chiamata di rete, il
+         menu rapido e le festivita' dopo ancora. Un giro di controllo a dieci
+         secondi copre anche il caso lento, poi si smette di guardare. */
+      setTimeout(function () {
+        applica(u, null, true);
+        if (spiaUi) { spiaUi.disconnect(); spiaUi = null; }
+      }, 10000);
+    }).catch(function () {});
 
     attesa
       .then(function (d) {
@@ -230,6 +268,7 @@
         // fa comparire l'avviso anche dove la traduzione poi arriva.
         function controlloFinale() { setTimeout(function () {
           if (d) applica(d);   // recupera i pezzi nati da JavaScript nel frattempo
+          if (u) applica(u, null, true);
           var voci = raccogli(), residuo = 0;
           for (var i = 0; i < voci.length; i++) {
             var v = voci[i], portante = v.attr ? v.el : v.nodo.parentElement;

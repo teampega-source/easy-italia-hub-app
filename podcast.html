@@ -6,7 +6,7 @@
    e' arrivato, e quel ritardo si vedeva tutto sul cambio di lingua. */
 try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"it");
 if(/^(en|si|ta)$/.test(_l)){var _p=location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/,"").replace(/^\/+|\/+$/g,"").replace(/\.html$/,"")||"index";
-window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
+window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),promessaUi:fetch("/assets/i18n/_ui."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
 var _s=document.createElement("script");_s.fetchPriority="high";_s.src="/assets/eih-i18n-page.js";_s.defer=true;document.head.appendChild(_s);
 var _t=document.createElement("style");_t.textContent="html.eih-tr-attesa main{visibility:hidden}";document.head.appendChild(_t);
 document.documentElement.classList.add("eih-tr-attesa");
@@ -53,7 +53,6 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
 <div id="wipe" aria-hidden="true"></div>
 <div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
-<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
 <div id="site-nav"></div>
 
 <main id="main">

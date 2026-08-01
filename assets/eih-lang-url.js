@@ -50,7 +50,8 @@
     window.__eihTrad = {
       pagina: pagina,
       lingua: lang,
-      promessa: fetch(dizionario, opz).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
+      promessa: fetch(dizionario, opz).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
+      promessaUi: fetch('/assets/i18n/_ui.' + lang + '.json', opz).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
     };
 
     var s = document.createElement('script');

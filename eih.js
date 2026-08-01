@@ -500,19 +500,18 @@
     els.forEach(el=>io.observe(el));
   })();
 
-  // custom cursor
-  if(matchMedia('(pointer:fine)').matches){
-    const dot=document.getElementById('cursor-dot'),ring=document.getElementById('cursor-ring');
-    if(dot&&ring){
-      document.body.classList.add('has-cursor');
-      let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
-      addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';if(reduce)ring.style.transform=dot.style.transform;},{passive:true});
-      if(!reduce)(function loop(){rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;ring.style.transform='translate('+rx+'px,'+ry+'px) translate(-50%,-50%)';requestAnimationFrame(loop);})();
-      const HOV='a,button,[role="button"],input,textarea,.icard';
-      document.addEventListener('mouseover',e=>{if(e.target.closest(HOV))ring.classList.add('hover');});
-      document.addEventListener('mouseout',e=>{if(e.target.closest(HOV))ring.classList.remove('hover');});
-    }
-  }
+  // onda al clic (puntatore di sistema)
+  EIH.onda=function(){
+    if(reduce)return;
+    document.addEventListener('pointerdown',e=>{
+      const o=document.createElement('div');
+      o.className='clic-onda';
+      o.style.left=e.clientX+'px';o.style.top=e.clientY+'px';
+      o.addEventListener('animationend',()=>o.remove());
+      document.body.appendChild(o);
+    },{passive:true});
+  };
+  EIH.onda();
 
   // preloader + wipe (page transitions)
   let firstVisit=true;
