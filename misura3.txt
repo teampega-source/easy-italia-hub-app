@@ -1,5 +1,0 @@
-calendario               36
-community                16
-associazioni             12
-cargo                    9
-TOTALE: 94
