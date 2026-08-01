@@ -164,13 +164,20 @@ function applyLang(lang){
   var chiuso = null;
   try{ chiuso = localStorage.getItem('eih-si-bar-2'); }catch(e){}
   if(chiuso === 'off') return;
-  bar.hidden = false;
-  document.body.classList.add('has-si-bar');
+  /* Il nastro e' gia' visibile: lo decide l'inline nel <head>, che mette
+     html.si-bar-on prima del primo disegno. Rifarlo qui, a pagina gia'
+     comparsa, rimetteva in gioco il layout e faceva sobbalzare la pagina.
+     Qui resta solo il cablaggio del pulsante di chiusura. */
+  if(!document.documentElement.classList.contains('si-bar-on')){
+    bar.hidden = false;
+    document.body.classList.add('has-si-bar');
+  }
 
   var close = document.getElementById('si-close');
   if(close) close.addEventListener('click', function(){
     bar.hidden = true;
     document.body.classList.remove('has-si-bar');
+    document.documentElement.classList.remove('si-bar-on');
     try{ localStorage.setItem('eih-si-bar-2','off'); }catch(e){}
   });
 

@@ -15,6 +15,11 @@
 (function () {
   'use strict';
 
+  // Piu' pagine cercavano di caricare questo script per conto loro: ora lo
+  // fa eih-lang-url.js dal <head>, e questa guardia evita il doppio lavoro.
+  if (window.__eihI18NPagina) return;
+  window.__eihI18NPagina = true;
+
   var LINGUE = { en: 1, si: 1, ta: 1 };
 
   function lingua() {
@@ -25,9 +30,12 @@
   }
 
   function pagina() {
-    var p = document.body.getAttribute('data-page');
+    // Questo script ora parte dal <head>: quando gira, il body puo' non
+    // esistere ancora. In quel caso il nome si ricava dall'indirizzo, che e'
+    // esattamente quello che ha gia' usato lo snippet per chiedere il file.
+    var b = document.body, p = b && b.getAttribute('data-page');
     if (p) return p;
-    p = location.pathname.replace(/^\/+|\/+$/g, '').replace(/\.html$/, '');
+    p = location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/, '').replace(/^\/+|\/+$/g, '').replace(/\.html$/, '');
     return p || 'index';
   }
 
@@ -55,12 +63,32 @@
 
   /* Raccoglie i frammenti traducibili. Stessa funzione usata dallo script di
      estrazione, cosi' quello che si estrae e quello che si applica coincidono. */
-  function raccogli() {
-    var radici = document.querySelectorAll('main');
-    if (!radici.length) radici = [document.body];
+  /* Con `dentro` si limita la raccolta a un pezzo di pagina appena arrivato:
+     mentre l'HTML e' ancora in streaming conviene tradurre solo il nuovo,
+     non rifare ogni volta il giro di tutto il documento. */
+  function raccogli(dentro) {
+    var radici;
+    if (dentro) radici = dentro.closest && dentro.closest('main') ? [dentro] : [];
+    else radici = document.querySelectorAll('main');
+    if (!dentro && !radici.length) radici = document.body ? [document.body] : [];
     var fuori = [];
     for (var r = 0; r < radici.length; r++) {
-      var camm = document.createTreeWalker(radici[r], NodeFilter.SHOW_TEXT, null);
+      /* Si scarta l'intero sottoalbero appena si incontra un elemento da
+         saltare, invece di visitare ogni nodo di testo e poi risalire gli
+         antenati uno per uno. Sulla home, che e' grande, la sola scansione
+         costava quasi un secondo: il testo restava in italiano nel frattempo. */
+      var camm = document.createTreeWalker(radici[r], NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, {
+        acceptNode: function (nodo) {
+          if (nodo.nodeType === 1) {
+            if (SALTA.test(nodo.tagName)) return NodeFilter.FILTER_REJECT;
+            if (nodo.hasAttribute('data-i18n') || nodo.hasAttribute('data-i18n-html') || nodo.hasAttribute('data-no-tr'))
+              return NodeFilter.FILTER_REJECT;
+            if (nodo.classList.contains('eih-no-tr')) return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_SKIP;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
       var n;
       while ((n = camm.nextNode())) {
         var t = n.nodeValue;
@@ -68,7 +96,6 @@
         var pulito = t.replace(/\s+/g, ' ').trim();
         if (pulito.length < 2) continue;
         if (!/[A-Za-zÀ-ÿ]{2}/.test(pulito)) continue;   // numeri, simboli, emoji
-        if (daSaltare(n.parentElement)) continue;
         fuori.push({ nodo: n, testo: pulito });
       }
       var camp = radici[r].querySelectorAll('[placeholder],[aria-label],[title]');
@@ -109,8 +136,8 @@
     radice.insertBefore(d, radice.firstChild);
   }
 
-  function applica(dizionario) {
-    var voci = raccogli(), presi = 0;
+  function applica(dizionario, dentro) {
+    var voci = raccogli(dentro), presi = 0;
     for (var i = 0; i < voci.length; i++) {
       var v = voci[i], t = dizionario[impronta(v.testo)];
       // "" e' una traduzione valida: serve a svuotare gli spezzoni di una
@@ -132,14 +159,76 @@
     var lg = lingua();
     if (lg === 'it') return;
     var pg = pagina();
-    fetch('/assets/i18n/' + pg + '.' + lg + '.json', { cache: 'no-cache' })
-      .then(function (r) { return r.ok ? r.json() : null; })
+
+    // Il dizionario di norma e' gia' in volo: lo fa partire eih-lang-url.js
+    // dal <head>, prima ancora che questo script esista. Si riusa quella
+    // richiesta; si riparte da zero solo se manca o riguarda un'altra pagina.
+    var anticipato = window.__eihTrad;
+    var attesa = (anticipato && anticipato.pagina === pg && anticipato.lingua === lg)
+      ? anticipato.promessa
+      : fetch('/assets/i18n/' + pg + '.' + lg + '.json').then(function (r) { return r.ok ? r.json() : null; });
+
+    attesa
       .then(function (d) {
-        if (d) { delete d._meta; applica(d); }
+        // Il dizionario di solito arriva prima che il corpo pagina esista: si
+        // aspetta il minimo indispensabile perche' ci sia qualcosa da tradurre.
+        function primoPassaggio() {
+          if (d) {
+            var e = applica(d);
+            document.documentElement.setAttribute('data-tr', e.presi + '/' + e.totale);
+          }
+          // il corpo pagina puo' comparire: ora e' nella lingua giusta
+          document.documentElement.classList.remove('eih-tr-attesa');
+          controlloFinale();
+        }
+        if (d) delete d._meta;
+
+        /* Non si aspetta il documento completo. Sulla home l'HTML e' lungo e
+           DOMContentLoaded arriva dopo due secondi: il dizionario era pronto
+           da un pezzo e il testo restava in italiano ad aspettare. Si traduce
+           appena <main> compare, e si ripassa mentre il resto della pagina
+           arriva pezzo per pezzo. */
+        var ripasso = null;
+        function seguiIlFlusso() {
+          if (!d || !window.MutationObserver) return;
+          // Si traduce subito il pezzo appena arrivato, prima che il browser
+          // lo dipinga: rimandare anche di un fotogramma significa mostrarlo
+          // in italiano e poi cambiarlo, ed e' li' che la pagina sobbalza.
+          ripasso = new MutationObserver(function (mutazioni) {
+            for (var i = 0; i < mutazioni.length; i++) {
+              var agg = mutazioni[i].addedNodes;
+              for (var j = 0; j < agg.length; j++)
+                if (agg[j].nodeType === 1) applica(d, agg[j]);
+            }
+          });
+          ripasso.observe(document.documentElement, { childList: true, subtree: true });
+          document.addEventListener('DOMContentLoaded', function () {
+            applica(d);
+            if (ripasso) { ripasso.disconnect(); ripasso = null; }
+          });
+        }
+
+        if (document.querySelector('main') || document.readyState !== 'loading') {
+          primoPassaggio();
+          if (document.readyState === 'loading') seguiIlFlusso();
+        } else {
+          var spia = new MutationObserver(function () {
+            if (!document.querySelector('main')) return;
+            spia.disconnect();
+            primoPassaggio();
+            seguiIlFlusso();
+          });
+          spia.observe(document.documentElement, { childList: true, subtree: true });
+          document.addEventListener('DOMContentLoaded', function () {
+            spia.disconnect();
+            if (!document.documentElement.hasAttribute('data-tr')) primoPassaggio();
+          });
+        }
+
         // Il giudizio sulla copertura si dà a pagina ferma: molte pagine
         // costruiscono pezzi di sé con JavaScript, e misurare troppo presto
         // fa comparire l'avviso anche dove la traduzione poi arriva.
-        setTimeout(function () {
+        function controlloFinale() { setTimeout(function () {
           if (d) applica(d);   // recupera i pezzi nati da JavaScript nel frattempo
           var voci = raccogli(), residuo = 0;
           for (var i = 0; i < voci.length; i++) {
@@ -154,15 +243,17 @@
           // l'alfabeto: lì l'avviso vale solo quando manca tutto il dizionario.
           var attendibile = lg !== 'en' || !d;
           if (attendibile && residuo > 12 && residuo / Math.max(1, voci.length) > 0.45) avviso(lg, !!d);
-        }, 1400);
+        }, 1400); }
       })
-      .catch(function () {});
+      .catch(function () { document.documentElement.classList.remove('eih-tr-attesa'); });
   }
 
   window.EIHPageI18N = { raccogli: raccogli, impronta: impronta, applica: applica, avvia: avvia };
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', avvia);
-  else avvia();
+  // Si parte subito, senza aspettare DOMContentLoaded: il dizionario e'
+  // gia' in volo e ogni millisecondo di attesa e' un millisecondo in cui
+  // l'utente legge l'italiano.
+  avvia();
 
   // ricarica la pagina quando l'utente cambia lingua da un'altra scheda
   window.addEventListener('storage', function (e) {
