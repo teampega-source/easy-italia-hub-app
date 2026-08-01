@@ -6,7 +6,7 @@
    e' arrivato, e quel ritardo si vedeva tutto sul cambio di lingua. */
 try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"it");
 if(/^(en|si|ta)$/.test(_l)){var _p=location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/,"").replace(/^\/+|\/+$/g,"").replace(/\.html$/,"")||"index";
-window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
+window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),promessaUi:fetch("/assets/i18n/_ui."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
 var _s=document.createElement("script");_s.fetchPriority="high";_s.src="/assets/eih-i18n-page.js";_s.defer=true;document.head.appendChild(_s);
 var _t=document.createElement("style");_t.textContent="html.eih-tr-attesa main{visibility:hidden}";document.head.appendChild(_t);
 document.documentElement.classList.add("eih-tr-attesa");
@@ -267,8 +267,6 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
 <div id="noise" aria-hidden="true"></div>
 
 <!-- Custom dual-layer cursor (fine pointers only) -->
-<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
-<div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
 
 <!-- NAV -->
 <nav class="site-nav" aria-label="Navigazione principale">
@@ -543,6 +541,22 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
 <script>
 /* Religious celebration widget + toast. */
 (function(){
+  /* Le date sono l'unico testo che si costruisce qui: un dizionario minimo,
+     letto dalla lingua scelta, evita di dipendere da eih.js che su questa
+     pagina puo' non essere ancora arrivato. */
+  var LG=(function(){try{var m=location.pathname.match(/^\/(en|si|ta)(\/|$)/);
+    return m?m[1]:(localStorage.getItem('eih-lang')||'it');}catch(e){return 'it';}})();
+  var Q={
+    it:{oggi:'Oggi',domani:'Domani',fra:'Tra {n} gg',oggiL:'oggi',domaniL:'domani',fraL:'tra {n} giorni',
+        h:'🗓 Festività in arrivo',msg:'La festività si celebra {q}. Auguri a tutta la comunità! 🙏',cta:'Esplora le guide →',x:'Chiudi'},
+    en:{oggi:'Today',domani:'Tomorrow',fra:'In {n} days',oggiL:'today',domaniL:'tomorrow',fraL:'in {n} days',
+        h:'🗓 Upcoming holidays',msg:'The holiday falls {q}. Best wishes to the whole community! 🙏',cta:'Explore the guides →',x:'Close'},
+    si:{oggi:'අද',domani:'හෙට',fra:'දින {n}කින්',oggiL:'අද',domaniL:'හෙට',fraL:'දින {n}කින්',
+        h:'🗓 ළඟ එන නිවාඩු',msg:'උත්සවය {q} සමරනු ලැබේ. සමස්ත ප්‍රජාවටම සුබ පැතුම්! 🙏',cta:'මාර්ගෝපදේශ බලන්න →',x:'වසන්න'},
+    ta:{oggi:'இன்று',domani:'நாளை',fra:'{n} நாட்களில்',oggiL:'இன்று',domaniL:'நாளை',fraL:'{n} நாட்களில்',
+        h:'🗓 வரவிருக்கும் விடுமுறைகள்',msg:'விழா {q} கொண்டாடப்படுகிறது. சமூகம் முழுவதற்கும் வாழ்த்துகள்! 🙏',cta:'வழிகாட்டிகளைப் பாருங்கள் →',x:'மூடு'}
+  };
+  var T=Q[LG]||Q.it;
   var F=[
     {n:"Esala Poya",d:"2026-07-01",e:"🪷",r:"Buddista",c:"#d97706"},
     {n:"Nikini Poya",d:"2026-07-30",e:"🪷",r:"Buddista",c:"#d97706"},
@@ -575,10 +589,10 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
 
   var wrap=document.getElementById('nr-fests');
   if(wrap&&upcoming.length){
-    var h='<div class="nr-fests-h">🗓 Festività in arrivo</div>';
+    var h='<div class="nr-fests-h">'+T.h+'</div>';
     upcoming.forEach(function(f){
       var diff=Math.round((f.dt-now)/864e5);
-      var ds=diff===0?'Oggi':diff===1?'Domani':'Tra '+diff+' gg';
+      var ds=diff===0?T.oggi:diff===1?T.domani:T.fra.replace('{n}',diff);
       var isSoon=diff<=3;
       var ts='background:'+f.c+'20;color:'+f.c;
       h+='<div class="nr-fest"><span class="nr-fest-e" aria-hidden="true">'+f.e+'</span>'
@@ -596,7 +610,7 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
     if(!sessionStorage.getItem(key)){
       sessionStorage.setItem(key,'1');
       var diff=Math.round((tf.dt-now)/864e5);
-      var ws=diff===0?'oggi':diff===1?'domani':'tra '+diff+' giorni';
+      var ws=diff===0?T.oggiL:diff===1?T.domaniL:T.fraL.replace('{n}',diff);
       var t=document.createElement('div');
       t.className='eih-fest-toast';
       t.setAttribute('role','alertdialog');
@@ -604,12 +618,12 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
       t.setAttribute('aria-describedby','eft-msg');
       var ts='background:'+tf.c+'20;color:'+tf.c;
       t.innerHTML='<div class="eih-fest-toast-inner">'
-        +'<button class="eih-fest-toast-close" aria-label="Chiudi" onclick="this.closest(\'.eih-fest-toast\').classList.remove(\'is-shown\')">✕</button>'
+        +'<button class="eih-fest-toast-close" aria-label="'+T.x+'" onclick="this.closest(\'.eih-fest-toast\').classList.remove(\'is-shown\')">✕</button>'
         +'<span class="eih-fest-toast-emoji" aria-hidden="true">'+tf.e+'</span>'
         +'<span class="eih-fest-toast-tag" style="'+ts+'">'+tf.r+'</span>'
         +'<h2 class="eih-fest-toast-title" id="eft-title">'+tf.n+'</h2>'
-        +'<p class="eih-fest-toast-msg" id="eft-msg">La festività si celebra '+ws+'. Auguri a tutta la comunità! 🙏</p>'
-        +'<a class="eih-fest-toast-cta" href="/guide">Esplora le guide →</a>'
+        +'<p class="eih-fest-toast-msg" id="eft-msg">'+T.msg.replace('{q}',ws)+'</p>'
+        +'<a class="eih-fest-toast-cta" href="/guide">'+T.cta+'</a>'
         +'</div>';
       document.body.appendChild(t);
       // Non più a tempo: compare solo quando l'utente ha davvero iniziato a

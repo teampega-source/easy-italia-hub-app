@@ -17,25 +17,20 @@ if(!mediaQ.matches){
   });
 }
 
-/* ── Custom dual-layer cursor (fine pointers only) ── */
+/* ── Onda al clic ──
+   Il puntatore torna quello di sistema; la traccia visiva la da' il cerchio
+   che si allarga dal punto toccato. Se eih.js ha gia' registrato la sua,
+   non se ne aggiunge una seconda. */
 (function(){
-  if(!matchMedia('(pointer:fine)').matches)return;
-  const dot=document.getElementById('cursor-dot'),ring=document.getElementById('cursor-ring');
-  if(!dot||!ring)return;
-  document.body.classList.add('has-cursor');
-  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
-  addEventListener('mousemove',e=>{
-    mx=e.clientX;my=e.clientY;
-    dot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
-    if(reduce)ring.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
+  if(window.EIH&&EIH.onda)return;
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  document.addEventListener('pointerdown',function(e){
+    var o=document.createElement('div');
+    o.className='clic-onda';
+    o.style.left=e.clientX+'px';o.style.top=e.clientY+'px';
+    o.addEventListener('animationend',function(){o.remove();});
+    document.body.appendChild(o);
   },{passive:true});
-  if(!reduce){(function loop(){rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;ring.style.transform='translate('+rx+'px,'+ry+'px) translate(-50%,-50%)';requestAnimationFrame(loop);})();}
-  const HOV='a,button,[role="button"],input,.step-check,.sug,.lang-btn,.card,.feat';
-  document.addEventListener('mouseover',e=>{if(e.target.closest(HOV))ring.classList.add('hover');});
-  document.addEventListener('mouseout',e=>{if(e.target.closest(HOV))ring.classList.remove('hover');});
-  addEventListener('mouseleave',()=>{dot.classList.add('cursor-hidden');ring.classList.add('cursor-hidden');});
-  addEventListener('mouseenter',()=>{dot.classList.remove('cursor-hidden');ring.classList.remove('cursor-hidden');});
 })();
 
 /* ═══ i18n — IT / EN / Sinhala (සිංහල flagged for native review) ═══ */

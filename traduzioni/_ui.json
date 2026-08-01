@@ -1,0 +1,952 @@
+{
+ "Home": [
+  "Home",
+  "මුල් පිටුව",
+  "முகப்பு"
+ ],
+ "Chiudi": [
+  "Close",
+  "වසන්න",
+  "மூடு"
+ ],
+ "Cerca": [
+  "Search",
+  "සොයන්න",
+  "தேடு"
+ ],
+ "Community": [
+  "Community",
+  "ප්‍රජාව",
+  "சமூகம்"
+ ],
+ "Money Transfer": [
+  "Money Transfer",
+  "මුදල් යැවීම",
+  "பணப் பரிமாற்றம்"
+ ],
+ "Travel Hub Sri Lanka": [
+  "Travel Hub Sri Lanka",
+  "ගමන් තොරතුරු — ශ්‍රී ලංකාව",
+  "பயண மையம் — இலங்கை"
+ ],
+ "Accedi": [
+  "Sign in",
+  "ඇතුල් වන්න",
+  "உள்நுழை"
+ ],
+ "Registrati": [
+  "Sign up",
+  "ලියාපදිංචි වන්න",
+  "பதிவு செய்"
+ ],
+ "Note legali": [
+  "Legal notice",
+  "නෛතික තොරතුරු",
+  "சட்டத் தகவல்"
+ ],
+ "Sottomenu": [
+  "Submenu",
+  "උපමෙනුව",
+  "துணை பட்டி"
+ ],
+ "Salta al contenuto": [
+  "Skip to content",
+  "අන්තර්ගතයට යන්න",
+  "உள்ளடக்கத்திற்குச் செல்"
+ ],
+ "Guide": [
+  "Guides",
+  "මාර්ගෝපදේශ",
+  "வழிகாட்டிகள்"
+ ],
+ "Podcast": [
+  "Podcast",
+  "පොඩ්කාස්ට්",
+  "பாட்காஸ்ட்"
+ ],
+ "News": [
+  "News",
+  "පුවත්",
+  "செய்திகள்"
+ ],
+ "GUIDES · AI · COMMUNITY": [
+  "GUIDES · AI · COMMUNITY",
+  "මාර්ගෝපදේශ · AI · ප්‍රජාව",
+  "வழிகாட்டி · AI · சமூகம்"
+ ],
+ "Messaggio": [
+  "Message",
+  "පණිවිඩය",
+  "செய்தி"
+ ],
+ "Nessun risultato · No results": [
+  "No results",
+  "ප්‍රතිඵල නැත",
+  "முடிவுகள் இல்லை"
+ ],
+ "naviga": [
+  "navigate",
+  "ගමන් කරන්න",
+  "நகர்த்து"
+ ],
+ "apri": [
+  "open",
+  "විවෘත කරන්න",
+  "திற"
+ ],
+ "esc": [
+  "esc",
+  "esc",
+  "esc"
+ ],
+ "chiudi": [
+  "close",
+  "වසන්න",
+  "மூடு"
+ ],
+ "Navigazione principale": [
+  "Main navigation",
+  "ප්‍රධාන සංචලනය",
+  "முதன்மை வழிசெலுத்தல்"
+ ],
+ "Invia": [
+  "Send",
+  "යවන්න",
+  "அனுப்பு"
+ ],
+ "Ricerca nel sito": [
+  "Site search",
+  "අඩවියේ සොයන්න",
+  "தளத்தில் தேடு"
+ ],
+ "Cerca una pagina o uno strumento… / Search…": [
+  "Search a page or a tool…",
+  "පිටුවක් හෝ මෙවලමක් සොයන්න…",
+  "பக்கம் அல்லது கருவியைத் தேடு…"
+ ],
+ "Cerca nel sito (Ctrl+K)": [
+  "Search the site (Ctrl+K)",
+  "අඩවියේ සොයන්න (Ctrl+K)",
+  "தளத்தில் தேடு (Ctrl+K)"
+ ],
+ "Cerca · Ctrl+K": [
+  "Search · Ctrl+K",
+  "සොයන්න · Ctrl+K",
+  "தேடு · Ctrl+K"
+ ],
+ "Cambia tema chiaro/scuro": [
+  "Switch light/dark theme",
+  "ආලෝක/අඳුරු තේමාව මාරු කරන්න",
+  "வெளிச்சம்/இருள் தோற்றம் மாற்று"
+ ],
+ "Tema chiaro/scuro": [
+  "Light/dark theme",
+  "ආලෝක/අඳුරු තේමාව",
+  "வெளிச்சம்/இருள் தோற்றம்"
+ ],
+ "Navigazione rapida": [
+  "Quick navigation",
+  "ඉක්මන් සංචලනය",
+  "விரைவு வழிசெலுத்தல்"
+ ],
+ "Chi siamo": [
+  "About us",
+  "අප ගැන",
+  "எங்களைப் பற்றி"
+ ],
+ "Contatti": [
+  "Contact",
+  "සම්බන්ධ වන්න",
+  "தொடர்பு"
+ ],
+ "Numeri di emergenza": [
+  "Emergency numbers",
+  "හදිසි ඇමතුම් අංක",
+  "அவசர எண்கள்"
+ ],
+ "Ricongiungimento familiare": [
+  "Family reunification",
+  "පවුල් එක්වීම",
+  "குடும்ப ஒன்றிணைவு"
+ ],
+ "Calendario festività": [
+  "Holiday calendar",
+  "නිවාඩු දින දර්ශනය",
+  "விடுமுறை நாட்காட்டி"
+ ],
+ "Bentornato": [
+  "Welcome back",
+  "නැවත සාදරයෙන් පිළිගනිමු",
+  "மீண்டும் வரவேற்கிறோம்"
+ ],
+ "Accedi al tuo account Easy Italia Hub": [
+  "Sign in to your Easy Italia Hub account",
+  "ඔබේ Easy Italia Hub ගිණුමට ඇතුල් වන්න",
+  "உங்கள் Easy Italia Hub கணக்கில் உள்நுழையவும்"
+ ],
+ "Nome completo": [
+  "Full name",
+  "සම්පූර්ණ නම",
+  "முழுப் பெயர்"
+ ],
+ "Email": [
+  "Email",
+  "විද්‍යුත් තැපෑල",
+  "மின்னஞ்சல்"
+ ],
+ "Password": [
+  "Password",
+  "මුරපදය",
+  "கடவுச்சொல்"
+ ],
+ "Password dimenticata?": [
+  "Forgot your password?",
+  "මුරපදය අමතකද?",
+  "கடவுச்சொல் மறந்துவிட்டதா?"
+ ],
+ "oppure": [
+  "or",
+  "නැතහොත්",
+  "அல்லது"
+ ],
+ "Continua con Google": [
+  "Continue with Google",
+  "Google සමඟ ඉදිරියට",
+  "Google மூலம் தொடரவும்"
+ ],
+ "Non hai un account?": [
+  "Don't have an account?",
+  "ගිණුමක් නැද්ද?",
+  "கணக்கு இல்லையா?"
+ ],
+ "Apri assistente AI — scorciatoia Ctrl/⌘+J": [
+  "Open AI assistant — shortcut Ctrl/⌘+J",
+  "AI සහායක විවෘත කරන්න — Ctrl/⌘+J",
+  "AI உதவியாளரைத் திற — Ctrl/⌘+J"
+ ],
+ "Apri assistente AI (Ctrl/⌘+J)": [
+  "Open AI assistant (Ctrl/⌘+J)",
+  "AI සහායක විවෘත කරන්න (Ctrl/⌘+J)",
+  "AI உதவியாளரைத் திற (Ctrl/⌘+J)"
+ ],
+ "Apri assistente AI": [
+  "Open AI assistant",
+  "AI සහායක විවෘත කරන්න",
+  "AI உதவியாளரைத் திற"
+ ],
+ "Chiudi assistente": [
+  "Close assistant",
+  "සහායක වසන්න",
+  "உதவியாளரை மூடு"
+ ],
+ "Messaggi": [
+  "Messages",
+  "පණිවිඩ",
+  "செய்திகள்"
+ ],
+ "Domande suggerite": [
+  "Suggested questions",
+  "යෝජිත ප්‍රශ්න",
+  "பரிந்துரைக்கப்பட்ட கேள்விகள்"
+ ],
+ "Navigazione app": [
+  "App navigation",
+  "යෙදුම් සංචලනය",
+  "செயலி வழிசெலுத்தல்"
+ ],
+ "Lingua": [
+  "Language",
+  "භාෂාව",
+  "மொழி"
+ ],
+ "Lingue": [
+  "Languages",
+  "භාෂා",
+  "மொழிகள்"
+ ],
+ "Corsi di Lingue": [
+  "Language courses",
+  "භාෂා පාඨමාලා",
+  "மொழிப் பாடநெறிகள்"
+ ],
+ "Opportunità": [
+  "Opportunities",
+  "අවස්ථා",
+  "வாய்ப்புகள்"
+ ],
+ "Moduli e Lettere": [
+  "Forms and letters",
+  "පෝරම සහ ලිපි",
+  "படிவங்களும் கடிதங்களும்"
+ ],
+ "Assegno Unico": [
+  "Single allowance",
+  "ඒකීය දරු දීමනාව",
+  "ஒற்றைக் குழந்தை உதவித்தொகை"
+ ],
+ "Diritti INPS": [
+  "INPS rights",
+  "INPS අයිතිවාසිකම්",
+  "INPS உரிமைகள்"
+ ],
+ "Riconosc. Titoli": [
+  "Qualification recognition",
+  "සුදුසුකම් පිළිගැනීම",
+  "தகுதி அங்கீகாரம்"
+ ],
+ "Mappa servizi": [
+  "Services map",
+  "සේවා සිතියම",
+  "சேவை வரைபடம்"
+ ],
+ "Pubblicità": [
+  "Advertising",
+  "වෙළඳ ප්‍රචාරණය",
+  "விளம்பரம்"
+ ],
+ "Account": [
+  "Account",
+  "ගිණුම",
+  "கணக்கு"
+ ],
+ "Guide burocratiche": [
+  "Bureaucracy guides",
+  "නිලධාරී ක්‍රියාපටිපාටි මාර්ගෝපදේශ",
+  "அலுவல் நடைமுறை வழிகாட்டிகள்"
+ ],
+ "Guida SSN e medico di base": [
+  "SSN and family doctor guide",
+  "SSN සහ පවුලේ වෛද්‍ය මාර්ගෝපදේශය",
+  "SSN மற்றும் குடும்ப மருத்துவர் வழிகாட்டி"
+ ],
+ "Patente di guida": [
+  "Driving licence",
+  "රියදුරු බලපත්‍රය",
+  "ஓட்டுநர் உரிமம்"
+ ],
+ "Associazioni srilankesi": [
+  "Sri Lankan associations",
+  "ශ්‍රී ලාංකික සංගම්",
+  "இலங்கைச் சங்கங்கள்"
+ ],
+ "Prodotto": [
+  "Product",
+  "නිෂ්පාදනය",
+  "தயாரிப்பு"
+ ],
+ "Assistente AI": [
+  "AI assistant",
+  "AI සහායක",
+  "AI உதவியாளர்"
+ ],
+ "Guida SSN": [
+  "SSN guide",
+  "SSN මාර්ගෝපදේශය",
+  "SSN வழிகாட்டி"
+ ],
+ "Patente": [
+  "Driving licence",
+  "රියදුරු බලපත්‍රය",
+  "ஓட்டுநர் உரிமம்"
+ ],
+ "Casa in Affitto": [
+  "Renting a home",
+  "කුලී නිවාස",
+  "வாடகை வீடு"
+ ],
+ "Associazioni": [
+  "Associations",
+  "සංගම්",
+  "சங்கங்கள்"
+ ],
+ "Mercatino": [
+  "Marketplace",
+  "වෙළඳපොළ",
+  "சந்தை"
+ ],
+ "Il progetto": [
+  "The project",
+  "ව්‍යාපෘතිය",
+  "திட்டம்"
+ ],
+ "La mia Dashboard": [
+  "My dashboard",
+  "මගේ පුවරුව",
+  "எனது பலகை"
+ ],
+ "Tracker Permesso": [
+  "Permit tracker",
+  "බලපත්‍ර ලුහුබැඳීම",
+  "அனுமதி கண்காணிப்பு"
+ ],
+ "CV Builder": [
+  "CV builder",
+  "CV සාදන්න",
+  "CV உருவாக்கி"
+ ],
+ "Archivio Documenti": [
+  "Document archive",
+  "ලේඛන ගබඩාව",
+  "ஆவணக் காப்பகம்"
+ ],
+ "Il Mio Percorso": [
+  "My journey",
+  "මගේ ගමන",
+  "எனது பயணம்"
+ ],
+ "Mappa": [
+  "Map",
+  "සිතියම",
+  "வரைபடம்"
+ ],
+ "Servizi": [
+  "Services",
+  "සේවා",
+  "சேவைகள்"
+ ],
+ "Voli Sri Lanka": [
+  "Sri Lanka flights",
+  "ශ්‍රී ලංකා ගුවන් ගමන්",
+  "இலங்கை விமானங்கள்"
+ ],
+ "Spedizioni Cargo": [
+  "Cargo shipping",
+  "භාණ්ඩ නැව්ගත කිරීම",
+  "சரக்கு அனுப்புதல்"
+ ],
+ "Apri menu": [
+  "Open menu",
+  "මෙනුව විවෘත කරන්න",
+  "பட்டியைத் திற"
+ ],
+ "Permesso di soggiorno": [
+  "Residence permit",
+  "පදිංචි බලපත්‍රය",
+  "வதிவிட அனுமதி"
+ ],
+ "Controlla la scadenza del tuo permesso e avvia il rinnovo con anticipo.": [
+  "Check when your permit expires and start the renewal early.",
+  "ඔබේ බලපත්‍රයේ කල් ඉකුත් වන දිනය පරීක්ෂා කර අලුත් කිරීම කලින් ආරම්භ කරන්න.",
+  "உங்கள் அனுமதியின் காலாவதி தேதியைப் பார்த்து, புதுப்பித்தலை முன்கூட்டியே தொடங்குங்கள்."
+ ],
+ "Scopri di più →": [
+  "Learn more →",
+  "තව දැනගන්න →",
+  "மேலும் அறிக →"
+ ],
+ "Contattaci": [
+  "Contact us",
+  "අප හා සම්බන්ධ වන්න",
+  "எங்களைத் தொடர்பு கொள்ளுங்கள்"
+ ],
+ "In evidenza": [
+  "Featured",
+  "විශේෂ",
+  "சிறப்பு"
+ ],
+ "Corsi gratuiti": [
+  "Free courses",
+  "නොමිලේ පාඨමාලා",
+  "இலவசப் பாடநெறிகள்"
+ ],
+ "Italiano gratis al CPIA": [
+  "Free Italian at CPIA",
+  "CPIA හි නොමිලේ ඉතාලි භාෂාව",
+  "CPIA-வில் இலவச இத்தாலிய மொழி"
+ ],
+ "Corsi statali per adulti, certificazione A2. Verifica la finestra di iscrizione sulla fonte.": [
+  "State courses for adults, A2 certification. Check the enrolment window at the source.",
+  "වැඩිහිටියන් සඳහා රාජ්‍ය පාඨමාලා, A2 සහතිකය. ලියාපදිංචි කාලය මූලාශ්‍රයෙන් තහවුරු කරගන්න.",
+  "பெரியவர்களுக்கான அரச பாடநெறிகள், A2 சான்றிதழ். பதிவுக் காலத்தை மூலத்தில் சரிபார்க்கவும்."
+ ],
+ "Scopri come": [
+  "Find out how",
+  "කෙසේදැයි බලන්න",
+  "எப்படி என்று அறிக"
+ ],
+ "Diritto allo studio": [
+  "Right to study",
+  "අධ්‍යාපන අයිතිය",
+  "கல்வி உரிமை"
+ ],
+ "Borse di studio DSU": [
+  "DSU scholarships",
+  "DSUශිෂ්‍යත්ව",
+  "DSU உதவித்தொகைகள்"
+ ],
+ "Esonero tasse e sostegno per studenti universitari. Controlla il bando della tua regione.": [
+  "Fee waivers and support for university students. Check your region's call.",
+  "විශ්ව විද්‍යාල සිසුන් සඳහා ගාස්තු නිදහස් කිරීම සහ සහාය. ඔබේ ප්‍රදේශයේ නිවේදනය පරීක්ෂා කරන්න.",
+  "பல்கலைக்கழக மாணவர்களுக்கான கட்டண விலக்கும் உதவியும். உங்கள் பிராந்திய அறிவிப்பைப் பாருங்கள்."
+ ],
+ "Vai al portale": [
+  "Go to the portal",
+  "ද්වාරයට යන්න",
+  "வலைவாசலுக்குச் செல்"
+ ],
+ "Governo italiano": [
+  "Italian government",
+  "ඉතාලි රජය",
+  "இத்தாலிய அரசு"
+ ],
+ "Borse MAECI": [
+  "MAECI scholarships",
+  "MAECI ශිෂ්‍යත්ව",
+  "MAECI உதவித்தொகைகள்"
+ ],
+ "Borse statali per studiare in Italia. Bando e candidatura sul portale Study in Italy.": [
+  "State scholarships to study in Italy. Call and application on the Study in Italy portal.",
+  "ඉතාලියේ ඉගෙනීමට රාජ්‍ය ශිෂ්‍යත්ව. නිවේදනය සහ අයදුම්පත Study in Italy ද්වාරයේ.",
+  "இத்தாலியில் படிக்க அரச உதவித்தொகைகள். அறிவிப்பும் விண்ணப்பமும் Study in Italy வலைவாசலில்."
+ ],
+ "Apri il bando": [
+  "Open the call",
+  "නිවේදනය විවෘත කරන්න",
+  "அறிவிப்பைத் திற"
+ ],
+ "Voli smart": [
+  "Smart flights",
+  "දක්ෂ ගුවන් ගමන්",
+  "சிக்கன விமானங்கள்"
+ ],
+ "Colombo–Italia al meglio": [
+  "Colombo–Italy at its best",
+  "කොළඹ–ඉතාලිය හොඳම ලෙස",
+  "கொழும்பு–இத்தாலி சிறந்த முறையில்"
+ ],
+ "Confronta date e tariffe in tempo reale: spesso conviene la bassa stagione.": [
+  "Compare dates and fares in real time: the low season is often cheaper.",
+  "දින සහ ගාස්තු තත්‍ය කාලීනව සසඳන්න: බොහෝ විට අඩු කාලය වාසිදායකයි.",
+  "தேதிகளையும் கட்டணங்களையும் நேரலையில் ஒப்பிடுங்கள்: பெரும்பாலும் குறைவான பருவமே மலிவு."
+ ],
+ "Confronta voli": [
+  "Compare flights",
+  "ගුවන් ගමන් සසඳන්න",
+  "விமானங்களை ஒப்பிடு"
+ ],
+ "Tutte le opportunità →": [
+  "All opportunities →",
+  "සියලු අවස්ථා →",
+  "அனைத்து வாய்ப்புகளும் →"
+ ],
+ "Unisciti gratis": [
+  "Join for free",
+  "නොමිලේ එක්වන්න",
+  "இலவசமாக இணையுங்கள்"
+ ],
+ "Chiedi all'AI": [
+  "Ask the AI",
+  "AI ගෙන් අසන්න",
+  "AI-யிடம் கேளுங்கள்"
+ ],
+ "🗓 Festività in arrivo": [
+  "🗓 Upcoming holidays",
+  "🗓 ළඟ එන නිවාඩු",
+  "🗓 வரவிருக்கும் விடுமுறைகள்"
+ ],
+ "Cristiana": [
+  "Christian",
+  "ක්‍රිස්තියානි",
+  "கிறிஸ்தவ"
+ ],
+ "Buddista": [
+  "Buddhist",
+  "බෞද්ධ",
+  "பௌத்த"
+ ],
+ "Assunzione": [
+  "Assumption",
+  "මරියතුමියගේ ස්වර්ගාරෝහණය",
+  "மரியாளின் விண்ணேற்பு"
+ ],
+ "Menu rapido": [
+  "Quick menu",
+  "ඉක්මන් මෙනුව",
+  "விரைவு பட்டி"
+ ],
+ "📖 Guide": [
+  "📖 Guides",
+  "📖 මාර්ගෝපදේශ",
+  "📖 வழிகாட்டிகள்"
+ ],
+ "🤖 Assistente AI": [
+  "🤖 AI assistant",
+  "🤖 AI සහායක",
+  "🤖 AI உதவியாளர்"
+ ],
+ "👥 Community": [
+  "👥 Community",
+  "👥 ප්‍රජාව",
+  "👥 சமூகம்"
+ ],
+ "🗣️ Corsi di Lingue": [
+  "🗣️ Language courses",
+  "🗣️ භාෂා පාඨමාලා",
+  "🗣️ மொழிப் பாடநெறிகள்"
+ ],
+ "✨ Opportunità": [
+  "✨ Opportunities",
+  "✨ අවස්ථා",
+  "✨ வாய்ப்புகள்"
+ ],
+ "💸 Money Transfer": [
+  "💸 Money Transfer",
+  "💸 මුදල් යැවීම",
+  "💸 பணப் பரிமாற்றம்"
+ ],
+ "📄 Moduli e Lettere": [
+  "📄 Forms and letters",
+  "📄 පෝරම සහ ලිපි",
+  "📄 படிவங்களும் கடிதங்களும்"
+ ],
+ "👶 Assegno Unico": [
+  "👶 Single allowance",
+  "👶 ඒකීය දරු දීමනාව",
+  "👶 ஒற்றைக் குழந்தை உதவித்தொகை"
+ ],
+ "🏛️ Diritti INPS": [
+  "🏛️ INPS rights",
+  "🏛️ INPS අයිතිවාසිකම්",
+  "🏛️ INPS உரிமைகள்"
+ ],
+ "🏥 Guida SSN": [
+  "🏥 SSN guide",
+  "🏥 SSN මාර්ගෝපදේශය",
+  "🏥 SSN வழிகாட்டி"
+ ],
+ "🚗 Patente": [
+  "🚗 Driving licence",
+  "🚗 රියදුරු බලපත්‍රය",
+  "🚗 ஓட்டுநர் உரிமம்"
+ ],
+ "🏠 Casa in Affitto": [
+  "🏠 Renting a home",
+  "🏠 කුලී නිවාස",
+  "🏠 வாடகை வீடு"
+ ],
+ "🤝 Associazioni": [
+  "🤝 Associations",
+  "🤝 සංගම්",
+  "🤝 சங்கங்கள்"
+ ],
+ "🛍️ Mercatino": [
+  "🛍️ Marketplace",
+  "🛍️ වෙළඳපොළ",
+  "🛍️ சந்தை"
+ ],
+ "🎙️ Podcast": [
+  "🎙️ Podcast",
+  "🎙️ පොඩ්කාස්ට්",
+  "🎙️ பாட்காஸ்ட்"
+ ],
+ "🎓 Riconosc. Titoli": [
+  "🎓 Qualification recognition",
+  "🎓 සුදුසුකම් පිළිගැනීම",
+  "🎓 தகுதி அங்கீகாரம்"
+ ],
+ "🗺️ Mappa servizi": [
+  "🗺️ Services map",
+  "🗺️ සේවා සිතියම",
+  "🗺️ சேவை வரைபடம்"
+ ],
+ "Ultime news · Sri Lanka": [
+  "Latest news · Sri Lanka",
+  "නවතම පුවත් · ශ්‍රී ලංකාව",
+  "சமீபச் செய்திகள் · இலங்கை"
+ ],
+ "Notizie non disponibili al momento.": [
+  "News not available right now.",
+  "දැනට පුවත් නොමැත.",
+  "தற்போது செய்திகள் இல்லை."
+ ],
+ "Vai alle news →": [
+  "Go to news →",
+  "පුවත් වෙත →",
+  "செய்திகளுக்கு →"
+ ],
+ "Tutte le news →": [
+  "All news →",
+  "සියලු පුවත් →",
+  "அனைத்துச் செய்திகளும் →"
+ ],
+ "Guide & Diritti": [
+  "Guides & rights",
+  "මාර්ගෝපදේශ සහ අයිතිවාසිකම්",
+  "வழிகாட்டிகளும் உரிமைகளும்"
+ ],
+ "Documenti": [
+  "Documents",
+  "ලේඛන",
+  "ஆவணங்கள்"
+ ],
+ "Lavoro & Casa": [
+  "Work & home",
+  "රැකියාව සහ නිවස",
+  "வேலையும் வீடும்"
+ ],
+ "Community & Media": [
+  "Community & media",
+  "ප්‍රජාව සහ මාධ්‍ය",
+  "சமூகமும் ஊடகமும்"
+ ],
+ "Lezioni Academy": [
+  "Academy lessons",
+  "Academy පාඩම්",
+  "Academy பாடங்கள்"
+ ],
+ "Preparazione certificazioni": [
+  "Certification prep",
+  "සහතික සඳහා සූදානම",
+  "சான்றிதழ் தயாரிப்பு"
+ ],
+ "Insegnante AI": [
+  "AI teacher",
+  "AI ගුරුවරයා",
+  "AI ஆசிரியர்"
+ ],
+ "Esame & Badge": [
+  "Exam & badge",
+  "විභාගය සහ ලාංඡනය",
+  "தேர்வும் பதக்கமும்"
+ ],
+ "Scuola e studio": [
+  "School and study",
+  "පාසල සහ අධ්‍යාපනය",
+  "பள்ளியும் படிப்பும்"
+ ],
+ "Forum": [
+  "Forum",
+  "සංසදය",
+  "கலந்துரையாடல்"
+ ],
+ "Traduzioni": [
+  "Translations",
+  "පරිවර්තන",
+  "மொழிபெயர்ப்புகள்"
+ ],
+ "Professionisti": [
+  "Professionals",
+  "වෘත්තිකයන්",
+  "தொழில் வல்லுநர்கள்"
+ ],
+ "Profilo": [
+  "Profile",
+  "පැතිකඩ",
+  "சுயவிவரம்"
+ ],
+ "Sottomenu Guide": [
+  "Guides submenu",
+  "මාර්ගෝපදේශ උපමෙනුව",
+  "வழிகாட்டிகள் துணை பட்டி"
+ ],
+ "Sottomenu Academy": [
+  "Academy submenu",
+  "Academy උපමෙනුව",
+  "Academy துணை பட்டி"
+ ],
+ "Seleziona lingua / Select language": [
+  "Select language",
+  "භාෂාව තෝරන්න",
+  "மொழியைத் தேர்ந்தெடுக்கவும்"
+ ],
+ "Navigazione principale e ultime notizie dallo Sri Lanka": [
+  "Main navigation and latest news from Sri Lanka",
+  "ප්‍රධාන සංචලනය සහ ශ්‍රී ලංකාවෙන් නවතම පුවත්",
+  "முதன்மை வழிசெலுத்தலும் இலங்கையின் சமீபச் செய்திகளும்"
+ ],
+ "Navigazione": [
+  "Navigation",
+  "සංචලනය",
+  "வழிசெலுத்தல்"
+ ],
+ "Scegli opportunità": [
+  "Choose opportunity",
+  "අවස්ථාව තෝරන්න",
+  "வாய்ப்பைத் தேர்வுசெய்"
+ ],
+ "Torna all'inizio della pagina": [
+  "Back to top of page",
+  "පිටුවේ මුදුනට",
+  "பக்கத்தின் மேலே"
+ ],
+ "Dizionario Medico": [
+  "Medical dictionary",
+  "වෛද්‍ය ශබ්දකෝෂය",
+  "மருத்துவ அகராதி"
+ ],
+ "Azienda": [
+  "Company",
+  "සමාගම",
+  "நிறுவனம்"
+ ],
+ "La casa digitale della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — in un unico posto.": [
+  "The digital home of the Sri Lankan community in Italy. Guides, multilingual AI, community and services — all in one place.",
+  "ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාවේ ඩිජිටල් නිවහන. මාර්ගෝපදේශ, බහුභාෂා AI, ප්‍රජාව සහ සේවා — එකම තැනක.",
+  "இத்தாலியில் உள்ள இலங்கைச் சமூகத்தின் இணைய இல்லம். வழிகாட்டிகள், பன்மொழி AI, சமூகம், சேவைகள் — ஒரே இடத்தில்."
+ ],
+ "Piattaforma": [
+  "Platform",
+  "වේදිකාව",
+  "தளம்"
+ ],
+ "Risorse": [
+  "Resources",
+  "සම්පත්",
+  "வளங்கள்"
+ ],
+ "© 2026 Easy Italia Hub. Tutti i diritti riservati.": [
+  "© 2026 Easy Italia Hub. All rights reserved.",
+  "© 2026 Easy Italia Hub. සියලු හිමිකම් ඇවිරිණි.",
+  "© 2026 Easy Italia Hub. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
+ ],
+ "Privacy Policy": [
+  "Privacy Policy",
+  "පෞද්ගලිකත්ව ප්‍රතිපත්තිය",
+  "தனியுரிமைக் கொள்கை"
+ ],
+ "Cookie Policy": [
+  "Cookie Policy",
+  "කුකී ප්‍රතිපත්තිය",
+  "குக்கீக் கொள்கை"
+ ],
+ "Termini di Servizio": [
+  "Terms of Service",
+  "සේවා කොන්දේසි",
+  "சேவை விதிமுறைகள்"
+ ],
+ "Crea il tuo account": [
+  "Create your account",
+  "ඔබේ ගිණුම සාදන්න",
+  "உங்கள் கணக்கை உருவாக்கு"
+ ],
+ "Registrati gratis e sblocca il tuo percorso": [
+  "Sign up free and unlock your journey",
+  "නොමිලේ ලියාපදිංචි වී ඔබේ ගමන අරඹන්න",
+  "இலவசமாகப் பதிவுசெய்து உங்கள் பயணத்தைத் தொடங்குங்கள்"
+ ],
+ "Simulatore": [
+  "Simulator",
+  "අනුකාරකය",
+  "உருவகப்படுத்தி"
+ ],
+ "Piè di pagina": [
+  "Footer",
+  "පාද පිටුව",
+  "அடிக்குறிப்பு"
+ ],
+ "Apri Consigliere AI": [
+  "Open AI advisor",
+  "AI උපදේශක විවෘත කරන්න",
+  "AI ஆலோசகரைத் திற"
+ ],
+ "Consigliere AI": [
+  "AI advisor",
+  "AI උපදේශක",
+  "AI ஆலோசகர்"
+ ],
+ "Inserisci voce": [
+  "Add entry",
+  "ඇතුළත් කරන්න",
+  "உள்ளீடு சேர்"
+ ],
+ "Codice Fiscale": [
+  "Tax code",
+  "බදු අංකය",
+  "வரி எண்"
+ ],
+ "Non hai ancora il codice fiscale? Scopri come ottenerlo in pochi passi.": [
+  "Don't have a tax code yet? Find out how to get one in a few steps.",
+  "තවම බදු අංකය නැද්ද? පියවර කිහිපයකින් ලබාගන්නා ආකාරය බලන්න.",
+  "இன்னும் வரி எண் இல்லையா? சில படிகளில் பெறுவது எப்படி என்று பாருங்கள்."
+ ],
+ "Tessera Sanitaria": [
+  "Health card",
+  "සෞඛ්‍ය කාඩ්පත",
+  "சுகாதார அட்டை"
+ ],
+ "Con la residenza puoi iscriverti al medico di base gratuitamente.": [
+  "With residency you can register with a family doctor free of charge.",
+  "පදිංචිය සමඟ ඔබට නොමිලේ පවුලේ වෛද්‍යවරයෙකු ලියාපදිංචි කරගත හැක.",
+  "வதிவிடம் இருந்தால் இலவசமாகக் குடும்ப மருத்துவரிடம் பதிவு செய்யலாம்."
+ ],
+ "Crea il tuo curriculum in formato europeo pronto da inviare.": [
+  "Create your CV in the European format, ready to send.",
+  "යුරෝපීය ආකෘතියෙන් ඔබේ CV එක සාදා යවන්න සූදානම් කරගන්න.",
+  "ஐரோப்பிய வடிவில் உங்கள் CV-ஐ உருவாக்கி அனுப்பத் தயாராக வையுங்கள்."
+ ],
+ "Confronta i costi di Wise, Western Union e Ria prima di inviare denaro.": [
+  "Compare Wise, Western Union and Ria costs before sending money.",
+  "මුදල් යැවීමට පෙර Wise, Western Union සහ Ria ගාස්තු සසඳන්න.",
+  "பணம் அனுப்பும் முன் Wise, Western Union, Ria கட்டணங்களை ஒப்பிடுங்கள்."
+ ],
+ "Hai una domanda burocratica? L'AI risponde in italiano, inglese e sinhala.": [
+  "Got a bureaucracy question? The AI replies in Italian, English and Sinhala.",
+  "නිලධාරී ක්‍රියාපටිපාටියක් ගැන ප්‍රශ්නයක්ද? AI ඉතාලි, ඉංග්‍රීසි සහ සිංහල බසින් පිළිතුරු දෙයි.",
+  "அலுவல் நடைமுறை பற்றிய கேள்வியா? AI இத்தாலிய, ஆங்கில, சிங்கள மொழிகளில் பதிலளிக்கும்."
+ ],
+ "Mappa dei servizi": [
+  "Services map",
+  "සේවා සිතියම",
+  "சேவை வரைபடம்"
+ ],
+ "Trova CAF, patronati e consolati vicino a te.": [
+  "Find CAF offices, patronati and consulates near you.",
+  "ඔබට ආසන්න CAF, patronato සහ කොන්සල් කාර්යාල සොයන්න.",
+  "உங்களுக்கு அருகிலுள்ள CAF, patronato, தூதரகங்களைக் கண்டறியுங்கள்."
+ ],
+ "News dalla comunità": [
+  "Community news",
+  "ප්‍රජා පුවත්",
+  "சமூகச் செய்திகள்"
+ ],
+ "Leggi le ultime notizie rilevanti per gli srilankesi in Italia.": [
+  "Read the latest news that matters to Sri Lankans in Italy.",
+  "ඉතාලියේ ශ්‍රී ලාංකිකයන්ට වැදගත් නවතම පුවත් කියවන්න.",
+  "இத்தாலியில் உள்ள இலங்கையர்களுக்கு முக்கியமான சமீபச் செய்திகளைப் படியுங்கள்."
+ ],
+ "Scopri a quali contributi e assegni hai diritto.": [
+  "Find out which benefits and allowances you are entitled to.",
+  "ඔබට හිමි දීමනා සහ ප්‍රතිලාභ මොනවාදැයි බලන්න.",
+  "உங்களுக்கு உரிய உதவித்தொகைகளும் சலுகைகளும் என்னென்ன என்று அறியுங்கள்."
+ ],
+ "Genera lettere di disdetta, delega o ospitalità in un clic.": [
+  "Generate cancellation, proxy or hospitality letters in one click.",
+  "අවලංගු කිරීම, බලය පැවරීම හෝ නවාතැන් ලිපි එක ක්ලික් එකකින් සාදන්න.",
+  "ரத்து, அதிகாரம் அல்லது தங்குமிட கடிதங்களை ஒரே சொடுக்கில் உருவாக்குங்கள்."
+ ],
+ "Indù/Tamil": [
+  "Hindu/Tamil",
+  "හින්දු/දෙමළ",
+  "இந்து/தமிழ்"
+ ],
+ "Indù": [
+  "Hindu",
+  "හින්දු",
+  "இந்து"
+ ],
+ "Musulmana": [
+  "Muslim",
+  "මුස්ලිම්",
+  "முஸ்லிம்"
+ ],
+ "Natale": [
+  "Christmas",
+  "නත්තල",
+  "கிறிஸ்துமஸ்"
+ ],
+ "Pasqua": [
+  "Easter",
+  "පාස්කුව",
+  "உயிர்த்த ஞாயிறு"
+ ],
+ "Anno Nuovo Sinhalese": [
+  "Sinhala New Year",
+  "සිංහල අලුත් අවුරුද්ද",
+  "சிங்கள புத்தாண்டு"
+ ],
+ "Anno Nuovo Tamil": [
+  "Tamil New Year",
+  "දෙමළ අලුත් අවුරුද්ද",
+  "தமிழ்ப் புத்தாண்டு"
+ ]
+}
