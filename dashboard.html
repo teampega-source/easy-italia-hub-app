@@ -433,8 +433,35 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   "use strict";
 
   var STORE_KEY = 'eih-deadlines';
-  var MONTHS = ['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
-  var MONTHS_SHORT = ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+  /* I nomi di mesi e giorni si scrivono qui, non si traducono a posteriori:
+     sono generati dal JavaScript e nel dizionario per impronta finirebbero
+     dodici voci per lingua che cambiano ogni mese. */
+  var LG = (function(){ try {
+    var m = location.pathname.match(/^\/(en|si|ta)(\/|$)/);
+    return m ? m[1] : (localStorage.getItem('eih-lang') || 'it');
+  } catch(e){ return 'it'; } })();
+  var CAL = {
+    it:{m:['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'],
+        s:['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'],
+        g:['Lun','Mar','Mer','Gio','Ven','Sab','Dom']},
+    en:{m:['January','February','March','April','May','June','July','August','September','October','November','December'],
+        s:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+        g:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
+    si:{m:['ජනවාරි','පෙබරවාරි','මාර්තු','අප්‍රේල්','මැයි','ජූනි','ජූලි','අගෝස්තු','සැප්තැම්බර්','ඔක්තෝබර්','නොවැම්බර්','දෙසැම්බර්'],
+        s:['ජන','පෙබ','මාර්','අප්‍රේ','මැයි','ජූනි','ජූලි','අගෝ','සැප්','ඔක්','නොවැ','දෙසැ'],
+        g:['සඳු','අඟ','බදා','බ්‍රහ','සිකු','සෙන','ඉරි']},
+    ta:{m:['ஜனவரி','பிப்ரவரி','மார்ச்','ஏப்ரல்','மே','ஜூன்','ஜூலை','ஆகஸ்ட்','செப்டம்பர்','அக்டோபர்','நவம்பர்','டிசம்பர்'],
+        s:['ஜன','பிப்','மார்','ஏப்','மே','ஜூன்','ஜூலை','ஆக','செப்','அக்','நவ','டிச'],
+        g:['திங்','செவ்','புத','வியா','வெள்','சனி','ஞாயி']}
+  };
+  var C = CAL[LG] || CAL.it;
+  var MONTHS = C.m;
+  var MONTHS_SHORT = C.s;
+  (function(){
+    var sp = document.querySelectorAll('.cal-weekdays span');
+    if (sp.length !== 7) return;
+    for (var i = 0; i < 7; i++) sp[i].textContent = C.g[i];
+  })();
 
   // ── helpers ──────────────────────────────────────────────
   function pad(n){ return (n < 10 ? '0' : '') + n; }
