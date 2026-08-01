@@ -152,16 +152,48 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     {n:"Poson Poya",d:"2027-06-20",e:"🪷",r:"Buddista",c:"#d97706"},
   ];
 
-  var WD=['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
-  var MONTHS=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  /* Mesi, giorni, conteggi e nomi delle festivita' si scrivono qui: la pagina
+     e' costruita interamente dal JavaScript e ogni giorno che passa cambia il
+     testo ("Tra 14 giorni"), quindi un dizionario per impronta non reggerebbe. */
+  var LG=(function(){try{var m=location.pathname.match(/^\/(en|si|ta)(\/|$)/);
+    return m?m[1]:(localStorage.getItem('eih-lang')||'it');}catch(e){return 'it';}})();
+  var L={
+    it:{wd:['Dom','Lun','Mar','Mer','Gio','Ven','Sab'],
+        m:['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+        oggi:'Oggi',domani:'Domani',tra:'Tra {n} giorni',fa:'{n} giorni fa',
+        r:{'Tutti':'Tutte le festività','Buddista':'Buddiste','Indù':'Indù','Indù/Tamil':'Tamil / Indù','Cristiana':'Cristiane','Musulmana':'Musulmane'},
+        tag:{'Buddista':'Buddista','Indù':'Indù','Indù/Tamil':'Indù/Tamil','Cristiana':'Cristiana','Musulmana':'Musulmana'},n:{}},
+    en:{wd:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+        m:['January','February','March','April','May','June','July','August','September','October','November','December'],
+        oggi:'Today',domani:'Tomorrow',tra:'In {n} days',fa:'{n} days ago',
+        r:{'Tutti':'All holidays','Buddista':'Buddhist','Indù':'Hindu','Indù/Tamil':'Tamil / Hindu','Cristiana':'Christian','Musulmana':'Muslim'},
+        tag:{'Buddista':'Buddhist','Indù':'Hindu','Indù/Tamil':'Hindu/Tamil','Cristiana':'Christian','Musulmana':'Muslim'},
+        n:{'Anno Nuovo Sinhalese':'Sinhala New Year','Anno Nuovo Tamil':'Tamil New Year','Assunzione':'Assumption','Natale':'Christmas','Pasqua':'Easter','Ramadan (inizio)':'Ramadan (start)'}},
+    si:{wd:['ඉරි','සඳු','අඟ','බදා','බ්‍රහ','සිකු','සෙන'],
+        m:['ජනවාරි','පෙබරවාරි','මාර්තු','අප්‍රේල්','මැයි','ජූනි','ජූලි','අගෝස්තු','සැප්තැම්බර්','ඔක්තෝබර්','නොවැම්බර්','දෙසැම්බර්'],
+        oggi:'අද',domani:'හෙට',tra:'දින {n}කින්',fa:'දින {n}කට පෙර',
+        r:{'Tutti':'සියලු නිවාඩු','Buddista':'බෞද්ධ','Indù':'හින්දු','Indù/Tamil':'දෙමළ / හින්දු','Cristiana':'ක්‍රිස්තියානි','Musulmana':'මුස්ලිම්'},
+        tag:{'Buddista':'බෞද්ධ','Indù':'හින්දු','Indù/Tamil':'හින්දු/දෙමළ','Cristiana':'ක්‍රිස්තියානි','Musulmana':'මුස්ලිම්'},
+        n:{'Anno Nuovo Sinhalese':'සිංහල අලුත් අවුරුද්ද','Anno Nuovo Tamil':'දෙමළ අලුත් අවුරුද්ද','Assunzione':'මරියතුමියගේ ස්වර්ගාරෝහණය','Natale':'නත්තල','Pasqua':'පාස්කුව','Ramadan (inizio)':'රාමසාන් (ආරම්භය)'}},
+    ta:{wd:['ஞாயி','திங்','செவ்','புத','வியா','வெள்','சனி'],
+        m:['ஜனவரி','பிப்ரவரி','மார்ச்','ஏப்ரல்','மே','ஜூன்','ஜூலை','ஆகஸ்ட்','செப்டம்பர்','அக்டோபர்','நவம்பர்','டிசம்பர்'],
+        oggi:'இன்று',domani:'நாளை',tra:'{n} நாட்களில்',fa:'{n} நாட்களுக்கு முன்',
+        r:{'Tutti':'அனைத்து விடுமுறைகளும்','Buddista':'பௌத்த','Indù':'இந்து','Indù/Tamil':'தமிழ் / இந்து','Cristiana':'கிறிஸ்தவ','Musulmana':'முஸ்லிம்'},
+        tag:{'Buddista':'பௌத்த','Indù':'இந்து','Indù/Tamil':'இந்து/தமிழ்','Cristiana':'கிறிஸ்தவ','Musulmana':'முஸ்லிம்'},
+        n:{'Anno Nuovo Sinhalese':'சிங்கள புத்தாண்டு','Anno Nuovo Tamil':'தமிழ்ப் புத்தாண்டு','Assunzione':'மரியாளின் விண்ணேற்பு','Natale':'கிறிஸ்துமஸ்','Pasqua':'உயிர்த்த ஞாயிறு','Ramadan (inizio)':'ரமலான் (தொடக்கம்)'}}
+  };
+  var T=L[LG]||L.it;
+  function nomeFesta(n){ return (T.n && T.n[n]) || n; }   // i Poya restano com'e' sono
+  var WD=T.wd;
+  var MONTHS=T.m;
 
   var RELIGIONS=[
-    {id:'Tutti',label:'Tutte le festività',emoji:'🗓'},
-    {id:'Buddista',label:'Buddiste',emoji:'🪷'},
-    {id:'Indù',label:'Indù',emoji:'🕉️'},
-    {id:'Indù/Tamil',label:'Tamil / Indù',emoji:'🌾'},
-    {id:'Cristiana',label:'Cristiane',emoji:'✝️'},
-    {id:'Musulmana',label:'Musulmane',emoji:'☪️'},
+    {id:'Tutti',label:T.r['Tutti'],emoji:'🗓'},
+    {id:'Buddista',label:T.r['Buddista'],emoji:'🪷'},
+    {id:'Indù',label:T.r['Indù'],emoji:'🕉️'},
+    {id:'Indù/Tamil',label:T.r['Indù/Tamil'],emoji:'🌾'},
+    {id:'Cristiana',label:T.r['Cristiana'],emoji:'✝️'},
+    {id:'Musulmana',label:T.r['Musulmana'],emoji:'☪️'},
   ];
 
   var activeFilter='Tutti';
@@ -228,18 +260,18 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
         var isPast=diff<0;
         var isToday=diff===0;
         var cntText='',cntClass='ok';
-        if(isToday){cntText='Oggi';cntClass='soon';}
-        else if(diff===1){cntText='Domani';cntClass='soon';}
-        else if(diff>0&&diff<=7){cntText='Tra '+diff+' giorni';cntClass='soon';}
-        else if(diff>0){cntText='Tra '+diff+' giorni';cntClass='ok';}
-        else{cntText=Math.abs(diff)+' giorni fa';cntClass='ok';}
+        if(isToday){cntText=T.oggi;cntClass='soon';}
+        else if(diff===1){cntText=T.domani;cntClass='soon';}
+        else if(diff>0&&diff<=7){cntText=T.tra.replace('{n}',diff);cntClass='soon';}
+        else if(diff>0){cntText=T.tra.replace('{n}',diff);cntClass='ok';}
+        else{cntText=T.fa.replace('{n}',Math.abs(diff));cntClass='ok';}
         var tagStyle='background:'+ev.c+'20;color:'+ev.c;
         html+='<div class="cal-item'+(isToday?' is-today':'')+(isPast?' is-past':'')+'">'
           +'<div class="cal-date-col"><span class="cal-day">'+ev.dt.getDate()+'</span><span class="cal-wd">'+WD[ev.dt.getDay()]+'</span></div>'
           +'<span class="cal-emoji" aria-hidden="true">'+ev.e+'</span>'
           +'<div class="cal-body">'
-          +'<span class="cal-tag" style="'+tagStyle+'">'+esc(ev.r)+'</span>'
-          +'<div class="cal-name">'+esc(ev.n)+'</div>'
+          +'<span class="cal-tag" style="'+tagStyle+'">'+esc(T.tag[ev.r]||ev.r)+'</span>'
+          +'<div class="cal-name">'+esc(nomeFesta(ev.n))+'</div>'
           +'<div class="cal-countdown '+cntClass+'">'+cntText+'</div>'
           +'</div></div>';
       });

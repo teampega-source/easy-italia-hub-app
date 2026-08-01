@@ -51,6 +51,11 @@
   }
 
   var SALTA = /^(SCRIPT|STYLE|CODE|PRE|NOSCRIPT|TEXTAREA|SVG|NAV|FOOTER|TEMPLATE)$/;
+  /* Dentro <main> un <nav> e' contenuto di pagina, non la testata del sito:
+     l'indice "In questa pagina" delle guide lunghe e' un <nav> e restava in
+     italiano perche' la regola qui sopra scartava ogni <nav> senza guardare
+     dove fosse. Il menu e il piede stanno fuori da <main> e li prende _ui. */
+  var SALTA_MAIN = /^(SCRIPT|STYLE|CODE|PRE|NOSCRIPT|TEXTAREA|SVG|TEMPLATE)$/;
   // Menu, piede, barra laterale e modali stanno fuori da <main>: li traduce il
   // dizionario condiviso _ui, che vale per tutte le pagine.
   var SALTA_UI = /^(SCRIPT|STYLE|CODE|PRE|NOSCRIPT|TEXTAREA|SVG|TEMPLATE|MAIN)$/;
@@ -72,12 +77,15 @@
   /* `ui` rovescia l'ambito: invece del corpo pagina si guarda tutto il resto —
      testata, piede, barra laterale, modali — che e' uguale su ogni pagina. */
   function raccogli(dentro, ui) {
-    var salta = ui ? SALTA_UI : SALTA;
     var radici;
     var interno = dentro && dentro.closest && dentro.closest('main');
     if (dentro) radici = ui ? (interno ? [] : [dentro]) : (interno ? [dentro] : []);
     else radici = ui ? (document.body ? [document.body] : []) : document.querySelectorAll('main');
-    if (!dentro && !ui && !radici.length) radici = document.body ? [document.body] : [];
+    // Se <main> manca si ripiega sul documento intero: li' il <nav> del sito
+    // c'e' davvero e va scartato, quindi si torna alla regola larga.
+    var dentroMain = !!(radici.length || interno);
+    if (!dentro && !ui && !radici.length) { radici = document.body ? [document.body] : []; dentroMain = false; }
+    var salta = ui ? SALTA_UI : (dentroMain ? SALTA_MAIN : SALTA);
     var fuori = [];
     for (var r = 0; r < radici.length; r++) {
       if (ui && radici[r].tagName === 'MAIN') continue;
