@@ -26,9 +26,10 @@
     W('atmo-ring atmo-r2', 58, 34) +
     W('atmo-ring atmo-r3', 48, 22) +
     '<div class="atmo-beam"></div>' +
-    '<div class="atmo-grid"></div>' +
-    W('atmo-dust', 66, 0) +
-    W('atmo-dust2', 80, 0);
+    '<div class="atmo-grid"></div>';
+    // La polvere di stelle non si costruisce piu': erano due strati di punti
+    // luminosi che pulsavano di continuo, su telefono sempre attivi. Costo
+    // costante di composizione per un dettaglio che quasi non si vede.
 
   function mount() {
     var bg = document.getElementById('bg');
