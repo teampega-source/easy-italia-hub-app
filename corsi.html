@@ -98,6 +98,25 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
 <div id="site-nav"></div>
 
+<script>
+/* Il conteggio delle lezioni si scrive nella lingua scelta: e' generato dal
+   JavaScript e cambia a ogni lezione completata, quindi un dizionario per
+   impronta non potrebbe reggerlo. */
+var EIH_CORSI = (function(){
+  var lg = (function(){ try {
+    var m = location.pathname.match(/^\/(en|si|ta)(\/|$)/);
+    return m ? m[1] : (localStorage.getItem('eih-lang') || 'it');
+  } catch(e){ return 'it'; } })();
+  var F = {
+    it: '{d}/{n} lezioni completate',
+    en: '{d}/{n} lessons completed',
+    si: 'පාඩම් {n} න් {d} ක් සම්පූර්ණයි',
+    ta: '{n} பாடங்களில் {d} முடிந்தது'
+  };
+  var f = F[lg] || F.it;
+  return { lingua: lg, fatte: function(d, n){ return f.replace('{d}', d).replace('{n}', n); } };
+})();
+</script>
 <main id="main">
 <div class="page">
   <p class="eyebrow reveal"><span class="eyebrow-line"></span> Crescita personale</p>
@@ -317,7 +336,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       return '<div class="crs-section" style="margin-top:var(--sp-4)">'+
         '<div class="crs-head">'+
           '<h2 style="font-size:var(--text-lg)">'+c.title+' <span class="soon" style="background:var(--green-dim);color:var(--green);border-color:rgba(31,157,85,.28)">'+c.cat+'</span></h2>'+
-          '<span class="progress-tag">'+d+'/'+c.lessons.length+' lezioni completate</span>'+
+          '<span class="progress-tag">'+EIH_CORSI.fatte(d, c.lessons.length)+'</span>'+
         '</div>'+
         c.lessons.map(function(l){
           var isDone = done.indexOf(l.id)>-1;
@@ -491,7 +510,7 @@ function renderBaseUnlocked(key, done){
   var lessons = COURSES[key].base;
   var doneSet = {};
   done.forEach(function(d){ doneSet[d.lesson] = true; });
-  document.getElementById(key+'-base-progress').textContent = Object.keys(doneSet).length + '/' + lessons.length + ' lezioni completate';
+  document.getElementById(key+'-base-progress').textContent = EIH_CORSI.fatte(Object.keys(doneSet).length, lessons.length);
   if (lessons.length > 0 && Object.keys(doneSet).length >= lessons.length) {
     try { localStorage.setItem('eih-corso-completato', '1'); } catch (e) {}
   }
