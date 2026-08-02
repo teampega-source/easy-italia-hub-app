@@ -548,13 +548,13 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
     return m?m[1]:(localStorage.getItem('eih-lang')||'it');}catch(e){return 'it';}})();
   var Q={
     it:{oggi:'Oggi',domani:'Domani',fra:'Tra {n} gg',oggiL:'oggi',domaniL:'domani',fraL:'tra {n} giorni',
-        h:'🗓 Festività in arrivo',msg:'La festività si celebra {q}. Auguri a tutta la comunità! 🙏',cta:'Esplora le guide →',x:'Chiudi'},
+        h:'🗓 Festività in arrivo',msg:'La festività si celebra {q}. Auguri a tutta la comunità! 🙏',cta:'Esplora le guide →',x:'Chiudi',n:{},r:{}},
     en:{oggi:'Today',domani:'Tomorrow',fra:'In {n} days',oggiL:'today',domaniL:'tomorrow',fraL:'in {n} days',
-        h:'🗓 Upcoming holidays',msg:'The holiday falls {q}. Best wishes to the whole community! 🙏',cta:'Explore the guides →',x:'Close'},
+        h:'🗓 Upcoming holidays',msg:'The holiday falls {q}. Best wishes to the whole community! 🙏',cta:'Explore the guides →',x:'Close',n:{'Anno Nuovo Sinhalese':'Sinhala New Year','Anno Nuovo Tamil':'Tamil New Year','Assunzione':'Assumption','Natale':'Christmas','Pasqua':'Easter','Ramadan':'Ramadan'},r:{'Buddista':'Buddhist','Cristiana':'Christian','Musulmana':'Muslim','Indù':'Hindu','Indù/Tamil':'Hindu/Tamil'}},
     si:{oggi:'අද',domani:'හෙට',fra:'දින {n}කින්',oggiL:'අද',domaniL:'හෙට',fraL:'දින {n}කින්',
-        h:'🗓 ළඟ එන නිවාඩු',msg:'උත්සවය {q} සමරනු ලැබේ. සමස්ත ප්‍රජාවටම සුබ පැතුම්! 🙏',cta:'මාර්ගෝපදේශ බලන්න →',x:'වසන්න'},
+        h:'🗓 ළඟ එන නිවාඩු',msg:'උත්සවය {q} සමරනු ලැබේ. සමස්ත ප්‍රජාවටම සුබ පැතුම්! 🙏',cta:'මාර්ගෝපදේශ බලන්න →',x:'වසන්න',n:{'Anno Nuovo Sinhalese':'සිංහල අලුත් අවුරුද්ද','Anno Nuovo Tamil':'දෙමළ අලුත් අවුරුද්ද','Assunzione':'මරියතුමියගේ ස්වර්ගාරෝහණය','Natale':'නත්තල','Pasqua':'පාස්කුව','Esala Poya':'ඇසළ පොහොය','Nikini Poya':'නිකිණි පොහොය','Binara Poya':'බිනර පොහොය','Vap Poya':'වප් පොහොය','Il Poya':'ඉල් පොහොය','Unduvap Poya':'උඳුවප් පොහොය','Duruthu Poya':'දුරුතු පොහොය','Vesak Poya':'වෙසක් පොහොය','Poson Poya':'පොසොන් පොහොය','Thai Pongal':'තෛපොංගල්','Maha Sivaratri':'මහා සිවරාත්‍රී','Eid al-Fitr':'ඊද් අල් ෆිතර්','Eid al-Adha':'ඊද් අල් අද්හා','Ramadan':'රාමසාන්'},r:{'Buddista':'බෞද්ධ','Cristiana':'ක්‍රිස්තියානි','Musulmana':'මුස්ලිම්','Indù':'හින්දු','Indù/Tamil':'හින්දු/දෙමළ'}},
     ta:{oggi:'இன்று',domani:'நாளை',fra:'{n} நாட்களில்',oggiL:'இன்று',domaniL:'நாளை',fraL:'{n} நாட்களில்',
-        h:'🗓 வரவிருக்கும் விடுமுறைகள்',msg:'விழா {q} கொண்டாடப்படுகிறது. சமூகம் முழுவதற்கும் வாழ்த்துகள்! 🙏',cta:'வழிகாட்டிகளைப் பாருங்கள் →',x:'மூடு'}
+        h:'🗓 வரவிருக்கும் விடுமுறைகள்',msg:'விழா {q} கொண்டாடப்படுகிறது. சமூகம் முழுவதற்கும் வாழ்த்துகள்! 🙏',cta:'வழிகாட்டிகளைப் பாருங்கள் →',x:'மூடு',n:{'Anno Nuovo Sinhalese':'சிங்கள புத்தாண்டு','Anno Nuovo Tamil':'தமிழ்ப் புத்தாண்டு','Assunzione':'மரியாளின் விண்ணேற்பு','Natale':'கிறிஸ்துமஸ்','Pasqua':'உயிர்த்த ஞாயிறு','Esala Poya':'எசல பௌர்ணமி','Nikini Poya':'நிக்கினி பௌர்ணமி','Binara Poya':'பினர பௌர்ணமி','Vap Poya':'வப் பௌர்ணமி','Il Poya':'இல் பௌர்ணமி','Unduvap Poya':'உந்துவப் பௌர்ணமி','Duruthu Poya':'துருது பௌர்ணமி','Vesak Poya':'வெசாக் பௌர்ணமி','Poson Poya':'பொசொன் பௌர்ணமி','Thai Pongal':'தைப்பொங்கல்','Maha Sivaratri':'மகா சிவராத்திரி','Eid al-Fitr':'ஈத் அல்-ஃபித்ர்','Eid al-Adha':'ஈத் அல்-அள்ஹா','Ramadan':'ரமலான்'},r:{'Buddista':'பௌத்த','Cristiana':'கிறிஸ்தவ','Musulmana':'முஸ்லிம்','Indù':'இந்து','Indù/Tamil':'இந்து/தமிழ்'}}
   };
   var T=Q[LG]||Q.it;
   var F=[
@@ -596,8 +596,8 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
       var isSoon=diff<=3;
       var ts='background:'+f.c+'20;color:'+f.c;
       h+='<div class="nr-fest"><span class="nr-fest-e" aria-hidden="true">'+f.e+'</span>'
-        +'<div class="nr-fest-body"><span class="nr-fest-tag" style="'+ts+'">'+f.r+'</span>'
-        +'<div class="nr-fest-name">'+f.n+'</div>'
+        +'<div class="nr-fest-body"><span class="nr-fest-tag" style="'+ts+'">'+(T.r[f.r]||f.r)+'</span>'
+        +'<div class="nr-fest-name">'+(T.n[f.n]||f.n)+'</div>'
         +(isSoon?'<div class="nr-fest-soon">'+ds+'</div>':'<div class="nr-fest-date">'+ds+'</div>')
         +'</div></div>';
     });
@@ -620,8 +620,8 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
       t.innerHTML='<div class="eih-fest-toast-inner">'
         +'<button class="eih-fest-toast-close" aria-label="'+T.x+'" onclick="this.closest(\'.eih-fest-toast\').classList.remove(\'is-shown\')">✕</button>'
         +'<span class="eih-fest-toast-emoji" aria-hidden="true">'+tf.e+'</span>'
-        +'<span class="eih-fest-toast-tag" style="'+ts+'">'+tf.r+'</span>'
-        +'<h2 class="eih-fest-toast-title" id="eft-title">'+tf.n+'</h2>'
+        +'<span class="eih-fest-toast-tag" style="'+ts+'">'+(T.r[tf.r]||tf.r)+'</span>'
+        +'<h2 class="eih-fest-toast-title" id="eft-title">'+(T.n[tf.n]||tf.n)+'</h2>'
         +'<p class="eih-fest-toast-msg" id="eft-msg">'+T.msg.replace('{q}',ws)+'</p>'
         +'<a class="eih-fest-toast-cta" href="/guide">'+T.cta+'</a>'
         +'</div>';
