@@ -2,6 +2,7 @@
 "064124ab": "Role / job title",
 "07fa93eb": "C1 — Advanced",
 "097c4211": "Period",
+"09a08e16": "← My Journey",
 "12823eeb": "＋ Add qualification",
 "160c00f9": "Live preview",
 "16efeb70": "Use a serious email address (firstname.lastname) and an active phone number with WhatsApp if possible.",
@@ -15,6 +16,7 @@
 "422d8879": "The photo stays in your browser only. In Italy it is optional: many companies prefer a CV without a photo.",
 "42d1d78c": "e.g. 2018",
 "4854898a": "Keep the summary short and concrete. Avoid generic phrases.",
+"49a3cae7": "Job opportunities",
 "4a739475": "Year",
 "51c5990e": "e.g. Milan (MI)",
 "52428e5f": "I authorise the processing of my personal data contained in this CV pursuant to EU Regulation 2016/679 (GDPR) and Legislative Decree 196/2003.",
@@ -41,9 +43,10 @@
 "869d804b": "e.g. Logistica SRL",
 "93182e2a": "Personal details",
 "93975dfe": "Education and training",
+"96f8fa9e": "Quick links",
 "9b1220a0": "Profile / summary",
 "_meta": {
-"copertura": 98,
+"copertura": 94,
 "lingua": "en",
 "pagina": "cv-builder"
 },

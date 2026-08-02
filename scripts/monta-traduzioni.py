@@ -29,9 +29,6 @@ def monta(pagina, lingua):
     italiano = json.load(io.open(sorgente, encoding='utf-8'))
     per_testo = {normalizza(v): k for k, v in italiano.items()}
 
-    tradotto = os.path.join(RADICE, 'traduzioni', '%s.%s.json' % (pagina, lingua))
-    if not os.path.exists(tradotto):
-        return pagina, lingua, 'nessuna traduzione'
     # le frasi che ricorrono su piu' pagine (avvertenza AI, bottoni) stanno in
     # _comuni e valgono ovunque; la traduzione di pagina ha comunque la meglio
     voci, generiche = {}, set()
@@ -39,7 +36,14 @@ def monta(pagina, lingua):
     if os.path.exists(comuni):
         voci.update(json.load(io.open(comuni, encoding='utf-8')))
         generiche = set(voci)
-    voci.update(json.load(io.open(tradotto, encoding='utf-8')))
+    # Una pagina senza file di traduzione proprio non veniva montata affatto:
+    # cosi' 'contatti', che ha solo frasi comuni, restava senza dizionario e
+    # in italiano. Se _comuni ha qualcosa da dire, il file si scrive lo stesso.
+    tradotto = os.path.join(RADICE, 'traduzioni', '%s.%s.json' % (pagina, lingua))
+    if os.path.exists(tradotto):
+        voci.update(json.load(io.open(tradotto, encoding='utf-8')))
+    elif not voci:
+        return pagina, lingua, 'nessuna traduzione'
 
     fuori, orfane = {}, []
     for it, tr in voci.items():
@@ -68,10 +72,15 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         coppie = [(p, lg) for p in sys.argv[1].split(',') for lg in (sys.argv[2].split(',') if len(sys.argv) > 2 else ['en', 'si', 'ta'])]
     else:
+        # Si parte dalle pagine estratte, non dai file di traduzione: una pagina
+        # che ha solo frasi comuni non ha un file suo e prima veniva saltata,
+        # restando senza dizionario e quindi in italiano.
         coppie = []
-        for f in sorted(glob.glob(os.path.join(RADICE, 'traduzioni', '*.json'))):
-            n = os.path.basename(f)[:-5]
-            p, _, lg = n.rpartition('.')
-            coppie.append((p, lg))
+        for f in sorted(glob.glob(os.path.join(RADICE, 'i18n-src', '*.json'))):
+            pg = os.path.basename(f)[:-5]
+            if pg.startswith('_'):
+                continue
+            for lg in ('en', 'si', 'ta'):
+                coppie.append((pg, lg))
     for p, lg, nota in (monta(p, lg) for p, lg in coppie):
         print('%-24s %-3s %s' % (p, lg, nota))

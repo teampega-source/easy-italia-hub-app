@@ -36,7 +36,6 @@
 "559bc66d": "⚠️ Documents and amounts change every year: check the INPS site or a CAF/patronato.",
 "55f64377": "The renewal application must be submitted before expiry using the Poste Italiane postal kit. Check the date on your permit and gather the documents in advance.",
 "5780314d": "12 March 2026",
-"5976e33f": "3 days to go",
 "5cfd344e": "Details: Council housing calls and rent contributions",
 "5e3b0608": "⚠️ The DSU's validity and documents may change: check the INPS site or a CAF/patronato.",
 "5fe15e3f": "People with employment income or similar often file their tax return using form 730, which lets you obtain refunds and deductions (medical expenses, rent, children). The Revenue Agency makes a pre-filled 730 available in your private area (log in with SPID/CIE), which you can accept or amend; alternatively you can go to a CAF or a professional. There are deadlines for filing and for any payments. Dates, thresholds and deductions change every year: check the exact terms on the official source before filing.",
@@ -57,7 +56,6 @@
 "8786ea08": "Permit renewal: apply early",
 "8934997f": "Ministry of the Interior ↗",
 "914b1716": "The ISEE certificate is valid until 31 December of the year you request it: from 1 January a new DSU (single substitute declaration) is needed. This is not a formality: without an up-to-date ISEE the single allowance automatically drops to the minimum and social bonuses, reduced nursery and canteen fees, scholarships and housing lists all stay blocked. The DSU is filed free of charge through a CAF or a patronato, or online on the INPS site with SPID or CIE; much of the data is already pre-filled. It is best done in the first weeks of January, when the offices are less crowded: you will need ID documents for everyone in the household, tax codes, the tenancy agreement or mortgage details, and the account balances as at 31 December two years earlier.",
-"924cfbe5": "153 days to go",
 "935c77cc": "Ministry of the Interior — Electronic Identity Card ↗",
 "95e6cb86": "28 March 2026",
 "97b37787": "Decreto Flussi 2026: the click-days have already closed",
@@ -65,7 +63,7 @@
 "9e038e95": "AgID — Digital identity ↗",
 "9ff97276": "With the registered-post number on your receipt you can check how far along your application is directly on the Polizia di Stato website.",
 "_meta": {
-"copertura": 94,
+"copertura": 90,
 "lingua": "en",
 "pagina": "news"
 },

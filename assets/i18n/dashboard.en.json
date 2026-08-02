@@ -26,7 +26,6 @@
 "5377ca91": "Flights, courses, work and calls",
 "576e5c36": "quick additions",
 "58d9f08d": "Tip of the day",
-"69a8c040": "SPID is activated once and lets you access all public services (INPS, Revenue Agency, FSE) without queuing at counters.",
 "70038527": "Documents",
 "78409fb3": "Questura appointment",
 "7cced1fb": "Add deadline",
@@ -38,7 +37,7 @@
 "9c6a2f5f": "Contact",
 "9fa9d3a0": "No badge yet — take the Exam & Badge test →",
 "_meta": {
-"copertura": 59,
+"copertura": 57,
 "lingua": "en",
 "pagina": "dashboard"
 },
