@@ -220,7 +220,9 @@ function renderSheet(){
     '<div class="s-sender">'+mitt+'</div>'+
     '<div class="s-dest">'+cur.dest(v)+'</div>'+
     '<div class="s-obj">'+cur.obj(v)+'</div>'+
-    '<div class="s-body">'+cur.body(v)+'</div>'+
+    // La lettera e' il documento che si consegna all'ufficio italiano:
+    // va stampata in italiano, qualunque sia la lingua dell'interfaccia.
+    '<div class="s-body" data-no-tr>'+cur.body(v)+'</div>'+
     '<div class="s-close"><div>'+(v.luogo||'____________')+', '+v.data+'</div>'+
     '<div class="s-sign">Firma<span class="line">'+(v.nome||'')+'</span></div></div>';
 }

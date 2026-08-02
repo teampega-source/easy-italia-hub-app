@@ -149,8 +149,14 @@
 
   function initAll() {
     if (!TOUCH) { initHeroParallax(); initCardImageParallax(); initMarqueeVelocity(); }
-    initKineticHeadings();
-    ScrollTrigger.refresh();
+    // Spezzare un titolo in parole lo rende introvabile per il traduttore:
+    // prima si traduce, poi si spezza. Se il traduttore manca o tarda si va
+    // avanti lo stesso: l'animazione non deve dipendere dalla rete.
+    function inizia() { initKineticHeadings(); ScrollTrigger.refresh(); }
+    var attesa = window.EIHPageI18N && window.EIHPageI18N.pronta;
+    if (attesa && window.Promise) {
+      Promise.race([attesa, new Promise(function (r) { setTimeout(r, 4000); })]).then(inizia);
+    } else inizia();
   }
   // Su index il ritardo copre l'entrance CSS dell'hero; le pagine interne partono subito dopo il wipe
   var DELAY = document.querySelector('.hero') ? 1300 : 400;
