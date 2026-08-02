@@ -1,7 +1,5 @@
 {
  "Strumenti": "கருவிகள்",
- "Dizionario": "மருத்துவ",
- "medico": "அகராதி",
  "Frasi pronte per spiegare i tuoi sintomi al medico, al pronto soccorso o in farmacia. Testo in singalese con pronuncia fonetica per leggerlo anche senza conoscere l'alfabeto.": "மருத்துவரிடம், அவசர சிகிச்சைப் பிரிவில் அல்லது மருந்தகத்தில் உங்கள் அறிகுறிகளை விளக்கத் தயாரான வாக்கியங்கள். எழுத்துக்கள் தெரியாமலும் படிக்க ஒலிப்பு உச்சரிப்புடன் சிங்களப் பாடம்.",
  "🚨 Numeri di emergenza in Italia": "🚨 இத்தாலியில் அவசர எண்கள்",
  "Ambulanza / Emergenza medica": "ஆம்புலன்ஸ் / மருத்துவ அவசரம்",
@@ -26,5 +24,6 @@
  "Hai bisogno di altra traduzione?": "மேலும் மொழிபெயர்ப்பு தேவையா?",
  "Altre guide": "பிற வழிகாட்டிகள்",
  "Cerca una parola o frase in italiano o singalese…": "இத்தாலிய அல்லது சிங்கள வார்த்தை அல்லது வாக்கியத்தைத் தேடுங்கள்…",
- "Filtra per categoria": "வகைப்படி வடிகட்டு"
+ "Filtra per categoria": "வகைப்படி வடிகட்டு",
+ "Dizionario medico": "மருத்துவ அகராதி"
 }

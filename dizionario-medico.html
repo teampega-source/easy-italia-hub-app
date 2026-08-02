@@ -66,7 +66,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   [data-page="dizionario-medico"] .dm-table td{padding:.75rem 1rem;font-size:var(--text-sm);border-top:1px solid var(--border);color:var(--fg-secondary);vertical-align:top;line-height:1.4}
   [data-page="dizionario-medico"] .dm-table tr:hover td{background:rgba(185,170,141,.04)}
   [data-page="dizionario-medico"] .dm-it{font-weight:600;color:var(--ink)}
-  [data-page="dizionario-medico"] .dm-si{color:var(--fg);font-family:'Noto Sans Sinhala',Satoshi,sans-serif}
+  [data-page="dizionario-medico"] .dm-mean{color:var(--fg);font-family:'Noto Sans Sinhala','Noto Sans Tamil',Satoshi,sans-serif}
   [data-page="dizionario-medico"] .dm-pron{color:var(--fg-muted);font-size:var(--text-xs);font-style:italic}
   [data-page="dizionario-medico"] .dm-copy-btn{background:none;border:1px solid var(--border);border-radius:var(--radius-sm);padding:.2rem .5rem;font-size:.65rem;color:var(--fg-muted);cursor:pointer;transition:background var(--dur-micro),color var(--dur-micro)}
   [data-page="dizionario-medico"] .dm-copy-btn:hover{background:var(--surface-hover);color:var(--fg)}
@@ -130,16 +130,16 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   <div class="dm-section" data-cat="emergenza" id="dm-s-emergenza">
     <div class="dm-section-title"><span class="dm-section-icon">🚨</span> Emergenza / හදිසි තත්ත්වය</div>
     <table class="dm-table">
-      <thead><tr><th>Italiano</th><th>සිංහල</th><th>Pronuncia</th><th></th></tr></thead>
+      <thead><tr><th class="dm-h-it">Da dire in italiano</th><th class="dm-h-mean">Significato</th><th class="dm-h-pron">Pronuncia</th><th></th></tr></thead>
       <tbody>
-        <tr><td class="dm-it">Aiuto!</td><td class="dm-si">උදව්!</td><td class="dm-pron">udaw!</td><td><button class="dm-copy-btn" data-copy="උදව්!">copia</button></td></tr>
-        <tr><td class="dm-it">Chiama un'ambulanza!</td><td class="dm-si">ඇම්බුලන්සියක් කතා කරන්න!</td><td class="dm-pron">ambūlansiyek katā karanna!</td><td><button class="dm-copy-btn" data-copy="ඇම්බුලන්සියක් කතා කරන්න!">copia</button></td></tr>
-        <tr><td class="dm-it">Ho bisogno di un medico</td><td class="dm-si">මට වෛද්‍යවරයෙකු අවශ්‍යයි</td><td class="dm-pron">mata vaidyavariyeku avashyai</td><td><button class="dm-copy-btn" data-copy="මට වෛද්‍යවරයෙකු අවශ්‍යයි">copia</button></td></tr>
-        <tr><td class="dm-it">Sono caduto/a</td><td class="dm-si">මම වැටුණා</td><td class="dm-pron">mama vaetunā</td><td><button class="dm-copy-btn" data-copy="මම වැටුණා">copia</button></td></tr>
-        <tr><td class="dm-it">Ho perso conoscenza</td><td class="dm-si">මම සිහිය නැති වුණා</td><td class="dm-pron">mama sihiya naeti vunā</td><td><button class="dm-copy-btn" data-copy="මම සිහිය නැති වුණා">copia</button></td></tr>
-        <tr><td class="dm-it">Sto avendo un attacco di cuore</td><td class="dm-si">මට හදවත් ප්‍රහාරයක් එනවා</td><td class="dm-pron">mata hadawat praharāyak enawā</td><td><button class="dm-copy-btn" data-copy="මට හදවත් ප්‍රහාරයක් එනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Non riesco a respirare</td><td class="dm-si">මට හුස්ම ගන්න බෑ</td><td class="dm-pron">mata husma ganna bae</td><td><button class="dm-copy-btn" data-copy="මට හුස්ම ගන්න බෑ">copia</button></td></tr>
-        <tr><td class="dm-it">Pronto soccorso</td><td class="dm-si">හදිසි ප්‍රතිකාර</td><td class="dm-pron">hadisi pratikāra</td><td><button class="dm-copy-btn" data-copy="හදිසි ප්‍රතිකාර">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Aiuto!</td><td class="dm-mean" data-si="උදව්!" data-ta="உதவி!" data-en="Help!">උදව්!</td><td class="dm-pron" data-no-tr>udaw!</td><td><button class="dm-copy-btn" data-copy="උදව්!">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Chiama un'ambulanza!</td><td class="dm-mean" data-si="ඇම්බුලන්සියක් කතා කරන්න!" data-ta="ஆம்புலன்ஸ் கூப்பிடுங்கள்!" data-en="Call an ambulance!">ඇම්බුලන්සියක් කතා කරන්න!</td><td class="dm-pron" data-no-tr>ambūlansiyek katā karanna!</td><td><button class="dm-copy-btn" data-copy="ඇම්බුලන්සියක් කතා කරන්න!">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho bisogno di un medico</td><td class="dm-mean" data-si="මට වෛද්‍යවරයෙකු අවශ්‍යයි" data-ta="எனக்கு மருத்துவர் தேவை" data-en="I need a doctor">මට වෛද්‍යවරයෙකු අවශ්‍යයි</td><td class="dm-pron" data-no-tr>mata vaidyavariyeku avashyai</td><td><button class="dm-copy-btn" data-copy="මට වෛද්‍යවරයෙකු අවශ්‍යයි">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Sono caduto/a</td><td class="dm-mean" data-si="මම වැටුණා" data-ta="நான் விழுந்துவிட்டேன்" data-en="I have fallen">මම වැටුණා</td><td class="dm-pron" data-no-tr>mama vaetunā</td><td><button class="dm-copy-btn" data-copy="මම වැටුණා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho perso conoscenza</td><td class="dm-mean" data-si="මම සිහිය නැති වුණා" data-ta="நான் மயங்கிவிட்டேன்" data-en="I lost consciousness">මම සිහිය නැති වුණා</td><td class="dm-pron" data-no-tr>mama sihiya naeti vunā</td><td><button class="dm-copy-btn" data-copy="මම සිහිය නැති වුණා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Sto avendo un attacco di cuore</td><td class="dm-mean" data-si="මට හදවත් ප්‍රහාරයක් එනවා" data-ta="எனக்கு மாரடைப்பு வருகிறது" data-en="I'm having a heart attack">මට හදවත් ප්‍රහාරයක් එනවා</td><td class="dm-pron" data-no-tr>mata hadawat praharāyak enawā</td><td><button class="dm-copy-btn" data-copy="මට හදවත් ප්‍රහාරයක් එනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Non riesco a respirare</td><td class="dm-mean" data-si="මට හුස්ම ගන්න බෑ" data-ta="என்னால் மூச்சுவிட முடியவில்லை" data-en="I can't breathe">මට හුස්ම ගන්න බෑ</td><td class="dm-pron" data-no-tr>mata husma ganna bae</td><td><button class="dm-copy-btn" data-copy="මට හුස්ම ගන්න බෑ">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Pronto soccorso</td><td class="dm-mean" data-si="හදිසි ප්‍රතිකාර" data-ta="அவசர சிகிச்சைப் பிரிவு" data-en="Accident and emergency">හදිසි ප්‍රතිකාර</td><td class="dm-pron" data-no-tr>hadisi pratikāra</td><td><button class="dm-copy-btn" data-copy="හදිසි ප්‍රතිකාර">copia</button></td></tr>
       </tbody>
     </table>
   </div>
@@ -148,24 +148,24 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   <div class="dm-section" data-cat="sintomi" id="dm-s-sintomi">
     <div class="dm-section-title"><span class="dm-section-icon">🤒</span> Sintomi / රෝග ලක්ෂණ</div>
     <table class="dm-table">
-      <thead><tr><th>Italiano</th><th>සිංහල</th><th>Pronuncia</th><th></th></tr></thead>
+      <thead><tr><th class="dm-h-it">Da dire in italiano</th><th class="dm-h-mean">Significato</th><th class="dm-h-pron">Pronuncia</th><th></th></tr></thead>
       <tbody>
-        <tr><td class="dm-it">Ho mal di testa</td><td class="dm-si">මට හිස් වේදනාවක් තිබෙනවා</td><td class="dm-pron">mata his vēdanāvak tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට හිස් වේදනාවක් තිබෙනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Ho la febbre</td><td class="dm-si">මට උෂ්ණත්වය තිබෙනවා</td><td class="dm-pron">mata ushnatway tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට උෂ්ණත්වය තිබෙනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Ho mal di stomaco</td><td class="dm-si">මට බඩේ වේදනාවක් තිබෙනවා</td><td class="dm-pron">mata badē vēdanāvak tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට බඩේ වේදනාවක් තිබෙනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Ho mal di gola</td><td class="dm-si">මට උගුරේ කැකුළු තිබෙනවා</td><td class="dm-pron">mata uguré kaekulu tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට උගුරේ කැකුළු තිබෙනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Ho mal di schiena</td><td class="dm-si">මට පිට වේදනාවක් තිබෙනවා</td><td class="dm-pron">mata pita vēdanāvak tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට පිට වේදනාවක් තිබෙනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Ho la nausea</td><td class="dm-si">මට ඔක්කාරය එනවා</td><td class="dm-pron">mata okkāraya enawā</td><td><button class="dm-copy-btn" data-copy="මට ඔක්කාරය එනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Vomito</td><td class="dm-si">මට වමනය දැනෙනවා</td><td class="dm-pron">mata vamanaya daenenawā</td><td><button class="dm-copy-btn" data-copy="මට වමනය දැනෙනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Ho la diarrea</td><td class="dm-si">මට අතීසාරය තිබෙනවා</td><td class="dm-pron">mata atisāraya tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට අතීසාරය තිබෙනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Ho mal di denti</td><td class="dm-si">මට දත් වේදනාවක් තිබෙනවා</td><td class="dm-pron">mata dat vēdanāvak tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට දත් වේදනාවක් තිබෙනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Ho la tosse</td><td class="dm-si">මට කැස්සක් තිබෙනවා</td><td class="dm-pron">mata kaessak tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට කැස්සක් තිබෙනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Mi gira la testa</td><td class="dm-si">මට හිස් කරකැවිල්ලක් දැනෙනවා</td><td class="dm-pron">mata his karakaevilla daenenawā</td><td><button class="dm-copy-btn" data-copy="මට හිස් කරකැවිල්ලක් දැනෙනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Ho una ferita</td><td class="dm-si">මට තුවාලයක් ඇත</td><td class="dm-pron">mata tuvālayak aet</td><td><button class="dm-copy-btn" data-copy="මට තුවාලයක් ඇත">copia</button></td></tr>
-        <tr><td class="dm-it">Sono stanco/a</td><td class="dm-si">මම වෙහෙසෙලා ඉන්නවා</td><td class="dm-pron">mama veheselā innawā</td><td><button class="dm-copy-btn" data-copy="මම වෙහෙසෙලා ඉන්නවා">copia</button></td></tr>
-        <tr><td class="dm-it">Ho una rash / eruzione cutanea</td><td class="dm-si">මට සම් රෝගයක් / කැසිලි ඇත</td><td class="dm-pron">mata sam rōgayak / kaesili aet</td><td><button class="dm-copy-btn" data-copy="මට සම් රෝගයක් ඇත">copia</button></td></tr>
-        <tr><td class="dm-it">Il dolore è qui</td><td class="dm-si">වේදනාව මෙහේ</td><td class="dm-pron">vēdanāva mehē</td><td><button class="dm-copy-btn" data-copy="වේදනාව මෙහේ">copia</button></td></tr>
-        <tr><td class="dm-it">Il dolore è forte / lieve / pulsante</td><td class="dm-si">වේදනාව දරුණු / සාමාන්‍ය / ස්පන්දනය</td><td class="dm-pron">vēdanāva daruṇu / sāmānya / spandana</td><td><button class="dm-copy-btn" data-copy="වේදනාව දරුණු">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho mal di testa</td><td class="dm-mean" data-si="මට හිස් වේදනාවක් තිබෙනවා" data-ta="எனக்குத் தலைவலி" data-en="I have a headache">මට හිස් වේදනාවක් තිබෙනවා</td><td class="dm-pron" data-no-tr>mata his vēdanāvak tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට හිස් වේදනාවක් තිබෙනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho la febbre</td><td class="dm-mean" data-si="මට උෂ්ණත්වය තිබෙනවා" data-ta="எனக்குக் காய்ச்சல்" data-en="I have a fever">මට උෂ්ණත්වය තිබෙනවා</td><td class="dm-pron" data-no-tr>mata ushnatway tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට උෂ්ණත්වය තිබෙනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho mal di stomaco</td><td class="dm-mean" data-si="මට බඩේ වේදනාවක් තිබෙනවා" data-ta="எனக்கு வயிற்று வலி" data-en="I have a stomach ache">මට බඩේ වේදනාවක් තිබෙනවා</td><td class="dm-pron" data-no-tr>mata badē vēdanāvak tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට බඩේ වේදනාවක් තිබෙනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho mal di gola</td><td class="dm-mean" data-si="මට උගුරේ කැකුළු තිබෙනවා" data-ta="எனக்குத் தொண்டை வலி" data-en="I have a sore throat">මට උගුරේ කැකුළු තිබෙනවා</td><td class="dm-pron" data-no-tr>mata uguré kaekulu tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට උගුරේ කැකුළු තිබෙනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho mal di schiena</td><td class="dm-mean" data-si="මට පිට වේදනාවක් තිබෙනවා" data-ta="எனக்கு முதுகு வலி" data-en="I have back pain">මට පිට වේදනාවක් තිබෙනවා</td><td class="dm-pron" data-no-tr>mata pita vēdanāvak tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට පිට වේදනාවක් තිබෙනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho la nausea</td><td class="dm-mean" data-si="මට ඔක්කාරය එනවා" data-ta="எனக்கு குமட்டல்" data-en="I feel sick">මට ඔක්කාරය එනවා</td><td class="dm-pron" data-no-tr>mata okkāraya enawā</td><td><button class="dm-copy-btn" data-copy="මට ඔක්කාරය එනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Vomito</td><td class="dm-mean" data-si="මට වමනය දැනෙනවා" data-ta="வாந்தி" data-en="Vomiting">මට වමනය දැනෙනවා</td><td class="dm-pron" data-no-tr>mata vamanaya daenenawā</td><td><button class="dm-copy-btn" data-copy="මට වමනය දැනෙනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho la diarrea</td><td class="dm-mean" data-si="මට අතීසාරය තිබෙනවා" data-ta="எனக்கு வயிற்றுப்போக்கு" data-en="I have diarrhoea">මට අතීසාරය තිබෙනවා</td><td class="dm-pron" data-no-tr>mata atisāraya tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට අතීසාරය තිබෙනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho mal di denti</td><td class="dm-mean" data-si="මට දත් වේදනාවක් තිබෙනවා" data-ta="எனக்குப் பல் வலி" data-en="I have toothache">මට දත් වේදනාවක් තිබෙනවා</td><td class="dm-pron" data-no-tr>mata dat vēdanāvak tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට දත් වේදනාවක් තිබෙනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho la tosse</td><td class="dm-mean" data-si="මට කැස්සක් තිබෙනවා" data-ta="எனக்கு இருமல்" data-en="I have a cough">මට කැස්සක් තිබෙනවා</td><td class="dm-pron" data-no-tr>mata kaessak tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට කැස්සක් තිබෙනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Mi gira la testa</td><td class="dm-mean" data-si="මට හිස් කරකැවිල්ලක් දැනෙනවා" data-ta="எனக்குத் தலைசுற்றல்" data-en="I feel dizzy">මට හිස් කරකැවිල්ලක් දැනෙනවා</td><td class="dm-pron" data-no-tr>mata his karakaevilla daenenawā</td><td><button class="dm-copy-btn" data-copy="මට හිස් කරකැවිල්ලක් දැනෙනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho una ferita</td><td class="dm-mean" data-si="මට තුවාලයක් ඇත" data-ta="எனக்கு ஒரு காயம்" data-en="I have a wound">මට තුවාලයක් ඇත</td><td class="dm-pron" data-no-tr>mata tuvālayak aet</td><td><button class="dm-copy-btn" data-copy="මට තුවාලයක් ඇත">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Sono stanco/a</td><td class="dm-mean" data-si="මම වෙහෙසෙලා ඉන්නවා" data-ta="நான் சோர்வாக இருக்கிறேன்" data-en="I'm tired">මම වෙහෙසෙලා ඉන්නවා</td><td class="dm-pron" data-no-tr>mama veheselā innawā</td><td><button class="dm-copy-btn" data-copy="මම වෙහෙසෙලා ඉන්නවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho una rash / eruzione cutanea</td><td class="dm-mean" data-si="මට සම් රෝගයක් / කැසිලි ඇත" data-ta="எனக்குத் தோல் அரிப்பு / தடிப்பு" data-en="I have a rash">මට සම් රෝගයක් / කැසිලි ඇත</td><td class="dm-pron" data-no-tr>mata sam rōgayak / kaesili aet</td><td><button class="dm-copy-btn" data-copy="මට සම් රෝගයක් ඇත">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Il dolore è qui</td><td class="dm-mean" data-si="වේදනාව මෙහේ" data-ta="வலி இங்கே" data-en="The pain is here">වේදනාව මෙහේ</td><td class="dm-pron" data-no-tr>vēdanāva mehē</td><td><button class="dm-copy-btn" data-copy="වේදනාව මෙහේ">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Il dolore è forte / lieve / pulsante</td><td class="dm-mean" data-si="වේදනාව දරුණු / සාමාන්‍ය / ස්පන්දනය" data-ta="வலி கடுமையானது / லேசானது / துடிக்கிறது" data-en="The pain is severe / mild / throbbing">වේදනාව දරුණු / සාමාන්‍ය / ස්පන්දනය</td><td class="dm-pron" data-no-tr>vēdanāva daruṇu / sāmānya / spandana</td><td><button class="dm-copy-btn" data-copy="වේදනාව දරුණු">copia</button></td></tr>
       </tbody>
     </table>
   </div>
@@ -174,27 +174,27 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   <div class="dm-section" data-cat="corpo" id="dm-s-corpo">
     <div class="dm-section-title"><span class="dm-section-icon">🫀</span> Parti del corpo / ශරීර අවයව</div>
     <table class="dm-table">
-      <thead><tr><th>Italiano</th><th>සිංහල</th><th>Pronuncia</th><th></th></tr></thead>
+      <thead><tr><th class="dm-h-it">Da dire in italiano</th><th class="dm-h-mean">Significato</th><th class="dm-h-pron">Pronuncia</th><th></th></tr></thead>
       <tbody>
-        <tr><td class="dm-it">Testa</td><td class="dm-si">හිස</td><td class="dm-pron">hisa</td><td><button class="dm-copy-btn" data-copy="හිස">copia</button></td></tr>
-        <tr><td class="dm-it">Occhi</td><td class="dm-si">ඇස්</td><td class="dm-pron">aes</td><td><button class="dm-copy-btn" data-copy="ඇස්">copia</button></td></tr>
-        <tr><td class="dm-it">Orecchie</td><td class="dm-si">කන්</td><td class="dm-pron">kan</td><td><button class="dm-copy-btn" data-copy="කන්">copia</button></td></tr>
-        <tr><td class="dm-it">Naso</td><td class="dm-si">නාසය</td><td class="dm-pron">nāsaya</td><td><button class="dm-copy-btn" data-copy="නාසය">copia</button></td></tr>
-        <tr><td class="dm-it">Bocca / Gola</td><td class="dm-si">කට / උගුර</td><td class="dm-pron">kata / ugura</td><td><button class="dm-copy-btn" data-copy="කට / උගුර">copia</button></td></tr>
-        <tr><td class="dm-it">Denti</td><td class="dm-si">දත්</td><td class="dm-pron">dat</td><td><button class="dm-copy-btn" data-copy="දත්">copia</button></td></tr>
-        <tr><td class="dm-it">Collo</td><td class="dm-si">බෙල්ල</td><td class="dm-pron">bella</td><td><button class="dm-copy-btn" data-copy="බෙල්ල">copia</button></td></tr>
-        <tr><td class="dm-it">Spalle</td><td class="dm-si">උරහිස්</td><td class="dm-pron">urahis</td><td><button class="dm-copy-btn" data-copy="උරහිස්">copia</button></td></tr>
-        <tr><td class="dm-it">Petto / Torace</td><td class="dm-si">පපුව</td><td class="dm-pron">papuwa</td><td><button class="dm-copy-btn" data-copy="පපුව">copia</button></td></tr>
-        <tr><td class="dm-it">Cuore</td><td class="dm-si">හදවත</td><td class="dm-pron">hadawata</td><td><button class="dm-copy-btn" data-copy="හදවත">copia</button></td></tr>
-        <tr><td class="dm-it">Polmoni</td><td class="dm-si">පෙනහළු</td><td class="dm-pron">penhalū</td><td><button class="dm-copy-btn" data-copy="පෙනහළු">copia</button></td></tr>
-        <tr><td class="dm-it">Stomaco / Pancia</td><td class="dm-si">බඩ / මේදය</td><td class="dm-pron">bada / mēdaya</td><td><button class="dm-copy-btn" data-copy="බඩ">copia</button></td></tr>
-        <tr><td class="dm-it">Schiena</td><td class="dm-si">පිට</td><td class="dm-pron">pita</td><td><button class="dm-copy-btn" data-copy="පිට">copia</button></td></tr>
-        <tr><td class="dm-it">Braccio</td><td class="dm-si">අත</td><td class="dm-pron">ata</td><td><button class="dm-copy-btn" data-copy="අත">copia</button></td></tr>
-        <tr><td class="dm-it">Mano</td><td class="dm-si">අත්ල</td><td class="dm-pron">atala</td><td><button class="dm-copy-btn" data-copy="අත්ල">copia</button></td></tr>
-        <tr><td class="dm-it">Gamba</td><td class="dm-si">කකුල</td><td class="dm-pron">kakula</td><td><button class="dm-copy-btn" data-copy="කකුල">copia</button></td></tr>
-        <tr><td class="dm-it">Piede</td><td class="dm-si">පාදය</td><td class="dm-pron">pādaya</td><td><button class="dm-copy-btn" data-copy="පාදය">copia</button></td></tr>
-        <tr><td class="dm-it">Ginocchio</td><td class="dm-si">දණහිස</td><td class="dm-pron">danahisa</td><td><button class="dm-copy-btn" data-copy="දණහිස">copia</button></td></tr>
-        <tr><td class="dm-it">Reni / Lombi</td><td class="dm-si">වකුගඩු</td><td class="dm-pron">wakugadu</td><td><button class="dm-copy-btn" data-copy="වකුගඩු">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Testa</td><td class="dm-mean" data-si="හිස" data-ta="தலை" data-en="Head">හිස</td><td class="dm-pron" data-no-tr>hisa</td><td><button class="dm-copy-btn" data-copy="හිස">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Occhi</td><td class="dm-mean" data-si="ඇස්" data-ta="கண்கள்" data-en="Eyes">ඇස්</td><td class="dm-pron" data-no-tr>aes</td><td><button class="dm-copy-btn" data-copy="ඇස්">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Orecchie</td><td class="dm-mean" data-si="කන්" data-ta="காதுகள்" data-en="Ears">කන්</td><td class="dm-pron" data-no-tr>kan</td><td><button class="dm-copy-btn" data-copy="කන්">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Naso</td><td class="dm-mean" data-si="නාසය" data-ta="மூக்கு" data-en="Nose">නාසය</td><td class="dm-pron" data-no-tr>nāsaya</td><td><button class="dm-copy-btn" data-copy="නාසය">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Bocca / Gola</td><td class="dm-mean" data-si="කට / උගුර" data-ta="வாய் / தொண்டை" data-en="Mouth / Throat">කට / උගුර</td><td class="dm-pron" data-no-tr>kata / ugura</td><td><button class="dm-copy-btn" data-copy="කට / උගුර">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Denti</td><td class="dm-mean" data-si="දත්" data-ta="பற்கள்" data-en="Teeth">දත්</td><td class="dm-pron" data-no-tr>dat</td><td><button class="dm-copy-btn" data-copy="දත්">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Collo</td><td class="dm-mean" data-si="බෙල්ල" data-ta="கழுத்து" data-en="Neck">බෙල්ල</td><td class="dm-pron" data-no-tr>bella</td><td><button class="dm-copy-btn" data-copy="බෙල්ල">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Spalle</td><td class="dm-mean" data-si="උරහිස්" data-ta="தோள்கள்" data-en="Shoulders">උරහිස්</td><td class="dm-pron" data-no-tr>urahis</td><td><button class="dm-copy-btn" data-copy="උරහිස්">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Petto / Torace</td><td class="dm-mean" data-si="පපුව" data-ta="மார்பு" data-en="Chest">පපුව</td><td class="dm-pron" data-no-tr>papuwa</td><td><button class="dm-copy-btn" data-copy="පපුව">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Cuore</td><td class="dm-mean" data-si="හදවත" data-ta="இதயம்" data-en="Heart">හදවත</td><td class="dm-pron" data-no-tr>hadawata</td><td><button class="dm-copy-btn" data-copy="හදවත">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Polmoni</td><td class="dm-mean" data-si="පෙනහළු" data-ta="நுரையீரல்" data-en="Lungs">පෙනහළු</td><td class="dm-pron" data-no-tr>penhalū</td><td><button class="dm-copy-btn" data-copy="පෙනහළු">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Stomaco / Pancia</td><td class="dm-mean" data-si="බඩ / මේදය" data-ta="வயிறு" data-en="Stomach / Belly">බඩ / මේදය</td><td class="dm-pron" data-no-tr>bada / mēdaya</td><td><button class="dm-copy-btn" data-copy="බඩ">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Schiena</td><td class="dm-mean" data-si="පිට" data-ta="முதுகு" data-en="Back">පිට</td><td class="dm-pron" data-no-tr>pita</td><td><button class="dm-copy-btn" data-copy="පිට">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Braccio</td><td class="dm-mean" data-si="අත" data-ta="கை" data-en="Arm">අත</td><td class="dm-pron" data-no-tr>ata</td><td><button class="dm-copy-btn" data-copy="අත">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Mano</td><td class="dm-mean" data-si="අත්ල" data-ta="கைப்பகுதி" data-en="Hand">අත්ල</td><td class="dm-pron" data-no-tr>atala</td><td><button class="dm-copy-btn" data-copy="අත්ල">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Gamba</td><td class="dm-mean" data-si="කකුල" data-ta="கால்" data-en="Leg">කකුල</td><td class="dm-pron" data-no-tr>kakula</td><td><button class="dm-copy-btn" data-copy="කකුල">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Piede</td><td class="dm-mean" data-si="පාදය" data-ta="பாதம்" data-en="Foot">පාදය</td><td class="dm-pron" data-no-tr>pādaya</td><td><button class="dm-copy-btn" data-copy="පාදය">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ginocchio</td><td class="dm-mean" data-si="දණහිස" data-ta="முழங்கால்" data-en="Knee">දණහිස</td><td class="dm-pron" data-no-tr>danahisa</td><td><button class="dm-copy-btn" data-copy="දණහිස">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Reni / Lombi</td><td class="dm-mean" data-si="වකුගඩු" data-ta="சிறுநீரகம் / இடுப்பு" data-en="Kidneys / Lower back">වකුගඩු</td><td class="dm-pron" data-no-tr>wakugadu</td><td><button class="dm-copy-btn" data-copy="වකුගඩු">copia</button></td></tr>
       </tbody>
     </table>
   </div>
@@ -203,18 +203,18 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   <div class="dm-section" data-cat="farmacia" id="dm-s-farmacia">
     <div class="dm-section-title"><span class="dm-section-icon">💊</span> Farmacia / ඖෂධශාලාව</div>
     <table class="dm-table">
-      <thead><tr><th>Italiano</th><th>සිංහල</th><th>Pronuncia</th><th></th></tr></thead>
+      <thead><tr><th class="dm-h-it">Da dire in italiano</th><th class="dm-h-mean">Significato</th><th class="dm-h-pron">Pronuncia</th><th></th></tr></thead>
       <tbody>
-        <tr><td class="dm-it">Ho la ricetta medica</td><td class="dm-si">මට වෛද්‍ය බෙහෙත් වට්ටෝරුවක් ඇත</td><td class="dm-pron">mata vaidya behet vattōruvak aet</td><td><button class="dm-copy-btn" data-copy="මට වෛද්‍ය බෙහෙත් වට්ටෝරුවක් ඇත">copia</button></td></tr>
-        <tr><td class="dm-it">Ho bisogno di antidolorifici</td><td class="dm-si">මට වේදනා නාශකයක් අවශ්‍යයි</td><td class="dm-pron">mata vēdanā nāshakayak avashyai</td><td><button class="dm-copy-btn" data-copy="මට වේදනා නාශකයක් අවශ්‍යයි">copia</button></td></tr>
-        <tr><td class="dm-it">Antibiotici</td><td class="dm-si">ප්‍රතිජීවකය</td><td class="dm-pron">pratijīvakaya</td><td><button class="dm-copy-btn" data-copy="ප්‍රතිජීවකය">copia</button></td></tr>
-        <tr><td class="dm-it">Antifebbre</td><td class="dm-si">උෂ්ණ නාශකය</td><td class="dm-pron">ushna nāshakaya</td><td><button class="dm-copy-btn" data-copy="උෂ්ණ නාශකය">copia</button></td></tr>
-        <tr><td class="dm-it">Sciroppo per la tosse</td><td class="dm-si">කැස්ස සඳහා සිරප්</td><td class="dm-pron">kaessa sandahā sirap</td><td><button class="dm-copy-btn" data-copy="කැස්ස සඳහා සිරප්">copia</button></td></tr>
-        <tr><td class="dm-it">Sono allergico/a a</td><td class="dm-si">මට ... ට ආසාත්මිකතාවයක් ඇත</td><td class="dm-pron">mata ... ta āsātmikataāwayak aet</td><td><button class="dm-copy-btn" data-copy="මට ආසාත්මිකතාවයක් ඇත">copia</button></td></tr>
-        <tr><td class="dm-it">Sono allergico/a alla penicillina</td><td class="dm-si">මට පෙනිසිලීන් ට ආසාත්මිකතාවය ඇත</td><td class="dm-pron">mata penisilin ta āsātmikatāwaya aet</td><td><button class="dm-copy-btn" data-copy="මට පෙනිසිලීන් ට ආසාත්මිකතාවය ඇත">copia</button></td></tr>
-        <tr><td class="dm-it">Prendo già questi medicinali</td><td class="dm-si">මම දැනටමත් මෙම ඖෂධ ගන්නවා</td><td class="dm-pron">mama daenatamat mema aushadha gannawā</td><td><button class="dm-copy-btn" data-copy="මම දැනටමත් මෙම ඖෂධ ගන්නවා">copia</button></td></tr>
-        <tr><td class="dm-it">Quante volte al giorno?</td><td class="dm-si">දිනකට කීවතාවක්?</td><td class="dm-pron">dinakate kīwatāwak?</td><td><button class="dm-copy-btn" data-copy="දිනකට කීවතාවක්?">copia</button></td></tr>
-        <tr><td class="dm-it">Prima / Dopo i pasti</td><td class="dm-si">ආහාරයට පෙර / පසු</td><td class="dm-pron">āhārayata pera / pasu</td><td><button class="dm-copy-btn" data-copy="ආහාරයට පෙර / පසු">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho la ricetta medica</td><td class="dm-mean" data-si="මට වෛද්‍ය බෙහෙත් වට්ටෝරුවක් ඇත" data-ta="என்னிடம் மருந்துச் சீட்டு உள்ளது" data-en="I have a prescription">මට වෛද්‍ය බෙහෙත් වට්ටෝරුවක් ඇත</td><td class="dm-pron" data-no-tr>mata vaidya behet vattōruvak aet</td><td><button class="dm-copy-btn" data-copy="මට වෛද්‍ය බෙහෙත් වට්ටෝරුවක් ඇත">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho bisogno di antidolorifici</td><td class="dm-mean" data-si="මට වේදනා නාශකයක් අවශ්‍යයි" data-ta="எனக்கு வலி நிவாரணி தேவை" data-en="I need painkillers">මට වේදනා නාශකයක් අවශ්‍යයි</td><td class="dm-pron" data-no-tr>mata vēdanā nāshakayak avashyai</td><td><button class="dm-copy-btn" data-copy="මට වේදනා නාශකයක් අවශ්‍යයි">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Antibiotici</td><td class="dm-mean" data-si="ප්‍රතිජීවකය" data-ta="நுண்ணுயிர்க் கொல்லி" data-en="Antibiotics">ප්‍රතිජීවකය</td><td class="dm-pron" data-no-tr>pratijīvakaya</td><td><button class="dm-copy-btn" data-copy="ප්‍රතිජීවකය">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Antifebbre</td><td class="dm-mean" data-si="උෂ්ණ නාශකය" data-ta="காய்ச்சல் மருந்து" data-en="Fever medicine">උෂ්ණ නාශකය</td><td class="dm-pron" data-no-tr>ushna nāshakaya</td><td><button class="dm-copy-btn" data-copy="උෂ්ණ නාශකය">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Sciroppo per la tosse</td><td class="dm-mean" data-si="කැස්ස සඳහා සිරප්" data-ta="இருமல் மருந்து" data-en="Cough syrup">කැස්ස සඳහා සිරප්</td><td class="dm-pron" data-no-tr>kaessa sandahā sirap</td><td><button class="dm-copy-btn" data-copy="කැස්ස සඳහා සිරප්">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Sono allergico/a a</td><td class="dm-mean" data-si="මට ... ට ආසාත්මිකතාවයක් ඇත" data-ta="எனக்கு ஒவ்வாமை உண்டு" data-en="I'm allergic to">මට ... ට ආසාත්මිකතාවයක් ඇත</td><td class="dm-pron" data-no-tr>mata ... ta āsātmikataāwayak aet</td><td><button class="dm-copy-btn" data-copy="මට ආසාත්මිකතාවයක් ඇත">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Sono allergico/a alla penicillina</td><td class="dm-mean" data-si="මට පෙනිසිලීන් ට ආසාත්මිකතාවය ඇත" data-ta="எனக்கு பென்சிலின் ஒவ்வாமை" data-en="I'm allergic to penicillin">මට පෙනිසිලීන් ට ආසාත්මිකතාවය ඇත</td><td class="dm-pron" data-no-tr>mata penisilin ta āsātmikatāwaya aet</td><td><button class="dm-copy-btn" data-copy="මට පෙනිසිලීන් ට ආසාත්මිකතාවය ඇත">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Prendo già questi medicinali</td><td class="dm-mean" data-si="මම දැනටමත් මෙම ඖෂධ ගන්නවා" data-ta="நான் ஏற்கனவே இந்த மருந்துகளை எடுக்கிறேன்" data-en="I'm already taking these medicines">මම දැනටමත් මෙම ඖෂධ ගන්නවා</td><td class="dm-pron" data-no-tr>mama daenatamat mema aushadha gannawā</td><td><button class="dm-copy-btn" data-copy="මම දැනටමත් මෙම ඖෂධ ගන්නවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Quante volte al giorno?</td><td class="dm-mean" data-si="දිනකට කීවතාවක්?" data-ta="நாளொன்றுக்கு எத்தனை முறை?" data-en="How many times a day?">දිනකට කීවතාවක්?</td><td class="dm-pron" data-no-tr>dinakate kīwatāwak?</td><td><button class="dm-copy-btn" data-copy="දිනකට කීවතාවක්?">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Prima / Dopo i pasti</td><td class="dm-mean" data-si="ආහාරයට පෙර / පසු" data-ta="உணவுக்கு முன் / பின்" data-en="Before / After meals">ආහාරයට පෙර / පසු</td><td class="dm-pron" data-no-tr>āhārayata pera / pasu</td><td><button class="dm-copy-btn" data-copy="ආහාරයට පෙර / පසු">copia</button></td></tr>
       </tbody>
     </table>
   </div>
@@ -223,20 +223,20 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   <div class="dm-section" data-cat="medico" id="dm-s-medico">
     <div class="dm-section-title"><span class="dm-section-icon">👨‍⚕️</span> Dal medico / වෛද්‍යවරයා ළඟ</div>
     <table class="dm-table">
-      <thead><tr><th>Italiano</th><th>සිංහල</th><th>Pronuncia</th><th></th></tr></thead>
+      <thead><tr><th class="dm-h-it">Da dire in italiano</th><th class="dm-h-mean">Significato</th><th class="dm-h-pron">Pronuncia</th><th></th></tr></thead>
       <tbody>
-        <tr><td class="dm-it">Dove fa male?</td><td class="dm-si">කොතනද රිදෙන්නේ?</td><td class="dm-pron">kotanda ridennē?</td><td><button class="dm-copy-btn" data-copy="කොතනද රිදෙන්නේ?">copia</button></td></tr>
-        <tr><td class="dm-it">Da quanto tempo?</td><td class="dm-si">කොපමණ කාලයක් ඉඳලා?</td><td class="dm-pron">kopamana kālayak indālā?</td><td><button class="dm-copy-btn" data-copy="කොපමණ කාලයක් ඉඳලා?">copia</button></td></tr>
-        <tr><td class="dm-it">Da due giorni / una settimana</td><td class="dm-si">දින දෙකක් / සතියක් ඉඳලා</td><td class="dm-pron">dina dekak / sathiyak indālā</td><td><button class="dm-copy-btn" data-copy="දින දෙකක් ඉඳලා">copia</button></td></tr>
-        <tr><td class="dm-it">Ho il medico di base</td><td class="dm-si">මට පදිංචි වෛද්‍යවරයෙකු සිටිනවා</td><td class="dm-pron">mata padinci vaidyavariyeku sitinawā</td><td><button class="dm-copy-btn" data-copy="මට පදිංචි වෛද්‍යවරයෙකු සිටිනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Non ho il medico di base</td><td class="dm-si">මට පදිංචි වෛද්‍යවරයෙකු නැහැ</td><td class="dm-pron">mata padinci vaidyavariyeku naehe</td><td><button class="dm-copy-btn" data-copy="මට පදිංචි වෛද්‍යවරයෙකු නැහැ">copia</button></td></tr>
-        <tr><td class="dm-it">Ho la tessera sanitaria</td><td class="dm-si">මට සෞඛ්‍ය කාඩ්පත තිබෙනවා</td><td class="dm-pron">mata saukya kādpata tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට සෞඛ්‍ය කාඩ්පත තිබෙනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Devo fare un esame del sangue</td><td class="dm-si">මට රුධිර පරීක්ෂාවක් කළ යුතුයි</td><td class="dm-pron">mata rudhira parīkshāwak kala yutui</td><td><button class="dm-copy-btn" data-copy="මට රුධිර පරීක්ෂාවක් කළ යුතුයි">copia</button></td></tr>
-        <tr><td class="dm-it">Ho bisogno di un certificato medico</td><td class="dm-si">මට වෛද්‍ය සහතිකයක් අවශ්‍යයි</td><td class="dm-pron">mata vaidya sahatikayak avashyai</td><td><button class="dm-copy-btn" data-copy="මට වෛද්‍ය සහතිකයක් අවශ්‍යයි">copia</button></td></tr>
-        <tr><td class="dm-it">Sono incinta / Sono in gravidanza</td><td class="dm-si">මම ගැබ්ගෙන ඉන්නවා</td><td class="dm-pron">mama gaebgen innawā</td><td><button class="dm-copy-btn" data-copy="මම ගැබ්ගෙන ඉන්නවා">copia</button></td></tr>
-        <tr><td class="dm-it">Sono diabetico/a</td><td class="dm-si">මට දියවැඩියා ඇත</td><td class="dm-pron">mata diyawaediā aet</td><td><button class="dm-copy-btn" data-copy="මට දියවැඩියා ඇත">copia</button></td></tr>
-        <tr><td class="dm-it">Ho la pressione alta / bassa</td><td class="dm-si">මට ඉහළ / පහළ රුධිර පීඩනය ඇත</td><td class="dm-pron">mata ihala / pahala rudhira pīdanaya aet</td><td><button class="dm-copy-btn" data-copy="මට ඉහළ රුධිර පීඩනය ඇත">copia</button></td></tr>
-        <tr><td class="dm-it">Non capisco — può ripetere lentamente?</td><td class="dm-si">මට තේරෙන්නේ නැහැ — සෙමෙන් නැවත කියන්න?</td><td class="dm-pron">mata terennē naehe — semen naewat kiyanna?</td><td><button class="dm-copy-btn" data-copy="මට තේරෙන්නේ නැහැ — සෙමෙන් නැවත කියන්න?">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Dove fa male?</td><td class="dm-mean" data-si="කොතනද රිදෙන්නේ?" data-ta="எங்கே வலிக்கிறது?" data-en="Where does it hurt?">කොතනද රිදෙන්නේ?</td><td class="dm-pron" data-no-tr>kotanda ridennē?</td><td><button class="dm-copy-btn" data-copy="කොතනද රිදෙන්නේ?">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Da quanto tempo?</td><td class="dm-mean" data-si="කොපමණ කාලයක් ඉඳලා?" data-ta="எவ்வளவு காலமாக?" data-en="For how long?">කොපමණ කාලයක් ඉඳලා?</td><td class="dm-pron" data-no-tr>kopamana kālayak indālā?</td><td><button class="dm-copy-btn" data-copy="කොපමණ කාලයක් ඉඳලා?">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Da due giorni / una settimana</td><td class="dm-mean" data-si="දින දෙකක් / සතියක් ඉඳලා" data-ta="இரண்டு நாட்களாக / ஒரு வாரமாக" data-en="For two days / a week">දින දෙකක් / සතියක් ඉඳලා</td><td class="dm-pron" data-no-tr>dina dekak / sathiyak indālā</td><td><button class="dm-copy-btn" data-copy="දින දෙකක් ඉඳලා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho il medico di base</td><td class="dm-mean" data-si="මට පදිංචි වෛද්‍යවරයෙකු සිටිනවා" data-ta="எனக்குக் குடும்ப மருத்துவர் உண்டு" data-en="I have a family doctor">මට පදිංචි වෛද්‍යවරයෙකු සිටිනවා</td><td class="dm-pron" data-no-tr>mata padinci vaidyavariyeku sitinawā</td><td><button class="dm-copy-btn" data-copy="මට පදිංචි වෛද්‍යවරයෙකු සිටිනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Non ho il medico di base</td><td class="dm-mean" data-si="මට පදිංචි වෛද්‍යවරයෙකු නැහැ" data-ta="எனக்குக் குடும்ப மருத்துவர் இல்லை" data-en="I don't have a family doctor">මට පදිංචි වෛද්‍යවරයෙකු නැහැ</td><td class="dm-pron" data-no-tr>mata padinci vaidyavariyeku naehe</td><td><button class="dm-copy-btn" data-copy="මට පදිංචි වෛද්‍යවරයෙකු නැහැ">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho la tessera sanitaria</td><td class="dm-mean" data-si="මට සෞඛ්‍ය කාඩ්පත තිබෙනවා" data-ta="என்னிடம் சுகாதார அட்டை உள்ளது" data-en="I have a health card">මට සෞඛ්‍ය කාඩ්පත තිබෙනවා</td><td class="dm-pron" data-no-tr>mata saukya kādpata tibbenawā</td><td><button class="dm-copy-btn" data-copy="මට සෞඛ්‍ය කාඩ්පත තිබෙනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Devo fare un esame del sangue</td><td class="dm-mean" data-si="මට රුධිර පරීක්ෂාවක් කළ යුතුයි" data-ta="நான் இரத்தப் பரிசோதனை செய்ய வேண்டும்" data-en="I need a blood test">මට රුධිර පරීක්ෂාවක් කළ යුතුයි</td><td class="dm-pron" data-no-tr>mata rudhira parīkshāwak kala yutui</td><td><button class="dm-copy-btn" data-copy="මට රුධිර පරීක්ෂාවක් කළ යුතුයි">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho bisogno di un certificato medico</td><td class="dm-mean" data-si="මට වෛද්‍ය සහතිකයක් අවශ්‍යයි" data-ta="எனக்கு மருத்துவச் சான்றிதழ் தேவை" data-en="I need a medical certificate">මට වෛද්‍ය සහතිකයක් අවශ්‍යයි</td><td class="dm-pron" data-no-tr>mata vaidya sahatikayak avashyai</td><td><button class="dm-copy-btn" data-copy="මට වෛද්‍ය සහතිකයක් අවශ්‍යයි">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Sono incinta / Sono in gravidanza</td><td class="dm-mean" data-si="මම ගැබ්ගෙන ඉන්නවා" data-ta="நான் கர்ப்பமாக இருக்கிறேன்" data-en="I'm pregnant">මම ගැබ්ගෙන ඉන්නවා</td><td class="dm-pron" data-no-tr>mama gaebgen innawā</td><td><button class="dm-copy-btn" data-copy="මම ගැබ්ගෙන ඉන්නවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Sono diabetico/a</td><td class="dm-mean" data-si="මට දියවැඩියා ඇත" data-ta="எனக்கு நீரிழிவு உள்ளது" data-en="I'm diabetic">මට දියවැඩියා ඇත</td><td class="dm-pron" data-no-tr>mata diyawaediā aet</td><td><button class="dm-copy-btn" data-copy="මට දියවැඩියා ඇත">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Ho la pressione alta / bassa</td><td class="dm-mean" data-si="මට ඉහළ / පහළ රුධිර පීඩනය ඇත" data-ta="எனக்கு உயர் / குறைந்த இரத்த அழுத்தம்" data-en="I have high / low blood pressure">මට ඉහළ / පහළ රුධිර පීඩනය ඇත</td><td class="dm-pron" data-no-tr>mata ihala / pahala rudhira pīdanaya aet</td><td><button class="dm-copy-btn" data-copy="මට ඉහළ රුධිර පීඩනය ඇත">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Non capisco — può ripetere lentamente?</td><td class="dm-mean" data-si="මට තේරෙන්නේ නැහැ — සෙමෙන් නැවත කියන්න?" data-ta="எனக்குப் புரியவில்லை — மெதுவாகச் சொல்ல முடியுமா?" data-en="I don't understand — could you repeat slowly?">මට තේරෙන්නේ නැහැ — සෙමෙන් නැවත කියන්න?</td><td class="dm-pron" data-no-tr>mata terennē naehe — semen naewat kiyanna?</td><td><button class="dm-copy-btn" data-copy="මට තේරෙන්නේ නැහැ — සෙමෙන් නැවත කියන්න?">copia</button></td></tr>
       </tbody>
     </table>
   </div>
@@ -245,15 +245,15 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   <div class="dm-section" data-cat="bambini" id="dm-s-bambini">
     <div class="dm-section-title"><span class="dm-section-icon">👶</span> Bambini / ළදරුවෝ</div>
     <table class="dm-table">
-      <thead><tr><th>Italiano</th><th>සිංහල</th><th>Pronuncia</th><th></th></tr></thead>
+      <thead><tr><th class="dm-h-it">Da dire in italiano</th><th class="dm-h-mean">Significato</th><th class="dm-h-pron">Pronuncia</th><th></th></tr></thead>
       <tbody>
-        <tr><td class="dm-it">Mio figlio/a ha la febbre</td><td class="dm-si">මගේ දරුවාට උෂ්ණත්වය ඇත</td><td class="dm-pron">magē daruwāta ushnatway aet</td><td><button class="dm-copy-btn" data-copy="මගේ දරුවාට උෂ්ණත්වය ඇත">copia</button></td></tr>
-        <tr><td class="dm-it">Mio figlio/a non mangia</td><td class="dm-si">මගේ දරුවා කෑම කන්නේ නැහැ</td><td class="dm-pron">magē daruwā kaem kannē naehe</td><td><button class="dm-copy-btn" data-copy="මගේ දරුවා කෑම කන්නේ නැහැ">copia</button></td></tr>
-        <tr><td class="dm-it">Mio figlio/a piange continuamente</td><td class="dm-si">මගේ දරුවා නිරන්තරයෙන් අඬනවා</td><td class="dm-pron">magē daruwā nirantarayan andanawā</td><td><button class="dm-copy-btn" data-copy="මගේ දරුවා නිරන්තරයෙන් අඬනවා">copia</button></td></tr>
-        <tr><td class="dm-it">Devo vaccinare mio figlio/a</td><td class="dm-si">මගේ දරුවාට එන්නත් ලබා දිය යුතුයි</td><td class="dm-pron">magē daruwāta ennat labā diya yutui</td><td><button class="dm-copy-btn" data-copy="මගේ දරුවාට එන්නත් ලබා දිය යුතුයි">copia</button></td></tr>
-        <tr><td class="dm-it">Quanti anni ha?</td><td class="dm-si">කීය දරුවාට? (වයස)</td><td class="dm-pron">kīya daruwāta? (wayasa)</td><td><button class="dm-copy-btn" data-copy="කීය දරුවාට?">copia</button></td></tr>
-        <tr><td class="dm-it">Il bambino ha le convulsioni</td><td class="dm-si">දරුවාට කැක්කුම් ගන්නවා</td><td class="dm-pron">daruwāta kaekkum gannawā</td><td><button class="dm-copy-btn" data-copy="දරුවාට කැක්කුම් ගන්නවා">copia</button></td></tr>
-        <tr><td class="dm-it">Pediatra</td><td class="dm-si">ළමා රෝග විශේෂඥ</td><td class="dm-pron">lamā rōga vishēshagnya</td><td><button class="dm-copy-btn" data-copy="ළමා රෝග විශේෂඥ">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Mio figlio/a ha la febbre</td><td class="dm-mean" data-si="මගේ දරුවාට උෂ්ණත්වය ඇත" data-ta="என் குழந்தைக்குக் காய்ச்சல்" data-en="My child has a fever">මගේ දරුවාට උෂ්ණත්වය ඇත</td><td class="dm-pron" data-no-tr>magē daruwāta ushnatway aet</td><td><button class="dm-copy-btn" data-copy="මගේ දරුවාට උෂ්ණත්වය ඇත">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Mio figlio/a non mangia</td><td class="dm-mean" data-si="මගේ දරුවා කෑම කන්නේ නැහැ" data-ta="என் குழந்தை சாப்பிடவில்லை" data-en="My child isn't eating">මගේ දරුවා කෑම කන්නේ නැහැ</td><td class="dm-pron" data-no-tr>magē daruwā kaem kannē naehe</td><td><button class="dm-copy-btn" data-copy="මගේ දරුවා කෑම කන්නේ නැහැ">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Mio figlio/a piange continuamente</td><td class="dm-mean" data-si="මගේ දරුවා නිරන්තරයෙන් අඬනවා" data-ta="என் குழந்தை தொடர்ந்து அழுகிறது" data-en="My child cries all the time">මගේ දරුවා නිරන්තරයෙන් අඬනවා</td><td class="dm-pron" data-no-tr>magē daruwā nirantarayan andanawā</td><td><button class="dm-copy-btn" data-copy="මගේ දරුවා නිරන්තරයෙන් අඬනවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Devo vaccinare mio figlio/a</td><td class="dm-mean" data-si="මගේ දරුවාට එන්නත් ලබා දිය යුතුයි" data-ta="என் குழந்தைக்குத் தடுப்பூசி போட வேண்டும்" data-en="I need to vaccinate my child">මගේ දරුවාට එන්නත් ලබා දිය යුතුයි</td><td class="dm-pron" data-no-tr>magē daruwāta ennat labā diya yutui</td><td><button class="dm-copy-btn" data-copy="මගේ දරුවාට එන්නත් ලබා දිය යුතුයි">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Quanti anni ha?</td><td class="dm-mean" data-si="කීය දරුවාට? (වයස)" data-ta="வயது என்ன?" data-en="How old is he/she?">කීය දරුවාට? (වයස)</td><td class="dm-pron" data-no-tr>kīya daruwāta? (wayasa)</td><td><button class="dm-copy-btn" data-copy="කීය දරුවාට?">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Il bambino ha le convulsioni</td><td class="dm-mean" data-si="දරුවාට කැක්කුම් ගන්නවා" data-ta="குழந்தைக்கு வலிப்பு வருகிறது" data-en="The child is having convulsions">දරුවාට කැක්කුම් ගන්නවා</td><td class="dm-pron" data-no-tr>daruwāta kaekkum gannawā</td><td><button class="dm-copy-btn" data-copy="දරුවාට කැක්කුම් ගන්නවා">copia</button></td></tr>
+        <tr><td class="dm-it" data-no-tr>Pediatra</td><td class="dm-mean" data-si="ළමා රෝග විශේෂඥ" data-ta="குழந்தை மருத்துவர்" data-en="Paediatrician">ළමා රෝග විශේෂඥ</td><td class="dm-pron" data-no-tr>lamā rōga vishēshagnya</td><td><button class="dm-copy-btn" data-copy="ළමා රෝග විශේෂඥ">copia</button></td></tr>
       </tbody>
     </table>
   </div>
@@ -311,7 +311,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       var rows = s.querySelectorAll('tbody tr');
       var sectionFound = false;
       rows.forEach(function(row){
-        var text = row.textContent.toLowerCase();
+        var m = row.querySelector('.dm-mean');
+        var text = (row.textContent + ' ' + (m ? (m.getAttribute('data-si')||'') + ' ' + (m.getAttribute('data-ta')||'') + ' ' + (m.getAttribute('data-en')||'') : '')).toLowerCase();
         if(text.indexOf(q) !== -1){ row.style.display=''; sectionFound=true; found++; }
         else row.style.display='none';
       });
@@ -321,6 +322,44 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     noResults.style.display = found ? 'none' : 'block';
   });
 
+  /* La colonna del significato segue la lingua scelta: prima il frasario era
+     italiano<->singalese e basta, quindi in tamil o in inglese mostrava una
+     riga che il lettore non poteva leggere. L'italiano invece resta italiano
+     — e' la frase da far leggere al medico, tradurla svuoterebbe lo strumento
+     — ed e' marcato data-no-tr perche' il traduttore di pagina non la tocchi. */
+  var LG = (function(){ try {
+    var m = location.pathname.match(/^\/(en|si|ta)(\/|$)/);
+    return m ? m[1] : (localStorage.getItem('eih-lang') || 'it');
+  } catch(e){ return 'it'; } })();
+  var ETICHETTE = {
+    it:{it:'Da dire in italiano',mean:'Significato',pron:'Pronuncia',copia:'copia'},
+    en:{it:'Say this in Italian',mean:'Meaning',pron:'Pronunciation',copia:'copy'},
+    si:{it:'ඉතාලියෙන් කියන්න',mean:'අර්ථය',pron:'උච්චාරණය',copia:'පිටපත්'},
+    ta:{it:'இத்தாலியில் சொல்லுங்கள்',mean:'பொருள்',pron:'உச்சரிப்பு',copia:'நகல்'}
+  };
+  var ET = ETICHETTE[LG] || ETICHETTE.it;
+  (function(){
+    // in italiano il significato coincide con la frase: si mostra il singalese
+    var chiave = LG === 'it' ? 'si' : LG;
+    document.querySelectorAll('.dm-mean').forEach(function(td){
+      var v = td.getAttribute('data-' + chiave);
+      if (v) td.textContent = v;
+      td.setAttribute('lang', chiave);
+      var btn = td.parentElement.querySelector('.dm-copy-btn');
+      if (btn && v) btn.dataset.copy = v;
+    });
+    /* La colonna fonetica esiste per leggere il significato senza conoscere
+       l'alfabeto singalese. In tamil il testo e' gia' in tamil e in inglese e'
+       gia' in caratteri latini: li' la colonna non serve e si toglie. */
+    if (LG === 'ta' || LG === 'en') {
+      document.querySelectorAll('.dm-pron, .dm-h-pron').forEach(function(c){ c.hidden = true; });
+    }
+    document.querySelectorAll('.dm-h-it').forEach(function(h){ h.textContent = ET.it; });
+    document.querySelectorAll('.dm-h-mean').forEach(function(h){ h.textContent = ET.mean; });
+    document.querySelectorAll('.dm-h-pron').forEach(function(h){ h.textContent = ET.pron; });
+    document.querySelectorAll('.dm-copy-btn').forEach(function(b){ b.textContent = ET.copia; });
+  })();
+
   // Copy to clipboard
   document.querySelectorAll('.dm-copy-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
@@ -328,7 +367,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       if(navigator.clipboard){ navigator.clipboard.writeText(text); }
       else{ var ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
       btn.textContent='✓'; btn.classList.add('copied');
-      setTimeout(function(){ btn.textContent='copia'; btn.classList.remove('copied'); }, 1500);
+      setTimeout(function(){ btn.textContent=ET.copia; btn.classList.remove('copied'); }, 1500);
     });
   });
 })();

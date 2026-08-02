@@ -1,7 +1,5 @@
 {
  "Strumenti": "Tools",
- "Dizionario": "Medical",
- "medico": "dictionary",
  "Frasi pronte per spiegare i tuoi sintomi al medico, al pronto soccorso o in farmacia. Testo in singalese con pronuncia fonetica per leggerlo anche senza conoscere l'alfabeto.": "Ready-made phrases to explain your symptoms to the doctor, at A&E or in the pharmacy. Sinhala text with phonetic pronunciation so you can read it even without knowing the alphabet.",
  "🚨 Numeri di emergenza in Italia": "🚨 Emergency numbers in Italy",
  "Ambulanza / Emergenza medica": "Ambulance / Medical emergency",
@@ -26,5 +24,6 @@
  "Hai bisogno di altra traduzione?": "Need another translation?",
  "Altre guide": "Other guides",
  "Cerca una parola o frase in italiano o singalese…": "Search a word or phrase in Italian or Sinhala…",
- "Filtra per categoria": "Filter by category"
+ "Filtra per categoria": "Filter by category",
+ "Dizionario medico": "Medical dictionary"
 }

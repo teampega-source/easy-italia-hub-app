@@ -1,7 +1,5 @@
 {
  "Strumenti": "මෙවලම්",
- "Dizionario": "වෛද්‍ය",
- "medico": "ශබ්දකෝෂය",
  "Frasi pronte per spiegare i tuoi sintomi al medico, al pronto soccorso o in farmacia. Testo in singalese con pronuncia fonetica per leggerlo anche senza conoscere l'alfabeto.": "වෛද්‍යවරයාට, හදිසි ප්‍රතිකාර අංශයට හෝ ඖෂධශාලාවට ඔබේ රෝග ලක්ෂණ පැහැදිලි කිරීමට සූදානම් වාක්‍ය. අකුරු නොදැන වුවද කියවීමට හඬ උච්චාරණය සමඟ සිංහල පෙළ.",
  "🚨 Numeri di emergenza in Italia": "🚨 ඉතාලියේ හදිසි ඇමතුම් අංක",
  "Ambulanza / Emergenza medica": "ගිලන් රථය / වෛද්‍ය හදිසි",
@@ -26,5 +24,6 @@
  "Hai bisogno di altra traduzione?": "තවත් පරිවර්තනයක් අවශ්‍යද?",
  "Altre guide": "වෙනත් මාර්ගෝපදේශ",
  "Cerca una parola o frase in italiano o singalese…": "ඉතාලි හෝ සිංහල වචනයක් හෝ වාක්‍යයක් සොයන්න…",
- "Filtra per categoria": "කාණ්ඩය අනුව පෙරන්න"
+ "Filtra per categoria": "කාණ්ඩය අනුව පෙරන්න",
+ "Dizionario medico": "වෛද්‍ය ශබ්දකෝෂය"
 }
