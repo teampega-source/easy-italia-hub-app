@@ -145,11 +145,11 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 (function(){
 'use strict';
 var F={ // campi riusabili
-  nome:{k:'nome',l:'Nome e cognome',ph:'Nimal Perera'},
-  nato:{k:'nato',l:'Nato/a a',ph:'Colombo (Sri Lanka)'},
+  nome:{k:'nome',l:'Nome e cognome',ph:'Nimal Perera',nt:1},
+  nato:{k:'nato',l:'Nato/a a',ph:'Colombo (Sri Lanka)',nt:1},
   natoIl:{k:'natoIl',l:'Il (data di nascita)',ph:'01/01/1990',t:'text'},
-  cf:{k:'cf',l:'Codice fiscale',ph:'PRRNML90A01Z209X'},
-  doc:{k:'doc',l:'Documento d’identità n.',ph:'Passaporto N1234567'},
+  cf:{k:'cf',l:'Codice fiscale',ph:'PRRNML90A01Z209X',nt:1},
+  doc:{k:'doc',l:'Documento d’identità n.',ph:'Passaporto N1234567',nt:1},
   via:{k:'via',l:'Indirizzo (via, città)',ph:'Via Roma 1, 20100 Milano'},
   tel:{k:'tel',l:'Telefono',ph:'+39 333 1234567'},
   luogo:{k:'luogo',l:'Luogo (città della firma)',ph:'Milano'},
@@ -160,7 +160,7 @@ function fmtData(v){if(!v)return oggi();var p=v.split('-');return p.length===3?p
 var TPL=[
  {id:'delega',tit:'Delega al ritiro',sub:'Autorizza una persona di fiducia a ritirare un documento al posto tuo.',
   fields:[{h:'Chi delega (tu)'},F.nome,F.nato,F.natoIl,F.cf,F.doc,
-          {h:'Chi ritira (persona di fiducia)'},{k:'dNome',l:'Nome e cognome',ph:'Sunil Fernando'},{k:'dNato',l:'Nato/a a',ph:'Kandy (Sri Lanka)'},{k:'dNatoIl',l:'Il',ph:'05/05/1985'},{k:'dDoc',l:'Documento d’identità n.',ph:'CI AB1234567'},
+          {h:'Chi ritira (persona di fiducia)'},{k:'dNome',l:'Nome e cognome',ph:'Sunil Fernando',nt:1},{k:'dNato',l:'Nato/a a',ph:'Kandy (Sri Lanka)',nt:1},{k:'dNatoIl',l:'Il',ph:'05/05/1985'},{k:'dDoc',l:'Documento d’identità n.',ph:'CI AB1234567',nt:1},
           {h:'Cosa e dove'},{k:'cosa',l:'Cosa deve ritirare',ph:'il mio permesso di soggiorno'},{k:'dove',l:'Presso (ufficio)',ph:'Questura di Milano — Ufficio Immigrazione'},F.luogo,F.data],
   dest:function(v){return (v.dove||'Ufficio competente');},
   obj:function(){return 'Oggetto: Delega al ritiro di documenti';},
@@ -207,6 +207,9 @@ function renderForm(){
     w.innerHTML='<label for="'+id+'">'+f.l+'</label>';
     var inp=document.createElement('input');
     inp.id=id;inp.type=f.t||'text';inp.placeholder=f.ph||'';inp.value=vals[f.k]||'';
+    // nt: il segnaposto e' un dato d'esempio (nome, codice fiscale, documento),
+    // non una frase: resta com'e' in ogni lingua.
+    if(f.nt)inp.setAttribute('data-no-tr','');
     inp.addEventListener('input',function(){vals[f.k]=inp.value;renderSheet();save();});
     w.appendChild(inp);form.appendChild(w);
   });

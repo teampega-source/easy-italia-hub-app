@@ -1,4 +1,6 @@
 {
+ "52f50eae": "Home",
+ "ff56efab": "Scuola Italiana",
  "518c3aa4": "Famiglia e Istruzione",
  "73ad2b06": "Il Percorso Scolastico Italiano",
  "44877c6d": "0–3 anni",
@@ -27,7 +29,6 @@
  "0abc260a": "La scuola dell'obbligo è assegnata per territorio (circoscrizione). Per la scuola superiore puoi scegliere tra: Liceo (teorico), Istituto Tecnico (pratico), Istituto Professionale (pratico-lavorativo).",
  "61af1ba1": "Iscrizione Online",
  "427e3287": "Dal 2020 le iscrizioni alla scuola primaria e media si fanno online sul portale",
- "ce558c33": "iscrizioni.istruzione.it",
  "fe2a8cd1": "usando SPID o CIE. Per asilo nido è il comune che gestisce le iscrizioni (sito del comune).",
  "c741f083": "Supporto Linguistico",
  "9288f5fd": "Le scuole offrono corsi di",
@@ -47,7 +48,6 @@
  "0439f321": "Con diploma di scuola superiore (5 anni) puoi iscriverti a qualsiasi università italiana. Alcune facoltà hanno test d'ingresso (Medicina, Architettura). Le tasse universitarie variano in base all'ISEE familiare.",
  "59bd34cc": "Borse di Studio (DSU)",
  "1ae660ab": "Con ISEE basso puoi richiedere la borsa di studio regionale (",
- "18d8988f": "DSU",
  "d86e4c05": ") che copre tasse e fornisce un contributo mensile. Fai domanda ogni anno ad agosto-settembre sul sito della tua regione.",
  "41ae6be2": "Riconoscimento Titoli Esteri",
  "733d01c2": "Il diploma srilankese può essere riconosciuto in Italia. La procedura varia per tipo di titolo. Per la scuola superiore serve la",
@@ -56,5 +56,6 @@
  "c380bc09": "Hai dubbi sull'iscrizione a scuola o vuoi sapere quali documenti portare? Usa l'assistente AI o consulta la guida al riconoscimento dei titoli.",
  "df23daab": "Chiedi all'AI",
  "7b129818": "Riconoscimento Titoli",
- "0ba85227": "Corsi di Italiano"
+ "0ba85227": "Corsi di Italiano",
+ "30635f6c": "Breadcrumb"
 }

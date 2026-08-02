@@ -154,17 +154,17 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       <div class="engine-grid">
         <button class="se-btn se-kiwi" data-engine="kiwi">
           <span class="se-logo">✈</span>
-          <span class="se-name">Kiwi.com</span>
+          <span class="se-name" data-no-tr>Kiwi.com</span>
           <span class="se-note">Migliori connessioni</span>
         </button>
         <button class="se-btn se-google" data-engine="gflights">
           <span class="se-logo">🔍</span>
-          <span class="se-name">Google Flights</span>
+          <span class="se-name" data-no-tr>Google Flights</span>
           <span class="se-note">Panoramica prezzi</span>
         </button>
         <button class="se-btn se-kayak" data-engine="kayak">
           <span class="se-logo">🔶</span>
-          <span class="se-name">Kayak</span>
+          <span class="se-name" data-no-tr>Kayak</span>
           <span class="se-note">Confronto completo</span>
         </button>
       </div>
@@ -181,11 +181,11 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
           <button class="btn-all" id="tk-go" style="margin:0;white-space:nowrap">Traccia →</button>
         </div>
         <div class="track-chips" id="tk-chips">
-          <button type="button" data-fn="UL566">UL566</button>
-          <button type="button" data-fn="UL565">UL565</button>
-          <button type="button" data-fn="EK205">EK205</button>
-          <button type="button" data-fn="QR127">QR127</button>
-          <button type="button" data-fn="TK1877">TK1877</button>
+          <button type="button" data-fn="UL566" data-no-tr>UL566</button>
+          <button type="button" data-fn="UL565" data-no-tr>UL565</button>
+          <button type="button" data-fn="EK205" data-no-tr>EK205</button>
+          <button type="button" data-fn="QR127" data-no-tr>QR127</button>
+          <button type="button" data-fn="TK1877" data-no-tr>TK1877</button>
         </div>
         <div id="tk-result" aria-live="polite"></div>
       </div>
@@ -199,37 +199,37 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
           <span class="route-from">Milano</span>
           <span class="route-arrow">→</span>
           <span class="route-to">Colombo</span>
-          <span class="route-iata">MXP → CMB</span>
+          <span class="route-iata" data-no-tr>MXP → CMB</span>
         </a>
         <a class="route-card" href="/api/go?to=kiwi&from=FCO" target="_blank" rel="noopener noreferrer">
           <span class="route-from">Roma</span>
           <span class="route-arrow">→</span>
           <span class="route-to">Colombo</span>
-          <span class="route-iata">FCO → CMB</span>
+          <span class="route-iata" data-no-tr>FCO → CMB</span>
         </a>
         <a class="route-card" href="/api/go?to=kiwi&from=TRN" target="_blank" rel="noopener noreferrer">
           <span class="route-from">Torino</span>
           <span class="route-arrow">→</span>
           <span class="route-to">Colombo</span>
-          <span class="route-iata">TRN → CMB</span>
+          <span class="route-iata" data-no-tr>TRN → CMB</span>
         </a>
         <a class="route-card" href="/api/go?to=kiwi&from=VCE" target="_blank" rel="noopener noreferrer">
           <span class="route-from">Venezia</span>
           <span class="route-arrow">→</span>
           <span class="route-to">Colombo</span>
-          <span class="route-iata">VCE → CMB</span>
+          <span class="route-iata" data-no-tr>VCE → CMB</span>
         </a>
         <a class="route-card" href="/api/go?to=kiwi&from=NAP" target="_blank" rel="noopener noreferrer">
           <span class="route-from">Napoli</span>
           <span class="route-arrow">→</span>
           <span class="route-to">Colombo</span>
-          <span class="route-iata">NAP → CMB</span>
+          <span class="route-iata" data-no-tr>NAP → CMB</span>
         </a>
         <a class="route-card" href="/api/go?to=kiwi&from=BGY" target="_blank" rel="noopener noreferrer">
           <span class="route-from">Bergamo</span>
           <span class="route-arrow">→</span>
           <span class="route-to">Colombo</span>
-          <span class="route-iata">BGY → CMB</span>
+          <span class="route-iata" data-no-tr>BGY → CMB</span>
         </a>
       </div>
       <p class="info-box" data-i18n="v.routes.note">I link aprono Kiwi.com con la rotta Italia → Colombo preimpostata. I prezzi mostrati sono live e possono variare.</p>
@@ -240,27 +240,27 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       <h2 id="airline-heading" data-i18n="v.airlines">Principali compagnie</h2>
       <div class="airline-grid">
         <div class="airline-card">
-          <p class="airline-name">Emirates</p>
+          <p class="airline-name" data-no-tr>Emirates</p>
           <p class="airline-hub">Via Dubai (DXB) · spesso la più economica</p>
         </div>
         <div class="airline-card">
-          <p class="airline-name">Qatar Airways</p>
+          <p class="airline-name" data-no-tr>Qatar Airways</p>
           <p class="airline-hub">Via Doha (DOH) · ottimo servizio</p>
         </div>
         <div class="airline-card">
-          <p class="airline-name">Turkish Airlines</p>
+          <p class="airline-name" data-no-tr>Turkish Airlines</p>
           <p class="airline-hub">Via Istanbul (IST) · comodo dal Nord Italia</p>
         </div>
         <div class="airline-card">
-          <p class="airline-name">Etihad Airways</p>
+          <p class="airline-name" data-no-tr>Etihad Airways</p>
           <p class="airline-hub">Via Abu Dhabi (AUH)</p>
         </div>
         <div class="airline-card">
-          <p class="airline-name">SriLankan Airlines</p>
+          <p class="airline-name" data-no-tr>SriLankan Airlines</p>
           <p class="airline-hub">Compagnia di bandiera · vola da varie hub</p>
         </div>
         <div class="airline-card">
-          <p class="airline-name">Air India</p>
+          <p class="airline-name" data-no-tr>Air India</p>
           <p class="airline-hub">Via Mumbai / Delhi</p>
         </div>
       </div>
@@ -313,17 +313,17 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
           <div>
             <label for="fs-origin" style="display:block;font-size:var(--text-sm);margin-bottom:.4rem;font-weight:500">Città di partenza</label>
             <select id="fs-origin" name="origin" class="ch-in">
-              <option value="MXP">Milano (MXP)</option>
-              <option value="FCO">Roma (FCO)</option>
-              <option value="TRN">Torino (TRN)</option>
-              <option value="VCE">Venezia (VCE)</option>
-              <option value="NAP">Napoli (NAP)</option>
-              <option value="BGY">Bergamo (BGY)</option>
+              <option value="MXP" data-no-tr>Milano (MXP)</option>
+              <option value="FCO" data-no-tr>Roma (FCO)</option>
+              <option value="TRN" data-no-tr>Torino (TRN)</option>
+              <option value="VCE" data-no-tr>Venezia (VCE)</option>
+              <option value="NAP" data-no-tr>Napoli (NAP)</option>
+              <option value="BGY" data-no-tr>Bergamo (BGY)</option>
             </select>
           </div>
           <div>
             <label for="fs-email" style="display:block;font-size:var(--text-sm);margin-bottom:.4rem;font-weight:500">La tua email</label>
-            <input id="fs-email" type="email" name="email" class="ch-in" placeholder="tua@email.com" required autocomplete="email"/>
+            <input id="fs-email" type="email" name="email" class="ch-in" placeholder="tua@email.com" required autocomplete="email"/ data-no-tr/>
           </div>
           <button type="submit" class="btn-primary" id="fs-btn" style="white-space:nowrap;height:42px">Iscrivimi</button>
         </div>

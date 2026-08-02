@@ -154,10 +154,15 @@
     _traducendo=true;
     const testo=el=>{const k=el.getAttribute('data-i18n');if(_dict[k]!=null)el.textContent=_dict[k];};
     const html=el=>{const k=el.getAttribute('data-i18n-html');if(_dict[k]!=null)el.innerHTML=_dict[k];};
+    // I segnaposto dei campi erano tradotti solo dove girava assets/index.js:
+    // sulle pagine che caricano il solo eih.js restavano in italiano.
+    const ph=el=>{const k=el.getAttribute('data-i18n-ph');if(_dict[k]!=null)el.setAttribute('placeholder',_dict[k]);};
     if(radice.hasAttribute('data-i18n'))testo(radice);
     if(radice.hasAttribute('data-i18n-html'))html(radice);
+    if(radice.hasAttribute('data-i18n-ph'))ph(radice);
     radice.querySelectorAll('[data-i18n]').forEach(testo);
     radice.querySelectorAll('[data-i18n-html]').forEach(html);
+    radice.querySelectorAll('[data-i18n-ph]').forEach(ph);
     _traducendo=false;
   }
   function applyLang(l){
@@ -167,6 +172,7 @@
     _traducendo=true;
     document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(d[k]!=null)el.textContent=d[k];});
     document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.getAttribute('data-i18n-html');if(d[k]!=null)el.innerHTML=d[k];});
+    document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(d[k]!=null)el.setAttribute('placeholder',d[k]);});
     _traducendo=false;
     const lf=document.getElementById('lang-flag'),lc=document.getElementById('lang-code');
     if(lf)lf.textContent=LANG_META[l].flag; if(lc)lc.textContent=LANG_META[l].code;

@@ -18,6 +18,11 @@ const PAGINE = process.argv[3]
 mkdirSync('i18n-src', { recursive: true });
 const b = await chromium.launch();
 const ctx = await b.newContext({ viewport: { width: 1280, height: 1400 }, serviceWorkers: 'block' });
+// La tipografia cinetica spezza i titoli in una <span> per parola. In italiano
+// non c'e' nessun traduttore da aspettare, quindi lo fa subito e l'estrazione
+// registrerebbe «Aprire | un | conto» invece del titolo intero: impronte che
+// nessuna traduzione potra' mai agganciare. Qui il movimento non serve.
+await ctx.route('**/eih-motion.js', r => r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
 await ctx.addInitScript(() => {
   try {
     localStorage.setItem('eih-lang', 'it');

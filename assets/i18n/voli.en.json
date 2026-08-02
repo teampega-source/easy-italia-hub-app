@@ -3,6 +3,7 @@
 "143f1082": "Flight number",
 "153d2985": "Departure city",
 "1f0e26b2": "Return",
+"1fdfa618": "e.g. 700",
 "24eb4642": "Departure",
 "2d1e0c77": "Via Doha (DOH) · excellent service",
 "33c870ab": "Select your departure city and dates, then choose your preferred comparison site. The three buttons open the search already set up, with prices that are",
@@ -15,9 +16,10 @@
 "712eec7e": "Naples",
 "7b898264": "Your email",
 "81d6c63b": "✈ Open all three comparison sites →",
+"91dff491": "e.g. UL566",
 "928c3f0c": "Track →",
 "_meta": {
-"copertura": 48,
+"copertura": 85,
 "lingua": "en",
 "pagina": "voli"
 },
