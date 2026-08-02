@@ -10,6 +10,7 @@
 "1e3ca161": "If you have no ISEE, or it exceeds €46,582.71, the minimum amount of €58.30/month per child applies.",
 "23562410": "+50% on the base amount for each child under 1 year old",
 "409c41e0": "Dependent children",
+"40a31387": "e.g. 20000",
 "4f811263": "6 or more children",
 "55d3be99": "5 children",
 "5b08def6": "CAF or patronato",
@@ -28,7 +29,7 @@
 "9a2d56ea": "4 children",
 "9a6dbc36": "Fill in the application with your ISEE, your children's details and your bank details (IBAN).",
 "_meta": {
-"copertura": 88,
+"copertura": 95,
 "lingua": "en",
 "pagina": "assegno-unico"
 },
@@ -41,7 +42,6 @@
 "c4c7ba49": "1 — mild/moderate disability",
 "c5e8cde2": "None",
 "c737bbbb": "Alternatively, go to a",
-"d77e7da5": "INPS — official application",
 "e9062ac9": "Log in to",
 "ecdc7fc2": "2 — mild/moderate disability",
 "f8f82db9": "Updated: June 2026",

@@ -1,14 +1,16 @@
 {
- "— STRUMENTI": "— TOOLS",
- "Traduci": "Translate",
- "capisci,": "understand,",
- "ogni": "every",
- "documento.": "document.",
  "Incolla il testo di una lettera o comunicazione ufficiale italiana. Scegli come vuoi capirla.": "Paste the text of an Italian letter or official communication. Choose how you want to understand it.",
+ "L'Intelligenza Artificiale fornisce informazioni generali basate su fonti pubbliche. Non sostituisce in alcun modo la consulenza legale di un avvocato, di un Patronato o di un CAF autorizzato. Easy Italia Hub declina ogni responsabilità per errori o per l'uso improprio delle informazioni.": "Artificial Intelligence provides general information based on public sources. It is in no way a substitute for the legal advice of a lawyer, a Patronato or an authorised CAF. Easy Italia Hub accepts no liability for errors or misuse of the information.",
  "TESTO DEL DOCUMENTO": "DOCUMENT TEXT",
- "🇰🇰 Traduci in sinhala": "🇰🇰 Translate into Sinhala",
- "🇮🇳 Traduci in tamil": "🇮🇳 Translate into Tamil",
+ "Traduci": "Translate",
+ "Traduci & capisci,": "Translate & understand,",
+ "capisci,": "understand,",
+ "documento.": "document.",
+ "ogni": "every",
+ "ogni documento.": "every document.",
+ "— STRUMENTI": "— TOOLS",
  "🇬🇧 Traduci in inglese": "🇬🇧 Translate into English",
- "📝 Spiega in semplice": "📝 Explain in plain language",
- "L'Intelligenza Artificiale fornisce informazioni generali basate su fonti pubbliche. Non sostituisce in alcun modo la consulenza legale di un avvocato, di un Patronato o di un CAF autorizzato. Easy Italia Hub declina ogni responsabilità per errori o per l'uso improprio delle informazioni.": "Artificial Intelligence provides general information based on public sources. It is in no way a substitute for the legal advice of a lawyer, a Patronato or an authorised CAF. Easy Italia Hub accepts no liability for errors or misuse of the information."
+ "🇮🇳 Traduci in tamil": "🇮🇳 Translate into Tamil",
+ "🇰🇰 Traduci in sinhala": "🇰🇰 Translate into Sinhala",
+ "📝 Spiega in semplice": "📝 Explain in plain language"
 }

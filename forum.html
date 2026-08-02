@@ -308,7 +308,7 @@ function renderList(){
       '<div class="tc-header"><span class="tc-cat '+escHtml(t.cat)+'">'+escHtml(catLabel(t.cat))+'</span></div>'+
       '<div class="tc-title">'+escHtml(t.title)+'</div>'+
       '<div class="tc-body">'+escHtml(t.body)+'</div>'+
-      '<div class="tc-meta"><b>'+escHtml(t.author||'Anonimo')+'</b> · '+relTime(t.ts)+' · '+
+      '<div class="tc-meta"><b data-no-tr>'+escHtml(t.author||'Anonimo')+'</b> · '+relTime(t.ts)+' · '+
       '<b>'+rc+'</b> risposta'+(rc!==1?'':'')+'e · '+
       '<b>'+t.helpful+'</b> utile</div>'+
     '</div>';

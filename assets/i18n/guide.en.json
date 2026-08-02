@@ -13,6 +13,7 @@
 "451154da": "Between Italy and Sri Lanka",
 "4713558c": "7 guides →",
 "478503eb": "Guides",
+"4831c9de": "the",
 "48f46671": "ANPR — change of address online",
 "53a11692": "Find your ASL",
 "5802cb23": "6 guides →",
@@ -27,7 +28,6 @@
 "6fbb2cd7": "Find your town hall's website",
 "714e1ea0": "Find your nearest Agenzia delle Entrate office",
 "77d81873": "A Sri Lankan passport from Italy and a first passport for children born here, dual citizenship, the village house in your ISEE, contributions paid in two countries.",
-"7b5c155d": "Agenzia delle Entrate — official guide",
 "7be0aa28": "INPS — NASpI (online application)",
 "902ffe83": "Building your future",
 "9151d187": "These ten guides cover the documents everyone needs. But most of the real problems come later, and on those you will find almost nothing, even in Italian.",
@@ -36,7 +36,7 @@
 "9c4ec69f": "Agenzia delle Entrate — flat-rate tax scheme",
 "9fb61be8": "from 2026 the SPID from",
 "_meta": {
-"copertura": 78,
+"copertura": 95,
 "lingua": "en",
 "pagina": "guide"
 },
@@ -56,9 +56,9 @@
 "e168b41c": "Find an employment consultant",
 "e7e57942": "⚠️ New in 2026:",
 "f2dd6172": "Undeclared hours, papers signed in a hurry, injuries without a contract, maternity, work-clearance scams, exploitation, safety.",
-"f6464904": "INPS — Gestione Separata scheme",
 "f83fb051": "Immigration portal",
 "f914d21a": "EIH deadline tracker",
 "fa9fa46b": "EIH comparison tool — live exchange rate",
+"fc5fc32f": "In this guide",
 "fe28eae6": "EIH payslip simulator"
 }

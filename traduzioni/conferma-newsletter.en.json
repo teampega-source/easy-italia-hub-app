@@ -1,7 +1,8 @@
 {
- "Controlla": "Check",
- "tua": "your",
- "email": "email",
  "Abbiamo inviato un link di conferma al tuo indirizzo. Clicca il link nell'email per completare l'iscrizione alla newsletter.": "We have sent a confirmation link to your address. Click the link in the email to complete your newsletter subscription.",
- "Torna alla home": "Back to home"
+ "Controlla": "Check",
+ "Controlla la tua email": "Check your email",
+ "Torna alla home": "Back to home",
+ "email": "email",
+ "tua": "your"
 }

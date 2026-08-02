@@ -40,7 +40,6 @@
 "8a79957d": "First month in advance",
 "8b70f0bc": "If your ISEE is low you can apply for a rent contribution from your town hall. The amount and the requirements vary by city.",
 "90226e52": "Most common",
-"92766bed": "Agenzia delle Entrate — contracts",
 "94b5d82a": "The contract must be registered with the Agenzia delle Entrate within 30 days. Without registration it is not legally valid.",
 "9599943b": "Before you pay",
 "96ac14cd": "1–3 months' rent",
@@ -49,7 +48,7 @@
 "9cc63da8": "Estate agencies",
 "9d6910c9": "Payslips / income",
 "_meta": {
-"copertura": 98,
+"copertura": 100,
 "lingua": "en",
 "pagina": "housing"
 },
