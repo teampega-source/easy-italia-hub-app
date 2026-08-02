@@ -17,6 +17,7 @@
 "3a24530d": "🏥 Medical expenses",
 "3d03390f": "A deduction for children up to 21. Since 2022 partly replaced by the single child allowance. Check what your household is entitled to.",
 "3ee8c598": "The",
+"42c2678c": "Tax and duties",
 "48165906": "📚 Education",
 "59f4f3ac": "(Certificazione Unica). Check it and keep it.",
 "6e038201": "Document",
@@ -32,7 +33,7 @@
 "96c588dd": "Employers issue the",
 "97d62b91": "Payslip and contributions",
 "_meta": {
-"copertura": 93,
+"copertura": 90,
 "lingua": "en",
 "pagina": "fisco"
 },

@@ -221,6 +221,12 @@
         function primoPassaggio() {
           if (d) {
             var e = applica(d);
+            /* Il dizionario di pagina si applica anche fuori da <main>: le
+               briciole di pane e i link "vedi anche" stanno in un <nav> che
+               precede il corpo, sono diversi da pagina a pagina — quindi non
+               possono stare in _ui — e cosi' restavano in italiano. Le voci
+               che non c'entrano semplicemente non si trovano e si saltano. */
+            applica(d, null, true);
             document.documentElement.setAttribute('data-tr', e.presi + '/' + e.totale);
           }
           // il corpo pagina puo' comparire: ora e' nella lingua giusta
@@ -249,7 +255,7 @@
           });
           ripasso.observe(document.documentElement, { childList: true, subtree: true });
           document.addEventListener('DOMContentLoaded', function () {
-            applica(d);
+            applica(d); applica(d, null, true);
             if (ripasso) { ripasso.disconnect(); ripasso = null; }
           });
         }
@@ -275,7 +281,7 @@
         // costruiscono pezzi di sé con JavaScript, e misurare troppo presto
         // fa comparire l'avviso anche dove la traduzione poi arriva.
         function controlloFinale() { setTimeout(function () {
-          if (d) applica(d);   // recupera i pezzi nati da JavaScript nel frattempo
+          if (d) { applica(d); applica(d, null, true); }   // anche i pezzi nati da JavaScript
           if (u) applica(u, null, true);
           var voci = raccogli(), residuo = 0;
           for (var i = 0; i < voci.length; i++) {

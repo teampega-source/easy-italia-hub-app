@@ -427,21 +427,40 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   }
   function isSaved(id){ return state.saved.indexOf(id) !== -1; }
 
+  /* Il conteggio dei giorni cambia ogni giorno: si scrive nella lingua scelta
+     dal codice, un dizionario per impronta scadrebbe da solo. */
+  var NW = (function(){
+    var lg; try {
+      var m = location.pathname.match(/^\/(en|si|ta)(\/|$)/);
+      lg = m ? m[1] : (localStorage.getItem('eih-lang') || 'it');
+    } catch(e){ lg = 'it'; }
+    var T = {
+      it:{scaduta:'scaduta',oggi:'scade oggi',uno:'manca 1 giorno',molti:'mancano {n} giorni',loc:'it'},
+      en:{scaduta:'expired',oggi:'due today',uno:'1 day left',molti:'{n} days left',loc:'en'},
+      si:{scaduta:'කල් ඉකුත්',oggi:'අද අවසන්',uno:'දිනක් ඉතිරියි',molti:'දින {n}ක් ඉතිරියි',loc:'si'},
+      ta:{scaduta:'காலாவதி',oggi:'இன்று கடைசி',uno:'1 நாள் உள்ளது',molti:'{n} நாட்கள் உள்ளன',loc:'ta'}
+    };
+    return T[lg] || T.it;
+  })();
+
   // Etichetta "mancano N giorni" sulle voci con una data limite reale.
   function dueBadge(due){
     if(!due) return '';
     var d = Date.parse(due + 'T23:59:59');
     if(isNaN(d)) return '';
     var days = Math.ceil((d - Date.now()) / 86400000);
-    if(days < 0) return '<span class="ndue past">scaduta</span>';
-    if(days === 0) return '<span class="ndue soon">scade oggi</span>';
-    var txt = days === 1 ? 'manca 1 giorno' : 'mancano ' + days + ' giorni';
+    if(days < 0) return '<span class="ndue past">'+NW.scaduta+'</span>';
+    if(days === 0) return '<span class="ndue soon">'+NW.oggi+'</span>';
+    var txt = days === 1 ? NW.uno : NW.molti.replace('{n}', days);
     return '<span class="ndue' + (days <= 30 ? ' soon' : '') + '">' + txt + '</span>';
   }
 
   function fmtDate(iso){
     try {
       var d = new Date(iso + 'T00:00:00');
+      // Resta in italiano: le date degli articoli sono poche e fisse, le
+      // traduce il dizionario di pagina. toLocaleDateString con si-LK/ta-IN
+      // non e' supportato ovunque e ripiegava sull'inglese.
       return d.toLocaleDateString('it-IT', {day:'numeric', month:'long', year:'numeric'});
     } catch(e){ return iso; }
   }
