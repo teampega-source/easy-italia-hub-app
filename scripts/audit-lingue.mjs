@@ -53,8 +53,11 @@ for (const lg of LINGUE) {
       //     («Sworn translations (3 docs × €80)» e' gia' inglese);
       //   · i nomi propri tengono i loro accenti anche tradotti
       //     («Abarekà Nandree (non-profit) — Via Venini, Milan»).
+      // Si guardano solo le vocali accentate che l'italiano usa davvero: la û
+      // di «vesak kûdu» e' una traslitterazione dal singalese, non italiano.
+      const ACCENTI_IT = /[àèéìíòóùúÀÈÉÌÍÒÓÙÚ]/;
       const senzaNomi = (t) => t.replace(/\p{Lu}[\p{L}'’-]*/gu, ' ');
-      const tradotto = (t) => (re ? re.test(t) : !/[À-ÖØ-öø-ÿ]/.test(senzaNomi(t)));
+      const tradotto = (t) => (re ? re.test(t) : !ACCENTI_IT.test(senzaNomi(t)));
 
       // 1. chiavi data-i18n ferme all'italiano
       // Un elemento con data-i18n e data-no-tr insieme dichiara che il valore

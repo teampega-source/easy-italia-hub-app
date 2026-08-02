@@ -18,66 +18,62 @@ permesso di soggiorno…). Gli spazi pubblicitari non fanno eccezione.
   (italiano → traduzione); `scripts/monta-traduzioni.py` monta l'uscita.
 - **Eccezioni volute**: si dichiarano nel markup con `data-no-tr`, non in un
   elenco dentro gli script. La ragione vive accanto al testo.
+  `scripts/segna-no-tr.py` mette l'attributo sull'elemento che contiene
+  esattamente quel testo, così non si fa a mano su decine di pagine.
 
-## Fatto (PR #333, mergiata)
-Prima si traduce, poi si spezzano i titoli in parole: la tipografia cinetica
-(`assets/eih-motion.js`) trasformava ogni titolo in una `<span>` per parola e,
-se arrivava prima del traduttore, il titolo non era più una frase e restava in
-italiano. Ora aspetta `EIHPageI18N.pronta` (tetto 4 s).
-Più: `data-no-tr` su corsi/moduli/podcast, e l'occhiello di `scuola` che
-diceva 託児所 al posto di «asilo nido».
+## Stato: l'audit esce a zero
+`node scripts/audit-lingue.mjs` (59 pagine × en/si/ta) non trova più né chiavi
+`data-i18n` ferme all'italiano né frammenti di corpo non tradotti;
+`node scripts/audit-cornice.mjs` dice «Cornice tradotta in si e ta».
+Si partiva da 341 frammenti in singalese su 51 pagine.
 
-## Da fare, in ordine
+## Come si è arrivati a zero (per rifarlo dopo nuove pagine)
 
-1. **Ri-estrarre tutto** con il fix attivo — le impronte dei titoli finora
-   erano una lotteria.
+1. **Estrarre** — `scripts/estrai-testi.mjs` blocca `eih-motion.js`: la
+   tipografia cinetica spezza ogni titolo in una `<span>` per parola e in
+   italiano non ha nessun traduttore da aspettare, quindi lo fa subito. Senza
+   quel blocco si estraeva «Aprire | un | conto», impronte che nessuna
+   traduzione può agganciare.
    ```
    ln -sfn /opt/node22/lib/node_modules/playwright node_modules/playwright
    npx serve . -l 3100 --no-request-logging &
    node scripts/estrai-testi.mjs http://localhost:3100
    ```
-   Il server muore sotto carico (EMFILE): estrarre a blocchi di ~15 pagine
+   Il server muore sotto carico (EMFILE): estrarre a blocchi di ~10 pagine
    (`node scripts/estrai-testi.mjs http://localhost:3100 pag1,pag2,…`) e
    riavviarlo fra un blocco e l'altro. Se una pagina dice CARICAMENTO FALLITO
    il suo file non viene toccato: rifare solo quelle.
 
-2. **Tradurre i frammenti nuovi.** `python3 scripts/monta-traduzioni.py`
-   segnala le voci senza riscontro (testo italiano cambiato) e la copertura
-   per pagina. I titoli interi vanno tradotti come frasi, non a pezzi.
+2. **Vedere cosa manca davvero** — `node scripts/elenca-non-tradotti.mjs
+   http://localhost:3100 <pagine> <lingua>` stampa i testi ancora in italiano
+   pagina per pagina, pronti da incollare in `traduzioni/`. È l'audit visto dal
+   lato di chi traduce.
 
-3. **Allargare `AMMESSI` in `scripts/audit-lingue.mjs`** — solo classi di
-   stringa che nessun markup può marcare una per una:
-   - togliere gli emoji iniziali prima del confronto (`🇱🇰 Sinhala`,
-     `🎙️ Spotify`, `📘 Sri Lankans in Italy (Facebook)`,
-     `🇱🇰 Embassy of Sri Lanka — Rome`);
-   - domini `.co` (`coolors.co`);
-   - hashtag accentati: `^#\w+$` non prende `#Comunità` → `^#[\p{L}\d_]+$/u`;
-   - token colore (`Taupe · #7d7058`);
-   - codice fiscale (`^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$`);
-   - aeroporti (`Roma Fiumicino (FCO)`, `Milano Malpensa (MXP)`);
-   - certificati consolari srilankesi (`Consular Birth Certificate`,
-     `Citizenship Registration Certificate`, `Citizenship 1`,
-     `new passport in lieu of…`);
-   - enti e servizi: `Identity Provider`, `PosteID`, `Namirial ID`,
-     `Idealista`, `OpenStreetMap`, `Patente Guru`, `Motorizzazione Civile`,
-     `foglio rosa`, `Medico di Medicina Generale (MMG)`, `EDISU/ARDSU/DSU`,
-     `European Job Days`, `Portale della Lingua Italiana`,
-     `Impara l'italiano con la RAI`, `Easy Italia Academy`.
+3. **Separare le due cose**: quello che va tradotto e quello che resta com'è.
+   Nomi propri, marchi, sigle di volo, indirizzi email d'esempio, codici
+   fiscali, hashtag, token colore → `data-no-tr` nel markup. Frasi, termini
+   burocratici e titoli → `traduzioni/<pagina>.<lg>.json`.
+   Restano tradotti di proposito, anche se sembrano nomi: `Tessera Sanitaria`,
+   `guardia medica`, `Medico di Medicina Generale (MMG)`, `foglio rosa`,
+   `Scuola Italiana`, `Travel Hub Sri Lanka`, `Patronato INPS`, `Privacy` e
+   `Cookie Policy`.
 
-   **Non** allargare per `Privacy Policy`, `Cookie Policy`, `Scuola Italiana`,
-   `Travel Hub Sri Lanka`, `Assegno Unico`, `tessera sanitaria`: `_ui.json` li
-   traduce già nelle briciole di pane, quindi ammetterli nasconderebbe un buco
-   vero. Vanno tradotti anche nel corpo.
-
-4. **Girare finché non esce 0**: `node scripts/audit-lingue.mjs` (server su
-   3100). Ultima misura nota: 116 frammenti su 46 pagine — buona parte dovuti
-   al bug dei titoli spezzati, quindi ora saranno meno.
-
-5. Commit, push, PR, merge in autonomia (squash su main).
+4. **Montare e ricontrollare**: `python3 scripts/monta-traduzioni.py`, poi
+   `node scripts/audit-lingue.mjs` finché non esce 0.
 
 ## Trappole già pagate
 - **Il container si riavvia e riporta indietro l'albero di lavoro.** Committare
   e *pushare* dopo ogni passo, non alla fine.
+- `pkill -f "serve . -l 3100"` ammazza anche la shell che ha quella stringa
+  nella propria riga di comando: tenere il pid in un file e uccidere quello.
+- `data-i18n-ph` (segnaposto dei campi) era applicato solo da
+  `assets/index.js`: sulle pagine col solo `eih.js` restava in italiano. Ora lo
+  applica anche `eih.js`.
+- Il metro dell'inglese guarda le sole vocali accentate italiane, dopo aver
+  tolto le parole con l'iniziale maiuscola: `×` non è una lettera, `Abarekà` è
+  un nome proprio e `vesak kûdu` è una traslitterazione dal singalese.
+- Un elemento con `data-i18n` **e** `data-no-tr` dichiara che il valore resta
+  com'è di proposito (`SPID`, `SIM / eSIM`): l'audit lo salta.
 - `scripts/monta-ui.py` deve calcolare l'impronta su **unità UTF-16**
   (`s.encode('utf-16-le')`), non su punti di codice: altrimenti le voci con
   emoji non combaciano con `charCodeAt()` del browser.
