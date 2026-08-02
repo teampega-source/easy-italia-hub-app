@@ -172,14 +172,16 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
           <button class="ep-play" aria-label="Ascolta episodio" data-ep="1">
             <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           </button>
-          <div class="ep-body">
+          <!-- Ogni episodio e' in una lingua sua (data-lang): titolo e descrizione
+               restano in quella lingua, non seguono la lingua dell'interfaccia. -->
+            <div class="ep-body">
             <div class="ep-meta">
               <span class="ep-lang lang-si">Sinhala</span>
               <span class="ep-num">EP. 01</span>
               <span class="ep-dur">· 8 min</span>
             </div>
-            <div class="ep-title">ඉතාලියේ වාසය කිරීමේ අවසරය — පළමු අවස්ථාව</div>
-            <div class="ep-desc">ඉතාලියට ළඟා වූ පසු කළ යුතු පළමු ලේඛනය: soggiorno permitot. කාල සීමා, ශ්‍රේණිගත ගාස්තු සහ භ්‍රමය වන ගැටළු.</div>
+            <div class="ep-title" data-no-tr>ඉතාලියේ වාසය කිරීමේ අවසරය — පළමු අවස්ථාව</div>
+            <div class="ep-desc" data-no-tr>ඉතාලියට ළඟා වූ පසු කළ යුතු පළමු ලේඛනය: soggiorno permitot. කාල සීමා, ශ්‍රේණිගත ගාස්තු සහ භ්‍රමය වන ගැටළු.</div>
             <div class="ep-progress"><div class="ep-progress-bar" id="ep-bar-1"></div></div>
           </div>
         </div>
@@ -194,8 +196,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
               <span class="ep-num">EP. 02</span>
               <span class="ep-dur">· 7 min</span>
             </div>
-            <div class="ep-title">தேசிய சுகாதார சேவை (SSN) — உங்கள் உரிமைகள்</div>
-            <div class="ep-desc">இத்தாலியில் மருத்துவ சேவைகளை அணுகுவது எப்படி. குடும்ப மருத்துவர் பதிவு, மருந்துச் சீட்டு மற்றும் அவசர காலம்.</div>
+            <div class="ep-title" data-no-tr>தேசிய சுகாதார சேவை (SSN) — உங்கள் உரிமைகள்</div>
+            <div class="ep-desc" data-no-tr>இத்தாலியில் மருத்துவ சேவைகளை அணுகுவது எப்படி. குடும்ப மருத்துவர் பதிவு, மருந்துச் சீட்டு மற்றும் அவசர காலம்.</div>
             <div class="ep-progress"><div class="ep-progress-bar" id="ep-bar-2"></div></div>
           </div>
         </div>
@@ -210,8 +212,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
               <span class="ep-num">EP. 03</span>
               <span class="ep-dur">· 10 min</span>
             </div>
-            <div class="ep-title">Come funziona il contratto di lavoro in Italia</div>
-            <div class="ep-desc">Tipi di contratto (determinato, indeterminato, somministrazione), busta paga spiegata voce per voce, ferie e malattia: i tuoi diritti.</div>
+            <div class="ep-title" data-no-tr>Come funziona il contratto di lavoro in Italia</div>
+            <div class="ep-desc" data-no-tr>Tipi di contratto (determinato, indeterminato, somministrazione), busta paga spiegata voce per voce, ferie e malattia: i tuoi diritti.</div>
             <div class="ep-progress"><div class="ep-progress-bar" id="ep-bar-3"></div></div>
           </div>
         </div>
@@ -226,8 +228,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
               <span class="ep-num">EP. 04</span>
               <span class="ep-dur">· 9 min</span>
             </div>
-            <div class="ep-title">Sending Money Home: Best Options in 2025</div>
-            <div class="ep-desc">Comparing Western Union, Wise, Remitly and local money transfer shops for Sri Lanka remittances. Fees, speed and safety.</div>
+            <div class="ep-title" data-no-tr>Sending Money Home: Best Options in 2025</div>
+            <div class="ep-desc" data-no-tr>Comparing Western Union, Wise, Remitly and local money transfer shops for Sri Lanka remittances. Fees, speed and safety.</div>
             <div class="ep-progress"><div class="ep-progress-bar" id="ep-bar-4"></div></div>
           </div>
         </div>
@@ -242,8 +244,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
               <span class="ep-num">EP. 05</span>
               <span class="ep-dur">· 12 min</span>
             </div>
-            <div class="ep-title">ඉතාලියේ නිවසක් කුලියට ගැනීම — සම්පූර්ණ මාර්ගෝපදේශය</div>
-            <div class="ep-desc">ගිවිසුම් වර්ග, ලේඛන, ඇප ගාස්තු සහ කුලී නිවැසියෙකු ලෙස ඔබේ අයිතිවාසිකම්. වංචාකරුවන්ගෙන් ආරක්ෂා වන්නේ කෙසේද.</div>
+            <div class="ep-title" data-no-tr>ඉතාලියේ නිවසක් කුලියට ගැනීම — සම්පූර්ණ මාර්ගෝපදේශය</div>
+            <div class="ep-desc" data-no-tr>ගිවිසුම් වර්ග, ලේඛන, ඇප ගාස්තු සහ කුලී නිවැසියෙකු ලෙස ඔබේ අයිතිවාසිකම්. වංචාකරුවන්ගෙන් ආරක්ෂා වන්නේ කෙසේද.</div>
             <div class="ep-progress"><div class="ep-progress-bar" id="ep-bar-5"></div></div>
           </div>
         </div>
@@ -258,8 +260,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
               <span class="ep-num">EP. 06</span>
               <span class="ep-dur">· 6 min</span>
             </div>
-            <div class="ep-title">குழந்தைகளை இத்தாலிய பள்ளியில் சேர்ப்பது எப்படி</div>
-            <div class="ep-desc">பள்ளி சேர்க்கை செயல்முறை, தேவையான ஆவணங்கள், மொழி ஆதரவு வகுப்புகள் (L2) மற்றும் உதவி நிதிகள்.</div>
+            <div class="ep-title" data-no-tr>குழந்தைகளை இத்தாலிய பள்ளியில் சேர்ப்பது எப்படி</div>
+            <div class="ep-desc" data-no-tr>பள்ளி சேர்க்கை செயல்முறை, தேவையான ஆவணங்கள், மொழி ஆதரவு வகுப்புகள் (L2) மற்றும் உதவி நிதிகள்.</div>
             <div class="ep-progress"><div class="ep-progress-bar" id="ep-bar-6"></div></div>
           </div>
         </div>

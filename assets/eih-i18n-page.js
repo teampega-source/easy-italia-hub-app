@@ -171,9 +171,17 @@
     return { presi: presi, totale: voci.length };
   }
 
+  /* La tipografia cinetica spezza i titoli in una <span> per parola. Se lo fa
+     prima di noi, il titolo non e' piu' una frase: nessuna impronta lo trova e
+     resta in italiano una parola alla volta. Chi spezza aspetta questa
+     promessa, che si scioglie appena il primo passaggio ha tradotto. */
+  var sciogli;
+  var pronta = window.Promise ? new Promise(function (r) { sciogli = r; }) : null;
+  function fatto() { if (sciogli) { sciogli(); sciogli = null; } }
+
   function avvia() {
     var lg = lingua();
-    if (lg === 'it') return;
+    if (lg === 'it') { fatto(); return; }
     var pg = pagina();
 
     // Il dizionario di norma e' gia' in volo: lo fa partire eih-lang-url.js
@@ -231,6 +239,7 @@
           }
           // il corpo pagina puo' comparire: ora e' nella lingua giusta
           document.documentElement.classList.remove('eih-tr-attesa');
+          fatto();
           controlloFinale();
         }
         if (d) delete d._meta;
@@ -298,10 +307,12 @@
           if (attendibile && residuo > 12 && residuo / Math.max(1, voci.length) > 0.45) avviso(lg, !!d);
         }, 1400); }
       })
-      .catch(function () { document.documentElement.classList.remove('eih-tr-attesa'); });
+      .catch(function () { document.documentElement.classList.remove('eih-tr-attesa'); fatto(); });
+    // se il dizionario non arriva, l'animazione non resta ferma per sempre
+    setTimeout(fatto, 4000);
   }
 
-  window.EIHPageI18N = { raccogli: raccogli, impronta: impronta, applica: applica, avvia: avvia };
+  window.EIHPageI18N = { raccogli: raccogli, impronta: impronta, applica: applica, avvia: avvia, pronta: pronta };
 
   // Si parte subito, senza aspettare DOMContentLoaded: il dizionario e'
   // gia' in volo e ogni millisecondo di attesa e' un millisecondo in cui

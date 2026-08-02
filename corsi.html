@@ -222,11 +222,13 @@ var EIH_CORSI = (function(){
         "<p>La richiami con <code>saluta(\"Anna\")</code>.</p>" }
     ]},
     { cat:"Lingue", title:"Inglese per il lavoro", yt:"corso inglese per lavoro colloquio principianti", lessons:[
+      // Le frasi inglesi sono la materia del corso: restano in inglese in ogni
+      // lingua (data-no-tr). Si traduce solo la colonna del significato.
       { id:'en1', t:"Presentarsi a un colloquio", body:
-        "<table><tr><td>My name is… and I'm from…</td><td>Mi chiamo… e vengo da…</td></tr>"+
-        "<tr><td>I have experience in…</td><td>Ho esperienza in…</td></tr>"+
-        "<tr><td>I'm a hard worker and reliable</td><td>Sono un gran lavoratore e affidabile</td></tr>"+
-        "<tr><td>I'm looking for a job as…</td><td>Cerco un lavoro come…</td></tr></table>" },
+        "<table><tr><td data-no-tr>My name is… and I'm from…</td><td>Mi chiamo… e vengo da…</td></tr>"+
+        "<tr><td data-no-tr>I have experience in…</td><td>Ho esperienza in…</td></tr>"+
+        "<tr><td data-no-tr>I'm a hard worker and reliable</td><td>Sono un gran lavoratore e affidabile</td></tr>"+
+        "<tr><td data-no-tr>I'm looking for a job as…</td><td>Cerco un lavoro come…</td></tr></table>" },
       { id:'en2', t:"Frasi utili sul posto di lavoro", body:
         "<ul><li>Can you help me, please? — Puoi aiutarmi, per favore?</li>"+
         "<li>I don't understand, can you repeat? — Non capisco, puoi ripetere?</li>"+
@@ -234,10 +236,10 @@ var EIH_CORSI = (function(){
         "<li>Where is the changing room? — Dov'è lo spogliatoio?</li>"+
         "<li>I finished the task — Ho finito il compito</li></ul>" },
       { id:'en3', t:"Email e telefono professionali", body:
-        "<p><b>Email</b>: inizia con <i>Dear Sir/Madam,</i> e chiudi con <i>Best regards, [nome]</i>.</p>"+
+        "<p><b>Email</b>: inizia con <i data-no-tr>Dear Sir/Madam,</i> e chiudi con <i data-no-tr>Best regards, [nome]</i>.</p>"+
         "<ul><li>I'm writing to apply for… — Scrivo per candidarmi a…</li>"+
         "<li>Please find my CV attached — In allegato il mio CV</li></ul>"+
-        "<p><b>Telefono</b>: <i>Hello, this is [nome] speaking</i> — Pronto, sono [nome].</p>" }
+        "<p><b>Telefono</b>: <i data-no-tr>Hello, this is [nome] speaking</i> — Pronto, sono [nome].</p>" }
     ]},
     { cat:"Ufficio & Business", title:"Microsoft Excel base", yt:"corso excel italiano completo gratis principianti", lessons:[
       { id:'xl1', t:"Celle, righe e colonne", body:
