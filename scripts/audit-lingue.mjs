@@ -47,10 +47,20 @@ for (const lg of LINGUE) {
 
     const r = await p.evaluate((lang) => {
       const re = { si: /[඀-෿]/, ta: /[஀-௿]/ }[lang];
-      const tradotto = (t) => (re ? re.test(t) : !/[À-ÿ]/.test(t));
+      // In inglese la spia dell'italiano rimasto sono le vocali accentate. Due
+      // classi di stringa non c'entrano e vanno tolte prima del confronto:
+      //   · × e ÷ stanno nello stesso tratto Latin-1 ma non sono lettere
+      //     («Sworn translations (3 docs × €80)» e' gia' inglese);
+      //   · i nomi propri tengono i loro accenti anche tradotti
+      //     («Abarekà Nandree (non-profit) — Via Venini, Milan»).
+      const senzaNomi = (t) => t.replace(/\p{Lu}[\p{L}'’-]*/gu, ' ');
+      const tradotto = (t) => (re ? re.test(t) : !/[À-ÖØ-öø-ÿ]/.test(senzaNomi(t)));
 
       // 1. chiavi data-i18n ferme all'italiano
-      const chiavi = [...document.querySelectorAll('[data-i18n],[data-i18n-html]')];
+      // Un elemento con data-i18n e data-no-tr insieme dichiara che il valore
+      // resta com'e' di proposito (SPID, SIM / eSIM, nomi di programmi).
+      const chiavi = [...document.querySelectorAll('[data-i18n],[data-i18n-html]')]
+        .filter(el => !el.closest('[data-no-tr]'));
       const ferme = [];
       for (const el of chiavi) {
         const k = el.getAttribute('data-i18n') || el.getAttribute('data-i18n-html');

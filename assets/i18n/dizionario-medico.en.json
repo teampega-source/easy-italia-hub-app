@@ -3,6 +3,7 @@
 "16e14d3e": "Tools",
 "173c4245": "Other guides",
 "1aeeaad9": "Filter by category",
+"1e0acf0e": "Italian — Sinhala",
 "3671c7ab": "Body parts",
 "371d0b94": "Pronunciation",
 "41888886": "The AI advisor replies in Sinhala and can help you build phrases tailored to your medical situation.",
@@ -10,6 +11,7 @@
 "4aa38b86": "Ask the AI advisor",
 "4db9faf7": "At the doctor's",
 "591d9a6e": "Fire brigade",
+"59513c94": "No results",
 "5fddda0f": "copy",
 "61ffed07": "Emergency",
 "6b2483c2": "Ambulance / Medical emergency",
@@ -18,7 +20,7 @@
 "99f3fd44": "Medical dictionary",
 "9aad18cb": "🫀 Body parts",
 "_meta": {
-"copertura": 83,
+"copertura": 89,
 "lingua": "en",
 "pagina": "dizionario-medico"
 },

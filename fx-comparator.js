@@ -173,6 +173,8 @@
           "padding:.4rem .85rem;border-radius:9999px;" +
           "background:" + C.surfaceSoft + ";border:1px solid " + C.borderBright + ";",
         text: p.name + " ↗",
+        // il nome del servizio e' un marchio: resta com'e' in ogni lingua
+        "data-no-tr": "",
       });
       linkRow.appendChild(a);
     });

@@ -40,7 +40,10 @@ for (const nome of PAGINE) {
   }
   const voci = await p.evaluate((lang) => {
     const re = { si: /[඀-෿]/, ta: /[஀-௿]/ }[lang];
-    const tradotto = (t) => (re ? re.test(t) : !/[À-ÿ]/.test(t));
+    // Stesso metro dell'audit: × e ÷ non sono lettere, e i nomi propri tengono
+    // i loro accenti anche una volta tradotta la frase.
+    const senzaNomi = (t) => t.replace(/\p{Lu}[\p{L}'’-]*/gu, ' ');
+    const tradotto = (t) => (re ? re.test(t) : !/[À-ÖØ-öø-ÿ]/.test(senzaNomi(t)));
     const api = window.EIHPageI18N;
     if (!api) return [];
     const out = [];
