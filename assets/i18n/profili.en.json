@@ -21,7 +21,9 @@
 "50299801": "Permit tracker",
 "5b73eb88": "Parent",
 "6f50bf95": "Save profile",
+"712eec7e": "Naples",
 "714af866": "Complete your profile below",
+"79bb35cb": "Genoa",
 "7dd2feef": "All your data saved privately on this device. No account needed.",
 "805fde95": "Delete all saved data",
 "857b1227": "Days with us",
@@ -35,14 +37,17 @@
 "9ccc124c": "— PROFILE",
 "9f269941": "Another city",
 "_meta": {
-"copertura": 70,
+"copertura": 79,
 "lingua": "en",
 "pagina": "profili"
 },
 "a04b68c7": "Welcome",
 "a0e12082": "Name initials",
+"af9984d3": "Milan",
 "b36f7c7f": "Other",
+"b82dfbc8": "Rome",
 "c389b695": "No members added.",
+"cff3aba8": "Florence",
 "d2e81703": "6–10 years",
 "d8d39773": "City",
 "e85e007b": "4–5 years",
@@ -52,5 +57,6 @@
 "eec4fa2d": "+ Add",
 "f4dfe2c9": "Forum posts",
 "f6600aa6": "e.g. Dilani",
+"f7625406": "Turin",
 "ffa25b82": "Saved deadlines"
 }
