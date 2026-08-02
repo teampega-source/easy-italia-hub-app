@@ -159,14 +159,14 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
         <p class="muted" data-i18n="n.11">Lasciaci nome ed email per ricevere permessi, scadenze INPS, bandi casa e opportunità quando la redazione sarà attiva.</p>
         <form class="form" id="signup-form" novalidate>
           <div><label for="s-name" data-i18n="n.12">Nome</label><input id="s-name" name="name" type="text" autocomplete="name" placeholder="Il tuo nome" required/></div>
-          <div><label for="s-email" data-i18n="n.13">Email</label><input id="s-email" name="email" type="email" autocomplete="email" placeholder="nome@email.it" required/></div>
+          <div><label for="s-email" data-i18n="n.13">Email</label><input id="s-email" name="email" type="email" autocomplete="email" placeholder="nome@email.it" required/ data-no-tr/></div>
           <div class="signup-actions">
             <button type="submit" class="btn-primary" data-i18n="n.14">Iscrivimi agli aggiornamenti</button>
             <a href="/percorso" class="btn-ghost" data-i18n="n.15">Registrati con il tuo percorso</a>
           </div>
           <p class="form-err muted" id="signup-err" role="alert" hidden></p>
           <p class="form-ok" id="signup-ok" role="status" hidden>✓ Grazie, <span id="signup-name">amico</span>! Ti contatteremo non appena gli aggiornamenti saranno attivi.</p>
-          <p class="form-demo" id="signup-demo" role="status" hidden style="color:#b45309;background:#fef3c7;border-radius:8px;padding:.6rem .9rem;font-size:.85rem">⚠️ Iscrizione NON inviata — modalità demo attiva. Scrivi direttamente a <a class="inline" href="mailto:info@easyitaliahub.it">info@easyitaliahub.it</a></p>
+          <p class="form-demo" id="signup-demo" role="status" hidden style="color:#b45309;background:#fef3c7;border-radius:8px;padding:.6rem .9rem;font-size:.85rem">⚠️ Iscrizione NON inviata — modalità demo attiva. Scrivi direttamente a <a class="inline" href="mailto:info@easyitaliahub.it" data-no-tr>info@easyitaliahub.it</a></p>
         </form>
       </div>
     </section>
@@ -507,7 +507,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
               '<p class="nitem-verify">⚠️ '+esc(it.verify)+'</p>'+
               '<div class="nitem-source">'+
                 '<span class="src-label">Fonte ufficiale:</span> '+
-                '<a class="inline" href="'+esc(it.src.url)+'" target="_blank" rel="noopener">'+esc(it.src.label)+' ↗</a>'+
+                '<a class="inline" href="'+esc(it.src.url)+'" target="_blank" rel="noopener" data-no-tr>'+esc(it.src.label)+' ↗</a>'+
               '</div>'+
             '</div>'+
           '</div>'+

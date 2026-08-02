@@ -342,7 +342,14 @@ function openThread(id){
   catEl.textContent = catLabel(t.cat);
   document.getElementById('td-title').textContent = t.title;
   var metaEl = document.getElementById('td-meta');
-  metaEl.textContent = 'Da ' + (t.author||'Anonimo') + ' · ' + relTime(t.ts) + ' ';
+  // il nome di chi scrive non si traduce: sta in un suo elemento marcato
+  metaEl.textContent = '';
+  metaEl.appendChild(document.createTextNode('Da '));
+  var autEl = document.createElement('span');
+  autEl.setAttribute('data-no-tr', '');
+  autEl.textContent = t.author || 'Anonimo';
+  metaEl.appendChild(autEl);
+  metaEl.appendChild(document.createTextNode(' · ' + relTime(t.ts) + ' '));
   if(window.EIHModeration){
     var rb = EIHModeration.reportButton(function(){ return { area:'forum', id:t.id, title:t.title }; }, 'td-report');
     rb.style.cssText = 'background:none;border:none;padding:0;margin-left:.4rem;cursor:pointer;font-size:var(--text-xs);color:var(--fg-muted)';
@@ -362,7 +369,7 @@ function renderReplies(t){
   container.innerHTML = '<p class="replies-label">'+t.replies.length+' risposta'+(t.replies.length!==1?'':'')+'e</p>' +
     t.replies.map(function(r){
       return '<div class="reply-card'+(r.isAI?' ai-reply':'')+'">' +
-        '<div class="reply-author">'+escHtml(r.author||'Anonimo')+(r.isAI?' <span class="ai-badge">AI</span>':'')+' <span style="font-weight:400;color:var(--fg-muted)">· '+relTime(r.ts)+'</span></div>'+
+        '<div class="reply-author"><span data-no-tr>'+escHtml(r.author||'Anonimo')+'</span>'+(r.isAI?' <span class="ai-badge">AI</span>':'')+' <span style="font-weight:400;color:var(--fg-muted)">· '+relTime(r.ts)+'</span></div>'+
         '<div class="reply-body">'+escHtml(r.body)+'</div>'+
       '</div>';
     }).join('');

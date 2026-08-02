@@ -5,7 +5,6 @@
 "0ac43b90": "· 40' container: on quotation",
 "110a2edd": "Express air",
 "11d26549": "🚫 Perishable food",
-"17db3825": "Cargo shipping",
 "1b35c859": "Customs",
 "1bb4a2b6": "A note on contacts:",
 "1ca5cd6b": "🚫 Drugs and narcotics",
@@ -46,11 +45,12 @@
 "8527b561": "Packing list (a detailed list of what you are sending), a copy of your ID, and the recipient's full address in Sri Lanka (district and town).",
 "857cd3e3": "Specialising in the Sri Lankan community in Italy. Box collection from home, LCL consolidation to Colombo. Estimated time: 45–60 days.",
 "87db98a4": "📦 FCL container",
+"8bb0bd67": "Italy",
 "8e97e029": "Items that cannot be shipped to Sri Lanka",
 "9612c461": "Agencies specialising in sending parcels, boxes and containers from Italy to Sri Lanka by sea (LCL/FCL) and by air. Direct contacts and indicative prices.",
 "9997407c": "EIH Community",
 "_meta": {
-"copertura": 82,
+"copertura": 77,
 "lingua": "en",
 "pagina": "cargo"
 },
@@ -82,6 +82,5 @@
 "f7d7ba73": "Turin (Aurora area)",
 "faa8f537": "Tracking",
 "fb0daaf0": "Agency prices and contacts change often. The most reliable numbers come from asking directly in the",
-"ff355f01": "Ask in the community for up-to-date contacts",
-"ffc40a8a": "Italy → Sri Lanka"
+"ff355f01": "Ask in the community for up-to-date contacts"
 }

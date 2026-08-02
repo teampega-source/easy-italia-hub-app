@@ -112,10 +112,10 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       <h2 data-i18n="m.8">Ottieni un preventivo reale</h2>
       <p data-i18n-html="m.9">Questi servizi mostrano l'importo finale con <strong>commissioni e cambio inclusi</strong>. Le condizioni cambiano in continuazione: confrontale al momento dell'invio. (Alcuni link sono affiliati: se attivi un servizio potremmo ricevere una commissione, senza costi extra per te.)</p>
       <ul class="provider-list">
-        <li><a href="/api/go?to=wise&amp;ref=mt" target="_blank" rel="sponsored noopener noreferrer">Wise ↗</a></li>
-        <li><a href="/api/go?to=remitly&amp;ref=mt" target="_blank" rel="sponsored noopener noreferrer">Remitly ↗</a></li>
-        <li><a href="https://www.westernunion.com" target="_blank" rel="noopener noreferrer">Western Union ↗</a></li>
-        <li><a href="https://www.riamoneytransfer.com" target="_blank" rel="noopener noreferrer">Ria ↗</a></li>
+        <li><a href="/api/go?to=wise&amp;ref=mt" target="_blank" rel="sponsored noopener noreferrer" data-no-tr>Wise ↗</a></li>
+        <li><a href="/api/go?to=remitly&amp;ref=mt" target="_blank" rel="sponsored noopener noreferrer" data-no-tr>Remitly ↗</a></li>
+        <li><a href="https://www.westernunion.com" target="_blank" rel="noopener noreferrer" data-no-tr>Western Union ↗</a></li>
+        <li><a href="https://www.riamoneytransfer.com" target="_blank" rel="noopener noreferrer" data-no-tr>Ria ↗</a></li>
       </ul>
     </section>
 
@@ -125,7 +125,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
         <p class="muted" style="font-size:var(--text-sm)">Indicaci email e tasso obiettivo: ti scriviamo quando 1 EUR supera quella soglia LKR.</p>
         <form class="form" id="fx-alert-form" novalidate>
           <div class="fa-grid">
-            <label style="font-size:var(--text-sm);font-weight:500;display:flex;flex-direction:column;gap:.35rem">Email<input type="email" id="fa-email" placeholder="nome@email.it" required/></label>
+            <label style="font-size:var(--text-sm);font-weight:500;display:flex;flex-direction:column;gap:.35rem">Email<input type="email" id="fa-email" placeholder="nome@email.it" required/ data-no-tr/></label>
             <label style="font-size:var(--text-sm);font-weight:500;display:flex;flex-direction:column;gap:.35rem">Tasso obiettivo LKR<input type="number" id="fa-rate" placeholder="es. 340" min="200" max="600" step="1" required/></label>
           </div>
           <div class="signup-actions" style="margin-top:.75rem">

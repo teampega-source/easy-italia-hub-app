@@ -197,7 +197,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     <!-- IndexedDB unsupported notice (shown by JS only when needed) -->
     <div id="unsupported" class="unsupported reveal" role="alert">
       <span class="un-ic" aria-hidden="true">⚠️</span>
-      <span>Il tuo browser non supporta l'archiviazione locale dei file (<strong>IndexedDB</strong>), oppure è disattivata (per esempio in navigazione privata). Non è possibile salvare documenti su questo dispositivo. Prova con un browser aggiornato come Chrome, Firefox, Edge o Safari, fuori dalla modalità privata.</span>
+      <span>Il tuo browser non supporta l'archiviazione locale dei file (<strong data-no-tr>IndexedDB</strong>), oppure è disattivata (per esempio in navigazione privata). Non è possibile salvare documenti su questo dispositivo. Prova con un browser aggiornato come Chrome, Firefox, Edge o Safari, fuori dalla modalità privata.</span>
     </div>
 
     <div class="doc-grid">
@@ -220,7 +220,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
           <div class="file-zone" id="file-zone">
             <span class="fz-ic" aria-hidden="true">📄</span>
             <span class="fz-main">Scegli un file o trascinalo qui</span>
-            <span class="fz-sub">PDF, JPG, PNG, HEIC…</span>
+            <span class="fz-sub" data-no-tr>PDF, JPG, PNG, HEIC…</span>
             <span class="fz-file" id="fz-file"></span>
             <input type="file" id="doc-file" name="file" accept="application/pdf,image/*" aria-labelledby="file-label" disabled/>
           </div>
