@@ -388,26 +388,30 @@ var COURSES = {
     base: [
       { id:'it-b1', title:"L'alfabeto e la pronuncia", body:
         "<ul>"+
-        "<li><b>c</b> + e/i = suono \"ce/ci\" (come in <i>cena</i>, <i>cibo</i>); <b>c</b> + a/o/u = suono \"k\" (<i>casa</i>, <i>cosa</i>)</li>"+
-        "<li><b>ch</b> = sempre suono \"k\" (<i>chiave</i>, <i>chiesa</i>)</li>"+
-        "<li><b>gn</b> = suono \"ny\" (<i>gnocchi</i>, <i>bagno</i>)</li>"+
-        "<li><b>gli</b> = suono \"ly\" (<i>famiglia</i>, <i>figlio</i>)</li>"+
-        "<li>Le doppie consonanti si pronunciano più a lungo: <i>nonno</i> (grandfather) vs <i>nono</i> (ninth)</li>"+
-        "</ul>" },
+        "<li>La lettera c ha un suono dolce davanti alle vocali e ed i, e un suono duro davanti ad a, o, u.</li>"+
+        "<li>Il gruppo ch ha sempre suono duro.</li>"+
+        "<li>Il gruppo gn si pronuncia come la n spagnola.</li>"+
+        "<li>Il gruppo gli ha un suono liquido che non esiste in molte lingue.</li>"+
+        "<li>Le consonanti doppie si pronunciano piu' a lungo, e cambiano il significato della parola.</li>"+
+        "</ul>"+
+        "<p data-no-tr>cena, cibo · casa, cosa · chiave, chiesa · gnocchi, bagno · famiglia, figlio · nonno ≠ nono</p>" },
       { id:'it-b2', title:"Saluti e presentazioni", body:
+        "<p>A sinistra la frase italiana da usare, a destra cosa significa.</p>"+
         "<table>"+
-        "<tr><td>Ciao!</td><td>Hi / Bye <span class='muted'>(informale)</span></td></tr>"+
-        "<tr><td>Buongiorno</td><td>Good morning/day <span class='muted'>(formale)</span></td></tr>"+
-        "<tr><td>Buonasera</td><td>Good evening</td></tr>"+
-        "<tr><td>Mi chiamo…</td><td>My name is…</td></tr>"+
-        "<tr><td>Piacere!</td><td>Nice to meet you</td></tr>"+
-        "<tr><td>Come stai? / Come sta?</td><td>How are you? <span class='muted'>(informale/formale)</span></td></tr>"+
-        "<tr><td>Tutto bene, grazie</td><td>All good, thanks</td></tr>"+
+        "<tr><td data-no-tr>Ciao!</td><td>Saluto tra amici, vale sia per arrivare sia per andare via</td></tr>"+
+        "<tr><td data-no-tr>Buongiorno</td><td>Saluto formale del mattino, si usa fino al primo pomeriggio</td></tr>"+
+        "<tr><td data-no-tr>Buonasera</td><td>Saluto formale dal tardo pomeriggio in poi</td></tr>"+
+        "<tr><td data-no-tr>Mi chiamo…</td><td>Serve a dire il proprio nome</td></tr>"+
+        "<tr><td data-no-tr>Piacere!</td><td>Si dice quando si conosce qualcuno per la prima volta</td></tr>"+
+        "<tr><td data-no-tr>Come stai? / Come sta?</td><td>La prima forma con gli amici, la seconda con chi non conosci</td></tr>"+
+        "<tr><td data-no-tr>Tutto bene, grazie</td><td>La risposta piu' comune</td></tr>"+
         "</table>" },
       { id:'it-b3', title:"I numeri da 0 a 20", body:
-        "<p>0 zero · 1 uno · 2 due · 3 tre · 4 quattro · 5 cinque · 6 sei · 7 sette · 8 otto · 9 nove · 10 dieci · 11 undici · 12 dodici · 13 tredici · 14 quattordici · 15 quindici · 16 sedici · 17 diciassette · 18 diciotto · 19 diciannove · 20 venti</p>" },
+        "<p>I numeri da imparare a memoria: sono quelli che servono per i prezzi, gli orari e gli sportelli.</p>"+
+        "<p data-no-tr>0 zero · 1 uno · 2 due · 3 tre · 4 quattro · 5 cinque · 6 sei · 7 sette · 8 otto · 9 nove · 10 dieci · 11 undici · 12 dodici · 13 tredici · 14 quattordici · 15 quindici · 16 sedici · 17 diciassette · 18 diciotto · 19 diciannove · 20 venti</p>" },
       { id:'it-b4', title:"I verbi ESSERE e AVERE (presente)", body:
-        "<table>"+
+        "<p>Sono i due verbi piu' usati della lingua: reggono da soli meta' delle frasi quotidiane.</p>"+
+        "<table data-no-tr>"+
         "<tr><td>io</td><td>sono</td><td>ho</td></tr>"+
         "<tr><td>tu</td><td>sei</td><td>hai</td></tr>"+
         "<tr><td>lui / lei</td><td>è</td><td>ha</td></tr>"+
@@ -416,23 +420,28 @@ var COURSES = {
         "<tr><td>loro</td><td>sono</td><td>hanno</td></tr>"+
         "</table>" },
       { id:'it-b5', title:"Frasi utili per la vita quotidiana", body:
-        "<ul>"+
-        "<li>Quanto costa? — How much is it?</li>"+
-        "<li>Dov'è la farmacia? — Where is the pharmacy?</li>"+
-        "<li>Posso avere un biglietto per…? — Can I have a ticket for…?</li>"+
-        "<li>Ho bisogno di aiuto — I need help</li>"+
-        "<li>Non capisco, può ripetere? — I don't understand, can you repeat?</li>"+
-        "<li>Parla inglese? — Do you speak English?</li>"+
-        "</ul>" },
+        "<p>Sei frasi che risolvono la maggior parte delle situazioni fuori casa. A destra cosa significano.</p>"+
+        "<table>"+
+        "<tr><td data-no-tr>Quanto costa?</td><td>Per chiedere il prezzo</td></tr>"+
+        "<tr><td data-no-tr>Dov'è la farmacia?</td><td>Per chiedere dove si trova un posto</td></tr>"+
+        "<tr><td data-no-tr>Posso avere un biglietto per…?</td><td>Per comprare un biglietto</td></tr>"+
+        "<tr><td data-no-tr>Ho bisogno di aiuto</td><td>Per chiedere aiuto</td></tr>"+
+        "<tr><td data-no-tr>Non capisco, può ripetere?</td><td>La frase piu' utile di tutte: chiedere di ripetere non e' maleducato</td></tr>"+
+        "<tr><td data-no-tr>Parla inglese?</td><td>Per chiedere se la persona parla inglese</td></tr>"+
+        "</table>" },
       { id:'it-b6', title:"Giorni della settimana e orari", body:
-        "<p>lunedì · martedì · mercoledì · giovedì · venerdì · sabato · domenica</p>"+
-        "<p>Che ore sono? (What time is it?) — Sono le… (It's…) <br>mattina (morning) · pomeriggio (afternoon) · sera (evening) · notte (night)</p>" }
+        "<p>I giorni della settimana, dal lunedi' alla domenica.</p>"+
+        "<p data-no-tr>lunedì · martedì · mercoledì · giovedì · venerdì · sabato · domenica</p>"+
+        "<p>Per chiedere l'ora si usa una domanda fissa, e la risposta comincia sempre allo stesso modo, seguita dal numero.</p>"+
+        "<p data-no-tr>Che ore sono? — Sono le…</p>"+
+        "<p>Le quattro parti della giornata:</p>"+
+        "<p data-no-tr>mattina · pomeriggio · sera · notte</p>" }
     ],
     adv: [
       { id:'it-a1', title:"Verbi regolari al presente (-are, -ere, -ire)", desc:"Le tre coniugazioni regolari con esempi pratici.", body:
-        "<p>Tre gruppi, riconoscibili dalla fine dell'infinito. Si toglie la desinenza e si aggiunge la terminazione della persona.</p>"+
-        "<table>"+
-        "<tr><td></td><td><b>parl-are</b></td><td><b>prend-ere</b></td><td><b>dorm-ire</b></td></tr>"+
+        "<p>I verbi regolari si dividono in tre gruppi, riconoscibili dalla fine dell'infinito. Si toglie la desinenza e si aggiunge la terminazione della persona.</p>"+
+        "<table data-no-tr>"+
+        "<tr><td></td><td>parl-are</td><td>prend-ere</td><td>dorm-ire</td></tr>"+
         "<tr><td>io</td><td>parlo</td><td>prendo</td><td>dormo</td></tr>"+
         "<tr><td>tu</td><td>parli</td><td>prendi</td><td>dormi</td></tr>"+
         "<tr><td>lui/lei</td><td>parla</td><td>prende</td><td>dorme</td></tr>"+
@@ -440,162 +449,172 @@ var COURSES = {
         "<tr><td>voi</td><td>parlate</td><td>prendete</td><td>dormite</td></tr>"+
         "<tr><td>loro</td><td>parlano</td><td>prendono</td><td>dormono</td></tr>"+
         "</table>"+
-        "<p>Attenzione: <i>capire</i>, <i>finire</i>, <i>preferire</i> aggiungono <b>-isc-</b> (io cap<b>isc</b>o, tu cap<b>isc</b>i, loro cap<b>isc</b>ono).</p>" },
+        "<p>Alcuni verbi del terzo gruppo aggiungono una sillaba in piu' fra la radice e la terminazione. Sono moltissimi e vanno riconosciuti a memoria.</p>"+
+        "<p data-no-tr>capire → io capisco, tu capisci, loro capiscono · finire · preferire</p>" },
       { id:'it-a2', title:"Passato e futuro: le basi", desc:"Passato prossimo e futuro semplice per raccontare la tua storia.", body:
-        "<p>Il <b>passato prossimo</b> serve per quasi tutto il passato parlato. Si forma con <i>avere</i> o <i>essere</i> + participio.</p>"+
-        "<ul>"+
-        "<li>Con <b>avere</b>: ho lavorato, ho mangiato, ho dormito — il participio non cambia</li>"+
-        "<li>Con <b>essere</b> (andare, venire, arrivare, restare, nascere): sono andat<b>o</b> / sono andat<b>a</b> — cambia con chi parla</li>"+
-        "<li>Irregolari da imparare a memoria: fatto, detto, letto, scritto, preso, visto, aperto, chiuso</li>"+
-        "</ul>"+
-        "<p>Il <b>futuro</b>: parler<b>ò</b>, prender<b>ò</b>, dormir<b>ò</b>. Nel parlato si usa spesso il presente: «domani <i>vado</i> in Questura».</p>" },
+        "<p>Per raccontare quasi tutto il passato basta un tempo solo, che si forma con un verbo ausiliare piu' il participio.</p>"+
+        "<p>Con il primo ausiliare il participio non cambia mai, qualunque sia la persona che parla.</p>"+
+        "<p data-no-tr>ho lavorato · ho mangiato · ho dormito</p>"+
+        "<p>Con il secondo ausiliare, che regge i verbi di movimento e di stato, il participio cambia secondo chi parla.</p>"+
+        "<p data-no-tr>sono andato / sono andata · sono venuto / venuta · sono nato / nata</p>"+
+        "<p>Questi participi sono irregolari e vanno imparati a memoria: sono anche i piu' frequenti.</p>"+
+        "<p data-no-tr>fatto · detto · letto · scritto · preso · visto · aperto · chiuso</p>"+
+        "<p>Il futuro esiste, ma nel parlato di tutti i giorni si usa quasi sempre il presente con un riferimento di tempo.</p>"+
+        "<p data-no-tr>parlerò · prenderò · dormirò — «domani vado in Questura»</p>" },
       { id:'it-a3', title:"Italiano per il lavoro", desc:"Colloqui, CV e email professionali in italiano.", body:
-        "<p><b>Al colloquio</b>, frasi che tornano sempre:</p>"+
-        "<ul>"+
-        "<li>«Ho esperienza come… da… anni»</li>"+
-        "<li>«Sono disponibile da subito / dal…»</li>"+
-        "<li>«Sono disponibile a turni e nel fine settimana»</li>"+
-        "<li>«Ho il permesso di soggiorno che consente di lavorare»</li>"+
-        "</ul>"+
-        "<p><b>Email formale</b>: apri con «Gentile [nome/azienda],», chiudi con «Cordiali saluti» e il tuo nome. Il <i>tu</i> si usa solo se te lo propongono.</p>"+
-        "<p>Parole da riconoscere in un annuncio: <i>assunzione</i>, <i>tempo determinato</i>, <i>full time</i>, <i>part time</i>, <i>turnista</i>, <i>RAL</i> (stipendio annuo lordo).</p>" },
+        "<p>Al colloquio tornano sempre le stesse quattro frasi. Impararle a memoria toglie meta' dell'ansia.</p>"+
+        "<p data-no-tr>«Ho esperienza come… da… anni» · «Sono disponibile da subito» · «Sono disponibile a turni e nel fine settimana» · «Ho il permesso di soggiorno che consente di lavorare»</p>"+
+        "<p>Una email formale si apre e si chiude con formule fisse. Il tu si usa solo se e' l'altra persona a proporlo.</p>"+
+        "<p data-no-tr>«Gentile [nome],» … «Cordiali saluti»</p>"+
+        "<p>Queste parole compaiono in quasi ogni annuncio di lavoro: riconoscerle serve a capire cosa ti stanno offrendo davvero.</p>"+
+        "<p data-no-tr>assunzione · tempo determinato · full time · part time · turnista · RAL</p>" },
       { id:'it-a4', title:"Capire le lettere della burocrazia", desc:"Leggere comunicazioni di Questura, INPS e Comune senza ansia.", body:
-        "<p>Le lettere degli uffici usano sempre le stesse parole. Riconoscerne una decina basta per capire cosa ti chiedono.</p>"+
+        "<p>Le lettere degli uffici usano sempre le stesse formule. Riconoscerne una decina basta per capire cosa ti chiedono.</p>"+
         "<table>"+
-        "<tr><td>Si invita a…</td><td>devi fare questa cosa</td></tr>"+
-        "<tr><td>Entro e non oltre il…</td><td>scadenza, dopo non vale piu'</td></tr>"+
-        "<tr><td>Si comunica che…</td><td>informazione, di solito nessuna azione</td></tr>"+
-        "<tr><td>Ai sensi dell'art…</td><td>riferimento di legge, si puo' saltare</td></tr>"+
-        "<tr><td>Integrazione documentale</td><td>mancano dei documenti</td></tr>"+
-        "<tr><td>Diniego / rigetto</td><td>domanda respinta</td></tr>"+
-        "<tr><td>Accoglimento</td><td>domanda accettata</td></tr>"+
-        "<tr><td>Ricorso</td><td>puoi contestare la decisione</td></tr>"+
+        "<tr><td data-no-tr>Si invita a…</td><td>Devi fare qualcosa</td></tr>"+
+        "<tr><td data-no-tr>Entro e non oltre il…</td><td>Scadenza: dopo quella data non vale piu'</td></tr>"+
+        "<tr><td data-no-tr>Si comunica che…</td><td>Solo un'informazione, di solito non devi fare niente</td></tr>"+
+        "<tr><td data-no-tr>Ai sensi dell'art…</td><td>Riferimento di legge, si puo' saltare</td></tr>"+
+        "<tr><td data-no-tr>Integrazione documentale</td><td>Mancano dei documenti e vanno consegnati</td></tr>"+
+        "<tr><td data-no-tr>Diniego · Rigetto</td><td>La domanda e' stata respinta</td></tr>"+
+        "<tr><td data-no-tr>Accoglimento</td><td>La domanda e' stata accettata</td></tr>"+
+        "<tr><td data-no-tr>Ricorso</td><td>Puoi contestare la decisione</td></tr>"+
         "</table>"+
-        "<p>Cerca sempre due cose: <b>la data di scadenza</b> e <b>cosa devi consegnare</b>. Il resto e' contorno.</p>" },
+        "<p>In ogni lettera cerca solo due cose: entro quando devi rispondere e cosa devi consegnare. Tutto il resto e' contorno.</p>" },
       { id:'it-a5', title:"Conversazione pratica", desc:"Al bar, dal medico, all'ufficio postale: dialoghi reali.", body:
-        "<p><b>Allo sportello</b>: «Buongiorno, avrei bisogno di…» — e' la formula piu' educata e funziona ovunque.</p>"+
-        "<ul>"+
-        "<li>«Scusi, non ho capito. Puo' ripetere piu' lentamente?»</li>"+
-        "<li>«Puo' scrivermelo, per favore?»</li>"+
-        "<li>«Quale documento devo portare?»</li>"+
-        "<li>«Quanto tempo ci vuole?»</li>"+
-        "<li>«Devo prendere un appuntamento?»</li>"+
-        "</ul>"+
-        "<p><b>Dal medico</b>: «Ho dolore qui», «Da tre giorni», «Sono allergico a…», «Prendo questa medicina».</p>"+
-        "<p>Chiedere di ripetere non e' maleducato: e' la cosa piu' utile che puoi imparare.</p>" },
+        "<p>Allo sportello esiste una formula che funziona ovunque e suona sempre educata.</p>"+
+        "<p data-no-tr>«Buongiorno, avrei bisogno di…»</p>"+
+        "<p>Queste cinque domande risolvono quasi ogni pratica. Chiedere di ripetere non e' maleducato: e' la cosa piu' utile che puoi imparare.</p>"+
+        "<p data-no-tr>«Scusi, non ho capito. Puo' ripetere piu' lentamente?» · «Puo' scrivermelo, per favore?» · «Quale documento devo portare?» · «Quanto tempo ci vuole?» · «Devo prendere un appuntamento?»</p>"+
+        "<p>Dal medico servono poche frasi precise: dove fa male, da quanto tempo, cosa prendi gia'.</p>"+
+        "<p data-no-tr>«Ho dolore qui» · «Da tre giorni» · «Sono allergico a…» · «Prendo questa medicina»</p>" },
       { id:'it-a6', title:"Preparazione esame CILS/CELI A2", desc:"Schema di studio e simulazioni per l'esame di livello A2.", body:
-        "<p>L'A2 serve per il permesso di soggiorno di lungo periodo. Quattro prove: ascolto, lettura, scrittura, parlato.</p>"+
+        "<p>Il livello A2 serve per il permesso di soggiorno di lungo periodo. L'esame ha quattro prove.</p>"+
         "<ul>"+
-        "<li><b>Ascolto</b>: annunci, previsioni del tempo, brevi dialoghi. Allenati con la radio a volume basso</li>"+
-        "<li><b>Lettura</b>: cartelli, orari, avvisi, brevi email</li>"+
-        "<li><b>Scrittura</b>: un modulo da compilare e un messaggio di circa 50 parole</li>"+
-        "<li><b>Parlato</b>: presentati, descrivi la tua giornata, rispondi a domande semplici</li>"+
+        "<li>Ascolto: annunci, previsioni del tempo, brevi dialoghi. Ci si allena bene tenendo la radio accesa a volume basso.</li>"+
+        "<li>Lettura: cartelli, orari, avvisi e brevi messaggi scritti.</li>"+
+        "<li>Scrittura: un modulo da compilare e un messaggio di circa cinquanta parole.</li>"+
+        "<li>Parlato: presentarsi, descrivere la propria giornata, rispondere a domande semplici.</li>"+
         "</ul>"+
-        "<p>I <b>CPIA</b> (Centro Provinciale per l'Istruzione degli Adulti) offrono corsi gratuiti di preparazione in tutta Italia. La prova per il permesso e' gratuita e si prenota online.</p>" }
+        "<p>I centri pubblici per l'istruzione degli adulti offrono corsi di preparazione gratuiti in tutta Italia. La prova per il permesso e' gratuita e si prenota online.</p>"+
+        "<p data-no-tr>CPIA — Centro Provinciale per l'Istruzione degli Adulti</p>" }
     ]
   },
   en: {
     base: [
       { id:'en-b1', title:"The alphabet and pronunciation", body:
         "<ul>"+
-        "<li><b>th</b> ha due suoni: sordo come in <i>think</i>, sonoro come in <i>this</i> — non esiste in italiano, serve pratica</li>"+
-        "<li>Lettere spesso silenziose: <i>k</i>now (k muta), <i>h</i>our (h muta)</li>"+
-        "<li>L'accento di parola cambia il significato: <b>RE</b>cord (sostantivo) vs re<b>CORD</b> (verbo)</li>"+
-        "<li>La <b>-s</b> finale ha 3 suoni diversi: cat<b>s</b> (s), dog<b>s</b> (z), hous<b>es</b> (iz)</li>"+
-        "</ul>" },
+        "<li>Il gruppo th ha due suoni che non esistono in italiano, uno sordo e uno sonoro: serve pratica per distinguerli.</li>"+
+        "<li>Alcune lettere non si pronunciano affatto e restano mute.</li>"+
+        "<li>La stessa vocale cambia suono secondo la parola che la contiene.</li>"+
+        "<li>L'accento cade su una sillaba precisa e puo' cambiare il significato: la stessa parola diventa un nome o un verbo.</li>"+
+        "</ul>"+
+        "<p data-no-tr>think / this · know, hour · cat, car, care · PREsent (regalo) / preSENT (presentare)</p>" },
       { id:'en-b2', title:"Greetings and introductions", body:
+        "<p>A sinistra la frase inglese da usare, a destra quando si usa.</p>"+
         "<table>"+
-        "<tr><td>Hi! / Hello!</td><td>Ciao! <span class='muted'>(informale/neutro)</span></td></tr>"+
-        "<tr><td>Good morning</td><td>Buongiorno</td></tr>"+
-        "<tr><td>Good evening</td><td>Buonasera</td></tr>"+
-        "<tr><td>My name is…</td><td>Mi chiamo…</td></tr>"+
-        "<tr><td>Nice to meet you</td><td>Piacere</td></tr>"+
-        "<tr><td>How are you?</td><td>Come stai?</td></tr>"+
-        "<tr><td>I'm fine, thanks</td><td>Sto bene, grazie</td></tr>"+
+        "<tr><td data-no-tr>Hello / Hi</td><td>Saluto neutro, va bene sempre</td></tr>"+
+        "<tr><td data-no-tr>Good morning</td><td>Fino a mezzogiorno</td></tr>"+
+        "<tr><td data-no-tr>Good afternoon</td><td>Dal pomeriggio fino a sera</td></tr>"+
+        "<tr><td data-no-tr>My name is…</td><td>Per dire il proprio nome</td></tr>"+
+        "<tr><td data-no-tr>Nice to meet you</td><td>Quando si conosce qualcuno</td></tr>"+
+        "<tr><td data-no-tr>How are you?</td><td>Domanda di cortesia: si risponde breve</td></tr>"+
+        "<tr><td data-no-tr>I'm fine, thank you</td><td>La risposta piu' comune</td></tr>"+
         "</table>" },
       { id:'en-b3', title:"Numbers 0 to 20", body:
-        "<p>0 zero · 1 one · 2 two · 3 three · 4 four · 5 five · 6 six · 7 seven · 8 eight · 9 nine · 10 ten · 11 eleven · 12 twelve · 13 thirteen · 14 fourteen · 15 fifteen · 16 sixteen · 17 seventeen · 18 eighteen · 19 nineteen · 20 twenty</p>" },
+        "<p>I numeri da imparare a memoria: servono per prezzi, orari e numeri di telefono.</p>"+
+        "<p data-no-tr>0 zero · 1 one · 2 two · 3 three · 4 four · 5 five · 6 six · 7 seven · 8 eight · 9 nine · 10 ten · 11 eleven · 12 twelve · 13 thirteen · 14 fourteen · 15 fifteen · 16 sixteen · 17 seventeen · 18 eighteen · 19 nineteen · 20 twenty</p>" },
       { id:'en-b4', title:"The verbs TO BE and TO HAVE (present)", body:
-        "<table>"+
+        "<p>Sono i due verbi piu' usati: con questi due si costruisce gia' moltissimo.</p>"+
+        "<table data-no-tr>"+
         "<tr><td>I</td><td>am</td><td>have</td></tr>"+
         "<tr><td>you</td><td>are</td><td>have</td></tr>"+
         "<tr><td>he / she / it</td><td>is</td><td>has</td></tr>"+
         "<tr><td>we</td><td>are</td><td>have</td></tr>"+
-        "<tr><td>you (pl.)</td><td>are</td><td>have</td></tr>"+
         "<tr><td>they</td><td>are</td><td>have</td></tr>"+
-        "</table>" },
+        "</table>"+
+        "<p>Nel parlato si accorciano quasi sempre: la forma contratta e' la norma, non l'eccezione.</p>"+
+        "<p data-no-tr>I'm · you're · he's · we're · they're</p>" },
       { id:'en-b5', title:"Useful phrases for work and daily life", body:
-        "<ul>"+
-        "<li>How much is it? — Quanto costa?</li>"+
-        "<li>Where is the nearest pharmacy? — Dov'è la farmacia più vicina?</li>"+
-        "<li>Can I have a ticket for…? — Posso avere un biglietto per…?</li>"+
-        "<li>I need help — Ho bisogno di aiuto</li>"+
-        "<li>I'm available for an interview on… — Sono disponibile per un colloquio il…</li>"+
-        "<li>Could you repeat that, please? — Può ripetere, per favore?</li>"+
-        "</ul>" },
+        "<p>Sei frasi che risolvono la maggior parte delle situazioni. A destra quando si usano.</p>"+
+        "<table>"+
+        "<tr><td data-no-tr>How much is it?</td><td>Per chiedere il prezzo</td></tr>"+
+        "<tr><td data-no-tr>Where is the…?</td><td>Per chiedere dove si trova un posto</td></tr>"+
+        "<tr><td data-no-tr>I need help</td><td>Per chiedere aiuto</td></tr>"+
+        "<tr><td data-no-tr>Sorry, I don't understand</td><td>Quando non hai capito</td></tr>"+
+        "<tr><td data-no-tr>Could you repeat that, please?</td><td>Per farsi ripetere una frase</td></tr>"+
+        "<tr><td data-no-tr>Could you speak more slowly?</td><td>La richiesta piu' utile con chi parla veloce</td></tr>"+
+        "</table>" },
       { id:'en-b6', title:"Days of the week and time", body:
-        "<p>Monday · Tuesday · Wednesday · Thursday · Friday · Saturday · Sunday</p>"+
-        "<p>What time is it? — Che ore sono? It's… — Sono le… <br>morning (mattina) · afternoon (pomeriggio) · evening (sera) · night (notte)</p>" }
+        "<p>I giorni della settimana, dal lunedi' alla domenica.</p>"+
+        "<p data-no-tr>Monday · Tuesday · Wednesday · Thursday · Friday · Saturday · Sunday</p>"+
+        "<p>Per chiedere l'ora si usa una domanda fissa, e la risposta comincia sempre allo stesso modo, seguita dall'ora.</p>"+
+        "<p data-no-tr>What time is it? — It's…</p>"+
+        "<p>Le parti della giornata, e la sigla che distingue mattina e pomeriggio negli orari scritti:</p>"+
+        "<p data-no-tr>morning · afternoon · evening · night · a.m. / p.m.</p>" }
     ],
     adv: [
       { id:'en-a1', title:"Regular verbs in the present simple", desc:"Forma affermativa, negativa e interrogativa con esempi pratici.", body:
-        "<p>In inglese il verbo cambia solo alla terza persona singolare: si aggiunge <b>-s</b>.</p>"+
-        "<table>"+
-        "<tr><td>I / you / we / they</td><td>work, live, speak</td></tr>"+
-        "<tr><td>he / she / it</td><td>work<b>s</b>, live<b>s</b>, speak<b>s</b></td></tr>"+
+        "<p>Il verbo inglese al presente cambia in un punto solo: alla terza persona singolare si aggiunge una s.</p>"+
+        "<table data-no-tr>"+
+        "<tr><td>I / you / we / they</td><td>work · live · speak</td></tr>"+
+        "<tr><td>he / she / it</td><td>works · lives · speaks</td></tr>"+
         "</table>"+
-        "<p><b>Negativo e domanda</b> usano <i>do</i> / <i>does</i>, e il verbo torna alla forma base:</p>"+
-        "<ul>"+
-        "<li>I <b>don't</b> work on Sunday · He <b>doesn't</b> work on Sunday</li>"+
-        "<li><b>Do</b> you speak English? · <b>Does</b> she live here?</li>"+
-        "</ul>"+
-        "<p>Errore tipico di chi parla italiano: «He no work». La forma giusta e' «He doesn't work».</p>" },
+        "<p>Per negare e per fare domande si usa un verbo di appoggio, e il verbo principale torna alla forma base senza s.</p>"+
+        "<p data-no-tr>I don't work on Sunday · He doesn't work on Sunday · Do you speak English? · Does she live here?</p>"+
+        "<p>L'errore piu' comune di chi parla italiano e' costruire la negazione senza quel verbo di appoggio.</p>"+
+        "<p data-no-tr>«He no work» ✗ — «He doesn't work» ✓</p>" },
       { id:'en-a2', title:"Past and future basics", desc:"Past simple e future per raccontare esperienze e piani.", body:
-        "<p><b>Past simple</b>: regolari con <b>-ed</b> (worked, lived, started). Gli irregolari vanno imparati a memoria.</p>"+
-        "<table>"+
+        "<p>Al passato i verbi regolari prendono tutti la stessa terminazione, qualunque sia la persona.</p>"+
+        "<p data-no-tr>worked · lived · started</p>"+
+        "<p>I verbi piu' usati sono pero' irregolari e vanno imparati a memoria: sono una lista corta e conviene farla subito.</p>"+
+        "<table data-no-tr>"+
         "<tr><td>go</td><td>went</td></tr><tr><td>have</td><td>had</td></tr>"+
         "<tr><td>make</td><td>made</td></tr><tr><td>take</td><td>took</td></tr>"+
         "<tr><td>come</td><td>came</td></tr><tr><td>get</td><td>got</td></tr>"+
         "</table>"+
-        "<p>Nel negativo e nella domanda si usa <b>did</b> e il verbo torna base: «I <b>didn't</b> go», «<b>Did</b> you go?».</p>"+
-        "<p><b>Futuro</b>: <i>will</i> per decisioni sul momento, <i>going to</i> per piani gia' presi. «I <b>will</b> help you» · «I'<b>m going to</b> move to Milan».</p>" },
+        "<p>Anche al passato la negazione e la domanda usano un verbo di appoggio, e il verbo principale torna alla forma base.</p>"+
+        "<p data-no-tr>I didn't go · Did you go?</p>"+
+        "<p>Per il futuro ci sono due forme: una per le decisioni prese sul momento, l'altra per i piani gia' stabiliti.</p>"+
+        "<p data-no-tr>I will help you · I'm going to move to Milan</p>" },
       { id:'en-a3', title:"English for job interviews and CVs", desc:"Domande frequenti, vocabolario e frasi chiave per colloqui.", body:
-        "<p>Domande che tornano in quasi ogni colloquio, con l'inizio della risposta gia' pronto:</p>"+
-        "<ul>"+
-        "<li>«Tell me about yourself» → «I have worked as… for… years»</li>"+
-        "<li>«Why do you want this job?» → «I am interested in… because…»</li>"+
-        "<li>«What are your strengths?» → «I am reliable, and I learn quickly»</li>"+
-        "<li>«When can you start?» → «I am available from…»</li>"+
-        "</ul>"+
-        "<p><b>Nel CV</b>: <i>work experience</i>, <i>education</i>, <i>skills</i>, <i>languages</i>, <i>references available on request</i>.</p>"+
-        "<p>Usa i verbi al passato per i lavori finiti (<i>managed</i>, <i>organised</i>) e il presente per quello attuale.</p>" },
+        "<p>Quattro domande tornano in quasi ogni colloquio. Prepararne l'inizio della risposta basta a partire sicuri.</p>"+
+        "<table>"+
+        "<tr><td data-no-tr>Tell me about yourself</td><td>Racconta il tuo percorso in due frasi</td></tr>"+
+        "<tr><td data-no-tr>Why do you want this job?</td><td>Spiega cosa ti interessa di quel lavoro</td></tr>"+
+        "<tr><td data-no-tr>What are your strengths?</td><td>Due qualita' concrete, con un esempio</td></tr>"+
+        "<tr><td data-no-tr>When can you start?</td><td>Di' da quando sei disponibile</td></tr>"+
+        "</table>"+
+        "<p>Queste sono le sezioni che un CV inglese deve avere, con questi nomi esatti.</p>"+
+        "<p data-no-tr>work experience · education · skills · languages · references available on request</p>"+
+        "<p>Per i lavori finiti si usa il passato, per quello attuale il presente: e' un dettaglio che si nota subito.</p>" },
       { id:'en-a4', title:"Business email writing", desc:"Struttura e tono giusto per email professionali in inglese.", body:
-        "<p>Una email di lavoro in inglese e' piu' breve e diretta di una italiana.</p>"+
-        "<ul>"+
-        "<li><b>Apertura</b>: «Dear Mr/Ms [cognome],» — se non sai il nome, «Dear Sir or Madam,»</li>"+
-        "<li><b>Motivo, subito</b>: «I am writing regarding…» / «I would like to ask about…»</li>"+
-        "<li><b>Richiesta cortese</b>: «Could you please…» — piu' educato di «Can you»</li>"+
-        "<li><b>Chiusura</b>: «Best regards,» oppure «Kind regards,» e il tuo nome</li>"+
-        "</ul>"+
-        "<p>«Please find attached» per un allegato. «I look forward to hearing from you» chiude bene quasi ogni richiesta.</p>" },
+        "<p>Una email di lavoro in inglese e' piu' breve e diretta di una italiana: il motivo si dichiara subito, nella prima riga.</p>"+
+        "<table>"+
+        "<tr><td data-no-tr>Dear Mr / Ms [cognome],</td><td>Apertura quando conosci il nome</td></tr>"+
+        "<tr><td data-no-tr>Dear Sir or Madam,</td><td>Apertura quando non lo conosci</td></tr>"+
+        "<tr><td data-no-tr>I am writing regarding…</td><td>Per dichiarare subito il motivo</td></tr>"+
+        "<tr><td data-no-tr>Could you please…</td><td>Richiesta cortese, piu' educata della forma diretta</td></tr>"+
+        "<tr><td data-no-tr>Please find attached</td><td>Per segnalare un allegato</td></tr>"+
+        "<tr><td data-no-tr>Best regards,</td><td>Chiusura standard, sempre adatta</td></tr>"+
+        "</table>"+
+        "<p>Una frase di chiusura che funziona per quasi ogni richiesta, perche' invita a rispondere senza mettere fretta.</p>"+
+        "<p data-no-tr>I look forward to hearing from you</p>" },
       { id:'en-a5', title:"Practical conversation", desc:"Telefonate, meeting e small talk in contesti reali di lavoro.", body:
-        "<p><b>Al telefono</b>, formule fisse che ti tolgono dall'imbarazzo:</p>"+
-        "<ul>"+
-        "<li>«Could you speak more slowly, please?»</li>"+
-        "<li>«Sorry, could you repeat that?»</li>"+
-        "<li>«Let me check and get back to you»</li>"+
-        "<li>«Can I take a message?»</li>"+
-        "</ul>"+
-        "<p><b>Small talk</b>: il tempo, il viaggio, il fine settimana. «How was your weekend?» non e' una domanda vera: si risponde breve e si ricambia.</p>"+
-        "<p>In riunione: «I agree», «I see your point, but…», «Could we come back to this?».</p>" },
+        "<p>Al telefono le formule fisse tolgono l'imbarazzo: non serve improvvisare, servono quattro frasi imparate bene.</p>"+
+        "<p data-no-tr>Could you speak more slowly, please? · Sorry, could you repeat that? · Let me check and get back to you · Can I take a message?</p>"+
+        "<p>Le domande di cortesia sull'inizio non sono domande vere: si risponde in poche parole e si ricambia.</p>"+
+        "<p data-no-tr>How was your weekend? — Good, thanks. And you?</p>"+
+        "<p>In riunione servono tre mosse: dire che sei d'accordo, dissentire senza scontro, rimandare un punto.</p>"+
+        "<p data-no-tr>I agree · I see your point, but… · Could we come back to this?</p>" },
       { id:'en-a6', title:"IELTS/TOEFL exam prep basics", desc:"Schema di studio e simulazioni per gli esami internazionali.", body:
-        "<p>Servono per universita' e per alcuni datori di lavoro. Quattro parti: <i>listening</i>, <i>reading</i>, <i>writing</i>, <i>speaking</i>.</p>"+
-        "<ul>"+
-        "<li><b>IELTS</b>: punteggio da 1 a 9. Per l'universita' di solito servono 6.0–6.5</li>"+
-        "<li><b>TOEFL</b>: punteggio da 0 a 120. Di solito servono 80–90</li>"+
-        "</ul>"+
-        "<p>Il modo piu' efficace di prepararsi e' fare <b>simulazioni complete a tempo</b>: entrambi gli esami pubblicano prove ufficiali gratuite sui loro siti.</p>"+
-        "<p>Nel <i>writing</i> conta la struttura piu' delle parole difficili: introduzione, due paragrafi con un'idea ciascuno, conclusione.</p>" }
+        "<p>Servono per l'universita' e per alcuni datori di lavoro. Entrambi gli esami hanno quattro parti: ascolto, lettura, scrittura e conversazione.</p>"+
+        "<table>"+
+        "<tr><td data-no-tr>IELTS</td><td>Punteggio da 1 a 9: per l'universita' di solito servono 6.0–6.5</td></tr>"+
+        "<tr><td data-no-tr>TOEFL</td><td>Punteggio da 0 a 120: di solito servono 80–90</td></tr>"+
+        "</table>"+
+        "<p>Il modo piu' efficace di prepararsi e' fare simulazioni complete a tempo. Entrambi gli enti pubblicano prove ufficiali gratuite sui loro siti.</p>"+
+        "<p>Nella prova scritta conta la struttura piu' delle parole difficili: introduzione, due paragrafi con un'idea ciascuno, conclusione.</p>" }
     ]
   }
 };

@@ -13,4 +13,7 @@ Thumbs.db
 node_modules
 .claude/*
 !.claude/settings.json
+# Le skill stanno nel repository apposta: e' quello che le rende attive in
+# ogni sessione, su qualunque macchina, senza installarle a mano.
+!.claude/skills/
 scratchpad/
