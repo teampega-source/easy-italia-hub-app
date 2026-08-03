@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<script>/* La traduzione di pagina parte qui, prima di qualsiasi foglio di stile:
-   uno script che sta dopo un <link rel=stylesheet> non gira finche' il CSS non
-   e' arrivato, e quel ritardo si vedeva tutto sul cambio di lingua. */
-try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"it");
+<script>/* La lingua della pagina si decide qui, prima di qualsiasi foglio di
+   stile: uno script che sta dopo un <link rel=stylesheet> non gira finche' il
+   CSS non e' arrivato, e quel ritardo si vedeva tutto sul cambio di lingua.
+
+   La lingua predefinita del sito e' l'inglese. L'italiano e' una scelta come
+   le altre: si applica solo se l'utente l'ha chiesto. "eih-lang-scelta"
+   distingue una scelta vera dalla lingua che il sito applicava da se': prima
+   ogni visita salvava "it" anche a chi non aveva mai toccato il selettore, e
+   senza questa distinzione quei visitatori resterebbero in italiano per
+   sempre. Chi non ha il segno di scelta riparte dall'inglese, una volta sola. */
+try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
+try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+if(!/^(it|en|si|ta)$/.test(_l))_l="en";
+window.EIH_LANG=_l;
 if(/^(en|si|ta)$/.test(_l)){var _p=location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/,"").replace(/^\/+|\/+$/g,"").replace(/\.html$/,"")||"index";
 window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),promessaUi:fetch("/assets/i18n/_ui."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
 var _s=document.createElement("script");_s.fetchPriority="high";_s.src="/assets/eih-i18n-page.js";_s.defer=true;document.head.appendChild(_s);
@@ -412,7 +422,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 (function(){
   var el=document.getElementById('dash-badge'); if(!el||!window.EIHBadges) return;
   var L={it:{y:'Il tuo badge:',n:'Nessun badge — fai l’esame',go:'Esame & Badge →'},en:{y:'Your badge:',n:'No badge yet — take the exam',go:'Exam & Badge →'},si:{y:'ඔබේ බැජ්:',n:'තවම බැජ් නැත — විභාගය කරන්න',go:'විභාගය සහ බැජ් →'},ta:{y:'உங்கள் பேட்ஜ்:',n:'இன்னும் பேட்ஜ் இல்லை — தேர்வை எழுது',go:'தேர்வு & பேட்ஜ் →'}};
-  var lang='it';try{lang=localStorage.getItem('eih-lang')||'it';}catch(e){}var t=L[lang]||L.it;
+  var lang=window.EIH_LANG||'en';try{lang=localStorage.getItem('eih-lang')||lang;}catch(e){}var t=L[lang]||L.en||L.it;
   function paint(){
     var cur=window.EIHBadges.get();
     if(cur&&cur.level){ el.innerHTML='<span style="font-size:.85rem;color:var(--fg-secondary)">'+t.y+'</span> '+window.EIHBadges.chip(cur.level,lang)+' <a href="/esame" class="inline" style="font-size:.8rem">'+t.go+'</a>'; }
@@ -438,7 +448,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
      dodici voci per lingua che cambiano ogni mese. */
   var LG = (function(){ try {
     var m = location.pathname.match(/^\/(en|si|ta)(\/|$)/);
-    return m ? m[1] : (localStorage.getItem('eih-lang') || 'it');
+    return m ? m[1] : (localStorage.getItem('eih-lang') || window.EIH_LANG || 'en');
   } catch(e){ return 'it'; } })();
   var CAL = {
     it:{m:['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'],

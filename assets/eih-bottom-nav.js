@@ -24,7 +24,8 @@
 
   function lingua() {
     var l = 'it';
-    try { l = localStorage.getItem('eih-lang') || 'it'; } catch (e) {}
+    l = window.EIH_LANG || 'en';
+    try { l = localStorage.getItem('eih-lang') || l; } catch (e) {}
     return ['it', 'en', 'si', 'ta'].indexOf(l) >= 0 ? l : 'it';
   }
 

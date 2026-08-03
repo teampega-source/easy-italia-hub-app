@@ -23,7 +23,7 @@
   var KEY = 'eih-cookie-consent';
 
   function lang() {
-    try { return (localStorage.getItem('eih-lang') || 'it').slice(0, 2); }
+    try { return (localStorage.getItem('eih-lang') || window.EIH_LANG || 'en').slice(0, 2); }
     catch (e) { return 'it'; }
   }
 

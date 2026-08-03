@@ -33,8 +33,11 @@
       "f.academy":"அகாடமி","f.product":"தயாரிப்பு","f.aiAssistant":"AI உதவியாளர்","f.mapServices":"சேவை வரைபடம்","f.company":"திட்டம்","f.about":"எங்களைப் பற்றி","f.rete":"வலையமைப்பு & பங்குதாரர்கள்","f.whatsapp":"WhatsApp சேனல்","f.advertising":"விளம்பரம்","f.contact":"தொடர்பு","f.account":"கணக்கு","f.register":"பதிவு செய்ய","f.subscriptions":"சந்தாக்கள்","f.copy":"© 2026 Easy Italia Hub. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.","f.privacy":"தனியுரிமைக் கொள்கை","f.cookie":"குக்கீ கொள்கை","f.terms":"சேவை விதிமுறைகள்","f.legal":"சட்டக் குறிப்பு","f.cookieprefs":"குக்கீ விருப்பங்கள்" }
   };
   const LANG_META={it:{flag:"🇮🇹",code:"IT"},en:{flag:"🇬🇧",code:"EN"},si:{flag:"🇱🇰",code:"SI"},ta:{flag:"🇱🇰",code:"TA"}};
-  let lang=(function(){try{return localStorage.getItem('eih-lang')}catch(e){return null}})()||'it';
-  if(!I18N[lang])lang='it';
+  // La lingua l'ha gia' decisa lo snippet in cima al <head>, che gira prima
+  // di tutto: qui si legge il risultato invece di rifare il conto con un
+  // valore predefinito diverso. Senza sua scelta il sito parla inglese.
+  let lang=window.EIH_LANG||(function(){try{return localStorage.getItem('eih-lang')}catch(e){return null}})()||'en';
+  if(!I18N[lang])lang='en';
   const active=document.body.getAttribute('data-page')||'';
 
   function navSub(items){
@@ -165,6 +168,11 @@
     radice.querySelectorAll('[data-i18n-ph]').forEach(ph);
     _traducendo=false;
   }
+  // Registra una scelta di lingua fatta dall'utente. Il secondo segno e'
+  // quello che distingue la scelta dal valore predefinito: lo legge lo
+  // snippet nel <head> per sapere se puo' fidarsi di 'eih-lang'.
+  function ricordaLingua(l){try{localStorage.setItem('eih-lang',l);localStorage.setItem('eih-lang-scelta','1');}catch(e){}}
+  window.EIHRicordaLingua=ricordaLingua;
   function applyLang(l){
     if(!I18N[l])l='it'; lang=l; const d=Object.assign({},I18N[l],(window.EIH_I18N_EXTRA||{})[l]||{});
     _dict=d;
@@ -177,7 +185,6 @@
     const lf=document.getElementById('lang-flag'),lc=document.getElementById('lang-code');
     if(lf)lf.textContent=LANG_META[l].flag; if(lc)lc.textContent=LANG_META[l].code;
     document.querySelectorAll('#lang-menu button').forEach(b=>b.setAttribute('aria-current',b.getAttribute('onclick').includes("'"+l+"'")?'true':'false'));
-    try{localStorage.setItem('eih-lang',l);}catch(e){}
     if(_langReady&&d['f.langHint'])showLangHint(d['f.langHint']);
   }
   // Piccolo promemoria: il cambio lingua vale anche per l'assistente AI.
@@ -198,7 +205,10 @@
 
   // expose API
   const EIH={
-    setLang(l){applyLang(l);EIH.closeLang();},
+    // Solo di qui passa una scelta vera: applyLang da sola non salva niente,
+    // altrimenti la lingua predefinita si scriverebbe addosso a chi non ha
+    // mai aperto il selettore e non si distinguerebbe piu' da una scelta.
+    setLang(l){ricordaLingua(l);applyLang(l);EIH.closeLang();},
     toggleLang(e){if(e)e.stopPropagation();const m=document.getElementById('lang-menu'),b=document.getElementById('lang-btn');const o=!m.classList.contains('open');m.classList.toggle('open',o);b.setAttribute('aria-expanded',o);},
     closeLang(){const m=document.getElementById('lang-menu');if(m){m.classList.remove('open');document.getElementById('lang-btn').setAttribute('aria-expanded','false');}},
     toggleMenu(){const b=document.getElementById('nav-toggle'),p=document.getElementById('nav-collapse');const o=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',o);p.classList.toggle('open',o);}
@@ -376,7 +386,7 @@
       }
       // Benvenuto + avviso admin via Resend: l'SMTP di Supabase è limitato.
       if(_authMode==='signup'){
-        var lg='it';try{lg=localStorage.getItem('eih-lang')||'it';}catch(e){}
+        var lg=window.EIH_LANG||'en';try{lg=localStorage.getItem('eih-lang')||lg;}catch(e){}
         try{fetch('/api/email',{method:'POST',headers:{'Content-Type':'application/json'},
           body:JSON.stringify({type:'signup',email:email,name:name,lang:lg})}).catch(function(){});}catch(e){}
       }

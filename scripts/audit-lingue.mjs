@@ -27,7 +27,10 @@ for (const lg of LINGUE) {
   const ctx = await b.newContext({ viewport: { width: 1280, height: 1200 }, serviceWorkers: 'block' });
   await ctx.addInitScript((l) => {
     try {
+      // 'eih-lang-scelta' dice al sito che questa e' una scelta vera: senza
+      // di esso la lingua predefinita (inglese) avrebbe la meglio.
       localStorage.setItem('eih-lang', l);
+      localStorage.setItem('eih-lang-scelta', '1');
       localStorage.setItem('eih-cookie-consent', JSON.stringify({ v: 1, ts: Date.now(), analytics: true, marketing: true }));
     } catch (e) {}
   }, lg);

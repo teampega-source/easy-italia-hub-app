@@ -14,7 +14,7 @@ const b = await chromium.launch();
 let guasti = 0;
 for (const lg of ['si', 'ta']) {
   const ctx = await b.newContext({ viewport: { width: 1400, height: 900 } });
-  await ctx.addInitScript(([l]) => { try { localStorage.setItem('eih-lang', l); } catch (e) {} }, [lg]);
+  await ctx.addInitScript(([l]) => { try { localStorage.setItem('eih-lang', l); localStorage.setItem('eih-lang-scelta', '1'); } catch (e) {} }, [lg]);
   const p = await ctx.newPage();
   for (const pg of PAGINE) {
     try { await p.goto(`http://localhost:${PORTA}/${pg}`, { waitUntil: 'domcontentloaded', timeout: 15000 }); }

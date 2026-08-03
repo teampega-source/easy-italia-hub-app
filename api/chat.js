@@ -152,7 +152,7 @@ module.exports = async (req, res) => {
   const rawMessages = Array.isArray(body?.messages) ? body.messages : [];
   // Sanitize + bound the history (length, per-message size, total size) up front.
   const messages = sanitizeMessages(rawMessages);
-  const lang = ["it", "en", "si", "ta"].includes(body?.lang) ? body.lang : "it";
+  const lang = ["it", "en", "si", "ta"].includes(body?.lang) ? body.lang : "en";
   const langName = LANG_NAME[lang];
 
   // Journey context (from "Il Mio Percorso"): makes the advisor proactive/contextual.
