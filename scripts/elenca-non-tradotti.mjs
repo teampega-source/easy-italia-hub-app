@@ -30,6 +30,12 @@ await ctx.addInitScript((l) => {
     // iscritto: le lezioni base si leggono, le avanzate mostrano il loro
     // titolo e il motivo per cui sono ancora chiuse.
     localStorage.setItem('eih-registered', '1');
+    // Il percorso apre una fase alla volta: senza uno stato completo si
+    // estrarrebbero i passi della sola prima fase, e gli altri trentadue
+    // resterebbero in italiano per chi arriva fin la'.
+    var fatti = {};
+    for (var f = 1; f <= 9; f++) for (var p = 0; p < 4; p++) fatti[f + '-' + p] = true;
+    localStorage.setItem('eih-journey', JSON.stringify({ current: 9, completed: fatti, registered: true }));
     localStorage.setItem('eih-cookie-consent', JSON.stringify({ v: 1, ts: Date.now(), analytics: true, marketing: true }));
   } catch (e) {}
 }, LG);

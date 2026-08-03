@@ -71,25 +71,25 @@ Si partiva da 341 frammenti in singalese su 51 pagine.
 4. **Montare e ricontrollare**: `python3 scripts/monta-traduzioni.py`, poi
    `node scripts/audit-lingue.mjs` finché non esce 0.
 
-## Aperto: il contenuto delle lezioni dei corsi
+## Contenuti riservati: risolto
 
-L'estrazione girava da visitatore anonimo, e su `corsi` le lezioni si aprono
-solo per gli iscritti: **il corpo delle lezioni non è mai entrato nel giro delle
-traduzioni**. Ora `scripts/estrai-testi.mjs` imposta `eih-registered`, e la
-copertura di `corsi` scende dal 100% apparente al 67% reale (350 frammenti,
-234 tradotti).
+L'estrazione girava da visitatore anonimo, e corsi e percorso mostrano il loro
+contenuto solo a chi e' iscritto: **il corpo delle lezioni e i passi delle fasi
+non entravano mai nel giro delle traduzioni**. Ora `scripts/estrai-testi.mjs`,
+`elenca-non-tradotti.mjs` e `audit-lingue.mjs` impostano `eih-registered` e uno
+stato `eih-journey` con tutte e nove le fasi completate, cosi' vedono quello che
+vede chi il sito lo usa davvero.
 
-I 116 frammenti scoperti **non vanno tradotti tutti**: sono in buona parte
-materia di studio — `cena`, `cibo`, `chiave`, `Ciao!`, `Buongiorno` sono le
-parole che l'utente deve imparare, non testo da sostituire (stesso caso del
-frasario medico, che è marcato `data-no-tr`). Vanno tradotte le **spiegazioni**
-intorno agli esempi («Le doppie consonanti si pronunciano più a lungo»), e per
-farlo serve separare nel markup l'esempio dalla glossa. È un lavoro a parte, da
-decidere: nessuno dei due tagli è ovvio.
+Il contenuto delle lezioni e' stato riscritto secondo una regola precisa:
+**la spiegazione e' una frase intera, gli esempi stanno in elementi marcati
+`data-no-tr`**. Prima i `<b>` e gli `<i>` dentro le frasi le spezzavano in
+frammenti come «Il», «serve per quasi tutto il passato parlato. Si forma con»,
+«+ participio.»: intraducibili in lingue con un altro ordine delle parole. Le
+parole da imparare (`cena`, `cibo`, `parlo`, `prendi`) restano nella lingua che
+si studia, com'e' giusto: sono materia, non testo da sostituire.
 
-Le lezioni avanzate hanno lo stesso problema e non compaiono nemmeno
-nell'estrazione, perché servono il badge: l'estrattore si ferma allo stato
-«iscritto senza badge», che è quello che vede la maggioranza.
+Tradotte 45 spiegazioni delle lezioni e i 35 passi del percorso. L'audit torna
+a zero su tutte e 59 le pagine con i contenuti riservati visibili.
 
 ## Trappole già pagate
 - **Il container si riavvia e riporta indietro l'albero di lavoro.** Committare
