@@ -8,20 +8,31 @@
   var BASE = 'https://easyitaliahub.it';
   var LANGS = ['en', 'si', 'ta'];
   var m = location.pathname.match(/^\/(en|si|ta)(\/|$)/);
-  var lang = m ? m[1] : 'it';
+  // Fuori dai prefissi la lingua e' quella decisa dallo snippet nel <head>:
+  // inglese, salvo scelta dell'utente.
+  var lang = m ? m[1] : (window.EIH_LANG || 'en');
   var path = location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/, '') || '/';
 
   if (m) {
-    try { localStorage.setItem('eih-lang', lang); } catch (e) {}
-    document.documentElement.lang = lang;
+    // Arrivare da /en, /si o /ta e' una scelta esplicita quanto il selettore.
+    try { localStorage.setItem('eih-lang', lang); localStorage.setItem('eih-lang-scelta', '1'); } catch (e) {}
   }
+  // <html lang> dice in che lingua e' la pagina, e va detto ovunque: le pagine
+  // che non caricano eih.js (registrati) restavano dichiarate italiane anche
+  // quando il testo era gia' stato tradotto, e chi legge con uno screen reader
+  // se le sentiva pronunciare con la pronuncia sbagliata.
+  document.documentElement.lang = lang;
 
   function url(l) {
     return BASE + (l === 'it' ? path : '/' + l + (path === '/' ? '' : path));
   }
 
+  // Il canonical dichiara che indirizzo e' questo, non che lingua preferisce
+  // chi sta guardando: dipende dal prefisso del percorso e da nient'altro.
+  // Legarlo alla lingua attiva significherebbe, ora che l'inglese e' quella
+  // predefinita, far dire a ogni pagina senza prefisso di essere /en.
   var can = document.querySelector('link[rel="canonical"]');
-  if (can) can.setAttribute('href', url(lang));
+  if (can) can.setAttribute('href', url(m ? m[1] : 'it'));
 
   /* Avvio anticipato della traduzione di pagina.
 
@@ -33,8 +44,8 @@
 
      Qui siamo nel <head>, prima di tutto il resto: si fa partire subito sia
      la richiesta del dizionario sia quella dello script, in parallelo. */
-  if (lang === 'it') {
-    try { lang = localStorage.getItem('eih-lang') || 'it'; } catch (e) {}
+  if (!m) {
+    try { lang = localStorage.getItem('eih-lang') || window.EIH_LANG || 'en'; } catch (e) {}
   }
   // Di norma ci ha gia' pensato lo snippet in cima al <head>, che parte prima
   // dei fogli di stile. Questo resta come rete di sicurezza per una pagina che

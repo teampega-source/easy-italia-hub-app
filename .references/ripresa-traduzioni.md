@@ -3,6 +3,16 @@
 Parola magica dell'utente: **`riprendi traduzioni`** → leggere questo file ed eseguirlo dall'inizio.
 
 ## Obiettivo
+Dal 3 agosto 2026 la lingua predefinita del sito e' **l'inglese**: chi arriva
+senza aver mai scelto vede l'inglese, e l'italiano e' una scelta come le altre.
+Il markup resta scritto in italiano — e' il testo di partenza da cui si estrae,
+non la lingua in cui il sito si presenta. Chi tocca gli script deve sapere che
+la lingua la decide lo snippet in cima al `<head>` e la espone come
+`window.EIH_LANG`; `eih-lang-scelta` distingue una scelta vera dal valore
+predefinito, e ogni script che imposta `eih-lang` per una prova deve scrivere
+anche quello (`scripts/estrai-testi.mjs` estrae in italiano solo grazie a questo).
+Controllo: `node scripts/audit-lingua-predefinita.mjs`.
+
 Se l'utente sceglie singalese o tamil, **tutto** dev'essere in quella lingua.
 Uniche eccezioni: nomi propri e documenti blasonati (SPID, codice fiscale,
 permesso di soggiorno…). Gli spazi pubblicitari non fanno eccezione.

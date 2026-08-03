@@ -133,11 +133,14 @@ const I18N={
   }
 };
 const LANG_META={it:{flag:"🇮🇹",code:"IT"},en:{flag:"🇬🇧",code:"EN"},si:{flag:"🇱🇰",code:"SI"},ta:{flag:"🇱🇰",code:"TA"}};
-let currentLang=localStorage.getItem('eih-lang')||(navigator.language||'it').slice(0,2);
-if(!I18N[currentLang])currentLang='it';
+// La lingua predefinita e' l'inglese e la decide lo snippet nel <head>. Qui
+// non si guarda piu' navigator.language: un browser impostato in italiano
+// non e' una scelta fatta sul sito, e il sito ora si presenta in inglese.
+let currentLang=window.EIH_LANG||localStorage.getItem('eih-lang')||'en';
+if(!I18N[currentLang])currentLang='en';
 
 function applyLang(lang){
-  if(!I18N[lang])lang='it';
+  if(!I18N[lang])lang='en';
   currentLang=lang;
   const d=I18N[lang];
   document.documentElement.lang=lang;
@@ -147,7 +150,6 @@ function applyLang(lang){
   document.getElementById('lang-flag').textContent=LANG_META[lang].flag;
   document.getElementById('lang-code').textContent=LANG_META[lang].code;
   document.querySelectorAll('#lang-menu button').forEach(b=>b.setAttribute('aria-current',b.getAttribute('onclick').includes("'"+lang+"'")?'true':'false'));
-  try{localStorage.setItem('eih-lang',lang);}catch(e){}
 }
 /* Nastro sinhala e tamil: serve a chi arriva e non sa che il sito parla la sua
    lingua. Lo vedono tutti, tranne chi lo ha chiuso.
@@ -186,7 +188,10 @@ function applyLang(lang){
 
 function toggleLang(e){if(e)e.stopPropagation();const m=document.getElementById('lang-menu'),b=document.getElementById('lang-btn');const open=!m.classList.contains('open');m.classList.toggle('open',open);b.setAttribute('aria-expanded',open);}
 function closeLang(){const m=document.getElementById('lang-menu');if(m){m.classList.remove('open');document.getElementById('lang-btn').setAttribute('aria-expanded','false');}}
-function setLang(lang){applyLang(lang);closeLang();}
+// Applicare una lingua non e' sceglierla: si salva solo passando di qui,
+// cioe' dal selettore. Il secondo segno distingue la scelta dal valore
+// predefinito, che altrimenti si scriverebbe addosso a chi non ha scelto.
+function setLang(lang){try{localStorage.setItem('eih-lang',lang);localStorage.setItem('eih-lang-scelta','1');}catch(e){}applyLang(lang);closeLang();}
 
 
 window.refreshLang=function(){applyLang(currentLang);};
@@ -476,7 +481,7 @@ function applyAuthMode(){
 // Benvenuto all'utente e avviso all'admin via Resend: l'SMTP di Supabase è
 // limitato. Best-effort, non blocca la UI.
 function eihNotifySignup(email,name){
-  let lang='it';try{lang=localStorage.getItem('eih-lang')||'it';}catch(e){}
+  let lang=window.EIH_LANG||'en';try{lang=localStorage.getItem('eih-lang')||lang;}catch(e){}
   try{fetch('/api/email',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({type:'signup',email:email,name:name,lang:lang})}).catch(function(){});}catch(e){}
 }

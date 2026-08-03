@@ -29,6 +29,7 @@ for (const nome of PAGINE) {
     await ctx.addInitScript((l) => {
       try {
         localStorage.setItem('eih-lang', l);
+        localStorage.setItem('eih-lang-scelta', '1');
         localStorage.setItem('eih-cookie-consent', JSON.stringify({ v: 1, ts: Date.now(), analytics: true, marketing: true }));
       } catch (e) {}
       // marca il momento in cui il testo di pagina viene sostituito

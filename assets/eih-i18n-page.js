@@ -24,7 +24,9 @@
 
   function lingua() {
     try {
-      var l = localStorage.getItem('eih-lang') || document.documentElement.lang || 'it';
+      // Predefinita inglese: il markup e' scritto in italiano, ma quello e'
+      // il testo di partenza, non la lingua in cui si presenta il sito.
+      var l = localStorage.getItem('eih-lang') || window.EIH_LANG || 'en';
       return LINGUE[l] ? l : 'it';
     } catch (e) { return 'it'; }
   }

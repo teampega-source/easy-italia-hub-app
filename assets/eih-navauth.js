@@ -21,7 +21,7 @@
   // rimanda alla dashboard invece che a una nuova registrazione.
   var CTA_IN = { it:'Vai alla dashboard', en:'Go to dashboard', si:'ඩෑෂ්බෝඩ් වෙත', ta:'டாஷ்போர்டுக்கு' };
   function applyCtas(u){
-    var lang;try{lang=localStorage.getItem('eih-lang')||'it';}catch(e){lang='it';}
+    var lang=window.EIH_LANG||'en';try{lang=localStorage.getItem('eih-lang')||lang;}catch(e){}
     var els=document.querySelectorAll('[data-auth-cta]');
     for(var i=0;i<els.length;i++){
       var el=els[i];

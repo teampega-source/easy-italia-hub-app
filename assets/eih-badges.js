@@ -115,7 +115,7 @@
   function chip(id, lang) {
     var lv = levelById(id); if (!lv) return '';
     injectStyle();
-    lang = lang || (function () { try { return localStorage.getItem('eih-lang') || 'it'; } catch (e) { return 'it'; } })();
+    lang = lang || (function () { var d = window.EIH_LANG || 'en'; try { return localStorage.getItem('eih-lang') || d; } catch (e) { return d; } })();
     return '<span class="eih-badge-chip" style="--bc:' + lv.color + '">' + AWARD_SVG + (lv.name[lang] || lv.name.it) + '</span>';
   }
 

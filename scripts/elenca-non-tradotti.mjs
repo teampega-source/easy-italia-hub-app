@@ -20,7 +20,9 @@ const b = await chromium.launch();
 const ctx = await b.newContext({ viewport: { width: 1280, height: 1200 }, serviceWorkers: 'block' });
 await ctx.addInitScript((l) => {
   try {
+    // vale come scelta esplicita: altrimenti vince l'inglese predefinito
     localStorage.setItem('eih-lang', l);
+    localStorage.setItem('eih-lang-scelta', '1');
     localStorage.setItem('eih-cookie-consent', JSON.stringify({ v: 1, ts: Date.now(), analytics: true, marketing: true }));
   } catch (e) {}
 }, LG);

@@ -25,7 +25,10 @@ const ctx = await b.newContext({ viewport: { width: 1280, height: 1400 }, servic
 await ctx.route('**/eih-motion.js', r => r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
 await ctx.addInitScript(() => {
   try {
+    // Si estrae dall'italiano, che ora e' una scelta come le altre: senza il
+    // segno di scelta il sito partirebbe in inglese e si estrarrebbe quello.
     localStorage.setItem('eih-lang', 'it');
+    localStorage.setItem('eih-lang-scelta', '1');
     localStorage.setItem('eih-cookie-consent', JSON.stringify({ v: 1, ts: Date.now(), analytics: true, marketing: true }));
   } catch (e) {}
 });

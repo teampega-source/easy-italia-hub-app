@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<script>/* La traduzione di pagina parte qui, prima di qualsiasi foglio di stile:
-   uno script che sta dopo un <link rel=stylesheet> non gira finche' il CSS non
-   e' arrivato, e quel ritardo si vedeva tutto sul cambio di lingua. */
-try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"it");
+<script>/* La lingua della pagina si decide qui, prima di qualsiasi foglio di
+   stile: uno script che sta dopo un <link rel=stylesheet> non gira finche' il
+   CSS non e' arrivato, e quel ritardo si vedeva tutto sul cambio di lingua.
+
+   La lingua predefinita del sito e' l'inglese. L'italiano e' una scelta come
+   le altre: si applica solo se l'utente l'ha chiesto. "eih-lang-scelta"
+   distingue una scelta vera dalla lingua che il sito applicava da se': prima
+   ogni visita salvava "it" anche a chi non aveva mai toccato il selettore, e
+   senza questa distinzione quei visitatori resterebbero in italiano per
+   sempre. Chi non ha il segno di scelta riparte dall'inglese, una volta sola. */
+try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
+try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+if(!/^(it|en|si|ta)$/.test(_l))_l="en";
+window.EIH_LANG=_l;
 if(/^(en|si|ta)$/.test(_l)){var _p=location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/,"").replace(/^\/+|\/+$/g,"").replace(/\.html$/,"")||"index";
 window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),promessaUi:fetch("/assets/i18n/_ui."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
 var _s=document.createElement("script");_s.fetchPriority="high";_s.src="/assets/eih-i18n-page.js";_s.defer=true;document.head.appendChild(_s);
@@ -280,7 +290,8 @@ function esc(s) {
    tamil studia sull'inglese. Da qui la coppia spiegazione + traduzione. */
 function lessonLang() {
   var l = 'it';
-  try { l = localStorage.getItem('eih-lang') || 'it'; } catch (e) {}
+  l = window.EIH_LANG || 'en';
+  try { l = localStorage.getItem('eih-lang') || l; } catch (e) {}
   return (l === 'en' || l === 'ta')
     ? { teach: 'inglese', tr: 'tamil', note: 'Lesson in English with Tamil translation.', wait: 'Loading the lesson…',
         ask: '💬 Ask a question about this topic', ph: 'Ask about this lesson…', send: 'Send' }

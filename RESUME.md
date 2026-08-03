@@ -1,6 +1,38 @@
 # 📌 RESUME — Dove siamo arrivati
 
-> Ultimo aggiornamento: 3 agosto 2026 (traduzioni complete)
+> Ultimo aggiornamento: 3 agosto 2026 (lingua predefinita inglese)
+
+## 🆕 3 agosto: la lingua predefinita del sito è l'inglese
+
+Chi arriva senza aver mai scelto una lingua vede il sito in inglese. L'italiano è
+diventato una scelta come le altre. Verifica: `node scripts/audit-lingua-predefinita.mjs`
+apre ogni pagina con `localStorage` vuoto — 59 su 59 partono in inglese.
+
+- **Una sola fonte di verità** — lo snippet in cima al `<head>` (uguale su tutte le
+  61 pagine) calcola la lingua e la espone come `window.EIH_LANG`. Prima il valore
+  predefinito `'it'` era ripetuto in una ventina di punti fra script e pagine.
+- **Applicare una lingua non è sceglierla** — `applyLang` salvava `eih-lang` a ogni
+  caricamento, quindi ogni visitatore aveva «italiano» in memoria pur non avendolo
+  mai chiesto. Ora salva solo il selettore, e insieme scrive `eih-lang-scelta`.
+  Chi non ha quel segno riparte dall'inglese, una volta sola: **chi aveva scelto
+  singalese o tamil prima di oggi perde la preferenza** e deve rifarla.
+- **Niente più `navigator.language`** — un browser impostato in italiano non è una
+  scelta fatta sul sito.
+- **Service worker a `eih-v99`** — gli asset sono serviti dalla cache prima della
+  rete: senza cambiare versione, chi ha il sito installato avrebbe continuato a
+  ricevere i vecchi script.
+- **Canonical legato all'indirizzo, non alla preferenza** — dipendeva dalla lingua
+  attiva; con l'inglese predefinito ogni pagina senza prefisso avrebbe dichiarato
+  di essere `/en`, anche a Google.
+- **`api/chat.js`** risponde in inglese quando il client non dichiara la lingua.
+
+**Resta in italiano, e va deciso a parte:** `<title>`, `<meta name="description">`
+e i tag Open Graph di tutte le pagine, più `og:locale: it_IT`. La traduzione è
+client-side, quindi l'anteprima di un link su WhatsApp o Facebook e il titolo che
+Google mostra restano italiani. Tradurli significa rifare 59 pagine e mettere in
+conto l'effetto sul posizionamento delle ricerche italiane.
+
+## 3 agosto: il sito è tradotto per intero
 
 ## 🆕 3 agosto: il sito è tradotto per intero
 

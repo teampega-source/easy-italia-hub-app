@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<script>/* La traduzione di pagina parte qui, prima di qualsiasi foglio di stile:
-   uno script che sta dopo un <link rel=stylesheet> non gira finche' il CSS non
-   e' arrivato, e quel ritardo si vedeva tutto sul cambio di lingua. */
-try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"it");
+<script>/* La lingua della pagina si decide qui, prima di qualsiasi foglio di
+   stile: uno script che sta dopo un <link rel=stylesheet> non gira finche' il
+   CSS non e' arrivato, e quel ritardo si vedeva tutto sul cambio di lingua.
+
+   La lingua predefinita del sito e' l'inglese. L'italiano e' una scelta come
+   le altre: si applica solo se l'utente l'ha chiesto. "eih-lang-scelta"
+   distingue una scelta vera dalla lingua che il sito applicava da se': prima
+   ogni visita salvava "it" anche a chi non aveva mai toccato il selettore, e
+   senza questa distinzione quei visitatori resterebbero in italiano per
+   sempre. Chi non ha il segno di scelta riparte dall'inglese, una volta sola. */
+try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
+try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+if(!/^(it|en|si|ta)$/.test(_l))_l="en";
+window.EIH_LANG=_l;
 if(/^(en|si|ta)$/.test(_l)){var _p=location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/,"").replace(/^\/+|\/+$/g,"").replace(/\.html$/,"")||"index";
 window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),promessaUi:fetch("/assets/i18n/_ui."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
 var _s=document.createElement("script");_s.fetchPriority="high";_s.src="/assets/eih-i18n-page.js";_s.defer=true;document.head.appendChild(_s);
@@ -721,7 +731,7 @@ const I18N={
 
 };
 const LANG_META={it:{flag:"🇮🇹",code:"IT"},en:{flag:"🇬🇧",code:"EN"},si:{flag:"🇱🇰",code:"SI"},ta:{flag:"🇱🇰",code:"TA"}};
-let currentLang=localStorage.getItem('eih-lang')||'it'; if(!I18N[currentLang])currentLang='it';
+let currentLang=localStorage.getItem('eih-lang')||window.EIH_LANG||'en'; if(!I18N[currentLang])currentLang='en';
 function t(k){return (I18N[currentLang]&&I18N[currentLang][k])||(I18N.it[k])||k;}
 function applyLang(lang){
   if(!I18N[lang])lang='it'; currentLang=lang; const d=I18N[lang];
@@ -732,12 +742,14 @@ function applyLang(lang){
   document.getElementById('lang-flag').textContent=LANG_META[lang].flag;
   document.getElementById('lang-code').textContent=LANG_META[lang].code;
   document.querySelectorAll('#lang-menu button').forEach(b=>b.setAttribute('aria-current',b.getAttribute('onclick').includes("'"+lang+"'")?'true':'false'));
-  try{localStorage.setItem('eih-lang',lang);}catch(e){}
   renderPhases(); // phase labels depend on language
 }
 function toggleLang(e){if(e)e.stopPropagation();const m=document.getElementById('lang-menu'),b=document.getElementById('lang-btn');const o=!m.classList.contains('open');m.classList.toggle('open',o);b.setAttribute('aria-expanded',o);}
 function closeLang(){const m=document.getElementById('lang-menu');if(m){m.classList.remove('open');document.getElementById('lang-btn').setAttribute('aria-expanded','false');}}
-function setLang(l){applyLang(l);closeLang();}
+// Il salvataggio sta qui e non in applyLang: applyLang gira anche all'avvio
+// con la lingua predefinita, e scriverla equivarrebbe a scegliere per
+// conto dell'utente.
+function setLang(l){try{localStorage.setItem('eih-lang',l);localStorage.setItem('eih-lang-scelta','1');}catch(e){}applyLang(l);closeLang();}
 document.addEventListener('click',e=>{if(!e.target.closest('.lang-switch'))closeLang();});
 
 /* ═══ Mobile nav ═══ */
