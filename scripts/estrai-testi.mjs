@@ -29,6 +29,13 @@ await ctx.addInitScript(() => {
     // segno di scelta il sito partirebbe in inglese e si estrarrebbe quello.
     localStorage.setItem('eih-lang', 'it');
     localStorage.setItem('eih-lang-scelta', '1');
+    // Corsi e percorso mostrano il contenuto solo a chi e' iscritto, e le
+    // lezioni avanzate solo a chi ha il badge: da visitatore anonimo quei
+    // testi non entrano mai nel giro delle traduzioni e restano in italiano
+    // a chi il sito lo usa davvero. Qui si guarda la pagina come la vede un
+    // iscritto: le lezioni base si leggono, le avanzate mostrano il loro
+    // titolo e il motivo per cui sono ancora chiuse.
+    localStorage.setItem('eih-registered', '1');
     localStorage.setItem('eih-cookie-consent', JSON.stringify({ v: 1, ts: Date.now(), analytics: true, marketing: true }));
   } catch (e) {}
 });

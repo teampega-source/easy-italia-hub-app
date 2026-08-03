@@ -156,8 +156,8 @@ var EIH_CORSI = (function(){
     </section>
     <section class="crs-section reveal" aria-labelledby="adv-h-it">
       <div class="crs-head"><h2 id="adv-h-it">Corso Avanzato <span class="soon">Badge</span></h2></div>
-      <p class="muted" style="font-size:var(--text-sm);margin:.2rem 0 .8rem">🏅 I corsi avanzati si sbloccano con il <strong>badge</strong>, che ottieni completando <a class="inline" href="/percorso">Il Mio Percorso</a>.</p>
-      <p class="muted">Verbi, conversazione e italiano per il lavoro e la burocrazia. Si sblocca con il badge del Percorso.</p>
+      <p class="muted" style="font-size:var(--text-sm);margin:.2rem 0 .8rem">🏅 Gratuiti come tutto il resto: si sbloccano con il <strong>badge Bronzo</strong>, che ottieni leggendo le sei lezioni del Corso Base e superando l'<a class="inline" href="/esame">Esame Base</a> con almeno 60/100.</p>
+      <p class="muted">Verbi, conversazione e italiano per il lavoro e la burocrazia. Sei lezioni complete, dopo l'Esame Base.</p>
       <div class="adv-grid" id="it-adv-list"></div>
     </section>
   </div>
@@ -173,8 +173,8 @@ var EIH_CORSI = (function(){
     </section>
     <section class="crs-section reveal" aria-labelledby="adv-h-en">
       <div class="crs-head"><h2 id="adv-h-en">Corso Avanzato <span class="soon">Badge</span></h2></div>
-      <p class="muted" style="font-size:var(--text-sm);margin:.2rem 0 .8rem">🏅 I corsi avanzati si sbloccano con il <strong>badge</strong>, che ottieni completando <a class="inline" href="/percorso">Il Mio Percorso</a>.</p>
-      <p class="muted">Verbi, conversazione e inglese professionale per colloqui ed esami. Si sblocca con il badge del Percorso.</p>
+      <p class="muted" style="font-size:var(--text-sm);margin:.2rem 0 .8rem">🏅 Gratuiti come tutto il resto: si sbloccano con il <strong>badge Bronzo</strong>, che ottieni leggendo le sei lezioni del Corso Base e superando l'<a class="inline" href="/esame">Esame Base</a> con almeno 60/100.</p>
+      <p class="muted">Verbi, conversazione e inglese professionale per colloqui ed esami. Sei lezioni complete, dopo l'Esame Base.</p>
       <div class="adv-grid" id="en-adv-list"></div>
     </section>
   </div>
@@ -429,12 +429,69 @@ var COURSES = {
         "<p>Che ore sono? (What time is it?) — Sono le… (It's…) <br>mattina (morning) · pomeriggio (afternoon) · sera (evening) · notte (night)</p>" }
     ],
     adv: [
-      { title:"Verbi regolari al presente (-are, -ere, -ire)", desc:"Le tre coniugazioni regolari con esempi pratici." },
-      { title:"Passato e futuro: le basi", desc:"Passato prossimo e futuro semplice per raccontare la tua storia." },
-      { title:"Italiano per il lavoro", desc:"Colloqui, CV e email professionali in italiano." },
-      { title:"Capire le lettere della burocrazia", desc:"Leggere comunicazioni di Questura, INPS e Comune senza ansia." },
-      { title:"Conversazione pratica", desc:"Al bar, dal medico, all'ufficio postale: dialoghi reali." },
-      { title:"Preparazione esame CILS/CELI A2", desc:"Schema di studio e simulazioni per l'esame di livello A2." }
+      { id:'it-a1', title:"Verbi regolari al presente (-are, -ere, -ire)", desc:"Le tre coniugazioni regolari con esempi pratici.", body:
+        "<p>Tre gruppi, riconoscibili dalla fine dell'infinito. Si toglie la desinenza e si aggiunge la terminazione della persona.</p>"+
+        "<table>"+
+        "<tr><td></td><td><b>parl-are</b></td><td><b>prend-ere</b></td><td><b>dorm-ire</b></td></tr>"+
+        "<tr><td>io</td><td>parlo</td><td>prendo</td><td>dormo</td></tr>"+
+        "<tr><td>tu</td><td>parli</td><td>prendi</td><td>dormi</td></tr>"+
+        "<tr><td>lui/lei</td><td>parla</td><td>prende</td><td>dorme</td></tr>"+
+        "<tr><td>noi</td><td>parliamo</td><td>prendiamo</td><td>dormiamo</td></tr>"+
+        "<tr><td>voi</td><td>parlate</td><td>prendete</td><td>dormite</td></tr>"+
+        "<tr><td>loro</td><td>parlano</td><td>prendono</td><td>dormono</td></tr>"+
+        "</table>"+
+        "<p>Attenzione: <i>capire</i>, <i>finire</i>, <i>preferire</i> aggiungono <b>-isc-</b> (io cap<b>isc</b>o, tu cap<b>isc</b>i, loro cap<b>isc</b>ono).</p>" },
+      { id:'it-a2', title:"Passato e futuro: le basi", desc:"Passato prossimo e futuro semplice per raccontare la tua storia.", body:
+        "<p>Il <b>passato prossimo</b> serve per quasi tutto il passato parlato. Si forma con <i>avere</i> o <i>essere</i> + participio.</p>"+
+        "<ul>"+
+        "<li>Con <b>avere</b>: ho lavorato, ho mangiato, ho dormito — il participio non cambia</li>"+
+        "<li>Con <b>essere</b> (andare, venire, arrivare, restare, nascere): sono andat<b>o</b> / sono andat<b>a</b> — cambia con chi parla</li>"+
+        "<li>Irregolari da imparare a memoria: fatto, detto, letto, scritto, preso, visto, aperto, chiuso</li>"+
+        "</ul>"+
+        "<p>Il <b>futuro</b>: parler<b>ò</b>, prender<b>ò</b>, dormir<b>ò</b>. Nel parlato si usa spesso il presente: «domani <i>vado</i> in Questura».</p>" },
+      { id:'it-a3', title:"Italiano per il lavoro", desc:"Colloqui, CV e email professionali in italiano.", body:
+        "<p><b>Al colloquio</b>, frasi che tornano sempre:</p>"+
+        "<ul>"+
+        "<li>«Ho esperienza come… da… anni»</li>"+
+        "<li>«Sono disponibile da subito / dal…»</li>"+
+        "<li>«Sono disponibile a turni e nel fine settimana»</li>"+
+        "<li>«Ho il permesso di soggiorno che consente di lavorare»</li>"+
+        "</ul>"+
+        "<p><b>Email formale</b>: apri con «Gentile [nome/azienda],», chiudi con «Cordiali saluti» e il tuo nome. Il <i>tu</i> si usa solo se te lo propongono.</p>"+
+        "<p>Parole da riconoscere in un annuncio: <i>assunzione</i>, <i>tempo determinato</i>, <i>full time</i>, <i>part time</i>, <i>turnista</i>, <i>RAL</i> (stipendio annuo lordo).</p>" },
+      { id:'it-a4', title:"Capire le lettere della burocrazia", desc:"Leggere comunicazioni di Questura, INPS e Comune senza ansia.", body:
+        "<p>Le lettere degli uffici usano sempre le stesse parole. Riconoscerne una decina basta per capire cosa ti chiedono.</p>"+
+        "<table>"+
+        "<tr><td>Si invita a…</td><td>devi fare questa cosa</td></tr>"+
+        "<tr><td>Entro e non oltre il…</td><td>scadenza, dopo non vale piu'</td></tr>"+
+        "<tr><td>Si comunica che…</td><td>informazione, di solito nessuna azione</td></tr>"+
+        "<tr><td>Ai sensi dell'art…</td><td>riferimento di legge, si puo' saltare</td></tr>"+
+        "<tr><td>Integrazione documentale</td><td>mancano dei documenti</td></tr>"+
+        "<tr><td>Diniego / rigetto</td><td>domanda respinta</td></tr>"+
+        "<tr><td>Accoglimento</td><td>domanda accettata</td></tr>"+
+        "<tr><td>Ricorso</td><td>puoi contestare la decisione</td></tr>"+
+        "</table>"+
+        "<p>Cerca sempre due cose: <b>la data di scadenza</b> e <b>cosa devi consegnare</b>. Il resto e' contorno.</p>" },
+      { id:'it-a5', title:"Conversazione pratica", desc:"Al bar, dal medico, all'ufficio postale: dialoghi reali.", body:
+        "<p><b>Allo sportello</b>: «Buongiorno, avrei bisogno di…» — e' la formula piu' educata e funziona ovunque.</p>"+
+        "<ul>"+
+        "<li>«Scusi, non ho capito. Puo' ripetere piu' lentamente?»</li>"+
+        "<li>«Puo' scrivermelo, per favore?»</li>"+
+        "<li>«Quale documento devo portare?»</li>"+
+        "<li>«Quanto tempo ci vuole?»</li>"+
+        "<li>«Devo prendere un appuntamento?»</li>"+
+        "</ul>"+
+        "<p><b>Dal medico</b>: «Ho dolore qui», «Da tre giorni», «Sono allergico a…», «Prendo questa medicina».</p>"+
+        "<p>Chiedere di ripetere non e' maleducato: e' la cosa piu' utile che puoi imparare.</p>" },
+      { id:'it-a6', title:"Preparazione esame CILS/CELI A2", desc:"Schema di studio e simulazioni per l'esame di livello A2.", body:
+        "<p>L'A2 serve per il permesso di soggiorno di lungo periodo. Quattro prove: ascolto, lettura, scrittura, parlato.</p>"+
+        "<ul>"+
+        "<li><b>Ascolto</b>: annunci, previsioni del tempo, brevi dialoghi. Allenati con la radio a volume basso</li>"+
+        "<li><b>Lettura</b>: cartelli, orari, avvisi, brevi email</li>"+
+        "<li><b>Scrittura</b>: un modulo da compilare e un messaggio di circa 50 parole</li>"+
+        "<li><b>Parlato</b>: presentati, descrivi la tua giornata, rispondi a domande semplici</li>"+
+        "</ul>"+
+        "<p>I <b>CPIA</b> (Centro Provinciale per l'Istruzione degli Adulti) offrono corsi gratuiti di preparazione in tutta Italia. La prova per il permesso e' gratuita e si prenota online.</p>" }
     ]
   },
   en: {
@@ -481,12 +538,64 @@ var COURSES = {
         "<p>What time is it? — Che ore sono? It's… — Sono le… <br>morning (mattina) · afternoon (pomeriggio) · evening (sera) · night (notte)</p>" }
     ],
     adv: [
-      { title:"Regular verbs in the present simple", desc:"Forma affermativa, negativa e interrogativa con esempi pratici." },
-      { title:"Past and future basics", desc:"Past simple e future per raccontare esperienze e piani." },
-      { title:"English for job interviews and CVs", desc:"Domande frequenti, vocabolario e frasi chiave per colloqui." },
-      { title:"Business email writing", desc:"Struttura e tono giusto per email professionali in inglese." },
-      { title:"Practical conversation", desc:"Telefonate, meeting e small talk in contesti reali di lavoro." },
-      { title:"IELTS/TOEFL exam prep basics", desc:"Schema di studio e simulazioni per gli esami internazionali." }
+      { id:'en-a1', title:"Regular verbs in the present simple", desc:"Forma affermativa, negativa e interrogativa con esempi pratici.", body:
+        "<p>In inglese il verbo cambia solo alla terza persona singolare: si aggiunge <b>-s</b>.</p>"+
+        "<table>"+
+        "<tr><td>I / you / we / they</td><td>work, live, speak</td></tr>"+
+        "<tr><td>he / she / it</td><td>work<b>s</b>, live<b>s</b>, speak<b>s</b></td></tr>"+
+        "</table>"+
+        "<p><b>Negativo e domanda</b> usano <i>do</i> / <i>does</i>, e il verbo torna alla forma base:</p>"+
+        "<ul>"+
+        "<li>I <b>don't</b> work on Sunday · He <b>doesn't</b> work on Sunday</li>"+
+        "<li><b>Do</b> you speak English? · <b>Does</b> she live here?</li>"+
+        "</ul>"+
+        "<p>Errore tipico di chi parla italiano: «He no work». La forma giusta e' «He doesn't work».</p>" },
+      { id:'en-a2', title:"Past and future basics", desc:"Past simple e future per raccontare esperienze e piani.", body:
+        "<p><b>Past simple</b>: regolari con <b>-ed</b> (worked, lived, started). Gli irregolari vanno imparati a memoria.</p>"+
+        "<table>"+
+        "<tr><td>go</td><td>went</td></tr><tr><td>have</td><td>had</td></tr>"+
+        "<tr><td>make</td><td>made</td></tr><tr><td>take</td><td>took</td></tr>"+
+        "<tr><td>come</td><td>came</td></tr><tr><td>get</td><td>got</td></tr>"+
+        "</table>"+
+        "<p>Nel negativo e nella domanda si usa <b>did</b> e il verbo torna base: «I <b>didn't</b> go», «<b>Did</b> you go?».</p>"+
+        "<p><b>Futuro</b>: <i>will</i> per decisioni sul momento, <i>going to</i> per piani gia' presi. «I <b>will</b> help you» · «I'<b>m going to</b> move to Milan».</p>" },
+      { id:'en-a3', title:"English for job interviews and CVs", desc:"Domande frequenti, vocabolario e frasi chiave per colloqui.", body:
+        "<p>Domande che tornano in quasi ogni colloquio, con l'inizio della risposta gia' pronto:</p>"+
+        "<ul>"+
+        "<li>«Tell me about yourself» → «I have worked as… for… years»</li>"+
+        "<li>«Why do you want this job?» → «I am interested in… because…»</li>"+
+        "<li>«What are your strengths?» → «I am reliable, and I learn quickly»</li>"+
+        "<li>«When can you start?» → «I am available from…»</li>"+
+        "</ul>"+
+        "<p><b>Nel CV</b>: <i>work experience</i>, <i>education</i>, <i>skills</i>, <i>languages</i>, <i>references available on request</i>.</p>"+
+        "<p>Usa i verbi al passato per i lavori finiti (<i>managed</i>, <i>organised</i>) e il presente per quello attuale.</p>" },
+      { id:'en-a4', title:"Business email writing", desc:"Struttura e tono giusto per email professionali in inglese.", body:
+        "<p>Una email di lavoro in inglese e' piu' breve e diretta di una italiana.</p>"+
+        "<ul>"+
+        "<li><b>Apertura</b>: «Dear Mr/Ms [cognome],» — se non sai il nome, «Dear Sir or Madam,»</li>"+
+        "<li><b>Motivo, subito</b>: «I am writing regarding…» / «I would like to ask about…»</li>"+
+        "<li><b>Richiesta cortese</b>: «Could you please…» — piu' educato di «Can you»</li>"+
+        "<li><b>Chiusura</b>: «Best regards,» oppure «Kind regards,» e il tuo nome</li>"+
+        "</ul>"+
+        "<p>«Please find attached» per un allegato. «I look forward to hearing from you» chiude bene quasi ogni richiesta.</p>" },
+      { id:'en-a5', title:"Practical conversation", desc:"Telefonate, meeting e small talk in contesti reali di lavoro.", body:
+        "<p><b>Al telefono</b>, formule fisse che ti tolgono dall'imbarazzo:</p>"+
+        "<ul>"+
+        "<li>«Could you speak more slowly, please?»</li>"+
+        "<li>«Sorry, could you repeat that?»</li>"+
+        "<li>«Let me check and get back to you»</li>"+
+        "<li>«Can I take a message?»</li>"+
+        "</ul>"+
+        "<p><b>Small talk</b>: il tempo, il viaggio, il fine settimana. «How was your weekend?» non e' una domanda vera: si risponde breve e si ricambia.</p>"+
+        "<p>In riunione: «I agree», «I see your point, but…», «Could we come back to this?».</p>" },
+      { id:'en-a6', title:"IELTS/TOEFL exam prep basics", desc:"Schema di studio e simulazioni per gli esami internazionali.", body:
+        "<p>Servono per universita' e per alcuni datori di lavoro. Quattro parti: <i>listening</i>, <i>reading</i>, <i>writing</i>, <i>speaking</i>.</p>"+
+        "<ul>"+
+        "<li><b>IELTS</b>: punteggio da 1 a 9. Per l'universita' di solito servono 6.0–6.5</li>"+
+        "<li><b>TOEFL</b>: punteggio da 0 a 120. Di solito servono 80–90</li>"+
+        "</ul>"+
+        "<p>Il modo piu' efficace di prepararsi e' fare <b>simulazioni complete a tempo</b>: entrambi gli esami pubblicano prove ufficiali gratuite sui loro siti.</p>"+
+        "<p>Nel <i>writing</i> conta la struttura piu' delle parole difficili: introduzione, due paragrafi con un'idea ciascuno, conclusione.</p>" }
     ]
   }
 };
@@ -498,16 +607,60 @@ function isRegistered(){
   try{ return !!localStorage.getItem('eih-registered'); }catch(e){ return false; }
 }
 
-function renderAdv(key){
+/* I corsi avanzati sono gratuiti come tutto il resto, ma non si aprono a chi
+   arriva e basta: si sbloccano con il badge Bronzo, cioe' dopo aver letto le
+   sei lezioni base e superato l'Esame Base con almeno 60/100. E' un impegno
+   vero e alla portata di tutti. Prima serviva il badge Oro, che si prende solo
+   con l'Esame Avanzato: chi si fermava a Bronzo o Argento non arrivava mai qui,
+   e intanto il testo mandava al Percorso, che i badge non li assegna. */
+function advSbloccati(){
+  return !!(window.EIHBadges && window.EIHBadges.has && window.EIHBadges.has('bronzo'));
+}
+
+function renderAdvLocked(key){
   var el = document.getElementById(key+'-adv-list');
-  var byBadge = !!(window.EIHBadges && window.EIHBadges.has && window.EIHBadges.has('oro'));
   el.innerHTML = COURSES[key].adv.map(function(l){
-    var flag = byBadge
-      ? '<span class="premium-flag" style="color:var(--gold)">✓ Sbloccato con il tuo badge</span>'
-      : '<span class="premium-flag">'+lockIco+' Richiede il badge del Percorso</span>';
-    return '<a class="adv-card" href="'+(byBadge?'/esame':'/percorso')+'">'+flag+
+    return '<a class="adv-card" href="/esame">'+
+      '<span class="premium-flag">'+lockIco+' Si sblocca con l\'Esame Base</span>'+
       '<h3>'+l.title+'</h3><p>'+l.desc+'</p></a>';
   }).join('');
+}
+
+function renderAdvUnlocked(key, done){
+  var lezioni = COURSES[key].adv;
+  var fatte = {};
+  done.forEach(function(d){ fatte[d.lesson] = true; });
+  var el = document.getElementById(key+'-adv-list');
+  el.classList.remove('adv-grid');
+  el.innerHTML = lezioni.map(function(l){
+    var isDone = !!fatte[l.id];
+    return '<details class="lesson" data-lesson="'+l.id+'">'+
+      '<summary><span>'+l.title+'</span>'+
+        (isDone ? '<span class="lesson-done-badge">✓ Completata</span>' : chevIco) +
+      '</summary>'+
+      '<div class="lesson-body"><p class="muted">'+l.desc+'</p>'+l.body+
+        '<button type="button" class="lesson-mark" '+(isDone?'disabled':'')+'>'+(isDone?'✓ Completata':'Segna come completata')+'</button>'+
+      '</div>'+
+    '</details>';
+  }).join('');
+  el.querySelectorAll('.lesson-mark').forEach(function(btn){
+    btn.addEventListener('click', async function(){
+      var details = btn.closest('.lesson');
+      var lessonId = details.getAttribute('data-lesson');
+      btn.disabled = true;
+      btn.textContent = '…';
+      try{
+        await window.EIH_DB.table('course-progress').insert({ lesson: lessonId, course: key+'-adv' });
+        var fresh = await window.EIH_DB.table('course-progress').list();
+        renderAdvUnlocked(key, fresh.filter(function(d){ return d && d.course === key+'-adv'; }));
+        var again = document.querySelector('.lesson[data-lesson="'+lessonId+'"]');
+        if(again) again.open = true;
+      }catch(e){
+        btn.disabled = false;
+        btn.textContent = 'Segna come completata';
+      }
+    });
+  });
 }
 
 function renderBaseLocked(key){
@@ -579,8 +732,6 @@ function initTabs(){
   if(regPrompt) regPrompt.hidden = registered;
 
   initTabs();
-  renderAdv('it');
-  renderAdv('en');
 
   if(registered){
     // Il salvataggio dei progressi è un extra: se il database non risponde le
@@ -589,9 +740,18 @@ function initTabs(){
     if(window.EIH_DB){ try{ all = await window.EIH_DB.table('course-progress').list(); }catch(e){} }
     renderBaseUnlocked('it', all.filter(function(d){ return d && d.course === 'it-base'; }));
     renderBaseUnlocked('en', all.filter(function(d){ return d && d.course === 'en-base'; }));
+    if(advSbloccati()){
+      renderAdvUnlocked('it', all.filter(function(d){ return d && d.course === 'it-adv'; }));
+      renderAdvUnlocked('en', all.filter(function(d){ return d && d.course === 'en-adv'; }));
+    } else {
+      renderAdvLocked('it');
+      renderAdvLocked('en');
+    }
   } else {
     renderBaseLocked('it');
     renderBaseLocked('en');
+    renderAdvLocked('it');
+    renderAdvLocked('en');
   }
 })();
 })();
