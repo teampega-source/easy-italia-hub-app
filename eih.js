@@ -209,11 +209,36 @@
     // altrimenti la lingua predefinita si scriverebbe addosso a chi non ha
     // mai aperto il selettore e non si distinguerebbe piu' da una scelta.
     setLang(l){ricordaLingua(l);applyLang(l);EIH.closeLang();},
+    // Il testo tradotto di una chiave, per il JavaScript che riscrive un
+    // elemento dopo che la pagina e' stata tradotta: scrivere la frase a mano
+    // la riporterebbe in italiano, e a seconda di chi arriva primo il difetto
+    // si vede o non si vede.
+    testo(chiave,ripiego){return _dict&&_dict[chiave]!=null?_dict[chiave]:ripiego;},
     toggleLang(e){if(e)e.stopPropagation();const m=document.getElementById('lang-menu'),b=document.getElementById('lang-btn');const o=!m.classList.contains('open');m.classList.toggle('open',o);b.setAttribute('aria-expanded',o);},
     closeLang(){const m=document.getElementById('lang-menu');if(m){m.classList.remove('open');document.getElementById('lang-btn').setAttribute('aria-expanded','false');}},
     toggleMenu(){const b=document.getElementById('nav-toggle'),p=document.getElementById('nav-collapse');const o=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',o);p.classList.toggle('open',o);}
   };
   window.EIH=EIH;
+
+  /* Attesa condivisa per il livello dati.
+
+     eih-auth.js si carica con defer, quindi quando lo script in fondo alla
+     pagina comincia a lavorare window.EIH_AUTH e window.EIH_DB non esistono
+     ancora: le pagine facevano `await (window.EIH_AUTH && window.EIH_AUTH.ready)`,
+     che su undefined prosegue subito, e leggevano i dati salvati da un livello
+     dati non ancora nato. Effetto: le lezioni segnate come completate sparivano
+     al ricaricamento, benche' fossero regolarmente salvate.
+
+     Gli script defer girano prima di DOMContentLoaded: aspettare quello e poi
+     la promessa di EIH_AUTH copre entrambi i casi. */
+  window.EIH_DATI_PRONTI=new Promise(function(risolvi){
+    function poi(){
+      var r=window.EIH_AUTH&&window.EIH_AUTH.ready;
+      if(r&&r.then)r.then(risolvi,risolvi);else risolvi();
+    }
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',poi,{once:true});
+    else poi();
+  });
 
   // inject nav + footer
   const navHost=document.getElementById('site-nav'); if(navHost)navHost.innerHTML=navHTML();
