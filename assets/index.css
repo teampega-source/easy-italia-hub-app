@@ -743,11 +743,6 @@ body{
 .nr-sidebar-nav{flex-shrink:0;display:flex;flex-direction:column;gap:.15rem;padding:1.1rem .75rem .6rem;border-bottom:1px solid var(--border)}
 .nr-sidebar-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--ink);font-family:'Clash Grotesk',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.55rem;padding:.2rem .15rem}
 .nr-sidebar-logo img{height:26px;width:auto;border-radius:5px;flex-shrink:0}
-.nr-sidebar-links{display:flex;flex-direction:column;gap:.05rem}
-.nr-sidebar-link{display:flex;align-items:center;gap:.6rem;padding:.45rem .6rem;border-radius:10px;text-decoration:none;color:var(--fg-secondary);font-size:.82rem;font-weight:500;transition:background var(--dur-micro),color var(--dur-micro);white-space:nowrap}
-.nr-sidebar-link:hover{background:var(--surface-hover);color:var(--ink)}
-.nr-sidebar-link.active{background:rgba(124,130,140,.08);color:var(--coral);font-weight:600}
-.nr-sl-icon{font-size:.88rem;width:1.25rem;text-align:center;flex-shrink:0}
 /* ─── Sidebar footer (auth buttons) ─── */
 .nr-sidebar-footer{flex-shrink:0;display:flex;flex-direction:column;gap:.45rem;padding:.75rem .75rem 1rem;border-top:1px solid var(--border);margin-top:auto}
 .nr-sidebar-btn{width:100%;padding:.52rem .75rem;border-radius:10px;font-size:.8rem;font-weight:600;font-family:'Clash Grotesk',sans-serif;cursor:pointer;border:none;text-align:center;transition:opacity var(--dur-micro)}

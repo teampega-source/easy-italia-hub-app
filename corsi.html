@@ -573,7 +573,7 @@ function initTabs(){
 }
 
 (async function init(){
-  try{ await (window.EIH_AUTH && window.EIH_AUTH.ready); }catch(e){}
+  try{ await window.EIH_DATI_PRONTI; }catch(e){}
   var regPrompt = document.getElementById('reg-prompt');
   var registered = isRegistered();
   if(regPrompt) regPrompt.hidden = registered;

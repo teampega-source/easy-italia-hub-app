@@ -468,7 +468,10 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   }
   renderMyBadge(); renderLadder(); applyGate();
   if(B.sync) B.sync(function(){ renderMyBadge(); renderLadder(); refreshTabs(); updateIntro(); });
-  // Sblocco per utenti loggati con progressi corsi salvati in EIH_DB
+  // Sblocco per utenti loggati con progressi corsi salvati in EIH_DB.
+  // Si aspetta il livello dati: eih-auth.js e' defer e qui non e' ancora nato,
+  // quindi il controllo cadeva sempre e chi aveva finito i corsi restava fuori.
+  window.EIH_DATI_PRONTI.then(function(){
   if(!B.coursesDone() && window.EIH_DB && window.EIH_DB.table){
     try{ window.EIH_DB.table('course-progress').list().then(function(rows){
       if(!rows||!rows.length) return;
@@ -478,6 +481,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       if(ok){ B.markCoursesDone(); applyGate(); }
     }).catch(function(){}); }catch(e){}
   }
+  });
   document.querySelectorAll('.etab').forEach(function(b){ b.addEventListener('click',function(){ if(!B.coursesDone())return; selectTier(this.getAttribute('data-tier')); }); });
   document.getElementById('start-btn').addEventListener('click',function(){ if(!B.coursesDone()){applyGate();return;} startQuiz(); });
   document.getElementById('submit-btn').addEventListener('click',grade);

@@ -919,7 +919,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 
   (async function init(){
     // Initialize REAL mode if configured; in demo this resolves instantly.
-    try{ await (window.EIH_AUTH && window.EIH_AUTH.ready); }catch(e){}
+    try{ await window.EIH_DATI_PRONTI; }catch(e){}
 
     // optional greeting nicety (defensive, no-op in demo when not registered)
     if(window.EIH_AUTH && typeof window.EIH_AUTH.getUser === 'function'){
