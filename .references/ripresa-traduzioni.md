@@ -71,6 +71,26 @@ Si partiva da 341 frammenti in singalese su 51 pagine.
 4. **Montare e ricontrollare**: `python3 scripts/monta-traduzioni.py`, poi
    `node scripts/audit-lingue.mjs` finché non esce 0.
 
+## Aperto: il contenuto delle lezioni dei corsi
+
+L'estrazione girava da visitatore anonimo, e su `corsi` le lezioni si aprono
+solo per gli iscritti: **il corpo delle lezioni non è mai entrato nel giro delle
+traduzioni**. Ora `scripts/estrai-testi.mjs` imposta `eih-registered`, e la
+copertura di `corsi` scende dal 100% apparente al 67% reale (350 frammenti,
+234 tradotti).
+
+I 116 frammenti scoperti **non vanno tradotti tutti**: sono in buona parte
+materia di studio — `cena`, `cibo`, `chiave`, `Ciao!`, `Buongiorno` sono le
+parole che l'utente deve imparare, non testo da sostituire (stesso caso del
+frasario medico, che è marcato `data-no-tr`). Vanno tradotte le **spiegazioni**
+intorno agli esempi («Le doppie consonanti si pronunciano più a lungo»), e per
+farlo serve separare nel markup l'esempio dalla glossa. È un lavoro a parte, da
+decidere: nessuno dei due tagli è ovvio.
+
+Le lezioni avanzate hanno lo stesso problema e non compaiono nemmeno
+nell'estrazione, perché servono il badge: l'estrattore si ferma allo stato
+«iscritto senza badge», che è quello che vede la maggioranza.
+
 ## Trappole già pagate
 - **Il container si riavvia e riporta indietro l'albero di lavoro.** Committare
   e *pushare* dopo ogni passo, non alla fine.

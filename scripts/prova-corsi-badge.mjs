@@ -37,14 +37,14 @@ let guasti = 0;
     baseIt: document.querySelectorAll('#it-base-list .lesson').length,
     bloccate: document.querySelectorAll('#it-base-list .lesson.locked').length,
     advIt: document.querySelectorAll('#it-adv-list .adv-card').length,
-    advVersoPercorso: [...document.querySelectorAll('#it-adv-list .adv-card')].every(a => a.getAttribute('href') === '/percorso'),
+    advVersoEsame: [...document.querySelectorAll('#it-adv-list .adv-card')].every(a => a.getAttribute('href') === '/esame'),
     invito: !document.getElementById('reg-prompt')?.hidden
   }));
   console.log('\n── corsi · non iscritto');
   guasti += riga('lezioni base elencate (it)', 6, r.baseIt);
   guasti += riga('tutte bloccate', 6, r.bloccate);
   guasti += riga('schede avanzate mostrate', 6, r.advIt);
-  guasti += riga('avanzate rimandano al percorso', true, r.advVersoPercorso);
+  guasti += riga('avanzate rimandano all\'esame', true, r.advVersoEsame);
   guasti += riga('invito a registrarsi visibile', true, r.invito);
   guasti += riga('nessun errore js', 0, errori.length);
   if (errori.length) console.log('       ', errori.join(' · '));
@@ -91,21 +91,51 @@ let guasti = 0;
   await ctx.close();
 }
 
-// ── 3. corsi avanzati sbloccati dal badge oro ────────────────────
+// ── 3. iscritto ma senza badge: gli avanzati restano chiusi ──────
 {
-  const { ctx, p } = await pagina({
+  const { ctx, p } = await pagina({ 'eih-registered': '1' });
+  await p.goto(BASE + '/corsi', { waitUntil: 'domcontentloaded' });
+  await p.waitForTimeout(3000);
+  const r = await p.evaluate(() => ({
+    schede: document.querySelectorAll('#it-adv-list .adv-card').length,
+    lezioni: document.querySelectorAll('#it-adv-list .lesson').length
+  }));
+  console.log('\n── corsi avanzati · iscritto senza badge');
+  guasti += riga('schede avanzate ancora chiuse', 6, r.schede);
+  guasti += riga('nessuna lezione avanzata accessibile', 0, r.lezioni);
+  await ctx.close();
+}
+
+// ── 4. col badge Bronzo gli avanzati si aprono davvero ───────────
+{
+  const { ctx, p, errori } = await pagina({
     'eih-registered': '1',
-    'eih-badge': JSON.stringify({ level: 'oro', score: 88, date: new Date().toISOString() })
+    'eih-badge': JSON.stringify({ level: 'bronzo', score: 65, date: new Date().toISOString() })
   });
   await p.goto(BASE + '/corsi', { waitUntil: 'domcontentloaded' });
   await p.waitForTimeout(3000);
   const r = await p.evaluate(() => ({
-    versoEsame: [...document.querySelectorAll('#it-adv-list .adv-card')].every(a => a.getAttribute('href') === '/esame'),
-    schede: document.querySelectorAll('#it-adv-list .adv-card').length
+    lezioni: document.querySelectorAll('#it-adv-list .lesson').length,
+    schede: document.querySelectorAll('#it-adv-list .adv-card').length,
+    conTesto: [...document.querySelectorAll('#it-adv-list .lesson-body')].filter(b => (b.textContent || '').trim().length > 120).length,
+    bottoni: document.querySelectorAll('#it-adv-list .lesson-mark').length
   }));
-  console.log('\n── corsi · con badge oro');
-  guasti += riga('schede avanzate presenti', 6, r.schede);
-  guasti += riga('avanzate sbloccate (portano a /esame)', true, r.versoEsame);
+  console.log('\n── corsi avanzati · con badge Bronzo');
+  guasti += riga('sei lezioni avanzate aperte', 6, r.lezioni);
+  guasti += riga('nessuna scheda bloccata rimasta', 0, r.schede);
+  guasti += riga('ogni lezione ha un contenuto vero', 6, r.conTesto);
+  guasti += riga('si possono segnare come completate', 6, r.bottoni);
+
+  await p.click('#it-adv-list .lesson:first-child summary');
+  await p.waitForTimeout(300);
+  await p.click('#it-adv-list .lesson:first-child .lesson-mark');
+  await p.waitForTimeout(1500);
+  guasti += riga('lezione avanzata segnata', 1, await p.evaluate(() => document.querySelectorAll('#it-adv-list .lesson-done-badge').length));
+  await p.reload({ waitUntil: 'domcontentloaded' });
+  await p.waitForTimeout(3000);
+  guasti += riga('resta segnata dopo il ricaricamento', 1, await p.evaluate(() => document.querySelectorAll('#it-adv-list .lesson-done-badge').length));
+  guasti += riga('nessun errore js', 0, errori.length);
+  if (errori.length) console.log('       ', errori.join(' · '));
   await ctx.close();
 }
 
