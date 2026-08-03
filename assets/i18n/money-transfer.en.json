@@ -7,7 +7,7 @@
 "9e16bba9": "Target LKR rate",
 "9fa3089c": "Turn on the rate alert",
 "_meta": {
-"copertura": 55,
+"copertura": 67,
 "lingua": "en",
 "pagina": "money-transfer"
 },
@@ -15,5 +15,5 @@
 "b26eded6": "Give us your email and a target rate: we will write to you when 1 EUR goes above that LKR threshold.",
 "c014c042": "Get an alert when the rate goes up",
 "c3213c80": "e.g. 340",
-"e7abae97": "Get a real quote (fees and exchange rate included). Some links are affiliate links:"
+"f0f134ca": "Get a real quote, with fees and exchange rate included:"
 }

@@ -156,7 +156,7 @@
     // ── Provider links (get the REAL quote) ─────────────────
     var providerIntro = el("div", {
       style: "font-size:.8rem;color:" + C.fgMuted + ";margin-bottom:.45rem;",
-      text: "Ottieni un preventivo reale (commissioni e cambio inclusi). Alcuni link sono affiliati:",
+      text: "Ottieni un preventivo reale, con commissioni e cambio inclusi:",
     });
 
     var linkRow = el("div", {
