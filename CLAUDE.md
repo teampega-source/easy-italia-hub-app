@@ -17,6 +17,9 @@
 - Nient'altro va caricato di default. Catalogo e riattivazione: `.references/tools-archive.md`, **solo se l'utente lo chiede** e dopo conferma. Mai installazioni automatiche in `scripts/session-bootstrap.sh`.
 - Immagini/video AI: riattivare MCP **meigen** (da `.references/mcp-disabled.json`), mai altri provider. Conferma prima di video, batch >1, 2K/4K.
 
+## Contenuti generati dall'AI
+- Video, immagini e voci sintetiche pubblicate vanno marcate `data-ai-gen` (`="immagine"` / `="voce"`): `eih.js` ci mette l'etichetta tradotta. Obbligo art. 50 Reg. UE 2024/1689, sanzioni fino a 15M€.
+
 ## GitHub
 - Dopo ogni push: creare PR e mergiarla autonomamente (squash su main). L'utente non tocca GitHub.
 

@@ -91,6 +91,24 @@ si studia, com'e' giusto: sono materia, non testo da sostituire.
 Tradotte 45 spiegazioni delle lezioni e i 35 passi del percorso. L'audit torna
 a zero su tutte e 59 le pagine con i contenuti riservati visibili.
 
+## Etichetta sui contenuti generati dall'AI
+
+Dal 2 agosto 2026 l'articolo 50 del Regolamento (UE) 2024/1689 chiede che un
+video, un'immagine o una voce sintetica che sembra reale sia dichiarata tale
+**accanto al contenuto**, non nei termini d'uso. Basta marcare l'elemento e
+`eih.js` aggiunge l'etichetta `.eih-ai-gen` da solo, nella lingua di chi guarda
+(le quattro traduzioni stanno nella tabella `AI_GEN` dentro `eih.js`, non nei
+dizionari: il testo nasce a runtime).
+
+```html
+<video data-ai-gen>…</video>            <!-- Video generato… -->
+<img data-ai-gen="immagine" …>          <!-- Immagine generata… -->
+<audio data-ai-gen="voce">…</audio>     <!-- Voce generata… -->
+```
+
+L'etichetta porta `data-no-tr`: la traduzione la fa gia' quella tabella, il
+dizionario di pagina non deve toccarla.
+
 ## Trappole già pagate
 - **Il container si riavvia e riporta indietro l'albero di lavoro.** Committare
   e *pushare* dopo ogni passo, non alla fine.

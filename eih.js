@@ -231,6 +231,43 @@
 
      Gli script defer girano prima di DOMContentLoaded: aspettare quello e poi
      la promessa di EIH_AUTH copre entrambi i casi. */
+  /* Etichetta per i contenuti generati dall'intelligenza artificiale.
+
+     L'articolo 50 del Regolamento (UE) 2024/1689 chiede che un video o
+     un'immagine sintetica che sembra reale sia dichiarata tale a chi la
+     guarda, accanto al contenuto e non sepolta nei termini d'uso. Metterla
+     a mano vuol dire prima o poi dimenticarla, e la sanzione arriva a
+     15 milioni: qui basta marcare l'elemento e l'etichetta compare da sola,
+     nella lingua di chi guarda.
+
+     Uso:  <video data-ai-gen>…</video>          → «Video generato…»
+           <img data-ai-gen="immagine" …>        → «Immagine generata…»
+           <audio data-ai-gen="voce">…</audio>   → «Voce generata…»                */
+  var AI_GEN={
+    video:{it:'Video generato con l\'intelligenza artificiale',en:'Video generated with artificial intelligence',
+      si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද වීඩියෝව',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட காணொளி'},
+    immagine:{it:'Immagine generata con l\'intelligenza artificiale',en:'Image generated with artificial intelligence',
+      si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද රූපය',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட படம்'},
+    voce:{it:'Voce generata con l\'intelligenza artificiale',en:'Voice generated with artificial intelligence',
+      si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද හඬ',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட குரல்'}
+  };
+  function etichettaAiGen(){
+    document.querySelectorAll('[data-ai-gen]').forEach(function(el){
+      if(el.__aiGen)return; el.__aiGen=true;
+      var tipo=el.getAttribute('data-ai-gen')||'video';
+      var testi=AI_GEN[tipo]||AI_GEN.video;
+      var p=document.createElement('p');
+      p.className='eih-ai-gen';
+      p.setAttribute('data-no-tr','');   // la traduzione la fa gia' questa tabella
+      p.textContent=testi[lang]||testi.it;
+      // subito dopo il contenuto: l'obbligo e' che si veda insieme a quello
+      (el.parentNode||document.body).insertBefore(p,el.nextSibling);
+    });
+  }
+  window.EIHEtichettaAiGen=etichettaAiGen;
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',etichettaAiGen,{once:true});
+  else etichettaAiGen();
+
   window.EIH_DATI_PRONTI=new Promise(function(risolvi){
     function poi(){
       var r=window.EIH_AUTH&&window.EIH_AUTH.ready;
