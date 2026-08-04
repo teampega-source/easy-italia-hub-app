@@ -68,5 +68,30 @@ html[data-theme="dark"] .partner-inner{background:rgba(33,30,26,.72)}
 html[data-theme="dark"] .pcard{background:rgba(244,246,249,.04)}
 html[data-theme="dark"] .pcard:hover{background:rgba(244,246,249,.07)}
 
+/* ── Piede di pagina ────────────────────────────────────────────────────
+   Il fondo del piede era scritto a mano in chiaro e non aveva un gemello
+   notturno: in fondo a una pagina scura restava una lastra quasi bianca, e
+   sopra ci finivano le voci in grigio medio, illeggibili. Il piede del
+   Percorso (.pf) ha un suo foglio di stile con gli stessi colori fissi:
+   vanno spenti tutti e due qui, dove il tema e' gia' dichiarato.          */
+html[data-theme="dark"] footer,
+html[data-theme="dark"] .pf{background:rgba(24,22,19,.88);border-top-color:rgba(255,255,255,.09)}
+html[data-theme="dark"] .pf-bottom{border-top-color:rgba(255,255,255,.09)}
+html[data-theme="dark"] .pf-logo,
+html[data-theme="dark"] .pf-col h4{color:#f2eee7}
+html[data-theme="dark"] .pf-logo .ac{color:#c2a15e}
+html[data-theme="dark"] .pf-tag,
+html[data-theme="dark"] .pf-col a,
+html[data-theme="dark"] .pf-col button,
+html[data-theme="dark"] .pf-copy,
+html[data-theme="dark"] .pf-legal a{color:#b4aa9b}
+html[data-theme="dark"] .pf-col a:hover,
+html[data-theme="dark"] .pf-col button:hover,
+html[data-theme="dark"] .pf-legal a:hover{color:#f2eee7}
+/* Il marchio nel piede nasce da eih.js con i colori scritti nell'attributo
+   style: solo !important arriva a coprirli. */
+html[data-theme="dark"] .footer-brand span{color:#f2eee7!important}
+html[data-theme="dark"] .footer-brand span+span{color:#b4aa9b!important}
+
 /* transizione morbida durante lo switch (classe momentanea) */
 html.theme-anim,html.theme-anim *{transition:background-color .3s ease,color .3s ease,border-color .3s ease!important}

@@ -204,7 +204,15 @@ function renderPick(){
     var b=document.createElement('button');b.type='button';b.className='tpl-btn';
     b.setAttribute('aria-pressed',t===cur);
     b.innerHTML='<b>'+t.tit+'</b><span>'+t.sub+'</span>';
-    b.onclick=function(){cur=t;renderPick();renderForm();renderSheet();save();};
+    b.onclick=function(){
+      cur=t;renderPick();renderForm();renderSheet();save();
+      // Scegliere un modello cambiava modulo e lettera piu' in basso, fuori
+      // dallo schermo: dal telefono sembrava che il clic non facesse niente.
+      var pane=document.querySelector('.builder');
+      if(pane&&pane.scrollIntoView)pane.scrollIntoView({behavior:'smooth',block:'start'});
+      var primo=document.querySelector('#m-form input');
+      if(primo)setTimeout(function(){primo.focus({preventScroll:true});},400);
+    };
     pick.appendChild(b);
   });
 }

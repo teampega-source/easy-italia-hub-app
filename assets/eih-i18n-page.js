@@ -265,15 +265,20 @@
             }
           });
           ripasso.observe(document.documentElement, { childList: true, subtree: true });
+          // L'osservatore resta acceso anche dopo il caricamento. Prima si
+          // spegneva a DOMContentLoaded, e le pagine che si ridisegnano al
+          // clic tornavano in italiano un pezzo alla volta: nei moduli bastava
+          // scegliere un altro modello per vedere l'elenco riscriversi in
+          // italiano sotto un'interfaccia inglese. Rileggere un ramo appena
+          // nato costa poco, e `data-tr-ok` impedisce di rifarlo due volte.
           document.addEventListener('DOMContentLoaded', function () {
             applica(d); applica(d, null, true);
-            if (ripasso) { ripasso.disconnect(); ripasso = null; }
           });
         }
 
         if (document.querySelector('main') || document.readyState !== 'loading') {
           primoPassaggio();
-          if (document.readyState === 'loading') seguiIlFlusso();
+          seguiIlFlusso();
         } else {
           var spia = new MutationObserver(function () {
             if (!document.querySelector('main')) return;

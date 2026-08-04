@@ -120,10 +120,11 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 
   <div class="reg-right" aria-hidden="true">
     <img class="poster" src="/assets/img/community-welcome.webp" alt=""/>
-    <video id="reg-video" autoplay muted loop playsinline preload="auto" poster="/assets/img/community-welcome.webp" style="display:none">
-      <source src="/assets/video/signup-demo.webm" type="video/webm"/>
-      <source src="/assets/video/signup-demo.mp4" type="video/mp4"/>
-    </video>
+    <!-- Le sorgenti le mette lo script qui sotto, nella lingua scelta: il
+         filmato racconta il sito a parole, e mezzo schermo in una lingua che
+         non hai scelto e' esattamente il problema che il sito risolve.
+         Si rifanno tutti e quattro con scripts/monta-video-iscrizione.mjs -->
+    <video id="reg-video" autoplay muted loop playsinline preload="auto" poster="/assets/img/community-welcome.webp" style="display:none"></video>
     <div class="shade"></div>
     <div class="reg-claim">
       <h2>Tutta l'Italia, spiegata semplice.</h2>
@@ -246,6 +247,16 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     // Video: mostralo appena è decodificabile (robusto anche se gli eventi
     // sono già passati o l'autoplay parte in ritardo su mobile)
     var v = el('reg-video');
+    var lg = window.EIH_LANG || 'en';
+    try { lg = localStorage.getItem('eih-lang') || lg; } catch(e){}
+    if (['it','en','si','ta'].indexOf(lg) < 0) lg = 'en';
+    [['webm','video/webm'],['mp4','video/mp4']].forEach(function(f){
+      var s = document.createElement('source');
+      s.src = '/assets/video/signup-demo.' + lg + '.' + f[0];
+      s.type = f[1];
+      v.appendChild(s);
+    });
+    v.load();
     function show(){
       if(v.style.display !== 'block'){ v.style.display = 'block'; }
       var p = v.play(); if(p && p.catch) p.catch(function(){});
