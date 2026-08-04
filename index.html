@@ -298,7 +298,22 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
         <a role="menuitem" href="/riconoscimento-titoli" data-i18n="m.titles">Riconosc. Titoli</a>
         <a role="menuitem" href="/dizionario-medico" data-i18n="m.medical">Dizionario Medico</a>
       </div></li>
-          <li class="nav-item"><a href="/servizi" data-i18n="nav.services">Servizi</a></li>
+          <!-- Gli strumenti stavano solo dentro la pagina Servizi: ora si
+               raggiungono dal menu, e la pagina resta come indice completo. -->
+          <li class="nav-item nav-has-sub"><a href="/servizi" data-i18n="nav.services">Servizi</a><button type="button" class="nav-sub-btn" aria-expanded="false" aria-label="Sottomenu Servizi" tabindex="-1"><svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="nav-sub" role="menu">
+        <a role="menuitem" href="/permesso-tracker" data-i18n="m.tracker">Tracker Permesso</a>
+        <a role="menuitem" href="/documenti" data-i18n="m.docs">Archivio Documenti</a>
+        <a role="menuitem" href="/cv-builder" data-i18n="m.cv">CV Builder</a>
+        <a role="menuitem" href="/moduli" data-i18n="m.templates">Moduli e Lettere</a>
+        <a role="menuitem" href="/traduci" data-i18n="m.translate">Traduzioni</a>
+        <a role="menuitem" href="/money-transfer" data-i18n="m.money">Comparatore rimesse</a>
+        <a role="menuitem" href="/fisco" data-i18n="m.fisco">Fisco e tasse</a>
+        <a role="menuitem" href="/opportunita" data-i18n="m.opportunities">Opportunità</a>
+        <a role="menuitem" href="/housing" data-i18n="m.housing">Casa e alloggio</a>
+        <a role="menuitem" href="/mercatino" data-i18n="m.market">Mercatino</a>
+        <a role="menuitem" href="/professionisti" data-i18n="m.pros">Professionisti</a>
+        <a role="menuitem" href="/servizi" data-i18n="m.allservices">Tutti i servizi</a>
+      </div></li>
           <li class="nav-item"><a href="/community" data-i18n="nav.community">Community</a></li>
           <li class="nav-item nav-has-sub"><a href="/academy" data-i18n="nav.academy">Academy</a><button type="button" class="nav-sub-btn" aria-expanded="false" aria-label="Sottomenu Academy" tabindex="-1"><svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="nav-sub" role="menu">
         <a role="menuitem" href="/academy" data-i18n="m.academy">Lezioni Academy</a>
