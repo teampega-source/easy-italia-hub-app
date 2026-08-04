@@ -139,6 +139,28 @@ const LANG_META={it:{flag:"🇮🇹",code:"IT"},en:{flag:"🇬🇧",code:"EN"},s
 let currentLang=window.EIH_LANG||localStorage.getItem('eih-lang')||'en';
 if(!I18N[currentLang])currentLang='en';
 
+/* Contenuti sintetici: l'articolo 50 del Reg. (UE) 2024/1689 vuole la
+   dichiarazione accanto al contenuto, nella lingua di chi guarda. Questa pagina
+   non carica eih.js, quindi l'etichetta se la scrive da sé, con le stesse
+   quattro traduzioni della tabella AI_GEN di eih.js. */
+const AI_GEN={
+  immagine:{it:"immagine generata con l'intelligenza artificiale",en:'image generated with artificial intelligence',si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද රූපයකි',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட படம்'},
+  video:{it:"video generato con l'intelligenza artificiale",en:'video generated with artificial intelligence',si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද වීඩියෝවකි',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட காணொளி'},
+  voce:{it:"voce generata con l'intelligenza artificiale",en:'voice generated with artificial intelligence',si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද හඬකි',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட குரல்'}
+};
+function etichettaAiGen(lang){
+  document.querySelectorAll('[data-ai-gen]').forEach(el=>{
+    const testi=AI_GEN[el.getAttribute('data-ai-gen')]||AI_GEN.video;
+    let p=el.__aiGen;
+    if(!p){
+      p=el.__aiGen=document.createElement('p');
+      p.className='eih-ai-gen';p.setAttribute('data-no-tr','');
+      (el.parentNode||document.body).insertBefore(p,el.nextSibling);
+    }
+    p.textContent=testi[lang]||testi.en;
+  });
+}
+
 function applyLang(lang){
   if(!I18N[lang])lang='en';
   currentLang=lang;
@@ -147,6 +169,7 @@ function applyLang(lang){
   document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(d[k]!=null)el.textContent=d[k];});
   document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.getAttribute('data-i18n-html');if(d[k]!=null)el.innerHTML=d[k];});
   document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(d[k]!=null)el.setAttribute('placeholder',d[k]);});
+  etichettaAiGen(lang);
   document.getElementById('lang-flag').textContent=LANG_META[lang].flag;
   document.getElementById('lang-code').textContent=LANG_META[lang].code;
   document.querySelectorAll('#lang-menu button').forEach(b=>b.setAttribute('aria-current',b.getAttribute('onclick').includes("'"+lang+"'")?'true':'false'));
@@ -203,7 +226,7 @@ applyLang(currentLang);
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   // Hero headline reveals via CSS keyframe (lineUp) automatically on load.
   // Scroll-reveal targets (below the fold)
-  const targets=[...document.querySelectorAll('.ad-mini-bar,.wa-section,.donate-card,.cta-card,.footer-brand,.footer-col,.svc-card,.plan,.tools-section .section-label,.tools-section .section-title,.tools-section .section-sub,.tw-group,.does-section .section-label,.does-section .section-title,.does-section .section-sub,.does-card')];
+  const targets=[...document.querySelectorAll('.ad-mini-bar,.wa-section,.donate-card,.cta-card,.footer-brand,.footer-col,.svc-card,.plan,.tools-section .section-label,.tools-section .section-title,.tools-section .section-sub,.tw-group,.does-section .section-label,.does-section .section-title,.does-section .section-sub,.does-card,.ct-foto')];
   targets.forEach(el=>el.classList.add('reveal'));
   if(reduce){targets.forEach(el=>el.classList.add('in'));return;}
   const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
