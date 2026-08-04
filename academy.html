@@ -105,7 +105,10 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   [data-page="academy"] .lesson-overlay.open{display:flex}
   [data-page="academy"] .lesson-panel{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:680px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
   [data-page="academy"] .lesson-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.3rem;border-bottom:1px solid var(--border)}
-  [data-page="academy"] .lesson-head h2{font-family:'Clash Grotesk',sans-serif;font-size:1.1rem;font-weight:600;margin:0}
+  [data-page="academy"] .lesson-head h2{font-family:'Clash Grotesk',sans-serif;font-size:1.1rem;font-weight:600;margin:0;flex:1 1 auto;min-width:0}
+  [data-page="academy"] .lesson-tr{display:inline-flex;align-items:center;gap:.4rem;font-size:.76rem;color:var(--fg-muted)}
+  [data-page="academy"] .lesson-tr select{font:inherit;color:var(--ink);background:var(--surface);
+    border:1px solid var(--border);border-radius:99px;padding:.22rem .5rem;cursor:pointer}
   [data-page="academy"] .close-lesson{cursor:pointer;border:0;background:none;color:var(--fg-muted);font-size:1.3rem;line-height:1;padding:.2rem .4rem;border-radius:var(--radius-sm)}
   [data-page="academy"] .close-lesson:hover{background:var(--bg-deep)}
   [data-page="academy"] .lesson-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:1.3rem}
@@ -241,10 +244,21 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   <div class="lesson-panel">
     <div class="lesson-head">
       <h2 id="lesson-title">Lezione</h2>
+      <!-- La lingua d'appoggio la sceglie chi studia: la lingua dell'interfaccia
+           dice come si legge il sito, non quale traduzione serve accanto
+           all'italiano. -->
+      <label class="lesson-tr">
+        <span id="lesson-tr-label">Traduzione</span>
+        <select id="lesson-tr" data-no-tr>
+          <option value="">—</option>
+          <option value="si" lang="si">සිංහල</option>
+          <option value="ta" lang="ta">தமிழ்</option>
+        </select>
+      </label>
       <button class="close-lesson" id="close-lesson" aria-label="Chiudi">&times;</button>
     </div>
     <div class="lesson-body" id="lesson-body" data-lenis-prevent>
-      <div class="lesson-content" id="lesson-content"></div>
+      <div class="lesson-content" id="lesson-content" data-ai-gen="testo"></div>
       <!-- Mini chat -->
       <div class="mini-chat" id="mini-chat">
         <div class="mini-thread" id="mini-thread" data-lenis-prevent></div>
@@ -278,6 +292,7 @@ var miniThread = document.getElementById('mini-thread');
 var miniInput = document.getElementById('mini-input');
 var miniSend = document.getElementById('mini-send');
 var currentTopic = '';
+var currentTitle = '';
 
 function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br/>');
@@ -286,17 +301,48 @@ function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-/* Lingua della lezione: chi legge in sinhala studia l'italiano, chi legge in
-   tamil studia sull'inglese. Da qui la coppia spiegazione + traduzione. */
-function lessonLang() {
-  var l = 'it';
-  l = window.EIH_LANG || 'en';
+/* La materia e' sempre l'italiano. Quello che cambia e' la lingua in cui la
+   lezione e' spiegata — quella dell'interfaccia — e la traduzione che si vuole
+   accanto alle frasi chiave, che si sceglie.
+
+   Prima l'inglese era messo insieme al tamil: chi leggeva il sito in inglese
+   si ritrovava una lezione scritta in inglese con le traduzioni in tamil, mai
+   chieste. Ora chi non legge in singalese o tamil parte senza traduzione e la
+   accende dal menu in cima alla lezione. */
+var VOCI = {
+  it: { nome: 'italiano', note: 'Lezione di italiano, spiegata in italiano', wait: 'Carico la lezione…',
+        ask: '💬 Fai una domanda su questo argomento', ph: 'Fai una domanda su questo argomento…', send: 'Invia',
+        trLabel: 'Traduzione', nessuna: 'nessuna', ko: 'Lezione non disponibile. Riprova fra poco.', rete: 'Errore di connessione.' },
+  en: { nome: 'inglese', note: 'Italian lesson, explained in English', wait: 'Loading the lesson…',
+        ask: '💬 Ask a question about this topic', ph: 'Ask about this lesson…', send: 'Send',
+        trLabel: 'Translation', nessuna: 'none', ko: 'Lesson unavailable. Please try again shortly.', rete: 'Connection error.' },
+  si: { nome: 'singalese', note: 'ඉතාලි පාඩම, සිංහලෙන් පැහැදිලි කර ඇත', wait: 'පාඩම පූරණය වෙමින්…',
+        ask: '💬 මෙම මාතෘකාව ගැන ප්‍රශ්නයක් අසන්න', ph: 'මෙම පාඩම ගැන අසන්න…', send: 'යවන්න',
+        trLabel: 'පරිවර්තනය', nessuna: 'නැත', ko: 'පාඩම ලබා ගත නොහැක. මොහොතකින් නැවත උත්සාහ කරන්න.', rete: 'සම්බන්ධතා දෝෂයකි.' },
+  ta: { nome: 'tamil', note: 'இத்தாலியப் பாடம், தமிழில் விளக்கப்பட்டது', wait: 'பாடம் ஏற்றப்படுகிறது…',
+        ask: '💬 இந்தத் தலைப்பு குறித்துக் கேளுங்கள்', ph: 'இந்தப் பாடம் குறித்துக் கேளுங்கள்…', send: 'அனுப்பு',
+        trLabel: 'மொழிபெயர்ப்பு', nessuna: 'இல்லை', ko: 'பாடம் கிடைக்கவில்லை. சிறிது நேரத்தில் முயலவும்.', rete: 'இணைப்புப் பிழை.' }
+};
+var NOMI_TR = { si: 'singalese', ta: 'tamil' };
+
+function linguaSito() {
+  var l = window.EIH_LANG || 'en';
   try { l = localStorage.getItem('eih-lang') || l; } catch (e) {}
-  return (l === 'en' || l === 'ta')
-    ? { teach: 'inglese', tr: 'tamil', note: 'Lesson in English with Tamil translation.', wait: 'Loading the lesson…',
-        ask: '💬 Ask a question about this topic', ph: 'Ask about this lesson…', send: 'Send' }
-    : { teach: 'italiano', tr: 'sinhala', note: 'Lezione in italiano con traduzione in sinhala.', wait: 'Carico la lezione…',
-        ask: '💬 Fai una domanda su questo argomento', ph: 'Fai una domanda su questo argomento…', send: 'Invia' };
+  return VOCI[l] ? l : 'en';
+}
+function traduzioneScelta() {
+  var salvata = null;
+  try { salvata = localStorage.getItem('eih-lezione-tr'); } catch (e) {}
+  if (salvata !== null) return salvata;          // anche '' vale: nessuna, voluta
+  var l = linguaSito();
+  return (l === 'si' || l === 'ta') ? l : '';
+}
+function lessonLang() {
+  var l = linguaSito(), tr = traduzioneScelta();
+  var V = VOCI[l], nota = V.note;
+  if (tr && tr !== l) nota += ' + ' + (l === 'it' ? NOMI_TR[tr] : tr === 'si' ? 'සිංහල' : 'தமிழ்');
+  return { lang: l, spiega: V.nome, tr: NOMI_TR[tr] || '', chiaveTr: tr || '-',
+           note: nota, wait: V.wait, ask: V.ask, ph: V.ph, send: V.send, ko: V.ko, rete: V.rete };
 }
 
 /* Il modello risponde in testo semplice: qui diventa HTML leggibile.
@@ -344,10 +390,13 @@ function unlockPage() {
   try { if (window.EIH_LENIS) window.EIH_LENIS.start(); } catch (e) {}
 }
 
-function openLesson(topic) {
+function openLesson(topic, titolo) {
   currentTopic = topic;
+  if (titolo) currentTitle = titolo;
   var L = lessonLang();
-  lessonTitle.textContent = topic.split(':')[0];
+  // Il titolo si prende dalla scheda, che il dizionario di pagina ha gia'
+  // tradotto: data-topic e' la traccia per il modello e resta in italiano.
+  lessonTitle.textContent = currentTitle || topic.split(':')[0];
   lessonContent.innerHTML = '<span class="spinner"></span> ' + esc(L.wait);
   lessonFooter.style.display = '';
   askBtn.textContent = L.ask;
@@ -355,22 +404,23 @@ function openLesson(topic) {
   miniSend.textContent = L.send;
   miniChat.classList.remove('open');
   miniThread.innerHTML = '';
-  overlay.classList.add('open');
-  lockPage();
+  // Riaprire una lezione già aperta (cambio traduzione) non deve rifare il
+  // blocco: lockY leggerebbe 0, e alla chiusura la pagina tornerebbe in cima.
+  if (!overlay.classList.contains('open')) { overlay.classList.add('open'); lockPage(); }
   document.getElementById('lesson-body').scrollTop = 0;
 
   // Una lezione generata è identica per tutta la sessione: si tiene da parte
   // invece di richiederla di nuovo a ogni apertura.
-  var key = 'eih-lez:' + L.tr + ':' + topic;
+  var key = 'eih-lez:' + L.lang + ':' + L.chiaveTr + ':' + topic;
   var cached = null;
   try { cached = sessionStorage.getItem(key); } catch (e) {}
   if (cached) { lessonContent.innerHTML = '<p class="lang-note">' + esc(L.note) + '</p>' + render(cached); return; }
 
-  var prompt = 'Sei un insegnante di ' + L.teach + ' per stranieri. Crea una lezione breve (max 280 parole) su "' + topic +
-    '" per chi vive in Italia. Struttura: titoli di sezione con "## " ed emoji; 6 parole o frasi chiave in elenco "- "; ' +
-    'un dialogo reale di 3 battute; un consiglio pratico finale. ' +
-    'REGOLA: dopo ogni frase chiave e ogni battuta di dialogo scrivi la traduzione in ' + L.tr +
-    ' su una riga a parte che inizia con "> ". Nessun altro commento.';
+  var prompt = 'Insegnante di italiano per stranieri. Lezione breve (max 280 parole) su "' + topic +
+    '", scritta in ' + L.spiega + '. Struttura: titoli "## " con emoji; 6 frasi chiave in elenco "- "; ' +
+    'dialogo di 3 battute; un consiglio finale.' +
+    (L.tr ? ' Dopo ogni frase chiave e ogni battuta, la traduzione in ' + L.tr + ' su riga a parte che inizia con "> ".' : '') +
+    ' Nessun altro commento.';
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -382,11 +432,11 @@ function openLesson(topic) {
       try { sessionStorage.setItem(key, data.reply); } catch (e) {}
       lessonContent.innerHTML = '<p class="lang-note">' + esc(L.note) + '</p>' + render(data.reply);
     } else {
-      lessonContent.innerHTML = '<span style="color:var(--fg-muted)">Lezione non disponibile. Riprova tra qualche istante.</span>';
+      lessonContent.innerHTML = '<span style="color:var(--fg-muted)">' + esc(L.ko) + '</span>';
     }
   })
   .catch(function(){
-    lessonContent.innerHTML = '<span style="color:var(--fg-muted)">Errore di connessione.</span>';
+    lessonContent.innerHTML = '<span style="color:var(--fg-muted)">' + esc(L.rete) + '</span>';
   });
 }
 
@@ -424,9 +474,10 @@ function sendMiniChat() {
   miniThread.scrollTop = miniThread.scrollHeight;
 
   var L = lessonLang();
-  var prompt = 'Sei un insegnante di ' + L.teach + '. L\'utente ha appena letto una lezione su "' + currentTopic +
-    '". Rispondi in modo chiaro e breve, poi ripeti la risposta tradotta in ' + L.tr +
-    ' su una riga che inizia con "> ". Domanda: ' + text;
+  var prompt = 'Insegnante di italiano. Lezione appena letta: "' + currentTopic +
+    '". Rispondi breve e chiaro in ' + L.spiega + '.' +
+    (L.tr ? ' Poi la traduzione in ' + L.tr + ' su riga che inizia con "> ".' : '') +
+    ' Domanda: ' + text;
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -449,9 +500,28 @@ miniInput.addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.pr
 
 document.querySelectorAll('.start-btn').forEach(function(btn){
   btn.addEventListener('click', function(){
-    openLesson(btn.getAttribute('data-topic'));
+    var card = btn.closest('.course-card');
+    var t = card && card.querySelector('.cc-title');
+    openLesson(btn.getAttribute('data-topic'), t ? t.textContent.trim() : '');
   });
 });
+
+/* Menu della traduzione: la scelta resta, e cambiandola la lezione aperta si
+   rifà subito — chiuderla e riaprirla per vederla nell'altra lingua non è un
+   passaggio che si può chiedere a chi sta studiando. */
+(function(){
+  var menu = document.getElementById('lesson-tr');
+  var etichetta = document.getElementById('lesson-tr-label');
+  if (!menu) return;
+  var V = VOCI[linguaSito()];
+  etichetta.textContent = V.trLabel;
+  menu.options[0].textContent = V.nessuna;
+  menu.value = traduzioneScelta();
+  menu.addEventListener('change', function(){
+    try { localStorage.setItem('eih-lezione-tr', menu.value); } catch (e) {}
+    if (currentTopic && overlay.classList.contains('open')) openLesson(currentTopic);
+  });
+})();
 })();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>

@@ -242,14 +242,21 @@
 
      Uso:  <video data-ai-gen>…</video>          → «Video generato…»
            <img data-ai-gen="immagine" …>        → «Immagine generata…»
-           <audio data-ai-gen="voce">…</audio>   → «Voce generata…»                */
+           <audio data-ai-gen="voce">…</audio>   → «Voce generata…»
+           <div data-ai-gen="testo">…</div>      → «Testo generato…»
+     Per il testo l'etichetta va prima del contenuto: si legge dall'alto, e
+     l'avviso serve a chi sta per leggere, non a chi ha gia' letto.           */
   var AI_GEN={
     video:{it:'Video generato con l\'intelligenza artificiale',en:'Video generated with artificial intelligence',
       si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද වීඩියෝව',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட காணொளி'},
     immagine:{it:'Immagine generata con l\'intelligenza artificiale',en:'Image generated with artificial intelligence',
       si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද රූපය',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட படம்'},
     voce:{it:'Voce generata con l\'intelligenza artificiale',en:'Voice generated with artificial intelligence',
-      si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද හඬ',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட குரல்'}
+      si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද හඬ',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட குரல்'},
+    testo:{it:'Testo generato con l\'intelligenza artificiale: informazioni generali, non consulenza professionale',
+      en:'Text generated with artificial intelligence: general information, not professional advice',
+      si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද පෙළ: සාමාන්‍ය තොරතුරු මිස වෘත්තීය උපදෙස් නොවේ',
+      ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட உரை: பொதுத் தகவல், தொழில்முறை ஆலோசனை அல்ல'}
   };
   function etichettaAiGen(){
     document.querySelectorAll('[data-ai-gen]').forEach(function(el){
@@ -260,8 +267,9 @@
       p.className='eih-ai-gen';
       p.setAttribute('data-no-tr','');   // la traduzione la fa gia' questa tabella
       p.textContent=testi[lang]||testi.it;
-      // subito dopo il contenuto: l'obbligo e' che si veda insieme a quello
-      (el.parentNode||document.body).insertBefore(p,el.nextSibling);
+      // insieme al contenuto: dopo per quello che si guarda, prima per quello
+      // che si legge
+      (el.parentNode||document.body).insertBefore(p,tipo==='testo'?el:el.nextSibling);
     });
   }
   window.EIHEtichettaAiGen=etichettaAiGen;
