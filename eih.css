@@ -476,3 +476,17 @@ html[data-theme="dark"] .site-nav{background:#1c1916}
   .roadmap-item{grid-template-columns:56px 1fr}
   .roadmap-quarter{font-size:.58rem;padding-right:var(--sp-1)}
   .roadmap-section,.testimonials-section,.pricing-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
+
+/* ─── Contenuto generato dall'intelligenza artificiale ───────────────────
+   L'articolo 50 del Regolamento (UE) 2024/1689 chiede che un contenuto
+   sintetico — una voce, un'immagine, un video che sembra reale — sia
+   dichiarato tale a chi lo guarda, in modo chiaro e riconoscibile: non
+   nascosto nei termini d'uso e non affidato al solo watermark tecnico.
+   Si mette accanto al contenuto, non a fondo pagina.
+   Uso:  <p class="eih-ai-gen">Video generato con l'AI</p>              */
+.eih-ai-gen{display:inline-flex;align-items:center;gap:.4rem;margin:.5rem 0 0;
+  padding:.3rem .7rem;border-radius:var(--radius-full,99px);
+  font-size:var(--text-xs,.72rem);font-weight:500;line-height:1.4;
+  color:var(--fg-secondary,#565049);background:var(--bg-deep,rgba(40,36,30,.05));
+  border:1px solid var(--border,rgba(118,118,118,.18))}
+.eih-ai-gen::before{content:"✦";flex-shrink:0;color:var(--gold,#7c7059)}
