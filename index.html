@@ -1079,7 +1079,19 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
       <a href="/community" class="btn-primary" style="display:inline-flex" data-i18n="ct.cta">Unisciti alla community →</a>
     </div>
 
-    <!-- Right: social proof visual -->
+    <!-- Right: il saluto ayubowan apre la colonna, poi la prova sociale.
+         La foto resta fuori dal blocco aria-hidden: l'etichetta che dichiara
+         l'origine artificiale deve poterla leggere anche chi usa uno screen
+         reader, non e' decorazione. -->
+    <div class="ct-lato">
+    <figure class="ct-foto reveal">
+      <img src="/assets/img/community-ayubowan.webp"
+           srcset="/assets/img/community-ayubowan-sm.webp 512w, /assets/img/community-ayubowan.webp 1024w"
+           sizes="(max-width:900px) 88vw, 420px"
+           width="1024" height="1538"
+           alt="Una donna srilankese in sari saluta con le mani giunte nel gesto ayubowan, sulla soglia di una porta di legno intagliato"
+           loading="lazy" decoding="async" data-ai-gen="immagine"/>
+    </figure>
     <div class="ct-visual" aria-hidden="true">
       <div class="ct-counter">
         <span class="ct-num" style="font-size:clamp(1.8rem,4vw,2.8rem)">🌱</span>
@@ -1097,6 +1109,7 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
         <span>Roma</span><span>Milano</span><span>Torino</span>
         <span>Firenze</span><span>Bologna</span><span>Napoli</span>
       </div>
+    </div>
     </div>
 
   </div>
