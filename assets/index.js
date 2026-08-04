@@ -139,6 +139,80 @@ const LANG_META={it:{flag:"🇮🇹",code:"IT"},en:{flag:"🇬🇧",code:"EN"},s
 let currentLang=window.EIH_LANG||localStorage.getItem('eih-lang')||'en';
 if(!I18N[currentLang])currentLang='en';
 
+/* ── Newsletter «Resta aggiornato» ───────────────────────────────────────
+   Il pulsante chiamava subscribeNewsletter(), che non è mai esistita: il clic
+   moriva in un ReferenceError e non succedeva niente, né un errore né una
+   conferma. Qui la funzione c'è, e racconta sempre com'è andata.
+
+   Chi non ha un account viene mandato prima a crearlo: la newsletter parla di
+   scadenze e pratiche personali, e senza un profilo non c'è modo di gestire
+   l'iscrizione né di disdirla. Chi è già iscritto lo vede scritto, invece di
+   ricevere di nuovo la stessa email di conferma. */
+const NL_TESTI={
+  attesa:{it:'Invio in corso…',en:'Sending…',si:'යවමින්…',ta:'அனுப்புகிறது…'},
+  fatto:{it:'✓ Ti abbiamo scritto: apri l\'email e conferma l\'iscrizione.',en:'✓ Check your inbox: open the email and confirm your subscription.',si:'✓ ඔබේ විද්‍යුත් තැපෑල පරීක්ෂා කරන්න: එහි ඇති සබැඳියෙන් දායකත්වය තහවුරු කරන්න.',ta:'✓ உங்கள் மின்னஞ்சலைப் பாருங்கள்: அதிலுள்ள இணைப்பால் சந்தாவை உறுதிப்படுத்துங்கள்.'},
+  gia:{it:'✓ Sei iscritto alla newsletter.',en:'✓ Subscribed to the newsletter.',si:'✓ ඔබ පුවත් පත්‍රිකාවට දායක වී ඇත.',ta:'✓ நீங்கள் செய்திமடலுக்குச் சந்தா செலுத்தியுள்ளீர்கள்.'},
+  conto:{it:'Per iscriverti serve un account gratuito.',en:'A free account is needed to subscribe.',si:'දායක වීමට නොමිලේ ගිණුමක් අවශ්‍යයි.',ta:'சந்தா செலுத்த இலவசக் கணக்கு தேவை.'},
+  vaiConto:{it:'Crea il tuo account →',en:'Create your account →',si:'ගිණුමක් සාදන්න →',ta:'கணக்கை உருவாக்கு →'},
+  email:{it:'Scrivi un indirizzo email valido.',en:'Please enter a valid email address.',si:'වලංගු විද්‍යුත් තැපැල් ලිපිනයක් ලියන්න.',ta:'சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்.'},
+  errore:{it:'Non ha funzionato. Riprova fra poco.',en:'That did not work. Please try again shortly.',si:'එය ක්‍රියා නොකළේය. මොහොතකින් නැවත උත්සාහ කරන්න.',ta:'அது வேலை செய்யவில்லை. சிறிது நேரத்தில் மீண்டும் முயலவும்.'}
+};
+const NL_ISCRITTO='eih-nl-iscritto';
+function nlDice(chiave,esito){
+  const el=document.getElementById('nl-state');if(!el)return;
+  el.hidden=false;
+  el.textContent=NL_TESTI[chiave][currentLang]||NL_TESTI[chiave].en;
+  if(esito)el.setAttribute('data-esito',esito);else el.removeAttribute('data-esito');
+}
+function nlChiudiModulo(){
+  const r=document.querySelector('.newsletter-row');if(r)r.hidden=true;
+  const n=document.querySelector('.newsletter-note');if(n)n.hidden=true;
+}
+function subscribeNewsletter(){
+  const campo=document.getElementById('nl-email');
+  const email=(campo&&campo.value||'').trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){nlDice('email','errore');if(campo)campo.focus();return;}
+  nlDice('attesa');
+  fetch('/api/newsletter',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email})})
+    .then(r=>r.json().then(d=>({ok:r.ok,d})))
+    .then(({ok,d})=>{
+      if(!ok||!d||d.error){nlDice('errore','errore');return;}
+      try{localStorage.setItem(NL_ISCRITTO,email);}catch(e){}
+      nlChiudiModulo();nlDice('fatto');
+    })
+    .catch(()=>nlDice('errore','errore'));
+}
+window.subscribeNewsletter=subscribeNewsletter;
+
+/* Stato all'apertura della pagina: già iscritto, oppure ancora senza account */
+(function(){
+  const card=document.querySelector('.newsletter-card');if(!card)return;
+  const avvia=()=>{
+    let iscritto=null;try{iscritto=localStorage.getItem(NL_ISCRITTO);}catch(e){}
+    if(iscritto){nlChiudiModulo();nlDice('gia');return;}
+    const chiediConto=()=>{
+      nlChiudiModulo();nlDice('conto');
+      const el=document.getElementById('nl-state');if(!el)return;
+      const a=document.createElement('a');
+      a.href='/registrati?next=%2F%23newsletter';
+      a.textContent=NL_TESTI.vaiConto[currentLang]||NL_TESTI.vaiConto.en;
+      el.appendChild(document.createElement('br'));el.appendChild(a);
+    };
+    const auth=window.EIH_AUTH;
+    if(!auth||!auth.getUser){chiediConto();return;}
+    auth.getUser().then(u=>{
+      const utente=u&&(u.user||u.email?u:null);
+      if(!utente||!(utente.user||utente.email)){chiediConto();return;}
+      const campo=document.getElementById('nl-email');
+      const mail=(utente.user&&utente.user.email)||utente.email;
+      if(campo&&mail&&!campo.value)campo.value=mail;
+    }).catch(chiediConto);
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',avvia,{once:true});
+  else avvia();
+})();
+
 /* Contenuti sintetici: l'articolo 50 del Reg. (UE) 2024/1689 vuole la
    dichiarazione accanto al contenuto, nella lingua di chi guarda. Questa pagina
    non carica eih.js, quindi l'etichetta se la scrive da sé, con le stesse
@@ -228,9 +302,24 @@ applyLang(currentLang);
   // Scroll-reveal targets (below the fold)
   const targets=[...document.querySelectorAll('.ad-mini-bar,.wa-section,.donate-card,.cta-card,.footer-brand,.footer-col,.svc-card,.plan,.tools-section .section-label,.tools-section .section-title,.tools-section .section-sub,.tw-group,.does-section .section-label,.does-section .section-title,.does-section .section-sub,.does-card,.ct-foto')];
   targets.forEach(el=>el.classList.add('reveal'));
-  if(reduce){targets.forEach(el=>el.classList.add('in'));return;}
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
-  targets.forEach(el=>io.observe(el));
+
+  /* Il CSS mette a zero l'opacita' di ogni .reveal, ma finora l'osservatore
+     guardava solo l'elenco qui sopra: chi portava gia' la classe nel markup
+     — i passi del «come funziona», la barra verde di WhatsApp quando la
+     cache serviva un index.js indietro di un rilascio — spariva allo scorrere
+     e non tornava piu'. Si osserva tutto quello che porta .reveal, e si
+     ripassa dopo, perche' piede e barra di navigazione arrivano dopo. */
+  const visti=new WeakSet();
+  const accendi=el=>{if(!visti.has(el)){visti.add(el);el.classList.add('in');}};
+  if(reduce){document.querySelectorAll('.reveal').forEach(accendi);return;}
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){accendi(e.target);io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+  const raccogli=()=>document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
+    if(visti.has(el))return;
+    io.observe(el);
+  });
+  raccogli();
+  setTimeout(raccogli,1200);
+  setTimeout(raccogli,3000);
 })();
 
 /* ── Strands background (React Bits, port Canvas 2D) ── */

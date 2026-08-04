@@ -62,6 +62,10 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   var ok = p.get('ok'), err = p.get('e'), already = p.get('already'), demo = p.get('demo');
   var el = document.getElementById('confirm-content');
 
+  // Conferma avvenuta: la home smette di riproporre il modulo e scrive che
+  // l'iscrizione c'è. Vale solo su questo browser, ed è quanto basta.
+  if (ok) { try { localStorage.setItem('eih-nl-iscritto', '1'); } catch (e) {} }
+
   if (ok) {
     el.innerHTML = already
       ? '<div class="confirm-icon">✓</div><h1>Già iscritto</h1><p>Il tuo indirizzo email era già stato confermato in precedenza.</p><a href="/" class="confirm-btn">Torna alla home</a>'
