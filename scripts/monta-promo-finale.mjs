@@ -150,7 +150,14 @@ h1 em{font-style:normal;color:#c2a15e}
 .gratis{margin-top:9px;font-size:17px;color:#a2988a}
 .ai{position:absolute;left:0;right:0;bottom:44px;font-size:15px;font-weight:500;
   color:rgba(255,255,255,.72);letter-spacing:.01em}
+/* Grana finissima e ferma sopra il fondo: un gradiente scuro perfettamente
+   liscio esce a fasce da qualunque compressione a 8 bit, e le fasce si
+   muovono col bitrate. Un filo di rumore le scioglie e non si nota. */
+.grana{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.055;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>");
+  background-size:180px 180px}
 </style>
+<div class="grana"></div>
 <div class="marchio" id="marchio"><img src="${logo}" alt=""/></div>
 <h1 id="titolo">${q(d.titolo)}<br><em>${q(d.enfasi)}</em></h1>
 <div class="voci" id="voci">
@@ -201,9 +208,14 @@ await pag.addScriptTag({ content: DISEGNA });
 await pag.evaluate(() => document.fonts.ready);
 await pag.waitForTimeout(400);
 
+/* Intermedio senza perdita.
+   La scheda passava per due compressioni: una qui e una nel montaggio finale.
+   Su fondi scuri piatti con sopra del testo grande e' il caso peggiore per
+   x264 — bordi sporchi e gradiente a fasce. Lossless costa disco per un
+   minuto e lascia una sola compressione, quella che conta. */
 const ff = spawn(FF, ['-v', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-i', '-',
-  '-c:v', 'libx264', '-profile:v', 'high', '-preset', 'slow', '-crf', '19',
-  '-pix_fmt', 'yuv420p', '-y', coda]);
+  '-c:v', 'libx264', '-preset', 'ultrafast', '-qp', '0',
+  '-pix_fmt', 'yuv444p', '-y', coda]);
 ff.stderr.on('data', (b) => process.stderr.write(b));
 const finita = new Promise((ok, ko) => ff.on('close', (c) => (c === 0 ? ok() : ko(new Error('ffmpeg coda: ' + c)))));
 
@@ -295,7 +307,10 @@ await new Promise((ok, ko) => {
     `[a][b]xfade=transition=fade:duration=${DISSOLVENZA}:offset=${offset}[v];` +
     `[0:a]afade=t=out:st=${(dPromo - 1.4).toFixed(3)}:d=1.4,apad=whole_dur=${dTotale}[s]`,
     '-map', '[v]', '-map', '[s]',
-    '-c:v', 'libx264', '-profile:v', 'high', '-preset', 'slow', '-crf', '19', '-pix_fmt', 'yuv420p',
+    // aq-mode 3 protegge le zone scure e piatte, dove le fasce si formano;
+    // il deblock leggero tiene i bordi delle lettere senza impastarli
+    '-c:v', 'libx264', '-profile:v', 'high', '-preset', 'slow', '-crf', '17',
+    '-x264-params', 'aq-mode=3:aq-strength=1.1:deblock=-1,-1', '-pix_fmt', 'yuv420p',
     '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', '-y', USCITA]);
   p.stderr.on('data', (b) => process.stderr.write(b));
   p.on('close', (c) => (c === 0 ? ok() : ko(new Error('ffmpeg montaggio: ' + c))));
