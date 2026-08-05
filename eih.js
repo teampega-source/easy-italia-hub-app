@@ -597,8 +597,26 @@
   (function(){
     const els=[...document.querySelectorAll('.reveal')];
     if(reduce){els.forEach(el=>el.classList.add('in'));return;}
-    const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    /* Soglia zero, non 12%.
+       Le sezioni delle guide lunghe sono alte tremila pixel: su un telefono
+       non entrano mai per il 12% in una schermata, e scorrendo di slancio
+       l'osservatore non le campionava mai sopra quella soglia. Restavano a
+       opacita' zero per tutta la pagina — sette sezioni su otto invisibili,
+       una guida che sembrava vuota. Basta un pixel dentro lo schermo.
+       La spazzata allo scorrimento chiude il caso limite: qualunque cosa sia
+       gia' passata sopra il bordo inferiore si accende comunque. */
+    const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}}),{threshold:0});
     els.forEach(el=>io.observe(el));
+    let inCoda=false;
+    addEventListener('scroll',function(){
+      if(inCoda)return; inCoda=true;
+      requestAnimationFrame(function(){
+        inCoda=false;
+        document.querySelectorAll('.reveal:not(.in)').forEach(function(el){
+          if(el.getBoundingClientRect().top<innerHeight)el.classList.add('in');
+        });
+      });
+    },{passive:true});
   })();
 
   // onda al clic (puntatore di sistema)

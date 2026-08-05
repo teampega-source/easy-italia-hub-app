@@ -312,7 +312,9 @@ applyLang(currentLang);
   const visti=new WeakSet();
   const accendi=el=>{if(!visti.has(el)){visti.add(el);el.classList.add('in');}};
   if(reduce){document.querySelectorAll('.reveal').forEach(accendi);return;}
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){accendi(e.target);io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+  // Soglia zero: un blocco piu' alto dello schermo non raggiunge mai il 12%,
+  // e scorrendo di slancio non veniva campionato in tempo. Basta un pixel.
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){accendi(e.target);io.unobserve(e.target);}});},{threshold:0});
   const raccogli=()=>document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
     if(visti.has(el))return;
     io.observe(el);
@@ -320,6 +322,18 @@ applyLang(currentLang);
   raccogli();
   setTimeout(raccogli,1200);
   setTimeout(raccogli,3000);
+  // Rete di sicurezza allo scorrimento: quello che e' gia' passato sopra il
+  // bordo inferiore si accende comunque, anche se l'osservatore l'ha mancato.
+  let inCoda=false;
+  addEventListener('scroll',()=>{
+    if(inCoda)return; inCoda=true;
+    requestAnimationFrame(()=>{
+      inCoda=false;
+      document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
+        if(el.getBoundingClientRect().top<innerHeight)accendi(el);
+      });
+    });
+  },{passive:true});
 })();
 
 /* ── Strands background (React Bits, port Canvas 2D) ── */
