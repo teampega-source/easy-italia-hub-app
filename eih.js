@@ -10,25 +10,25 @@
     it:{"msg.notifKo":"Notifiche non supportate da questo browser","msg.unavail":"Non disponibile","msg.notifBlock":"Notifiche bloccate dal browser — sbloccale dalle impostazioni del sito","msg.remindOn":"Attiva promemoria nel browser","msg.remindOff":"Promemoria non attivi","msg.remindOk":"✓ Promemoria attivi su questo dispositivo","msg.netErr":"Errore di rete. Riprova.","msg.emailNeed":"Inserisci la tua email.","msg.delete":"Elimina","f.langHint":"Anche l\u2019assistente AI ti risponde in italiano.", "nav.guide":"Guide","nav.community":"Community","nav.courses":"Corsi","nav.journey":"Percorso","nav.news":"News","nav.map":"Mappa","nav.contact":"Contatti","nav.login":"Accedi","nav.signup":"Registrati",
       "nav.voli":"Soldi & Viaggi","nav.profile":"Profilo",
       "wa.title":"Uniti anche su WhatsApp","wa.sub":"Scadenze, novità e opportunità per la comunità srilankese, direttamente dove passi il tuo tempo. Niente spam.","wa.btn":"Unisciti al canale",
-      "nav.academy":"Academy","nav.services":"Servizi","m.forum":"Forum","m.academy":"Lezioni Academy","m.certprep":"Preparazione certificazioni","m.aiteacher":"Insegnante AI","m.school":"Scuola e studio","m.market":"Mercatino","m.translate":"Traduzioni","m.housing":"Casa e alloggio","m.pros":"Professionisti","m.quicknav":"Navigazione rapida","m.flights":"Voli Sri Lanka","m.languages":"Corsi di Lingue","m.esame":"Esame & Badge","m.opportunities":"Opportunità","m.cargo":"Spedizioni Cargo","m.lavdir":"Lavoro e diritti","m.duesponde":"Fra Italia e Sri Lanka","m.costruire":"Costruire il futuro","m.templates":"Moduli e Lettere","m.openaccount":"Aprire un Conto","m.assegno":"Calcol. Assegno Unico","m.inps":"Verifica Diritti INPS","m.titles":"Riconosc. Titoli","m.medical":"Dizionario Medico","m.dashboard":"La mia Dashboard","m.tracker":"Tracker Permesso","m.docs":"Archivio Documenti","m.cvbuilder":"CV Builder",
+      "nav.academy":"Academy","nav.services":"Servizi","m.money":"Comparatore rimesse","m.fisco":"Fisco e tasse","m.allservices":"Tutti i servizi","m.forum":"Forum","m.academy":"Lezioni Academy","m.certprep":"Preparazione certificazioni","m.aiteacher":"Insegnante AI","m.school":"Scuola e studio","m.market":"Mercatino","m.translate":"Traduzioni","m.housing":"Casa e alloggio","m.pros":"Professionisti","m.quicknav":"Navigazione rapida","m.flights":"Voli Sri Lanka","m.languages":"Corsi di Lingue","m.esame":"Esame & Badge","m.opportunities":"Opportunità","m.cargo":"Spedizioni Cargo","m.lavdir":"Lavoro e diritti","m.duesponde":"Fra Italia e Sri Lanka","m.costruire":"Costruire il futuro","m.templates":"Moduli e Lettere","m.openaccount":"Aprire un Conto","m.assegno":"Calcol. Assegno Unico","m.inps":"Verifica Diritti INPS","m.titles":"Riconosc. Titoli","m.medical":"Dizionario Medico","m.dashboard":"La mia Dashboard","m.tracker":"Tracker Permesso","m.docs":"Archivio Documenti","m.cvbuilder":"CV Builder",
       "f.tag":"Il punto di riferimento della comunità srilankese in Italia. Guide, AI multilingua, community e servizi — tutto in un unico posto.",
       "f.academy":"Academy","f.product":"Prodotto","f.aiAssistant":"Assistente AI","f.mapServices":"Mappa servizi","f.company":"Il progetto","f.about":"Chi siamo","f.rete":"Rete & Affiliazioni","f.whatsapp":"Canale WhatsApp","f.advertising":"Sponsorizza","f.contact":"Contatti","f.account":"Account","f.register":"Registrati","f.subscriptions":"Abbonamenti","f.copy":"© 2026 Easy Italia Hub. Tutti i diritti riservati.","f.privacy":"Privacy Policy","f.cookie":"Cookie Policy","f.terms":"Termini di Servizio","f.legal":"Note legali","f.cookieprefs":"Preferenze cookie" },
     en:{"msg.notifKo":"Notifications are not supported by this browser","msg.unavail":"Not available","msg.notifBlock":"Notifications are blocked by the browser — unblock them in the site settings","msg.remindOn":"Enable browser reminders","msg.remindOff":"Reminders are off","msg.remindOk":"✓ Reminders are on for this device","msg.netErr":"Network error. Please try again.","msg.emailNeed":"Enter your email address.","msg.delete":"Delete","f.langHint":"The AI assistant replies in English too.", "nav.guide":"Guides","nav.community":"Community","nav.courses":"Courses","nav.journey":"Journey","nav.news":"News","nav.map":"Map","nav.contact":"Contact","nav.login":"Log in","nav.signup":"Sign up",
       "nav.voli":"Money & Travel","nav.profile":"Profile",
       "wa.title":"Together on WhatsApp too","wa.sub":"Deadlines, news and opportunities for the Sri Lankan community, right where you spend your time. No spam.","wa.btn":"Join the channel",
-      "nav.academy":"Academy","nav.services":"Services","m.forum":"Forum","m.academy":"Academy lessons","m.certprep":"Certification prep","m.aiteacher":"AI Teacher","m.school":"School & study","m.market":"Marketplace","m.translate":"Translations","m.housing":"Housing","m.pros":"Professionals","m.quicknav":"Quick navigation","m.flights":"Sri Lanka Flights","m.languages":"Language Courses","m.esame":"Exam & Badge","m.opportunities":"Opportunities","m.cargo":"Cargo Shipping","m.lavdir":"Work & rights","m.duesponde":"Italy & Sri Lanka","m.costruire":"Building your future","m.templates":"Forms & Letters","m.openaccount":"Open a Bank Account","m.assegno":"Assegno Unico Calc.","m.inps":"INPS Rights Check","m.titles":"Qual. Recognition","m.medical":"Medical Dictionary","m.dashboard":"My Dashboard","m.tracker":"Permit Tracker","m.docs":"Document Archive","m.cvbuilder":"CV Builder",
+      "nav.academy":"Academy","nav.services":"Services","m.money":"Remittance comparison","m.fisco":"Tax and duties","m.allservices":"All services","m.forum":"Forum","m.academy":"Academy lessons","m.certprep":"Certification prep","m.aiteacher":"AI Teacher","m.school":"School & study","m.market":"Marketplace","m.translate":"Translations","m.housing":"Housing","m.pros":"Professionals","m.quicknav":"Quick navigation","m.flights":"Sri Lanka Flights","m.languages":"Language Courses","m.esame":"Exam & Badge","m.opportunities":"Opportunities","m.cargo":"Cargo Shipping","m.lavdir":"Work & rights","m.duesponde":"Italy & Sri Lanka","m.costruire":"Building your future","m.templates":"Forms & Letters","m.openaccount":"Open a Bank Account","m.assegno":"Assegno Unico Calc.","m.inps":"INPS Rights Check","m.titles":"Qual. Recognition","m.medical":"Medical Dictionary","m.dashboard":"My Dashboard","m.tracker":"Permit Tracker","m.docs":"Document Archive","m.cvbuilder":"CV Builder",
       "f.tag":"The reference point for the Sri Lankan community in Italy. Guides, multilingual AI, community and services — all in one place.",
       "f.academy":"Academy","f.product":"Product","f.aiAssistant":"AI Assistant","f.mapServices":"Services map","f.company":"The project","f.about":"About us","f.rete":"Network & Partners","f.whatsapp":"WhatsApp channel","f.advertising":"Sponsor us","f.contact":"Contact","f.account":"Account","f.register":"Register","f.subscriptions":"Subscriptions","f.copy":"© 2026 Easy Italia Hub. All rights reserved.","f.privacy":"Privacy Policy","f.cookie":"Cookie Policy","f.terms":"Terms of Service","f.legal":"Legal notice","f.cookieprefs":"Cookie preferences" },
     si:{"msg.notifKo":"මෙම බ්‍රව්සරය දැනුම්දීම් සඳහා සහාය නොදක්වයි","msg.unavail":"ලබා ගත නොහැක","msg.notifBlock":"බ්‍රව්සරය දැනුම්දීම් අවහිර කර ඇත — වෙබ් අඩවි සැකසුම් වලින් ඉවත් කරන්න","msg.remindOn":"බ්‍රව්සර් මතක් කිරීම් සක්‍රිය කරන්න","msg.remindOff":"මතක් කිරීම් ක්‍රියාත්මක නැත","msg.remindOk":"✓ මෙම උපාංගයේ මතක් කිරීම් සක්‍රියයි","msg.netErr":"ජාල දෝෂයකි. නැවත උත්සාහ කරන්න.","msg.emailNeed":"ඔබේ විද්‍යුත් තැපෑල ඇතුළත් කරන්න.","msg.delete":"මකන්න","f.langHint":"AI සහායකයාද සිංහලෙන් පිළිතුරු දෙයි.", "nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.courses":"පාඨමාලා","nav.journey":"මගේ ගමන","nav.news":"පුවත්","nav.map":"සිතියම","nav.contact":"සම්බන්ධ","nav.login":"පිවිසෙන්න","nav.signup":"ලියාපදිංචිය",
       "nav.voli":"මුදල් සහ ගමන්","nav.profile":"පැතිකඩ",
       "wa.title":"WhatsApp හරහාද එකට","wa.sub":"ශ්‍රී ලාංකික ප්‍රජාව සඳහා නියමිත දින, පුවත් සහ අවස්ථා — ඔබ සිටින තැනම. spam නැත.","wa.btn":"නාලිකාවට එක්වන්න",
-      "nav.academy":"ඇකඩමිය","nav.services":"සේවා","m.forum":"සංසදය","m.academy":"Academy පාඩම්","m.certprep":"සහතික සූදානම","m.aiteacher":"AI ගුරු","m.school":"පාසල හා අධ්‍යාපනය","m.market":"වෙළඳපොළ","m.translate":"පරිවර්තන","m.housing":"නිවාස","m.pros":"වෘත්තිකයන්","m.quicknav":"ඉක්මන් සොයන","m.flights":"ශ්‍රී ලංකා ගුවන් ගමන්","m.languages":"භාෂා පාඨමාලා","m.esame":"විභාගය සහ බැජ්","m.opportunities":"අවස්ථා","m.cargo":"ගෙවල් ගෙනයාම","m.lavdir":"රැකියාව සහ අයිතිවාසිකම්","m.duesponde":"ඉතාලිය සහ ශ්‍රී ලංකාව","m.costruire":"අනාගතය ගොඩනැගීම","m.templates":"ෆෝරම් සහ ලිපි","m.openaccount":"බැංකු ගිණුමක්","m.assegno":"Assegno Unico ගණකය","m.inps":"INPS අයිතිවාසිකම්","m.titles":"සුදුස්සකම් හඳුනාගැනීම","m.medical":"වෛද්‍ය ශබ්දකෝෂය","m.dashboard":"මගේ ඩෑෂ්බෝඩ්","m.tracker":"බලපත්‍ර ලුහුබැඳීම","m.docs":"ලේඛනාගාරය","m.cvbuilder":"CV සාදන මෙවලම",
+      "nav.academy":"ඇකඩමිය","nav.services":"සේවා","m.money":"මුදල් යැවීමේ සැසඳීම","m.fisco":"බදු සහ තීරුබදු","m.allservices":"සියලු සේවා","m.forum":"සංසදය","m.academy":"Academy පාඩම්","m.certprep":"සහතික සූදානම","m.aiteacher":"AI ගුරු","m.school":"පාසල හා අධ්‍යාපනය","m.market":"වෙළඳපොළ","m.translate":"පරිවර්තන","m.housing":"නිවාස","m.pros":"වෘත්තිකයන්","m.quicknav":"ඉක්මන් සොයන","m.flights":"ශ්‍රී ලංකා ගුවන් ගමන්","m.languages":"භාෂා පාඨමාලා","m.esame":"විභාගය සහ බැජ්","m.opportunities":"අවස්ථා","m.cargo":"ගෙවල් ගෙනයාම","m.lavdir":"රැකියාව සහ අයිතිවාසිකම්","m.duesponde":"ඉතාලිය සහ ශ්‍රී ලංකාව","m.costruire":"අනාගතය ගොඩනැගීම","m.templates":"ෆෝරම් සහ ලිපි","m.openaccount":"බැංකු ගිණුමක්","m.assegno":"Assegno Unico ගණකය","m.inps":"INPS අයිතිවාසිකම්","m.titles":"සුදුස්සකම් හඳුනාගැනීම","m.medical":"වෛද්‍ය ශබ්දකෝෂය","m.dashboard":"මගේ ඩෑෂ්බෝඩ්","m.tracker":"බලපත්‍ර ලුහුබැඳීම","m.docs":"ලේඛනාගාරය","m.cvbuilder":"CV සාදන මෙවලම",
       "f.tag":"ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාවේ විශ්වාසනීය මධ්‍යස්ථානය. මාර්ගෝපදේශ, බහුභාෂා AI, ප්‍රජාව සහ සේවා — සියල්ල එක තැනක.",
       "f.academy":"ඇකඩමිය","f.product":"නිෂ්පාදනය","f.aiAssistant":"AI සහායක","f.mapServices":"සේවා සිතියම","f.company":"ව්‍යාපෘතිය","f.about":"අප ගැන","f.rete":"ජාලය සහ හවුල්කරුවන්","f.whatsapp":"WhatsApp නාලිකාව","f.advertising":"දැන්වීම්","f.contact":"සම්බන්ධ වන්න","f.account":"ගිණුම","f.register":"ලියාපදිංචි වන්න","f.subscriptions":"දායකත්ව","f.copy":"© 2026 Easy Italia Hub. සියලු හිමිකම් ඇවිරිණි.","f.privacy":"පෞද්ගලිකත්ව ප්‍රතිපත්තිය","f.cookie":"කුකී ප්‍රතිපත්තිය","f.terms":"සේවා කොන්දේසි","f.legal":"නෛතික දැන්වීම","f.cookieprefs":"කුකී මනාප" },
     ta:{"msg.notifKo":"இந்த உலாவி அறிவிப்புகளை ஆதரிக்கவில்லை","msg.unavail":"கிடைக்கவில்லை","msg.notifBlock":"உலாவி அறிவிப்புகளைத் தடுத்துள்ளது — தள அமைப்புகளில் அனுமதியுங்கள்","msg.remindOn":"உலாவி நினைவூட்டல்களை இயக்குங்கள்","msg.remindOff":"நினைவூட்டல்கள் இயக்கத்தில் இல்லை","msg.remindOk":"✓ இந்தச் சாதனத்தில் நினைவூட்டல்கள் இயக்கத்தில் உள்ளன","msg.netErr":"பிணைப் பிழை. மீண்டும் முயலுங்கள்.","msg.emailNeed":"உங்கள் மின்னஞ்சலை உள்ளிடுங்கள்.","msg.delete":"நீக்கு","f.langHint":"AI உதவியாளரும் தமிழில் பதிலளிக்கும்.", "nav.guide":"வழிகாட்டிகள்","nav.community":"சமூகம்","nav.courses":"படிப்புகள்","nav.journey":"என் பயணம்","nav.news":"செய்திகள்","nav.map":"வரைபடம்","nav.contact":"தொடர்பு","nav.login":"உள்நுழைய","nav.signup":"பதிவு",
       "nav.voli":"பணம் & பயணம்","nav.profile":"சுயவிவரம்",
       "wa.title":"WhatsApp-இலும் இணைந்து","wa.sub":"இலங்கை சமூகத்திற்கான காலக்கெடுக்கள், செய்திகள் மற்றும் வாய்ப்புகள் — நீங்கள் நேரம் செலவிடும் இடத்திலேயே. ஸ்பேம் இல்லை.","wa.btn":"சேனலில் சேருங்கள்",
-      "nav.academy":"அகாடமி","nav.services":"சேவைகள்","m.forum":"மன்றம்","m.academy":"Academy பாடங்கள்","m.certprep":"சான்றிதழ் தயாரிப்பு","m.aiteacher":"AI ஆசிரியர்","m.school":"பள்ளி & படிப்பு","m.market":"சந்தை","m.translate":"மொழிபெயர்ப்புகள்","m.housing":"வீடு","m.pros":"நிபுணர்கள்","m.quicknav":"விரைவு வழிசெலுத்தல்","m.flights":"இலங்கை விமானங்கள்","m.languages":"மொழி வகுப்புகள்","m.esame":"தேர்வு & பேட்ஜ்","m.opportunities":"வாய்ப்புகள்","m.cargo":"சரக்கு அனுப்புதல்","m.lavdir":"வேலை மற்றும் உரிமைகள்","m.duesponde":"இத்தாலி மற்றும் இலங்கை","m.costruire":"எதிர்காலத்தை கட்டமைத்தல்","m.templates":"படிவங்கள் & கடிதங்கள்","m.openaccount":"வங்கி கணக்கு திறக்க","m.assegno":"Assegno Unico கணக்கு","m.inps":"INPS உரிமைகள்","m.titles":"தகுதி அங்கீகாரம்","m.medical":"மருத்துவ அகராதி","m.dashboard":"என் டாஷ்போர்டு","m.tracker":"அனுமதி கண்காணிப்பு","m.docs":"ஆவண காப்பகம்","m.cvbuilder":"CV உருவாக்கி",
+      "nav.academy":"அகாடமி","nav.services":"சேவைகள்","m.money":"பணப் பரிமாற்ற ஒப்பீடு","m.fisco":"வரி மற்றும் தீர்வை","m.allservices":"அனைத்துச் சேவைகளும்","m.forum":"மன்றம்","m.academy":"Academy பாடங்கள்","m.certprep":"சான்றிதழ் தயாரிப்பு","m.aiteacher":"AI ஆசிரியர்","m.school":"பள்ளி & படிப்பு","m.market":"சந்தை","m.translate":"மொழிபெயர்ப்புகள்","m.housing":"வீடு","m.pros":"நிபுணர்கள்","m.quicknav":"விரைவு வழிசெலுத்தல்","m.flights":"இலங்கை விமானங்கள்","m.languages":"மொழி வகுப்புகள்","m.esame":"தேர்வு & பேட்ஜ்","m.opportunities":"வாய்ப்புகள்","m.cargo":"சரக்கு அனுப்புதல்","m.lavdir":"வேலை மற்றும் உரிமைகள்","m.duesponde":"இத்தாலி மற்றும் இலங்கை","m.costruire":"எதிர்காலத்தை கட்டமைத்தல்","m.templates":"படிவங்கள் & கடிதங்கள்","m.openaccount":"வங்கி கணக்கு திறக்க","m.assegno":"Assegno Unico கணக்கு","m.inps":"INPS உரிமைகள்","m.titles":"தகுதி அங்கீகாரம்","m.medical":"மருத்துவ அகராதி","m.dashboard":"என் டாஷ்போர்டு","m.tracker":"அனுமதி கண்காணிப்பு","m.docs":"ஆவண காப்பகம்","m.cvbuilder":"CV உருவாக்கி",
       "f.tag":"இத்தாலியில் இலங்கை சமூகத்தின் நம்பகமான மையம். வழிகாட்டிகள், பன்மொழி AI, சமூகம் மற்றும் சேவைகள் — அனைத்தும் ஒரே இடத்தில்.",
       "f.academy":"அகாடமி","f.product":"தயாரிப்பு","f.aiAssistant":"AI உதவியாளர்","f.mapServices":"சேவை வரைபடம்","f.company":"திட்டம்","f.about":"எங்களைப் பற்றி","f.rete":"வலையமைப்பு & பங்குதாரர்கள்","f.whatsapp":"WhatsApp சேனல்","f.advertising":"விளம்பரம்","f.contact":"தொடர்பு","f.account":"கணக்கு","f.register":"பதிவு செய்ய","f.subscriptions":"சந்தாக்கள்","f.copy":"© 2026 Easy Italia Hub. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.","f.privacy":"தனியுரிமைக் கொள்கை","f.cookie":"குக்கீ கொள்கை","f.terms":"சேவை விதிமுறைகள்","f.legal":"சட்டக் குறிப்பு","f.cookieprefs":"குக்கீ விருப்பங்கள்" }
   };
@@ -42,8 +42,9 @@
 
   function navSub(items){
     return '<button type="button" class="nav-sub-btn" aria-expanded="false" aria-label="Sottomenu" tabindex="-1"><svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>'+
+      // il quarto elemento dichiara un nome che resta com'e' in ogni lingua
       '<div class="nav-sub" role="menu">'+items.map(function(it){
-        return '<a role="menuitem" href="'+it[0]+'"'+(it[1]?' data-i18n="'+it[1]+'"':'')+'>'+it[2]+'</a>';
+        return '<a role="menuitem" href="'+it[0]+'"'+(it[1]?' data-i18n="'+it[1]+'"':'')+(it[3]?' data-no-tr':'')+'>'+it[2]+'</a>';
       }).join('')+'</div>';
   }
   function navLink(key,href,i18n,label,sub){
@@ -59,7 +60,22 @@
       '<div class="nav-collapse" id="nav-collapse">'+
         '<ul class="nav-links">'+
           navLink(['guide','lavoro-diritti','italia-srilanka','costruire-futuro','moduli','guida-conti','assegno-unico','diritti-inps','riconoscimento-titoli','dizionario-medico'],'/guide','nav.guide','Guide',[['/guide','','Guide burocratiche'],['/lavoro-diritti','m.lavdir','Lavoro e diritti'],['/italia-srilanka','m.duesponde','Fra Italia e Sri Lanka'],['/costruire-futuro','m.costruire','Costruire il futuro'],['/moduli','m.templates','Moduli e Lettere'],['/guida-conti','m.openaccount','Aprire un Conto'],['/assegno-unico','m.assegno','Calcol. Assegno Unico'],['/diritti-inps','m.inps','Verifica Diritti INPS'],['/riconoscimento-titoli','m.titles','Riconosc. Titoli'],['/dizionario-medico','m.medical','Dizionario Medico']])+
-          navLink('servizi','/servizi','nav.services','Servizi')+
+          // Gli strumenti stavano tutti dentro la pagina Servizi, e per
+          // arrivarci bisognava passare da lì ogni volta. Ora la voce del
+          // menu li elenca: la pagina resta, come indice completo in fondo.
+          navLink(['servizi','permesso-tracker','documenti','cv-builder','money-transfer','fisco','traduci','opportunita','housing','mercatino','professionisti'],'/servizi','nav.services','Servizi',[
+            ['/permesso-tracker','m.tracker','Tracker Permesso'],
+            ['/documenti','m.docs','Archivio Documenti'],
+            ['/cv-builder','m.cvbuilder','CV Builder'],
+            ['/moduli','m.templates','Moduli e Lettere'],
+            ['/traduci','m.translate','Traduzioni'],
+            ['/money-transfer','m.money','Comparatore rimesse'],
+            ['/fisco','m.fisco','Fisco e tasse'],
+            ['/opportunita','m.opportunities','Opportunità'],
+            ['/housing','m.housing','Casa e alloggio'],
+            ['/mercatino','m.market','Mercatino'],
+            ['/professionisti','m.pros','Professionisti'],
+            ['/servizi','m.allservices','Tutti i servizi']])+
           navLink('community','/community','nav.community','Community')+
           navLink(['corsi','academy','certificazioni','ai-teacher','esame','scuola'],'/academy','nav.academy','Academy',[['/academy','m.academy','Lezioni Academy'],['/corsi','nav.courses','Corsi di lingua'],['/certificazioni','m.certprep','Preparazione certificazioni'],['/ai-teacher','m.aiteacher','Insegnante AI'],['/esame','m.esame','Esame e Badge'],['/scuola','m.school','Scuola e studio']])+
           navLink('percorso','/percorso','nav.journey','Percorso')+
@@ -242,14 +258,21 @@
 
      Uso:  <video data-ai-gen>…</video>          → «Video generato…»
            <img data-ai-gen="immagine" …>        → «Immagine generata…»
-           <audio data-ai-gen="voce">…</audio>   → «Voce generata…»                */
+           <audio data-ai-gen="voce">…</audio>   → «Voce generata…»
+           <div data-ai-gen="testo">…</div>      → «Testo generato…»
+     Per il testo l'etichetta va prima del contenuto: si legge dall'alto, e
+     l'avviso serve a chi sta per leggere, non a chi ha gia' letto.           */
   var AI_GEN={
     video:{it:'Video generato con l\'intelligenza artificiale',en:'Video generated with artificial intelligence',
       si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද වීඩියෝව',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட காணொளி'},
     immagine:{it:'Immagine generata con l\'intelligenza artificiale',en:'Image generated with artificial intelligence',
       si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද රූපය',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட படம்'},
     voce:{it:'Voce generata con l\'intelligenza artificiale',en:'Voice generated with artificial intelligence',
-      si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද හඬ',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட குரல்'}
+      si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද හඬ',ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட குரல்'},
+    testo:{it:'Testo generato con l\'intelligenza artificiale: informazioni generali, non consulenza professionale',
+      en:'Text generated with artificial intelligence: general information, not professional advice',
+      si:'කෘත්‍රිම බුද්ධියෙන් සාදන ලද පෙළ: සාමාන්‍ය තොරතුරු මිස වෘත්තීය උපදෙස් නොවේ',
+      ta:'செயற்கை நுண்ணறிவால் உருவாக்கப்பட்ட உரை: பொதுத் தகவல், தொழில்முறை ஆலோசனை அல்ல'}
   };
   function etichettaAiGen(){
     document.querySelectorAll('[data-ai-gen]').forEach(function(el){
@@ -260,8 +283,9 @@
       p.className='eih-ai-gen';
       p.setAttribute('data-no-tr','');   // la traduzione la fa gia' questa tabella
       p.textContent=testi[lang]||testi.it;
-      // subito dopo il contenuto: l'obbligo e' che si veda insieme a quello
-      (el.parentNode||document.body).insertBefore(p,el.nextSibling);
+      // insieme al contenuto: dopo per quello che si guarda, prima per quello
+      // che si legge
+      (el.parentNode||document.body).insertBefore(p,tipo==='testo'?el:el.nextSibling);
     });
   }
   window.EIHEtichettaAiGen=etichettaAiGen;
@@ -574,8 +598,26 @@
   (function(){
     const els=[...document.querySelectorAll('.reveal')];
     if(reduce){els.forEach(el=>el.classList.add('in'));return;}
-    const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    /* Soglia zero, non 12%.
+       Le sezioni delle guide lunghe sono alte tremila pixel: su un telefono
+       non entrano mai per il 12% in una schermata, e scorrendo di slancio
+       l'osservatore non le campionava mai sopra quella soglia. Restavano a
+       opacita' zero per tutta la pagina — sette sezioni su otto invisibili,
+       una guida che sembrava vuota. Basta un pixel dentro lo schermo.
+       La spazzata allo scorrimento chiude il caso limite: qualunque cosa sia
+       gia' passata sopra il bordo inferiore si accende comunque. */
+    const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}}),{threshold:0});
     els.forEach(el=>io.observe(el));
+    let inCoda=false;
+    addEventListener('scroll',function(){
+      if(inCoda)return; inCoda=true;
+      requestAnimationFrame(function(){
+        inCoda=false;
+        document.querySelectorAll('.reveal:not(.in)').forEach(function(el){
+          if(el.getBoundingClientRect().top<innerHeight)el.classList.add('in');
+        });
+      });
+    },{passive:true});
   })();
 
   // onda al clic (puntatore di sistema)

@@ -37,7 +37,7 @@ if(!mediaQ.matches){
 const I18N={
   it:{
     "nav.academy":"Academy","nav.services":"Servizi","nav.courses":"Corsi","m.forum":"Forum","m.esame":"Esame & Badge","m.academy":"Lezioni Academy","m.certprep":"Preparazione certificazioni","m.aiteacher":"Insegnante AI","m.school":"Scuola e studio","m.market":"Mercatino","m.translate":"Traduzioni","m.housing":"Casa e alloggio","m.pros":"Professionisti","nav.guide":"Guide","nav.community":"Community","nav.ai":"AI Assistant","nav.news":"News","nav.map":"Mappa","nav.contact":"Contatti","nav.journey":"Percorso","nav.login":"Accedi","nav.signup":"Registrati",
-    "m.lavdir":"Lavoro e diritti","m.duesponde":"Fra Italia e Sri Lanka","m.costruire":"Costruire il futuro","m.templates":"Moduli e Lettere","m.openaccount":"Aprire un Conto","m.assegno":"Calcol. Assegno Unico","m.inps":"Verifica Diritti INPS","m.titles":"Riconosc. Titoli","m.medical":"Dizionario Medico","m.languages":"Corsi di Lingue","m.opportunities":"Opportunità","m.dashboard":"La mia Dashboard","m.tracker":"Tracker Permesso","m.cvbuilder":"CV Builder","m.docs":"Archivio Documenti","m.flights":"Voli Sri Lanka","m.cargo":"Spedizioni Cargo","f.about":"Chi siamo","f.subscriptions":"Abbonamenti",
+    "m.lavdir":"Lavoro e diritti","m.duesponde":"Fra Italia e Sri Lanka","m.costruire":"Costruire il futuro","m.templates":"Moduli e Lettere","m.openaccount":"Aprire un Conto","m.assegno":"Calcol. Assegno Unico","m.inps":"Verifica Diritti INPS","m.titles":"Riconosc. Titoli","m.medical":"Dizionario Medico","m.languages":"Corsi di Lingue","m.opportunities":"Opportunità","m.dashboard":"La mia Dashboard","m.tracker":"Tracker Permesso","m.money":"Comparatore rimesse","m.fisco":"Fisco e tasse","m.allservices":"Tutti i servizi","m.cvbuilder":"CV Builder","m.docs":"Archivio Documenti","m.flights":"Voli Sri Lanka","m.cargo":"Spedizioni Cargo","f.about":"Chi siamo","f.subscriptions":"Abbonamenti",
     "hero.eyebrow":"In Italia, nella tua lingua","hero.t1":"100% gratuito","hero.t2":"Nessuna carta richiesta","hero.t3":"Fonti ufficiali citate","hero.title":"<span class='ln'><span>La comunità</span></span><span class='ln'><span><em>srilankese</em></span></span><span class='ln'><span>in Italia</span></span>","hero.sub":"Guide burocratiche, assistente AI multilingua, community di supporto e news aggiornate — in italiano, inglese, sinhala e tamil.","hero.cta1":"Inizia gratis","hero.cta2":"Esplora le guide","hero.stat1":"Fasi del percorso","hero.stat2":"Guide pratiche","hero.stat3":"Città sulla mappa","hero.stat4":"Lingue dell'interfaccia","hero.stat5":"Strumenti e servizi","hero.stat6":"Passi concreti",
     "card1.tag":"Burocrazia","card1.title":"Permesso di Soggiorno","card1.sub":"Guida completa al rinnovo","card2.tag":"AI","card2.title":"Assistente AI","card2.sub":"Risposte multilingua 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"Confronto e supporto tra pari","card4.tag":"Finanza","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
     "ad.label":"Pubblicità","ad.lead":"Fai crescere il tuo brand: raggiungi ogni giorno la community srilankese in Italia.","ad.buy":"Prenota lo spazio","ad.sponsor":"Sponsorizzato","ad.slot":"Spazio ad — 300×250","ad.book":"Prenota →",
@@ -61,7 +61,7 @@ const I18N={
   },
   en:{
     "nav.academy":"Academy","nav.services":"Services","nav.courses":"Courses","m.forum":"Forum","m.esame":"Exam & Badge","m.academy":"Academy lessons","m.certprep":"Certification prep","m.aiteacher":"AI Teacher","m.school":"School & study","m.market":"Marketplace","m.translate":"Translations","m.housing":"Housing","m.pros":"Professionals","nav.guide":"Guides","nav.community":"Community","nav.ai":"AI Assistant","nav.news":"News","nav.map":"Map","nav.contact":"Contact","nav.journey":"Journey","nav.login":"Log in","nav.signup":"Sign up",
-    "m.lavdir":"Work & rights","m.duesponde":"Italy & Sri Lanka","m.costruire":"Building your future","m.templates":"Forms & Letters","m.openaccount":"Open a Bank Account","m.assegno":"Assegno Unico Calc.","m.inps":"INPS Rights Check","m.titles":"Qual. Recognition","m.medical":"Medical Dictionary","m.languages":"Language Courses","m.opportunities":"Opportunities","m.dashboard":"My Dashboard","m.tracker":"Permit Tracker","m.cvbuilder":"CV Builder","m.docs":"Document Archive","m.flights":"Sri Lanka Flights","m.cargo":"Cargo Shipping","f.about":"About us","f.subscriptions":"Subscriptions",
+    "m.lavdir":"Work & rights","m.duesponde":"Italy & Sri Lanka","m.costruire":"Building your future","m.templates":"Forms & Letters","m.openaccount":"Open a Bank Account","m.assegno":"Assegno Unico Calc.","m.inps":"INPS Rights Check","m.titles":"Qual. Recognition","m.medical":"Medical Dictionary","m.languages":"Language Courses","m.opportunities":"Opportunities","m.dashboard":"My Dashboard","m.tracker":"Permit Tracker","m.money":"Remittance comparison","m.fisco":"Tax and duties","m.allservices":"All services","m.cvbuilder":"CV Builder","m.docs":"Document Archive","m.flights":"Sri Lanka Flights","m.cargo":"Cargo Shipping","f.about":"About us","f.subscriptions":"Subscriptions",
     "hero.eyebrow":"In Italy, in your language","hero.t1":"100% free","hero.t2":"No card required","hero.t3":"Official sources cited","hero.title":"<span class='ln'><span>The Sri Lankan</span></span><span class='ln'><span><em>community</em></span></span><span class='ln'><span>in Italy</span></span>","hero.sub":"Bureaucratic guides, multilingual AI assistant, support community and up-to-date news — in Italian, English, Sinhala and Tamil.","hero.cta1":"Start free","hero.cta2":"Explore the guides","hero.stat1":"Journey phases","hero.stat2":"Practical guides","hero.stat3":"Cities on the map","hero.stat4":"Interface languages","hero.stat5":"Tools and services","hero.stat6":"Concrete steps",
     "card1.tag":"Bureaucracy","card1.title":"Residence Permit","card1.sub":"Complete renewal guide","card2.tag":"AI","card2.title":"AI Assistant","card2.sub":"Multilingual answers 24/7","card3.tag":"Community","card3.title":"Community","card3.sub":"Peer-to-peer support","card4.tag":"Finance","card4.title":"Money Transfer","card4.sub":"Wise, Ria, Western Union",
     "ad.label":"Advertising","ad.lead":"Grow your brand: reach the Sri Lankan community in Italy every day.","ad.buy":"Book this space","ad.sponsor":"Sponsored","ad.slot":"Ad space — 300×250","ad.book":"Book →",
@@ -85,7 +85,7 @@ const I18N={
   },
   si:{
     "nav.academy":"ඇකඩමිය","nav.services":"සේවා","nav.courses":"පාඨමාලා","m.forum":"සංසදය","m.esame":"විභාගය සහ බැජ්","m.academy":"Academy පාඩම්","m.certprep":"සහතික සූදානම","m.aiteacher":"AI ගුරු","m.school":"පාසල හා අධ්‍යාපනය","m.market":"වෙළඳපොළ","m.translate":"පරිවර්තන","m.housing":"නිවාස","m.pros":"වෘත්තිකයන්","nav.guide":"මාර්ගෝපදේශ","nav.community":"ප්‍රජාව","nav.ai":"AI සහායක","nav.news":"පුවත්","nav.map":"සිතියම","nav.contact":"සම්බන්ධ","nav.journey":"මගේ ගමන","nav.login":"පිවිසෙන්න","nav.signup":"ලියාපදිංචිය",
-    "m.lavdir":"රැකියාව සහ අයිතිවාසිකම්","m.duesponde":"ඉතාලිය සහ ශ්‍රී ලංකාව","m.costruire":"අනාගතය ගොඩනැගීම","m.templates":"ෆෝරම් සහ ලිපි","m.openaccount":"බැංකු ගිණුමක්","m.assegno":"Assegno Unico ගණකය","m.inps":"INPS අයිතිවාසිකම්","m.titles":"සුදුස්සකම් හඳුනාගැනීම","m.medical":"වෛද්‍ය ශබ්දකෝෂය","m.languages":"භාෂා පාඨමාලා","m.opportunities":"අවස්ථා","m.dashboard":"මගේ ඩෑෂ්බෝඩ්","m.tracker":"බලපත්‍ර ලුහුබැඳීම","m.cvbuilder":"CV සාදන මෙවලම","m.docs":"ලේඛනාගාරය","m.flights":"ශ්‍රී ලංකා ගුවන් ගමන්","m.cargo":"ගෙවල් ගෙනයාම","f.about":"අප ගැන","f.subscriptions":"දායකත්ව",
+    "m.lavdir":"රැකියාව සහ අයිතිවාසිකම්","m.duesponde":"ඉතාලිය සහ ශ්‍රී ලංකාව","m.costruire":"අනාගතය ගොඩනැගීම","m.templates":"ෆෝරම් සහ ලිපි","m.openaccount":"බැංකු ගිණුමක්","m.assegno":"Assegno Unico ගණකය","m.inps":"INPS අයිතිවාසිකම්","m.titles":"සුදුස්සකම් හඳුනාගැනීම","m.medical":"වෛද්‍ය ශබ්දකෝෂය","m.languages":"භාෂා පාඨමාලා","m.opportunities":"අවස්ථා","m.dashboard":"මගේ ඩෑෂ්බෝඩ්","m.tracker":"බලපත්‍ර ලුහුබැඳීම","m.money":"මුදල් යැවීමේ සැසඳීම","m.fisco":"බදු සහ තීරුබදු","m.allservices":"සියලු සේවා","m.cvbuilder":"CV සාදන මෙවලම","m.docs":"ලේඛනාගාරය","m.flights":"ශ්‍රී ලංකා ගුවන් ගමන්","m.cargo":"ගෙවල් ගෙනයාම","f.about":"අප ගැන","f.subscriptions":"දායකත්ව",
     "hero.eyebrow":"ඉතාලියේ, ඔබේ භාෂාවෙන්","hero.t1":"100% නොමිලේ","hero.t2":"ක්‍රෙඩිට් කාඩ් අවශ්‍ය නැත","hero.t3":"නිල මූලාශ්‍ර සඳහන් කර ඇත","hero.title":"<span class='ln'><span>ඉතාලියේ</span></span><span class='ln'><span><em>ශ්‍රී ලාංකික</em></span></span><span class='ln'><span>ප්‍රජාව</span></span>","hero.sub":"නිලධාරී මාර්ගෝපදේශ, බහුභාෂා AI සහායක, සහාය ප්‍රජාව සහ යාවත්කාලීන පුවත් — ඉතාලි, ඉංග්‍රීසි, සිංහල සහ දෙමළ භාෂාවලින්.","hero.cta1":"නොමිලේ අරඹන්න","hero.cta2":"මාර්ගෝපදේශ ගවේෂණය කරන්න","hero.stat1":"ගමනේ අදියර","hero.stat2":"ප්‍රායෝගික මාර්ගෝපදේශ","hero.stat3":"සිතියමේ නගර","hero.stat4":"අතුරුමුහුණත් භාෂා","hero.stat5":"මෙවලම් සහ සේවා","hero.stat6":"සැබෑ පියවර",
     "card1.tag":"නිලධාරිවාදය","card1.title":"පදිංචි බලපත්‍රය","card1.sub":"සම්පූර්ණ අලුත් කිරීමේ මාර්ගෝපදේශය","card2.tag":"AI","card2.title":"AI සහායක","card2.sub":"බහුභාෂා පිළිතුරු 24/7","card3.tag":"ප්‍රජාව","card3.title":"ප්‍රජාව","card3.sub":"සම වයසේ අයගේ සහාය","card4.tag":"මුල්‍ය","card4.title":"මුදල් හුවමාරුව","card4.sub":"Wise, Ria, Western Union",
     "ad.label":"දැන්වීම්","ad.lead":"ඔබේ වෙළඳ නාමය වර්ධනය කරන්න: සෑම දිනකම ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව වෙත ළඟා වන්න.","ad.buy":"අවකාශය වෙන්කරවා ගන්න","ad.sponsor":"අනුග්‍රාහක","ad.slot":"දැන්වීම් අවකාශය — 300×250","ad.book":"වෙන්කරවා ගන්න →",
@@ -109,7 +109,7 @@ const I18N={
   }
   ,ta:{
     "nav.academy":"அகாடமி","nav.services":"சேவைகள்","nav.courses":"படிப்புகள்","m.forum":"மன்றம்","m.esame":"தேர்வு & பேட்ஜ்","m.academy":"Academy பாடங்கள்","m.certprep":"சான்றிதழ் தயாரிப்பு","m.aiteacher":"AI ஆசிரியர்","m.school":"பள்ளி & படிப்பு","m.market":"சந்தை","m.translate":"மொழிபெயர்ப்புகள்","m.housing":"வீடு","m.pros":"நிபுணர்கள்","nav.guide":"வழிகாட்டிகள்","nav.community":"சமூகம்","nav.ai":"AI உதவியாளர்","nav.news":"செய்திகள்","nav.map":"வரைபடம்","nav.contact":"தொடர்பு","nav.journey":"என் பயணம்","nav.login":"உள்நுழைய","nav.signup":"பதிவு",
-    "m.lavdir":"வேலை மற்றும் உரிமைகள்","m.duesponde":"இத்தாலி மற்றும் இலங்கை","m.costruire":"எதிர்காலத்தை கட்டமைத்தல்","m.templates":"படிவங்கள் & கடிதங்கள்","m.openaccount":"வங்கி கணக்கு திறக்க","m.assegno":"Assegno Unico கணக்கு","m.inps":"INPS உரிமைகள்","m.titles":"தகுதி அங்கீகாரம்","m.medical":"மருத்துவ அகராதி","m.languages":"மொழி வகுப்புகள்","m.opportunities":"வாய்ப்புகள்","m.dashboard":"என் டாஷ்போர்டு","m.tracker":"அனுமதி கண்காணிப்பு","m.cvbuilder":"CV உருவாக்கி","m.docs":"ஆவண காப்பகம்","m.flights":"இலங்கை விமானங்கள்","m.cargo":"சரக்கு அனுப்புதல்","f.about":"எங்களைப் பற்றி","f.subscriptions":"சந்தாக்கள்",
+    "m.lavdir":"வேலை மற்றும் உரிமைகள்","m.duesponde":"இத்தாலி மற்றும் இலங்கை","m.costruire":"எதிர்காலத்தை கட்டமைத்தல்","m.templates":"படிவங்கள் & கடிதங்கள்","m.openaccount":"வங்கி கணக்கு திறக்க","m.assegno":"Assegno Unico கணக்கு","m.inps":"INPS உரிமைகள்","m.titles":"தகுதி அங்கீகாரம்","m.medical":"மருத்துவ அகராதி","m.languages":"மொழி வகுப்புகள்","m.opportunities":"வாய்ப்புகள்","m.dashboard":"என் டாஷ்போர்டு","m.tracker":"அனுமதி கண்காணிப்பு","m.money":"பணப் பரிமாற்ற ஒப்பீடு","m.fisco":"வரி மற்றும் தீர்வை","m.allservices":"அனைத்துச் சேவைகளும்","m.cvbuilder":"CV உருவாக்கி","m.docs":"ஆவண காப்பகம்","m.flights":"இலங்கை விமானங்கள்","m.cargo":"சரக்கு அனுப்புதல்","f.about":"எங்களைப் பற்றி","f.subscriptions":"சந்தாக்கள்",
     "hero.eyebrow":"இத்தாலியில், உங்கள் மொழியில்","hero.t1":"100% இலவசம்","hero.t2":"அட்டை தேவையில்லை","hero.t3":"அதிகாரப்பூர்வ ஆதாரங்கள்","hero.title":"<span class='ln'><span>இத்தாலியில்</span></span><span class='ln'><span><em>இலங்கை</em></span></span><span class='ln'><span>சமூகம்</span></span>","hero.sub":"அதிகாரபூர்வ வழிகாட்டிகள், பன்மொழி AI உதவியாளர், ஆதரவு சமூகம் மற்றும் புதிய செய்திகள் — இத்தாலியம், ஆங்கிலம், சிங்களம் மற்றும் தமிழில்.","hero.cta1":"இலவசமாக தொடங்குங்கள்","hero.cta2":"வழிகாட்டிகளை ஆராயுங்கள்","hero.stat1":"பயண நிலைகள்","hero.stat2":"நடைமுறை வழிகாட்டிகள்","hero.stat3":"வரைபடத்தில் நகரங்கள்","hero.stat4":"இடைமுக மொழிகள்","hero.stat5":"கருவிகள் & சேவைகள்","hero.stat6":"உறுதியான படிகள்",
     "card1.tag":"அதிகாரத்துவம்","card1.title":"வசிப்பிட அனுமதி","card1.sub":"முழுமையான புதுப்பித்தல் வழிகாட்டி","card2.tag":"AI","card2.title":"AI உதவியாளர்","card2.sub":"பன்மொழி பதில்கள் 24/7","card3.tag":"சமூகம்","card3.title":"சமூகம்","card3.sub":"சக ஆதரவு","card4.tag":"நிதி","card4.title":"பண பரிமாற்றம்","card4.sub":"Wise, Ria, Western Union",
     "ad.label":"விளம்பரம்","ad.lead":"உங்கள் பிராண்டை வளர்த்துக் கொள்ளுங்கள்: இத்தாலியில் உள்ள இலங்கை சமூகத்தை தினமும் சென்றடையுங்கள்.","ad.buy":"இந்த இடத்தை முன்பதிவு செய்யுங்கள்","ad.sponsor":"விளம்பரதாரர்","ad.slot":"விளம்பர இடம் — 300×250","ad.book":"முன்பதிவு →",
@@ -138,6 +138,80 @@ const LANG_META={it:{flag:"🇮🇹",code:"IT"},en:{flag:"🇬🇧",code:"EN"},s
 // non e' una scelta fatta sul sito, e il sito ora si presenta in inglese.
 let currentLang=window.EIH_LANG||localStorage.getItem('eih-lang')||'en';
 if(!I18N[currentLang])currentLang='en';
+
+/* ── Newsletter «Resta aggiornato» ───────────────────────────────────────
+   Il pulsante chiamava subscribeNewsletter(), che non è mai esistita: il clic
+   moriva in un ReferenceError e non succedeva niente, né un errore né una
+   conferma. Qui la funzione c'è, e racconta sempre com'è andata.
+
+   Chi non ha un account viene mandato prima a crearlo: la newsletter parla di
+   scadenze e pratiche personali, e senza un profilo non c'è modo di gestire
+   l'iscrizione né di disdirla. Chi è già iscritto lo vede scritto, invece di
+   ricevere di nuovo la stessa email di conferma. */
+const NL_TESTI={
+  attesa:{it:'Invio in corso…',en:'Sending…',si:'යවමින්…',ta:'அனுப்புகிறது…'},
+  fatto:{it:'✓ Ti abbiamo scritto: apri l\'email e conferma l\'iscrizione.',en:'✓ Check your inbox: open the email and confirm your subscription.',si:'✓ ඔබේ විද්‍යුත් තැපෑල පරීක්ෂා කරන්න: එහි ඇති සබැඳියෙන් දායකත්වය තහවුරු කරන්න.',ta:'✓ உங்கள் மின்னஞ்சலைப் பாருங்கள்: அதிலுள்ள இணைப்பால் சந்தாவை உறுதிப்படுத்துங்கள்.'},
+  gia:{it:'✓ Sei iscritto alla newsletter.',en:'✓ Subscribed to the newsletter.',si:'✓ ඔබ පුවත් පත්‍රිකාවට දායක වී ඇත.',ta:'✓ நீங்கள் செய்திமடலுக்குச் சந்தா செலுத்தியுள்ளீர்கள்.'},
+  conto:{it:'Per iscriverti serve un account gratuito.',en:'A free account is needed to subscribe.',si:'දායක වීමට නොමිලේ ගිණුමක් අවශ්‍යයි.',ta:'சந்தா செலுத்த இலவசக் கணக்கு தேவை.'},
+  vaiConto:{it:'Crea il tuo account →',en:'Create your account →',si:'ගිණුමක් සාදන්න →',ta:'கணக்கை உருவாக்கு →'},
+  email:{it:'Scrivi un indirizzo email valido.',en:'Please enter a valid email address.',si:'වලංගු විද්‍යුත් තැපැල් ලිපිනයක් ලියන්න.',ta:'சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்.'},
+  errore:{it:'Non ha funzionato. Riprova fra poco.',en:'That did not work. Please try again shortly.',si:'එය ක්‍රියා නොකළේය. මොහොතකින් නැවත උත්සාහ කරන්න.',ta:'அது வேலை செய்யவில்லை. சிறிது நேரத்தில் மீண்டும் முயலவும்.'}
+};
+const NL_ISCRITTO='eih-nl-iscritto';
+function nlDice(chiave,esito){
+  const el=document.getElementById('nl-state');if(!el)return;
+  el.hidden=false;
+  el.textContent=NL_TESTI[chiave][currentLang]||NL_TESTI[chiave].en;
+  if(esito)el.setAttribute('data-esito',esito);else el.removeAttribute('data-esito');
+}
+function nlChiudiModulo(){
+  const r=document.querySelector('.newsletter-row');if(r)r.hidden=true;
+  const n=document.querySelector('.newsletter-note');if(n)n.hidden=true;
+}
+function subscribeNewsletter(){
+  const campo=document.getElementById('nl-email');
+  const email=(campo&&campo.value||'').trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){nlDice('email','errore');if(campo)campo.focus();return;}
+  nlDice('attesa');
+  fetch('/api/newsletter',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email})})
+    .then(r=>r.json().then(d=>({ok:r.ok,d})))
+    .then(({ok,d})=>{
+      if(!ok||!d||d.error){nlDice('errore','errore');return;}
+      try{localStorage.setItem(NL_ISCRITTO,email);}catch(e){}
+      nlChiudiModulo();nlDice('fatto');
+    })
+    .catch(()=>nlDice('errore','errore'));
+}
+window.subscribeNewsletter=subscribeNewsletter;
+
+/* Stato all'apertura della pagina: già iscritto, oppure ancora senza account */
+(function(){
+  const card=document.querySelector('.newsletter-card');if(!card)return;
+  const avvia=()=>{
+    let iscritto=null;try{iscritto=localStorage.getItem(NL_ISCRITTO);}catch(e){}
+    if(iscritto){nlChiudiModulo();nlDice('gia');return;}
+    const chiediConto=()=>{
+      nlChiudiModulo();nlDice('conto');
+      const el=document.getElementById('nl-state');if(!el)return;
+      const a=document.createElement('a');
+      a.href='/registrati?next=%2F%23newsletter';
+      a.textContent=NL_TESTI.vaiConto[currentLang]||NL_TESTI.vaiConto.en;
+      el.appendChild(document.createElement('br'));el.appendChild(a);
+    };
+    const auth=window.EIH_AUTH;
+    if(!auth||!auth.getUser){chiediConto();return;}
+    auth.getUser().then(u=>{
+      const utente=u&&(u.user||u.email?u:null);
+      if(!utente||!(utente.user||utente.email)){chiediConto();return;}
+      const campo=document.getElementById('nl-email');
+      const mail=(utente.user&&utente.user.email)||utente.email;
+      if(campo&&mail&&!campo.value)campo.value=mail;
+    }).catch(chiediConto);
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',avvia,{once:true});
+  else avvia();
+})();
 
 /* Contenuti sintetici: l'articolo 50 del Reg. (UE) 2024/1689 vuole la
    dichiarazione accanto al contenuto, nella lingua di chi guarda. Questa pagina
@@ -228,9 +302,38 @@ applyLang(currentLang);
   // Scroll-reveal targets (below the fold)
   const targets=[...document.querySelectorAll('.ad-mini-bar,.wa-section,.donate-card,.cta-card,.footer-brand,.footer-col,.svc-card,.plan,.tools-section .section-label,.tools-section .section-title,.tools-section .section-sub,.tw-group,.does-section .section-label,.does-section .section-title,.does-section .section-sub,.does-card,.ct-foto')];
   targets.forEach(el=>el.classList.add('reveal'));
-  if(reduce){targets.forEach(el=>el.classList.add('in'));return;}
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
-  targets.forEach(el=>io.observe(el));
+
+  /* Il CSS mette a zero l'opacita' di ogni .reveal, ma finora l'osservatore
+     guardava solo l'elenco qui sopra: chi portava gia' la classe nel markup
+     — i passi del «come funziona», la barra verde di WhatsApp quando la
+     cache serviva un index.js indietro di un rilascio — spariva allo scorrere
+     e non tornava piu'. Si osserva tutto quello che porta .reveal, e si
+     ripassa dopo, perche' piede e barra di navigazione arrivano dopo. */
+  const visti=new WeakSet();
+  const accendi=el=>{if(!visti.has(el)){visti.add(el);el.classList.add('in');}};
+  if(reduce){document.querySelectorAll('.reveal').forEach(accendi);return;}
+  // Soglia zero: un blocco piu' alto dello schermo non raggiunge mai il 12%,
+  // e scorrendo di slancio non veniva campionato in tempo. Basta un pixel.
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){accendi(e.target);io.unobserve(e.target);}});},{threshold:0});
+  const raccogli=()=>document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
+    if(visti.has(el))return;
+    io.observe(el);
+  });
+  raccogli();
+  setTimeout(raccogli,1200);
+  setTimeout(raccogli,3000);
+  // Rete di sicurezza allo scorrimento: quello che e' gia' passato sopra il
+  // bordo inferiore si accende comunque, anche se l'osservatore l'ha mancato.
+  let inCoda=false;
+  addEventListener('scroll',()=>{
+    if(inCoda)return; inCoda=true;
+    requestAnimationFrame(()=>{
+      inCoda=false;
+      document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
+        if(el.getBoundingClientRect().top<innerHeight)accendi(el);
+      });
+    });
+  },{passive:true});
 })();
 
 /* ── Strands background (React Bits, port Canvas 2D) ── */

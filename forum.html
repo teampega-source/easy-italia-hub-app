@@ -162,7 +162,10 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     <div id="td-replies"></div>
     <div>
       <p class="replies-label">Chiedi anche tu</p>
-      <div class="ai-ask-bar">
+      <!-- Le risposte del Consigliere le scrive un modello: qui le repliche
+           umane e quelle artificiali stanno nello stesso elenco, quindi
+           l'avviso va dove nasce la risposta generata. -->
+      <div class="ai-ask-bar" data-ai-gen="testo">
         <textarea id="ai-ask-input" placeholder="Scrivi un commento o chiedi all'AI…" rows="2"></textarea>
         <button id="ai-ask-btn">Invia</button>
       </div>

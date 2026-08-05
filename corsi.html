@@ -84,7 +84,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   [data-page="corsi"] .lesson-mark[disabled]{opacity:.55;cursor:default}
   [data-page="corsi"] .reg-prompt[hidden]{display:none!important}
   [data-page="corsi"] .lesson.locked{opacity:.6}
-  [data-page="corsi"] .lesson.locked summary{cursor:default}
+  [data-page="corsi"] .lesson.locked summary{cursor:pointer}
   [data-page="corsi"] .adv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.1rem;margin-top:var(--sp-3)}
   [data-page="corsi"] .adv-card{padding:1.3rem;border-radius:var(--radius);background:var(--bg-elevated);border:1px solid var(--border);display:flex;flex-direction:column;gap:.5rem;text-decoration:none;color:inherit;transition:transform var(--dur-std) var(--ease-spring),box-shadow var(--dur-std)}
   [data-page="corsi"] .adv-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(22,20,18,.10)}
@@ -124,7 +124,16 @@ var EIH_CORSI = (function(){
     ta: '{n} பாடங்களில் {d} முடிந்தது'
   };
   var f = F[lg] || F.it;
-  return { lingua: lg, fatte: function(d, n){ return f.replace('{d}', d).replace('{n}', n); } };
+  /* Il lucchetto da solo non spiega niente: chi lo tocca deve leggere perche'
+     la lezione e' chiusa e come aprirla, senza tornare in cima alla pagina. */
+  var CHIUSA = {
+    it: { testo: 'Questa lezione è riservata a chi è iscritto. L\'iscrizione è gratuita e ti apre subito tutte le lezioni del Corso Base.', cta: 'Registrati gratis →' },
+    en: { testo: 'This lesson is for registered users. Signing up is free and opens every Base Course lesson right away.', cta: 'Create your free account →' },
+    si: { testo: 'මෙම පාඩම ලියාපදිංචි වූවන් සඳහා පමණි. ලියාපදිංචිය නොමිලේ වන අතර මූලික පාඨමාලාවේ සියලු පාඩම් වහාම විවෘත කරයි.', cta: 'නොමිලේ ලියාපදිංචි වන්න →' },
+    ta: { testo: 'இந்தப் பாடம் பதிவு செய்தவர்களுக்கு மட்டும். பதிவு இலவசம், அடிப்படைப் பாடநெறியின் எல்லாப் பாடங்களையும் உடனே திறக்கும்.', cta: 'இலவசமாகப் பதிவு செய்க →' }
+  };
+  var c = CHIUSA[lg] || CHIUSA.it;
+  return { lingua: lg, fatte: function(d, n){ return f.replace('{d}', d).replace('{n}', n); }, chiusa: c };
 })();
 </script>
 <main id="main">
@@ -686,7 +695,10 @@ function renderBaseLocked(key){
   document.getElementById(key+'-base-progress').textContent = '';
   var el = document.getElementById(key+'-base-list');
   el.innerHTML = COURSES[key].base.map(function(l){
-    return '<details class="lesson locked"><summary>'+lockIco+' '+l.title+'</summary></details>';
+    return '<details class="lesson locked"><summary>'+lockIco+' '+l.title+'</summary>'+
+      '<div class="lesson-body"><p class="muted" data-no-tr>'+EIH_CORSI.chiusa.testo+'</p>'+
+      '<a class="inline" href="/registrati?next=/corsi" data-no-tr>'+EIH_CORSI.chiusa.cta+'</a></div>'+
+    '</details>';
   }).join('');
 }
 

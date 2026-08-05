@@ -4,7 +4,7 @@
    Le API (/api/) e le richieste cross-origin non vengono mai intercettate. */
 'use strict';
 
-const CACHE = 'eih-v99';
+const CACHE = 'eih-v100';
 const OFFLINE = '/offline';
 const CORE = [
   '/',
@@ -75,7 +75,29 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Asset: cache subito, aggiornamento in background.
+  // Codice e dizionari: rete prima, cache solo se la rete non risponde.
+  //
+  // Prima stavano insieme alle immagini, serviti dalla cache e aggiornati dopo:
+  // chi tornava sul sito dopo un rilascio vedeva la versione precedente di
+  // eih.js e dei dizionari, e si ritrovava l'assistente che salutava in
+  // italiano dentro un sito in inglese. Un giro di rete su file di pochi
+  // kilobyte costa molto meno di un rilascio che non arriva.
+  if (/\.(js|css|json)$/.test(url.pathname)) {
+    e.respondWith(
+      fetch(req)
+        .then((res) => {
+          if (res && res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put(req, copy));
+          }
+          return res;
+        })
+        .catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  // Immagini, font, video: cache subito, aggiornamento in background.
   e.respondWith(
     caches.match(req).then((hit) => {
       const refresh = fetch(req)

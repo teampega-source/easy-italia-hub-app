@@ -1892,6 +1892,11 @@ footer{
 .newsletter-btn:active{transform:scale(.97)}
 .newsletter-btn:focus-visible{outline:2px solid rgba(255,255,255,.65);outline-offset:3px;border-radius:var(--radius-full)}
 .newsletter-note{font-size:var(--text-xs);color:rgba(255,255,255,.42);padding:0 .15rem}
+/* Esito dell'iscrizione: sta dentro la scheda scura, quindi si scrive chiaro */
+.newsletter-state{font-size:var(--text-sm);line-height:1.55;color:#eafff3;padding:.55rem .8rem;
+  border-radius:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)}
+.newsletter-state[data-esito="errore"]{background:rgba(255,120,100,.16);border-color:rgba(255,150,130,.4)}
+.newsletter-state a{color:#fff;font-weight:600}
 @media(max-width:767px){
   .newsletter-card{padding:var(--sp-4) var(--sp-3);gap:var(--sp-3);flex-direction:column}
   .newsletter-form{width:100%}
