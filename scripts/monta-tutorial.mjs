@@ -76,11 +76,11 @@ html,body{width:${L}px;height:${A}px;overflow:hidden;
 .scena{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
   padding:0 132px;opacity:0}
 h1,h2,.numero{font-family:${loc}'Clash Grotesk',sans-serif;font-weight:700;letter-spacing:-.02em}
-h1{font-size:78px;line-height:1.08}
-h2{font-size:52px;line-height:1.14;margin-bottom:26px}
+h1{font-size:86px;line-height:1.08}
+h2{font-size:58px;line-height:1.14;margin-bottom:28px}
 em{font-style:normal;color:#c2a15e}
-p{font-size:34px;line-height:1.58;font-weight:400;color:#e8dfd2;max-width:34ch}
-.occhiello{font-family:${loc}'Clash Grotesk',sans-serif;font-size:22px;font-weight:600;
+p{font-size:44px;line-height:1.52;font-weight:400;color:#e8dfd2;max-width:30ch}
+.occhiello{font-family:${loc}'Clash Grotesk',sans-serif;font-size:26px;font-weight:600;
   letter-spacing:.17em;text-transform:uppercase;color:#c2a15e;margin-bottom:22px}
 .marchio{position:absolute;top:52px;right:60px;display:flex;align-items:center;gap:14px;
   font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:24px;color:rgba(253,251,247,.82)}
@@ -88,27 +88,27 @@ p{font-size:34px;line-height:1.58;font-weight:400;color:#e8dfd2;max-width:34ch}
   background:rgba(255,255,255,.94);border-radius:50%;padding:5px}
 /* passo numerato */
 .passo{display:flex;gap:44px;align-items:flex-start}
-.numero{flex:0 0 auto;width:104px;height:104px;border-radius:50%;background:#c2a15e;color:#221a0e;
-  display:flex;align-items:center;justify-content:center;font-size:48px}
+.numero{flex:0 0 auto;width:118px;height:118px;border-radius:50%;background:#c2a15e;color:#221a0e;
+  display:flex;align-items:center;justify-content:center;font-size:54px}
 .passo .corpo{flex:1 1 auto;min-width:0}
-.passo h2{font-size:46px;margin-bottom:16px}
+.passo h2{font-size:54px;margin-bottom:18px}
 .passo p{max-width:none}
 /* avvertenze */
 .avvisi{display:flex;flex-direction:column;gap:20px;max-width:1200px}
 .avviso{display:flex;gap:20px;align-items:flex-start;background:rgba(255,255,255,.055);
-  border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:22px 28px;
-  font-size:30px;line-height:1.5;color:#efe7db}
-.avviso .seg{color:#e0a84a;flex:0 0 auto;font-size:30px}
+  border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:26px 32px;
+  font-size:38px;line-height:1.45;color:#efe7db}
+.avviso .seg{color:#e0a84a;flex:0 0 auto;font-size:34px}
 /* fonti */
-.fonte{display:flex;align-items:center;gap:18px;font-size:30px;color:#e8dfd2;margin-bottom:18px}
+.fonte{display:flex;align-items:center;gap:20px;font-size:38px;color:#e8dfd2;margin-bottom:18px}
 .fonte .pun{width:10px;height:10px;border-radius:50%;background:#c2a15e;flex:0 0 auto}
 .fonte b{font-weight:700;color:#fdfbf7}
 /* finale */
 .centro{align-items:center;text-align:center}
 .pillola{display:inline-block;margin-top:30px;background:#c2a15e;color:#221a0e;border-radius:999px;
-  padding:20px 54px;font-family:'Clash Grotesk',sans-serif;font-weight:700;font-size:34px}
-.sito{margin-top:22px;font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:40px}
-.minuta{position:absolute;left:0;right:0;bottom:44px;text-align:center;font-size:20px;
+  padding:22px 58px;font-family:'Clash Grotesk',sans-serif;font-weight:700;font-size:40px}
+.sito{margin-top:24px;font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:46px}
+.minuta{position:absolute;left:0;right:0;bottom:44px;text-align:center;font-size:26px;
   color:rgba(255,255,255,.6)}
 </style>
 <div class="grana"></div>
