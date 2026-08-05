@@ -173,7 +173,12 @@ qualsiasi riferimento a partiti o referendum.
 **Tre cose sul funzionamento del controllo, che cambiano il modo di lavorare:**
 1. **Meta esamina anche la landing page**, non solo l'annuncio. Un testo di
    rivendicazione su easyitaliahub.it può far rifiutare un annuncio impeccabile.
-   → **serve un audit del tono del sito prima di lanciare.**
+   → *Audit fatto il 5 agosto 2026.* Il sito è pulito: «Chi siamo» parla di
+   valori del progetto e non di politiche, le guide citano leggi e articoli di
+   codice senza commentarli, le pagine su decreto flussi e borse di studio sono
+   cronaca. Riformulata **una** frase in «Lavoro e diritti», che commentava un
+   sistema invece di descrivere una legge; tradotta nelle quattro lingue.
+   L'audit va rifatto ogni volta che si scrive una pagina nuova.
 2. **Chi insiste a pubblicare annunci classificati come temi sociali rischia la
    restrizione permanente dell'account.** Non si fanno tentativi «per vedere se
    passa»: si parte da creatività inequivocabilmente di servizio.
