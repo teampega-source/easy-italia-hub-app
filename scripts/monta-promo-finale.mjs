@@ -1,6 +1,11 @@
-/* Attacca al promo la scheda finale: cosa fa la piattaforma e come entrare.
+/* Ripulisce il promo e gli attacca la scheda finale.
 
    Uso:  node scripts/monta-promo-finale.mjs <promo.mp4> [uscita.mp4] [lingua]
+                                             [--taglia-alto=px] [--larghezza=1440]
+
+   Tre cose in un passaggio solo: via il watermark dello strumento che ha
+   generato il video, l'inquadratura portata a 9:16 e ingrandita, e in coda la
+   scheda con i servizi e l'invito.
 
    Il promo si chiudeva sulla modella e finiva li'. Chi lo guarda fino in fondo
    e' esattamente chi vorrebbe sapere cosa c'e' dentro il sito e come entrarci:
@@ -23,15 +28,30 @@ const RADICE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CACHE = path.join(RADICE, '.cache-font');
 const FF = process.env.FFMPEG || path.join(RADICE, 'node_modules', 'ffmpeg-static', 'ffmpeg');
 
-const PROMO = process.argv[2];
-const USCITA = process.argv[3] || path.join(RADICE, '.out', 'promo-con-finale.mp4');
-const LG = process.argv[4] || 'en';
+const argomenti = process.argv.slice(2);
+const opzione = (nome, ripiego) => {
+  const v = argomenti.find((a) => a.startsWith('--' + nome + '='));
+  return v ? v.split('=')[1] : ripiego;
+};
+const liberi = argomenti.filter((a) => !a.startsWith('--'));
+const PROMO = liberi[0];
+const USCITA = liberi[1] || path.join(RADICE, '.out', 'promo-con-finale.mp4');
+const LG = liberi[2] || 'en';
+// Il watermark sta in un angolo: invece di sfocarlo si taglia la striscia che
+// lo contiene. Una toppa interpolata su uno sfondo che si muove si vede;
+// qualche pixel in meno di cielo, no.
+const TAGLIA_ALTO = parseInt(opzione('taglia-alto', '0'), 10);
+const USCITA_L = parseInt(opzione('larghezza', '1440'), 10);   // 1440x2560 = 2K verticale
 if (!PROMO || !existsSync(PROMO)) {
-  console.error('serve il promo: node scripts/monta-promo-finale.mjs <promo.mp4> [uscita.mp4] [lingua]');
+  console.error('serve il promo: node scripts/monta-promo-finale.mjs <promo.mp4> [uscita.mp4] [lingua] [--taglia-alto=px] [--larghezza=1440]');
   process.exit(1);
 }
 
+// La scheda si disegna sempre a 720x1280 e si fotografa ingrandita: cosi' il
+// foglio di stile non cambia quando cambia la risoluzione d'uscita.
 const L = 720, A = 1280, FPS = 24, CODA = 5.6, DISSOLVENZA = 0.9;
+const SCALA = USCITA_L / L;
+const USCITA_A = Math.round(A * SCALA);
 
 /* Icone di linea, non emoji: le emoji le disegna il sistema, ognuna con un
    suo stile e i suoi colori, e su una scheda sobria stonano fra loro. */
@@ -175,7 +195,7 @@ mkdirSync(path.dirname(USCITA), { recursive: true });
 const coda = path.join(path.dirname(USCITA), '.coda-promo.mp4');
 
 const browser = await chromium.launch();
-const pag = await browser.newPage({ viewport: { width: L, height: A }, deviceScaleFactor: 1 });
+const pag = await browser.newPage({ viewport: { width: L, height: A }, deviceScaleFactor: SCALA });
 await pag.setContent(pagina(font, logo, d));
 await pag.addScriptTag({ content: DISEGNA });
 await pag.evaluate(() => document.fonts.ready);
@@ -195,6 +215,26 @@ for (let i = 0; i < totale; i++) {
 }
 ff.stdin.end();
 await finita;
+
+/* La dichiarazione sul filmato.
+   Questo promo arriva senza etichetta, ed e' un video generato: una persona
+   che non esiste che parla a chi guarda. L'articolo 50 del Reg. (UE)
+   2024/1689 la vuole visibile accanto al contenuto, non nella descrizione del
+   post — quindi si cuce sull'immagine, per tutta la durata del parlato. La
+   scheda finale ha gia' la sua. */
+const etichetta = path.join(path.dirname(USCITA), '.etichetta-ai.png');
+await pag.setViewportSize({ width: L, height: A });
+await pag.setContent(`<style>${font}
+*{margin:0;padding:0}
+html,body{width:${L}px;height:${A}px;background:transparent;overflow:hidden;
+  font-family:'Satoshi',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.ai{position:absolute;left:0;right:0;bottom:34px;text-align:center;font-size:15px;
+  font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.93);
+  text-shadow:0 2px 12px rgba(0,0,0,.8),0 0 3px rgba(0,0,0,.6)}
+</style><div class="ai">${d.ai}</div>`);
+await pag.evaluate(() => document.fonts.ready);
+await pag.waitForTimeout(250);
+writeFileSync(etichetta, await pag.screenshot({ omitBackground: true, type: 'png' }));
 await browser.close();
 
 /* La durata del promo la chiede a ffprobe? Non serve: la si legge da ffmpeg
@@ -213,24 +253,53 @@ function durata(file) {
   });
 }
 
+function dimensioni(file) {
+  return new Promise((ok, ko) => {
+    const p = spawn(FF, ['-i', file, '-f', 'null', '-']);
+    let log = '';
+    p.stderr.on('data', (b) => (log += b));
+    p.on('close', () => {
+      const m = log.match(/Video:.*?,\s(\d{2,5})x(\d{2,5})/);
+      if (!m) return ko(new Error('dimensioni non leggibili per ' + file));
+      ok({ l: +m[1], a: +m[2] });
+    });
+  });
+}
+
 const dPromo = await durata(PROMO);
+const dim = await dimensioni(PROMO);
+
+/* Ritaglio: prima via la striscia col watermark, poi si porta il fotogramma a
+   9:16 togliendo il meno possibile, sempre dal centro. */
+const restaA = dim.a - TAGLIA_ALTO;
+let ritL = Math.min(dim.l, Math.round(restaA * 9 / 16));
+let ritA = Math.min(restaA, Math.round(ritL * 16 / 9));
+ritL -= ritL % 2; ritA -= ritA % 2;
+const ritX = Math.round((dim.l - ritL) / 2);
+const ritY = TAGLIA_ALTO + Math.round((restaA - ritA) / 2);
+// L'ingrandimento non inventa dettaglio: lanczos tiene i bordi puliti e una
+// punta di maschera di contrasto rimette il mordente che la scalatura toglie.
+const PULISCI = `crop=${ritL}:${ritA}:${ritX}:${ritY},scale=${USCITA_L}:${USCITA_A}:flags=lanczos,` +
+  `unsharp=5:5:0.55:5:5:0`;
+console.log(`sorgente ${dim.l}x${dim.a} → ritaglio ${ritL}x${ritA}+${ritX}+${ritY} → uscita ${USCITA_L}x${USCITA_A}`);
 const offset = (dPromo - DISSOLVENZA).toFixed(3);
 const dTotale = (dPromo + CODA - DISSOLVENZA).toFixed(3);
 
 await new Promise((ok, ko) => {
-  const p = spawn(FF, ['-v', 'error', '-i', PROMO, '-i', coda,
+  const p = spawn(FF, ['-v', 'error', '-i', PROMO, '-i', coda, '-i', etichetta,
     '-filter_complex',
     // la coda non ha suono: si prolunga quello del promo con silenzio e lo si
     // spegne mentre l'immagine sfuma, cosi' non taglia di netto
-    `[0:v]fps=${FPS},format=yuv420p,setsar=1[a];[1:v]fps=${FPS},format=yuv420p,setsar=1[b];` +
+    `[0:v]${PULISCI},fps=${FPS},setsar=1[a0];[2:v]format=rgba[et];[a0][et]overlay=0:0,format=yuv420p[a];` +
+    `[1:v]fps=${FPS},format=yuv420p,setsar=1[b];` +
     `[a][b]xfade=transition=fade:duration=${DISSOLVENZA}:offset=${offset}[v];` +
     `[0:a]afade=t=out:st=${(dPromo - 1.4).toFixed(3)}:d=1.4,apad=whole_dur=${dTotale}[s]`,
     '-map', '[v]', '-map', '[s]',
-    '-c:v', 'libx264', '-profile:v', 'high', '-preset', 'slow', '-crf', '20', '-pix_fmt', 'yuv420p',
+    '-c:v', 'libx264', '-profile:v', 'high', '-preset', 'slow', '-crf', '19', '-pix_fmt', 'yuv420p',
     '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', '-y', USCITA]);
   p.stderr.on('data', (b) => process.stderr.write(b));
   p.on('close', (c) => (c === 0 ? ok() : ko(new Error('ffmpeg montaggio: ' + c))));
 });
 
-try { unlinkSync(coda); } catch (e) {}
+for (const f of [coda, etichetta]) { try { unlinkSync(f); } catch (e) {} }
 console.log('promo con finale:', USCITA, '·', dTotale + 's');
