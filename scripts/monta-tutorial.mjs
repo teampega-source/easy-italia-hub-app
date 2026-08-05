@@ -79,7 +79,7 @@ h1,h2,.numero{font-family:${loc}'Clash Grotesk',sans-serif;font-weight:700;lette
 h1{font-size:86px;line-height:1.08}
 h2{font-size:58px;line-height:1.14;margin-bottom:28px}
 em{font-style:normal;color:#c2a15e}
-p{font-size:44px;line-height:1.52;font-weight:400;color:#e8dfd2;max-width:30ch}
+p{font-size:44px;line-height:1.52;font-weight:400;color:#e8dfd2;max-width:1400px}
 .occhiello{font-family:${loc}'Clash Grotesk',sans-serif;font-size:26px;font-weight:600;
   letter-spacing:.17em;text-transform:uppercase;color:#c2a15e;margin-bottom:22px}
 .marchio{position:absolute;top:52px;right:60px;display:flex;align-items:center;gap:14px;
