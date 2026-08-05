@@ -179,6 +179,7 @@ function subscribeNewsletter(){
     .then(({ok,d})=>{
       if(!ok||!d||d.error){nlDice('errore','errore');return;}
       try{localStorage.setItem(NL_ISCRITTO,email);}catch(e){}
+      try{ if(window.EIH_MISURA) window.EIH_MISURA.evento('newsletter'); }catch(e){}
       nlChiudiModulo();nlDice('fatto');
     })
     .catch(()=>nlDice('errore','errore'));

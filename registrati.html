@@ -174,7 +174,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     btn.disabled=true;
     var restore=function(){ btn.disabled=false; applyMode(); };
 
-    if(!window.EIH_AUTH){ try{localStorage.setItem('eih-registered','1');}catch(_){} location.href=dest; return; }
+    if(!window.EIH_AUTH){ try{localStorage.setItem('eih-registered','1');}catch(_){} segnalaIscrizione(); location.href=dest; return; }
     EIH_AUTH.ready.then(function(){
       if(mode==='signup'){
         var tok='';
@@ -198,6 +198,16 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       }catch(_){}
     }
 
+    /* L'unica conversione del sito. Va segnalata a tutte le piattaforme
+       insieme — GA4, Google Ads, Meta, TikTok — e una volta sola: senza questo
+       nessuna campagna sa quale annuncio ha portato un iscritto. */
+    var giaSegnalata=false;
+    function segnalaIscrizione(){
+      if(mode!=='signup'||giaSegnalata)return;
+      giaSegnalata=true;
+      try{ if(window.EIH_MISURA) window.EIH_MISURA.iscrizione({method:'email'}); }catch(_){}
+    }
+
     function handle(res){
       if(res && res.error){
         if(EIH_AUTH.resetCaptcha) EIH_AUTH.resetCaptcha();
@@ -208,6 +218,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
         restore(); return;
       }
       notifySignup();
+      segnalaIscrizione();
       if(res && !res.demo && res.user && !res.session){
         document.querySelector('.reg-main').innerHTML =
           '<div style="text-align:center;padding:2rem 0"><div style="font-size:2.5rem;margin-bottom:1rem">📧</div>'+
@@ -223,6 +234,9 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     var err=el('reg-err'); err.textContent='';
     if(!window.EIH_AUTH){ err.textContent='Accesso Google non disponibile in modalità demo.'; return; }
     EIH_AUTH.ready.then(function(){
+      // Si va via dal sito e si torna da un'altra parte: l'evento parte adesso
+      // o non parte mai. Chi arriva qui in modalita' iscrizione la sta facendo.
+      if(mode==='signup'){ try{ if(window.EIH_MISURA) window.EIH_MISURA.iscrizione({method:'google'}); }catch(_){} }
       return EIH_AUTH.signInWithGoogle(location.origin + dest);
     }).then(function(res){
       if(res && res.demo) err.textContent='Accesso Google non disponibile in modalità demo.';
@@ -272,5 +286,6 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
 </script>
+<script src="/assets/eih-misura.js" defer></script>
 </body>
 </html>
