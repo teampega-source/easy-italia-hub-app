@@ -64,7 +64,7 @@ let sopra = '[0:v]';
 
 for (let i = 0; i < STACCHI.length; i++) {
   const s = STACCHI[i];
-  const file = path.join(RIPRESE, s.ripresa + '.webm');
+  const file = path.join(RIPRESE, s.ripresa + '.mp4');
   if (!existsSync(file)) { console.error('ripresa mancante: ' + file); process.exit(1); }
   // Si prende la coda della ripresa: e' li' che il gesto si compie. L'inizio
   // e' la pagina ferma che aspetta, e non racconta niente.
