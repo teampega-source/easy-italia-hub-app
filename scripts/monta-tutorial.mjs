@@ -35,14 +35,16 @@ const liberi = argomenti.filter((a) => !a.startsWith('--'));
 const SCHEDA = liberi[0];
 const LG = liberi[1] || 'si';
 if (!SCHEDA || !existsSync(SCHEDA)) {
-  console.error('uso: node scripts/monta-tutorial.mjs <contenuti.json> [lingua] [uscita.mp4] [--ritmo=0.84] [--musica=no|<file>]');
+  console.error('uso: node scripts/monta-tutorial.mjs <contenuti.json> [lingua] [uscita.mp4] [--ritmo=0.84] [--musica=<file>]');
   process.exit(1);
 }
 const dati = JSON.parse(readFileSync(SCHEDA, 'utf8'));
 const c = dati[LG];
 if (!c) { console.error('la scheda non ha la lingua ' + LG); process.exit(1); }
 const USCITA = liberi[2] || path.join(RADICE, '.out', `${dati.id}.${LG}.mp4`);
-const MUSICA = opzione('musica', 'genera');
+// Muto di default: l'audio lo mette l'utente in fase di pubblicazione.
+// --musica=<file> lo cuce qui, in anello con dissolvenza fra le ripetizioni.
+const MUSICA = opzione('musica', 'no');
 
 const L = 1920, A = 1080, FPS = 24;
 
@@ -236,9 +238,7 @@ await browser.close();
    Dura meno del video, quindi si ripete: non tagliato di netto ma incrociato
    in dissolvenza, cosi' la giuntura non si sente.                          */
 if (MUSICA !== 'no') {
-  const tappeto = MUSICA === 'genera'
-    ? path.join(RADICE, 'assets', 'audio', 'tappeto-promo.m4a')
-    : MUSICA;
+  const tappeto = MUSICA;
   if (!existsSync(tappeto)) {
     console.error('tappeto sonoro non trovato: ' + tappeto + ' — video lasciato muto');
   } else {
