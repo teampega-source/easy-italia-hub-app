@@ -18,7 +18,7 @@
 
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
-import { mkdirSync, existsSync, readFileSync } from 'node:fs';
+import { mkdirSync, existsSync, readFileSync, renameSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { fontIncorporati, famigliaLocale } from './lib-font.mjs';
@@ -26,35 +26,47 @@ import { fontIncorporati, famigliaLocale } from './lib-font.mjs';
 const RADICE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const FF = process.env.FFMPEG || path.join(RADICE, 'node_modules', 'ffmpeg-static', 'ffmpeg');
 
-const SCHEDA = process.argv[2];
-const LG = process.argv[3] || 'si';
+const argomenti = process.argv.slice(2);
+const opzione = (nome, ripiego) => {
+  const v = argomenti.find((a) => a.startsWith('--' + nome + '='));
+  return v ? v.split('=')[1] : ripiego;
+};
+const liberi = argomenti.filter((a) => !a.startsWith('--'));
+const SCHEDA = liberi[0];
+const LG = liberi[1] || 'si';
 if (!SCHEDA || !existsSync(SCHEDA)) {
-  console.error('uso: node scripts/monta-tutorial.mjs <contenuti.json> [lingua] [uscita.mp4]');
+  console.error('uso: node scripts/monta-tutorial.mjs <contenuti.json> [lingua] [uscita.mp4] [--ritmo=0.84] [--musica=no|<file>]');
   process.exit(1);
 }
 const dati = JSON.parse(readFileSync(SCHEDA, 'utf8'));
 const c = dati[LG];
 if (!c) { console.error('la scheda non ha la lingua ' + LG); process.exit(1); }
-const USCITA = process.argv[4] || path.join(RADICE, '.out', `${dati.id}.${LG}.mp4`);
+const USCITA = liberi[2] || path.join(RADICE, '.out', `${dati.id}.${LG}.mp4`);
+const MUSICA = opzione('musica', 'genera');
 
 const L = 1920, A = 1080, FPS = 24;
 
 /* ── Durate: ogni schermata resta il tempo che serve a leggerla ───────────
    Non un tempo fisso: una schermata con quaranta parole in singalese non si
    legge nello stesso tempo di una con sei. Si parte da un minimo e si aggiunge
-   in proporzione a quanto c'e' scritto. */
+   in proporzione a quanto c'e' scritto.
+
+   RITMO regola tutto insieme: sotto 1 il video scorre piu' svelto. Il primo
+   montaggio era corretto ma lento — chi guarda un tutorial legge in fretta e
+   riavvolge se gli serve, non aspetta che la schermata si decida a cambiare. */
+const RITMO = Number(opzione('ritmo', '0.84'));
 function durata(testo, minimo) {
   const n = String(testo || '').length;
-  return Math.max(minimo, Math.min(minimo + 9, minimo + n / 26));
+  return RITMO * Math.max(minimo, Math.min(minimo + 9, minimo + n / 26));
 }
 
 const scene = [];
-scene.push({ tipo: 'titolo', durata: 5.5 });
+scene.push({ tipo: 'titolo', durata: 5.5 * RITMO });
 scene.push({ tipo: 'intro', durata: durata(c.intro, 7) });
 c.passi.forEach((p, i) => scene.push({ tipo: 'passo', i, durata: durata(p.testo, 7) }));
 if (c.attenzione && c.attenzione.length) scene.push({ tipo: 'attenzione', durata: durata(c.attenzione.join(' '), 8) });
-if (c.fonti && c.fonti.length) scene.push({ tipo: 'fonti', durata: 7 });
-scene.push({ tipo: 'finale', durata: 7 });
+if (c.fonti && c.fonti.length) scene.push({ tipo: 'fonti', durata: 7 * RITMO });
+scene.push({ tipo: 'finale', durata: 7 * RITMO });
 
 let t0 = 0;
 for (const s of scene) { s.da = t0; s.a = t0 + s.durata; t0 = s.a; }
@@ -195,4 +207,47 @@ for (let i = 0; i < fotogrammi; i++) {
 ff.stdin.end();
 await finita;
 await browser.close();
+
+/* ── Il tappeto sonoro ───────────────────────────────────────────────────
+   Un video muto fa comparire l'icona dell'audio assente su parecchi lettori,
+   e su YouTube il silenzio assoluto e' scomodo da guardare. Qui il suono si
+   costruisce da zero con ffmpeg: quattro sinusoidi che formano un accordo,
+   ognuna con un respiro suo, passate in un filtro basso e in un'eco larga.
+   Nasce nel montaggio, quindi non ha diritti da chiedere a nessuno — che con
+   la musica su YouTube e' meta' del problema.
+
+   Volume a -27 dB: deve accompagnare, non farsi notare. Con `--musica=<file>`
+   si usa una traccia propria; con `--musica=no` il video resta muto. */
+if (MUSICA !== 'no') {
+  const conAudio = USCITA.replace(/\.mp4$/, '.tmp.mp4');
+  const d = TOTALE.toFixed(2);
+  // Fa9 largo: fa, la, do, sol — intervalli aperti, niente terze strette che
+  // sulle casse dei telefoni suonano fangose.
+  const NOTE = [174.61, 220.0, 261.63, 392.0];
+  const voci = NOTE.map((f, i) =>
+    `sine=frequency=${f}:duration=${d}:sample_rate=44100[n${i}];` +
+    // ogni voce respira con un periodo diverso: cosi' l'accordo non e' fermo
+    `[n${i}]tremolo=f=${(0.055 + i * 0.021).toFixed(3)}:d=0.55,volume=${(0.5 - i * 0.07).toFixed(2)}[v${i}]`
+  ).join(';');
+  const somma = NOTE.map((_, i) => `[v${i}]`).join('') + `amix=inputs=${NOTE.length}:normalize=0[mix]`;
+  const filtro =
+    `${voci};${somma};` +
+    `[mix]lowpass=f=900,aecho=0.8:0.9:900|1400:0.28|0.2,` +
+    `volume=-27dB,afade=t=in:st=0:d=2.5,afade=t=out:st=${(TOTALE - 3).toFixed(2)}:d=3[a]`;
+
+  const arg = MUSICA === 'genera'
+    ? ['-v', 'error', '-i', USCITA, '-filter_complex', filtro, '-map', '0:v', '-map', '[a]']
+    : ['-v', 'error', '-i', USCITA, '-i', MUSICA,
+       '-filter_complex', `[1:a]volume=-27dB,afade=t=in:st=0:d=2.5,afade=t=out:st=${(TOTALE - 3).toFixed(2)}:d=3[a]`,
+       '-map', '0:v', '-map', '[a]', '-shortest'];
+
+  await new Promise((ok, ko) => {
+    const p = spawn(FF, [...arg, '-c:v', 'copy', '-c:a', 'aac', '-b:a', '128k',
+      '-movflags', '+faststart', '-y', conAudio]);
+    p.stderr.on('data', (b) => process.stderr.write(b));
+    p.on('close', (x) => (x === 0 ? ok() : ko(new Error('ffmpeg audio: ' + x))));
+  });
+  renameSync(conAudio, USCITA);
+}
+
 console.log(`${dati.id}.${LG} · ${TOTALE.toFixed(1)}s · ${USCITA}`);
