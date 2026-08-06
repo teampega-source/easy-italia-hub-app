@@ -178,6 +178,21 @@ window.disegna = function (t, scene) {
   }
 };`;
 
+/* La durata di un file, letta dal registro di ffmpeg. */
+function durataFile(file) {
+  return new Promise((ok, ko) => {
+    const p = spawn(FF, ['-i', file, '-f', 'null', '-']);
+    let log = '';
+    p.stderr.on('data', (b) => (log += b));
+    p.on('close', () => {
+      const m = log.match(/time=(\d+):(\d+):(\d+\.\d+)/g);
+      if (!m) return ko(new Error('durata non leggibile per ' + file));
+      const u = m[m.length - 1].slice(5).split(':');
+      ok(+u[0] * 3600 + +u[1] * 60 + +u[2]);
+    });
+  });
+}
+
 /* ── Montaggio ─────────────────────────────────────────────────────────── */
 const font = await fontIncorporati([LG]);
 const logo = 'data:image/webp;base64,' + readFileSync(path.join(RADICE, 'assets', 'img', 'logo-symbol.webp')).toString('base64');
@@ -210,51 +225,53 @@ await browser.close();
 
 /* ── Il tappeto sonoro ───────────────────────────────────────────────────
    Un video muto fa comparire l'icona dell'audio assente su parecchi lettori,
-   e su YouTube il silenzio assoluto e' scomodo da guardare. Qui il suono si
-   costruisce da zero con ffmpeg: quattro sinusoidi che formano un accordo,
-   ognuna con un respiro suo, passate in un filtro basso e in un'eco larga.
-   Nasce nel montaggio, quindi non ha diritti da chiedere a nessuno — che con
-   la musica su YouTube e' meta' del problema.
+   e su YouTube il silenzio assoluto e' scomodo da guardare.
 
-   Il livello si misura, non si stima: picco intorno a -24 dB, che accompagna
-   senza farsi notare. Con `--musica=<file>`
-   si usa una traccia propria; con `--musica=no` il video resta muto. */
+   Il tappeto e' la musica del promo, con la voce tolta: stessa identita'
+   sonora di tutto il resto, e nessun diritto da chiedere a nessuno — che con
+   la musica su YouTube e' meta' del problema. Sta in assets/audio/, e si e'
+   ricavato separando le sorgenti del promo (demucs) e verificando col
+   riconoscitore vocale che non restasse una parola.
+
+   Dura meno del video, quindi si ripete: non tagliato di netto ma incrociato
+   in dissolvenza, cosi' la giuntura non si sente.                          */
 if (MUSICA !== 'no') {
-  const conAudio = USCITA.replace(/\.mp4$/, '.tmp.mp4');
-  const d = TOTALE.toFixed(2);
-  // Fa9 largo: fa, la, do, sol — intervalli aperti, niente terze strette che
-  // sulle casse dei telefoni suonano fangose.
-  const NOTE = [174.61, 220.0, 261.63, 392.0];
-  const voci = NOTE.map((f, i) =>
-    `sine=frequency=${f}:duration=${d}:sample_rate=44100[n${i}];` +
-    // Ogni voce respira con un periodo diverso, cosi' l'accordo non e' fermo.
-    // Sotto 0,1 Hz tremolo non va: e' il minimo che accetta, e a 0,11 il giro
-    // dura nove secondi — abbastanza lento da non sentirsi come un effetto.
-    `[n${i}]tremolo=f=${(0.11 + i * 0.03).toFixed(2)}:d=0.55,volume=${(0.5 - i * 0.07).toFixed(2)}[v${i}]`
-  ).join(';');
-  const somma = NOTE.map((_, i) => `[v${i}]`).join('') + `amix=inputs=${NOTE.length}:normalize=0[mix]`;
-  const filtro =
-    `${voci};${somma};` +
-    // -4 dB dopo il filtro e l'eco vuol dire un picco intorno a -24 dB:
-    // misurato, non stimato. A -27 il tappeto risultava a -43 di picco, cioe'
-    // inudibile — le sinusoidi perdono molta energia passando di li'.
-    `[mix]lowpass=f=900,aecho=0.8:0.9:900|1400:0.28|0.2,` +
-    `aformat=channel_layouts=stereo,` +
-    `volume=-4dB,afade=t=in:st=0:d=2.5,afade=t=out:st=${(TOTALE - 3).toFixed(2)}:d=3[a]`;
+  const tappeto = MUSICA === 'genera'
+    ? path.join(RADICE, 'assets', 'audio', 'tappeto-promo.m4a')
+    : MUSICA;
+  if (!existsSync(tappeto)) {
+    console.error('tappeto sonoro non trovato: ' + tappeto + ' — video lasciato muto');
+  } else {
+    const conAudio = USCITA.replace(/\.mp4$/, '.tmp.mp4');
+    const INCROCIO = 2;
+    // quante copie servono per coprire il video, tenuto conto che ogni
+    // incrocio mangia due secondi
+    const durataTappeto = await durataFile(tappeto);
+    const copie = Math.max(1, Math.ceil((TOTALE + INCROCIO) / (durataTappeto - INCROCIO)));
 
-  const arg = MUSICA === 'genera'
-    ? ['-v', 'error', '-i', USCITA, '-filter_complex', filtro, '-map', '0:v', '-map', '[a]']
-    : ['-v', 'error', '-i', USCITA, '-i', MUSICA,
-       '-filter_complex', `[1:a]volume=-20dB,afade=t=in:st=0:d=2.5,afade=t=out:st=${(TOTALE - 3).toFixed(2)}:d=3[a]`,
-       '-map', '0:v', '-map', '[a]', '-shortest'];
+    const ingressi = [];
+    for (let i = 0; i < copie; i++) ingressi.push('-i', tappeto);
+    let filtro = '', ultima = '[1:a]';
+    for (let i = 2; i <= copie; i++) {
+      const fuori = i === copie ? '[giro]' : `[c${i}]`;
+      filtro += `${ultima}[${i}:a]acrossfade=d=${INCROCIO}:c1=tri:c2=tri${fuori};`;
+      ultima = fuori;
+    }
+    if (copie === 1) filtro = '[1:a]anull[giro];';
+    filtro += `[giro]atrim=0:${TOTALE.toFixed(2)},asetpts=N/SR/TB,` +
+      `afade=t=in:st=0:d=2,afade=t=out:st=${Math.max(0, TOTALE - 3).toFixed(2)}:d=3,` +
+      `volume=${opzione('volume', '2')}dB[a]`;
 
-  await new Promise((ok, ko) => {
-    const p = spawn(FF, [...arg, '-c:v', 'copy', '-c:a', 'aac', '-b:a', '128k',
-      '-movflags', '+faststart', '-y', conAudio]);
-    p.stderr.on('data', (b) => process.stderr.write(b));
-    p.on('close', (x) => (x === 0 ? ok() : ko(new Error('ffmpeg audio: ' + x))));
-  });
-  renameSync(conAudio, USCITA);
+    await new Promise((ok, ko) => {
+      const p = spawn(FF, ['-v', 'error', '-i', USCITA, ...ingressi,
+        '-filter_complex', filtro, '-map', '0:v', '-map', '[a]',
+        '-c:v', 'copy', '-c:a', 'aac', '-b:a', '128k',
+        '-movflags', '+faststart', '-y', conAudio]);
+      p.stderr.on('data', (b) => process.stderr.write(b));
+      p.on('close', (x) => (x === 0 ? ok() : ko(new Error('ffmpeg audio: ' + x))));
+    });
+    renameSync(conAudio, USCITA);
+  }
 }
 
 console.log(`${dati.id}.${LG} · ${TOTALE.toFixed(1)}s · ${USCITA}`);
