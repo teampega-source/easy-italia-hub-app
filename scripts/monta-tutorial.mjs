@@ -216,7 +216,8 @@ await browser.close();
    Nasce nel montaggio, quindi non ha diritti da chiedere a nessuno — che con
    la musica su YouTube e' meta' del problema.
 
-   Volume a -27 dB: deve accompagnare, non farsi notare. Con `--musica=<file>`
+   Il livello si misura, non si stima: picco intorno a -24 dB, che accompagna
+   senza farsi notare. Con `--musica=<file>`
    si usa una traccia propria; con `--musica=no` il video resta muto. */
 if (MUSICA !== 'no') {
   const conAudio = USCITA.replace(/\.mp4$/, '.tmp.mp4');
@@ -226,19 +227,25 @@ if (MUSICA !== 'no') {
   const NOTE = [174.61, 220.0, 261.63, 392.0];
   const voci = NOTE.map((f, i) =>
     `sine=frequency=${f}:duration=${d}:sample_rate=44100[n${i}];` +
-    // ogni voce respira con un periodo diverso: cosi' l'accordo non e' fermo
-    `[n${i}]tremolo=f=${(0.055 + i * 0.021).toFixed(3)}:d=0.55,volume=${(0.5 - i * 0.07).toFixed(2)}[v${i}]`
+    // Ogni voce respira con un periodo diverso, cosi' l'accordo non e' fermo.
+    // Sotto 0,1 Hz tremolo non va: e' il minimo che accetta, e a 0,11 il giro
+    // dura nove secondi — abbastanza lento da non sentirsi come un effetto.
+    `[n${i}]tremolo=f=${(0.11 + i * 0.03).toFixed(2)}:d=0.55,volume=${(0.5 - i * 0.07).toFixed(2)}[v${i}]`
   ).join(';');
   const somma = NOTE.map((_, i) => `[v${i}]`).join('') + `amix=inputs=${NOTE.length}:normalize=0[mix]`;
   const filtro =
     `${voci};${somma};` +
+    // -4 dB dopo il filtro e l'eco vuol dire un picco intorno a -24 dB:
+    // misurato, non stimato. A -27 il tappeto risultava a -43 di picco, cioe'
+    // inudibile — le sinusoidi perdono molta energia passando di li'.
     `[mix]lowpass=f=900,aecho=0.8:0.9:900|1400:0.28|0.2,` +
-    `volume=-27dB,afade=t=in:st=0:d=2.5,afade=t=out:st=${(TOTALE - 3).toFixed(2)}:d=3[a]`;
+    `aformat=channel_layouts=stereo,` +
+    `volume=-4dB,afade=t=in:st=0:d=2.5,afade=t=out:st=${(TOTALE - 3).toFixed(2)}:d=3[a]`;
 
   const arg = MUSICA === 'genera'
     ? ['-v', 'error', '-i', USCITA, '-filter_complex', filtro, '-map', '0:v', '-map', '[a]']
     : ['-v', 'error', '-i', USCITA, '-i', MUSICA,
-       '-filter_complex', `[1:a]volume=-27dB,afade=t=in:st=0:d=2.5,afade=t=out:st=${(TOTALE - 3).toFixed(2)}:d=3[a]`,
+       '-filter_complex', `[1:a]volume=-20dB,afade=t=in:st=0:d=2.5,afade=t=out:st=${(TOTALE - 3).toFixed(2)}:d=3[a]`,
        '-map', '0:v', '-map', '[a]', '-shortest'];
 
   await new Promise((ok, ko) => {
