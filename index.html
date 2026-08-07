@@ -1201,6 +1201,24 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
   </div>
 </section>
 
+<!-- Partner. Un logo solo non scorre: la barra parte da sola quando i loghi
+     non ci stanno più (assets/index.js → barraPartner). -->
+<section class="pt-section" aria-labelledby="pt-heading">
+  <p class="section-label" data-i18n="pt.label">Partner</p>
+  <h3 id="pt-heading" class="section-title section-title--sub" data-i18n-html="pt.title">Chi lavora <em>con noi</em></h3>
+  <div class="pt-bar">
+    <div class="pt-track" id="pt-track">
+      <a class="pt-logo" href="/api/go?to=wise&amp;ref=partner" target="_blank" rel="sponsored noopener" aria-label="Wise">
+        <img src="/assets/img/partner-wise.svg" alt="Wise" width="95" height="24" loading="lazy" decoding="async"/>
+      </a>
+      <a class="pt-logo pt-logo--vuoto" href="/contatti?motivo=partner">
+        <span data-i18n="pt.slot">Il tuo logo qui</span>
+      </a>
+    </div>
+  </div>
+  <p class="pt-note" data-i18n="pt.note">Wise è un partner affiliato: se apri un conto dal nostro link, la piattaforma riceve una piccola commissione. Per te il costo non cambia.</p>
+</section>
+
 <section class="faq-section" aria-labelledby="faq-heading">
   <div class="faq-head">
     <p class="section-label" style="margin-bottom:1rem" data-i18n="faq.label">Domande frequenti</p>
@@ -1739,6 +1757,7 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
 <script src="assets/eih-palette.js" fetchpriority="low" defer></script>
 <script src="assets/eih-theme.js" defer></script>
 <script src="assets/eih-consent.js" defer></script>
+<script src="/assets/eih-misura.js" defer></script>
 <script src="assets/eih-vfx.js" fetchpriority="low" defer></script>
 <script src="assets/eih-navauth.js" defer></script>
 <script src="assets/eih-install.js" defer></script>

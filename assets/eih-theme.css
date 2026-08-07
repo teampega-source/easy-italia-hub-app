@@ -55,6 +55,9 @@ html[data-theme="dark"] #eiht-fab .moon{display:none}
 html[data-theme="dark"] .problem-section{background:#0d0c0a}
 html[data-theme="dark"] .step{background:rgba(244,246,249,.04)}
 html[data-theme="dark"] .testimonial{background:rgba(244,246,249,.04)}
+/* targhetta chiara ma non accecante: il logo Wise è blu scuro e vuole un fondo chiaro */
+html[data-theme="dark"] .pt-logo{background:#eceae4}
+html[data-theme="dark"] .pt-logo--vuoto{background:transparent}
 html[data-theme="dark"] .screenshot-card{background:var(--bg-elevated)}
 html[data-theme="dark"] .sol-card{background:rgba(244,246,249,.05)}
 html[data-theme="dark"] .mission-visual{box-shadow:0 32px 80px rgba(0,0,0,.4)}

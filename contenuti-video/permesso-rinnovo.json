@@ -1,0 +1,116 @@
+{
+  "id": "permesso-rinnovo",
+  "nota": "Contenuto tratto da guide.html, sezione permesso-soggiorno. Verificare su portaleimmigrazione.it e poliziadistato.it prima di ogni nuova pubblicazione: documenti, tempi e requisiti cambiano spesso.",
+
+  "it": {
+    "occhiello": "Guida · Permesso di soggiorno",
+    "titolo": "Rinnovare il permesso di soggiorno",
+    "intro": "Il permesso di soggiorno va rinnovato prima che scada. La domanda si presenta alle Poste con il «kit giallo», non in Questura. Ecco i passaggi, in ordine.",
+    "passi": [
+      { "titolo": "Guarda la data di scadenza", "testo": "Avvia la pratica con buon anticipo, in genere intorno ai 60 giorni prima della scadenza. Aspettare l'ultima settimana è il modo più comune per trovarsi senza documento in regola." },
+      { "titolo": "Ritira il kit giallo", "testo": "Si prende gratis in un ufficio postale con lo Sportello Amico. È lo stesso kit del primo rilascio: dentro trovi i moduli da compilare." },
+      { "titolo": "Prepara i documenti", "testo": "Passaporto, il permesso in scadenza, e i documenti che giustificano il motivo del soggiorno: contratto di lavoro, busta paga, documenti di famiglia o iscrizione scolastica. Servono anche le marche da bollo." },
+      { "titolo": "Consegna e conserva la ricevuta", "testo": "Porta il kit alle Poste. La ricevuta che ti danno è il documento più importante: dimostra che la pratica è in corso e ti permette di restare in regola mentre aspetti. Fanne una foto e tienila sul telefono." },
+      { "titolo": "Vai in Questura quando ti convocano", "testo": "Riceverai un appuntamento per foto e impronte digitali. Presentati nel giorno indicato con la ricevuta e il passaporto." }
+    ],
+    "attenzioneTitolo": "Attenzione",
+    "attenzione": [
+      "Se perdi la ricevuta, all'ufficio postale dove hai spedito il kit possono rilasciarti una copia o un'attestazione dell'invio.",
+      "Nessuno può farti ottenere il permesso più in fretta pagando: chi te lo promette ti sta truffando.",
+      "Per casi complessi rivolgiti a un patronato o a un CAF: per queste pratiche sono gratuiti per legge."
+    ],
+    "fontiTitolo": "Fonti ufficiali",
+    "fonti": [
+      { "nome": "Portale Immigrazione", "url": "portaleimmigrazione.it" },
+      { "nome": "Polizia di Stato", "url": "poliziadistato.it" },
+      { "nome": "Poste — Sportello Amico", "url": "poste.it" }
+    ],
+    "finale": "Le scadenze te le ricordiamo noi.",
+    "invito": "Guide gratuite nella tua lingua",
+    "avvertenza": "Informazioni a scopo orientativo, da fonti ufficiali. Tempi e documenti cambiano: verifica sempre sulla fonte."
+  },
+
+  "en": {
+    "occhiello": "Guide · Residence permit",
+    "titolo": "Renewing your residence permit",
+    "intro": "Your residence permit must be renewed before it expires. The application goes to the post office with the «yellow kit», not to the Questura. Here are the steps, in order.",
+    "passi": [
+      { "titolo": "Check the expiry date", "testo": "Start well ahead of time, usually around 60 days before it expires. Waiting until the last week is the most common way to end up without a valid document." },
+      { "titolo": "Collect the yellow kit", "testo": "It is free at any post office with a Sportello Amico desk. It is the same kit as the first application: the forms to fill in are inside." },
+      { "titolo": "Get your documents ready", "testo": "Passport, the expiring permit, and the documents that justify why you are here: work contract, payslips, family documents or school enrolment. You will also need the revenue stamps." },
+      { "titolo": "Hand it in and keep the receipt", "testo": "Take the kit to the post office. The receipt they give you is the most important document: it proves your application is in progress and lets you stay legally while you wait. Photograph it and keep it on your phone." },
+      { "titolo": "Go to the Questura when called", "testo": "You will be given an appointment for photographs and fingerprints. Turn up on the day with your receipt and your passport." }
+    ],
+    "attenzioneTitolo": "Watch out",
+    "attenzione": [
+      "If you lose the receipt, the post office where you sent the kit can issue a copy or a certificate of posting.",
+      "Nobody can get your permit faster in exchange for money: anyone who promises that is scamming you.",
+      "For difficult cases go to a patronato or a CAF: for these matters they are free by law."
+    ],
+    "fontiTitolo": "Official sources",
+    "fonti": [
+      { "nome": "Portale Immigrazione", "url": "portaleimmigrazione.it" },
+      { "nome": "Polizia di Stato", "url": "poliziadistato.it" },
+      { "nome": "Poste — Sportello Amico", "url": "poste.it" }
+    ],
+    "finale": "We will remind you of the deadlines.",
+    "invito": "Free guides in your language",
+    "avvertenza": "General information from official sources. Times and documents change: always check the source."
+  },
+
+  "si": {
+    "occhiello": "මාර්ගෝපදේශය · වාසි බලපත්‍රය",
+    "titolo": "වාසි බලපත්‍රය අලුත් කිරීම",
+    "intro": "වාසි බලපත්‍රය කල් ඉකුත් වීමට පෙර අලුත් කළ යුතුයි. ඉල්ලුම්පත්‍රය «කහ කට්ටලය» සමඟ තැපැල් කාර්යාලයට යවනු ලැබේ, Questura වෙත නොවේ. පියවර මෙන්න, පිළිවෙළට.",
+    "passi": [
+      { "titolo": "කල් ඉකුත්වන දිනය බලන්න", "testo": "හොඳ කලකට පෙර ආරම්භ කරන්න — සාමාන්‍යයෙන් කල් ඉකුත් වීමට දින 60කට පමණ පෙර. අවසාන සතිය දක්වා බලා සිටීම නිසි ලේඛනයක් නොමැතිව සිටීමට ඇති පොදුම හේතුවයි." },
+      { "titolo": "කහ කට්ටලය ලබා ගන්න", "testo": "Sportello Amico සේවාව ඇති ඕනෑම තැපැල් කාර්යාලයකින් නොමිලේ ලබා ගත හැකියි. එය පළමු ඉල්ලුමට භාවිතා කළ කට්ටලයමයි: පුරවිය යුතු පෝරම ඇතුළත තිබේ." },
+      { "titolo": "ලේඛන සූදානම් කරන්න", "testo": "ගමන් බලපත්‍රය, කල් ඉකුත් වන බලපත්‍රය, සහ ඔබ මෙහි සිටින හේතුව සනාථ කරන ලේඛන: රැකියා ගිවිසුම, වැටුප් පත්‍රිකා, පවුලේ ලේඛන හෝ පාසල් ලියාපදිංචිය. මුද්දර ගාස්තු (marche da bollo) ද අවශ්‍යයි." },
+      { "titolo": "භාර දී රිසිට්පත තබා ගන්න", "testo": "කට්ටලය තැපැල් කාර්යාලයට ගෙන යන්න. ඔවුන් දෙන රිසිට්පත වැදගත්ම ලේඛනයයි: ඔබේ ඉල්ලුම ක්‍රියාත්මක බව එයින් සනාථ වන අතර, බලා සිටින කාලයේ ඔබට නීත්‍යානුකූලව රැඳී සිටිය හැකියි. එය ඡායාරූපගත කර දුරකථනයේ තබා ගන්න." },
+      { "titolo": "කැඳවූ විට Questura වෙත යන්න", "testo": "ඡායාරූප සහ ඇඟිලි සලකුණු සඳහා දිනයක් ලැබෙනු ඇත. එදින රිසිට්පත සහ ගමන් බලපත්‍රය සමඟ පැමිණෙන්න." }
+    ],
+    "attenzioneTitolo": "අවධානය",
+    "attenzione": [
+      "රිසිට්පත නැති වුවහොත්, කට්ටලය යැවූ තැපැල් කාර්යාලයෙන් පිටපතක් හෝ යැවීමේ සහතිකයක් ලබා ගත හැකියි.",
+      "මුදල් ගෙවීමෙන් බලපත්‍රය ඉක්මනින් ලබා දිය හැකි කිසිවෙක් නැත: එසේ පොරොන්දු වන අය ඔබව රවටයි.",
+      "සංකීර්ණ අවස්ථාවලදී patronato හෝ CAF වෙත යන්න: මෙම කටයුතු සඳහා ඒවා නීතියෙන් නොමිලේ ය."
+    ],
+    "fontiTitolo": "නිල මූලාශ්‍ර",
+    "fonti": [
+      { "nome": "Portale Immigrazione", "url": "portaleimmigrazione.it" },
+      { "nome": "Polizia di Stato", "url": "poliziadistato.it" },
+      { "nome": "Poste — Sportello Amico", "url": "poste.it" }
+    ],
+    "finale": "කල් ඉකුත්වීම් අපි ඔබට මතක් කරන්නම්.",
+    "invito": "ඔබේ භාෂාවෙන් නොමිලේ මාර්ගෝපදේශ",
+    "avvertenza": "නිල මූලාශ්‍රවලින් ලබාගත් සාමාන්‍ය තොරතුරු. කාලය සහ ලේඛන වෙනස් වේ: සැමවිටම මූලාශ්‍රය පරීක්ෂා කරන්න."
+  },
+
+  "ta": {
+    "occhiello": "வழிகாட்டி · வதிவு அனுமதி",
+    "titolo": "வதிவு அனுமதியைப் புதுப்பித்தல்",
+    "intro": "வதிவு அனுமதி காலாவதியாகும் முன் புதுப்பிக்கப்பட வேண்டும். விண்ணப்பம் «மஞ்சள் கிட்» உடன் தபால் அலுவலகத்திற்குச் செல்கிறது, Questura-வுக்கு அல்ல. படிகள் இதோ, வரிசையாக.",
+    "passi": [
+      { "titolo": "காலாவதி தேதியைப் பாருங்கள்", "testo": "நன்கு முன்பே தொடங்குங்கள் — வழக்கமாக காலாவதியாகும் 60 நாட்களுக்கு முன்பு. கடைசி வாரம் வரை காத்திருப்பதுதான் செல்லுபடியான ஆவணம் இல்லாமல் போவதற்கான மிகப் பொதுவான காரணம்." },
+      { "titolo": "மஞ்சள் கிட்டைப் பெறுங்கள்", "testo": "Sportello Amico உள்ள எந்த தபால் அலுவலகத்திலும் இலவசம். இது முதல் விண்ணப்பத்திற்குப் பயன்படுத்திய அதே கிட்: நிரப்ப வேண்டிய படிவங்கள் உள்ளே உள்ளன." },
+      { "titolo": "ஆவணங்களைத் தயார் செய்யுங்கள்", "testo": "கடவுச்சீட்டு, காலாவதியாகும் அனுமதி, மற்றும் நீங்கள் இங்கு இருப்பதற்கான காரணத்தை நிரூபிக்கும் ஆவணங்கள்: வேலை ஒப்பந்தம், ஊதியச் சீட்டுகள், குடும்ப ஆவணங்கள் அல்லது பள்ளிப் பதிவு. முத்திரைக் கட்டணங்களும் (marche da bollo) தேவை." },
+      { "titolo": "ஒப்படைத்து ரசீதை வைத்திருங்கள்", "testo": "கிட்டை தபால் அலுவலகத்திற்குக் கொண்டு செல்லுங்கள். அவர்கள் தரும் ரசீதுதான் மிக முக்கியமான ஆவணம்: உங்கள் விண்ணப்பம் நடைபெறுவதை அது நிரூபிக்கிறது, காத்திருக்கும் காலத்தில் சட்டப்படி தங்க அனுமதிக்கிறது. அதைப் புகைப்படம் எடுத்து தொலைபேசியில் வைத்திருங்கள்." },
+      { "titolo": "அழைக்கும்போது Questura செல்லுங்கள்", "testo": "புகைப்படம் மற்றும் கைரேகைக்கான நாள் வழங்கப்படும். அன்று ரசீது மற்றும் கடவுச்சீட்டுடன் வாருங்கள்." }
+    ],
+    "attenzioneTitolo": "கவனம்",
+    "attenzione": [
+      "ரசீதைத் தொலைத்தால், கிட்டை அனுப்பிய தபால் அலுவலகம் நகல் அல்லது அனுப்பிய சான்றிதழ் வழங்க முடியும்.",
+      "பணம் கொடுத்தால் அனுமதியை விரைவாகப் பெற்றுத் தர யாராலும் முடியாது: அப்படி வாக்குறுதி தருபவர் உங்களை ஏமாற்றுகிறார்.",
+      "சிக்கலான வழக்குகளுக்கு patronato அல்லது CAF-ஐ அணுகுங்கள்: இந்த விஷயங்களுக்கு அவை சட்டப்படி இலவசம்."
+    ],
+    "fontiTitolo": "அதிகாரப்பூர்வ ஆதாரங்கள்",
+    "fonti": [
+      { "nome": "Portale Immigrazione", "url": "portaleimmigrazione.it" },
+      { "nome": "Polizia di Stato", "url": "poliziadistato.it" },
+      { "nome": "Poste — Sportello Amico", "url": "poste.it" }
+    ],
+    "finale": "காலக்கெடுவை நாங்கள் நினைவூட்டுவோம்.",
+    "invito": "உங்கள் மொழியில் இலவச வழிகாட்டிகள்",
+    "avvertenza": "அதிகாரப்பூர்வ ஆதாரங்களிலிருந்து பொதுத் தகவல். நேரமும் ஆவணங்களும் மாறும்: எப்போதும் ஆதாரத்தைச் சரிபார்க்கவும்."
+  }
+}

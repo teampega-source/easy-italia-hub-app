@@ -1694,6 +1694,41 @@ footer{
   .testimonials-marquee{mask-image:none;-webkit-mask-image:none}
 }
 
+/* ─── PARTNER (barra loghi) ───
+   Con un logo solo una barra che scorre sembra rotta: resta ferma e centrata,
+   e si mette a scorrere da sola quando i loghi non ci stanno più (il JS
+   aggiunge .is-scroll e duplica la fila). I loghi stanno su una targhetta
+   chiara anche di notte: il marchio Wise è blu scuro e su fondo nero sparisce. */
+.pt-section{position:relative;z-index:1;max-width:1380px;margin:0 auto;padding:var(--sp-5) var(--sp-5);text-align:center}
+.pt-bar{margin-top:var(--sp-3);position:relative;overflow:hidden}
+.pt-track{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:var(--sp-2);padding:.4rem 0}
+.pt-logo{flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+  min-width:196px;height:84px;padding:0 var(--sp-3);border-radius:16px;
+  background:#fff;border:1px solid var(--border);text-decoration:none;
+  transition:border-color var(--dur-micro),box-shadow var(--dur-micro),transform var(--dur-micro)}
+.pt-logo:hover{border-color:var(--border-bright);box-shadow:0 8px 32px rgba(20,30,48,.08);transform:translateY(-3px)}
+.pt-logo img{height:30px;width:auto;display:block}
+.pt-logo--vuoto{background:transparent;border-style:dashed;color:var(--fg-muted);
+  font-size:var(--text-xs);letter-spacing:.04em}
+.pt-logo--vuoto:hover{color:var(--ink)}
+.pt-note{margin:var(--sp-3) auto 0;max-width:640px;text-align:center;
+  font-size:var(--text-xs);color:var(--fg-muted);line-height:1.6;font-weight:300}
+.pt-bar.is-scroll{-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.pt-bar.is-scroll .pt-track{flex-wrap:nowrap;justify-content:flex-start;width:max-content;
+  animation:ptScroll 34s linear infinite}
+.pt-bar.is-scroll:hover .pt-track{animation-play-state:paused}
+@keyframes ptScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){
+  .pt-bar.is-scroll{mask-image:none;-webkit-mask-image:none}
+  .pt-bar.is-scroll .pt-track{animation:none;flex-wrap:wrap;justify-content:center;width:auto}
+}
+@media(max-width:767px){
+  .pt-section{padding-left:var(--sp-3);padding-right:var(--sp-3)}
+  .pt-logo{min-width:152px;height:72px}
+  .pt-logo img{height:26px}
+}
+
 /* ─── MISSION TEASER ─── */
 .mission-section{
   position:relative;z-index:1;

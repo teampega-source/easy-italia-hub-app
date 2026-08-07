@@ -552,20 +552,9 @@
     document.head.appendChild(si);
   }
 
-  // Google Analytics 4
-  (function(){
-    var GA_ID='G-13TEJWCKZZ';
-    if(!GA_ID||GA_ID==='G-XXXXXXXXXX')return;
-    if(document.querySelector('script[src*="googletagmanager.com/gtag"]'))return;
-    window.dataLayer=window.dataLayer||[];
-    function gtag(){dataLayer.push(arguments);}
-    window.gtag=gtag;
-    gtag('js',new Date());
-    gtag('config',GA_ID,{anonymize_ip:true,cookie_flags:'SameSite=None;Secure'});
-    var s=document.createElement('script');s.async=true;
-    s.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;
-    document.head.appendChild(s);
-  })();
+  // Le statistiche stanno in assets/eih-misura.js, caricato da ogni pagina:
+  // qui dentro non arrivavano alla home, che non carica eih.js, e partivano
+  // senza aspettare il consenso.
 
   applyLang(lang);
   // Alcune pagine definiscono EIH_I18N_EXTRA dopo aver caricato eih.js: alla
