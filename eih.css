@@ -152,6 +152,29 @@ main{position:relative;z-index:1}
 .page h1{font-family:'Clash Grotesk',sans-serif;font-size:clamp(2.4rem,5.5vw,4.25rem);font-weight:600;line-height:1;letter-spacing:-.035em;color:var(--ink);margin-bottom:var(--sp-3)}
 .page h1 em{font-style:normal;color:var(--taupe)}
 .page .lead{font-size:var(--text-lg);line-height:1.7;color:var(--fg-secondary);font-weight:300;max-width:620px;margin-bottom:var(--sp-4)}
+/* Avviso AI: la riga di marcatura resta sempre in vista, il testo di legge
+   si apre al tocco. Da telefono occupava mezzo schermo prima dello strumento. */
+.ai-legal{max-width:64ch;margin:1rem 0 0;padding:.55rem .95rem;font-size:.78rem;line-height:1.6;
+  color:var(--fg-secondary);background:var(--gold-dim);border-left:3px solid var(--gold);border-radius:8px}
+.ai-legal summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:.4rem;font-weight:500}
+.ai-legal summary::-webkit-details-marker{display:none}
+.ai-legal summary::after{content:"▾";margin-left:auto;flex-shrink:0;transition:transform .2s}
+.ai-legal[open] summary::after{transform:rotate(180deg)}
+.ai-legal p{margin:.5rem 0 .1rem;font-size:inherit;line-height:inherit;color:inherit}
+/* Da telefono: la presentazione si stringe, lo strumento sale */
+@media(max-width:640px){
+  .page{padding-top:calc(var(--sp-5) + 1.1rem)}
+  .eyebrow{margin-bottom:.65rem}
+  .page h1{font-size:clamp(2rem,8.5vw,2.6rem);margin-bottom:var(--sp-2)}
+  .page .lead{line-height:1.6;margin-bottom:var(--sp-3)}
+  .ai-legal{font-size:.8125rem}
+  .lead-corto{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+    margin-bottom:.15rem!important}
+  .lead-piu{display:block;background:none;border:0;padding:.7rem 0;margin:0 0 var(--sp-2);
+    font:inherit;font-size:.9375rem;font-weight:500;color:var(--gold);
+    text-decoration:underline;text-underline-offset:3px;cursor:pointer;min-height:44px;text-align:left}
+}
+@media(min-width:641px){.lead-piu{display:none}}
 .guide-meta{display:flex;flex-wrap:wrap;gap:.4rem .6rem;margin:-.75rem 0 var(--sp-3);align-items:center}
 .guide-meta-date{font-size:var(--text-xs);color:var(--fg-muted);background:var(--surface);border:1px solid var(--border);padding:.22rem .65rem;border-radius:var(--radius-full)}
 .guide-meta-fonte{font-size:var(--text-xs);color:var(--gold);text-decoration:none;background:rgba(185,170,141,.08);border:1px solid rgba(185,170,141,.22);padding:.22rem .65rem;border-radius:var(--radius-full);transition:background .15s}
