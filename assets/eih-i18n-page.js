@@ -167,6 +167,7 @@
       // senza marcatura un secondo controllo lo scambierebbe per non tradotto
       var portante = v.attr ? v.el : v.nodo.parentElement;
       if (portante) portante.setAttribute('data-tr-ok', '');
+      ricorda(v);
       if (v.attr) v.el.setAttribute(v.attr, t);
       else v.nodo.nodeValue = v.nodo.nodeValue.replace(/^(\s*).*?(\s*)$/s, '$1' + t.replace(/\$/g, '$$$$') + '$2');
     }
@@ -177,13 +178,54 @@
      prima di noi, il titolo non e' piu' una frase: nessuna impronta lo trova e
      resta in italiano una parola alla volta. Chi spezza aspetta questa
      promessa, che si scioglie appena il primo passaggio ha tradotto. */
+  /* Cambio lingua a pagina aperta.
+
+     Prima questo script girava una volta sola: chi cambiava lingua a meta'
+     pagina vedeva muoversi il menu e i pulsanti — quelli hanno le chiavi
+     data-i18n, li rifa' eih.js — ma il corpo della pagina restava nella
+     lingua di prima finche' non si ricaricava. Sull'esame era vistoso: le
+     domande restavano in singalese sotto un'interfaccia inglese.
+
+     Per tornare indietro serve l'italiano di partenza, che dopo la
+     sostituzione non c'e' piu' da nessuna parte: si tiene qui, nodo per nodo.
+     Gli osservatori si registrano, cosi' al cambio si spengono invece di
+     accumularsi uno sopra l'altro. */
+  var MEMORIA = [], SPIE = [];
+
+  function ricorda(v) {
+    if (v.attr) MEMORIA.push({ el: v.el, attr: v.attr, era: v.el.getAttribute(v.attr) });
+    else MEMORIA.push({ nodo: v.nodo, era: v.nodo.nodeValue });
+  }
+
+  function ripristina() {
+    for (var i = MEMORIA.length - 1; i >= 0; i--) {
+      var m = MEMORIA[i];
+      try {
+        if (m.attr) m.el.setAttribute(m.attr, m.era);
+        else m.nodo.nodeValue = m.era;
+      } catch (e) {}
+    }
+    MEMORIA.length = 0;
+    var segnati = document.querySelectorAll('[data-tr-ok]');
+    for (var k = 0; k < segnati.length; k++) segnati[k].removeAttribute('data-tr-ok');
+    var av = document.getElementById('eih-tr-avviso');
+    if (av && av.parentNode) av.parentNode.removeChild(av);
+    document.documentElement.removeAttribute('data-tr');
+  }
+
+  function spegni() {
+    for (var i = 0; i < SPIE.length; i++) { try { SPIE[i].disconnect(); } catch (e) {} }
+    SPIE.length = 0;
+  }
+
   var sciogli;
   var pronta = window.Promise ? new Promise(function (r) { sciogli = r; }) : null;
   function fatto() { if (sciogli) { sciogli(); sciogli = null; } }
 
-  function avvia() {
+  function avvia(rifai) {
     var lg = lingua();
-    if (lg === 'it') { fatto(); return; }
+    // tornando all'italiano non c'e' niente da scaricare: si rimette l'originale
+    if (lg === 'it') { if (rifai) { spegni(); ripristina(); } fatto(); return; }
     var pg = pagina();
 
     // Il dizionario di norma e' gia' in volo: lo fa partire eih-lang-url.js
@@ -215,6 +257,7 @@
             if (m[i].addedNodes[j].nodeType === 1) applica(u, m[i].addedNodes[j], true);
       });
       spiaUi.observe(document.documentElement, { childList: true, subtree: true });
+      SPIE.push(spiaUi);
       /* La barra laterale arriva tardi: le news dopo la chiamata di rete, il
          menu rapido e le festivita' dopo ancora. Un giro di controllo a dieci
          secondi copre anche il caso lento, poi si smette di guardare. */
@@ -229,6 +272,7 @@
         // Il dizionario di solito arriva prima che il corpo pagina esista: si
         // aspetta il minimo indispensabile perche' ci sia qualcosa da tradurre.
         function primoPassaggio() {
+          if (rifai) { spegni(); ripristina(); }
           if (d) {
             var e = applica(d);
             /* Il dizionario di pagina si applica anche fuori da <main>: le
@@ -265,6 +309,7 @@
             }
           });
           ripasso.observe(document.documentElement, { childList: true, subtree: true });
+          SPIE.push(ripasso);
           // L'osservatore resta acceso anche dopo il caricamento. Prima si
           // spegneva a DOMContentLoaded, e le pagine che si ridisegnano al
           // clic tornavano in italiano un pezzo alla volta: nei moduli bastava
@@ -319,7 +364,11 @@
     setTimeout(fatto, 4000);
   }
 
-  window.EIHPageI18N = { raccogli: raccogli, impronta: impronta, applica: applica, avvia: avvia, pronta: pronta };
+  /* La chiama eih.js quando l'utente sceglie un'altra lingua. */
+  function cambia() { avvia(true); }
+
+  window.EIHPageI18N = { raccogli: raccogli, impronta: impronta, applica: applica,
+    avvia: avvia, cambia: cambia, pronta: pronta };
 
   // Si parte subito, senza aspettare DOMContentLoaded: il dizionario e'
   // gia' in volo e ogni millisecondo di attesa e' un millisecondo in cui

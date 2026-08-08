@@ -195,9 +195,20 @@
     _dict=d;
     document.documentElement.lang=l;
     _traducendo=true;
-    document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(d[k]!=null)el.textContent=d[k];});
-    document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.getAttribute('data-i18n-html');if(d[k]!=null)el.innerHTML=d[k];});
-    document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(d[k]!=null)el.setAttribute('placeholder',d[k]);});
+    /* L'italiano di partenza sta scritto nell'HTML, e i dizionari di pagina
+       hanno solo en/si/ta: senza chiave per la lingua richiesta l'elemento
+       restava com'era. Tornando all'italiano dopo un giro in singalese si
+       restava in singalese. Si tiene da parte il testo originale al primo
+       passaggio, e lo si rimette quando la chiave manca. */
+    document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');
+      if(el.__eihIt==null)el.__eihIt=el.textContent;
+      el.textContent=d[k]!=null?d[k]:el.__eihIt;});
+    document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.getAttribute('data-i18n-html');
+      if(el.__eihItH==null)el.__eihItH=el.innerHTML;
+      el.innerHTML=d[k]!=null?d[k]:el.__eihItH;});
+    document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');
+      if(el.__eihItP==null)el.__eihItP=el.getAttribute('placeholder')||'';
+      el.setAttribute('placeholder',d[k]!=null?d[k]:el.__eihItP);});
     _traducendo=false;
     const lf=document.getElementById('lang-flag'),lc=document.getElementById('lang-code');
     if(lf)lf.textContent=LANG_META[l].flag; if(lc)lc.textContent=LANG_META[l].code;
@@ -225,7 +236,7 @@
     // Solo di qui passa una scelta vera: applyLang da sola non salva niente,
     // altrimenti la lingua predefinita si scriverebbe addosso a chi non ha
     // mai aperto il selettore e non si distinguerebbe piu' da una scelta.
-    setLang(l){ricordaLingua(l);applyLang(l);EIH.closeLang();},
+    setLang(l){ricordaLingua(l);applyLang(l);EIH.closeLang();eihDopoLingua(l);},
     // Il testo tradotto di una chiave, per il JavaScript che riscrive un
     // elemento dopo che la pagina e' stata tradotta: scrivere la frase a mano
     // la riporterebbe in italiano, e a seconda di chi arriva primo il difetto
@@ -235,6 +246,22 @@
     closeLang(){const m=document.getElementById('lang-menu');if(m){m.classList.remove('open');document.getElementById('lang-btn').setAttribute('aria-expanded','false');}},
     toggleMenu(){const b=document.getElementById('nav-toggle'),p=document.getElementById('nav-collapse');const o=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',o);p.classList.toggle('open',o);}
   };
+  /* Il corpo della pagina lo traduce eih-i18n-page.js, che al primo giro
+     viene caricato solo se la lingua non e' l'italiano: partendo dall'italiano
+     va acceso adesso. Poi si avvisa la pagina, perche' chi si disegna da solo
+     il proprio contenuto — le domande dell'esame, le lezioni, gli elenchi —
+     deve ridisegnarsi nella lingua nuova. */
+  function eihDopoLingua(l){
+    try{
+      if(window.EIHPageI18N&&window.EIHPageI18N.cambia){ window.EIHPageI18N.cambia(); }
+      else if(l!=='it'&&!document.querySelector('script[src*="eih-i18n-page.js"]')){
+        var s=document.createElement('script');s.src='/assets/eih-i18n-page.js';s.defer=true;
+        document.head.appendChild(s);
+      }
+    }catch(e){}
+    try{ window.dispatchEvent(new CustomEvent('eihLangChanged',{detail:{lingua:l}})); }catch(e){}
+  }
+
   window.EIH=EIH;
 
   /* Attesa condivisa per il livello dati.
