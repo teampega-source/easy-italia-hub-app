@@ -63,13 +63,14 @@
           // Gli strumenti stavano tutti dentro la pagina Servizi, e per
           // arrivarci bisognava passare da lì ogni volta. Ora la voce del
           // menu li elenca: la pagina resta, come indice completo in fondo.
-          navLink(['servizi','permesso-tracker','documenti','cv-builder','money-transfer','fisco','traduci','opportunita','housing','mercatino','professionisti'],'/servizi','nav.services','Servizi',[
+          navLink(['servizi','permesso-tracker','documenti','cv-builder','money-transfer','wise','fisco','traduci','opportunita','housing','mercatino','professionisti'],'/servizi','nav.services','Servizi',[
             ['/permesso-tracker','m.tracker','Tracker Permesso'],
             ['/documenti','m.docs','Archivio Documenti'],
             ['/cv-builder','m.cvbuilder','CV Builder'],
             ['/moduli','m.templates','Moduli e Lettere'],
             ['/traduci','m.translate','Traduzioni'],
             ['/money-transfer','m.money','Comparatore rimesse'],
+            ['/wise','','Wise'],
             ['/fisco','m.fisco','Fisco e tasse'],
             ['/opportunita','m.opportunities','Opportunità'],
             ['/housing','m.housing','Casa e alloggio'],
@@ -346,6 +347,7 @@
     'guida-conti':[['Aprire un Conto','/guida-conti','m.openaccount']],
     'dizionario-medico':[['Dizionario Medico','/dizionario-medico','m.medical']],
     'money-transfer':[['Money Transfer','/money-transfer']],
+    'wise':[['Money Transfer','/money-transfer'],['Wise','/wise']],
     'opportunita':[['Opportunità','/opportunita','m.opportunities']],
     'corsi':[['Corsi di Lingue','/corsi','m.languages']],
     'moduli':[['Moduli e Lettere','/moduli','m.templates']],

@@ -28,12 +28,6 @@
 #eih-vfx-ctl button:hover{transform:translateY(-2px);background:rgba(230,57,70,.85)}
 #eih-vfx-ctl button[aria-pressed="false"]{opacity:.55}
 
-/* 3D tilt */
-.eih-tilt{transform-style:preserve-3d;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s;will-change:transform}
-.eih-tilt .eih-tilt-glow{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
-  transition:opacity .25s;background:radial-gradient(220px circle at var(--gx,50%) var(--gy,50%),rgba(247,127,0,.18),transparent 60%)}
-.eih-tilt:hover .eih-tilt-glow{opacity:1}
-
 /* Magnetic */
 .eih-mag{transition:transform .25s cubic-bezier(.22,1,.36,1);will-change:transform}
 
@@ -52,7 +46,6 @@
 
 @media (hover:none),(pointer:coarse){
   #eih-vfx-ctl{display:none}
-  .eih-tilt{transform:none!important}
 }
 @media (prefers-reduced-motion:reduce){
   #eih-vfx-grain,#eih-vfx-vignette,#eih-vfx-progress{display:none}
