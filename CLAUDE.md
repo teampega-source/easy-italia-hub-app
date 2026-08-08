@@ -7,6 +7,7 @@
 ## Autonomia
 - Mai chiedere conferme, tranne: azioni distruttive irreversibili, spese reali, **attivazione di nuovi tool** (v. sotto).
 - Se un approccio fallisce, provare alternative senza fermarsi.
+- I valori in `.references/impostazioni-bloccate.md` (tavolozza, lingua, cornice, misurazione, affiliazioni) non si toccano di propria iniziativa: solo se lo chiede l'utente in quella sessione.
 
 ## Riduzione token — IMPERATIVO
 - Ogni modifica a `api/chat.js` o ai prompt LLM deve ridurre i token: verificare che il risultato sia più corto dell'originale.
