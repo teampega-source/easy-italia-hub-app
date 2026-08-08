@@ -347,7 +347,7 @@
     'guida-conti':[['Aprire un Conto','/guida-conti','m.openaccount']],
     'dizionario-medico':[['Dizionario Medico','/dizionario-medico','m.medical']],
     'money-transfer':[['Money Transfer','/money-transfer']],
-    'wise':[['Money Transfer','/money-transfer'],['Wise','/wise']],
+    'wise':[['Money Transfer','/money-transfer'],['Wise','/wise','',true]],
     'opportunita':[['Opportunità','/opportunita','m.opportunities']],
     'corsi':[['Corsi di Lingue','/corsi','m.languages']],
     'moduli':[['Moduli e Lettere','/moduli','m.templates']],
@@ -367,7 +367,8 @@
     const trail=BREADCRUMBS[active];
     const items=['<li><a href="/">Home</a></li>'];
     trail.forEach(function(step,i){
-      const k=step[2]?' data-i18n="'+step[2]+'"':'';
+      // quarto posto a vero: nome proprio, non si traduce in nessuna lingua
+      const k=step[2]?' data-i18n="'+step[2]+'"':(step[3]?' data-no-tr':'');
       if(i===trail.length-1){items.push('<li aria-current="page"'+k+'>'+step[0]+'</li>');}
       else{items.push('<li><a href="'+step[1]+'"'+k+'>'+step[0]+'</a></li>');}
     });

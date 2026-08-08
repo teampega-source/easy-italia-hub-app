@@ -4,47 +4,49 @@
   if(window.__eihSearch)return; window.__eihSearch=1;
 
   var ACTIONS=[
-    {u:'/percorso',e:'🤖',c:'Servizi',t:'Assistente AI Personale',k:'ai assistente chatbot domande aiuto burocrazia'},
-    {u:'/guide',e:'📖',c:'Guide',t:'Guide burocratiche',k:'permesso soggiorno codice fiscale spid residenza tessera sanitaria cittadinanza'},
-    {u:'/guida-ssn',e:'🏥',c:'Guide',t:'Sistema Sanitario Nazionale',k:'ssn salute medico pronto soccorso farmacia asl esenzione ticket'},
-    {u:'/patente',e:'🚗',c:'Guide',t:'Patente di guida',k:'patente auto convertire straniera motorizzazione quiz autoscuola'},
-    {u:'/housing',e:'🏠',c:'Guide',t:'Casa in Affitto',k:'casa affitto appartamento contratto inquilino deposito utenze'},
-    {u:'/assegno-unico',e:'👶',c:'Guide',t:'Assegno Unico Universale',k:'assegno figli bambini isee inps'},
-    {u:'/diritti-inps',e:'🏛️',c:'Guide',t:'Diritti INPS',k:'inps naspi disoccupazione pensione contributi maternità malattia'},
-    {u:'/riconoscimento-titoli',e:'🎓',c:'Guide',t:'Riconoscimento Titoli',k:'titolo studio laurea diploma nostrificazione università professione'},
-    {u:'/ricongiungimento',e:'👨‍👩‍👧',c:'Guide',t:'Ricongiungimento Familiare',k:'famiglia visto permesso coniuge figli genitori nulla osta'},
-    {u:'/fisco',e:'💶',c:'Guide',t:'Fisco e Redditi',k:'fisco dichiarazione 730 irpef partita iva detrazioni rimborso caf tasse'},
-    {u:'/documenti',e:'📋',c:'Guide',t:'Documenti essenziali',k:'carta identità passaporto codice fiscale stato famiglia certificati anagrafe'},
-    {u:'/scuola',e:'🎒',c:'Guide',t:'Scuola e Istruzione',k:'scuola iscrizione figli università nido asilo elementari medie'},
-    {u:'/moduli',e:'📄',c:'Servizi',t:'Moduli e Lettere tipo',k:'moduli lettere disdetta reclamo richiesta autocertificazione template'},
-    {u:'/community',e:'👥',c:'Servizi',t:'Community',k:'community forum gruppo supporto stranieri immigrati'},
-    {u:'/corsi',e:'🗣️',c:'Servizi',t:'Corsi di Italiano',k:'corsi italiano lingua imparare a1 b1 b2 c1 online gratuito'},
-    {u:'/opportunita',e:'✨',c:'Servizi',t:'Opportunità',k:'lavoro borse studio tirocinio bando concorso stage'},
-    {u:'/money-transfer',e:'💸',c:'Servizi',t:'Money Transfer',k:'rimessa soldi estero commissioni western union wise remitly'},
-    {u:'/associazioni',e:'🤝',c:'Servizi',t:'Associazioni',k:'associazioni immigrati patronato caf sportello assistenza'},
-    {u:'/mercatino',e:'🛍️',c:'Servizi',t:'Mercatino',k:'mercatino annunci compra vendi seconda mano usato'},
-    {u:'/podcast',e:'🎙️',c:'Servizi',t:'Podcast',k:'podcast audio episodi storie immigrati'},
-    {u:'/mappa',e:'🗺️',c:'Servizi',t:'Mappa dei Servizi',k:'mappa patronato caf questura comune vicino'},
-    {u:'/cv-builder',e:'📝',c:'Strumenti',t:'CV Builder',k:'cv curriculum vitae europass lavoro candidatura'},
-    {u:'/dizionario-medico',e:'🩺',c:'Strumenti',t:'Dizionario Medico',k:'dizionario medico glossario termini sinhala tamil'},
-    {u:'/traduci',e:'🌐',c:'Strumenti',t:'Traduttore',k:'traduci traduttore traduzione lingua documento'},
-    {u:'/permesso-tracker',e:'📍',c:'Strumenti',t:'Tracker Permesso',k:'permesso soggiorno scadenza rinnovo promemoria'},
-    {u:'/emergenze',e:'🚨',c:'Strumenti',t:'Numeri di Emergenza',k:'emergenze 112 118 115 ambasciata consolato carabinieri'},
-    {u:'/voli',e:'✈️',c:'Strumenti',t:'Voli Sri Lanka — Italia',k:'voli aereo colombo roma milano tariffe compagnie'},
-    {u:'/certificazioni',e:'📜',c:'Strumenti',t:'Certificazioni Linguistiche',k:'certificazione celi cils plida dante esame livello'},
-    {u:'/guida-conti',e:'🏦',c:'Strumenti',t:'Conti Bancari',k:'conto banca corrente aprire bancomat carta credito'},
-    {u:'/cargo',e:'📦',c:'Strumenti',t:'Cargo — Spedizioni',k:'cargo spedizione pacco bagaglio corriere sri lanka'},
-    {u:'/academy',e:'🎓',c:'Formazione',t:'Academy',k:'academy corsi formazione online diritti lavoratore'},
-    {u:'/ai-teacher',e:'🤖',c:'Formazione',t:'AI Teacher',k:'ai teacher insegnante italiano conversazione pratica'},
-    {u:'/profili',e:'👤',c:'Formazione',t:'Profili Utente',k:'profilo percorso personalizzato lavoratore studente familiare'},
-    {u:'/news',e:'📰',c:'Azienda',t:'News',k:'news notizie aggiornamenti leggi novità'},
-    {u:'/chi-siamo',e:'🙋',c:'Azienda',t:'Chi siamo',k:'chi siamo storia team missione comunità srilankese'},
-    {u:'/contatti',e:'✉️',c:'Azienda',t:'Contatti',k:'contatti scrivici email collaborazione segnalazione'},
-    {u:'/abbonamenti',e:'⭐',c:'Account',t:'Abbonamenti',k:'abbonamento premium piano prezzo supporto'},
-    {u:'/privacy',e:'🔒',c:'Legal',t:'Privacy Policy',k:'privacy gdpr dati personali'},
-    {u:'/termini',e:'📑',c:'Legal',t:'Termini di Servizio',k:'termini condizioni uso legale'},
-    {u:'/cookie',e:'🍪',c:'Legal',t:'Cookie Policy',k:'cookie informativa tracciamento'},
-    {u:'/note-legali',e:'⚖️',c:'Legal',t:'Note Legali',k:'note legali disclaimer responsabilità'}
+    {u:'/percorso',e:'🤖',c:'Servizi',t:'Assistente AI Personale',k:'ai assistente chatbot domande aiuto burocrazia ai assistant chatbot questions help guided path',en:'AI assistant'},
+    {u:'/guide',e:'📖',c:'Guide',t:'Guide burocratiche',k:'permesso soggiorno codice fiscale spid residenza tessera sanitaria cittadinanza guides residence permit tax code spid registration health card citizenship',en:'Bureaucratic guides'},
+    {u:'/guida-ssn',e:'🏥',c:'Guide',t:'Sistema Sanitario Nazionale',k:'ssn salute medico pronto soccorso farmacia asl esenzione ticket health service doctor gp emergency room pharmacy exemption',en:'National Health Service'},
+    {u:'/patente',e:'🚗',c:'Guide',t:'Patente di guida',k:'patente auto convertire straniera motorizzazione quiz autoscuola driving licence convert foreign car theory quiz driving school',en:'Driving licence'},
+    {u:'/housing',e:'🏠',c:'Guide',t:'Casa in Affitto',k:'casa affitto appartamento contratto inquilino deposito utenze house home rent flat apartment contract tenant deposit utilities',en:'Renting a home'},
+    {u:'/assegno-unico',e:'👶',c:'Guide',t:'Assegno Unico Universale',k:'assegno figli bambini isee inps child benefit family allowance children isee',en:'Assegno Unico (child benefit)'},
+    {u:'/diritti-inps',e:'🏛️',c:'Guide',t:'Diritti INPS',k:'inps naspi disoccupazione pensione contributi maternità malattia inps unemployment naspi pension contributions maternity sick leave',en:'INPS rights'},
+    {u:'/riconoscimento-titoli',e:'🎓',c:'Guide',t:'Riconoscimento Titoli',k:'titolo studio laurea diploma nostrificazione università professione qualification degree diploma recognition university profession',en:'Recognition of qualifications'},
+    {u:'/ricongiungimento',e:'👨‍👩‍👧',c:'Guide',t:'Ricongiungimento Familiare',k:'famiglia visto permesso coniuge figli genitori nulla osta family visa permit spouse children parents nulla osta',en:'Family reunification'},
+    {u:'/fisco',e:'💶',c:'Guide',t:'Fisco e Redditi',k:'fisco dichiarazione 730 irpef partita iva detrazioni rimborso caf tasse tax declaration 730 income vat number deductions refund caf taxes',en:'Tax and income'},
+    {u:'/documenti',e:'📋',c:'Guide',t:'Documenti essenziali',k:'carta identità passaporto codice fiscale stato famiglia certificati anagrafe id card passport tax code family status certificates registry',en:'Essential documents'},
+    {u:'/scuola',e:'🎒',c:'Guide',t:'Scuola e Istruzione',k:'scuola iscrizione figli università nido asilo elementari medie school enrolment children university nursery primary secondary',en:'School and education'},
+    {u:'/moduli',e:'📄',c:'Servizi',t:'Moduli e Lettere tipo',k:'moduli lettere disdetta reclamo richiesta autocertificazione template forms letters cancellation complaint request template',en:'Forms and template letters'},
+    {u:'/community',e:'👥',c:'Servizi',t:'Community',k:'community forum gruppo supporto stranieri immigrati community forum group support foreigners immigrants',en:'Community'},
+    {u:'/corsi',e:'🗣️',c:'Servizi',t:'Corsi di Italiano',k:'corsi italiano lingua imparare a1 b1 b2 c1 online gratuito italian courses language learn free lessons levels',en:'Italian courses'},
+    {u:'/opportunita',e:'✨',c:'Servizi',t:'Opportunità',k:'lavoro borse studio tirocinio bando concorso stage opportunities jobs work scholarships internships grants',en:'Opportunities'},
+    {u:'/money-transfer',e:'💸',c:'Servizi',t:'Money Transfer',k:'rimessa soldi estero commissioni western union wise remitly money transfer remittance send abroad fees exchange rate',en:'Money transfer'},
+    {u:'/associazioni',e:'🤝',c:'Servizi',t:'Associazioni',k:'associazioni immigrati patronato caf sportello assistenza associations immigrants patronato caf help desk',en:'Associations'},
+    {u:'/mercatino',e:'🛍️',c:'Servizi',t:'Mercatino',k:'mercatino annunci compra vendi seconda mano usato marketplace ads buy sell second hand',en:'Marketplace'},
+    {u:'/podcast',e:'🎙️',c:'Servizi',t:'Podcast',k:'podcast audio episodi storie immigrati podcast audio episodes stories',en:'Podcast'},
+    {u:'/mappa',e:'🗺️',c:'Servizi',t:'Mappa dei Servizi',k:'mappa patronato caf questura comune vicino map services patronato caf questura town hall near me',en:'Services map'},
+    {u:'/cv-builder',e:'📝',c:'Strumenti',t:'CV Builder',k:'cv curriculum vitae europass lavoro candidatura cv curriculum vitae resume europass job',en:'CV builder'},
+    {u:'/dizionario-medico',e:'🩺',c:'Strumenti',t:'Dizionario Medico',k:'dizionario medico glossario termini sinhala tamil medical dictionary glossary symptoms pharmacy',en:'Medical dictionary'},
+    {u:'/traduci',e:'🌐',c:'Strumenti',t:'Traduttore',k:'traduci traduttore traduzione lingua documento translate translator translation documents text',en:'Translator'},
+    {u:'/permesso-tracker',e:'📍',c:'Strumenti',t:'Tracker Permesso',k:'permesso soggiorno scadenza rinnovo promemoria residence permit tracker renewal expiry reminder',en:'Residence permit tracker'},
+    {u:'/emergenze',e:'🚨',c:'Strumenti',t:'Numeri di Emergenza',k:'emergenze 112 118 115 ambasciata consolato carabinieri emergency numbers 112 118 embassy consulate',en:'Emergency numbers'},
+    {u:'/voli',e:'✈️',c:'Strumenti',t:'Voli Sri Lanka — Italia',k:'voli aereo colombo roma milano tariffe compagnie flights airline colombo fares tickets',en:'Flights Sri Lanka — Italy'},
+    {u:'/certificazioni',e:'📜',c:'Strumenti',t:'Certificazioni Linguistiche',k:'certificazione celi cils plida dante esame livello certification celi cils plida italian exam level',en:'Language certifications'},
+    {u:'/guida-conti',e:'🏦',c:'Strumenti',t:'Conti Bancari',k:'conto banca corrente aprire bancomat carta credito bank account open iban foreigner documents costs',en:'Bank accounts'},
+    {u:'/cargo',e:'📦',c:'Strumenti',t:'Cargo — Spedizioni',k:'cargo spedizione pacco bagaglio corriere sri lanka cargo shipping parcel luggage courier',en:'Cargo — shipping'},
+    {u:'/academy',e:'🎓',c:'Formazione',t:'Academy',k:'academy corsi formazione online diritti lavoratore academy courses training online bureaucracy rights',en:'Academy'},
+    {u:'/ai-teacher',e:'🤖',c:'Formazione',t:'AI Teacher',k:'ai teacher insegnante italiano conversazione pratica ai teacher learn italian conversation speaking practice',en:'AI teacher'},
+    {u:'/profili',e:'👤',c:'Formazione',t:'Profili Utente',k:'profilo percorso personalizzato lavoratore studente familiare profile personalised path worker student family',en:'User profiles'},
+    {u:'/news',e:'📰',c:'Azienda',t:'News',k:'news notizie aggiornamenti leggi novità news updates laws immigrants',en:'News'},
+    {u:'/chi-siamo',e:'🙋',c:'Azienda',t:'Chi siamo',k:'chi siamo storia team missione comunità srilankese about us story team mission',en:'About us'},
+    {u:'/contatti',e:'✉️',c:'Azienda',t:'Contatti',k:'contatti scrivici email collaborazione segnalazione contact write email partnership advertising',en:'Contact'},
+    // /abbonamenti oggi rimanda alla home (vercel.json): cercarlo e finire
+    // altrove e' peggio che non trovarlo. Torna quando la pagina torna.
+    {u:'/wise',e:'💸',c:'Servizi',t:'Wise',k:'wise conto carta rupie lkr rimesse commissioni wise account card rupees lkr remittance fees partner',en:'Wise'},
+    {u:'/privacy',e:'🔒',c:'Legal',t:'Privacy Policy',k:'privacy gdpr dati personali privacy gdpr personal data',en:'Privacy Policy'},
+    {u:'/termini',e:'📑',c:'Legal',t:'Termini di Servizio',k:'termini condizioni uso legale terms conditions use legal',en:'Terms of Service'},
+    {u:'/cookie',e:'🍪',c:'Legal',t:'Cookie Policy',k:'cookie informativa tracciamento cookie notice tracking',en:'Cookie Policy'},
+    {u:'/note-legali',e:'⚖️',c:'Legal',t:'Note Legali',k:'note legali disclaimer responsabilità legal disclaimer liability',en:'Legal notice'}
   ];
   // Suggeriti iniziali (azioni rapide più usate)
   var QUICK=['/percorso','/guide','/guida-ssn','/permesso-tracker','/voli','/mappa','/traduci','/moduli'];
@@ -76,15 +78,26 @@
   function esc(s){return s.replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function hl(t,q){if(!q)return esc(t);var w=q.trim().split(/\s+/).filter(Boolean).map(function(x){return x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');});if(!w.length)return esc(t);return esc(t).replace(new RegExp('('+w.join('|')+')','gi'),'<mark>$1</mark>');}
 
-  function score(a,terms){var t=a.t.toLowerCase(),k=a.k.toLowerCase(),u=a.u.toLowerCase(),s=0;terms.forEach(function(x){if(t.indexOf(x)>-1)s+=10;if(u.indexOf(x)>-1)s+=8;if(k.indexOf(x)>-1)s+=3;});return s;}
+  /* La lingua predefinita del sito e' l'inglese: chi digita "permit" trovava
+     il vuoto perche' i titoli erano solo in italiano. */
+  function ita(){ var l=window.EIH_LANG; try{l=localStorage.getItem('eih-lang')||l;}catch(e){} return l==='it'; }
+  var UI={
+    it:{cerca:'Cerca',ph:'Cerca pagine, servizi, strumenti…',sugg:'Suggeriti',nulla:'Nessun risultato per'},
+    en:{cerca:'Search',ph:'Search pages, services, tools…',sugg:'Suggested',nulla:'No results for'},
+    si:{cerca:'සොයන්න',ph:'පිටු, සේවා, මෙවලම් සොයන්න…',sugg:'යෝජිත',nulla:'ප්‍රතිඵල නැත:'},
+    ta:{cerca:'தேடு',ph:'பக்கங்கள், சேவைகள், கருவிகளைத் தேடு…',sugg:'பரிந்துரை',nulla:'முடிவுகள் இல்லை:'}
+  };
+  function ui(){ var l=window.EIH_LANG; try{l=localStorage.getItem('eih-lang')||l;}catch(e){} return UI[l]||UI.en; }
+  function tit(a){ return (!ita() && a.en) ? a.en : a.t; }
+  function score(a,terms){var t=(a.t+' '+(a.en||'')).toLowerCase(),k=a.k.toLowerCase(),u=a.u.toLowerCase(),s=0;terms.forEach(function(x){if(t.indexOf(x)>-1)s+=10;if(u.indexOf(x)>-1)s+=8;if(k.indexOf(x)>-1)s+=3;});return s;}
 
   function build(){
     var st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);
-    ov=document.createElement('div');ov.className='eih-srch-ov';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','Cerca');
+    ov=document.createElement('div');ov.className='eih-srch-ov';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label',ui().cerca);
     ov.innerHTML='<div class="eih-srch">'+
       '<div class="eih-srch-top">'+
         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'+
-        '<input class="eih-srch-in" type="text" placeholder="Cerca pagine, servizi, strumenti…" aria-label="Cerca" autocomplete="off" spellcheck="false">'+
+        '<input class="eih-srch-in" type="text" placeholder="'+esc(ui().ph)+'" aria-label="'+esc(ui().cerca)+'" autocomplete="off" spellcheck="false">'+
         '<button class="eih-srch-esc" type="button" aria-label="Chiudi">Esc</button>'+
       '</div>'+
       '<div class="eih-srch-list" role="listbox"></div>'+
@@ -101,18 +114,18 @@
     q=(q||'').trim();var html='';
     if(!q){
       var quick=QUICK.map(function(u){return ACTIONS.find(function(a){return a.u===u;});}).filter(Boolean);
-      html='<div class="eih-srch-lbl">Suggeriti</div>'+rows(quick,'');
+      html='<div class="eih-srch-lbl">'+esc(ui().sugg)+'</div>'+rows(quick,'');
     }else{
       var terms=q.toLowerCase().split(/\s+/).filter(Boolean);
       var res=ACTIONS.map(function(a){return {a:a,s:score(a,terms)};}).filter(function(o){return o.s>0;}).sort(function(x,y){return y.s-x.s;}).map(function(o){return o.a;});
-      html=res.length?rows(res,q):'<div class="eih-srch-empty">Nessun risultato per "'+esc(q)+'"</div>';
+      html=res.length?rows(res,q):'<div class="eih-srch-empty">'+esc(ui().nulla)+' "'+esc(q)+'"</div>';
     }
     list.innerHTML=html;
     items=Array.prototype.slice.call(list.querySelectorAll('.eih-srch-it'));
     sel=items.length?0:-1;mark();
     items.forEach(function(el){el.addEventListener('mouseenter',function(){sel=items.indexOf(el);mark();});});
   }
-  function rows(arr,q){return arr.map(function(a){return '<a class="eih-srch-it" role="option" href="'+a.u+'" data-u="'+a.u+'"><span class="eih-srch-em">'+a.e+'</span><span class="eih-srch-tt">'+hl(a.t,q)+'</span><span class="eih-srch-bd">'+a.c+'</span></a>';}).join('');}
+  function rows(arr,q){return arr.map(function(a){return '<a class="eih-srch-it" role="option" href="'+a.u+'" data-u="'+a.u+'"><span class="eih-srch-em">'+a.e+'</span><span class="eih-srch-tt">'+hl(tit(a),q)+'</span><span class="eih-srch-bd">'+a.c+'</span></a>';}).join('');}
   function mark(){items.forEach(function(el,i){el.classList.toggle('sel',i===sel);if(i===sel)el.scrollIntoView({block:'nearest'});});}
 
   function onKey(e){

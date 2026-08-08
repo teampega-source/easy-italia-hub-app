@@ -51,23 +51,23 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   .cerca-hero h1{font-family:'Clash Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;margin:0 0 .5rem}
   .cerca-form{display:flex;gap:.5rem;margin:var(--sp-3) 0}
   .cerca-input{flex:1;padding:.65rem 1rem;border:2px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);color:var(--fg);font-size:1rem;font-family:'Satoshi',sans-serif;outline:none;transition:border-color .15s}
-  .cerca-input:focus{border-color:var(--accent)}
-  .cerca-btn{padding:.65rem 1.2rem;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:600;font-size:.95rem;white-space:nowrap;transition:opacity .15s}
+  .cerca-input:focus{border-color:var(--blue)}
+  .cerca-btn{padding:.65rem 1.2rem;background:var(--blue);color:var(--su-accento);border:none;border-radius:var(--radius);cursor:pointer;font-weight:600;font-size:.95rem;white-space:nowrap;transition:opacity .15s}
   .cerca-btn:hover{opacity:.85}
   .cerca-status{font-size:.88rem;color:var(--fg-muted);margin-bottom:var(--sp-3)}
   .cerca-results{display:flex;flex-direction:column;gap:1rem}
   .cerca-card{display:block;padding:1rem 1.2rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);text-decoration:none;transition:border-color .15s,box-shadow .15s}
-  .cerca-card:hover{border-color:var(--accent);box-shadow:0 2px 12px rgba(37,99,235,.08)}
+  .cerca-card:hover{border-color:var(--blue);box-shadow:0 2px 12px rgba(37,99,235,.08)}
   .cerca-card-top{display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem}
   .cerca-cat{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-muted);background:var(--bg-base);border:1px solid var(--border);padding:.1rem .4rem;border-radius:3px}
   .cerca-card h3{font-family:'Clash Grotesk',sans-serif;font-size:1rem;font-weight:600;color:var(--fg);margin:0 0 .25rem}
   .cerca-card p{font-size:.83rem;color:var(--fg-secondary);margin:0;line-height:1.45}
-  .cerca-card-url{font-size:.72rem;color:var(--accent);margin-top:.3rem;opacity:.7}
+  .cerca-card-url{font-size:.72rem;color:var(--blue);margin-top:.3rem;opacity:.7}
   .cerca-empty{text-align:center;padding:var(--sp-4);color:var(--fg-muted)}
   .cerca-empty strong{display:block;font-size:1.1rem;color:var(--fg);margin-bottom:.4rem}
   .cerca-suggestions{margin-top:var(--sp-3)}
   .cerca-suggestions ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
-  .cerca-suggestions li a{font-size:.83rem;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:.25rem .65rem;border-radius:20px;transition:background .15s}
+  .cerca-suggestions li a{font-size:.83rem;color:var(--blue);text-decoration:none;border:1px solid var(--border);padding:.25rem .65rem;border-radius:20px;transition:background .15s}
   .cerca-suggestions li a:hover{background:rgba(37,99,235,.07)}
   mark{background:rgba(253,224,71,.5);color:inherit;border-radius:2px;padding:0 1px}
   [data-theme="dark"] mark{background:rgba(253,224,71,.25)}
@@ -107,46 +107,46 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <script>
 (function(){
   var PAGES=[
-    {url:'/guide',emoji:'📖',cat:'Guide',title:'Guide burocratiche',desc:'Permesso di soggiorno, codice fiscale, SPID, residenza, tessera sanitaria, lavoro, fisco e cittadinanza.',keys:'guide guida documenti burocrazia permesso soggiorno spid codice fiscale residenza tessera sanitaria lavoro fisco cittadinanza passo passo'},
-    {url:'/guida-ssn',emoji:'🏥',cat:'Guide',title:'Guida al Sistema Sanitario Nazionale',desc:'Come iscriversi al SSN, scegliere il medico di base, il Pronto Soccorso, le visite specialistiche e le esenzioni.',keys:'ssn salute medico sanità pronto soccorso tessera sanitaria guardia medica farmacia esenzione ticket asl'},
-    {url:'/patente',emoji:'🚗',cat:'Guide',title:'Patente di guida',desc:'Convertire la patente straniera, ottenere la patente italiana, quiz di teoria, autoscuola.',keys:'patente guida auto convertire straniera motorizzazione quiz teoria esame autoscuola'},
-    {url:'/housing',emoji:'🏠',cat:'Guide',title:'Casa in Affitto',desc:'Trovare casa in Italia: contratti, deposito cauzionale, utenze, diritti dell\'inquilino.',keys:'casa affitto appartamento contratto inquilino deposito cauzione utenze agenzia immobiliare'},
-    {url:'/assegno-unico',emoji:'👶',cat:'Guide',title:'Assegno Unico Universale',desc:'Come richiedere l\'assegno unico per i figli: requisiti, ISEE, importi e scadenze.',keys:'assegno unico figli bambini isee inps family'},
-    {url:'/diritti-inps',emoji:'🏛️',cat:'Guide',title:'Diritti INPS',desc:'Indennità di disoccupazione (NASpI), maternità, malattia, pensione e contributi.',keys:'inps naspi disoccupazione pensione contributi maternità malattia infortunio cassa integrazione'},
-    {url:'/riconoscimento-titoli',emoji:'🎓',cat:'Guide',title:'Riconoscimento Titoli di Studio',desc:'Come far riconoscere un titolo di studio straniero in Italia: università, scuola, professioni.',keys:'titolo studio laurea diploma riconoscimento nostrificazione università professione straniero'},
-    {url:'/ricongiungimento',emoji:'👨‍👩‍👧',cat:'Guide',title:'Ricongiungimento Familiare',desc:'Come portare in Italia i familiari: requisiti, documenti, visto e permesso di soggiorno.',keys:'ricongiungimento familiare famiglia visto permesso soggiorno coniuge figli genitori nulla osta'},
-    {url:'/fisco',emoji:'💶',cat:'Guide',title:'Fisco e Dichiarazione dei Redditi',desc:'Dichiarazione 730 e Redditi PF, partita IVA, codice fiscale, detrazioni e rimborsi.',keys:'fisco dichiarazione redditi 730 irpef partita iva detrazioni rimborso caf commercialista tasse'},
-    {url:'/documenti',emoji:'📋',cat:'Guide',title:'Documenti essenziali',desc:'Carta di identità, passaporto, codice fiscale, stato di famiglia e altri documenti importanti.',keys:'documenti carta identità passaporto codice fiscale stato famiglia certificati anagrafe comune'},
-    {url:'/scuola',emoji:'🎒',cat:'Guide',title:'Scuola e Istruzione',desc:'Iscrivere i figli a scuola, equivalenza dei titoli, università e istruzione per adulti.',keys:'scuola iscrizione figli università istruzione adulti equivalenza titoli nido asilo elementari medie'},
-    {url:'/moduli',emoji:'📄',cat:'Servizi',title:'Moduli e Lettere tipo',desc:'Moduli precompilati e lettere standard per disdetta, reclami, richieste all\'amministrazione.',keys:'moduli lettere tipo disdetta reclamo richiesta autocertificazione dichiarazione template'},
-    {url:'/percorso',emoji:'🤖',cat:'Servizi',title:'Assistente AI Personale',desc:'L\'AI di Easy Italia Hub risponde alle tue domande su burocrazia, documenti e vita in Italia.',keys:'ai assistente chatbot intelligenza artificiale domande risposte aiuto'},
-    {url:'/community',emoji:'👥',cat:'Servizi',title:'Community',desc:'Forum e gruppi di supporto per stranieri che vivono in Italia.',keys:'community forum gruppo supporto stranieri immigrati'},
-    {url:'/corsi',emoji:'🗣️',cat:'Servizi',title:'Corsi di Lingua Italiana',desc:'Corsi gratuiti e a pagamento per imparare l\'italiano: online, in presenza, A1 B1 B2 C1.',keys:'corsi italiano lingua imparare livello A1 B1 B2 C1 scuola adulti gratuito online'},
-    {url:'/opportunita',emoji:'✨',cat:'Servizi',title:'Opportunità',desc:'Borse di studio, tirocini, bandi, lavoro e opportunità per stranieri in Italia.',keys:'opportunità lavoro borse studio tirocinio bando concorso stage'},
-    {url:'/money-transfer',emoji:'💸',cat:'Servizi',title:'Money Transfer',desc:'Confronto commissioni per inviare soldi all\'estero: Western Union, Wise, Remitly e altri.',keys:'money transfer rimessa soldi estero commissioni western union wise remitly transferwise'},
-    {url:'/associazioni',emoji:'🤝',cat:'Servizi',title:'Associazioni',desc:'Associazioni di immigrati, patronati, CAF e sportelli di assistenza in tutta Italia.',keys:'associazioni immigrati patronato caf sportello assistenza supporto volontariato'},
-    {url:'/mercatino',emoji:'🛍️',cat:'Servizi',title:'Mercatino',desc:'Compra e vendi: annunci di seconda mano nella community di Easy Italia Hub.',keys:'mercatino annunci compra vendi seconda mano usato oggetti'},
-    {url:'/podcast',emoji:'🎙️',cat:'Servizi',title:'Podcast',desc:'Episodi in italiano su burocrazia, lavoro, vita in Italia e storie di immigrati.',keys:'podcast audio episodi italiano storie immigrati'},
-    {url:'/mappa',emoji:'🗺️',cat:'Servizi',title:'Mappa dei Servizi',desc:'Trova patronati, CAF, centri immigrazione, questure e comuni vicino a te.',keys:'mappa servizi patronato caf questura comune vicino geolocalizzazione'},
-    {url:'/cv-builder',emoji:'📝',cat:'Strumenti',title:'CV Builder',desc:'Crea il tuo curriculum vitae in italiano con il formato europeo Europass.',keys:'cv curriculum vitae europass lavoro candidatura'},
-    {url:'/dizionario-medico',emoji:'🩺',cat:'Strumenti',title:'Dizionario Medico',desc:'Glossario medico multilingue: termini medici in italiano, inglese, sinhala, tamil.',keys:'dizionario medico glossario termini italiano inglese sinhala tamil'},
-    {url:'/traduci',emoji:'🌐',cat:'Strumenti',title:'Traduttore',desc:'Traduci documenti, testi e moduli in italiano, inglese, sinhala, tamil.',keys:'traduci traduttore traduzione lingua documento'},
-    {url:'/permesso-tracker',emoji:'📍',cat:'Strumenti',title:'Tracker Permesso di Soggiorno',desc:'Tieni traccia della scadenza del permesso di soggiorno e ricevi promemoria.',keys:'permesso soggiorno tracker scadenza rinnovo promemoria ricordo'},
-    {url:'/emergenze',emoji:'🚨',cat:'Strumenti',title:'Numeri di Emergenza',desc:'Numeri utili in Italia: 112, 118, 115, ambasciate, consulati e assistenza.',keys:'emergenze numeri utili 112 118 115 ambasciata consolato pronto soccorso carabinieri'},
-    {url:'/voli',emoji:'✈️',cat:'Strumenti',title:'Voli Sri Lanka — Italia',desc:'Confronta voli tra Sri Lanka e Italia: tariffe, compagnie aeree, scali.',keys:'voli aereo sri lanka italia colombo roma milano tariffe compagnie'},
-    {url:'/certificazioni',emoji:'📜',cat:'Strumenti',title:'Certificazioni Linguistiche',desc:'CELI, CILS, PLIDA, Dante Alighieri: come ottenere la certificazione di italiano.',keys:'certificazione italiano celi cils plida dante alighieri esame livello'},
-    {url:'/guida-conti',emoji:'🏦',cat:'Strumenti',title:'Guida ai Conti Bancari',desc:'Come aprire un conto corrente in Italia da straniero: documenti, banche, costi.',keys:'conto banca bancario corrente aprire straniero documenti bancomat carta credito'},
-    {url:'/cargo',emoji:'📦',cat:'Strumenti',title:'Cargo — Spedizioni',desc:'Spedire pacchi e bagagli tra Italia e Sri Lanka: corrieri, costi, tempi.',keys:'cargo spedizione pacco bagaglio corriere italia sri lanka doganale'},
-    {url:'/academy',emoji:'🎓',cat:'Formazione',title:'Academy',desc:'Corsi online su burocrazia italiana, diritti del lavoratore, italiano per stranieri.',keys:'academy corsi formazione online burocrazia diritti lavoratore'},
-    {url:'/ai-teacher',emoji:'🤖',cat:'Formazione',title:'AI Teacher',desc:'Insegnante virtuale AI per imparare l\'italiano con conversazioni simulate.',keys:'ai teacher insegnante italiano imparare conversazione pratica'},
-    {url:'/profili',emoji:'👤',cat:'Formazione',title:'Profili Utente',desc:'Percorsi personalizzati in base alla tua situazione: lavoratore, studente, familiare.',keys:'profilo utente percorso personalizzato lavoratore studente studente familiare'},
-    {url:'/news',emoji:'📰',cat:'Il progetto',title:'News',desc:'Aggiornamenti su burocrazia, leggi per immigrati, novità di Easy Italia Hub.',keys:'news notizie aggiornamenti leggi novità'},
-    {url:'/chi-siamo',emoji:'🙋',cat:'Il progetto',title:'Chi siamo',desc:'La storia e il team di Easy Italia Hub, nata per aiutare la comunità srilankese in Italia.',keys:'chi siamo storia team missione comunità srilankese'},
-    {url:'/contatti',emoji:'✉️',cat:'Il progetto',title:'Contatti',desc:'Scrivici per domande, segnalazioni, collaborazioni e pubblicità.',keys:'contatti scrivici email collaborazione pubblicità segnalazione'},
-    {url:'/privacy',emoji:'🔒',cat:'Legal',title:'Privacy Policy',desc:'Come trattiamo i tuoi dati personali in conformità al GDPR.',keys:'privacy gdpr dati personali cookie trattamento'},
-    {url:'/termini',emoji:'📑',cat:'Legal',title:'Termini di Servizio',desc:'Condizioni d\'uso della piattaforma Easy Italia Hub.',keys:'termini servizio condizioni uso legale'},
-    {url:'/cookie',emoji:'🍪',cat:'Legal',title:'Cookie Policy',desc:'Informativa sull\'uso dei cookie su Easy Italia Hub.',keys:'cookie policy informativa tracciamento'},
-    {url:'/note-legali',emoji:'⚖️',cat:'Legal',title:'Note Legali',desc:'Disclaimer, limitazioni di responsabilità e informazioni legali.',keys:'note legali disclaimer responsabilità'},
+    {url:'/guide',emoji:'📖',cat:'Guide',title:'Guide burocratiche',desc:'Permesso di soggiorno, codice fiscale, SPID, residenza, tessera sanitaria, lavoro, fisco e cittadinanza.',keys:'guide guida documenti burocrazia permesso soggiorno spid codice fiscale residenza tessera sanitaria lavoro fisco cittadinanza passo passo guides bureaucracy paperwork residence permit tax code spid registration health card citizenship',en:{t:'Bureaucratic guides',d:'Residence permit, tax code, SPID, registration, health card, work, tax and citizenship.'}},
+    {url:'/guida-ssn',emoji:'🏥',cat:'Guide',title:'Guida al Sistema Sanitario Nazionale',desc:'Come iscriversi al SSN, scegliere il medico di base, il Pronto Soccorso, le visite specialistiche e le esenzioni.',keys:'ssn salute medico sanità pronto soccorso tessera sanitaria guardia medica farmacia esenzione ticket asl health service doctor gp hospital emergency room health card medical care ssn',en:{t:'Guide to the National Health Service',d:'How to register with the NHS, choose a GP, use A&E, book specialist visits and exemptions.'}},
+    {url:'/patente',emoji:'🚗',cat:'Guide',title:'Patente di guida',desc:'Convertire la patente straniera, ottenere la patente italiana, quiz di teoria, autoscuola.',keys:'patente guida auto convertire straniera motorizzazione quiz teoria esame autoscuola driving licence driver license convert foreign car theory test driving school',en:{t:'Driving licence',d:'Convert a foreign licence, get the Italian one, theory quiz, driving school.'}},
+    {url:'/housing',emoji:'🏠',cat:'Guide',title:'Casa in Affitto',desc:'Trovare casa in Italia: contratti, deposito cauzionale, utenze, diritti dell\'inquilino.',keys:'casa affitto appartamento contratto inquilino deposito cauzione utenze agenzia immobiliare house home rent renting flat apartment landlord deposit contract tenant utilities',en:{t:'Renting a home',d:'Finding a home in Italy: contracts, deposit, utilities, tenant rights.'}},
+    {url:'/assegno-unico',emoji:'👶',cat:'Guide',title:'Assegno Unico Universale',desc:'Come richiedere l\'assegno unico per i figli: requisiti, ISEE, importi e scadenze.',keys:'assegno unico figli bambini isee inps family child benefit family allowance single universal allowance isee children',en:{t:'Assegno Unico (child benefit)',d:'How to claim the single allowance for children: requirements, ISEE, amounts and deadlines.'}},
+    {url:'/diritti-inps',emoji:'🏛️',cat:'Guide',title:'Diritti INPS',desc:'Indennità di disoccupazione (NASpI), maternità, malattia, pensione e contributi.',keys:'inps naspi disoccupazione pensione contributi maternità malattia infortunio cassa integrazione inps unemployment naspi maternity sick leave pension contributions welfare rights',en:{t:'INPS rights',d:'Unemployment benefit (NASpI), maternity, sick leave, pension and contributions.'}},
+    {url:'/riconoscimento-titoli',emoji:'🎓',cat:'Guide',title:'Riconoscimento Titoli di Studio',desc:'Come far riconoscere un titolo di studio straniero in Italia: università, scuola, professioni.',keys:'titolo studio laurea diploma riconoscimento nostrificazione università professione straniero recognition qualifications degree diploma foreign studies university equivalence',en:{t:'Recognition of qualifications',d:'How to get a foreign qualification recognised in Italy: university, school, professions.'}},
+    {url:'/ricongiungimento',emoji:'👨‍👩‍👧',cat:'Guide',title:'Ricongiungimento Familiare',desc:'Come portare in Italia i familiari: requisiti, documenti, visto e permesso di soggiorno.',keys:'ricongiungimento familiare famiglia visto permesso soggiorno coniuge figli genitori nulla osta family reunification bring family visa relatives spouse children',en:{t:'Family reunification',d:'How to bring your family to Italy: requirements, documents, visa and residence permit.'}},
+    {url:'/fisco',emoji:'💶',cat:'Guide',title:'Fisco e Dichiarazione dei Redditi',desc:'Dichiarazione 730 e Redditi PF, partita IVA, codice fiscale, detrazioni e rimborsi.',keys:'fisco dichiarazione redditi 730 irpef partita iva detrazioni rimborso caf commercialista tasse tax taxes income declaration 730 vat number deductions refund tax return',en:{t:'Tax and income declaration',d:'730 and Redditi PF declarations, VAT number, tax code, deductions and refunds.'}},
+    {url:'/documenti',emoji:'📋',cat:'Guide',title:'Documenti essenziali',desc:'Carta di identità, passaporto, codice fiscale, stato di famiglia e altri documenti importanti.',keys:'documenti carta identità passaporto codice fiscale stato famiglia certificati anagrafe comune documents id card passport tax code family status certificates',en:{t:'Essential documents',d:'ID card, passport, tax code, family status certificate and other key documents.'}},
+    {url:'/scuola',emoji:'🎒',cat:'Guide',title:'Scuola e Istruzione',desc:'Iscrivere i figli a scuola, equivalenza dei titoli, università e istruzione per adulti.',keys:'scuola iscrizione figli università istruzione adulti equivalenza titoli nido asilo elementari medie school education enrol children university adult education study',en:{t:'School and education',d:'Enrolling children at school, equivalence of qualifications, university and adult education.'}},
+    {url:'/moduli',emoji:'📄',cat:'Servizi',title:'Moduli e Lettere tipo',desc:'Moduli precompilati e lettere standard per disdetta, reclami, richieste all\'amministrazione.',keys:'moduli lettere tipo disdetta reclamo richiesta autocertificazione dichiarazione template forms letters templates model letter complaint cancellation request',en:{t:'Forms and template letters',d:'Pre-filled forms and standard letters for cancellations, complaints and requests.'}},
+    {url:'/percorso',emoji:'🤖',cat:'Servizi',title:'Assistente AI Personale',desc:'L\'AI di Easy Italia Hub risponde alle tue domande su burocrazia, documenti e vita in Italia.',keys:'ai assistente chatbot intelligenza artificiale domande risposte aiuto ai assistant advisor chat help questions guided path journey',en:{t:'Personal AI assistant',d:'The Easy Italia Hub AI answers your questions on paperwork, documents and life in Italy.'}},
+    {url:'/community',emoji:'👥',cat:'Servizi',title:'Community',desc:'Forum e gruppi di supporto per stranieri che vivono in Italia.',keys:'community forum gruppo supporto stranieri immigrati community forum group support foreigners immigrants',en:{t:'Community',d:'Forum and support groups for foreigners living in Italy.'}},
+    {url:'/corsi',emoji:'🗣️',cat:'Servizi',title:'Corsi di Lingua Italiana',desc:'Corsi gratuiti e a pagamento per imparare l\'italiano: online, in presenza, A1 B1 B2 C1.',keys:'corsi italiano lingua imparare livello A1 B1 B2 C1 scuola adulti gratuito online italian courses language learn italian free lessons a1 b1 b2',en:{t:'Italian language courses',d:'Free and paid courses to learn Italian: online, in person, A1 B1 B2 C1.'}},
+    {url:'/opportunita',emoji:'✨',cat:'Servizi',title:'Opportunità',desc:'Borse di studio, tirocini, bandi, lavoro e opportunità per stranieri in Italia.',keys:'opportunità lavoro borse studio tirocinio bando concorso stage opportunities jobs work scholarships internships grants calls',en:{t:'Opportunities',d:'Scholarships, internships, calls, jobs and opportunities for foreigners in Italy.'}},
+    {url:'/money-transfer',emoji:'💸',cat:'Servizi',title:'Money Transfer',desc:'Confronto commissioni per inviare soldi all\'estero: Western Union, Wise, Remitly e altri.',keys:'money transfer rimessa soldi estero commissioni western union wise remitly transferwise money transfer remittance send money abroad fees exchange rate wise western union',en:{t:'Money transfer',d:'Compare fees to send money abroad: Western Union, Wise, Remitly and others.'}},
+    {url:'/associazioni',emoji:'🤝',cat:'Servizi',title:'Associazioni',desc:'Associazioni di immigrati, patronati, CAF e sportelli di assistenza in tutta Italia.',keys:'associazioni immigrati patronato caf sportello assistenza supporto volontariato associations immigrants patronato caf help desks support',en:{t:'Associations',d:'Immigrant associations, patronati, CAF and help desks across Italy.'}},
+    {url:'/mercatino',emoji:'🛍️',cat:'Servizi',title:'Mercatino',desc:'Compra e vendi: annunci di seconda mano nella community di Easy Italia Hub.',keys:'mercatino annunci compra vendi seconda mano usato oggetti marketplace classifieds buy sell second hand ads',en:{t:'Marketplace',d:'Buy and sell: second-hand ads in the Easy Italia Hub community.'}},
+    {url:'/podcast',emoji:'🎙️',cat:'Servizi',title:'Podcast',desc:'Episodi in italiano su burocrazia, lavoro, vita in Italia e storie di immigrati.',keys:'podcast audio episodi italiano storie immigrati podcast audio episodes stories listen',en:{t:'Podcast',d:'Episodes in Italian on paperwork, work, life in Italy and immigrant stories.'}},
+    {url:'/mappa',emoji:'🗺️',cat:'Servizi',title:'Mappa dei Servizi',desc:'Trova patronati, CAF, centri immigrazione, questure e comuni vicino a te.',keys:'mappa servizi patronato caf questura comune vicino geolocalizzazione map services patronato caf immigration office questura town hall near me',en:{t:'Services map',d:'Find patronati, CAF, immigration centres, police headquarters and town halls near you.'}},
+    {url:'/cv-builder',emoji:'📝',cat:'Strumenti',title:'CV Builder',desc:'Crea il tuo curriculum vitae in italiano con il formato europeo Europass.',keys:'cv curriculum vitae europass lavoro candidatura cv curriculum vitae resume europass job application build',en:{t:'CV builder',d:'Create your curriculum vitae in Italian in the European Europass format.'}},
+    {url:'/dizionario-medico',emoji:'🩺',cat:'Strumenti',title:'Dizionario Medico',desc:'Glossario medico multilingue: termini medici in italiano, inglese, sinhala, tamil.',keys:'dizionario medico glossario termini italiano inglese sinhala tamil medical dictionary glossary symptoms doctor pharmacy translation',en:{t:'Medical dictionary',d:'Multilingual medical glossary: medical terms in Italian, English, Sinhala, Tamil.'}},
+    {url:'/traduci',emoji:'🌐',cat:'Strumenti',title:'Traduttore',desc:'Traduci documenti, testi e moduli in italiano, inglese, sinhala, tamil.',keys:'traduci traduttore traduzione lingua documento translate translator translation documents text language',en:{t:'Translator',d:'Translate documents, texts and forms into Italian, English, Sinhala, Tamil.'}},
+    {url:'/permesso-tracker',emoji:'📍',cat:'Strumenti',title:'Tracker Permesso di Soggiorno',desc:'Tieni traccia della scadenza del permesso di soggiorno e ricevi promemoria.',keys:'permesso soggiorno tracker scadenza rinnovo promemoria ricordo residence permit tracker renewal expiry deadline reminder',en:{t:'Residence permit tracker',d:'Keep track of your permit expiry date and get reminders.'}},
+    {url:'/emergenze',emoji:'🚨',cat:'Strumenti',title:'Numeri di Emergenza',desc:'Numeri utili in Italia: 112, 118, 115, ambasciate, consulati e assistenza.',keys:'emergenze numeri utili 112 118 115 ambasciata consolato pronto soccorso carabinieri emergency numbers 112 118 115 embassy consulate help',en:{t:'Emergency numbers',d:'Useful numbers in Italy: 112, 118, 115, embassies, consulates and assistance.'}},
+    {url:'/voli',emoji:'✈️',cat:'Strumenti',title:'Voli Sri Lanka — Italia',desc:'Confronta voli tra Sri Lanka e Italia: tariffe, compagnie aeree, scali.',keys:'voli aereo sri lanka italia colombo roma milano tariffe compagnie flights sri lanka italy colombo airline fares tickets',en:{t:'Flights Sri Lanka — Italy',d:'Compare flights between Sri Lanka and Italy: fares, airlines, stopovers.'}},
+    {url:'/certificazioni',emoji:'📜',cat:'Strumenti',title:'Certificazioni Linguistiche',desc:'CELI, CILS, PLIDA, Dante Alighieri: come ottenere la certificazione di italiano.',keys:'certificazione italiano celi cils plida dante alighieri esame livello language certification celi cils plida italian exam level',en:{t:'Language certifications',d:'CELI, CILS, PLIDA, Dante Alighieri: how to get your Italian certification.'}},
+    {url:'/guida-conti',emoji:'🏦',cat:'Strumenti',title:'Guida ai Conti Bancari',desc:'Come aprire un conto corrente in Italia da straniero: documenti, banche, costi.',keys:'conto banca bancario corrente aprire straniero documenti bancomat carta credito bank account open banking iban foreigner documents costs',en:{t:'Guide to bank accounts',d:'How to open a current account in Italy as a foreigner: documents, banks, costs.'}},
+    {url:'/cargo',emoji:'📦',cat:'Strumenti',title:'Cargo — Spedizioni',desc:'Spedire pacchi e bagagli tra Italia e Sri Lanka: corrieri, costi, tempi.',keys:'cargo spedizione pacco bagaglio corriere italia sri lanka doganale cargo shipping parcel luggage courier sri lanka costs times',en:{t:'Cargo — shipping',d:'Sending parcels and luggage between Italy and Sri Lanka: couriers, costs, times.'}},
+    {url:'/academy',emoji:'🎓',cat:'Formazione',title:'Academy',desc:'Corsi online su burocrazia italiana, diritti del lavoratore, italiano per stranieri.',keys:'academy corsi formazione online burocrazia diritti lavoratore academy courses training online bureaucracy workers rights',en:{t:'Academy',d:'Online courses on Italian bureaucracy, workers rights, Italian for foreigners.'}},
+    {url:'/ai-teacher',emoji:'🤖',cat:'Formazione',title:'AI Teacher',desc:'Insegnante virtuale AI per imparare l\'italiano con conversazioni simulate.',keys:'ai teacher insegnante italiano imparare conversazione pratica ai teacher learn italian conversation practice speaking',en:{t:'AI teacher',d:'A virtual AI teacher to learn Italian through simulated conversations.'}},
+    {url:'/profili',emoji:'👤',cat:'Formazione',title:'Profili Utente',desc:'Percorsi personalizzati in base alla tua situazione: lavoratore, studente, familiare.',keys:'profilo utente percorso personalizzato lavoratore studente studente familiare profile user personalised path worker student family member',en:{t:'User profiles',d:'Paths tailored to your situation: worker, student, family member.'}},
+    {url:'/news',emoji:'📰',cat:'Il progetto',title:'News',desc:'Aggiornamenti su burocrazia, leggi per immigrati, novità di Easy Italia Hub.',keys:'news notizie aggiornamenti leggi novità news updates laws immigrants',en:{t:'News',d:'Updates on paperwork, laws for immigrants, Easy Italia Hub news.'}},
+    {url:'/chi-siamo',emoji:'🙋',cat:'Il progetto',title:'Chi siamo',desc:'La storia e il team di Easy Italia Hub, nata per aiutare la comunità srilankese in Italia.',keys:'chi siamo storia team missione comunità srilankese about us story team mission',en:{t:'About us',d:'The story and team behind Easy Italia Hub, born to help the Sri Lankan community in Italy.'}},
+    {url:'/contatti',emoji:'✉️',cat:'Il progetto',title:'Contatti',desc:'Scrivici per domande, segnalazioni, collaborazioni e pubblicità.',keys:'contatti scrivici email collaborazione pubblicità segnalazione contact write to us email collaboration advertising',en:{t:'Contact',d:'Write to us for questions, reports, partnerships and advertising.'}},
+    {url:'/privacy',emoji:'🔒',cat:'Legal',title:'Privacy Policy',desc:'Come trattiamo i tuoi dati personali in conformità al GDPR.',keys:'privacy gdpr dati personali cookie trattamento privacy gdpr personal data',en:{t:'Privacy Policy',d:'How we handle your personal data under the GDPR.'}},
+    {url:'/termini',emoji:'📑',cat:'Legal',title:'Termini di Servizio',desc:'Condizioni d\'uso della piattaforma Easy Italia Hub.',keys:'termini servizio condizioni uso legale terms of service conditions use legal',en:{t:'Terms of Service',d:'Conditions of use of the Easy Italia Hub platform.'}},
+    {url:'/cookie',emoji:'🍪',cat:'Legal',title:'Cookie Policy',desc:'Informativa sull\'uso dei cookie su Easy Italia Hub.',keys:'cookie policy informativa tracciamento cookie policy tracking notice',en:{t:'Cookie Policy',d:'Notice on the use of cookies on Easy Italia Hub.'}},
+    {url:'/note-legali',emoji:'⚖️',cat:'Legal',title:'Note Legali',desc:'Disclaimer, limitazioni di responsabilità e informazioni legali.',keys:'note legali disclaimer responsabilità legal notice disclaimer liability',en:{t:'Legal notice',d:'Disclaimer, limitations of liability and legal information.'}},
   ];
 
   function esc(s){return s.replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]||c});}
@@ -158,10 +158,22 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     return esc(text).replace(re,'<mark>$1</mark>');
   }
 
+  /* La lingua predefinita del sito e' l'inglese: chi cerca "permit" non deve
+     trovare il vuoto perche' l'indice era scritto solo in italiano. Titoli e
+     descrizioni hanno il gemello inglese; le parole chiave stanno tutte
+     insieme, cosi' una ricerca in una lingua trova la scheda nell'altra. */
+  function lingua(){
+    var l = window.EIH_LANG;
+    try { l = localStorage.getItem('eih-lang') || l; } catch (e) {}
+    return l === 'it' ? 'it' : 'en';
+  }
+  function tit(p){ return (lingua()!=='it' && p.en) ? p.en.t : p.title; }
+  function des(p){ return (lingua()!=='it' && p.en) ? p.en.d : p.desc; }
+
   function score(page, terms){
     var s=0;
-    var title=page.title.toLowerCase();
-    var desc=page.desc.toLowerCase();
+    var title=(page.title+' '+(page.en?page.en.t:'')).toLowerCase();
+    var desc=(page.desc+' '+(page.en?page.en.d:'')).toLowerCase();
     var keys=page.keys.toLowerCase();
     var url=page.url.toLowerCase();
     terms.forEach(function(t){
@@ -181,18 +193,37 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     return results.map(function(r){return r.page;});
   }
 
+  /* Anche l'esito parla la lingua di chi cerca: prima "Nessun risultato" e
+     "3 risultati trovati" uscivano in italiano a chiunque. */
+  var ESITO = {
+    it:{ nulla:'Nessun risultato per', prova:'Prova con parole diverse o sfoglia le sezioni qui sotto.',
+         uno:'1 risultato trovato', molti:' risultati trovati' },
+    en:{ nulla:'No results for', prova:'Try different words or browse the sections below.',
+         uno:'1 result found', molti:' results found' },
+    si:{ nulla:'ප්‍රතිඵල නැත:', prova:'වෙනත් වචන උත්සාහ කරන්න හෝ පහත කොටස් බලන්න.',
+         uno:'ප්‍රතිඵල 1ක්', molti:' ප්‍රතිඵල' },
+    ta:{ nulla:'முடிவுகள் இல்லை:', prova:'வேறு சொற்களை முயற்சியுங்கள் அல்லது கீழே உள்ள பகுதிகளைப் பாருங்கள்.',
+         uno:'1 முடிவு', molti:' முடிவுகள்' }
+  };
+  function esito(){
+    var l = window.EIH_LANG;
+    try { l = localStorage.getItem('eih-lang') || l; } catch (e) {}
+    return ESITO[l] || ESITO.en;
+  }
+
   function render(pages, q){
     var status=document.getElementById('cerca-status');
     var out=document.getElementById('cerca-results');
+    var E=esito();
     if(!pages.length){
       status.textContent='';
-      out.innerHTML='<div class="cerca-empty"><strong>Nessun risultato per "'+esc(q)+'"</strong><p>Prova con parole diverse o sfoglia le sezioni qui sotto.</p><div class="cerca-suggestions"><ul><li><a href="/guide">📖 Guide</a></li><li><a href="/percorso">🤖 AI</a></li><li><a href="/diritti-inps">🏛️ INPS</a></li><li><a href="/guida-ssn">🏥 SSN</a></li><li><a href="/patente">🚗 Patente</a></li><li><a href="/housing">🏠 Casa</a></li></ul></div></div>';
+      out.innerHTML='<div class="cerca-empty"><strong>'+esc(E.nulla)+' "'+esc(q)+'"</strong><p>'+esc(E.prova)+'</p><div class="cerca-suggestions"><ul><li><a href="/guide">📖 Guide</a></li><li><a href="/percorso">🤖 AI</a></li><li><a href="/diritti-inps">🏛️ INPS</a></li><li><a href="/guida-ssn">🏥 SSN</a></li><li><a href="/patente">🚗 Patente</a></li><li><a href="/housing">🏠 Casa</a></li></ul></div></div>';
       return;
     }
-    status.textContent=pages.length===1?'1 risultato trovato':pages.length+' risultati trovati';
+    status.textContent=pages.length===1?E.uno:pages.length+E.molti;
     var html='';
     pages.forEach(function(p){
-      html+='<a class="cerca-card" href="'+esc(p.url)+'"><div class="cerca-card-top"><span class="cerca-cat">'+esc(p.cat)+'</span></div><h3>'+p.emoji+' '+highlight(p.title,q)+'</h3><p>'+highlight(p.desc,q)+'</p><div class="cerca-card-url">easyitaliahub.it'+esc(p.url)+'</div></a>';
+      html+='<a class="cerca-card" href="'+esc(p.url)+'"><div class="cerca-card-top"><span class="cerca-cat">'+esc(p.cat)+'</span></div><h3>'+p.emoji+' '+highlight(tit(p),q)+'</h3><p>'+highlight(des(p),q)+'</p><div class="cerca-card-url">easyitaliahub.it'+esc(p.url)+'</div></a>';
     });
     out.innerHTML=html;
   }

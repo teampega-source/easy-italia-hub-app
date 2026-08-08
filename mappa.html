@@ -137,7 +137,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     background:var(--surface);border:1px solid var(--border);cursor:pointer;min-height:44px;
     transition:background var(--dur-micro),color var(--dur-micro),border-color var(--dur-micro),transform var(--dur-std) var(--ease-spring)}
   .filter-btn:hover{background:var(--surface-hover);color:var(--ink);transform:translateY(-2px)}
-  .filter-btn.is-active{background:linear-gradient(135deg,var(--blue-deep),var(--blue));color:#fff;border-color:transparent;box-shadow:0 6px 20px var(--blue-glow)}
+  .filter-btn.is-active{background:linear-gradient(135deg,var(--blue-deep),var(--blue));color:var(--su-accento);border-color:transparent;box-shadow:0 6px 20px var(--blue-glow)}
   .filter-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   /* Da telefono i cinque filtri occupavano quattro righe prima della mappa:
      diventano una fila unica che scorre in orizzontale. */
@@ -178,14 +178,14 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   /* ── leaflet marker + popup (on-brand) ── */
   .eih-pin{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50% 50% 50% 4px;
     transform:rotate(45deg);background:linear-gradient(135deg,var(--blue-deep),var(--blue));border:2px solid #fffdf9;
-    box-shadow:0 4px 10px rgba(20,30,48,.3);color:#fff}
+    box-shadow:0 4px 10px rgba(20,30,48,.3);color:var(--su-accento)}
   .eih-pin span{transform:rotate(-45deg);font-size:14px;line-height:1}
   .leaflet-popup-content-wrapper{border-radius:var(--radius-sm);box-shadow:0 16px 40px rgba(20,30,48,.18)}
   .leaflet-popup-content{margin:.85rem 1rem;font-size:var(--text-sm);line-height:1.5;color:var(--fg)}
   .pop-city{font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:var(--text-base);color:var(--ink);margin:0 0 .2rem}
   .pop-note{color:var(--fg-secondary);margin:0 0 .6rem;font-size:var(--text-xs);line-height:1.45}
   .pop-btn{display:inline-flex;align-items:center;gap:.3rem;padding:.45rem .9rem;border-radius:var(--radius-full);
-    background:linear-gradient(135deg,var(--blue-deep),var(--blue));color:#fff;border:none;cursor:pointer;
+    background:linear-gradient(135deg,var(--blue-deep),var(--blue));color:var(--su-accento);border:none;cursor:pointer;
     font-family:inherit;font-size:var(--text-xs);font-weight:600;min-height:36px}
   .pop-btn:hover{opacity:.9}
 

@@ -16,6 +16,7 @@ html[data-theme="dark"]{
   --green:#3fcf7c;--green-dim:rgba(63,207,124,0.14);
   --ink:#f4f6f9;
   --fg:#eceae4;--fg-secondary:#b9bec6;--fg-muted:#91969f;
+  --su-accento:#161412;
 }
 /* unici colori chiari non variabilizzati */
 html[data-theme="dark"] #bg,html[data-theme="dark"] #particles{background:

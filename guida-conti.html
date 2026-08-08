@@ -63,7 +63,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <style>
   [data-page="guida-conti"] .gc-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin:var(--sp-4) 0 var(--sp-3)}
   [data-page="guida-conti"] .gc-tab{padding:.45rem 1.1rem;border-radius:var(--radius-full);border:1px solid var(--border-bright);background:var(--surface);color:var(--fg-secondary);font-size:var(--text-sm);font-weight:500;cursor:pointer;transition:background var(--dur-micro),color var(--dur-micro),border-color var(--dur-micro)}
-  [data-page="guida-conti"] .gc-tab.active,[data-page="guida-conti"] .gc-tab:hover{background:var(--gold);color:#fff;border-color:var(--gold)}
+  [data-page="guida-conti"] .gc-tab.active,[data-page="guida-conti"] .gc-tab:hover{background:var(--gold);color:var(--su-accento);border-color:var(--gold)}
   [data-page="guida-conti"] .gc-panel{display:none}
   [data-page="guida-conti"] .gc-panel.active{display:block}
   [data-page="guida-conti"] .step-list{counter-reset:step;list-style:none;padding:0;margin:var(--sp-3) 0}
@@ -93,7 +93,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   [data-page="guida-conti"] .faq-list{margin:var(--sp-3) 0}
   [data-page="guida-conti"] .faq-item{border-bottom:1px solid var(--border)}
   [data-page="guida-conti"] .faq-q{width:100%;background:none;border:none;text-align:left;padding:1rem 0;cursor:pointer;font:600 var(--text-sm)/1.4 'Satoshi',inherit;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:.5rem}
-  [data-page="guida-conti"] .faq-q svg{flex-shrink:0;transition:transform var(--dur-short)}
+  [data-page="guida-conti"] .faq-q svg{flex-shrink:0;transition:transform var(--dur-micro)}
   [data-page="guida-conti"] .faq-item.open .faq-q svg{transform:rotate(180deg)}
   [data-page="guida-conti"] .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
   [data-page="guida-conti"] .faq-item.open .faq-a{max-height:400px}
@@ -382,5 +382,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <script src="/assets/vendor/ScrollTrigger.min.js" fetchpriority="low" defer></script>
 <script src="/assets/eih-motion.js" fetchpriority="low" defer></script>
 <script src="/assets/eih-misura.js" defer></script>
+<script src="/assets/eih-atmosphere.js" fetchpriority="low" defer></script>
+<script src="/assets/eih-theme.js" defer></script>
+<script src="/assets/eih-consent.js" defer></script>
 </body>
 </html>
