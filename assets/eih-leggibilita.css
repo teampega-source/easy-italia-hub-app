@@ -17,6 +17,7 @@
   :root{--text-xs:0.8125rem;--text-sm:0.9375rem}
   .pbn-item{font-size:0.8125rem}
   .eyebrow{font-size:0.8125rem}
+  /* Avviso AI: la riga di marcatura resta sempre in vista, il testo di legge si apre al tocco. Da telefono occupava mezzo schermo prima dello strumento. */ .ai-legal{font-size:0.8125rem}
   .soon{font-size:0.8125rem}
   .btn-arrow{font-size:0.8125rem}
   .form .field-err-msg{font-size:0.8125rem}
