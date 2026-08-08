@@ -259,7 +259,7 @@ body{
   max-width:1380px;margin:0 auto;
 }
 /* Entrance: fade-up – only hero content, 1-2 key elements */
-.hero-left{animation:fadeUp var(--dur-complex) var(--ease-enter) .08s both}
+.hero-left{animation:fadeUp var(--dur-complex) var(--ease-enter) .08s both;min-width:0}
 .hero-right{animation:fadeUp var(--dur-complex) var(--ease-enter) .2s both}
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(28px)}
@@ -292,7 +292,27 @@ body{
   margin-bottom:var(--sp-4);max-width:440px;
 }
 /* CTAs */
-.hero-actions{display:flex;gap:var(--sp-1);flex-wrap:wrap;margin-bottom:var(--sp-4)}
+.hero-actions{display:flex;gap:var(--sp-1);flex-wrap:wrap;margin-bottom:var(--sp-3)}
+
+/* Ingressi rapidi: dal problema allo strumento, senza scorrere */
+.eo{margin:0 0 var(--sp-3);min-width:0;max-width:100%}
+.eo-t{font-size:var(--text-xs);font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--fg-muted);margin:0 0 .55rem}
+.eo-list{list-style:none;display:flex;flex-wrap:wrap;gap:.45rem;margin:0;padding:0}
+.eo-list a{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.5rem .85rem;border-radius:var(--radius-full);
+  border:1px solid var(--border);background:var(--surface);
+  font-size:var(--text-sm);line-height:1.25;color:var(--fg-secondary);text-decoration:none;
+  transition:border-color .18s,color .18s,background .18s}
+.eo-list a:hover,.eo-list a:focus-visible{border-color:var(--border-bright);color:var(--fg);
+  background:var(--surface-hover)}
+.eo-i{font-size:1rem;line-height:1}
+@media(max-width:640px){
+  .eo{margin-bottom:var(--sp-2)}
+  .eo-t{text-align:center}
+  .eo-list{justify-content:center;gap:.4rem}
+  .eo-list a{min-height:44px;padding:.5rem .7rem}
+}
 .btn-primary{
   display:inline-flex;align-items:center;gap:.45rem;
   padding:.8rem 1.75rem;border-radius:var(--radius-full);
