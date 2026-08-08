@@ -204,7 +204,10 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     print:{it:"Stampa l'attestato",en:"Print certificate",si:"සහතිකය මුද්‍රණය කරන්න",ta:"சான்றிதழை அச்சிடு"},
     nameq:{it:"Nome e cognome da riportare sull'attestato:",en:"Full name to print on the certificate:",si:"සහතිකයේ මුද්‍රණය කිරීමට සම්පූර්ණ නම:",ta:"சான்றிதழில் அச்சிட முழுப் பெயர்:"},
     review:{it:"Rivedi le tue risposte qui sotto.",en:"Review your answers below.",si:"පහත ඔබේ පිළිතුරු බලන්න.",ta:"கீழே உங்கள் பதில்களைப் பாருங்கள்."},
-    correct:{it:"Risposta corretta",en:"Correct answer",si:"නිවැරදි පිළිතුර",ta:"சரியான பதில்"}
+    correct:{it:"Risposta corretta",en:"Correct answer",si:"නිවැරදි පිළිතුර",ta:"சரியான பதில்"},
+    blankone:{it:"Hai lasciato 1 domanda senza risposta: conterà come sbagliata. Consegno lo stesso?",en:"You left 1 question unanswered: it will count as wrong. Submit anyway?",si:"ඔබ ප්‍රශ්න 1ක් පිළිතුරු නොදී තිබේ: එය වැරදි ලෙස ගණන් ගැනේ. කෙසේ වුවත් ඉදිරිපත් කරන්නද?",ta:"1 கேள்விக்குப் பதிலளிக்கவில்லை: அது தவறாகக் கணக்கிடப்படும். இருப்பினும் சமர்ப்பிக்கவா?"},
+    blankmany:{it:"Hai lasciato {n} domande senza risposta: conteranno come sbagliate. Consegno lo stesso?",en:"You left {n} questions unanswered: they will count as wrong. Submit anyway?",si:"ඔබ ප්‍රශ්න {n}ක් පිළිතුරු නොදී තිබේ: ඒවා වැරදි ලෙස ගණන් ගැනේ. කෙසේ වුවත් ඉදිරිපත් කරන්නද?",ta:"{n} கேள்விகளுக்குப் பதிலளிக்கவில்லை: அவை தவறாகக் கணக்கிடப்படும். இருப்பினும் சமர்ப்பிக்கவா?"},
+    blankall:{it:"Non hai risposto a nessuna domanda. Consegnando ora prendi 0/100. Rispondi almeno a una.",en:"You have not answered any question. Submitting now scores 0/100. Answer at least one.",si:"ඔබ කිසිම ප්‍රශ්නයකට පිළිතුරු දී නැත. දැන් ඉදිරිපත් කළොත් 0/100කි. අවම වශයෙන් එකකට පිළිතුරු දෙන්න.",ta:"நீங்கள் எந்தக் கேள்விக்கும் பதிலளிக்கவில்லை. இப்போது சமர்ப்பித்தால் 0/100. குறைந்தது ஒன்றுக்காவது பதிலளியுங்கள்."}
   };
 
   // ── Domande (8) — vita e burocrazia in Italia, difficoltà media ──
@@ -377,6 +380,32 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     f.innerHTML=h;
   }
 
+  /* Si poteva consegnare senza aver risposto a niente: 0/100 e nessuna
+     spiegazione. Ora le domande in bianco si contano prima, e chi non ne ha
+     risposta nessuna non consegna affatto: torna alla prima domanda. */
+  function inBianco(){
+    var set=activeSet(), vuote=[];
+    set.forEach(function(item,qi){
+      if(!document.querySelector('input[name="q'+qi+'"]:checked')) vuote.push(qi);
+    });
+    return vuote;
+  }
+  function vaiA(qi){
+    var q=document.querySelector('.q[data-qi="'+qi+'"]');
+    if(!q) return;
+    q.scrollIntoView({behavior:'smooth',block:'center'});
+    var primo=q.querySelector('input'); if(primo) try{ primo.focus({preventScroll:true}); }catch(e){}
+  }
+  function consegna(){
+    var vuote=inBianco(), tot=activeSet().length;
+    if(vuote.length===tot){ alert(t(UI.blankall)); vaiA(vuote[0]); return; }
+    if(vuote.length){
+      var msg=vuote.length===1 ? t(UI.blankone) : t(UI.blankmany).replace('{n}',vuote.length);
+      if(!window.confirm(msg)){ vaiA(vuote[0]); return; }
+    }
+    grade();
+  }
+
   function grade(){
     var set=activeSet(); var correct=0;
     set.forEach(function(item,qi){
@@ -503,7 +532,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   });
   document.querySelectorAll('.etab').forEach(function(b){ b.addEventListener('click',function(){ if(!B.coursesDone())return; selectTier(this.getAttribute('data-tier')); }); });
   document.getElementById('start-btn').addEventListener('click',function(){ if(!B.coursesDone()){applyGate();return;} startQuiz(); });
-  document.getElementById('submit-btn').addEventListener('click',grade);
+  document.getElementById('submit-btn').addEventListener('click',consegna);
 })();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
