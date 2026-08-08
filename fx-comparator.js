@@ -24,7 +24,7 @@
     fgMuted: "#857e72",
     gold: "#7c7059",
     goldDim: "rgba(124,112,89,0.14)",
-    coral: "#eb5939",
+    coral: "#cb4d31",
     border: "rgba(118,118,118,0.16)",
     borderBright: "rgba(118,118,118,0.30)",
     surface: "#f1eee9",
