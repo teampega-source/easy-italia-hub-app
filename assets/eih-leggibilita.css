@@ -1,0 +1,157 @@
+/* Leggibilità su schermo stretto — file generato, non si scrive a mano.
+   Rigenera con:  python3 scripts/genera-leggibilita.py
+
+   Etichette, pillole e didascalie erano scritte fra 8 e 12px: su
+   telefono, e nell'app installata, ci voleva il cannocchiale. Sotto i
+   1024px nessun testo scende sotto i 13px. Le misure grandi restano
+   dove sono: si alza solo il fondo della scala. */
+@media (max-width:1023px){
+  :root{--text-xs:0.8125rem;--text-sm:0.9375rem}
+  .pbn-item{font-size:0.8125rem}
+  .eyebrow{font-size:0.8125rem}
+  .soon{font-size:0.8125rem}
+  .btn-arrow{font-size:0.8125rem}
+  .form .field-err-msg{font-size:0.8125rem}
+  /* ───────────────────────────────────────────────────────────── Rifinitura mobile: il telefono è il modo principale in cui la community usa il sito. Testi sotto la soglia di leggibilità e aree toccabili troppo basse, misurate a 375px. ───────────────────────────────────────────────────────────── */ @media(max-width:640px){font-size:0.8125rem}
+  .roadmap-badge{font-size:0.8125rem}
+  .roadmap-quarter{font-size:0.8125rem}
+  /* Button-in-button trailing arrow pill */ .btn-arrow{font-size:0.8125rem}
+  .card-tag{font-size:0.8125rem}
+  .card-sub{font-size:0.8125rem}
+  .section-label{font-size:0.8125rem}
+  .partner-tag{font-size:0.8125rem}
+  .pcard-note{font-size:0.8125rem}
+  /* Percorso intro block inside CTA card */ .percorso-intro-tag{font-size:0.8125rem}
+  .percorso-pill{font-size:0.8125rem}
+  .nr-sidebar-btn{font-size:0.8125rem}
+  .nr-opp-h{font-size:0.8125rem}
+  .nr-opp-h .nr-spark{font-size:0.8125rem}
+  .nr-opp-eyebrow{font-size:0.8125rem}
+  .nr-opp-line{font-size:0.8125rem}
+  .nr-opp-cta{font-size:0.8125rem}
+  .nr-opp-all{font-size:0.8125rem}
+  /* — News section (now SECONDARY, below the featured widget) — */ .nr-head{font-size:0.8125rem}
+  .nr-src{font-size:0.8125rem}
+  .nr-title{font-size:0.8125rem}
+  .nr-foot{font-size:0.8125rem}
+  .nr-empty{font-size:0.8125rem}
+  .nr-cta-btn{font-size:0.8125rem}
+  .nr-fests-h{font-size:0.8125rem}
+  .nr-fest-tag{font-size:0.8125rem}
+  .nr-fest-name{font-size:0.8125rem}
+  .nr-fest-date{font-size:0.8125rem}
+  .nr-fest-soon{font-size:0.8125rem}
+  .eih-fest-toast-close{font-size:0.8125rem}
+  .eih-fest-toast-tag{font-size:0.8125rem}
+  .eih-fest-toast-title{font-size:0.8125rem}
+  .eih-fest-toast-msg{font-size:0.8125rem}
+  .eih-fest-toast-cta{font-size:0.8125rem}
+  .nr-nav-tog{font-size:0.8125rem}
+  .nr-nav-sh{font-size:0.8125rem}
+  .nr-nav-ul a,.nr-nav-lnk{font-size:0.8125rem}
+  /* Unread-count badge (proactive message while panel closed) */ .chat-badge{font-size:0.8125rem}
+  /* Avviso AI: riga breve sempre visibile, testo esteso al tocco */ .ch-ai-note{font-size:0.8125rem}
+  /* Da telefono .62rem sono 9,9px: sotto la soglia di leggibilita' */ @media(max-width:640px){font-size:0.8125rem}
+  .ts{font-size:0.8125rem}
+  .ad-mini-label{font-size:0.8125rem}
+  .ad-mini-cta{font-size:0.8125rem}
+  .plan-flag{font-size:0.8125rem}
+  /* 4) Card hover arrow badge */ .card-img::after{font-size:0.8125rem}
+  .problem-eyebrow{font-size:0.8125rem}
+  .sol-eyebrow{font-size:0.8125rem}
+  /* Dichiarazione art. 50 Reg. UE 2024/1689: minuscola e sottovoce, ma sotto l'immagine e sempre visibile, non nei termini d'uso */ .ct-foto .eih-ai-gen{font-size:0.8125rem}
+  .ct-av-more{font-size:0.8125rem}
+  .ct-cities span{font-size:0.8125rem}
+  .ct-milestone-top{font-size:0.8125rem}
+  .svc-badge{font-size:0.8125rem}
+  .donate-note{font-size:0.8125rem}
+  .trust-pill{font-size:0.8125rem}
+  .eih-bar{font-size:0.8125rem}
+  .eih-badge{font-size:0.8125rem}
+  .eih-slide p{font-size:0.8125rem}
+  .eih-field{font-size:0.8125rem}
+  .eih-btn{font-size:0.8125rem}
+  .eih-card h5{font-size:0.8125rem}
+  .eih-card span{font-size:0.8125rem}
+  .eih-user{font-size:0.8125rem}
+  .eih-ai{font-size:0.8125rem}
+  .cr-hint{font-size:0.8125rem}
+  .cr-region{font-size:0.8125rem}
+  .cr-tag{font-size:0.8125rem}
+  .pkg-card .pk-feats{font-size:0.8125rem}
+  .plan .flag{font-size:0.8125rem}
+  [data-page="academy"] .badge{font-size:0.8125rem}
+  [data-page="academy"] .lesson-tr{font-size:0.8125rem}
+  [data-page="academy"] .lang-note{font-size:0.8125rem}
+  .bv-avatars span{font-size:0.8125rem}
+  .bv-free-tag{font-size:0.8125rem}
+  .cal-chip{font-size:0.8125rem}
+  .cal-month{font-size:0.8125rem}
+  .cal-wd{font-size:0.8125rem}
+  .cal-tag{font-size:0.8125rem}
+  .cal-countdown{font-size:0.8125rem}
+  [data-page="cargo"] .cargo-tag{font-size:0.8125rem}
+  .cerca-cat{font-size:0.8125rem}
+  .cerca-card-url{font-size:0.8125rem}
+  [data-page="certificazioni"] .lt-badge{font-size:0.8125rem}
+  #attestato .ad{font-size:0.8125rem}
+  /* ── status pills + offering rows (scoped to Chi siamo) ── */ .st{font-size:0.8125rem}
+  .demo-tag{font-size:0.8125rem}
+  [data-page="corsi"] .lesson-done-badge{font-size:0.8125rem}
+  [data-page="corsi"] .adv-card .premium-flag{font-size:0.8125rem}
+  [data-page="costruire-futuro"] .pag-foto .eih-ai-gen{font-size:0.8125rem}
+  [data-page="cv-builder"] .cv-sec h3{font-size:0.8125rem}
+  [data-page="cv-builder"] .cv-item-period{font-size:0.8125rem}
+  [data-page="cv-builder"] .cv-tag{font-size:0.8125rem}
+  [data-page="cv-builder"] .cv-consent{font-size:0.8125rem}
+  [data-page="dashboard"] .cal-weekdays span{font-size:0.8125rem}
+  [data-page="dashboard"] .cal-cell .cnt{font-size:0.8125rem}
+  [data-page="dashboard"] .dl-date .m{font-size:0.8125rem}
+  [data-page="dashboard"] .dl-when{font-size:0.8125rem}
+  [data-page="dashboard"] .urgent-banner .ub-badge{font-size:0.8125rem}
+  [data-page="dashboard"] .tip-card .tip-label{font-size:0.8125rem}
+  [data-page="dizionario-medico"] .dm-copy-btn{font-size:0.8125rem}
+  [data-page="documenti"] .dc-cat{font-size:0.8125rem}
+  [data-page="documenti"] .dc-expiry{font-size:0.8125rem}
+  [data-page="esame"] .lv-min{font-size:0.8125rem}
+  [data-page="esame"] .lv li{font-size:0.8125rem}
+  [data-page="esame"] .lv .lv-you{font-size:0.8125rem}
+  [data-page="esame"] .hint{font-size:0.8125rem}
+  [data-page="esame"] .disc{font-size:0.8125rem}
+  [data-page="forum"] .tc-cat{font-size:0.8125rem}
+  [data-page="forum"] .ai-badge{font-size:0.8125rem}
+  [data-page="guida-conti"] .banca-badge{font-size:0.8125rem}
+  [data-page="guide"] .ag-c{font-size:0.8125rem}
+  .si-tag{font-size:0.8125rem}
+  .si-sep{font-size:0.8125rem}
+  .si-run{font-size:0.8125rem}
+  [data-page="italia-srilanka"] .pag-foto .eih-ai-gen{font-size:0.8125rem}
+  [data-page="lavoro-diritti"] .pag-foto .eih-ai-gen{font-size:0.8125rem}
+  .svc-links a .ext{font-size:0.8125rem}
+  .place-detail{font-size:0.8125rem}
+  [data-page="mappa"] .near-out .di{font-size:0.8125rem}
+  [data-page="moduli"] .sheet .s-sign .line{font-size:0.8125rem}
+  .ntag{font-size:0.8125rem}
+  .ndue{font-size:0.8125rem}
+  .phase-badge{font-size:0.8125rem}
+  .ch-status{font-size:0.8125rem}
+  .pf-col h4{font-size:0.8125rem}
+  .pf-copy{font-size:0.8125rem}
+  .pf-legal a{font-size:0.8125rem}
+  [data-page="permesso-tracker"] .pt-chip .k{font-size:0.8125rem}
+  [data-page="permesso-tracker"] .tl-dot{font-size:0.8125rem}
+  [data-page="permesso-tracker"] .tl-badge{font-size:0.8125rem}
+  .reg-div{font-size:0.8125rem}
+  .reg-field label{font-size:0.8125rem}
+  .reg-note{font-size:0.8125rem}
+  [data-page="riconoscimento-titoli"] .chk{font-size:0.8125rem}
+  .sp-badge{font-size:0.8125rem}
+  [data-page="travel-sri-lanka"] .hub-tag{font-size:0.8125rem}
+  [data-page="voli"] .route-iata{font-size:0.8125rem}
+  [data-page="voli"] .airline-hub{font-size:0.8125rem}
+  [data-page="voli"] .season-cell{font-size:0.8125rem}
+  [data-page="voli"] .track-chips button{font-size:0.8125rem}
+  [data-page="voli"] .tk-badge{font-size:0.8125rem}
+  [data-page="voli"] .tk-stat span{font-size:0.8125rem}
+  [data-page="voli"] .se-btn .se-note{font-size:0.8125rem}
+}
