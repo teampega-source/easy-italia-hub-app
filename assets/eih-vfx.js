@@ -38,22 +38,10 @@
     // stati rimossi: la grana resta attiva di default, l'audio non c'è più.
     function beep(){}
 
-    // ---- 3D tilt cards ----
-    if(fine && !reduce){
-      var cards=document.querySelectorAll('.card,.feat,.icard,.pcard,.svc-card,.tm-card,.roadmap-card,.nr-opp-card,.eih-card,.sol-card,.screenshot-card,[data-tilt]');
-      cards.forEach(function(c){
-        if(c.hasAttribute('data-no-tilt')||c.closest('[data-no-tilt]'))return;
-        var cs=getComputedStyle(c);if(cs.position==='static')c.style.position='relative';
-        c.classList.add('eih-tilt');
-        var glow=document.createElement('span');glow.className='eih-tilt-glow';c.appendChild(glow);
-        c.addEventListener('mousemove',function(e){
-          var r=c.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
-          var rx=(py-.5)*-7,ry=(px-.5)*9;
-          c.style.transform='perspective(900px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateZ(6px) scale(1.02)';
-          glow.style.setProperty('--gx',px*100+'%');glow.style.setProperty('--gy',py*100+'%');});
-        c.addEventListener('mouseleave',function(){c.style.transform='';});
-      });
-    }
+    /* Il tilt 3D sulle card e' stato tolto. Ruotava la card in prospettiva
+       sotto il mouse, con un alone arancione al seguito: i bordi finivano
+       storti rispetto al testo e ai riquadri dentro (le risposte dell'esame,
+       per dire), e su schermo vero sembrava un difetto, non un effetto. */
 
     // ---- Magnetic CTA ----
     if(fine && !reduce){
