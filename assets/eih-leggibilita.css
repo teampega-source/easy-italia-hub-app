@@ -5,6 +5,14 @@
    telefono, e nell'app installata, ci voleva il cannocchiale. Sotto i
    1024px nessun testo scende sotto i 13px. Le misure grandi restano
    dove sono: si alza solo il fondo della scala. */
+@media (pointer:coarse){
+  /* Bersagli per il dito: le linee guida chiedono 44px, i filtri stavano
+     fra 28 e 34. Si alza solo lo spazio attorno, il testo resta com'e'. */
+  .cal-chip,.cat-btn,.filter-btn,.price-tab,.type-btn,.dm-cat,.gc-tab,.ftab,.etab,
+  .lang-btn,.lang-tab,.city-btn,.cargo-filter-btn,.tab-btn,.chip{
+    min-height:44px;padding-top:.55rem;padding-bottom:.55rem;
+    display:inline-flex;align-items:center;justify-content:center}
+}
 @media (max-width:1023px){
   :root{--text-xs:0.8125rem;--text-sm:0.9375rem}
   .pbn-item{font-size:0.8125rem}

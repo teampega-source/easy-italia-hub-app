@@ -90,6 +90,16 @@ def main():
 
     righe = ['  :root{--text-xs:0.8125rem;--text-sm:0.9375rem}']
     righe += ['  %s{font-size:%.4frem}' % (sel, SOGLIA / 16) for sel in minimo]
+    tattile = (
+        '@media (pointer:coarse){\n'
+        '  /* Bersagli per il dito: le linee guida chiedono 44px, i filtri stavano\n'
+        '     fra 28 e 34. Si alza solo lo spazio attorno, il testo resta com\'e\'. */\n'
+        '  .cal-chip,.cat-btn,.filter-btn,.price-tab,.type-btn,.dm-cat,.gc-tab,.ftab,.etab,\n'
+        '  .lang-btn,.lang-tab,.city-btn,.cargo-filter-btn,.tab-btn,.chip{\n'
+        '    min-height:44px;padding-top:.55rem;padding-bottom:.55rem;\n'
+        '    display:inline-flex;align-items:center;justify-content:center}\n'
+        '}\n'
+    )
     testo = (
         '/* Leggibilità su schermo stretto — file generato, non si scrive a mano.\n'
         '   Rigenera con:  python3 scripts/genera-leggibilita.py\n\n'
@@ -99,7 +109,8 @@ def main():
         '   dove sono: si alza solo il fondo della scala. */\n'
         '@media (max-width:%dpx){\n%s\n}\n'
         % (LARGHEZZA + 1, int(SOGLIA), LARGHEZZA, '\n'.join(righe))
-    )
+    ) 
+    testo = testo.replace('@media (max-width:%d' % LARGHEZZA, tattile + '@media (max-width:%d' % LARGHEZZA, 1)
     io.open(USCITA, 'w', encoding='utf-8').write(testo)
     print('%d selettori · %s' % (len(minimo), os.path.relpath(USCITA, RADICE)))
 

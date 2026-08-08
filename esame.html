@@ -467,6 +467,24 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     document.getElementById('quiz-intro').style.display=locked?'none':'';
     if(!locked){ refreshTabs(); updateIntro(); }
   }
+  /* Le domande sono scritte nelle quattro lingue dentro il file, e la lingua
+     si legge quando si disegna il quiz: cambiandola a esame aperto le domande
+     restavano com'erano, sotto un'interfaccia gia' cambiata. Le risposte gia'
+     segnate si tengono: si annota quale casella era scelta e si rimette dopo
+     aver riscritto. */
+  window.addEventListener('eihLangChanged', function(){
+    renderMyBadge(); renderLadder(); refreshTabs(); updateIntro();
+    var f=document.getElementById('quiz-form');
+    if(!f || f.style.display==='none') return;
+    var scelte=[];
+    f.querySelectorAll('input[type=radio]:checked').forEach(function(i){ scelte.push([i.name,i.value]); });
+    renderQuiz();
+    scelte.forEach(function(c){
+      var i=f.querySelector('input[name="'+c[0]+'"][value="'+c[1]+'"]');
+      if(i) i.checked=true;
+    });
+  });
+
   renderMyBadge(); renderLadder(); applyGate();
   if(B.sync) B.sync(function(){ renderMyBadge(); renderLadder(); refreshTabs(); updateIntro(); });
   // Sblocco per utenti loggati con progressi corsi salvati in EIH_DB.

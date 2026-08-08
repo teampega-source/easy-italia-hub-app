@@ -332,8 +332,9 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       ta:{q:'கேள்வி',of:'இல்',done:'நிறைவு',yes:'✓ உரிமை உண்டு',partial:'~ சரிபார்க்கவும்',no:'✗ பொருந்தாது',summary:'உங்கள் பதில்களின் அடிப்படையில்: {0} நலன்கள் அனுமதிக்கப்பட்டவை, {1} சரிபார்க்க வேண்டியவை.'}
     };
     var _T=_T_MAP[_LANG]||{q:'Domanda',of:'di',done:'Completato',yes:'✓ Hai diritto',partial:'~ Verifica',no:'✗ Non applicabile',summary:'Basato sulle tue risposte: {0} prestazioni probabilmente accessibili, {1} da verificare.'};
-    document.addEventListener('eih:langchange',function(e){
-      _LANG=e.detail||'it';
+    // l'evento vero e' eihLangChanged su window: prima il nome non coincideva
+  window.addEventListener('eihLangChanged',function(e){
+      _LANG=(e.detail&&e.detail.lingua)||'it';
       _T=_T_MAP[_LANG]||{q:'Domanda',of:'di',done:'Completato',yes:'✓ Hai diritto',partial:'~ Verifica',no:'✗ Non applicabile',summary:'Basato sulle tue risposte: {0} prestazioni probabilmente accessibili, {1} da verificare.'};
     });
 

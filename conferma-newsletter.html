@@ -115,22 +115,27 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   // l'iscrizione c'è. Vale solo su questo browser, ed è quanto basta.
   if (ok) { try { localStorage.setItem('eih-nl-iscritto', '1'); } catch (e) {} }
 
-  var d = T[lingua()];
   var stato = ok ? (already ? 'gia' : demo ? 'demo' : 'ok')
     : err === 'expired' ? 'scaduto'
     : err === 'invalid' ? 'invalido'
     : err === 'server' ? 'errore'
     : 'attesa';
   var ICONA = { gia:'✓', demo:'✓', ok:'🎉', scaduto:'⏰', invalido:'❌', errore:'⚠️', attesa:'✉️' };
-  var indietro = (stato === 'scaduto' || stato === 'invalido')
-    ? ['/#newsletter', d.ancora]
-    : [ '/', stato === 'ok' ? d.vai : d.home ];
 
-  el.innerHTML = '<div class="confirm-icon">' + ICONA[stato] + '</div>'
-    + '<h1>' + esc(d[stato][0]) + '</h1>'
-    + '<p>' + esc(d[stato][1]) + '</p>'
-    + '<a href="' + indietro[0] + '" class="confirm-btn">' + esc(indietro[1]) + '</a>';
-  el.setAttribute('data-no-tr', '');
+  function disegna() {
+    var d = T[lingua()];
+    var indietro = (stato === 'scaduto' || stato === 'invalido')
+      ? ['/#newsletter', d.ancora]
+      : ['/', stato === 'ok' ? d.vai : d.home];
+    el.innerHTML = '<div class="confirm-icon">' + ICONA[stato] + '</div>'
+      + '<h1>' + esc(d[stato][0]) + '</h1>'
+      + '<p>' + esc(d[stato][1]) + '</p>'
+      + '<a href="' + indietro[0] + '" class="confirm-btn">' + esc(indietro[1]) + '</a>';
+    el.setAttribute('data-no-tr', '');
+  }
+  disegna();
+  // il messaggio si riscrive se l'utente cambia lingua stando qui
+  window.addEventListener('eihLangChanged', disegna);
 })();
 </script>
 <script src="/assets/vendor/lenis.min.js" fetchpriority="low" defer></script>

@@ -381,6 +381,10 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
         msg.style.borderLeft = '3px solid #16a34a';
         msg.textContent = '✅ Iscritto! Riceverai il primo avviso lunedì prossimo.';
         form.reset();
+        // il pulsante restava "..." e disabilitato per sempre, anche a
+        // iscrizione riuscita: chi voleva iscrivere un secondo indirizzo
+        // trovava il modulo bloccato
+        btn.disabled = false; btn.textContent = 'Iscrivimi';
       } else {
         msg.style.borderLeft = '3px solid var(--coral)';
         msg.textContent = d.error || 'Errore. Riprova.';

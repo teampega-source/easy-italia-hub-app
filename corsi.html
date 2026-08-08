@@ -94,9 +94,9 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 </style>
 <script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
 <script>window.EIH_I18N_EXTRA={
-"en":{"page.examcta":"Finished the basic course? Go to Exam &amp; Badge to get your level and unlock features →","page.h1":"Language courses,<br/><em>step by step.</em>","page.lead":"Learn the Italian or English you need for everyday life: alphabet, greetings, numbers, essential verbs and useful phrases. The <strong>Base course is free</strong> once you sign up; the <strong>Advanced course</strong> unlocks with the badge you earn by completing My Journey."},
-"si":{"page.examcta":"මූලික පාඨමාලාව අවසන් කළාද? ඔබේ මට්ටම ලබාගෙන පහසුකම් අගුළු හැරීමට විභාගය සහ බැජ් වෙත යන්න →","page.h1":"භාෂා පාඩම්,<br/><em>පියවරෙන් පියවර.</em>","page.lead":"දිනපතා ජීවිතයට අවශ්‍ය ඉතාලි හෝ ඉංග්‍රීසි භාෂාව ඉගෙන ගන්න: අකුරු, ආචාර, අංක, අවශ්‍ය ක්‍රියාපද සහ ප්‍රයෝජනවත් වාක්‍ය. ලියාපදිංචි වූ පසු <strong>මූලික පාඩම් මාලාව නොමිලේ</strong>; <strong>උසස් පාඩම් මාලාව</strong> සහනදායී Premium දායකත්වයකින් විවෘත වේ."},
-"ta":{"page.examcta":"அடிப்படைப் படிப்பை முடித்தீர்களா? உங்கள் நிலையைப் பெற்று வசதிகளைத் திறக்க தேர்வு &amp; பேட்ஜ் பக்கம் செல்லுங்கள் →","page.h1":"மொழி வகுப்புகள்,<br/><em>படிப்படியாக.</em>","page.lead":"அன்றாட வாழ்க்கைக்குத் தேவையான இத்தாலிய அல்லது ஆங்கில மொழியைக் கற்றுக்கொள்ளுங்கள்: எழுத்துகள், வணக்கங்கள், எண்கள், அடிப்படை வினைச்சொற்கள் மற்றும் பயனுள்ள சொற்றொடர்கள். பதிவு செய்தபின் <strong>அடிப்படை வகுப்பு இலவசம்</strong>; <strong>மேம்பட்ட வகுப்பு</strong> மலிவான Premium சந்தாவுடன் திறக்கப்படும்."}
+"en":{"co.fatta":"Completed","co.segna":"Mark as completed","page.examcta":"Finished the basic course? Go to Exam &amp; Badge to get your level and unlock features →","page.h1":"Language courses,<br/><em>step by step.</em>","page.lead":"Learn the Italian or English you need for everyday life: alphabet, greetings, numbers, essential verbs and useful phrases. The <strong>Base course is free</strong> once you sign up; the <strong>Advanced course</strong> unlocks with the badge you earn by completing My Journey."},
+"si":{"co.fatta":"සම්පූර්ණයි","co.segna":"සම්පූර්ණ ලෙස සලකුණු කරන්න","page.examcta":"මූලික පාඨමාලාව අවසන් කළාද? ඔබේ මට්ටම ලබාගෙන පහසුකම් අගුළු හැරීමට විභාගය සහ බැජ් වෙත යන්න →","page.h1":"භාෂා පාඩම්,<br/><em>පියවරෙන් පියවර.</em>","page.lead":"දිනපතා ජීවිතයට අවශ්‍ය ඉතාලි හෝ ඉංග්‍රීසි භාෂාව ඉගෙන ගන්න: අකුරු, ආචාර, අංක, අවශ්‍ය ක්‍රියාපද සහ ප්‍රයෝජනවත් වාක්‍ය. ලියාපදිංචි වූ පසු <strong>මූලික පාඩම් මාලාව නොමිලේ</strong>; <strong>උසස් පාඩම් මාලාව</strong> සහනදායී Premium දායකත්වයකින් විවෘත වේ."},
+"ta":{"co.fatta":"நிறைவு","co.segna":"நிறைவு எனக் குறி","page.examcta":"அடிப்படைப் படிப்பை முடித்தீர்களா? உங்கள் நிலையைப் பெற்று வசதிகளைத் திறக்க தேர்வு &amp; பேட்ஜ் பக்கம் செல்லுங்கள் →","page.h1":"மொழி வகுப்புகள்,<br/><em>படிப்படியாக.</em>","page.lead":"அன்றாட வாழ்க்கைக்குத் தேவையான இத்தாலிய அல்லது ஆங்கில மொழியைக் கற்றுக்கொள்ளுங்கள்: எழுத்துகள், வணக்கங்கள், எண்கள், அடிப்படை வினைச்சொற்கள் மற்றும் பயனுள்ள சொற்றொடர்கள். பதிவு செய்தபின் <strong>அடிப்படை வகுப்பு இலவசம்</strong>; <strong>மேம்பட்ட வகுப்பு</strong> மலிவான Premium சந்தாவுடன் திறக்கப்படும்."}
 };</script>
   <link rel="stylesheet" href="/assets/eih-hero3d.css"/>
 <script src="/assets/eih-lang-url.js"></script>
@@ -217,6 +217,10 @@ var EIH_CORSI = (function(){
 
 <script>
 (function(){
+  // eih.js puo' non essere ancora arrivato: senza rete di sicurezza qui
+  // saltava tutto il disegno delle lezioni con "EIH is not defined"
+  function M(k,i){ return (window.EIH&&window.EIH.msg)?window.EIH.msg(k,i):i; }
+  window.M = window.M || M;   // la usa anche il blocco che disegna le lezioni avanzate
   var COURSES = [
     { cat:"Programmazione", title:"Python da zero", yt:"corso python italiano completo principianti", lessons:[
       { id:'py1', t:"Cos'è Python e primo programma", body:
@@ -363,9 +367,9 @@ var EIH_CORSI = (function(){
         c.lessons.map(function(l){
           var isDone = done.indexOf(l.id)>-1;
           return '<details class="lesson" data-ml="'+l.id+'">'+
-            '<summary><span>'+l.t+'</span>'+(isDone?'<span class="lesson-done-badge">✓ Completata</span>':chev)+'</summary>'+
+            '<summary><span>'+l.t+'</span>'+(isDone?'<span class="lesson-done-badge">✓ '+M('co.fatta','Completata')+'</span>':chev)+'</summary>'+
             '<div class="lesson-body">'+l.body+
-              '<button type="button" class="lesson-mark" '+(isDone?'disabled':'')+'>'+(isDone?'✓ Completata':'Segna come completata')+'</button>'+
+              '<button type="button" class="lesson-mark" '+(isDone?'disabled':'')+'>'+(isDone?'✓ '+M('co.fatta','Completata'):M('co.segna','Segna come completata'))+'</button>'+
             '</div></details>';
         }).join('')+
         '<p style="margin-top:.6rem"><a class="inline" href="'+yt+'" target="_blank" rel="noopener">▶ Approfondisci con video gratuiti su YouTube</a></p>'+
@@ -665,10 +669,10 @@ function renderAdvUnlocked(key, done){
     var isDone = !!fatte[l.id];
     return '<details class="lesson" data-lesson="'+l.id+'">'+
       '<summary><span>'+l.title+'</span>'+
-        (isDone ? '<span class="lesson-done-badge">✓ Completata</span>' : chevIco) +
+        (isDone ? '<span class="lesson-done-badge">✓ '+M('co.fatta','Completata')+'</span>' : chevIco) +
       '</summary>'+
       '<div class="lesson-body"><p class="muted">'+l.desc+'</p>'+l.body+
-        '<button type="button" class="lesson-mark" '+(isDone?'disabled':'')+'>'+(isDone?'✓ Completata':'Segna come completata')+'</button>'+
+        '<button type="button" class="lesson-mark" '+(isDone?'disabled':'')+'>'+(isDone?'✓ '+M('co.fatta','Completata'):M('co.segna','Segna come completata'))+'</button>'+
       '</div>'+
     '</details>';
   }).join('');
@@ -686,7 +690,7 @@ function renderAdvUnlocked(key, done){
         if(again) again.open = true;
       }catch(e){
         btn.disabled = false;
-        btn.textContent = 'Segna come completata';
+        btn.textContent = M('co.segna','Segna come completata');
       }
     });
   });
@@ -716,10 +720,10 @@ function renderBaseUnlocked(key, done){
     var isDone = !!doneSet[l.id];
     return '<details class="lesson" data-lesson="'+l.id+'">'+
       '<summary><span>'+l.title+'</span>'+
-        (isDone ? '<span class="lesson-done-badge">✓ Completata</span>' : chevIco) +
+        (isDone ? '<span class="lesson-done-badge">✓ '+M('co.fatta','Completata')+'</span>' : chevIco) +
       '</summary>'+
       '<div class="lesson-body">'+l.body+
-        '<button type="button" class="lesson-mark" '+(isDone?'disabled':'')+'>'+(isDone?'✓ Completata':'Segna come completata')+'</button>'+
+        '<button type="button" class="lesson-mark" '+(isDone?'disabled':'')+'>'+(isDone?'✓ '+M('co.fatta','Completata'):M('co.segna','Segna come completata'))+'</button>'+
       '</div>'+
     '</details>';
   }).join('');
@@ -738,7 +742,7 @@ function renderBaseUnlocked(key, done){
         if(again) again.open = true;
       }catch(e){
         btn.disabled = false;
-        btn.textContent = 'Segna come completata';
+        btn.textContent = M('co.segna','Segna come completata');
       }
     });
   });

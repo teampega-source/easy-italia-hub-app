@@ -195,9 +195,20 @@
     _dict=d;
     document.documentElement.lang=l;
     _traducendo=true;
-    document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(d[k]!=null)el.textContent=d[k];});
-    document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.getAttribute('data-i18n-html');if(d[k]!=null)el.innerHTML=d[k];});
-    document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(d[k]!=null)el.setAttribute('placeholder',d[k]);});
+    /* L'italiano di partenza sta scritto nell'HTML, e i dizionari di pagina
+       hanno solo en/si/ta: senza chiave per la lingua richiesta l'elemento
+       restava com'era. Tornando all'italiano dopo un giro in singalese si
+       restava in singalese. Si tiene da parte il testo originale al primo
+       passaggio, e lo si rimette quando la chiave manca. */
+    document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');
+      if(el.__eihIt==null)el.__eihIt=el.textContent;
+      el.textContent=d[k]!=null?d[k]:el.__eihIt;});
+    document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.getAttribute('data-i18n-html');
+      if(el.__eihItH==null)el.__eihItH=el.innerHTML;
+      el.innerHTML=d[k]!=null?d[k]:el.__eihItH;});
+    document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');
+      if(el.__eihItP==null)el.__eihItP=el.getAttribute('placeholder')||'';
+      el.setAttribute('placeholder',d[k]!=null?d[k]:el.__eihItP);});
     _traducendo=false;
     const lf=document.getElementById('lang-flag'),lc=document.getElementById('lang-code');
     if(lf)lf.textContent=LANG_META[l].flag; if(lc)lc.textContent=LANG_META[l].code;
@@ -225,7 +236,7 @@
     // Solo di qui passa una scelta vera: applyLang da sola non salva niente,
     // altrimenti la lingua predefinita si scriverebbe addosso a chi non ha
     // mai aperto il selettore e non si distinguerebbe piu' da una scelta.
-    setLang(l){ricordaLingua(l);applyLang(l);EIH.closeLang();},
+    setLang(l){ricordaLingua(l);applyLang(l);EIH.closeLang();etichettaAiGen();eihDopoLingua(l);},
     // Il testo tradotto di una chiave, per il JavaScript che riscrive un
     // elemento dopo che la pagina e' stata tradotta: scrivere la frase a mano
     // la riporterebbe in italiano, e a seconda di chi arriva primo il difetto
@@ -235,6 +246,80 @@
     closeLang(){const m=document.getElementById('lang-menu');if(m){m.classList.remove('open');document.getElementById('lang-btn').setAttribute('aria-expanded','false');}},
     toggleMenu(){const b=document.getElementById('nav-toggle'),p=document.getElementById('nav-collapse');const o=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',o);p.classList.toggle('open',o);}
   };
+  /* Il corpo della pagina lo traduce eih-i18n-page.js, che al primo giro
+     viene caricato solo se la lingua non e' l'italiano: partendo dall'italiano
+     va acceso adesso. Poi si avvisa la pagina, perche' chi si disegna da solo
+     il proprio contenuto — le domande dell'esame, le lezioni, gli elenchi —
+     deve ridisegnarsi nella lingua nuova. */
+  function eihDopoLingua(l){
+    try{
+      if(window.EIHPageI18N&&window.EIHPageI18N.cambia){ window.EIHPageI18N.cambia(); }
+      else if(l!=='it'&&!document.querySelector('script[src*="eih-i18n-page.js"]')){
+        var s=document.createElement('script');s.src='/assets/eih-i18n-page.js';s.defer=true;
+        document.head.appendChild(s);
+      }
+    }catch(e){}
+    try{ window.dispatchEvent(new CustomEvent('eihLangChanged',{detail:{lingua:l}})); }catch(e){}
+  }
+
+  /* Finestre modali: tastiera e sfondo.
+
+     Ogni pagina apre la sua finestra a modo proprio — chi con una classe, chi
+     con uno stile — e qualcuna si era scordata la tastiera: Esc non chiudeva,
+     il fuoco usciva dalla finestra e finiva a girare fra i link della pagina
+     sotto, e lo sfondo scorreva. Chi legge con uno screen reader sentiva
+     aria-modal="true" dire che il resto non esiste, mentre ci finiva dentro
+     col tabulatore. Qui si copre tutto in una volta, senza toccare il codice
+     di apertura delle singole pagine. */
+  (function(){
+    var tornaA=null, bloccato=false;
+    function aperta(){
+      var l=document.querySelectorAll('.modal-overlay.open,[role="dialog"].open');
+      return l.length ? l[l.length-1] : null;
+    }
+    function dentro(m){
+      return [].slice.call(m.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'))
+        .filter(function(e){ return e.offsetWidth || e.offsetHeight || e.getClientRects().length; });
+    }
+    function chiudi(m){
+      // meglio premere il pulsante della pagina: fa anche le sue pulizie
+      var b=m.querySelector('.modal-close,.modal-cancel,#modal-cancel,[data-chiudi]');
+      if(b){ b.click(); return; }
+      m.classList.remove('open');
+    }
+    document.addEventListener('keydown', function(e){
+      var m=aperta(); if(!m) return;
+      if(e.key==='Escape'){ e.preventDefault(); chiudi(m); return; }
+      if(e.key!=='Tab') return;
+      var f=dentro(m); if(!f.length) return;
+      var primo=f[0], ultimo=f[f.length-1];
+      if(e.shiftKey && document.activeElement===primo){ e.preventDefault(); ultimo.focus(); }
+      else if(!e.shiftKey && document.activeElement===ultimo){ e.preventDefault(); primo.focus(); }
+      else if(!m.contains(document.activeElement)){ e.preventDefault(); primo.focus(); }
+    });
+    function guarda(){
+      var m=aperta();
+      if(m && !bloccato){
+        bloccato=true;
+        tornaA=document.activeElement;
+        document.body.style.overflow='hidden';
+        if(!m.contains(document.activeElement)){
+          var f=dentro(m);
+          setTimeout(function(){ (f[0]||m).focus(); }, 60);
+        }
+      } else if(!m && bloccato){
+        bloccato=false;
+        document.body.style.overflow='';
+        if(tornaA && tornaA.focus){ try{ tornaA.focus(); }catch(e){} }
+        tornaA=null;
+      }
+    }
+    if(window.MutationObserver){
+      new MutationObserver(guarda).observe(document.documentElement,
+        { attributes:true, subtree:true, attributeFilter:['class'] });
+    }
+  })();
+
   window.EIH=EIH;
 
   /* Attesa condivisa per il livello dati.
@@ -277,13 +362,17 @@
   };
   function etichettaAiGen(){
     document.querySelectorAll('[data-ai-gen]').forEach(function(el){
-      if(el.__aiGen)return; el.__aiGen=true;
       var tipo=el.getAttribute('data-ai-gen')||'video';
       var testi=AI_GEN[tipo]||AI_GEN.video;
+      /* L'avviso e' obbligatorio (art. 50 Reg. UE 2024/1689) e va nella lingua
+         di chi guarda: si scriveva una volta sola e al cambio lingua restava
+         com'era. Se c'e' gia', si riscrive invece di uscire. */
+      if(el.__aiGenEl){ el.__aiGenEl.textContent=testi[lang]||testi.it; return; }
       var p=document.createElement('p');
       p.className='eih-ai-gen';
       p.setAttribute('data-no-tr','');   // la traduzione la fa gia' questa tabella
       p.textContent=testi[lang]||testi.it;
+      el.__aiGenEl=p;
       // insieme al contenuto: dopo per quello che si guarda, prima per quello
       // che si legge
       (el.parentNode||document.body).insertBefore(p,tipo==='testo'?el:el.nextSibling);
