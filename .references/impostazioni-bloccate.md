@@ -93,6 +93,22 @@ quelle dentro le media query.
 `favicon.ico` — ogni browser e ogni crawler lo chiede senza che nessuno lo
 linki. Mancava e rispondeva 404 a ogni visita.
 
+## Indicizzazione
+
+Mappa del sito, `noindex` e canonical devono dire la stessa cosa. Una pagina
+elencata nella mappa e insieme marcata `noindex` è una contraddizione, e
+Search Console la segnala.
+
+Restano **fuori dalla mappa e con `noindex`**, di proposito: `cerca`,
+`cv-builder`, `dashboard`, `documenti`, `permesso-tracker`, `profili`,
+`registrati`, `benvenuta`, `abbonamenti`, `cookie`, `404`, `offline`.
+
+Dopo ogni modifica alla mappa o a un `<meta name="robots">`:
+
+```
+python3 scripts/audit-indicizzazione.py    # esce 1 se qualcosa si contraddice
+```
+
 ## Affiliazioni
 
 - Wise: camref Partnerize `1110lKde8`, valore predefinito in `api/go.js`.
