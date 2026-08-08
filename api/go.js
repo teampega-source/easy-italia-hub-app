@@ -12,7 +12,9 @@ const IDS = {
   safetywing: process.env.AFF_SAFETYWING  || '',
   airalo:     process.env.AFF_AIRALO      || '',
   gyg:        process.env.AFF_GYG         || '',
-  wise:       process.env.AFF_WISE        || '',
+  // camref del programma Wise (Partnerize), approvato: non e' un segreto, sta
+  // in chiaro in ogni link. In env solo se un giorno cambia.
+  wise:       process.env.AFF_WISE        || '1110lKde8',
   remitly:    process.env.AFF_REMITLY     || '',
 };
 

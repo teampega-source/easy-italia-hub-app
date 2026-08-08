@@ -16,6 +16,7 @@
     { href: '/news', it: 'News', en: 'News', k: 'notizie sri lanka aggiornamenti' },
     { href: '/mappa', it: 'Mappa dei servizi', en: 'Services map', k: 'caf patronato questura consolato negozio' },
     { href: '/money-transfer', it: 'Money Transfer', en: 'Money transfer', k: 'soldi rimesse cambio rupie invio denaro' },
+    { href: '/wise', it: 'Wise: come funziona', en: 'Wise: how it works', k: 'wise conto multivaluta carta rupie lkr rimesse commissioni partner' },
     { href: '/cargo', it: 'Spedizioni Cargo', en: 'Cargo shipping', k: 'pacco nave aereo container colombo spedire scatolone' },
     { href: '/guida-conti', it: 'Aprire un Conto in Banca', en: 'Open a bank account', k: 'conto corrente bancario poste iban hype n26 revolut stranieri' },
     { href: '/dizionario-medico', it: 'Dizionario Medico IT-Singalese', en: 'Medical dictionary IT-Sinhala', k: 'sintomi medico farmacia singalese sinhala frasi traduzione pronto soccorso' },
