@@ -69,7 +69,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   <style>
     [data-page="mercatino"] .cat-filter{display:flex;flex-wrap:wrap;gap:.5rem;margin:var(--sp-4) 0}
     [data-page="mercatino"] .cat-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.38rem .9rem;border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:500;color:var(--fg-secondary);background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:all var(--dur-micro)}
-    [data-page="mercatino"] .cat-btn:hover,[data-page="mercatino"] .cat-btn.active{background:var(--gold);color:#fff;border-color:var(--gold)}
+    [data-page="mercatino"] .cat-btn:hover,[data-page="mercatino"] .cat-btn.active{background:var(--gold);color:var(--su-accento);border-color:var(--gold)}
     [data-page="mercatino"] .listings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--sp-3);margin-top:var(--sp-2)}
     [data-page="mercatino"] .listing-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:var(--sp-4);display:flex;flex-direction:column;gap:.5rem;transition:border-color var(--dur-micro),transform var(--dur-micro)}
     [data-page="mercatino"] .listing-card:hover{border-color:var(--border-bright);transform:translateY(-2px)}
@@ -96,14 +96,14 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     [data-page="mercatino"] .listing-report{background:none;border:none;padding:0;cursor:pointer;font-size:var(--text-xs);color:var(--fg-muted);transition:color var(--dur-micro)}
     [data-page="mercatino"] .listing-report:hover{color:var(--coral)}
     [data-page="mercatino"] .listing-report:disabled{cursor:default;color:var(--green)}
-    [data-page="mercatino"] .cta-publish{background:var(--gold);color:#fff;border:none;padding:.75rem 1.5rem;border-radius:var(--radius-full);font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;cursor:pointer;transition:opacity .15s}
+    [data-page="mercatino"] .cta-publish{background:var(--gold);color:var(--su-accento);border:none;padding:.75rem 1.5rem;border-radius:var(--radius-full);font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;cursor:pointer;transition:opacity .15s}
     [data-page="mercatino"] .cta-publish:hover{opacity:.88}
     [data-page="mercatino"] .publish-box{background:rgba(255,253,249,0.6);backdrop-filter:blur(16px);border:1px solid var(--border-bright);border-radius:calc(var(--radius)*1.5);padding:var(--sp-5);text-align:center;margin-top:var(--sp-4)}
     [data-page="mercatino"] .publish-title{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xl);font-weight:600;color:var(--ink);margin-bottom:.5rem}
     [data-page="mercatino"] .publish-desc{font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--sp-3);line-height:1.6}
     [data-page="mercatino"] .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:1rem}
     [data-page="mercatino"] .modal-overlay.open{display:flex}
-    [data-page="mercatino"] .modal{background:var(--bg);border-radius:calc(var(--radius)*2);padding:var(--sp-5);width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
+    [data-page="mercatino"] .modal{background:var(--bg-elevated);border-radius:calc(var(--radius)*2);padding:var(--sp-5);width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
     [data-page="mercatino"] .modal-title{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xl);font-weight:600;color:var(--ink);margin-bottom:var(--sp-3)}
     [data-page="mercatino"] .form-field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:var(--sp-2)}
     [data-page="mercatino"] .form-label{font-size:var(--text-sm);font-weight:500;color:var(--fg)}
@@ -111,11 +111,11 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     [data-page="mercatino"] .form-textarea{min-height:90px;resize:vertical}
     [data-page="mercatino"] .modal-actions{display:flex;gap:.75rem;margin-top:var(--sp-3);justify-content:flex-end}
     [data-page="mercatino"] .btn-cancel{background:var(--surface);border:1px solid var(--border);color:var(--fg-secondary);padding:.55rem 1.2rem;border-radius:var(--radius-full);font-size:var(--text-sm);cursor:pointer}
-    [data-page="mercatino"] .btn-submit{background:var(--gold);color:#fff;border:none;padding:.55rem 1.5rem;border-radius:var(--radius-full);font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:600;cursor:pointer}
+    [data-page="mercatino"] .btn-submit{background:var(--gold);color:var(--su-accento);border:none;padding:.55rem 1.5rem;border-radius:var(--radius-full);font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:600;cursor:pointer}
     [data-page="mercatino"] .empty-state{text-align:center;padding:var(--sp-5);color:var(--fg-muted);font-size:var(--text-sm)}
     html[data-theme="dark"] [data-page="mercatino"] .publish-box{background:rgba(33,30,26,.72)}
     html[data-theme="dark"] [data-page="mercatino"] .modal{background:var(--bg-elevated)}
-    html[data-theme="dark"] [data-page="mercatino"] .form-input,html[data-theme="dark"] [data-page="mercatino"] .form-select,html[data-theme="dark"] [data-page="mercatino"] .form-textarea{background:var(--bg);border-color:var(--border-bright)}
+    html[data-theme="dark"] [data-page="mercatino"] .form-input,html[data-theme="dark"] [data-page="mercatino"] .form-select,html[data-theme="dark"] [data-page="mercatino"] .form-textarea{background:var(--bg-elevated);border-color:var(--border-bright)}
   </style>
 
   <div class="page page-wide">
@@ -435,5 +435,9 @@ window.EIH_I18N_EXTRA = {
 <script src="/assets/vendor/ScrollTrigger.min.js" fetchpriority="low" defer></script>
 <script src="/assets/eih-motion.js" fetchpriority="low" defer></script>
 <script src="/assets/eih-misura.js" defer></script>
+<script src="/assets/eih-atmosphere.js" fetchpriority="low" defer></script>
+<script src="/assets/eih-palette.js" fetchpriority="low" defer></script>
+<script src="/assets/eih-theme.js" defer></script>
+<script src="/assets/eih-consent.js" defer></script>
 </body>
 </html>

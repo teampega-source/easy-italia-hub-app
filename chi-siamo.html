@@ -105,7 +105,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   "roadmap.label":"Transparency",
   "roadmap.sub":"Our roadmap is public. Vote for the features you want to see first — your vote really counts.",
   "roadmap.title":"What we are <em>building</em>",
-  "roadmap.vote":"Vote",
+  "roadmap.vote":"Vote","roadmap.voted":"Voted",
   "roadmap.wip":"In progress",
   "page.h1":"Not a portal.<br/><em>A home.</em>",
   "page.lead":"Easy Italia Hub was born to serve foreigners living and working in Italy, with special attention to the Sri Lankan community — Sinhala and Tamil. But our ambition goes beyond an information website.",
@@ -206,7 +206,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   "roadmap.label":"විනිවිදභාවය",
   "roadmap.sub":"අපගේ roadmap ප්‍රසිද්ධයි. ඔබ කලින් දැකීමට කැමති විශේෂාංග සඳහා ඡන්දය දෙන්න — ඔබේ ඡන්දය සැබවින්ම ගණනය වේ.",
   "roadmap.title":"අපි <em>ගොඩනඟන</em> දේ",
-  "roadmap.vote":"ඡන්දය",
+  "roadmap.vote":"ඡන්දය","roadmap.voted":"ඡන්දය දුන්නා",
   "roadmap.wip":"ක්‍රියාත්මකයි",
   "page.h1":"පෝර්ටලයක් නොවේ.<br/><em>නිවසක්.</em>",
   "page.lead":"Easy Italia Hub බිහි වූයේ ඉතාලියේ ජීවත් වන සහ සේවය කරන විදේශිකයන්ට සේවය කිරීමටයි — සිංහල සහ දෙමළ ශ්‍රී ලාංකික ප්‍රජාවට විශේෂ අවධානයකින්. නමුත් අපේ අරමුණ තොරතුරු වෙබ් අඩවියකට වඩා ඔබ්බට යයි.",
@@ -307,7 +307,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   "roadmap.label":"வெளிப்படைத்தன்மை",
   "roadmap.sub":"எங்கள் roadmap பொதுவானது. நீங்கள் முதலில் பார்க்க விரும்பும் அம்சங்களுக்கு வாக்களியுங்கள் — உங்கள் வாக்கு உண்மையில் முக்கியம்.",
   "roadmap.title":"நாங்கள் <em>உருவாக்குவது</em>",
-  "roadmap.vote":"வாக்களி",
+  "roadmap.vote":"வாக்களி","roadmap.voted":"வாக்களித்தீர்கள்",
   "roadmap.wip":"செயல்பாட்டில்",
   "page.h1":"ஒரு போர்டல் அல்ல.<br/><em>ஒரு வீடு.</em>",
   "page.lead":"Easy Italia Hub இத்தாலியில் வாழ்ந்து வேலை செய்யும் வெளிநாட்டவர்களுக்கு சேவை செய்யப் பிறந்தது — சிங்கள மற்றும் தமிழ் இலங்கை சமூகத்திற்கு சிறப்பு கவனத்துடன். ஆனால் எங்கள் இலக்கு ஒரு தகவல் தளத்தைத் தாண்டியது.",
@@ -536,6 +536,44 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 </main>
 
 <div id="site-footer"></div>
+<script>
+/* I due pulsanti "Vota" della roadmap chiamavano una funzione che non e' mai
+   esistita: si cliccava e non succedeva niente. Il voto vive in questo
+   browser — non c'e' un archivio dei voti dietro — quindi il conteggio sale
+   di uno e il pulsante si ricorda di te al ritorno. */
+(function(){
+  var CHIAVE = 'eih-roadmap-voti';
+  function letti(){ try { return JSON.parse(localStorage.getItem(CHIAVE)) || {}; } catch (e) { return {}; } }
+  function scritti(v){ try { localStorage.setItem(CHIAVE, JSON.stringify(v)); } catch (e) {} }
+  function etichetta(b){
+    var l = b.querySelector('.rv-label'); if (!l) return;
+    // La chiave cambia, cosi' un cambio di lingua dopo il voto trova "Votato"
+    l.setAttribute('data-i18n', 'roadmap.voted');
+    l.textContent = (window.EIH && window.EIH.testo) ? window.EIH.testo('roadmap.voted', 'Votato') : 'Votato';
+  }
+  function segna(b, voce, sommare){
+    var c = b.querySelector('.rv-count');
+    if (c && sommare) c.textContent = String((parseInt(c.textContent, 10) || 0) + 1);
+    b.classList.add('voted');
+    b.setAttribute('aria-pressed', 'true');
+    etichetta(b);
+  }
+  window.voteRoadmap = function(b, voce){
+    var v = letti();
+    if (v[voce]) return;            // un voto a testa, e resta
+    v[voce] = 1; scritti(v);
+    segna(b, voce, true);
+  };
+  document.addEventListener('DOMContentLoaded', function(){
+    var v = letti();
+    document.querySelectorAll('.roadmap-vote').forEach(function(b){
+      var m = (b.getAttribute('onclick') || '').match(/['"]([^'"]+)['"]\s*\)/);
+      b.setAttribute('aria-pressed', 'false');
+      if (m && v[m[1]]) segna(b, m[1], true);
+    });
+  });
+})();
+</script>
 <script src="eih.js"></script>
 <script src="eih-auth.js" defer></script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>

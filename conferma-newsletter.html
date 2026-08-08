@@ -25,18 +25,21 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Newsletter — Easy Italia Hub</title>
-<link rel="stylesheet" href="/eih-theme.css"/>
-<link rel="stylesheet" href="/eih-atmosphere.css"/>
-<script>!function(){var s=localStorage.getItem('eih-theme')||'dark';document.documentElement.setAttribute('data-theme',s)}()</script>
-<link rel="icon" href="/assets/img/favicon.ico"/>
-<link rel="manifest" href="/site.webmanifest"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
 <link rel="stylesheet" href="/eih.css"/>
 <style>
-.confirm-wrap{max-width:520px;margin:var(--sp-12) auto;padding:var(--sp-5) var(--sp-4);text-align:center}
+/* Variabili del sito, non inventate: --sp-12, --fg-primary e --accent qui non
+   esistono, e il pulsante restava senza fondo — bianco su bianco. */
+.confirm-wrap{max-width:520px;margin:var(--sp-6) auto;padding:var(--sp-5) var(--sp-4);text-align:center}
 .confirm-icon{font-size:3.5rem;line-height:1;margin-bottom:var(--sp-4)}
-.confirm-wrap h1{font-size:var(--text-2xl);font-weight:700;color:var(--fg-primary);margin:0 0 var(--sp-3)}
+.confirm-wrap h1{font-size:var(--text-2xl);font-weight:700;color:var(--ink);margin:0 0 var(--sp-3)}
 .confirm-wrap p{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.7;margin:0 0 var(--sp-5)}
-.confirm-btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;font-size:var(--text-sm);padding:.75rem 2rem;border-radius:var(--radius-full);transition:opacity .15s}
+.confirm-btn{display:inline-block;background:var(--gold);color:var(--su-accento);text-decoration:none;font-weight:600;font-size:var(--text-sm);padding:.75rem 2rem;border-radius:var(--radius-full);transition:opacity .15s}
 .confirm-btn:hover{opacity:.85}
 </style>
 <script src="/assets/eih-lang-url.js"></script>
@@ -52,13 +55,57 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <div id="site-footer"></div>
 <script src="/eih.js"></script>
 <script src="/eih-auth.js"></script>
-<script src="/eih-atmosphere.js" fetchpriority="low"></script>
-<script src="/eih-palette.js" fetchpriority="low"></script>
-<script src="/eih-theme.js"></script>
-<script src="/eih-consent.js"></script>
+<script src="/assets/eih-atmosphere.js" fetchpriority="low" defer></script>
+<script src="/assets/eih-palette.js" fetchpriority="low" defer></script>
+<script src="/assets/eih-theme.js" defer></script>
+<script src="/assets/eih-consent.js" defer></script>
 <script src="/assets/eih-misura.js" defer></script>
 <script>
+/* I messaggi li scrive il JavaScript dopo il caricamento, quindi il traduttore
+   a impronte non li vede: qui stanno scritti in tutte e quattro le lingue. Chi
+   arriva da un'email in singalese non deve trovare una pagina in italiano. */
 (function(){
+  var T = {
+    it:{ gia:['Già iscritto','Il tuo indirizzo email era già stato confermato in precedenza.'],
+         demo:['Iscrizione ricevuta','Modalità demo — il sistema di conferma è attivo con Supabase e Resend configurati.'],
+         ok:['Iscrizione confermata!','Benvenuto nella newsletter di Easy Italia Hub. Riceverai aggiornamenti su novità burocratiche, opportunità selezionate e risorse per la vita in Italia.'],
+         scaduto:['Link scaduto','Il link di conferma è valido solo per 24 ore. Iscriviti di nuovo per ricevere un nuovo link.'],
+         invalido:['Link non valido','Il link di conferma non è valido. Verifica di aver copiato l\'indirizzo completo oppure iscriviti di nuovo.'],
+         errore:['Errore temporaneo','Si è verificato un problema. Riprova tra qualche minuto o scrivici.'],
+         attesa:['Controlla la tua email','Abbiamo inviato un link di conferma al tuo indirizzo. Clicca il link nell\'email per completare l\'iscrizione alla newsletter.'],
+         home:'Torna alla home', vai:'Vai alla home', ancora:'Iscriviti di nuovo' },
+    en:{ gia:['Already subscribed','Your email address had already been confirmed.'],
+         demo:['Subscription received','Demo mode — confirmation works once Supabase and Resend are configured.'],
+         ok:['Subscription confirmed!','Welcome to the Easy Italia Hub newsletter. You will get updates on paperwork changes, selected opportunities and resources for life in Italy.'],
+         scaduto:['Link expired','The confirmation link only lasts 24 hours. Subscribe again to get a new one.'],
+         invalido:['Invalid link','This confirmation link is not valid. Check that you copied the whole address, or subscribe again.'],
+         errore:['Temporary error','Something went wrong. Try again in a few minutes or write to us.'],
+         attesa:['Check your email','We have sent a confirmation link to your address. Click the link in the email to complete your newsletter subscription.'],
+         home:'Back to home', vai:'Go to home', ancora:'Subscribe again' },
+    si:{ gia:['දැනටමත් දායක වී ඇත','ඔබේ ඊමේල් ලිපිනය මීට පෙරම තහවුරු කර ඇත.'],
+         demo:['දායකත්වය ලැබුණි','ආදර්ශන ආකාරය — Supabase සහ Resend සකසා ඇති විට තහවුරු කිරීම ක්‍රියාත්මක වේ.'],
+         ok:['දායකත්වය තහවුරු විය!','Easy Italia Hub පුවත් ලිපියට සාදරයෙන් පිළිගනිමු. ලේඛන කටයුතු වෙනස්කම්, තෝරාගත් අවස්ථා සහ ඉතාලියේ ජීවිතයට උපකාරී තොරතුරු ඔබට ලැබෙනු ඇත.'],
+         scaduto:['සබැඳිය කල් ඉකුත් වී ඇත','තහවුරු කිරීමේ සබැඳිය පැය 24ක් පමණක් වලංගුයි. නව එකක් ලබාගැනීමට නැවත දායක වන්න.'],
+         invalido:['සබැඳිය වලංගු නැත','මෙම තහවුරු කිරීමේ සබැඳිය වලංගු නොවේ. සම්පූර්ණ ලිපිනය පිටපත් කළාදැයි බලන්න, නැතහොත් නැවත දායක වන්න.'],
+         errore:['තාවකාලික දෝෂයක්','යමක් වැරදී ඇත. මිනිත්තු කිහිපයකින් නැවත උත්සාහ කරන්න හෝ අපට ලියන්න.'],
+         attesa:['ඔබේ ඊමේල් පරීක්ෂා කරන්න','ඔබේ ලිපිනයට තහවුරු කිරීමේ සබැඳියක් යවා ඇත. දායකත්වය සම්පූර්ණ කිරීමට ඊමේලයේ ඇති සබැඳිය ක්ලික් කරන්න.'],
+         home:'මුල් පිටුවට', vai:'මුල් පිටුවට යන්න', ancora:'නැවත දායක වන්න' },
+    ta:{ gia:['ஏற்கனவே சந்தா செய்யப்பட்டது','உங்கள் மின்னஞ்சல் முகவரி ஏற்கனவே உறுதிப்படுத்தப்பட்டுள்ளது.'],
+         demo:['சந்தா பெறப்பட்டது','டெமோ முறை — Supabase மற்றும் Resend அமைக்கப்பட்டவுடன் உறுதிப்படுத்தல் இயங்கும்.'],
+         ok:['சந்தா உறுதிப்படுத்தப்பட்டது!','Easy Italia Hub செய்திமடலுக்கு வரவேற்கிறோம். ஆவண மாற்றங்கள், தேர்ந்தெடுத்த வாய்ப்புகள், இத்தாலி வாழ்க்கைக்கான தகவல்கள் உங்களுக்குக் கிடைக்கும்.'],
+         scaduto:['இணைப்பு காலாவதியானது','உறுதிப்படுத்தல் இணைப்பு 24 மணி நேரம் மட்டுமே செல்லும். புதியது பெற மீண்டும் சந்தா செய்யுங்கள்.'],
+         invalido:['செல்லாத இணைப்பு','இந்த உறுதிப்படுத்தல் இணைப்பு செல்லாது. முழு முகவரியையும் நகலெடுத்தீர்களா எனப் பாருங்கள், அல்லது மீண்டும் சந்தா செய்யுங்கள்.'],
+         errore:['தற்காலிகப் பிழை','ஏதோ தவறு நடந்தது. சில நிமிடங்களில் மீண்டும் முயற்சியுங்கள் அல்லது எங்களுக்கு எழுதுங்கள்.'],
+         attesa:['உங்கள் மின்னஞ்சலைப் பாருங்கள்','உங்கள் முகவரிக்கு உறுதிப்படுத்தல் இணைப்பு அனுப்பியுள்ளோம். சந்தாவை முடிக்க மின்னஞ்சலில் உள்ள இணைப்பைச் சொடுக்குங்கள்.'],
+         home:'முகப்புக்குத் திரும்பு', vai:'முகப்புக்குச் செல்', ancora:'மீண்டும் சந்தா செய்' }
+  };
+  function lingua(){
+    var l = window.EIH_LANG;
+    try { l = localStorage.getItem('eih-lang') || l; } catch (e) {}
+    return T[l] ? l : 'en';
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
   var p = new URLSearchParams(location.search);
   var ok = p.get('ok'), err = p.get('e'), already = p.get('already'), demo = p.get('demo');
   var el = document.getElementById('confirm-content');
@@ -67,32 +114,22 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   // l'iscrizione c'è. Vale solo su questo browser, ed è quanto basta.
   if (ok) { try { localStorage.setItem('eih-nl-iscritto', '1'); } catch (e) {} }
 
-  if (ok) {
-    el.innerHTML = already
-      ? '<div class="confirm-icon">✓</div><h1>Già iscritto</h1><p>Il tuo indirizzo email era già stato confermato in precedenza.</p><a href="/" class="confirm-btn">Torna alla home</a>'
-      : demo
-        ? '<div class="confirm-icon">✓</div><h1>Iscrizione ricevuta</h1><p>Modalità demo — il sistema di conferma è attivo con Supabase e Resend configurati.</p><a href="/" class="confirm-btn">Torna alla home</a>'
-        : '<div class="confirm-icon">🎉</div><h1>Iscrizione confermata!</h1><p>Benvenuto nella newsletter di <strong>Easy Italia Hub</strong>. Riceverai aggiornamenti su novità burocratiche, opportunità selezionate e risorse per la vita in Italia.</p><a href="/" class="confirm-btn">Vai alla home</a>';
-    return;
-  }
+  var d = T[lingua()];
+  var stato = ok ? (already ? 'gia' : demo ? 'demo' : 'ok')
+    : err === 'expired' ? 'scaduto'
+    : err === 'invalid' ? 'invalido'
+    : err === 'server' ? 'errore'
+    : 'attesa';
+  var ICONA = { gia:'✓', demo:'✓', ok:'🎉', scaduto:'⏰', invalido:'❌', errore:'⚠️', attesa:'✉️' };
+  var indietro = (stato === 'scaduto' || stato === 'invalido')
+    ? ['/#newsletter', d.ancora]
+    : [ '/', stato === 'ok' ? d.vai : d.home ];
 
-  if (err === 'expired') {
-    el.innerHTML = '<div class="confirm-icon">⏰</div><h1>Link scaduto</h1><p>Il link di conferma è valido solo per 24 ore. Iscriviti di nuovo per ricevere un nuovo link.</p><a href="/#newsletter" class="confirm-btn">Iscriviti di nuovo</a>';
-    return;
-  }
-
-  if (err === 'invalid') {
-    el.innerHTML = '<div class="confirm-icon">❌</div><h1>Link non valido</h1><p>Il link di conferma non è valido. Verifica di aver copiato l\'URL completo oppure iscriviti di nuovo.</p><a href="/#newsletter" class="confirm-btn">Iscriviti di nuovo</a>';
-    return;
-  }
-
-  if (err === 'server') {
-    el.innerHTML = '<div class="confirm-icon">⚠️</div><h1>Errore temporaneo</h1><p>Si è verificato un problema. Riprova tra qualche minuto o contattaci.</p><a href="/" class="confirm-btn">Torna alla home</a>';
-    return;
-  }
-
-  // No params: user landed directly
-  el.innerHTML = '<div class="confirm-icon">✉️</div><h1>Controlla la tua email</h1><p>Abbiamo inviato un link di conferma al tuo indirizzo. Clicca il link nell\'email per completare l\'iscrizione alla newsletter.</p><a href="/" class="confirm-btn">Torna alla home</a>';
+  el.innerHTML = '<div class="confirm-icon">' + ICONA[stato] + '</div>'
+    + '<h1>' + esc(d[stato][0]) + '</h1>'
+    + '<p>' + esc(d[stato][1]) + '</p>'
+    + '<a href="' + indietro[0] + '" class="confirm-btn">' + esc(indietro[1]) + '</a>';
+  el.setAttribute('data-no-tr', '');
 })();
 </script>
 <script src="/assets/vendor/lenis.min.js" fetchpriority="low" defer></script>
