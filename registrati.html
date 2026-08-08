@@ -147,15 +147,54 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 
   var el = function(id){ return document.getElementById(id); };
 
+  /* Questa pagina non carica eih.js, quindi non ha il dizionario del sito: le
+     sue frasi stanno qui, in quattro lingue. Prima erano fisse in italiano, e
+     passando fra accesso e registrazione la scheda tornava italiana anche a
+     chi stava leggendo in singalese. */
+  var TR = {
+    it:{ tS:'Crea il tuo account gratuito', tL:'Bentornato',
+      sS:'Guide passo-passo, Consigliere AI in 4 lingue, documenti al sicuro e la community srilankese in Italia. Gratis.',
+      sL:'Accedi al tuo account Easy Italia Hub.', bS:'Registrati gratis', bL:'Accedi',
+      qS:'Hai già un account?', qL:'Non hai un account?', lS:'Accedi', lL:'Registrati',
+      vuoti:'Inserisci email e password.', mail:'Controlla l\'indirizzo email: manca qualcosa.',
+      corta:'La password deve avere almeno 8 caratteri.', bot:'Completa la verifica anti-bot.',
+      usata:'Indirizzo già in uso. Prova ad accedere.', noReg:'Registrazione non riuscita. Riprova.',
+      noAcc:'Email o password non corretti.', imprevisto:'Errore imprevisto. Riprova.' },
+    en:{ tS:'Create your free account', tL:'Welcome back',
+      sS:'Step-by-step guides, an AI advisor in 4 languages, your documents kept safe and the Sri Lankan community in Italy. Free.',
+      sL:'Sign in to your Easy Italia Hub account.', bS:'Sign up free', bL:'Sign in',
+      qS:'Already have an account?', qL:"Don't have an account?", lS:'Sign in', lL:'Sign up',
+      vuoti:'Enter your email and password.', mail:'Check the email address: something is missing.',
+      corta:'The password needs at least 8 characters.', bot:'Complete the anti-bot check.',
+      usata:'That address is already in use. Try signing in.', noReg:'Sign-up failed. Please try again.',
+      noAcc:'Wrong email or password.', imprevisto:'Something went wrong. Please try again.' },
+    si:{ tS:'ඔබේ නොමිලේ ගිණුම සාදන්න', tL:'නැවත සාදරයෙන් පිළිගනිමු',
+      sS:'පියවරෙන් පියවර මාර්ගෝපදේශ, භාෂා 4කින් AI උපදේශක, ආරක්ෂිත ලේඛන සහ ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව. නොමිලේ.',
+      sL:'ඔබේ Easy Italia Hub ගිණුමට ඇතුළු වන්න.', bS:'නොමිලේ ලියාපදිංචි වන්න', bL:'ඇතුළු වන්න',
+      qS:'දැනටමත් ගිණුමක් තිබේද?', qL:'ගිණුමක් නැද්ද?', lS:'ඇතුළු වන්න', lL:'ලියාපදිංචි වන්න',
+      vuoti:'ඊමේල් සහ මුරපදය ඇතුළත් කරන්න.', mail:'ඊමේල් ලිපිනය පරීක්ෂා කරන්න: යමක් අඩුයි.',
+      corta:'මුරපදයට අවම වශයෙන් අකුරු 8ක් අවශ්‍යයි.', bot:'රොබෝ නොවන බව තහවුරු කරන්න.',
+      usata:'මෙම ලිපිනය දැනටමත් භාවිතයේ ඇත. ඇතුළු වීමට උත්සාහ කරන්න.', noReg:'ලියාපදිංචිය අසාර්ථකයි. නැවත උත්සාහ කරන්න.',
+      noAcc:'ඊමේල් හෝ මුරපදය වැරදියි.', imprevisto:'යමක් වැරදී ඇත. නැවත උත්සාහ කරන්න.' },
+    ta:{ tS:'உங்கள் இலவசக் கணக்கை உருவாக்குங்கள்', tL:'மீண்டும் வரவேற்கிறோம்',
+      sS:'படிப்படியான வழிகாட்டிகள், 4 மொழிகளில் AI ஆலோசகர், பாதுகாப்பான ஆவணங்கள், இத்தாலியில் இலங்கை சமூகம். இலவசம்.',
+      sL:'உங்கள் Easy Italia Hub கணக்கில் நுழையுங்கள்.', bS:'இலவசமாகப் பதிவு செய்', bL:'நுழைய',
+      qS:'ஏற்கனவே கணக்கு உள்ளதா?', qL:'கணக்கு இல்லையா?', lS:'நுழைய', lL:'பதிவு செய்',
+      vuoti:'மின்னஞ்சலையும் கடவுச்சொல்லையும் உள்ளிடுங்கள்.', mail:'மின்னஞ்சல் முகவரியைச் சரிபாருங்கள்: ஏதோ குறைகிறது.',
+      corta:'கடவுச்சொல்லுக்கு குறைந்தது 8 எழுத்துகள் தேவை.', bot:'ரோபோ அல்ல எனச் சரிபாருங்கள்.',
+      usata:'இந்த முகவரி ஏற்கனவே பயன்பாட்டில் உள்ளது. நுழைய முயற்சியுங்கள்.', noReg:'பதிவு தோல்வி. மீண்டும் முயற்சியுங்கள்.',
+      noAcc:'மின்னஞ்சல் அல்லது கடவுச்சொல் தவறு.', imprevisto:'ஏதோ தவறு நடந்தது. மீண்டும் முயற்சியுங்கள்.' }
+  };
+  function tr(){ var l=window.EIH_LANG; try{ l=localStorage.getItem('eih-lang')||l; }catch(e){} return TR[l]||TR.en; }
+
   function applyMode(){
-    var s = mode === 'signup';
-    el('reg-title').textContent = s ? 'Crea il tuo account gratuito' : 'Bentornato';
-    el('reg-sub').textContent = s ? 'Guide passo-passo, Consigliere AI in 4 lingue, documenti al sicuro e la community srilankese in Italia. Gratis.'
-                                  : 'Accedi al tuo account Easy Italia Hub.';
+    var s = mode === 'signup', T = tr();
+    el('reg-title').textContent = s ? T.tS : T.tL;
+    el('reg-sub').textContent = s ? T.sS : T.sL;
     el('reg-name-field').style.display = s ? '' : 'none';
-    el('reg-submit').textContent = s ? 'Registrati gratis' : 'Accedi';
-    el('reg-switch-text').textContent = s ? 'Hai già un account?' : 'Non hai un account?';
-    el('reg-switch').textContent = s ? 'Accedi' : 'Registrati';
+    el('reg-submit').textContent = s ? T.bS : T.bL;
+    el('reg-switch-text').textContent = s ? T.qS : T.qL;
+    el('reg-switch').textContent = s ? T.lS : T.lL;
     el('reg-pass').setAttribute('autocomplete', s ? 'new-password' : 'current-password');
     var ts = el('reg-turnstile');
     if(window.EIH_AUTH && EIH_AUTH.captchaEnabled && EIH_AUTH.captchaEnabled()){
@@ -171,7 +210,14 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     var email=el('reg-email').value.trim(), pass=el('reg-pass').value, name=el('reg-name').value.trim();
     var btn=el('reg-submit'), err=el('reg-err');
     err.textContent='';
-    if(!email || !pass){ err.textContent='Inserisci email e password.'; return; }
+    var T = tr();
+    if(!email || !pass){ err.textContent=T.vuoti; return; }
+    /* Il modulo e' novalidate — la validazione del browser parla la lingua del
+       sistema, non quella del sito — quindi i controlli li facciamo qui.
+       Prima passava "pippo" con password "x", e l'utente finiva in dashboard
+       con un account che non avrebbe mai potuto recuperare. */
+    if(!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email)){ err.textContent=T.mail; el('reg-email').focus(); return; }
+    if(mode==='signup' && pass.length < 8){ err.textContent=T.corta; el('reg-pass').focus(); return; }
     btn.disabled=true;
     var restore=function(){ btn.disabled=false; applyMode(); };
 
@@ -181,12 +227,12 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
         var tok='';
         if(EIH_AUTH.captchaEnabled && EIH_AUTH.captchaEnabled()){
           tok = EIH_AUTH.getCaptchaToken();
-          if(!tok){ err.textContent='Completa la verifica anti-bot.'; restore(); return; }
+          if(!tok){ err.textContent=T.bot; restore(); return; }
         }
         return EIH_AUTH.signUp(email, pass, {name:name}, tok).then(handle);
       }
       return EIH_AUTH.signIn(email, pass).then(handle);
-    }).catch(function(){ err.textContent='Errore imprevisto. Riprova.'; restore(); });
+    }).catch(function(){ err.textContent=T.imprevisto; restore(); });
 
     // Benvenuto all'utente e avviso all'admin: l'SMTP integrato di Supabase è
     // limitato, queste due partono da Resend. Best-effort, non blocca la UI.
@@ -214,8 +260,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
         if(EIH_AUTH.resetCaptcha) EIH_AUTH.resetCaptcha();
         var m=(res.error.message||'').toLowerCase();
         err.textContent = mode==='signup'
-          ? (m.includes('already')||m.includes('registered') ? 'Indirizzo già in uso. Prova ad accedere.' : 'Registrazione non riuscita. Riprova.')
-          : 'Email o password non corretti.';
+          ? (m.includes('already')||m.includes('registered') ? T.usata : T.noReg)
+          : T.noAcc;
         restore(); return;
       }
       notifySignup();

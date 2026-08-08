@@ -170,6 +170,21 @@
     }
     return out;
   }
+  /* La conversione serve a chi scrive il singalese con le lettere latine.
+     Ma non tutto il latino è singalese scritto male: un indirizzo email, una
+     sigla come SPID o NASpI, il nome di una città, le parole della burocrazia
+     italiana che l'utente è costretto a usare. Convertirle le rende
+     illeggibili — nimal@gmail.com diventava නිමල්@ග්මෛල්.චොම් — e l'indirizzo
+     non si recupera più. Queste restano com'è stato scritto. */
+  var PAROLE_INTATTE = /^(spid|isee|inps|caf|naspi|iban|pec|cud|730|kit|email|permesso|soggiorno|questura|prefettura|comune|anagrafe|codice|fiscale|carta|identita|patronato|tessera|sanitaria|residenza|cittadinanza|ricongiungimento|nulla|osta|marca|bollo|raccomandata|poste|italiane|dichiarazione|redditi|contratto|assegno|unico|hub|italia|easy)$/;
+
+  function daLasciare(parola, prima){
+    if(/[A-Z]/.test(parola)) return true;               // sigle e nomi propri
+    if(/[@\d]/.test(prima)) return true;                // sta scrivendo un indirizzo
+    if(/[@._\/-]$/.test(prima) && /[a-z0-9]/i.test(prima.slice(-2,-1))) return true;
+    return PAROLE_INTATTE.test(parola.toLowerCase());
+  }
+
   // Trasforma solo la parola appena conclusa: così si può correggere mentre si scrive.
   function wireTranslit(input){
     input.addEventListener('input',function(){
@@ -178,12 +193,16 @@
       if(!/[a-zA-Z]/.test(v))return;
       var m=v.match(/^([\s\S]*?)([a-zA-Z]+)([\s.,!?;:]+)$/);
       if(!m)return;
+      if(daLasciare(m[2], m[1])) return;
       input.value=m[1]+toSinhala(m[2])+m[3];
       input.setSelectionRange(input.value.length,input.value.length);
     });
   }
   wireTranslit(document.getElementById('ch-in'));
-  function sendMsg(){var i=document.getElementById('ch-in');var v=i.value;if(lang==='si')v=toSinhala(v);i.value='';sendToAgent(v);}
+  /* Parte quello che si vede nella casella. Prima all'invio si riconvertiva
+     tutto da capo, anche quello che l'utente aveva lasciato o rimesso in
+     latino apposta: la correzione veniva annullata nel momento dell'invio. */
+  function sendMsg(){var i=document.getElementById('ch-in');var v=i.value;i.value='';sendToAgent(v);}
   document.getElementById('ch-in').addEventListener('keydown',function(e){if(e.key==='Enter')sendMsg();});
   document.getElementById('ch-send').addEventListener('click',sendMsg);
   document.querySelectorAll('.sug[data-qi]').forEach(function(el,i){
@@ -191,6 +210,8 @@
   });
   document.addEventListener('keydown',function(e){
     if((e.metaKey||e.ctrlKey)&&!e.altKey&&e.key.toLowerCase()==='j'){e.preventDefault();toggleChat();}
+    // Esc chiude, come in ogni altro pannello del sito
+    if(e.key==='Escape' && open){ e.preventDefault(); toggleChat(); }
   });
 
   window.EIH_CHAT={toggle:toggleChat,send:sendToAgent,sendSug:function(idx){sendToAgent((CHAT_I18N[lang]||CHAT_I18N.it)[QS[idx]]);}};

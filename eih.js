@@ -236,7 +236,7 @@
     // Solo di qui passa una scelta vera: applyLang da sola non salva niente,
     // altrimenti la lingua predefinita si scriverebbe addosso a chi non ha
     // mai aperto il selettore e non si distinguerebbe piu' da una scelta.
-    setLang(l){ricordaLingua(l);applyLang(l);EIH.closeLang();eihDopoLingua(l);},
+    setLang(l){ricordaLingua(l);applyLang(l);EIH.closeLang();etichettaAiGen();eihDopoLingua(l);},
     // Il testo tradotto di una chiave, per il JavaScript che riscrive un
     // elemento dopo che la pagina e' stata tradotta: scrivere la frase a mano
     // la riporterebbe in italiano, e a seconda di chi arriva primo il difetto
@@ -261,6 +261,64 @@
     }catch(e){}
     try{ window.dispatchEvent(new CustomEvent('eihLangChanged',{detail:{lingua:l}})); }catch(e){}
   }
+
+  /* Finestre modali: tastiera e sfondo.
+
+     Ogni pagina apre la sua finestra a modo proprio — chi con una classe, chi
+     con uno stile — e qualcuna si era scordata la tastiera: Esc non chiudeva,
+     il fuoco usciva dalla finestra e finiva a girare fra i link della pagina
+     sotto, e lo sfondo scorreva. Chi legge con uno screen reader sentiva
+     aria-modal="true" dire che il resto non esiste, mentre ci finiva dentro
+     col tabulatore. Qui si copre tutto in una volta, senza toccare il codice
+     di apertura delle singole pagine. */
+  (function(){
+    var tornaA=null, bloccato=false;
+    function aperta(){
+      var l=document.querySelectorAll('.modal-overlay.open,[role="dialog"].open');
+      return l.length ? l[l.length-1] : null;
+    }
+    function dentro(m){
+      return [].slice.call(m.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'))
+        .filter(function(e){ return e.offsetWidth || e.offsetHeight || e.getClientRects().length; });
+    }
+    function chiudi(m){
+      // meglio premere il pulsante della pagina: fa anche le sue pulizie
+      var b=m.querySelector('.modal-close,.modal-cancel,#modal-cancel,[data-chiudi]');
+      if(b){ b.click(); return; }
+      m.classList.remove('open');
+    }
+    document.addEventListener('keydown', function(e){
+      var m=aperta(); if(!m) return;
+      if(e.key==='Escape'){ e.preventDefault(); chiudi(m); return; }
+      if(e.key!=='Tab') return;
+      var f=dentro(m); if(!f.length) return;
+      var primo=f[0], ultimo=f[f.length-1];
+      if(e.shiftKey && document.activeElement===primo){ e.preventDefault(); ultimo.focus(); }
+      else if(!e.shiftKey && document.activeElement===ultimo){ e.preventDefault(); primo.focus(); }
+      else if(!m.contains(document.activeElement)){ e.preventDefault(); primo.focus(); }
+    });
+    function guarda(){
+      var m=aperta();
+      if(m && !bloccato){
+        bloccato=true;
+        tornaA=document.activeElement;
+        document.body.style.overflow='hidden';
+        if(!m.contains(document.activeElement)){
+          var f=dentro(m);
+          setTimeout(function(){ (f[0]||m).focus(); }, 60);
+        }
+      } else if(!m && bloccato){
+        bloccato=false;
+        document.body.style.overflow='';
+        if(tornaA && tornaA.focus){ try{ tornaA.focus(); }catch(e){} }
+        tornaA=null;
+      }
+    }
+    if(window.MutationObserver){
+      new MutationObserver(guarda).observe(document.documentElement,
+        { attributes:true, subtree:true, attributeFilter:['class'] });
+    }
+  })();
 
   window.EIH=EIH;
 
@@ -304,13 +362,17 @@
   };
   function etichettaAiGen(){
     document.querySelectorAll('[data-ai-gen]').forEach(function(el){
-      if(el.__aiGen)return; el.__aiGen=true;
       var tipo=el.getAttribute('data-ai-gen')||'video';
       var testi=AI_GEN[tipo]||AI_GEN.video;
+      /* L'avviso e' obbligatorio (art. 50 Reg. UE 2024/1689) e va nella lingua
+         di chi guarda: si scriveva una volta sola e al cambio lingua restava
+         com'era. Se c'e' gia', si riscrive invece di uscire. */
+      if(el.__aiGenEl){ el.__aiGenEl.textContent=testi[lang]||testi.it; return; }
       var p=document.createElement('p');
       p.className='eih-ai-gen';
       p.setAttribute('data-no-tr','');   // la traduzione la fa gia' questa tabella
       p.textContent=testi[lang]||testi.it;
+      el.__aiGenEl=p;
       // insieme al contenuto: dopo per quello che si guarda, prima per quello
       // che si legge
       (el.parentNode||document.body).insertBefore(p,tipo==='testo'?el:el.nextSibling);
