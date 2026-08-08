@@ -74,6 +74,25 @@ piede non apre niente. Senza `eih-theme.js` non c'è il pulsante notte/giorno.
 il consenso da sé e non parte senza. GA4: `G-13TEJWCKZZ`. Gli altri campi
 (Google Ads, Meta, TikTok) sono vuoti in attesa degli identificativi.
 
+## Misure del testo
+
+Sotto i 1024px nessun testo scende sotto i **13px**: lo garantisce
+`assets/eih-leggibilita.css`, che ogni pagina carica per ultimo nella testata
+(dopo il proprio `<style>`, altrimenti perde). Il file è generato da
+`scripts/genera-leggibilita.py`, che rilegge le regole esistenti comprese
+quelle dentro le media query.
+
+- Aggiungendo una misura piccola, **rigenerare** invece di scrivere a mano nel
+  file generato.
+- `--text-xs` e `--text-sm` salgono a 13 e 15px sotto i 1024px.
+- La radice resta a **16px** anche su telefono: c'era `html{font-size:15px}`
+  sotto i 480px e rimpiccioliva tutto del 6% proprio dove serve leggere.
+
+## File che devono esistere in radice
+
+`favicon.ico` — ogni browser e ogni crawler lo chiede senza che nessuno lo
+linki. Mancava e rispondeva 404 a ogni visita.
+
 ## Affiliazioni
 
 - Wise: camref Partnerize `1110lKde8`, valore predefinito in `api/go.js`.

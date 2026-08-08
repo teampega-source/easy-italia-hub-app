@@ -477,6 +477,10 @@ html[data-theme="dark"] .site-nav{background:#1c1916}
 .roadmap-vote:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:var(--radius-full)}
 .roadmap-vote svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
   .roadmap-item{grid-template-columns:56px 1fr}
+  /* con il testo piu' grande la scheda non entrava piu' nella colonna:
+     un elemento flex non si stringe sotto il proprio contenuto senza questo */
+  .roadmap-card{min-width:0;flex-wrap:wrap;row-gap:.5rem}
+  .roadmap-card-text{min-width:0;flex:1 1 100%}
   .roadmap-quarter{font-size:.58rem;padding-right:var(--sp-1)}
   .roadmap-section,.testimonials-section,.pricing-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
 

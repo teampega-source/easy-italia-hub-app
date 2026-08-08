@@ -1299,7 +1299,8 @@ footer{
 
 /* ── SMALL MOBILE (≤480): tighten spacing & type ── */
 @media(max-width:480px){
-  html{font-size:15px}
+  /* qui c'era html{font-size:15px}: su telefono rimpiccioliva tutto del 6%,
+     proprio dove serve leggere di piu'. La radice resta a 16. */
   .site-nav{padding:var(--sp-1) var(--sp-2)}
   .hero{padding:calc(var(--sp-5) + 1.5rem) var(--sp-2) var(--sp-3)}
   .features,.members,.cta-section,.ad-section{padding-left:var(--sp-2);padding-right:var(--sp-2)}
