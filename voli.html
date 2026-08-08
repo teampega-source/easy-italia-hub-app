@@ -136,8 +136,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     [data-page="voli"] .se-kiwi{border-color:#00b2a9}[data-page="voli"] .se-kiwi:hover{border-color:#00b2a9;background:rgba(0,178,169,.06)}
     [data-page="voli"] .se-google{border-color:#4285f4}[data-page="voli"] .se-google:hover{border-color:#4285f4;background:rgba(66,133,244,.06)}
     [data-page="voli"] .se-kayak{border-color:#ff690f}[data-page="voli"] .se-kayak:hover{border-color:#ff690f;background:rgba(255,105,15,.06)}
-    [data-page="voli"] .btn-all{margin-top:.75rem;width:100%;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.85rem 1.5rem;background:var(--gold);color:var(--su-accento);font-size:var(--text-sm);font-weight:600;font-family:inherit;border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .18s}
-    [data-page="voli"] .btn-all:hover{opacity:.88}
+    [data-page="voli"] .btn-all{margin-top:.75rem;width:100%}
+    
     @media(max-width:600px){[data-page="voli"] .engine-grid{grid-template-columns:1fr 1fr}[data-page="voli"] .flight-search{grid-template-columns:1fr}}
   </style>
 
@@ -179,7 +179,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
           <span class="se-note">Confronto completo</span>
         </button>
       </div>
-      <button class="btn-all" id="fs-search-all">✈ Apri tutti e tre i comparatori →</button>
+      <button class="btn-oro btn-all" id="fs-search-all">✈ Apri tutti e tre i comparatori →</button>
     </section>
 
     <!-- ─── FLIGHT TRACKER ─── -->
@@ -189,7 +189,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       <div class="track-box">
         <div class="track-row">
           <input type="text" id="tk-fn" placeholder="es. UL566" autocomplete="off" spellcheck="false" aria-label="Numero del volo"/>
-          <button class="btn-all" id="tk-go" style="margin:0;white-space:nowrap">Traccia →</button>
+          <button class="btn-oro btn-all" id="tk-go" style="margin:0;white-space:nowrap">Traccia →</button>
         </div>
         <div class="track-chips" id="tk-chips">
           <button type="button" data-fn="UL566" data-no-tr>UL566</button>

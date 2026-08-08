@@ -39,8 +39,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 .confirm-icon{font-size:3.5rem;line-height:1;margin-bottom:var(--sp-4)}
 .confirm-wrap h1{font-size:var(--text-2xl);font-weight:700;color:var(--ink);margin:0 0 var(--sp-3)}
 .confirm-wrap p{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.7;margin:0 0 var(--sp-5)}
-.confirm-btn{display:inline-block;background:var(--gold);color:var(--su-accento);text-decoration:none;font-weight:600;font-size:var(--text-sm);padding:.75rem 2rem;border-radius:var(--radius-full);transition:opacity .15s}
-.confirm-btn:hover{opacity:.85}
+
 </style>
 <script src="/assets/eih-lang-url.js"></script>
 <link rel="stylesheet" href="/assets/eih-leggibilita.css"/>
@@ -130,7 +129,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     el.innerHTML = '<div class="confirm-icon">' + ICONA[stato] + '</div>'
       + '<h1>' + esc(d[stato][0]) + '</h1>'
       + '<p>' + esc(d[stato][1]) + '</p>'
-      + '<a href="' + indietro[0] + '" class="confirm-btn">' + esc(indietro[1]) + '</a>';
+      + '<a href="' + indietro[0] + '" class="btn-oro confirm-btn">' + esc(indietro[1]) + '</a>';
     el.setAttribute('data-no-tr', '');
   }
   disegna();

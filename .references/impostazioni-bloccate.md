@@ -88,6 +88,21 @@ quelle dentro le media query.
 - La radice resta a **16px** anche su telefono: c'era `html{font-size:15px}`
   sotto i 480px e rimpiccioliva tutto del 6% proprio dove serve leggere.
 
+## Pulsanti
+
+Il pulsante d'azione pieno è **`.btn-oro`** (in `eih.css`), con `--oro--s`
+(stretto) e `--oro--scuro` (fondo inchiostro). Prima esisteva con nove nomi di
+pagina — `cta-publish`, `new-btn`, `save-btn`, `suggest-btn`, `gen-btn`,
+`correct-btn`, `btn-all`, `confirm-btn`, `hub-cta`, `modal-submit`,
+`btn-submit`, `start-btn` — stesso colore e padding sempre un po' diverso.
+
+- Le classi di pagina restano nel markup solo come aggancio per il JS e per i
+  delta di posizione (`margin-top`, `width:100%`, `align-self`).
+- `.btn-primary` resta il pulsante grigio-blu del sito; `.btn-oro` è quello
+  color oro. Sono due cose diverse: non accorparle.
+- Il gradiente dorato di `[data-page="esame"] .btn-cta` è fuori tavolozza per
+  scelta e **non si tocca** senza che lo chieda l'utente.
+
 ## File che devono esistere in radice
 
 `favicon.ico` — ogni browser e ogni crawler lo chiede senza che nessuno lo

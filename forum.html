@@ -76,8 +76,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 [data-page="forum"] .tc-meta b{color:var(--fg-secondary)}
 
 /* new post btn */
-[data-page="forum"] .new-btn{display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;border:0;font:inherit;font-size:var(--text-sm);font-weight:700;padding:.75rem 1.4rem;border-radius:var(--radius-full);background:var(--gold);color:var(--su-accento);transition:opacity var(--dur-std),transform var(--dur-std) var(--ease-spring);margin-bottom:var(--sp-3)}
-[data-page="forum"] .new-btn:hover{opacity:.88;transform:translateY(-2px)}
+
 
 /* modal */
 [data-page="forum"] .modal-overlay{display:none;position:fixed;inset:0;z-index:900;background:rgba(10,8,6,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:var(--sp-3)}
@@ -91,7 +90,6 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 [data-page="forum"] .modal textarea{resize:vertical;min-height:100px}
 [data-page="forum"] .modal-actions{display:flex;gap:.7rem;justify-content:flex-end;margin-top:1.2rem;flex-wrap:wrap}
 [data-page="forum"] .modal-cancel{cursor:pointer;border:1px solid var(--border-bright);background:none;color:var(--fg-secondary);font:inherit;font-size:var(--text-sm);padding:.65rem 1.2rem;border-radius:var(--radius-full)}
-[data-page="forum"] .modal-submit{cursor:pointer;border:0;background:var(--gold);color:var(--su-accento);font:inherit;font-size:var(--text-sm);font-weight:700;padding:.65rem 1.4rem;border-radius:var(--radius-full)}
 
 /* thread detail view */
 [data-page="forum"] #thread-detail{display:none}
@@ -138,7 +136,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <div class="wrap">
   <!-- list view -->
   <div id="list-view">
-    <button class="new-btn" id="new-thread-btn">&#43; Nuova discussione</button>
+    <button class="btn-oro new-btn" id="new-thread-btn">&#43; Nuova discussione</button>
     <div class="cat-bar" id="cat-bar">
       <button class="cat-btn active" data-cat="tutti">Tutti</button>
       <button class="cat-btn" data-cat="permesso">Permesso</button>
@@ -195,7 +193,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     <input type="text" id="nt-author" placeholder="Es. Dilani, Roma" maxlength="40"/>
     <div class="modal-actions">
       <button class="modal-cancel" id="modal-cancel">Annulla</button>
-      <button class="modal-submit" id="modal-submit">Pubblica</button>
+      <button class="btn-oro btn-oro--s modal-submit" id="modal-submit">Pubblica</button>
     </div>
   </div>
 </div>
