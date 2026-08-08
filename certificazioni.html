@@ -98,8 +98,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   [data-page="certificazioni"] .types-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.2rem}
   [data-page="certificazioni"] .type-btn{cursor:pointer;font:inherit;font-size:var(--text-sm);padding:.5rem 1rem;border-radius:var(--radius-full);border:1px solid var(--border-bright);background:var(--bg-deep);color:var(--fg-secondary);transition:background var(--dur-std),color var(--dur-std),border-color var(--dur-std)}
   [data-page="certificazioni"] .type-btn.active{background:var(--gold);color:var(--su-accento);border-color:var(--gold)}
-  [data-page="certificazioni"] .gen-btn{cursor:pointer;border:0;font:inherit;font-weight:700;font-size:var(--text-sm);padding:.75rem 1.5rem;border-radius:var(--radius-full);background:var(--ink);color:var(--bg-deep);transition:opacity var(--dur-std)}
-  [data-page="certificazioni"] .gen-btn:disabled{opacity:.45;cursor:not-allowed}
+  
   /* Generated exercise */
   [data-page="certificazioni"] .exercise-output{display:none;margin-top:1.5rem;border-top:1px solid var(--border);padding-top:1.3rem}
   [data-page="certificazioni"] .exercise-output.visible{display:block}
@@ -107,8 +106,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   [data-page="certificazioni"] .answer-label{font-size:var(--text-xs);font-weight:600;color:var(--fg-secondary);margin-bottom:.4rem;display:block}
   [data-page="certificazioni"] #user-answer{width:100%;box-sizing:border-box;padding:.75rem 1rem;border-radius:var(--radius-sm);border:1px solid var(--border-bright);background:var(--bg-deep);color:var(--fg);font:inherit;font-size:var(--text-sm);line-height:1.6;resize:vertical;min-height:100px}
   [data-page="certificazioni"] #user-answer:focus{outline:2px solid var(--gold);outline-offset:1px}
-  [data-page="certificazioni"] .correct-btn{cursor:pointer;border:0;font:inherit;font-weight:700;font-size:var(--text-sm);padding:.7rem 1.3rem;border-radius:var(--radius-full);background:var(--gold);color:var(--su-accento);margin-top:.8rem;transition:opacity var(--dur-std)}
-  [data-page="certificazioni"] .correct-btn:disabled{opacity:.45;cursor:not-allowed}
+  [data-page="certificazioni"] .correct-btn{margin-top:.8rem}
+  
   /* Correction result */
   [data-page="certificazioni"] .correction-block{display:none;margin-top:1.3rem;background:var(--bg-deep);border-radius:var(--radius-sm);padding:1rem 1.2rem;border:1px solid var(--border)}
   [data-page="certificazioni"] .correction-block.visible{display:block}
@@ -173,7 +172,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   <div class="score-panel reveal" id="score-panel">
     <div class="sp-head"><span class="sp-title">📊 Il tuo Language Score</span><span class="sp-hint">Si costruisce con gli esercizi corretti — salvato su questo dispositivo</span></div>
     <div class="sp-grid" id="sp-grid"></div>
-    <button class="gen-btn" id="att-btn" style="display:none">🎓 Scarica l'attestato (PDF)</button>
+    <button class="btn-oro btn-oro--scuro gen-btn" id="att-btn" style="display:none">🎓 Scarica l'attestato (PDF)</button>
   </div>
 
   <!-- Exercise area -->
@@ -185,14 +184,14 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       <button class="type-btn" data-type="grammatica">&#127385;&#65039; Grammatica</button>
       <button class="type-btn" data-type="simulazione orale (scrivi la risposta)">&#128483;&#65039; Simulazione orale</button>
     </div>
-    <button class="gen-btn" id="gen-btn">Genera esercizio &#8594;</button>
+    <button class="btn-oro btn-oro--scuro gen-btn" id="gen-btn">Genera esercizio &#8594;</button>
 
     <div class="exercise-output" id="exercise-output">
       <div class="area-title">Esercizio</div>
       <div class="exercise-text" id="exercise-text"></div>
       <label class="answer-label" for="user-answer">La tua risposta</label>
       <textarea id="user-answer" placeholder="Scrivi qui la tua risposta..."></textarea>
-      <button class="correct-btn" id="correct-btn">&#9989; Vedi la correzione</button>
+      <button class="btn-oro correct-btn" id="correct-btn">&#9989; Vedi la correzione</button>
       <div class="correction-block" id="correction-block">
         <div class="stars" id="stars-display"></div>
         <div class="correction-text" id="correction-text"></div>

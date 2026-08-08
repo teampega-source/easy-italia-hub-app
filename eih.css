@@ -224,6 +224,22 @@ main{position:relative;z-index:1}
 .btn-ghost:hover{background:var(--surface-hover);color:var(--ink);transform:translateY(-2px)}
 .btn-ghost:active{transform:scale(0.97);transition-duration:var(--dur-micro)}
 .btn-ghost:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:var(--radius-full)}
+/* Il pulsante d'azione pieno esisteva con nove nomi diversi, uno per pagina
+   (cta-publish, new-btn, save-btn, suggest-btn, gen-btn…): stesso colore,
+   padding e corpo del testo ogni volta un po' diversi. Qui sta una volta sola.
+   --oro-s: piu' stretto, per le righe di schede. --oro-scuro: fondo inchiostro. */
+.btn-oro{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;
+  padding:.7rem 1.5rem;border-radius:var(--radius-full);border:none;cursor:pointer;
+  font-family:inherit;font-size:var(--text-sm);font-weight:600;line-height:1.2;
+  color:var(--su-accento);background:var(--gold);text-decoration:none;min-height:44px;
+  transition:opacity var(--dur-micro),transform var(--dur-std) var(--ease-spring)}
+.btn-oro:hover{opacity:.88}
+.btn-oro:active{transform:scale(.97)}
+.btn-oro:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.btn-oro:disabled{opacity:.5;cursor:not-allowed}
+.btn-oro--s{padding:.5rem 1.1rem;min-height:38px;white-space:nowrap}
+.btn-oro--scuro{background:var(--ink);color:var(--bg-deep)}
+.btn-oro--scuro:focus-visible{outline-color:var(--ink)}
 .cta-row{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:var(--sp-3)}
 .btn-arrow{display:inline-flex;align-items:center;justify-content:center;width:1.4rem;height:1.4rem;border-radius:50%;background:rgba(0,0,0,.12);font-style:normal;font-size:.8rem;transition:transform var(--dur-std) var(--ease-spring)}
 .btn-primary .btn-arrow{background:rgba(255,255,255,.2)}

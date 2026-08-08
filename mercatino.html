@@ -87,7 +87,10 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     [data-page="mercatino"] .listing-price{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;color:var(--gold)}
     [data-page="mercatino"] .listing-city{font-size:var(--text-xs);color:var(--fg-muted)}
     [data-page="mercatino"] .listing-date{font-size:var(--text-xs);color:var(--fg-muted)}
-    [data-page="mercatino"] .listings-empty{margin-top:var(--sp-3);padding:var(--sp-5);text-align:center;font-size:var(--text-base);color:var(--fg-muted);border:1px dashed var(--border-bright);border-radius:var(--radius)}
+    [data-page="mercatino"] .listings-empty{margin-top:var(--sp-3);padding:var(--sp-5) var(--sp-3);text-align:center;border:1px dashed var(--border-bright);border-radius:var(--radius)}
+    [data-page="mercatino"] .le-msg{font-size:var(--text-base);color:var(--fg-muted);margin:0 0 var(--sp-3)}
+    [data-page="mercatino"] .le-azioni{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
+    [data-page="mercatino"] .le-tutte{background:var(--surface);border:1px solid var(--border);color:var(--fg-secondary);padding:.55rem 1.2rem;border-radius:var(--radius-full);font:inherit;font-size:var(--text-sm);cursor:pointer;min-height:44px}
     [data-page="mercatino"] .listing-contact{margin-top:.4rem;font-size:var(--text-sm)}
     [data-page="mercatino"] .listing-contact button{background:none;border:none;padding:0;color:var(--gold);font-weight:600;cursor:pointer;font-size:var(--text-sm);text-decoration:underline}
     [data-page="mercatino"] .listing-contact a{color:var(--gold);font-weight:600;text-decoration:none;word-break:break-all}
@@ -97,8 +100,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     [data-page="mercatino"] .listing-report{background:none;border:none;padding:0;cursor:pointer;font-size:var(--text-xs);color:var(--fg-muted);transition:color var(--dur-micro)}
     [data-page="mercatino"] .listing-report:hover{color:var(--coral)}
     [data-page="mercatino"] .listing-report:disabled{cursor:default;color:var(--green)}
-    [data-page="mercatino"] .cta-publish{background:var(--gold);color:var(--su-accento);border:none;padding:.75rem 1.5rem;border-radius:var(--radius-full);font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;cursor:pointer;transition:opacity .15s}
-    [data-page="mercatino"] .cta-publish:hover{opacity:.88}
+    
     [data-page="mercatino"] .publish-box{background:rgba(255,253,249,0.6);backdrop-filter:blur(16px);border:1px solid var(--border-bright);border-radius:calc(var(--radius)*1.5);padding:var(--sp-5);text-align:center;margin-top:var(--sp-4)}
     [data-page="mercatino"] .publish-title{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-xl);font-weight:600;color:var(--ink);margin-bottom:.5rem}
     [data-page="mercatino"] .publish-desc{font-size:var(--text-sm);color:var(--fg-secondary);margin-bottom:var(--sp-3);line-height:1.6}
@@ -112,7 +114,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     [data-page="mercatino"] .form-textarea{min-height:90px;resize:vertical}
     [data-page="mercatino"] .modal-actions{display:flex;gap:.75rem;margin-top:var(--sp-3);justify-content:flex-end}
     [data-page="mercatino"] .btn-cancel{background:var(--surface);border:1px solid var(--border);color:var(--fg-secondary);padding:.55rem 1.2rem;border-radius:var(--radius-full);font-size:var(--text-sm);cursor:pointer}
-    [data-page="mercatino"] .btn-submit{background:var(--gold);color:var(--su-accento);border:none;padding:.55rem 1.5rem;border-radius:var(--radius-full);font-family:'Clash Grotesk',sans-serif;font-size:var(--text-sm);font-weight:600;cursor:pointer}
+    
     [data-page="mercatino"] .empty-state{text-align:center;padding:var(--sp-5);color:var(--fg-muted);font-size:var(--text-sm)}
     html[data-theme="dark"] [data-page="mercatino"] .publish-box{background:rgba(33,30,26,.72)}
     html[data-theme="dark"] [data-page="mercatino"] .modal{background:var(--bg-elevated)}
@@ -141,13 +143,19 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 
     <!-- LISTINGS -->
     <div class="listings-grid reveal" id="listings-grid"></div>
-    <p class="listings-empty" id="listings-empty" data-i18n="list.empty" hidden>Non ci sono annunci per il momento.</p>
+    <div class="listings-empty" id="listings-empty" hidden>
+      <p class="le-msg" id="le-msg" data-no-tr>Non ci sono ancora annunci.</p>
+      <div class="le-azioni">
+        <button type="button" class="btn-oro cta-publish" id="le-pubblica" data-i18n="list.first">Pubblica il primo annuncio</button>
+        <button type="button" class="le-tutte" id="le-tutte" data-i18n="list.showall" hidden>Vedi tutte le categorie</button>
+      </div>
+    </div>
 
     <!-- PUBBLICA ANNUNCIO -->
     <div class="publish-box reveal" id="publish-box">
       <div class="publish-title" data-i18n="publish.title">Hai qualcosa da offrire o cercare?</div>
       <p class="publish-desc" data-i18n="publish.desc">Pubblica il tuo annuncio gratuitamente: va subito online e resta visibile per 30 giorni. Serve un account gratuito.</p>
-      <button class="cta-publish" id="btn-open-modal" data-i18n="publish.cta">Pubblica annuncio</button>
+      <button class="btn-oro cta-publish" id="btn-open-modal" data-i18n="publish.cta">Pubblica annuncio</button>
     </div>
 
   </div>
@@ -191,7 +199,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
         </div>
         <div class="modal-actions">
           <button type="button" class="btn-cancel" id="btn-cancel">Annulla</button>
-          <button type="submit" class="btn-submit">Pubblica</button>
+          <button type="submit" class="btn-oro btn-oro--s btn-submit">Pubblica</button>
         </div>
       </form>
     </div>
@@ -209,7 +217,10 @@ window.EIH_I18N_EXTRA = {
     "publish.title": "Have something to offer or looking for something?",
     "publish.desc": "Post your ad for free: it goes live right away and stays visible for 30 days. A free account is required.",
     "publish.cta": "Post an ad",
-    "list.empty": "No listings at the moment."
+    "list.empty": "No listings yet.",
+    "list.first": "Post the first listing",
+    "list.showall": "See all categories",
+    "list.emptycat": "Nothing in this category yet."
   },
   si: {
     "page.eyebrow": "ප්‍රජාව",
@@ -218,7 +229,10 @@ window.EIH_I18N_EXTRA = {
     "publish.title": "කිසිවක් ඉදිරිපත් කිරීමට හෝ සෙවීමට තිබේද?",
     "publish.desc": "ඔබේ දැන්වීම නොමිලේ පළ කරන්න: එය වහාම සජීවී වේ, දින 30ක් පෙනේ. නොමිලේ ගිණුමක් අවශ්‍යයි.",
     "publish.cta": "දැන්වීම ලිවීමට",
-    "list.empty": "දැනට දැන්වීම් නොමැත."
+    "list.empty": "තවම දැන්වීම් නොමැත.",
+    "list.first": "පළමු දැන්වීම පළ කරන්න",
+    "list.showall": "සියලු ප්‍රවර්ග බලන්න",
+    "list.emptycat": "මෙම ප්‍රවර්ගයේ තවම කිසිවක් නැත."
   },
   ta: {
     "page.eyebrow": "சமூகம்",
@@ -227,7 +241,10 @@ window.EIH_I18N_EXTRA = {
     "publish.title": "வழங்க அல்லது தேட ஏதாவது இருக்கிறதா?",
     "publish.desc": "உங்கள் விளம்பரத்தை இலவசமாக பதிவிடுங்கள்: உடனே வெளியாகும், 30 நாட்கள் காணப்படும். இலவச கணக்கு தேவை.",
     "publish.cta": "விளம்பரம் பதிவிடுக",
-    "list.empty": "தற்போது விளம்பரங்கள் இல்லை."
+    "list.empty": "இன்னும் விளம்பரங்கள் இல்லை.",
+    "list.first": "முதல் விளம்பரத்தைப் பதிவிடுங்கள்",
+    "list.showall": "அனைத்து பிரிவுகளையும் காண்க",
+    "list.emptycat": "இந்தப் பிரிவில் இன்னும் எதுவும் இல்லை."
   }
 };
 
@@ -323,7 +340,26 @@ window.EIH_I18N_EXTRA = {
       if(show) visible++;
     });
     empty.hidden = visible > 0;
+    /* Un vicolo cieco non aiuta: se la categoria e' vuota si offre di vedere
+       tutto, se e' vuoto il mercatino si offre di pubblicare. */
+    var filtrato = curCat !== 'all';
+    document.getElementById('le-tutte').hidden = !filtrato;
+    document.getElementById('le-msg').textContent = filtrato
+      ? M('list.emptycat', 'In questa categoria non c\u2019\u00e8 ancora niente.')
+      : M('list.empty', 'Non ci sono ancora annunci.');
   }
+
+  /* eih.js e' differito e arriva dopo questo blocco: finche' non c'e' si usa
+     l'italiano scritto qui. */
+  function M(k,i){ return (window.EIH && EIH.msg) ? EIH.msg(k,i) : i; }
+  window.addEventListener('eihLangChanged', applyFilter);
+
+  document.getElementById('le-pubblica').addEventListener('click', function(){
+    document.getElementById('btn-open-modal').click();
+  });
+  document.getElementById('le-tutte').addEventListener('click', function(){
+    document.querySelector('.cat-btn[data-cat="all"]').click();
+  });
 
   document.getElementById('cat-filter').addEventListener('click', function(e){
     var btn = e.target.closest('.cat-btn');
