@@ -36,7 +36,17 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   .reg-wrap{display:flex;height:100vh;height:100dvh}
   /* ── colonna sinistra: iscrizione ── */
   .reg-left{flex:0 0 46%;max-width:560px;display:flex;flex-direction:column;padding:2rem 3rem;overflow-y:auto;background:var(--bg-base,#fff)}
-  .reg-logo{display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--ink);font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:1.05rem;margin-bottom:2.2rem}
+  .reg-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:2.2rem}
+  .reg-lang{display:flex;gap:.25rem;flex:none}
+  .reg-lang button{min-width:44px;min-height:38px;padding:.35rem .55rem;border-radius:var(--radius-full,999px);
+    border:1px solid var(--border,rgba(118,118,118,.2));background:transparent;color:var(--fg-secondary,#524c44);
+    font:inherit;font-size:.8125rem;font-weight:600;cursor:pointer;line-height:1;
+    transition:background .15s,color .15s,border-color .15s}
+  .reg-lang button:hover{background:var(--surface-hover,rgba(0,0,0,.05))}
+  .reg-lang button[aria-current="true"]{background:var(--gold,#6e747d);color:var(--su-accento,#fff);border-color:var(--gold,#6e747d)}
+  .reg-lang button:focus-visible{outline:2px solid var(--gold,#6e747d);outline-offset:2px}
+  @media(max-width:900px){.reg-top{margin-bottom:1.4rem}}
+  .reg-logo{display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--ink);font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:1.05rem}
   .reg-logo img{height:30px;width:auto}
   .reg-main{margin:auto 0;max-width:400px;width:100%;align-self:center}
   .reg-h1{font-family:'Clash Grotesk',sans-serif;font-size:clamp(1.6rem,2.6vw,2.1rem);font-weight:600;color:var(--ink);letter-spacing:-.02em;margin:0 0 .4rem}
@@ -84,38 +94,46 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <div class="reg-wrap">
 
   <div class="reg-left">
-    <a class="reg-logo" href="/" data-no-tr><img src="/assets/img/logo-symbol.webp" alt=""/>Easy Italia Hub</a>
+    <div class="reg-top">
+      <a class="reg-logo" href="/" data-no-tr><img src="/assets/img/logo-symbol.webp" alt=""/>Easy Italia Hub</a>
+      <div class="reg-lang" id="reg-lang" role="group" aria-label="Lingua / Language">
+        <button type="button" data-lg="it" lang="it" data-no-tr>IT</button>
+        <button type="button" data-lg="en" lang="en" data-no-tr>EN</button>
+        <button type="button" data-lg="si" lang="si" data-no-tr>සිං</button>
+        <button type="button" data-lg="ta" lang="ta" data-no-tr>தமி</button>
+      </div>
+    </div>
     <div class="reg-main">
-      <h1 class="reg-h1" id="reg-title">Crea il tuo account gratuito</h1>
-      <p class="reg-sub" id="reg-sub">Guide passo-passo, Consigliere AI in 4 lingue, documenti al sicuro e la community srilankese in Italia. Gratis.</p>
+      <h1 class="reg-h1" id="reg-title" data-no-tr>Crea il tuo account gratuito</h1>
+      <p class="reg-sub" id="reg-sub" data-no-tr>Guide passo-passo, Consigliere AI in 4 lingue, documenti al sicuro e la community srilankese in Italia. Gratis.</p>
 
       <button type="button" class="reg-google" id="reg-google">
         <svg width="17" height="17" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3l5.7-5.7C34.3 6.1 29.4 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3l5.7-5.7C34.3 6.1 29.4 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.6-5.2l-6.3-5.3C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.5l6.3 5.3C41.4 34.9 44 30 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
-        Continua con Google
+        <span id="reg-google-t" data-no-tr>Continua con Google</span>
       </button>
 
-      <div class="reg-div">oppure</div>
+      <div class="reg-div" id="reg-or" data-no-tr>oppure</div>
 
       <form id="reg-form" novalidate>
         <div class="reg-field" id="reg-name-field">
-          <label for="reg-name">Nome completo</label>
+          <label for="reg-name" id="reg-l-name" data-no-tr>Nome completo</label>
           <input id="reg-name" type="text" placeholder="Mario Rossi" autocomplete="name" data-no-tr/>
         </div>
         <div class="reg-field">
-          <label for="reg-email">Email</label>
-          <input id="reg-email" type="email" placeholder="nome@email.com" autocomplete="email" required/ data-no-tr/>
+          <label for="reg-email" id="reg-l-mail" data-no-tr>Email</label>
+          <input id="reg-email" type="email" placeholder="name@email.com" autocomplete="email" required/ data-no-tr/>
         </div>
         <div class="reg-field">
-          <label for="reg-pass">Password</label>
+          <label for="reg-pass" id="reg-l-pass" data-no-tr>Password</label>
           <input id="reg-pass" type="password" placeholder="••••••••" autocomplete="new-password" required minlength="8"/>
         </div>
         <div id="reg-turnstile"></div>
-        <button type="submit" class="reg-submit" id="reg-submit">Registrati gratis</button>
-        <p class="reg-err" id="reg-err" role="alert"></p>
+        <button type="submit" class="reg-submit" id="reg-submit" data-no-tr>Registrati gratis</button>
+        <p class="reg-err" id="reg-err" data-no-tr role="alert"></p>
       </form>
 
-      <p class="reg-switch"><span id="reg-switch-text">Hai già un account?</span> <button type="button" id="reg-switch">Accedi</button></p>
-      <p class="reg-note">Registrandoti accetti i <a href="/termini">Termini di Servizio</a> e la <a href="/privacy">Privacy Policy</a>.</p>
+      <p class="reg-switch"><span id="reg-switch-text" data-no-tr>Hai già un account?</span> <button type="button" id="reg-switch" data-no-tr>Accedi</button></p>
+      <p class="reg-note" id="reg-note" data-no-tr>Registrandoti accetti i <a href="/termini">Termini di Servizio</a> e la <a href="/privacy">Privacy Policy</a>.</p>
     </div>
   </div>
 
@@ -128,8 +146,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     <video id="reg-video" autoplay muted loop playsinline preload="auto" poster="/assets/img/community-welcome.webp" style="display:none"></video>
     <div class="shade"></div>
     <div class="reg-claim">
-      <h2>Tutta l'Italia, spiegata semplice.</h2>
-      <p>Permesso di soggiorno, lavoro, casa, sanità: guide verificate, un assistente AI che parla la tua lingua e una community che ti capisce.</p>
+      <h2 id="reg-claim-t" data-no-tr>Tutta l'Italia, spiegata semplice.</h2>
+      <p id="reg-claim-s" data-no-tr>Permesso di soggiorno, lavoro, casa, sanità: guide verificate, un assistente AI che parla la tua lingua e una community che ti capisce.</p>
     </div>
   </div>
 
@@ -159,7 +177,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       vuoti:'Inserisci email e password.', mail:'Controlla l\'indirizzo email: manca qualcosa.',
       corta:'La password deve avere almeno 8 caratteri.', bot:'Completa la verifica anti-bot.',
       usata:'Indirizzo già in uso. Prova ad accedere.', noReg:'Registrazione non riuscita. Riprova.',
-      noAcc:'Email o password non corretti.', imprevisto:'Errore imprevisto. Riprova.' },
+      noAcc:'Email o password non corretti.', imprevisto:'Errore imprevisto. Riprova.',
+      google:"Continua con Google", oppure:"oppure", lName:"Nome completo", lMail:"Email", lPass:"Password", note:"Registrandoti accetti i <a href=\"/termini\">Termini di Servizio</a> e la <a href=\"/privacy\">Privacy Policy</a>.", claimT:"Tutta l'Italia, spiegata semplice.", claimS:"Permesso di soggiorno, lavoro, casa, sanità: guide verificate, un assistente AI che parla la tua lingua e una community che ti capisce.", mailT:"Controlla la tua email", mailS:"Abbiamo inviato un link a {mail}. Clicca sul link per attivare il tuo account, poi accedi.", gDemo:"Accesso Google non disponibile in modalità demo.", gKo:"Accesso con Google non riuscito. Riprova." },
     en:{ tS:'Create your free account', tL:'Welcome back',
       sS:'Step-by-step guides, an AI advisor in 4 languages, your documents kept safe and the Sri Lankan community in Italy. Free.',
       sL:'Sign in to your Easy Italia Hub account.', bS:'Sign up free', bL:'Sign in',
@@ -167,7 +186,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       vuoti:'Enter your email and password.', mail:'Check the email address: something is missing.',
       corta:'The password needs at least 8 characters.', bot:'Complete the anti-bot check.',
       usata:'That address is already in use. Try signing in.', noReg:'Sign-up failed. Please try again.',
-      noAcc:'Wrong email or password.', imprevisto:'Something went wrong. Please try again.' },
+      noAcc:'Wrong email or password.', imprevisto:'Something went wrong. Please try again.',
+      google:"Continue with Google", oppure:"or", lName:"Full name", lMail:"Email", lPass:"Password", note:"By signing up you accept the <a href=\"/termini\">Terms of Service</a> and the <a href=\"/privacy\">Privacy Policy</a>.", claimT:"All of Italy, explained simply.", claimS:"Residence permit, work, housing, healthcare: verified guides, an AI assistant that speaks your language and a community that understands you.", mailT:"Check your email", mailS:"We sent a link to {mail}. Click the link to activate your account, then sign in.", gDemo:"Google sign-in is not available in demo mode.", gKo:"Google sign-in failed. Please try again." },
     si:{ tS:'ඔබේ නොමිලේ ගිණුම සාදන්න', tL:'නැවත සාදරයෙන් පිළිගනිමු',
       sS:'පියවරෙන් පියවර මාර්ගෝපදේශ, භාෂා 4කින් AI උපදේශක, ආරක්ෂිත ලේඛන සහ ඉතාලියේ ශ්‍රී ලාංකික ප්‍රජාව. නොමිලේ.',
       sL:'ඔබේ Easy Italia Hub ගිණුමට ඇතුළු වන්න.', bS:'නොමිලේ ලියාපදිංචි වන්න', bL:'ඇතුළු වන්න',
@@ -175,7 +195,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       vuoti:'ඊමේල් සහ මුරපදය ඇතුළත් කරන්න.', mail:'ඊමේල් ලිපිනය පරීක්ෂා කරන්න: යමක් අඩුයි.',
       corta:'මුරපදයට අවම වශයෙන් අකුරු 8ක් අවශ්‍යයි.', bot:'රොබෝ නොවන බව තහවුරු කරන්න.',
       usata:'මෙම ලිපිනය දැනටමත් භාවිතයේ ඇත. ඇතුළු වීමට උත්සාහ කරන්න.', noReg:'ලියාපදිංචිය අසාර්ථකයි. නැවත උත්සාහ කරන්න.',
-      noAcc:'ඊමේල් හෝ මුරපදය වැරදියි.', imprevisto:'යමක් වැරදී ඇත. නැවත උත්සාහ කරන්න.' },
+      noAcc:'ඊමේල් හෝ මුරපදය වැරදියි.', imprevisto:'යමක් වැරදී ඇත. නැවත උත්සාහ කරන්න.',
+      google:"Google සමඟ ඉදිරියට", oppure:"හෝ", lName:"සම්පූර්ණ නම", lMail:"ඊමේල්", lPass:"මුරපදය", note:"ලියාපදිංචි වීමෙන් ඔබ <a href=\"/termini\">සේවා කොන්දේසි</a> සහ <a href=\"/privacy\">රහස්‍යතා ප්‍රතිපත්තිය</a> පිළිගනී.", claimT:"මුළු ඉතාලියම, සරලව පැහැදිලි කර.", claimS:"පදිංචි බලපත්‍රය, රැකියාව, නිවාස, සෞඛ්‍ය: තහවුරු කළ මාර්ගෝපදේශ, ඔබේ භාෂාව කතා කරන AI සහායකයෙක් සහ ඔබව තේරුම් ගන්නා ප්‍රජාවක්.", mailT:"ඔබේ ඊමේල් පරීක්ෂා කරන්න", mailS:"අපි {mail} වෙත සබැඳියක් යැව්වා. ගිණුම සක්‍රිය කිරීමට සබැඳිය ක්ලික් කර, පසුව ඇතුළු වන්න.", gDemo:"ආදර්ශන ආකාරයේදී Google පිවිසුම ලබා ගත නොහැක.", gKo:"Google පිවිසුම අසාර්ථකයි. නැවත උත්සාහ කරන්න." },
     ta:{ tS:'உங்கள் இலவசக் கணக்கை உருவாக்குங்கள்', tL:'மீண்டும் வரவேற்கிறோம்',
       sS:'படிப்படியான வழிகாட்டிகள், 4 மொழிகளில் AI ஆலோசகர், பாதுகாப்பான ஆவணங்கள், இத்தாலியில் இலங்கை சமூகம். இலவசம்.',
       sL:'உங்கள் Easy Italia Hub கணக்கில் நுழையுங்கள்.', bS:'இலவசமாகப் பதிவு செய்', bL:'நுழைய',
@@ -183,12 +204,32 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       vuoti:'மின்னஞ்சலையும் கடவுச்சொல்லையும் உள்ளிடுங்கள்.', mail:'மின்னஞ்சல் முகவரியைச் சரிபாருங்கள்: ஏதோ குறைகிறது.',
       corta:'கடவுச்சொல்லுக்கு குறைந்தது 8 எழுத்துகள் தேவை.', bot:'ரோபோ அல்ல எனச் சரிபாருங்கள்.',
       usata:'இந்த முகவரி ஏற்கனவே பயன்பாட்டில் உள்ளது. நுழைய முயற்சியுங்கள்.', noReg:'பதிவு தோல்வி. மீண்டும் முயற்சியுங்கள்.',
-      noAcc:'மின்னஞ்சல் அல்லது கடவுச்சொல் தவறு.', imprevisto:'ஏதோ தவறு நடந்தது. மீண்டும் முயற்சியுங்கள்.' }
+      noAcc:'மின்னஞ்சல் அல்லது கடவுச்சொல் தவறு.', imprevisto:'ஏதோ தவறு நடந்தது. மீண்டும் முயற்சியுங்கள்.',
+      google:"Google உடன் தொடரவும்", oppure:"அல்லது", lName:"முழுப் பெயர்", lMail:"மின்னஞ்சல்", lPass:"கடவுச்சொல்", note:"பதிவு செய்வதன் மூலம் <a href=\"/termini\">சேவை விதிகளையும்</a> <a href=\"/privacy\">தனியுரிமைக் கொள்கையையும்</a> ஏற்கிறீர்கள்.", claimT:"இத்தாலி முழுவதும், எளிமையாக விளக்கப்பட்டது.", claimS:"குடியிருப்பு அனுமதி, வேலை, வீடு, சுகாதாரம்: சரிபார்க்கப்பட்ட வழிகாட்டிகள், உங்கள் மொழி பேசும் AI உதவியாளர், உங்களைப் புரிந்துகொள்ளும் சமூகம்.", mailT:"உங்கள் மின்னஞ்சலைப் பாருங்கள்", mailS:"{mail} க்கு ஒரு இணைப்பை அனுப்பியுள்ளோம். கணக்கைச் செயல்படுத்த இணைப்பைச் சொடுக்கி, பின்னர் நுழையுங்கள்.", gDemo:"டெமோ பயன்முறையில் Google நுழைவு கிடைக்காது.", gKo:"Google நுழைவு தோல்வி. மீண்டும் முயற்சியுங்கள்." }
   };
   function tr(){ var l=window.EIH_LANG; try{ l=localStorage.getItem('eih-lang')||l; }catch(e){} return TR[l]||TR.en; }
 
+  /* Il selettore lingua manca su tutte le altre pagine? No: mancava solo qui,
+     e qui e' dove arriva chi viene da un annuncio. Chi atterrava con la lingua
+     sbagliata doveva tornare indietro per cambiarla. */
+  function lingua(){ var l=window.EIH_LANG; try{ l=localStorage.getItem('eih-lang')||l; }catch(e){} return TR[l]?l:'en'; }
+  function segnaLingua(){
+    var l=lingua();
+    document.documentElement.lang=l;
+    var b=document.querySelectorAll('#reg-lang button');
+    for(var i=0;i<b.length;i++) b[i].setAttribute('aria-current', b[i].dataset.lg===l ? 'true' : 'false');
+  }
   function applyMode(){
     var s = mode === 'signup', T = tr();
+    segnaLingua();
+    var g=el('reg-google-t'); if(g) g.textContent=T.google;
+    var o=el('reg-or'); if(o) o.textContent=T.oppure;
+    var ln=el('reg-l-name'); if(ln) ln.textContent=T.lName;
+    var lm=el('reg-l-mail'); if(lm) lm.textContent=T.lMail;
+    var lp=el('reg-l-pass'); if(lp) lp.textContent=T.lPass;
+    var nt=el('reg-note'); if(nt) nt.innerHTML=T.note;
+    var ct=el('reg-claim-t'); if(ct) ct.textContent=T.claimT;
+    var cs=el('reg-claim-s'); if(cs) cs.textContent=T.claimS;
     el('reg-title').textContent = s ? T.tS : T.tL;
     el('reg-sub').textContent = s ? T.sS : T.sL;
     el('reg-name-field').style.display = s ? '' : 'none';
@@ -267,28 +308,54 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       notifySignup();
       segnalaIscrizione();
       if(res && !res.demo && res.user && !res.session){
+        var Tm = tr();
         document.querySelector('.reg-main').innerHTML =
           '<div style="text-align:center;padding:2rem 0"><div style="font-size:2.5rem;margin-bottom:1rem">📧</div>'+
-          '<h1 class="reg-h1">Controlla la tua email</h1>'+
-          '<p class="reg-sub">Abbiamo inviato un link a <strong>'+email.replace(/[<>&]/g,'')+'</strong>. Clicca sul link per attivare il tuo account, poi accedi.</p></div>';
+          '<h1 class="reg-h1">'+Tm.mailT+'</h1>'+
+          '<p class="reg-sub">'+Tm.mailS.replace('{mail}','<strong>'+email.replace(/[<>&]/g,'')+'</strong>')+'</p></div>';
         return;
       }
       location.href = dest;
     }
   });
 
+  /* Il filmato racconta il sito parlando: cambiando lingua va rifatto, non
+     lasciato indietro. */
+  function videoLingua(){
+    var v = el('reg-video'); if(!v) return;
+    var lg = lingua();
+    v.innerHTML = '';
+    [['webm','video/webm'],['mp4','video/mp4']].forEach(function(f){
+      var so = document.createElement('source');
+      so.src = '/assets/video/signup-demo.' + lg + '.' + f[0];
+      so.type = f[1];
+      v.appendChild(so);
+    });
+    v.load();
+    var p = v.play(); if(p && p.catch) p.catch(function(){});
+  }
+
+  el('reg-lang').addEventListener('click', function(e){
+    var b = e.target.closest('button[data-lg]'); if(!b) return;
+    var l = b.dataset.lg; if(!TR[l] || l===lingua()) return;
+    try{ localStorage.setItem('eih-lang',l); localStorage.setItem('eih-lang-scelta','1'); }catch(_){}
+    window.EIH_LANG = l;
+    applyMode();
+    videoLingua();
+  });
+
   el('reg-google').addEventListener('click', function(){
     var err=el('reg-err'); err.textContent='';
-    if(!window.EIH_AUTH){ err.textContent='Accesso Google non disponibile in modalità demo.'; return; }
+    if(!window.EIH_AUTH){ err.textContent=tr().gDemo; return; }
     EIH_AUTH.ready.then(function(){
       // Si va via dal sito e si torna da un'altra parte: l'evento parte adesso
       // o non parte mai. Chi arriva qui in modalita' iscrizione la sta facendo.
       if(mode==='signup'){ try{ if(window.EIH_MISURA) window.EIH_MISURA.iscrizione({method:'google'}); }catch(_){} }
       return EIH_AUTH.signInWithGoogle(location.origin + dest);
     }).then(function(res){
-      if(res && res.demo) err.textContent='Accesso Google non disponibile in modalità demo.';
-      else if(res && res.error) err.textContent='Accesso con Google non riuscito. Riprova.';
-    }).catch(function(){ err.textContent='Accesso con Google non riuscito. Riprova.'; });
+      if(res && res.demo) err.textContent=tr().gDemo;
+      else if(res && res.error) err.textContent=tr().gKo;
+    }).catch(function(){ err.textContent=tr().gKo; });
   });
 
   function boot(){
@@ -308,16 +375,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     // Video: mostralo appena è decodificabile (robusto anche se gli eventi
     // sono già passati o l'autoplay parte in ritardo su mobile)
     var v = el('reg-video');
-    var lg = window.EIH_LANG || 'en';
-    try { lg = localStorage.getItem('eih-lang') || lg; } catch(e){}
-    if (['it','en','si','ta'].indexOf(lg) < 0) lg = 'en';
-    [['webm','video/webm'],['mp4','video/mp4']].forEach(function(f){
-      var s = document.createElement('source');
-      s.src = '/assets/video/signup-demo.' + lg + '.' + f[0];
-      s.type = f[1];
-      v.appendChild(s);
-    });
-    v.load();
+    videoLingua();
     function show(){
       if(v.style.display !== 'block'){ v.style.display = 'block'; }
       var p = v.play(); if(p && p.catch) p.catch(function(){});
