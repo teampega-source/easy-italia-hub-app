@@ -147,9 +147,17 @@ python3 scripts/audit-indicizzazione.py    # esce 1 se qualcosa si contraddice
 - Wise: camref Partnerize `1110lKde8`, valore predefinito in `api/go.js`.
   `AFF_WISE` lo sovrascrive.
 - Travelpayouts: Partner ID (marker) **742717**, progetto Drive **542586**,
-  link breve Aviasales `https://aviasales.tpo.lu/9A6DFPAw`. Passano da
-  `/api/go?to=aviasales`: senza data si usa il link breve, con la data si va
-  dritti ai risultati (`AFF_AVIASALES` e `AFF_TP_MARKER` li sovrascrivono).
+  link brevi Aviasales `https://aviasales.tpo.lu/9A6DFPAw` e Klook
+  `https://klook.tpo.lu/8XJEF87j`. Passano da `/api/go?to=aviasales|klook`:
+  per Aviasales, senza data si usa il link breve, con la data si va dritti ai
+  risultati (`AFF_AVIASALES`, `AFF_KLOOK`, `AFF_TP_MARKER` li sovrascrivono).
+- **Partner e affiliazioni non sono la stessa cosa.** Nella barra in home la
+  prima fila ("Chi lavora con noi") e' per chi ha un rapporto diretto con noi:
+  Wise e Travelpayouts. La seconda ("Cerca e prenota con") e' per i marchi
+  dentro Travelpayouts — Aviasales, Klook — di cui siamo affiliati e basta.
+  Non spostarli nella prima fila: quasi tutti i contratti di affiliazione
+  vietano di lasciar intendere una partnership che non c'e', ed e' il modo
+  tipico in cui un account viene chiuso.
   Lo script Drive sta **solo** in `travelpayouts.html`, in fondo al `<body>`, e
   parte **dopo il consenso ai cookie di marketing** (`EIH_CONSENT.marketing`).
   Non rimetterlo nella testata di tutte le pagine: c'e' stato per un'ora sola,

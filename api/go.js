@@ -21,6 +21,7 @@ const IDS = {
   // conosciamo la data. Nessuno dei due e' un segreto: stanno in chiaro nei link.
   tpmarker:   process.env.AFF_TP_MARKER   || '742717',
   aviasales:  process.env.AFF_AVIASALES   || 'https://aviasales.tpo.lu/9A6DFPAw',
+  klook:      process.env.AFF_KLOOK       || 'https://klook.tpo.lu/8XJEF87j',
 };
 
 // Partnerize deep link (prf.hn). camref = ref campagna dalla dashboard.
@@ -72,6 +73,10 @@ function buildUrl(to, q) {
       return 'https://www.aviasales.com/search/' + from + p[2] + p[1] + 'CMB1'
         + '?marker=' + encodeURIComponent(IDS.tpmarker);
     }
+
+    case 'klook':
+      // Esperienze e attivita'. Il link breve porta gia' il pid: non si tocca.
+      return IDS.klook;
 
     case 'kayak': {
       const dep = q.date ? String(q.date).replace(/[^0-9-]/g,'').slice(0,10) : null;
