@@ -1737,6 +1737,17 @@ footer{
 .pt-logo--vuoto{background:transparent;border-style:dashed;color:var(--fg-muted);
   font-size:var(--text-xs);letter-spacing:.04em}
 .pt-logo--vuoto:hover{color:var(--ink)}
+/* Seconda fila: qui non ci sono partner, ci sono servizi che si cercano da noi.
+   Targhette piu' piccole e etichetta diversa: la differenza fra "lavora con noi"
+   e "lo trovi qui" deve vedersi, non solo leggersi. */
+.pt-sub{margin:var(--sp-4) 0 0;text-align:center;font-size:var(--text-xs);font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted)}
+.pt-bar--sec{margin-top:var(--sp-2)}
+.pt-logo--s{min-width:150px;height:62px;border-radius:12px;background:var(--surface)}
+.pt-logo--s:hover{background:var(--surface-hover);box-shadow:none;transform:translateY(-2px)}
+.pt-nome{font-family:'Clash Grotesk',sans-serif;font-size:1.05rem;font-weight:600;
+  letter-spacing:-.01em;color:var(--fg-secondary)}
+.pt-logo--s:hover .pt-nome{color:var(--ink)}
 .pt-note{margin:var(--sp-3) auto 0;max-width:640px;text-align:center;
   font-size:var(--text-xs);color:var(--fg-muted);line-height:1.6;font-weight:300}
 .pt-bar.is-scroll{-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
