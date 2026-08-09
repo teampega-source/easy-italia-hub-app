@@ -61,6 +61,8 @@ html[data-theme="dark"] .pt-logo{background:#eceae4}
 /* La targhetta chiara serve ai marchi disegnati, che sono scuri. Le targhette
    di testo no: li' il chiaro su chiaro rendeva le scritte illeggibili. */
 html[data-theme="dark"] .pt-logo--s{background:var(--surface)}
+/* ...tranne quando la targhetta piccola porta un marchio disegnato: quello e' scuro e vuole il fondo chiaro come le altre. */
+html[data-theme="dark"] .pt-logo--s.pt-logo--img{background:#eceae4}
 html[data-theme="dark"] .pt-logo--vuoto{background:transparent}
 html[data-theme="dark"] .screenshot-card{background:var(--bg-elevated)}
 html[data-theme="dark"] .sol-card{background:rgba(244,246,249,.05)}
