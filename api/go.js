@@ -16,6 +16,11 @@ const IDS = {
   // in chiaro in ogni link. In env solo se un giorno cambia.
   wise:       process.env.AFF_WISE        || '1110lKde8',
   remitly:    process.env.AFF_REMITLY     || '',
+  // Travelpayouts. Il link breve arriva dalla loro bacheca ed e' gia' tracciato;
+  // il marker serve a costruire il collegamento diretto ai risultati quando
+  // conosciamo la data. Nessuno dei due e' un segreto: stanno in chiaro nei link.
+  tpmarker:   process.env.AFF_TP_MARKER   || '742717',
+  aviasales:  process.env.AFF_AVIASALES   || 'https://aviasales.tpo.lu/9A6DFPAw',
 };
 
 // Partnerize deep link (prf.hn). camref = ref campagna dalla dashboard.
@@ -54,6 +59,18 @@ function buildUrl(to, q) {
       if (ret) url += '&return=' + ret;
       if (IDS.kiwi) url += '&affilid=' + encodeURIComponent(IDS.kiwi);
       return url;
+    }
+
+    case 'aviasales': {
+      /* Senza data si usa il link breve della bacheca, che porta alla home di
+         Aviasales gia' tracciata. Con la data si va dritti ai risultati: per chi
+         cerca un volo per un funerale o una scadenza, una schermata in meno conta
+         piu' di qualunque altra cosa in questa pagina. */
+      const dep = q.date ? String(q.date).replace(/[^0-9-]/g, '').slice(0, 10) : null;
+      const p = dep ? dep.split('-') : [];
+      if (p.length !== 3) return IDS.aviasales;
+      return 'https://www.aviasales.com/search/' + from + p[2] + p[1] + 'CMB1'
+        + '?marker=' + encodeURIComponent(IDS.tpmarker);
     }
 
     case 'kayak': {
