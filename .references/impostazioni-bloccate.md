@@ -146,7 +146,10 @@ python3 scripts/audit-indicizzazione.py    # esce 1 se qualcosa si contraddice
 
 - Wise: camref Partnerize `1110lKde8`, valore predefinito in `api/go.js`.
   `AFF_WISE` lo sovrascrive.
-- Travelpayouts: Partner ID (marker) **742717**, progetto Drive **542586**.
+- Travelpayouts: Partner ID (marker) **742717**, progetto Drive **542586**,
+  link breve Aviasales `https://aviasales.tpo.lu/9A6DFPAw`. Passano da
+  `/api/go?to=aviasales`: senza data si usa il link breve, con la data si va
+  dritti ai risultati (`AFF_AVIASALES` e `AFF_TP_MARKER` li sovrascrivono).
   Lo script Drive sta **solo** in `travelpayouts.html`, in fondo al `<body>`, e
   parte **dopo il consenso ai cookie di marketing** (`EIH_CONSENT.marketing`).
   Non rimetterlo nella testata di tutte le pagine: c'e' stato per un'ora sola,

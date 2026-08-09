@@ -127,7 +127,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     [data-page="voli"] .flight-search label{font-size:var(--text-sm);color:var(--fg-muted);display:flex;flex-direction:column;gap:.35rem;font-weight:500}
     [data-page="voli"] .flight-search input[type="date"]{padding:.65rem .9rem;border-radius:var(--radius-sm);border:1px solid var(--border-bright);background:var(--surface);color:var(--ink);font-size:var(--text-sm);font-family:inherit;width:100%;transition:border-color .18s}
     [data-page="voli"] .flight-search input[type="date"]:focus{outline:none;border-color:var(--gold)}
-    [data-page="voli"] .engine-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:var(--sp-3)}
+    [data-page="voli"] .engine-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:var(--sp-3)}
+    @media(max-width:900px){[data-page="voli"] .engine-grid{grid-template-columns:repeat(2,1fr)}}
     [data-page="voli"] .se-btn{display:flex;flex-direction:column;align-items:center;gap:.35rem;padding:1rem .75rem;border-radius:var(--radius);border:1.5px solid var(--border-bright);background:var(--surface);cursor:pointer;font-family:inherit;transition:transform .18s,box-shadow .18s,border-color .18s;text-align:center}
     [data-page="voli"] .se-btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
     [data-page="voli"] .se-btn .se-logo{font-size:1.4rem;line-height:1}
@@ -136,6 +137,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     [data-page="voli"] .se-kiwi{border-color:#00b2a9}[data-page="voli"] .se-kiwi:hover{border-color:#00b2a9;background:rgba(0,178,169,.06)}
     [data-page="voli"] .se-google{border-color:#4285f4}[data-page="voli"] .se-google:hover{border-color:#4285f4;background:rgba(66,133,244,.06)}
     [data-page="voli"] .se-kayak{border-color:#ff690f}[data-page="voli"] .se-kayak:hover{border-color:#ff690f;background:rgba(255,105,15,.06)}
+    [data-page="voli"] .se-aviasales{border-color:#006dff}[data-page="voli"] .se-aviasales:hover{border-color:#006dff;background:rgba(0,109,255,.06)}
     [data-page="voli"] .btn-all{margin-top:.75rem;width:100%}
     
     @media(max-width:600px){[data-page="voli"] .engine-grid{grid-template-columns:1fr 1fr}[data-page="voli"] .flight-search{grid-template-columns:1fr}}
@@ -178,8 +180,13 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
           <span class="se-name" data-no-tr>Kayak</span>
           <span class="se-note">Confronto completo</span>
         </button>
+        <button class="se-btn se-aviasales" data-engine="aviasales">
+          <span class="se-logo">🎫</span>
+          <span class="se-name" data-no-tr>Aviasales</span>
+          <span class="se-note">Tariffe verso l'Asia</span>
+        </button>
       </div>
-      <button class="btn-oro btn-all" id="fs-search-all">✈ Apri tutti e tre i comparatori →</button>
+      <button class="btn-oro btn-all" id="fs-search-all">✈ Apri tutti i comparatori →</button>
     </section>
 
     <!-- ─── FLIGHT TRACKER ─── -->
@@ -456,7 +463,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     allBtn.addEventListener('click', function() {
       // Aperture sincrone: con setTimeout il browser perde il gesto utente
       // e blocca tutte le schede tranne la prima.
-      ['kiwi','gflights','kayak'].forEach(function(engine) {
+      ['kiwi','gflights','kayak','aviasales'].forEach(function(engine) {
         window.open(buildUrl(engine), '_blank', 'noopener,noreferrer');
       });
     });
