@@ -91,6 +91,14 @@
     var fuori = [];
     for (var r = 0; r < radici.length; r++) {
       if (ui && radici[r].tagName === 'MAIN') continue;
+      /* Il TreeWalker non passa la radice al filtro: un nodo marcato data-no-tr
+         veniva rispettato quando lo si incontrava scendendo, ma non quando era
+         lui stesso il punto di partenza — ed e' quello che succede a ogni
+         richiamo dell'osservatore su un pezzo riscritto dal JavaScript. Su
+         /registrati i due link ai termini tornavano inglesi dentro una frase
+         italiana. La radice si controlla qui. */
+      var rad = radici[r];
+      if (rad.nodeType === 1 && rad !== document.body && daSaltare(rad, salta)) continue;
       /* Si scarta l'intero sottoalbero appena si incontra un elemento da
          saltare, invece di visitare ogni nodo di testo e poi risalire gli
          antenati uno per uno. Sulla home, che e' grande, la sola scansione
