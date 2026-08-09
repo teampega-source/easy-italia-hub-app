@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<script>/* Stessa apertura delle altre pagine: la lingua si decide prima del CSS. */
+try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
+try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+if(!/^(it|en|si|ta)$/.test(_l))_l="en";
+window.EIH_LANG=_l;
+if(/^(en|si|ta)$/.test(_l)){var _p=location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/,"").replace(/^\/+|\/+$/g,"").replace(/\.html$/,"")||"index";
+window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),promessaUi:fetch("/assets/i18n/_ui."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
+var _s=document.createElement("script");_s.fetchPriority="high";_s.src="/assets/eih-i18n-page.js";_s.defer=true;document.head.appendChild(_s);
+var _t=document.createElement("style");_t.textContent="html.eih-tr-attesa main{visibility:hidden}";document.head.appendChild(_t);
+document.documentElement.classList.add("eih-tr-attesa");
+setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")},500);}}catch(e){}</script>
+
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cerca voli e hotel — Easy Italia Hub</title>
+<meta name="description" content="Voli e hotel per lo Sri Lanka, cercati con lo stesso motore che usano le agenzie. Prezzi identici a quelli che trovi da solo: la commissione la paga chi vende, non tu."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/travelpayouts"/>
+
+<!-- ─── Open Graph ─── -->
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Easy Italia Hub"/>
+<meta property="og:title" content="Cerca voli e hotel — Easy Italia Hub"/>
+<meta property="og:description" content="Voli e hotel per lo Sri Lanka, cercati con lo stesso motore che usano le agenzie. Prezzi identici a quelli che trovi da solo: la commissione la paga chi vende, non tu."/>
+<meta property="og:url" content="https://easyitaliahub.it/travelpayouts"/>
+<meta property="og:image" content="https://easyitaliahub.it/api/og?t=Voli%20e%20hotel&amp;s=Cerca%20la%20tratta%20Italia%20%E2%80%93%20Colombo"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="it_IT"/>
+<meta property="og:locale:alternate" content="en_US"/>
+<meta property="og:locale:alternate" content="si_LK"/>
+<meta property="og:locale:alternate" content="ta_IN"/>
+
+<!-- ─── Twitter Card ─── -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Cerca voli e hotel — Easy Italia Hub"/>
+<meta name="twitter:description" content="Voli e hotel per lo Sri Lanka, cercati con lo stesso motore che usano le agenzie. Prezzi identici a quelli che trovi da solo: la commissione la paga chi vende, non tu."/>
+<meta name="twitter:image" content="https://easyitaliahub.it/api/og?t=Voli%20e%20hotel&amp;s=Cerca%20la%20tratta%20Italia%20%E2%80%93%20Colombo"/>
+
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" media="print" onload="this.media='all'"/>
+<noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/></noscript>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+<script>window.EIH_I18N_EXTRA={"en": {"page.h1": "Flights and hotels<br/><em>for Sri Lanka.</em>", "page.lead": "Search the Italy&ndash;Colombo route and places to stay on the island, with the same engine travel agencies use. <strong>The prices are the ones you would find on your own</strong>: the commission is paid by whoever sells the ticket, not by you.", "s0.t": "Search now", "s0.p": "The searches open on the partner's site. Nothing is booked here and we never see your payment details.", "b.voli": "Search flights to Colombo", "b.hotel": "Find a hotel in Sri Lanka", "cons.t": "Marketing cookies are off", "cons.p": "The search tools use a partner cookie to recognise your click. Turn on marketing cookies and this page works right away — without it the links still work, we simply earn nothing.", "cons.btn": "Cookie preferences", "s1.t": "Who Travelpayouts is", "s1.p1": "A partnership platform that brings together the affiliate programmes of travel brands — Booking.com, Tripadvisor, GetYourGuide and others — used by more than 300,000 sites and creators worldwide.", "s1.p2": "You buy nothing from Travelpayouts. It sits behind the scenes: it recognises that the visit came from here and passes us a share of what the seller earns anyway.", "s2.t": "What changes for you", "s2.l1": "<strong>Nothing on the price.</strong> The fare is the same whether you search from here or from Google.", "s2.l2": "<strong>Nothing on your rights.</strong> The contract is with the airline or the hotel, exactly as it would be otherwise.", "s2.l3": "<strong>One thing on your data.</strong> The partner needs a cookie to recognise that the click came from us. That is why we ask for your consent first.", "s3.t": "Before you book the Colombo route", "s3.p": "There are no direct flights between Italy and Colombo: every route has at least one stop, most often in the Gulf. Look at the total travel time and not only the price, and read the baggage rules before paying — for anyone flying home with gifts they matter more than twenty euros of difference.", "s3.alt": "Our flights guide", "s3.alt2": "Travelling to Sri Lanka", "disc": "Affiliate page: if you book after clicking from here, Easy Italia Hub receives a share of the seller's commission. You pay the same price and your conditions do not change. This page was not written together with Travelpayouts.", "upd": "Partnership active since August 2026."}, "si": {"page.h1": "ශ්‍රී ලංකාව සඳහා<br/><em>ගුවන් ටිකට් සහ හෝටල්.</em>", "page.lead": "ඉතාලිය–කොළඹ ගමන් මාර්ගය සහ දිවයිනේ නවාතැන්, සංචාරක නියෝජිතායතන භාවිත කරන එම යන්ත්‍රයෙන්ම සොයන්න. <strong>මිල ඔබම සොයාගන්නා මිලමයි</strong>: කොමිස් ගෙවන්නේ ටිකට් විකුණන අයයි, ඔබ නොවේ.", "s0.t": "දැන් සොයන්න", "s0.p": "සෙවීම් හවුල්කරුගේ අඩවියේ විවෘත වේ. මෙහි කිසිවක් වෙන් කරන්නේ නැත, ඔබේ ගෙවීම් තොරතුරු අපි කිසිදා නොදකිමු.", "b.voli": "කොළඹට ගුවන් ටිකට් සොයන්න", "b.hotel": "ශ්‍රී ලංකාවේ හෝටලයක් සොයන්න", "cons.t": "අලෙවිකරණ කුකීස් ක්‍රියාවිරහිතයි", "cons.p": "සෙවුම් මෙවලම් ඔබේ ක්ලික් හඳුනාගැනීමට හවුල්කරු කුකියක් භාවිත කරයි. අලෙවිකරණ කුකීස් සක්‍රිය කළොත් මෙම පිටුව වහාම ක්‍රියා කරයි — එය නැතිවද සබැඳි ක්‍රියා කරයි, අපට උපයන්නක් නැති තරමයි.", "cons.btn": "කුකී මනාප", "s1.t": "Travelpayouts කියන්නේ කවුද", "s1.p1": "සංචාරක සන්නාමවල අනුබද්ධ වැඩසටහන් එකට ගෙනෙන හවුල්කාරිත්ව වේදිකාවක් — Booking.com, Tripadvisor, GetYourGuide සහ තවත් — ලොව පුරා අඩවි සහ නිර්මාණකරුවන් 300,000කට වැඩි පිරිසක් භාවිත කරයි.", "s1.p2": "ඔබ Travelpayouts වෙතින් කිසිවක් මිලදී නොගනී. එය පිටුපස සිටී: පැමිණීම මෙතැනින් බව හඳුනාගෙන, විකුණන්නා කෙසේ හෝ උපයන දෙයෙන් කොටසක් අපට දෙයි.", "s2.t": "ඔබට වෙනස් වන දේ", "s2.l1": "<strong>මිලට කිසිවක් නැත.</strong> මෙතැනින් සෙවුවත් Google වෙතින් සෙවුවත් ගාස්තුව එකමයි.", "s2.l2": "<strong>ඔබේ අයිතිවලට කිසිවක් නැත.</strong> ගිවිසුම ගුවන් සමාගම හෝ හෝටලය සමඟයි.", "s2.l3": "<strong>ඔබේ දත්තවලට එකක්.</strong> ක්ලික් එක අපගෙන් බව හඳුනාගැනීමට හවුල්කරුට කුකියක් අවශ්‍යයි. ඒ නිසා අපි කලින් ඔබේ අවසරය අසමු.", "s3.t": "කොළඹ ගමන වෙන් කිරීමට පෙර", "s3.p": "ඉතාලිය සහ කොළඹ අතර සෘජු ගුවන් ගමන් නැත: සෑම මාර්ගයකම අවම වශයෙන් එක් නැවතුමක් ඇත, බොහෝ විට ගල්ෆ් කලාපයේ. මිල පමණක් නොව මුළු ගමන් කාලයද බලන්න, ගෙවීමට පෙර බෑග් නීති කියවන්න — තෑගි සමඟ ගෙදර යන අයට ඒවා යුරෝ විස්සක වෙනසකට වඩා වැදගත්.", "s3.alt": "අපගේ ගුවන් ගමන් මාර්ගෝපදේශය", "s3.alt2": "ශ්‍රී ලංකාවට යාම", "disc": "අනුබද්ධ පිටුව: මෙතැනින් ක්ලික් කර වෙන් කළහොත් විකුණන්නාගෙන් ලැබෙන කොමිස් මුදලින් කොටසක් Easy Italia Hub හට ලැබේ. ඔබ එම මිලම ගෙවයි, කොන්දේසිද වෙනස් නොවේ. මෙම පිටුව Travelpayouts සමඟ ලියා නැත.", "upd": "හවුල්කාරිත්වය 2026 අගෝස්තු සිට ක්‍රියාත්මකයි."}, "ta": {"page.h1": "இலங்கைக்கான<br/><em>விமானங்களும் தங்குமிடங்களும்.</em>", "page.lead": "இத்தாலி–கொழும்பு பாதையையும் தீவில் தங்குமிடங்களையும், பயண முகவர்கள் பயன்படுத்தும் அதே இயந்திரத்தால் தேடுங்கள். <strong>விலைகள் நீங்களே கண்டறியும் விலைகளே</strong>: கமிஷனை டிக்கெட் விற்பவர் தருகிறார், நீங்கள் அல்ல.", "s0.t": "இப்போது தேடுங்கள்", "s0.p": "தேடல்கள் கூட்டாளரின் தளத்தில் திறக்கும். இங்கே எதுவும் முன்பதிவு செய்யப்படுவதில்லை, உங்கள் கட்டண விவரங்களை நாங்கள் ஒருபோதும் பார்பதில்லை.", "b.voli": "கொழும்புக்கு விமானம் தேடு", "b.hotel": "இலங்கையில் ஹோட்டல் தேடு", "cons.t": "சந்தைப்படுத்தல் குக்கீகள் அணைக்கப்பட்டுள்ளன", "cons.p": "தேடல் கருவிகள் உங்கள் கிளிக்கை அடையாளம் காண கூட்டாளர் குக்கீயைப் பயன்படுத்துகின்றன. சந்தைப்படுத்தல் குக்கீகளை இயக்கினால் இந்தப் பக்கம் உடனே வேலை செய்யும் — அது இல்லாமலும் இணைப்புகள் வேலை செய்யும், நாங்கள் எதுவும் சம்பாதிக்க மாட்டோம், அவ்வளவே.", "cons.btn": "குக்கீ விருப்பங்கள்", "s1.t": "Travelpayouts யார்", "s1.p1": "பயண நிறுவனங்களின் இணைப்புத் திட்டங்களை ஒன்றிணைக்கும் கூட்டாண்மை தளம் — Booking.com, Tripadvisor, GetYourGuide மற்றும் பிற — உலகமெங்கும் 300,000க்கும் மேல்பட்ட தளங்களும் படைப்பாளர்களும் பயன்படுத்துகின்றனர்.", "s1.p2": "நீங்கள் Travelpayouts-இடமிருந்து எதையும் வாங்குவதில்லை. அது பின்னணியில் இருக்கிறது: வருகை இங்கிருந்து வந்தது என அடையாளம் கண்டு, விற்பவர் ஏதேனும் சம்பாதிப்பதில் ஒரு பங்கை எங்களுக்குத் தருகிறது.", "s2.t": "உங்களுக்கு மாறுவது என்ன", "s2.l1": "<strong>விலையில் எதுவும் இல்லை.</strong> இங்கிருந்து தேடினாலும் Google-இல் தேடினாலும் கட்டணம் ஒன்றே.", "s2.l2": "<strong>உங்கள் உரிமைகளில் எதுவும் இல்லை.</strong> ஒப்பந்தம் விமான நிறுவனத்துடனோ ஹோட்டலுடனோ, மற்றபடியும் அப்படியே.", "s2.l3": "<strong>உங்கள் தரவில் ஒன்று.</strong> கிளிக் எங்களிடமிருந்து வந்தது என அறிய கூட்டாளருக்கு ஒரு குக்கீ தேவை. அதனால்தான் முதலில் உங்கள் சம்மதம் கேட்கிறோம்.", "s3.t": "கொழும்பு பயணத்தை முன்பதிவு செய்யும் முன்", "s3.p": "இத்தாலிக்கும் கொழும்புக்கும் இடையே நேரடி விமானங்கள் இல்லை: ஒவ்வொரு பாதையிலும் குறைந்தது ஒரு நிறுத்தம், பெரும்பாலும் வளைகுடாவில். விலையை மட்டுமல்ல மொத்தப் பயண நேரத்தையும் பாருங்கள், செலுத்தும் முன் சாமான் விதிகளைப் படியுங்கள் — பரிசுகளுடன் வீட்டுக்குத் திரும்புபவர்களுக்கு அவை இருபது யூரோ வித்தியாசத்தை விட முக்கியம்.", "s3.alt": "எங்கள் விமான வழிகாட்டி", "s3.alt2": "இலங்கைக்குப் பயணம்", "disc": "இணைப்புப் பக்கம்: இங்கிருந்து கிளிக் செய்தபிறகு முன்பதிவு செய்தால் விற்பவரின் கமிஷனில் ஒரு பங்கு Easy Italia Hub-க்குக் கிடைக்கும். நீங்கள் அதே விலையைச் செலுத்துகிறீர்கள், நிபந்தனைகளும் மாறாது. இந்தப் பக்கம் Travelpayouts-உடன் சேர்ந்து எழுதப்படவில்லை.", "upd": "கூட்டாண்மை 2026 ஆகஸ்ட் முதல் செயலில்."}};</script>
+<link rel="stylesheet" href="/assets/eih-hero3d.css"/>
+<script src="/assets/eih-lang-url.js"></script>
+<link rel="stylesheet" href="/assets/eih-leggibilita.css"/>
+</head>
+<body data-page="travelpayouts">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <style>
+    [data-page="travelpayouts"] .page section{scroll-margin-top:6rem}
+    [data-page="travelpayouts"] .tp-marchio{display:inline-flex;align-items:center;justify-content:center;
+      padding:14px 26px;border-radius:16px;background:#fff;border:1px solid var(--border);margin-bottom:var(--sp-2)}
+    html[data-theme="dark"] [data-page="travelpayouts"] .tp-marchio{background:#eceae4}
+    [data-page="travelpayouts"] .tp-marchio img{height:26px;width:auto;display:block}
+    [data-page="travelpayouts"] .tp-cerca{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:var(--sp-3)}
+    [data-page="travelpayouts"] .tp-consenso{margin:var(--sp-3) 0 0;padding:1.1rem 1.3rem;border-radius:var(--radius);
+      background:var(--bg-elevated);border:1px solid var(--border);border-left:3px solid var(--coral)}
+    [data-page="travelpayouts"] .tp-consenso h3{margin:0 0 .4rem;font-size:var(--text-base)}
+    [data-page="travelpayouts"] .tp-consenso p{margin:0 0 .9rem;font-size:var(--text-sm)}
+    [data-page="travelpayouts"] .affiliato{margin-top:var(--sp-2);font-size:var(--text-xs);color:var(--fg-muted);line-height:1.6}
+  </style>
+  <div class="page">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> <span data-no-tr>Partner</span></p>
+    <span class="tp-marchio reveal"><img src="/assets/img/partner-travelpayouts.svg" alt="Travelpayouts" width="203" height="36"/></span>
+    <h1 class="reveal" data-i18n-html="page.h1">Voli e hotel<br/><em>per lo Sri Lanka.</em></h1>
+    <p class="lead reveal" data-i18n-html="page.lead">Cerca la tratta Italia&ndash;Colombo e i posti dove dormire sull&rsquo;isola, con lo stesso motore che usano le agenzie. <strong>I prezzi sono quelli che troveresti da solo</strong>: la commissione la paga chi vende il biglietto, non tu.</p>
+
+    <section id="cerca" class="reveal">
+      <h2 data-i18n="s0.t">Cerca adesso</h2>
+      <p data-i18n="s0.p">Le ricerche si aprono sul sito del partner. Qui non si prenota niente e i tuoi dati di pagamento non li vediamo mai.</p>
+      <div class="tp-cerca">
+        <a href="https://www.aviasales.com/?marker=742717" target="_blank" rel="sponsored noopener noreferrer" class="btn-oro" data-i18n="b.voli">Cerca voli per Colombo</a>
+        <a href="https://search.hotellook.com/?marker=742717" target="_blank" rel="sponsored noopener noreferrer" class="btn-ghost" data-i18n="b.hotel">Trova un hotel in Sri Lanka</a>
+      </div>
+      <div class="tp-consenso" id="tp-consenso" hidden>
+        <h3 data-i18n="cons.t">I cookie di marketing sono spenti</h3>
+        <p data-i18n="cons.p">Gli strumenti di ricerca usano un cookie del partner per riconoscere il tuo clic. Attivando i cookie di marketing questa pagina funziona subito &mdash; senza, i link restano validi, semplicemente noi non guadagniamo nulla.</p>
+        <button type="button" class="btn-ghost" id="tp-apri-cookie" data-i18n="cons.btn">Preferenze cookie</button>
+      </div>
+    </section>
+
+    <section id="chi" class="reveal">
+      <h2 data-i18n="s1.t">Chi &egrave; Travelpayouts</h2>
+      <p data-i18n="s1.p1">Una piattaforma di partnership che mette insieme i programmi di affiliazione dei marchi del viaggio &mdash; Booking.com, Tripadvisor, GetYourGuide e altri &mdash; usata da oltre 300.000 siti e creatori in tutto il mondo.</p>
+      <p data-i18n="s1.p2">Da Travelpayouts non compri niente. Sta dietro le quinte: riconosce che la visita arriva da qui e ci gira una parte di quello che il venditore guadagna comunque.</p>
+    </section>
+
+    <section id="cosa-cambia" class="reveal">
+      <h2 data-i18n="s2.t">Cosa cambia per te</h2>
+      <ul>
+        <li data-i18n-html="s2.l1"><strong>Niente sul prezzo.</strong> La tariffa &egrave; la stessa cercando da qui o da Google.</li>
+        <li data-i18n-html="s2.l2"><strong>Niente sui tuoi diritti.</strong> Il contratto &egrave; con la compagnia aerea o con l&rsquo;albergo, esattamente come sarebbe altrimenti.</li>
+        <li data-i18n-html="s2.l3"><strong>Una cosa sui tuoi dati.</strong> Al partner serve un cookie per riconoscere che il clic arriva da noi. Per questo il consenso te lo chiediamo prima.</li>
+      </ul>
+    </section>
+
+    <section id="prima-di-prenotare" class="reveal">
+      <h2 data-i18n="s3.t">Prima di prenotare la tratta per Colombo</h2>
+      <p data-i18n="s3.p">Fra Italia e Colombo non ci sono voli diretti: ogni rotta ha almeno uno scalo, il pi&ugrave; delle volte nel Golfo. Guarda la durata totale del viaggio e non solo il prezzo, e leggi le regole sui bagagli prima di pagare &mdash; per chi torna a casa con i regali contano pi&ugrave; di venti euro di differenza.</p>
+      <div class="cta-row">
+        <a href="/voli" class="btn-ghost" data-i18n="s3.alt">La nostra guida ai voli</a>
+        <a href="/travel-sri-lanka" class="btn-ghost" data-i18n="s3.alt2">Viaggiare in Sri Lanka</a>
+      </div>
+      <p class="affiliato" data-i18n="disc">Pagina affiliata: se prenoti dopo aver cliccato da qui, Easy Italia Hub riceve una parte della commissione dal venditore. Tu paghi lo stesso prezzo e le tue condizioni non cambiano. Questa pagina non &egrave; stata scritta insieme a Travelpayouts.</p>
+        <p class="affiliato" data-i18n="upd">Partnership attiva da agosto 2026.</p>
+    </section>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script src="eih-auth.js" defer></script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="assets/eih-atmosphere.js" fetchpriority="low" defer></script>
+<script src="assets/eih-palette.js" fetchpriority="low" defer></script>
+<script src="assets/eih-theme.js" defer></script>
+<script src="assets/eih-consent.js" defer></script>
+<script src="/assets/eih-misura.js" defer></script>
+<script src="/assets/eih-hero3d.js" fetchpriority="low" defer></script>
+<script src="/assets/vendor/lenis.min.js" fetchpriority="low" defer></script>
+<script src="/assets/vendor/gsap.min.js" fetchpriority="low" defer></script>
+<script src="/assets/vendor/ScrollTrigger.min.js" fetchpriority="low" defer></script>
+<script src="/assets/eih-motion.js" fetchpriority="low" defer></script>
+<script>
+/* Travelpayouts Drive. Sta solo qui, non nella testata di tutte le pagine, e
+   parte solo dopo il consenso ai cookie di marketing: e' tracciamento di
+   affiliazione, e la nostra fascia promette che senza consenso non parte.
+   Se il consenso manca si dice all'utente perche', invece di non fare niente
+   in silenzio. */
+(function(){
+  var acceso = false;
+  function avvia(){
+    if(acceso) return; acceso = true;
+    var s = document.createElement('script');
+    s.async = 1;
+    s.setAttribute('data-cmp-ab','2');
+    s.src = 'https://emrldtp.cc/NTQyNTg2.js?t=542586';
+    document.head.appendChild(s);
+  }
+  function guarda(){
+    var ok = !!(window.EIH_CONSENT && window.EIH_CONSENT.marketing);
+    var avviso = document.getElementById('tp-consenso');
+    if(avviso) avviso.hidden = ok;
+    if(ok) avvia();
+  }
+  var b = document.getElementById('tp-apri-cookie');
+  if(b) b.addEventListener('click', function(){
+    /* Il pannello lo apre il link "Preferenze cookie" del piede, che e'
+       l'unico punto d'ingresso pubblico di eih-consent.js. */
+    var voci = document.querySelectorAll('a,button');
+    for(var i=0;i<voci.length;i++){
+      if(voci[i]===b) continue;
+      if(/preferenze cookie|cookie preferences|කුකී මනාප|குக்கீ விருப்பங்கள்/i.test(voci[i].textContent||'')){
+        voci[i].click(); return;
+      }
+    }
+  });
+  window.addEventListener('cookieConsentUpdated', guarda);
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', guarda, {once:true});
+  else setTimeout(guarda, 0);
+  setTimeout(guarda, 900);   // eih-consent.js e' differito e arriva dopo
+})();
+</script>
+
+</body>
+</html>
