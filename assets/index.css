@@ -1732,6 +1732,8 @@ footer{
   transition:border-color var(--dur-micro),box-shadow var(--dur-micro),transform var(--dur-micro)}
 .pt-logo:hover{border-color:var(--border-bright);box-shadow:0 8px 32px rgba(20,30,48,.08);transform:translateY(-3px)}
 .pt-logo img{height:30px;width:auto;display:block}
+/* Marchi con proporzioni molto diverse: si pareggiano a occhio, non per altezza */
+.pt-logo img.pt-largo{height:23px}
 .pt-logo--vuoto{background:transparent;border-style:dashed;color:var(--fg-muted);
   font-size:var(--text-xs);letter-spacing:.04em}
 .pt-logo--vuoto:hover{color:var(--ink)}
