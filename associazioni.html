@@ -102,6 +102,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     <!-- ── FILTRO CITTÀ ── -->
     <div class="city-filter reveal" id="city-filter" role="group" aria-label="Filtra per città">
       <button class="city-btn active" data-city="all">Tutte le città</button>
+      <button class="city-btn" data-city="nazionale">Nazionali</button>
       <button class="city-btn" data-city="roma">Roma</button>
       <button class="city-btn" data-city="milano">Milano</button>
       <button class="city-btn" data-city="torino">Torino</button>
@@ -109,6 +110,19 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       <button class="city-btn" data-city="napoli">Napoli</button>
       <button class="city-btn" data-city="bologna">Bologna</button>
     </div>
+
+    <!-- ── NAZIONALI ── -->
+    <section class="city-section reveal" data-city-section="nazionale">
+      <h2 class="city-heading"><span class="city-flag">🇱🇰</span> Associazioni nazionali</h2>
+      <div class="assoc-grid">
+        <div class="assoc-card">
+          <span class="assoc-type community">Supporto</span>
+          <p class="assoc-name" data-no-tr>Associazione di Sri Lanka in Italia (SLAIT)</p>
+          <p class="assoc-desc">La più antica associazione della comunità srilankese in Italia, fondata il 23 novembre 1980. Presidente: Rande Sarada Goonatilleke. Rappresenta la comunità a livello nazionale.</p>
+          <p class="assoc-meta">🌐 <a class="inline" href="https://www.slait.it/" target="_blank" rel="noopener noreferrer" data-no-tr>slait.it</a> · ✉️ <span data-no-tr>info@slait.it</span></p>
+        </div>
+      </div>
+    </section>
 
     <!-- ── ROMA ── -->
     <section class="city-section reveal" data-city-section="roma">
