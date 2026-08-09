@@ -146,6 +146,12 @@ python3 scripts/audit-indicizzazione.py    # esce 1 se qualcosa si contraddice
 
 - Wise: camref Partnerize `1110lKde8`, valore predefinito in `api/go.js`.
   `AFF_WISE` lo sovrascrive.
+- Travelpayouts: Partner ID (marker) **742717**, progetto Drive **542586**.
+  Lo script Drive sta **solo** in `travelpayouts.html`, in fondo al `<body>`, e
+  parte **dopo il consenso ai cookie di marketing** (`EIH_CONSENT.marketing`).
+  Non rimetterlo nella testata di tutte le pagine: c'e' stato per un'ora sola,
+  il tempo di far passare la verifica, e contraddiceva la fascia dei cookie.
+  Se il consenso manca, la pagina lo dice e offre il pannello: non resta muta.
 - Ogni link affiliato porta `rel="sponsored"` e la commissione è dichiarata
   nella pagina. Non si toglie.
 
