@@ -103,6 +103,24 @@ pagina — `cta-publish`, `new-btn`, `save-btn`, `suggest-btn`, `gen-btn`,
 - Il gradiente dorato di `[data-page="esame"] .btn-cta` è fuori tavolozza per
   scelta e **non si tocca** senza che lo chieda l'utente.
 
+## Content-Security-Policy
+
+Sta in `vercel.json`, una riga sola per tutto il sito. Ogni servizio esterno va
+aperto **per direttiva**, non in blocco: caricare uno script e lasciarlo
+parlare sono due permessi diversi.
+
+| Dominio | Direttive aperte | Perche' |
+|---|---|---|
+| `emrldtp.cc` | `script-src`, `connect-src`, `img-src` | Travelpayouts Drive: lo script arriva da qui e da qui riporta i clic |
+| `tp.media` | `connect-src`, `img-src`, `frame-src` | riquadri di ricerca voli e hotel di Travelpayouts, che sono iframe |
+
+- Sintomo tipico di una direttiva mancante: lo script **si carica** e non
+  succede niente, senza errori in pagina. Con `script-src` da solo il Drive
+  partiva e la verifica di Travelpayouts falliva, perche' la chiamata di
+  ritorno cade sotto `connect-src`.
+- Non aggiungere `'unsafe-eval'` ne' caratteri jolly (`https://*`) per far
+  funzionare un servizio: si nomina l'host.
+
 ## File che devono esistere in radice
 
 `favicon.ico` — ogni browser e ogni crawler lo chiede senza che nessuno lo
