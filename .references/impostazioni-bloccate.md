@@ -160,10 +160,12 @@ python3 scripts/audit-indicizzazione.py    # esce 1 se qualcosa si contraddice
   tipico in cui un account viene chiuso.
 - Loghi dei partner: `assets/img/partner-*.{svg,png}`, sempre l'originale del
   marchio, mai ridisegnato. Aviasales viene dal file ufficiale su Wikimedia
-  Commons (`Aviasales logo horizontal.png`), ridotto a 416x96. Klook aspetta:
-  su Commons c'e' solo il marchio vecchio (KLOOK maiuscolo arancione, 2019),
-  e il sito blocca lo scarico automatico. Finche' non arriva quello nuovo
-  resta la targhetta col nome scritto.
+  Commons (`Aviasales logo horizontal.png`), ridotto a 416x96.
+- Klook e' l'unica eccezione: `partner-klook.svg` e' **ricostruito**, non
+  scaricato. Il file ufficiale non e' raggiungibile (il sito risponde 403, su
+  Commons c'e' solo il marchio del 2019) e l'utente ha chiesto di rifarlo
+  uguale. Va **sostituito** appena arriva l'originale dalla bacheca
+  Travelpayouts: stesso nome, stesse proporzioni, non serve toccare altro.
   Lo script Drive sta **solo** in `travelpayouts.html`, in fondo al `<body>`, e
   parte **dopo il consenso ai cookie di marketing** (`EIH_CONSENT.marketing`).
   Non rimetterlo nella testata di tutte le pagine: c'e' stato per un'ora sola,
