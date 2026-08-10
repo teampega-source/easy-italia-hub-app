@@ -174,6 +174,31 @@ python3 scripts/audit-indicizzazione.py    # esce 1 se qualcosa si contraddice
 - Ogni link affiliato porta `rel="sponsored"` e la commissione è dichiarata
   nella pagina. Non si toglie.
 
+## Sfondo fotografico della home
+
+`assets/eih-sfondo-mondo.js` + `assets/img/sf-1…8-*.jpg`. Otto foto sotto la
+pagina all'8% (16% di notte), che si danno il cambio sezione per sezione, in
+alternanza Sri Lanka / Italia. **L'alternanza è il messaggio**: non riordinare
+le coppie né sostituire una foto con una dell'altro paese.
+
+Lo scorrimento non deve rallentare. Tre scelte servono a questo e non si
+disfano:
+
+- **Niente `filter` CSS sui livelli.** Sfocatura e desaturazione sono cotte
+  dentro i JPEG. Un filtro su un livello a schermo pieno lo fa ridisegnare a
+  ogni fotogramma: misurato 89ms per fotogramma contro 37 senza, e 42
+  fotogrammi persi su telefono contro zero. Cotto nel file costa niente e i
+  file pesano la metà (1,3 MB → 600 K).
+- **Il movimento non lo fa il JavaScript**, lo fa `animation-timeline: scroll()`
+  sul compositor. Non rimettere scritture di `transform` dentro un
+  `requestAnimationFrame`.
+- **Durante lo scorrimento non si legge il layout.** Le posizioni delle sezioni
+  si misurano una volta e si rileggono su `resize`/`load`/`ResizeObserver`.
+  Niente `getBoundingClientRect` a ogni fotogramma.
+
+Delta misurato allo stato attuale: telefono identico al basale (zero fotogrammi
+persi), desktop p95 identico. Se si tocca qualcosa qui, rimisurare.
+
 ## Effetti che restano spenti
 
 Il tilt 3D sulle card è stato tolto di proposito (ruotava i riquadri sotto il
