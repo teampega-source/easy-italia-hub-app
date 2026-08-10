@@ -1745,6 +1745,9 @@ footer{
 .pt-bar--sec{margin-top:var(--sp-2)}
 .pt-logo--s{min-width:150px;height:62px;border-radius:12px;background:var(--surface)}
 .pt-logo--s img{height:22px;width:auto;display:block}
+/* Il marchio Klook porta con se' la propria pastiglia: serve piu' altezza
+   perche' la scritta dentro risulti grande come le altre. */
+.pt-logo--s img.pt-klook{height:30px}
 .pt-logo--s:hover{background:var(--surface-hover);box-shadow:none;transform:translateY(-2px)}
 .pt-nome{font-family:'Clash Grotesk',sans-serif;font-size:1.05rem;font-weight:600;
   letter-spacing:-.01em;color:var(--fg-secondary)}
