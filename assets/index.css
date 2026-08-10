@@ -1367,6 +1367,47 @@ footer{
 @keyframes typingDot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
 
 /* ─── NOISE TEXTURE (film-like, 3.5%) ─── */
+/* ── Sfondo del mondo (solo home) ──────────────────────────────────────
+   Otto fotografie che si danno il cambio scorrendo: Sri Lanka, Italia, Sri
+   Lanka, Italia. Stanno sotto tutto, appena visibili: il testo viene prima.
+   La sfocatura non e' un effetto, serve a togliere il dettaglio che altrimenti
+   litiga con le parole sopra. */
+#sfondo-mondo{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  contain:strict}
+/* Niente `filter` qui dentro. Sfocatura e desaturazione sono cotte dentro i
+   JPEG: un filtro CSS su un livello a schermo pieno obbliga la scheda grafica
+   a ridisegnarlo a ogni fotogramma dello scorrimento, ed era da solo quasi
+   tutto il costo dell'effetto (media per fotogramma 89ms contro 37 senza).
+   Cotto nel file costa zero, e i file pesano meno della metà.
+
+   Trasformazione 2D di partenza, non translate3d: così il livello grafico
+   nasce solo per la foto accesa, non per tutte e otto insieme. Otto livelli a
+   schermo pieno sempre promossi costano decine di megabyte di memoria video,
+   e li paga il telefono. */
+.sm-strato{position:absolute;inset:-8%;background-size:cover;background-position:center;
+  opacity:0;transform:scale(1.08);
+  transition:opacity 1s cubic-bezier(.4,0,.2,1)}
+.sm-strato.on{opacity:.085;will-change:opacity,transform}
+html[data-theme="dark"] .sm-strato.on{opacity:.16}
+@media(max-width:640px){.sm-strato.on{opacity:.07}
+  html[data-theme="dark"] .sm-strato.on{opacity:.13}}
+
+/* La deriva del fondo la muove il browser da sé, agganciata allo scorrimento:
+   nessun JavaScript a ogni fotogramma, nessuna lettura del layout. Dove la
+   timeline di scorrimento non esiste il fondo resta fermo — si perde un po' di
+   profondità, non si perde la pagina. */
+@supports (animation-timeline: scroll()) {
+  @media not (prefers-reduced-motion: reduce) {
+    .sm-strato.on{animation:sm-deriva linear both;animation-timeline:scroll(root block)}
+  }
+}
+@keyframes sm-deriva{
+  from{transform:translate3d(0,-3%,0) scale(1.08)}
+  to{transform:translate3d(0,3%,0) scale(1.08)}
+}
+@media(prefers-reduced-motion:reduce){
+  .sm-strato{transform:none;transition-duration:.01ms}
+}
 #noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.035;mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
