@@ -46,7 +46,16 @@ il cui fondo usa `--gold`, `--blue`, `--blue-deep` o `--taupe`.
   applica solo con `eih-lang-scelta` in localStorage.
 - Ogni testo scritto dal JavaScript dopo il caricamento va messo a mano nelle
   quattro lingue: il traduttore a impronte non lo vede.
-  Già fatto: `conferma-newsletter.html`, `/cerca`, `eih-search.js`.
+  Già fatto: `conferma-newsletter.html`, `/cerca`, `eih-search.js`,
+  `/mappa` (vocabolario in `assets/eih-mappa-testi.js`, 84 voci per lingua:
+  note delle città e dei luoghi, etichette, messaggi della ricerca).
+- Le traduzioni stanno **accanto alla frase italiana**, non accanto a una
+  chiave. È voluto — un refuso in un'impronta non passa inosservato — ma ha un
+  prezzo: **se cambi la frase italiana, cambia anche la traduzione**, altrimenti
+  la voce non trova più riscontro e il testo torna in italiano senza dire
+  niente. È già successo su `/voli`: «Apri tutti **e tre** i comparatori» è
+  diventato «Apri tutti i comparatori» quando è entrato Klook, e in sinhala e
+  tamil il pulsante è tornato italiano per un rilascio intero.
 - Gli indici di ricerca (`cerca.html`, `eih-search.js`) hanno titoli e parole
   in inglese accanto a quelli italiani. Aggiungendo una voce, mettere
   entrambi, altrimenti quella pagina sparisce per chi cerca in inglese.
