@@ -247,11 +247,29 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <!-- ░░ PAGE INIT ░░ -->
+<script src="/assets/eih-mappa-testi.js"></script>
 <script>
 (function(){
   "use strict";
   var reduce = false;
   try { reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches; } catch(e){}
+
+  /* Le schede dei luoghi non esistono nell'HTML: le costruisce questo script
+     quando scegli città e categoria, e il traduttore a impronte legge il
+     documento — quello che nasce dopo non lo vede. Le parole di qui dentro
+     passano quindi da un vocabolario scritto a mano, in `eih-mappa-testi.js`.
+     In italiano non c'è vocabolario e T() restituisce la frase com'è. */
+  var LINGUA = (function(){
+    var l = window.EIH_LANG || 'en';
+    try { l = localStorage.getItem('eih-lang') || l; } catch(e){}
+    return l;
+  })();
+  var VOCE = (window.EIH_MAPPA_TESTI || {})[LINGUA] || null;
+  function T(it, buchi){
+    var s = (VOCE && VOCE[it]) || it;
+    if (buchi) for (var k in buchi) s = s.split('{'+k+'}').join(buchi[k]);
+    return s;
+  }
 
   /* ── DATA ── real cities + real coordinates ── */
   var CITIES = [
@@ -407,14 +425,14 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   }
   function findNearMe(){
     var btn=document.getElementById('near-btn'), out=document.getElementById('near-out');
-    if(!navigator.geolocation){ out.innerHTML='<p class="err">Il tuo browser non permette la geolocalizzazione.</p>'; return; }
-    btn.disabled=true; out.innerHTML='<p class="err">Cerco la tua posizione…</p>';
+    if(!navigator.geolocation){ out.innerHTML='<p class="err">'+esc(T('Il tuo browser non permette la geolocalizzazione.'))+'</p>'; return; }
+    btn.disabled=true; out.innerHTML='<p class="err">'+esc(T('Cerco la tua posizione…'))+'</p>';
 
     navigator.geolocation.getCurrentPosition(function(pos){
       var lat=pos.coords.latitude, lon=pos.coords.longitude;
       var near=nearestCity(lat, lon);
       if(near.city) selectCity(near.city.id);
-      out.innerHTML='<p class="err">Cerco i CAF e i patronati vicino a te…</p>';
+      out.innerHTML='<p class="err">'+esc(T('Cerco i CAF e i patronati vicino a te…'))+'</p>';
 
       // riquadro di ~15 km attorno all'utente
       var d=0.14;
@@ -441,13 +459,13 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
         .then(function(list){
           btn.disabled=false;
           if(!list || !list.length){
-            out.innerHTML='<p class="err">Nessun ufficio trovato nel raggio di 15 km. Sotto trovi i recapiti delle reti nazionali, che coprono tutta Italia.</p>';
+            out.innerHTML='<p class="err">'+esc(T('Nessun ufficio trovato nel raggio di 15 km. Sotto trovi i recapiti delle reti nazionali, che coprono tutta Italia.'))+'</p>';
             return;
           }
           var items=list.map(function(p){
             var km=distKm(lat, lon, parseFloat(p.lat), parseFloat(p.lon));
             var parts=(p.display_name||'').split(',');
-            return { name:(p.name||parts[0]||'Ufficio').trim(),
+            return { name:(p.name||parts[0]||T('Ufficio')).trim(),
                      addr:parts.slice(1,4).join(',').trim(),
                      lat:parseFloat(p.lat), lon:parseFloat(p.lon), km:km };
           }).filter(function(i){ return i.km<=15; })
@@ -455,7 +473,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
             .slice(0,10);
 
           if(!items.length){
-            out.innerHTML='<p class="err">Nessun ufficio trovato nel raggio di 15 km. Sotto trovi i recapiti delle reti nazionali, che coprono tutta Italia.</p>';
+            out.innerHTML='<p class="err">'+esc(T('Nessun ufficio trovato nel raggio di 15 km. Sotto trovi i recapiti delle reti nazionali, che coprono tutta Italia.'))+'</p>';
             return;
           }
 
@@ -477,13 +495,13 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
         })
         .catch(function(){
           btn.disabled=false;
-          out.innerHTML='<p class="err">Ricerca non disponibile in questo momento. Usa i recapiti delle reti nazionali qui sotto.</p>';
+          out.innerHTML='<p class="err">'+esc(T('Ricerca non disponibile in questo momento. Usa i recapiti delle reti nazionali qui sotto.'))+'</p>';
         });
     }, function(err){
       btn.disabled=false;
       out.innerHTML = err && err.code===1
-        ? '<p class="err">Per cercare vicino a te serve il permesso di accedere alla posizione. Puoi comunque scegliere la tua città dall\'elenco.</p>'
-        : '<p class="err">Non riesco a rilevare la posizione. Scegli la tua città dall\'elenco.</p>';
+        ? '<p class="err">'+esc(T('Per cercare vicino a te serve il permesso di accedere alla posizione. Puoi comunque scegliere la tua città dall’elenco.'))+'</p>'
+        : '<p class="err">'+esc(T('Non riesco a rilevare la posizione. Scegli la tua città dall’elenco.'))+'</p>';
     }, { timeout:10000, maximumAge:300000 });
   }
   /* "lanka" e "ceylon" trovano le insegne della comunità, "money transfer"
@@ -504,7 +522,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       if(!p.lat || seen[k]) return;
       seen[k] = 1;
       var parts = (p.display_name||'').split(',');
-      out.push({ name:(p.name||parts[0]||'Attività').trim(),
+      out.push({ name:(p.name||parts[0]||T('Attività')).trim(),
                  addr:parts.slice(1,4).join(',').trim(),
                  lat:parseFloat(p.lat), lon:parseFloat(p.lon),
                  km:distKm(lat, lon, parseFloat(p.lat), parseFloat(p.lon)) });
@@ -522,7 +540,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     var city = cityById(btn.getAttribute('data-city'));
     var out = btn.parentNode.querySelector('.shop-out');
     btn.disabled = true;
-    out.innerHTML = '<p class="err">Cerco le attività a '+esc(city.name)+'…</p>';
+    out.innerHTML = '<p class="err">'+esc(T('Cerco le attività a {citta}…',{citta:city.name}))+'</p>';
     var lat = city.coords[0], lon = city.coords[1];
     // ~12 km attorno al centro città
     SHOP_TERMS.reduce(function(chain, q){
@@ -533,10 +551,10 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       btn.disabled = false;
       var items = osmItems(raw, lat, lon).slice(0, 15);
       if(!items.length){
-        out.innerHTML = '<p class="err">Nessuna attività mappata su OpenStreetMap a '+esc(city.name)+'. Se ne conosci una, segnalacela: la aggiungiamo all’elenco.</p>';
+        out.innerHTML = '<p class="err">'+esc(T('Nessuna attività mappata su OpenStreetMap a {citta}. Se ne conosci una, segnalacela: la aggiungiamo all’elenco.',{citta:city.name}))+'</p>';
         return;
       }
-      out.innerHTML = listHTML(items)+'<p class="err" style="margin-top:.5rem">Dati da OpenStreetMap: telefona prima di andare, gli orari cambiano spesso.</p>';
+      out.innerHTML = listHTML(items)+'<p class="err" style="margin-top:.5rem">'+esc(T('Dati da OpenStreetMap: telefona prima di andare, gli orari cambiano spesso.'))+'</p>';
       if(map && window.L){
         clearNearMarkers();
         items.forEach(function(i){
@@ -568,13 +586,13 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   /* ── build a single service card for a category ── */
   function serviceCardHTML(cat, city){
     var m = CAT_META[cat];
-    var head = '<div class="svc-head"><span class="svc-ic" aria-hidden="true">'+m.icon+'</span><span class="svc-cat">'+esc(m.label)+'</span></div>';
+    var head = '<div class="svc-head"><span class="svc-ic" aria-hidden="true">'+m.icon+'</span><span class="svc-cat">'+esc(T(m.label))+'</span></div>';
     if(cat==='caf'){
       var links = CAF_NETWORKS.map(function(n){
-        return '<a href="'+n.url+'" target="_blank" rel="noopener">'+esc(n.label)+' <span class="ext" aria-hidden="true">↗</span></a>';
+        return '<a href="'+n.url+'" target="_blank" rel="noopener">'+esc(T(n.label))+' <span class="ext" aria-hidden="true">↗</span></a>';
       }).join('');
       return '<article class="svc">'+head+
-        '<p>A '+esc(city.name)+' (e in tutta Italia) puoi rivolgerti agli sportelli delle reti ufficiali nazionali per ISEE, permesso di soggiorno, pensioni, NASpI e pratiche INPS. Usa i localizzatori ufficiali per la sede più vicina:</p>'+
+        '<p>'+esc(T('A {citta} (e in tutta Italia) puoi rivolgerti agli sportelli delle reti ufficiali nazionali per ISEE, permesso di soggiorno, pensioni, NASpI e pratiche INPS. Usa i localizzatori ufficiali per la sede più vicina:',{citta:city.name}))+'</p>'+
         '<div class="svc-links">'+links+'</div>'+
         '</article>';
     }
@@ -586,24 +604,24 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
         if(p.addr)  d += '📍 '+esc(p.addr)+'<br/>';
         if(p.tel)   d += '📞 <a href="tel:'+esc(p.tel)+'">'+esc(p.tel)+'</a><br/>';
         if(p.email) d += '✉️ <a href="mailto:'+esc(p.email)+'">'+esc(p.email)+'</a><br/>';
-        if(p.url)   d += '<a href="'+esc(p.url)+'" target="_blank" rel="noopener">Sito web ↗</a><br/>';
-        if(p.note)  d += '<em>'+esc(p.note)+'</em>';
-        return '<div class="place-item"><p class="place-name">'+esc(p.name)+'</p><p class="place-detail">'+d+'</p></div>';
+        if(p.url)   d += '<a href="'+esc(p.url)+'" target="_blank" rel="noopener">'+esc(T('Sito web ↗'))+'</a><br/>';
+        if(p.note)  d += '<em>'+esc(T(p.note))+'</em>';
+        return '<div class="place-item"><p class="place-name">'+esc(T(p.name))+'</p><p class="place-detail">'+d+'</p></div>';
       }).join('');
       return '<article class="svc">'+head+
         '<div class="place-list">'+items+'</div>'+
         (cat==='shop'
-          ? '<button type="button" class="near-btn shop-btn" data-city="'+esc(city.id)+'">🔎 Cerca altre attività a '+esc(city.name)+'</button><div class="near-out shop-out" aria-live="polite"></div>'
+          ? '<button type="button" class="near-btn shop-btn" data-city="'+esc(city.id)+'">'+esc(T('🔎 Cerca altre attività a {citta}',{citta:city.name}))+'</button><div class="near-out shop-out" aria-live="polite"></div>'
           : '')+
-        '<a class="svc-cta" href="/contatti">Segnala un altro luogo <span aria-hidden="true">→</span></a>'+
+        '<a class="svc-cta" href="/contatti">'+esc(T('Segnala un altro luogo'))+' <span aria-hidden="true">→</span></a>'+
         '</article>';
     }
     if(cat==='shop'){
       return '<article class="svc">'+head+
-        '<p>Le attività della comunità cambiano in fretta. Cerca in tempo reale su OpenStreetMap i negozi, i ristoranti e i money transfer di '+esc(city.name)+'.</p>'+
-        '<button type="button" class="near-btn shop-btn" data-city="'+esc(city.id)+'">🔎 Cerca le attività a '+esc(city.name)+'</button>'+
+        '<p>'+esc(T('Le attività della comunità cambiano in fretta. Cerca in tempo reale su OpenStreetMap i negozi, i ristoranti e i money transfer di {citta}.',{citta:city.name}))+'</p>'+
+        '<button type="button" class="near-btn shop-btn" data-city="'+esc(city.id)+'">'+esc(T('🔎 Cerca le attività a {citta}',{citta:city.name}))+'</button>'+
         '<div class="near-out shop-out" aria-live="polite"></div>'+
-        '<a class="svc-cta" href="/contatti">Segnala un’attività <span aria-hidden="true">→</span></a>'+
+        '<a class="svc-cta" href="/contatti">'+esc(T('Segnala un’attività'))+' <span aria-hidden="true">→</span></a>'+
         '</article>';
     }
     // fallback "in raccolta" per città senza dati ancora verificati
@@ -612,10 +630,13 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       worship:'Stiamo raccogliendo templi e centri culturali cingalesi e tamil',
       pro:'Stiamo raccogliendo commercialisti, avvocati e mediatori che parlano la tua lingua'
     }[cat];
+    /* La frase e il nome della citta' entrano dentro il periodo: in sinhala e
+       in tamil non stanno dove starebbero in italiano, per questo il periodo
+       intero e' una voce sola del vocabolario e non tre pezzi incollati. */
     return '<article class="svc">'+head+
-      '<p>'+esc(phrase)+' a '+esc(city.name)+'. Per ora questo elenco è <strong>in raccolta</strong>: pubblichiamo solo i contatti che ci segnala la community, per non dare informazioni non verificate.</p>'+
-      '<p class="svc-note muted">Conosci un posto affidabile a '+esc(city.name)+'?</p>'+
-      '<a class="svc-cta" href="/contatti">Segnala il tuo <span aria-hidden="true">→</span></a>'+
+      '<p>'+T('{frase} a {citta}. Per ora questo elenco è <strong>in raccolta</strong>: pubblichiamo solo i contatti che ci segnala la community, per non dare informazioni non verificate.',{frase:esc(T(phrase)),citta:esc(city.name)})+'</p>'+
+      '<p class="svc-note muted">'+esc(T('Conosci un posto affidabile a {citta}?',{citta:city.name}))+'</p>'+
+      '<a class="svc-cta" href="/contatti">'+esc(T('Segnala il tuo'))+' <span aria-hidden="true">→</span></a>'+
       '</article>';
   }
 
@@ -626,8 +647,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     var cats = state.cat==='all' ? CAT_ORDER : [state.cat];
     if(dirSubEl){
       dirSubEl.textContent = state.cat==='all'
-        ? 'Tutte le categorie a '+city.name+'. ' + city.note
-        : CAT_META[state.cat].label + ' a ' + city.name + '.';
+        ? T('Tutte le categorie a {citta}. ',{citta:city.name}) + T(city.note)
+        : T('{categoria} a {citta}.',{categoria:T(CAT_META[state.cat].label),citta:city.name});
     }
     if(dirResEl){
       dirResEl.innerHTML = cats.map(function(c){ return serviceCardHTML(c, city); }).join('');
@@ -672,7 +693,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     if(!cityListEl) return;
     cityListEl.innerHTML = CITIES.map(function(c){
       return '<button type="button" class="city-btn" role="listitem" data-city="'+c.id+'" aria-current="false">'+
-        '<span>'+esc(c.name)+'</span><span class="city-count" aria-hidden="true">4 categorie</span></button>';
+        '<span>'+esc(c.name)+'</span><span class="city-count" aria-hidden="true">'+esc(T('4 categorie'))+'</span></button>';
     }).join('');
     Array.prototype.forEach.call(cityListEl.children, function(btn){
       btn.addEventListener('click', function(){ selectCity(btn.getAttribute('data-city'), false); });
@@ -701,8 +722,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   /* ── popup HTML for a city marker ── */
   function popupHTML(c){
     return '<div class="pop-city">'+esc(c.name)+'</div>'+
-      '<p class="pop-note">'+esc(c.note)+'</p>'+
-      '<button type="button" class="pop-btn" data-city="'+c.id+'">Vedi servizi</button>';
+      '<p class="pop-note">'+esc(T(c.note))+'</p>'+
+      '<button type="button" class="pop-btn" data-city="'+c.id+'">'+esc(T('Vedi servizi'))+'</button>';
   }
 
   /* ── initialize the Leaflet map (guarded) ── */
