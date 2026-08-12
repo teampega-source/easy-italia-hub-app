@@ -156,6 +156,22 @@ main{position:relative;z-index:1}
 .phase.done .phase-node{background:var(--green);border-color:var(--green);color:#fff}
 .phase.current .phase-node{background:linear-gradient(135deg,var(--blue-deep),var(--blue));border-color:var(--blue);color:var(--su-accento);box-shadow:0 0 0 4px var(--blue-glow)}
 .phase.locked .phase-node{opacity:.55}
+/* Le tre domande d'ingresso: stanno sopra le fasi e spariscono appena
+   risposte. Occupano poco perche' chi arriva qui vuole il percorso, non un
+   questionario: tre domande a bottoni, nessun campo da scrivere. */
+.pp-box{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.35rem;margin-bottom:var(--sp-3)}
+.pp-box h3{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;margin:0 0 .25rem}
+.pp-box .pp-sub{font-size:var(--text-sm);color:var(--fg-secondary);margin:0 0 1rem;line-height:1.55}
+.pp-q{margin-bottom:.9rem}
+.pp-q p{font-size:var(--text-sm);font-weight:600;margin:0 0 .45rem}
+.pp-opts{display:flex;flex-wrap:wrap;gap:.4rem}
+.pp-opt{cursor:pointer;font:inherit;font-size:var(--text-xs);padding:.4rem .8rem;border-radius:var(--radius-full);border:1px solid var(--border-bright);background:var(--surface);color:var(--fg-secondary);transition:background var(--dur-micro),color var(--dur-micro),border-color var(--dur-micro)}
+.pp-opt:hover{border-color:var(--gold)}
+.pp-opt[aria-pressed="true"]{background:var(--blue-deep);border-color:var(--blue-deep);color:var(--su-accento)}
+.pp-fine{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:.4rem}
+.pp-esito{font-size:var(--text-sm);color:var(--fg-secondary);margin:0}
+.pp-rifai{background:none;border:none;padding:0;font:inherit;font-size:var(--text-xs);color:var(--gold);cursor:pointer;text-decoration:underline}
+.phase-badge.badge-consigliata{background:rgba(185,170,141,.16);color:var(--gold);border:1px solid rgba(185,170,141,.3)}
 .phase-card{flex:1;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.25rem;transition:box-shadow var(--dur-std),border-color var(--dur-std),transform var(--dur-std) var(--ease-spring)}
 .phase.current .phase-card{border-color:rgba(44,107,196,.35);box-shadow:0 14px 36px rgba(20,30,48,.1)}
 .phase.locked .phase-card{opacity:.82}
@@ -529,6 +545,7 @@ html[data-theme="dark"] .site-nav{background:#1c1916}
   <section class="timeline" data-members aria-label="Le 9 fasi del percorso">
     <div class="tl-line" aria-hidden="true"></div>
     <div class="tl-fill" id="tl-fill" aria-hidden="true"></div>
+    <div id="profilo-percorso"></div>
     <div id="phase-list"></div>
   </section>
 
@@ -887,6 +904,8 @@ function renderPhases(){
         '<div class="phase-card-head" onclick="togglePhase('+n+')" role="button" tabindex="0" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();togglePhase('+n+')}">'+
           '<div class="phase-titles"><div class="phase-title"><span style="font-size:.85rem;color:var(--fg-muted)">'+String(n).padStart(2,'0')+'</span> '+title+'</div><div class="phase-sub">'+sub+'</div></div>'+
           '<span class="phase-badge '+badgeClass+'">'+badgeText+'</span>'+
+          (typeof ppConsigliata==='function' && ppConsigliata(n) && status!=='done'
+            ? '<span class="phase-badge badge-consigliata">'+ppT().consigliata+'</span>' : '')+
           '<svg class="phase-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>'+
         '</div>'+
         '<div class="phase-body"><div class="phase-body-inner">'+body+'</div></div>'+
@@ -919,7 +938,8 @@ function toggleStep(n,i){
   const k=n+'-'+i, on=!state.completed[k];
   state.completed[k]=on;
   if(on)state.current=n;                       // spuntare un passo = sei in questa fase
-  saveState(state); state._open=n; renderPhases();
+  saveState(state); state._open=n; 
+  renderPhases();
   if(!on)return;
   if(completedPhaseCount()===9)cheer('all');
   else if(phaseStatus(n)==='done')cheer('phase');
@@ -1309,6 +1329,130 @@ renderPhases();
     });
   }
 })();
+
+/* ── Tre domande, e il percorso smette di essere uguale per tutti ──────────
+   Il percorso a nove fasi partiva dalla prima per chiunque: per chi è sbarcato
+   ieri e per chi è in Italia da otto anni e sta pensando alla cittadinanza.
+   Il PDF di analisi lo mette fra le cose critiche, e ha ragione: una mappa
+   uguale per tutti non è una mappa personale.
+
+   Le domande stanno qui e non nel modulo di registrazione. Un modulo che da
+   tre campi diventa sei perde iscritti, e queste risposte servono al percorso,
+   non all'account: chi non si registra ha lo stesso diritto di sapere da dove
+   partire.
+
+   Cosa NON fanno: non spuntano niente come già fatto. Dire a qualcuno «questa
+   fase l'hai completata» perché è in Italia da cinque anni sarebbe inventarsi
+   il suo avanzamento. Segnano la fase da cui conviene partire e quali fasi
+   guardare per prime — il resto lo spunta lui. */
+const PP_KEY_FASE = { permesso:2, lavoro:3, casa:4, famiglia:5, italiano:3 };
+const PP_SCORCIATOIA = {
+  permesso:'/permesso-tracker', lavoro:'/cv-builder', casa:'/housing',
+  famiglia:'/ricongiungimento', italiano:'/academy'
+};
+const PP_T = {
+  it:{ tit:'Da dove parti?', sub:'Tre domande, e il percorso si adatta a te. Puoi cambiarle quando vuoi.',
+       q1:'Da quanto sei in Italia?', a1:['Sono appena arrivato','Meno di 5 anni','Più di 5 anni'],
+       q2:'Cosa ti serve di più adesso?', a2:['Il permesso','Il lavoro','La casa','La famiglia','L’italiano'],
+       q3:'Hai figli con te o da far venire?', a3:['Sì','No'],
+       esito:'Ti conviene partire dalla fase {n}. Le fasi consigliate per te sono segnate qui sotto.',
+       rifai:'Cambia le risposte', vai:'Vai allo strumento giusto →', consigliata:'Consigliata per te' },
+  en:{ tit:'Where do you start?', sub:'Three questions, and the journey adapts to you. You can change them any time.',
+       q1:'How long have you been in Italy?', a1:['I have just arrived','Less than 5 years','More than 5 years'],
+       q2:'What do you need most right now?', a2:['The permit','Work','Housing','Family','Italian'],
+       q3:'Do you have children with you or to bring over?', a3:['Yes','No'],
+       esito:'It is best to start from phase {n}. The phases suggested for you are marked below.',
+       rifai:'Change your answers', vai:'Go to the right tool →', consigliata:'Suggested for you' },
+  si:{ tit:'ඔබ පටන් ගන්නේ කොහෙන්ද?', sub:'ප්‍රශ්න තුනයි, ගමන ඔබට ගැළපේ. ඕනෑම විටෙක වෙනස් කළ හැක.',
+       q1:'ඔබ ඉතාලියේ කොපමණ කලක් සිටිනවාද?', a1:['මම දැන් පැමිණියා','අවුරුදු 5ට අඩු','අවුරුදු 5ට වැඩි'],
+       q2:'දැන් ඔබට වැඩිපුරම අවශ්‍ය කුමක්ද?', a2:['බලපත්‍රය','රැකියාව','නිවස','පවුල','ඉතාලි භාෂාව'],
+       q3:'ඔබ සමඟ හෝ ගෙන්වා ගැනීමට දරුවන් සිටිනවාද?', a3:['ඔව්','නැත'],
+       esito:'ඔබට {n} වන අදියරෙන් පටන් ගැනීම සුදුසුයි. ඔබට නිර්දේශිත අදියර පහත සලකුණු කර ඇත.',
+       rifai:'පිළිතුරු වෙනස් කරන්න', vai:'නිවැරදි මෙවලමට යන්න →', consigliata:'ඔබට නිර්දේශිතයි' },
+  ta:{ tit:'நீங்கள் எங்கிருந்து தொடங்குகிறீர்கள்?', sub:'மூன்று கேள்விகள், பயணம் உங்களுக்கேற்ப மாறும். எப்போது வேண்டுமானாலும் மாற்றலாம்.',
+       q1:'நீங்கள் எவ்வளவு காலமாக இத்தாலியில் இருக்கிறீர்கள்?', a1:['நான் இப்போதுதான் வந்தேன்','5 ஆண்டுகளுக்கும் குறைவாக','5 ஆண்டுகளுக்கும் மேலாக'],
+       q2:'இப்போது உங்களுக்கு எது மிகவும் தேவை?', a2:['அனுமதி','வேலை','வீடு','குடும்பம்','இத்தாலிய மொழி'],
+       q3:'உங்களுடன் அல்லது அழைத்து வர வேண்டிய பிள்ளைகள் உள்ளனரா?', a3:['ஆம்','இல்லை'],
+       esito:'{n} ஆம் கட்டத்திலிருந்து தொடங்குவது நல்லது. உங்களுக்குப் பரிந்துரைக்கப்பட்ட கட்டங்கள் கீழே குறிக்கப்பட்டுள்ளன.',
+       rifai:'பதில்களை மாற்று', vai:'சரியான கருவிக்குச் செல் →', consigliata:'உங்களுக்குப் பரிந்துரை' }
+};
+function ppT(){ return PP_T[currentLang] || PP_T.en; }
+
+function ppCalcola(pr){
+  const bisogni = ['permesso','lavoro','casa','famiglia','italiano'];
+  const chiave = bisogni[pr.bisogno];
+  let fase = PP_KEY_FASE[chiave] || 1;
+  if (pr.tempo === 0) fase = Math.min(fase, 2);      // appena arrivato: prima le basi
+  const consigliate = [fase];
+  if (pr.figli === 0 && consigliate.indexOf(5) === -1) consigliate.push(5);
+  if (pr.tempo === 2 && consigliate.indexOf(9) === -1) consigliate.push(9);
+  return { fase: fase, consigliate: consigliate, scorciatoia: PP_SCORCIATOIA[chiave] };
+}
+
+function renderProfilo(){
+  const box = document.getElementById('profilo-percorso');
+  if(!box) return;
+  const L = ppT();
+  const pr = state.profilo;
+
+  if(pr && pr.esito){
+    box.innerHTML =
+      '<div class="pp-box"><div class="pp-fine">' +
+        '<p class="pp-esito">' + L.esito.replace('{n}', pr.esito.fase) + '</p>' +
+        (pr.esito.scorciatoia ? '<a class="btn-advisor" href="'+pr.esito.scorciatoia+'">'+L.vai+'</a>' : '') +
+        '<button type="button" class="pp-rifai" onclick="ppRifai()">'+L.rifai+'</button>' +
+      '</div></div>';
+    return;
+  }
+
+  const bozza = state._ppBozza || {};
+  function gruppo(idx, dom, opzioni){
+    return '<div class="pp-q"><p>'+dom+'</p><div class="pp-opts">' +
+      opzioni.map(function(o,i){
+        const on = bozza[idx] === i;
+        return '<button type="button" class="pp-opt" aria-pressed="'+on+'" onclick="ppScegli(\''+idx+'\','+i+')">'+o+'</button>';
+      }).join('') + '</div></div>';
+  }
+  box.innerHTML =
+    '<div class="pp-box"><h3>'+L.tit+'</h3><p class="pp-sub">'+L.sub+'</p>' +
+    gruppo('tempo', L.q1, L.a1) + gruppo('bisogno', L.q2, L.a2) + gruppo('figli', L.q3, L.a3) +
+    '</div>';
+}
+
+function ppScegli(campo, valore){
+  state._ppBozza = state._ppBozza || {};
+  state._ppBozza[campo] = valore;
+  const b = state._ppBozza;
+  /* Si conclude da sé quando le tre risposte ci sono: nessun pulsante
+     «conferma» da cercare dopo aver già risposto a tutto. */
+  if(b.tempo !== undefined && b.bisogno !== undefined && b.figli !== undefined){
+    const esito = ppCalcola(b);
+    state.profilo = { tempo:b.tempo, bisogno:b.bisogno, figli:b.figli, esito:esito };
+    delete state._ppBozza;
+    if(esito.fase > state.current) state.current = esito.fase;
+    saveState(state);
+    renderProfilo(); renderPhases();
+    const el = document.getElementById('phase-list');
+    if(el && el.scrollIntoView) el.scrollIntoView({behavior:'smooth', block:'start'});
+    return;
+  }
+  saveState(state);
+  renderProfilo();
+}
+
+function ppRifai(){
+  delete state.profilo; delete state._ppBozza;
+  saveState(state); renderProfilo(); renderPhases();
+}
+
+function ppConsigliata(n){
+  return !!(state.profilo && state.profilo.esito &&
+            state.profilo.esito.consigliate.indexOf(n) !== -1);
+}
+
+renderProfilo();
+renderPhases();
+
 </script>
 <script>
 /* auto-open chat from ?q= or #q= — used by community.html ask box */
