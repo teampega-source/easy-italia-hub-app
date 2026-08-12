@@ -520,11 +520,40 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   // (REAL = Supabase, DEMO = same localStorage key+shape used below). If the
   // script isn't loaded or a call fails, we fall back to the ORIGINAL
   // localStorage behavior verbatim, so the demo works exactly as before.
+  /* La scadenza del permesso vive nel tracker, sotto `eih-permesso`. Fino a
+     ieri i due sistemi non si parlavano: chi salvava la data nel tracker non
+     la vedeva nel calendario, e chi guardava il calendario non sapeva del
+     permesso — che e' la scadenza piu' importante che questa comunita' abbia.
+
+     Entra qui come voce di sola lettura. Copiarla dentro `eih-deadlines`
+     vorrebbe dire tenerne due copie, che si disallineano appena l'utente
+     cambia la data nel tracker: si legge dove sta, e basta. */
+  var TESTI_SCAD = {
+    it:{ tit:'Permesso di soggiorno', nota:'Dal tracker del permesso' },
+    en:{ tit:'Residence permit',      nota:'From the permit tracker' },
+    si:{ tit:'පදිංචි බලපත්‍රය',        nota:'බලපත්‍ර ට්‍රැකරයෙන්' },
+    ta:{ tit:'வதிவிட அனுமதி',        nota:'அனுமதி டிராக்கரிலிருந்து' }
+  };
+  var TS = TESTI_SCAD[LG] || TESTI_SCAD.en;
+
+  function permessoComeScadenza(){
+    try{
+      var p = JSON.parse(localStorage.getItem('eih-permesso'));
+      if(!p || !p.scadenza || !/^\d{4}-\d{2}-\d{2}$/.test(p.scadenza)) return null;
+      return { id:'eih-permesso', date:p.scadenza,
+               title:TS.tit + (p.tipo ? ' — ' + p.tipo : ''),
+               note:TS.nota, fisso:true };
+    }catch(e){ return null; }
+  }
+
   async function dlLoad(){
+    var base;
     if(window.EIH_DB){
-      try{ return normalize(await window.EIH_DB.listDeadlines()); }catch(e){}
+      try{ base = normalize(await window.EIH_DB.listDeadlines()); }catch(e){}
     }
-    return load(); // ORIGINAL localStorage read, unchanged
+    if(!base) base = load(); // ORIGINAL localStorage read, unchanged
+    var perm = permessoComeScadenza();
+    return perm ? base.concat([perm]) : base;
   }
   async function dlAdd(obj){
     if(window.EIH_DB){
@@ -690,11 +719,23 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   }
 
   // ── UPCOMING LIST ────────────────────────────────────────
+  /* Quanto manca: lo scrive il JavaScript, quindi va nelle quattro lingue qui.
+     Restava «TRA 10 GIORNI» in mezzo a una dashboard in sinhala. */
+  var QUANDO = {
+    it:{ pass1:'Scaduta da 1 giorno', passN:'Scaduta da {n} giorni', oggi:'Oggi', domani:'Domani', fra:'Tra {n} giorni' },
+    en:{ pass1:'1 day overdue',       passN:'{n} days overdue',      oggi:'Today', domani:'Tomorrow', fra:'In {n} days' },
+    si:{ pass1:'දින 1කින් ප්‍රමාදයි',  passN:'දින {n}කින් ප්‍රමාදයි', oggi:'අද', domani:'හෙට', fra:'දින {n}කින්' },
+    ta:{ pass1:'1 நாள் தாமதம்',       passN:'{n} நாட்கள் தாமதம்',   oggi:'இன்று', domani:'நாளை', fra:'{n} நாட்களில்' }
+  };
+  var Q = QUANDO[LG] || QUANDO.en;
   function whenLabel(diff){
-    if(diff < 0) return 'Scaduta da ' + Math.abs(diff) + (Math.abs(diff) === 1 ? ' giorno' : ' giorni');
-    if(diff === 0) return 'Oggi';
-    if(diff === 1) return 'Domani';
-    return 'Tra ' + diff + ' giorni';
+    if(diff < 0){
+      var n = Math.abs(diff);
+      return (n === 1 ? Q.pass1 : Q.passN).replace('{n}', n);
+    }
+    if(diff === 0) return Q.oggi;
+    if(diff === 1) return Q.domani;
+    return Q.fra.replace('{n}', diff);
   }
 
   function renderList(){
@@ -732,6 +773,20 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       if(d.note) html += '<p class="dl-note">' + escapeHTML(d.note) + '</p>';
       html += '<span class="dl-when">' + escapeHTML(whenLabel(diff)) + '</span>';
       body.innerHTML = html;
+
+      /* La voce del permesso non si cancella da qui: si cambia nel tracker,
+         che ne e' il proprietario. Un cestino che non cancella niente e' una
+         bugia; un rimando al posto giusto no. */
+      if(d.fisso){
+        var vai = document.createElement('a');
+        vai.className = 'dl-del';
+        vai.href = '/permesso-tracker';
+        vai.setAttribute('aria-label', d.title);
+        vai.innerHTML = '<span aria-hidden="true">→</span>';
+        li.appendChild(dateBox); li.appendChild(body); li.appendChild(vai);
+        elList.appendChild(li);
+        return;
+      }
 
       var del = document.createElement('button');
       del.type = 'button';

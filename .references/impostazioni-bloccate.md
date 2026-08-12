@@ -162,10 +162,11 @@ node scripts/verifica-fonti.mjs --controlla # esce 1 se un link ufficiale è rot
 `assets/eih-cancella-dati.js`, usato dal pulsante in `/profili`. Cancella
 **per prefisso `eih-`**, non da un elenco.
 
-- **Non rimettere un elenco di chiavi scritto a mano.** Quello di prima
-  cancellava 5 chiavi su 20 e lasciava indietro l'account, i corsi, la
-  newsletter e l'attribuzione pubblicitaria. Cinque delle dieci voci elencate
-  non esistevano nemmeno più.
+- **Non rimettere un elenco di chiavi scritto a mano.** Quello di prima ne
+  elencava dieci su una venticinquina realmente in uso, e lasciava indietro
+  l'account (`eih-user`), da quanto tempo uno e' iscritto, i corsi, le lezioni
+  tradotte, la newsletter, la lista di controllo del permesso e l'attribuzione
+  pubblicitaria (`eih-utm`).
 - Una chiave scritta attraverso una variabile (`eih-first-visit`) non si trova
   cercando nel codice: il prefisso la prende lo stesso.
 - Oltre alla memoria si spegne la **sottoscrizione push** — sta sul server di
