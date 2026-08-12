@@ -130,6 +130,33 @@ parlare sono due permessi diversi.
 - Non aggiungere `'unsafe-eval'` ne' caratteri jolly (`https://*`) per far
   funzionare un servizio: si nomina l'host.
 
+## Fonti ufficiali delle guide
+
+La fascia «Aggiornato · Fonte · Fonti controllate» sotto il sommario delle 20
+guide normative **è generata**, non scritta a mano:
+
+```
+node scripts/verifica-fonti.mjs             # rigenera fascia, JSON-LD e registro
+node scripts/verifica-fonti.mjs --controlla # esce 1 se un link ufficiale è rotto
+```
+
+- Fra `<!-- fonti:inizio -->` e `<!-- fonti:fine -->` **non si scrive a mano**:
+  al giro dopo viene sovrascritto.
+- Una data scritta a mano invecchia da sola e nessuno la aggiorna. Peggio il
+  link: `interno.gov.it/.../ricongiungimento-familiare` rispondeva **404** e
+  nessuno se n'era accorto, sulla guida al ricongiungimento familiare.
+- Il registro tiene `contenuto: null` finché **una persona** non rilegge la
+  guida. Una data di verifica messa da un programma non verifica niente: non
+  riempirla automaticamente.
+- Le fonti si raccolgono dai link a enti pubblici già presenti nella pagina.
+  Per le guide che non ne citano nessuna c'è la mappa `SEMI` nello script, da
+  riempire **a mano e solo dopo aver aperto la pagina dell'ente**. Ci va la
+  pagina della procedura, non la home: «vai su inps.it e arrangiati» non è una
+  fonte. `cargo`, `dizionario-medico`, `documenti` e `moduli` restano senza
+  perché non descrivono una procedura pubblica.
+- L'elenco `UFFICIALI` è esplicito di proposito: niente jolly, o il primo blog
+  con un dominio giusto diventa «fonte ufficiale».
+
 ## File che devono esistere in radice
 
 `favicon.ico` — ogni browser e ogni crawler lo chiede senza che nessuno lo
@@ -220,4 +247,5 @@ npx serve . -l 3100 &
 node scripts/audit-lingue.mjs              # nessuna carenza su 60 pagine
 node scripts/audit-cornice.mjs             # cornice tradotta in si e ta
 node scripts/audit-lingua-predefinita.mjs  # il sito parte in inglese
+node scripts/verifica-fonti.mjs --controlla # nessun link ufficiale rotto
 ```

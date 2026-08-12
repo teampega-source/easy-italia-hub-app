@@ -1,13 +1,16 @@
 {
 "300a31ca": "Rate not available right now.",
+"35a8ba5b": "Sources checked: August 2026 · next check February 2027",
 "4765225f": "Indicative interbank (mid-market) rate: the amount actually received depends on the provider's fees and exchange margin. This is not a live quote for any single provider.",
+"5bbb71a1": "Updated: August 2026",
 "6af0aae8": "The figures in the comparison tool are",
 "76c84f6a": "and can change. Before sending, always check the final amount on the website of the provider you choose.",
+"840ca32f": "Source:",
 "880e1593": "Amount to send (EUR)",
 "9e16bba9": "Target LKR rate",
 "9fa3089c": "Turn on the rate alert",
 "_meta": {
-"copertura": 67,
+"copertura": 71,
 "lingua": "en",
 "pagina": "money-transfer"
 },
