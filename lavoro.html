@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<script>/* La lingua della pagina si decide qui, prima di qualsiasi foglio di
+   stile: uno script che sta dopo un <link rel=stylesheet> non gira finche' il
+   CSS non e' arrivato, e quel ritardo si vedeva tutto sul cambio di lingua.
+
+   La lingua predefinita del sito e' l'inglese. L'italiano e' una scelta come
+   le altre: si applica solo se l'utente l'ha chiesto. "eih-lang-scelta"
+   distingue una scelta vera dalla lingua che il sito applicava da se': prima
+   ogni visita salvava "it" anche a chi non aveva mai toccato il selettore, e
+   senza questa distinzione quei visitatori resterebbero in italiano per
+   sempre. Chi non ha il segno di scelta riparte dall'inglese, una volta sola. */
+try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
+try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+if(!/^(it|en|si|ta)$/.test(_l))_l="en";
+window.EIH_LANG=_l;
+if(/^(en|si|ta)$/.test(_l)){var _p=location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/,"").replace(/^\/+|\/+$/g,"").replace(/\.html$/,"")||"index";
+window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),promessaUi:fetch("/assets/i18n/_ui."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
+var _s=document.createElement("script");_s.fetchPriority="high";_s.src="/assets/eih-i18n-page.js";_s.defer=true;document.head.appendChild(_s);
+var _t=document.createElement("style");_t.textContent="html.eih-tr-attesa main{visibility:hidden}";document.head.appendChild(_t);
+document.documentElement.classList.add("eih-tr-attesa");
+setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")},500);}}catch(e){}</script>
+
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bacheca lavoro — Easy Italia Hub</title>
+<meta name="description" content="Offerte di lavoro per la comunità srilankese in Italia, filtrabili per città, contratto e orario. Con alloggio, senza esperienza. Ogni annuncio si può segnalare."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="https://easyitaliahub.it/lavoro"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Easy Italia Hub"/>
+<meta property="og:title" content="Bacheca lavoro — Easy Italia Hub"/>
+<meta property="og:description" content="Offerte di lavoro per la comunità srilankese in Italia, filtrabili per città, contratto e orario. Con alloggio, senza esperienza. Ogni annuncio si può segnalare."/>
+<meta property="og:url" content="https://easyitaliahub.it/lavoro"/>
+<meta property="og:image" content="https://easyitaliahub.it/api/og?t=Bacheca%20lavoro&amp;s=Offerte%20verificabili%2C%20segnalabili%2C%20senza%20anticipi"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="it_IT"/>
+<meta property="og:locale:alternate" content="en_US"/>
+<meta property="og:locale:alternate" content="si_LK"/>
+<meta property="og:locale:alternate" content="ta_IN"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Bacheca lavoro — Easy Italia Hub"/>
+<meta name="twitter:description" content="Offerte di lavoro per la comunità srilankese in Italia, filtrabili per città, contratto e orario. Con alloggio, senza esperienza. Ogni annuncio si può segnalare."/>
+<meta name="twitter:image" content="https://easyitaliahub.it/api/og?t=Bacheca%20lavoro&amp;s=Offerte%20verificabili%2C%20segnalabili%2C%20senza%20anticipi"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" media="print" onload="this.media='all'"/>
+<noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/></noscript>
+<link rel="stylesheet" href="eih.css"/>
+<script>document.documentElement.classList.add('anim');try{if(sessionStorage.getItem('eih-loaded'))document.documentElement.classList.add('returning');}catch(e){}</script>
+  <link rel="stylesheet" href="/assets/eih-hero3d.css"/>
+<script src="/assets/eih-lang-url.js"></script>
+<link rel="stylesheet" href="/assets/eih-leggibilita.css"/>
+</head>
+<body data-page="lavoro">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <style>
+    [data-page="lavoro"] .lv-avviso{background:rgba(217,79,61,.07);border:1px solid rgba(217,79,61,.28);border-radius:var(--radius);padding:1.1rem 1.3rem;margin:var(--sp-4) 0}
+    [data-page="lavoro"] .lv-avviso h2{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;color:#c0392b;margin:0 0 .5rem}
+    [data-page="lavoro"] .lv-avviso ul{margin:0;padding-left:1.1rem;font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.75}
+    [data-page="lavoro"] .lv-avviso li strong{color:var(--fg)}
+    [data-page="lavoro"] .lv-filtri{display:flex;flex-wrap:wrap;gap:.55rem;margin:var(--sp-4) 0 var(--sp-2)}
+    [data-page="lavoro"] .lv-sel{padding:.4rem .8rem;border-radius:var(--radius-full);border:1px solid var(--border-bright);background:var(--surface);color:var(--fg-secondary);font:inherit;font-size:var(--text-sm)}
+    [data-page="lavoro"] .lv-chip{display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .9rem;border-radius:var(--radius-full);border:1px solid var(--border);background:var(--surface);color:var(--fg-secondary);font:inherit;font-size:var(--text-sm);cursor:pointer;transition:background var(--dur-micro),color var(--dur-micro),border-color var(--dur-micro)}
+    [data-page="lavoro"] .lv-chip:hover{border-color:var(--gold)}
+    [data-page="lavoro"] .lv-chip[aria-pressed="true"]{background:var(--blue-deep);border-color:var(--blue-deep);color:var(--su-accento)}
+    [data-page="lavoro"] .lv-conteggio{font-size:var(--text-sm);color:var(--fg-muted);margin:0 0 var(--sp-2)}
+    [data-page="lavoro"] .lv-griglia{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--sp-3)}
+    [data-page="lavoro"] .lv-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:var(--sp-4);display:flex;flex-direction:column;gap:.55rem;transition:border-color var(--dur-micro),transform var(--dur-micro)}
+    [data-page="lavoro"] .lv-card:hover{border-color:var(--border-bright);transform:translateY(-2px)}
+    [data-page="lavoro"] .lv-tit{font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;margin:0}
+    [data-page="lavoro"] .lv-dove{font-size:var(--text-sm);color:var(--fg-secondary);margin:0}
+    [data-page="lavoro"] .lv-corpo{font-size:var(--text-sm);color:var(--fg-secondary);line-height:1.6;margin:0}
+    [data-page="lavoro"] .lv-etichette{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.2rem}
+    [data-page="lavoro"] .lv-et{font-size:var(--text-xs);font-weight:600;padding:.18rem .6rem;border-radius:var(--radius-full);background:rgba(185,170,141,.14);color:var(--gold)}
+    [data-page="lavoro"] .lv-et--casa{background:rgba(16,185,129,.14);color:#0f7a45}
+    [data-page="lavoro"] .lv-et--senza{background:rgba(59,130,246,.14);color:#4e74c4}
+    [data-page="lavoro"] .lv-piede{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;margin-top:auto;padding-top:.6rem;border-top:1px solid var(--border)}
+    [data-page="lavoro"] .lv-quando{font-size:var(--text-xs);color:var(--fg-muted)}
+    [data-page="lavoro"] .lv-segnala{background:none;border:none;padding:0;cursor:pointer;font:inherit;font-size:var(--text-xs);color:var(--fg-muted);transition:color var(--dur-micro)}
+    [data-page="lavoro"] .lv-segnala:hover{color:var(--coral)}
+    [data-page="lavoro"] .lv-segnala:disabled{cursor:default;color:#0f7a45}
+    [data-page="lavoro"] .lv-vuoto{grid-column:1/-1;border:1px dashed var(--border-bright);border-radius:var(--radius);padding:var(--sp-4);text-align:center}
+    [data-page="lavoro"] .lv-vuoto p{font-size:var(--text-sm);color:var(--fg-secondary);margin:0 0 .8rem;line-height:1.65}
+    [data-page="lavoro"] .lv-uff{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+    [data-page="lavoro"] .lv-pubblica{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem;margin-top:var(--sp-5);text-align:center}
+    [data-page="lavoro"] .lv-pubblica p{font-size:var(--text-sm);color:var(--fg-secondary);margin:.3rem 0 .9rem;line-height:1.6}
+    [data-page="lavoro"] .lv-form{display:none;margin-top:var(--sp-3);text-align:left}
+    [data-page="lavoro"] .lv-form.aperto{display:block}
+    [data-page="lavoro"] .lv-campo{margin-bottom:.85rem}
+    [data-page="lavoro"] .lv-campo label{display:block;font-size:var(--text-sm);font-weight:600;margin-bottom:.3rem}
+    [data-page="lavoro"] .lv-campo input,[data-page="lavoro"] .lv-campo select,[data-page="lavoro"] .lv-campo textarea{width:100%;padding:.55rem .7rem;border:1px solid var(--border-bright);border-radius:var(--radius-sm);background:var(--bg-elevated);color:var(--fg);font:inherit;font-size:var(--text-sm)}
+    [data-page="lavoro"] .lv-campo textarea{min-height:90px;resize:vertical}
+    [data-page="lavoro"] .lv-due{display:flex;gap:.7rem;flex-wrap:wrap}
+    [data-page="lavoro"] .lv-due > *{flex:1;min-width:150px}
+    [data-page="lavoro"] .lv-spunte{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:.85rem}
+    [data-page="lavoro"] .lv-spunte label{display:flex;align-items:center;gap:.4rem;font-size:var(--text-sm);font-weight:500}
+    [data-page="lavoro"] .lv-spunte input{width:auto}
+    [data-page="lavoro"] .lv-esito{font-size:var(--text-sm);margin:.6rem 0 0}
+  </style>
+
+  <div class="container">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> Lavoro</p>
+    <h1 class="reveal">Bacheca <em>lavoro</em></h1>
+    <p class="lead reveal">Offerte segnalate dalla comunità, filtrabili per città, contratto e orario. Ogni annuncio si può segnalare in un clic: qui il rischio vero non è trovare poco, è trovare la persona sbagliata.</p>
+
+    <!-- ── Regole anti-truffa: stanno in cima e non in fondo ──────────────── -->
+    <section class="lv-avviso reveal" aria-labelledby="lv-truffa">
+      <h2 id="lv-truffa">⚠️ Prima di rispondere a un annuncio</h2>
+      <ul>
+        <li><strong>Un datore di lavoro serio non ti chiede mai soldi.</strong> Non per il contratto, non per il permesso di soggiorno, non per «pratiche» o «marche da bollo». Chi chiede un anticipo sta truffando.</li>
+        <li><strong>Nessuno può garantirti un permesso di soggiorno o un visto.</strong> Li rilascia solo lo Stato, e non si comprano.</li>
+        <li><strong>Il contratto si firma prima di iniziare</strong>, su carta, con il tuo nome e la tua paga scritti sopra. «Poi lo facciamo» significa in nero.</li>
+        <li><strong>Non consegnare mai il passaporto o il permesso originale</strong> a un privato. Una fotocopia basta a chiunque abbia diritto di chiederla.</li>
+        <li>Diffida di paghe molto sopra la media, di chi ha fretta e di chi vuole spostarsi subito su WhatsApp o Telegram senza dirti il nome dell'azienda.</li>
+      </ul>
+      <p style="font-size:var(--text-sm);margin:.8rem 0 0;color:var(--fg-secondary)">Se qualcosa non torna, usa <strong>Segnala</strong> sull'annuncio. Leggiamo tutte le segnalazioni. Per capire cosa ti spetta davvero, leggi <a class="inline" href="/lavoro-diritti">Lavoro e diritti</a>.</p>
+    </section>
+
+    <!-- ── Filtri ─────────────────────────────────────────────────────────── -->
+    <div class="lv-filtri reveal" role="group" aria-label="Filtra le offerte">
+      <select class="lv-sel" id="lv-citta" aria-label="Città"><option value="">Tutte le città</option></select>
+      <select class="lv-sel" id="lv-contratto" aria-label="Tipo di contratto">
+        <option value="">Ogni contratto</option>
+        <option value="indeterminato">Tempo indeterminato</option>
+        <option value="determinato">Tempo determinato</option>
+        <option value="stagionale">Stagionale</option>
+        <option value="tirocinio">Tirocinio</option>
+        <option value="occasionale">Occasionale</option>
+      </select>
+      <select class="lv-sel" id="lv-orario" aria-label="Orario">
+        <option value="">Ogni orario</option>
+        <option value="full">Tempo pieno</option>
+        <option value="part">Part-time</option>
+      </select>
+      <button type="button" class="lv-chip" id="lv-casa" aria-pressed="false">🏠 Con alloggio</button>
+      <button type="button" class="lv-chip" id="lv-senza" aria-pressed="false">🎓 Senza esperienza</button>
+    </div>
+
+    <p class="lv-conteggio" id="lv-conteggio"></p>
+    <div class="lv-griglia" id="lv-griglia"></div>
+
+    <!-- ── Pubblica ───────────────────────────────────────────────────────── -->
+    <div class="lv-pubblica reveal">
+      <h2 style="font-family:'Clash Grotesk',sans-serif;font-size:var(--text-base);font-weight:600;margin:0">Conosci un'offerta vera?</h2>
+      <p>Pubblicala qui: resta visibile 30 giorni e la vede tutta la comunità. Serve un account gratuito, così sappiamo chi ha scritto cosa.</p>
+      <button type="button" class="btn-oro" id="lv-apri">Pubblica un'offerta</button>
+
+      <form class="lv-form" id="lv-form" novalidate>
+        <div class="lv-campo">
+          <label for="lf-tit">Che lavoro è *</label>
+          <input type="text" id="lf-tit" maxlength="80" placeholder="Es. Aiuto cuoco in pizzeria" required/>
+        </div>
+        <div class="lv-due">
+          <div class="lv-campo"><label for="lf-az">Azienda o datore *</label><input type="text" id="lf-az" maxlength="80" required/></div>
+          <div class="lv-campo"><label for="lf-cit">Città *</label><input type="text" id="lf-cit" maxlength="40" placeholder="Es. Milano" required/></div>
+        </div>
+        <div class="lv-due">
+          <div class="lv-campo"><label for="lf-con">Contratto</label>
+            <select id="lf-con">
+              <option value="">Non indicato</option>
+              <option value="indeterminato">Tempo indeterminato</option>
+              <option value="determinato">Tempo determinato</option>
+              <option value="stagionale">Stagionale</option>
+              <option value="tirocinio">Tirocinio</option>
+              <option value="occasionale">Occasionale</option>
+            </select>
+          </div>
+          <div class="lv-campo"><label for="lf-ora">Orario</label>
+            <select id="lf-ora"><option value="">Non indicato</option><option value="full">Tempo pieno</option><option value="part">Part-time</option></select>
+          </div>
+        </div>
+        <div class="lv-spunte">
+          <label><input type="checkbox" id="lf-casa"/> Con alloggio</label>
+          <label><input type="checkbox" id="lf-senza"/> Senza esperienza</label>
+        </div>
+        <div class="lv-campo">
+          <label for="lf-desc">Descrizione</label>
+          <textarea id="lf-desc" maxlength="600" placeholder="Cosa si fa, quali orari, che paga. Più sei preciso, meno perdi tempo."></textarea>
+        </div>
+        <div class="lv-campo">
+          <label for="lf-cont">Come farsi contattare *</label>
+          <input type="text" id="lf-cont" maxlength="120" placeholder="Email, telefono o link all'annuncio ufficiale" required/>
+        </div>
+        <button type="submit" class="btn-oro">Pubblica</button>
+        <p class="lv-esito" id="lv-esito" role="status"></p>
+      </form>
+    </div>
+  </div>
+</main>
+
+<script>
+/* ── Bacheca lavoro ──────────────────────────────────────────────────────────
+   Le offerte stanno nella tabella `jobs` su Supabase, con le stesse regole del
+   mercatino: chiunque legge quelle pubblicate, ognuno scrive e cancella solo le
+   proprie. Se il backend non è collegato la pagina resta viva e mostra dove
+   cercare davvero — un elenco vuoto senza spiegazione è il modo migliore per
+   far credere che il sito sia rotto.
+
+   La parte che conta non è la bacheca: sono le segnalazioni. Su questa
+   comunità la truffa del lavoro è la più comune e la più cara — «pagami e ti
+   trovo il contratto», «ti sistemo io il permesso». Perciò le regole stanno in
+   cima alla pagina e non in fondo, ogni annuncio ha il suo pulsante Segnala, e
+   chi pubblica passa dalla stessa guardia anti-truffa del mercatino
+   (`assets/eih-moderation.js`), che riconosce le frasi tipiche e chiede
+   conferma prima di far uscire l'annuncio.
+
+   I testi scritti da qui vanno nelle quattro lingue a mano: il traduttore a
+   impronte legge il documento, e quello che nasce dopo non lo vede. */
+(function(){
+  "use strict";
+
+  var LG = (function(){
+    var m = location.pathname.match(/^\/(en|si|ta)(\/|$)/);
+    if (m) return m[1];
+    try { return localStorage.getItem('eih-lang') || window.EIH_LANG || 'en'; }
+    catch(e){ return window.EIH_LANG || 'en'; }
+  })();
+
+  var T = {
+    it:{ nessuna:'Nessuna offerta con questi filtri.', tutte:'Vedi tutte le offerte',
+         vuoto:'La bacheca è appena nata e le offerte le porta la comunità. Intanto qui si cerca sul serio, gratis e senza intermediari:',
+         conta1:'1 offerta', contaN:'{n} offerte', oggi:'oggi', ieri:'ieri', giorni:'{n} giorni fa',
+         segnala:'🚩 Segnala', casa:'Con alloggio', senza:'Senza esperienza',
+         con:{indeterminato:'Indeterminato',determinato:'Determinato',stagionale:'Stagionale',tirocinio:'Tirocinio',occasionale:'Occasionale'},
+         ora:{full:'Tempo pieno',part:'Part-time'},
+         serveAccount:'Per pubblicare serve un account gratuito.', accedi:'Registrati',
+         mancano:'Compila i campi con l’asterisco.', inviato:'Pubblicata. La vedi in cima all’elenco.',
+         erroreInvio:'Non è stato possibile pubblicare. Riprova fra poco.',
+         uff:{cli:'Cliclavoro', cpi:'Centri per l’impiego', eur:'EURES (Europa)'} },
+    en:{ nessuna:'No offers match these filters.', tutte:'See all offers',
+         vuoto:'The board has just started and the offers come from the community. In the meantime, these are the places to search for real — free and with no middlemen:',
+         conta1:'1 offer', contaN:'{n} offers', oggi:'today', ieri:'yesterday', giorni:'{n} days ago',
+         segnala:'🚩 Report', casa:'Housing included', senza:'No experience needed',
+         con:{indeterminato:'Permanent',determinato:'Fixed-term',stagionale:'Seasonal',tirocinio:'Internship',occasionale:'Occasional'},
+         ora:{full:'Full time',part:'Part time'},
+         serveAccount:'You need a free account to post.', accedi:'Sign up',
+         mancano:'Please fill in the fields marked with an asterisk.', inviato:'Published. You will find it at the top of the list.',
+         erroreInvio:'Could not publish. Please try again shortly.',
+         uff:{cli:'Cliclavoro', cpi:'Public employment centres', eur:'EURES (Europe)'} },
+    si:{ nessuna:'මෙම පෙරහන් සමඟ දීමනා නැත.', tutte:'සියලු දීමනා බලන්න',
+         vuoto:'මෙම පුවරුව අලුතින් ආරම්භ වූවකි; දීමනා ගෙන එන්නේ ප්‍රජාවයි. එතෙක්, සැබෑ ලෙස සොයන්නට හොඳම තැන් මෙන්න — නොමිලේ, අතරමැදියන් නොමැතිව:',
+         conta1:'දීමනා 1', contaN:'දීමනා {n}', oggi:'අද', ieri:'ඊයේ', giorni:'දින {n}කට පෙර',
+         segnala:'🚩 වාර්තා කරන්න', casa:'නවාතැන් සමඟ', senza:'පළපුරුද්ද අවශ්‍ය නැත',
+         con:{indeterminato:'ස්ථිර',determinato:'නියමිත කාලයක්',stagionale:'කාලීන',tirocinio:'පුහුණුව',occasionale:'ඉඳහිට'},
+         ora:{full:'පූර්ණ කාලීන',part:'අර්ධ කාලීන'},
+         serveAccount:'පළ කිරීමට නොමිලේ ගිණුමක් අවශ්‍යයි.', accedi:'ලියාපදිංචි වන්න',
+         mancano:'තරු ලකුණ ඇති කොටස් පුරවන්න.', inviato:'පළ කරන ලදී. ලැයිස්තුවේ ඉහළින්ම එය ඇත.',
+         erroreInvio:'පළ කිරීමට නොහැකි විය. මොහොතකින් නැවත උත්සාහ කරන්න.',
+         uff:{cli:'Cliclavoro', cpi:'රැකියා මධ්\u200dයස්ථාන', eur:'EURES (යුරෝපය)'} },
+    ta:{ nessuna:'இந்த வடிகட்டிகளுக்கு வேலை வாய்ப்புகள் இல்லை.', tutte:'அனைத்து வாய்ப்புகளையும் பார்',
+         vuoto:'இந்தப் பலகை இப்போதுதான் தொடங்கியுள்ளது; வாய்ப்புகளைக் கொண்டு வருவது சமூகம்தான். அதுவரை, உண்மையாகத் தேட இவைதான் சரியான இடங்கள் — இலவசம், இடைத்தரகர்கள் இல்லை:',
+         conta1:'1 வாய்ப்பு', contaN:'{n} வாய்ப்புகள்', oggi:'இன்று', ieri:'நேற்று', giorni:'{n} நாட்களுக்கு முன்',
+         segnala:'🚩 புகார் அளி', casa:'தங்குமிடத்துடன்', senza:'அனுபவம் தேவையில்லை',
+         con:{indeterminato:'நிரந்தரம்',determinato:'குறிப்பிட்ட காலம்',stagionale:'பருவகாலம்',tirocinio:'பயிற்சி',occasionale:'எப்போதாவது'},
+         ora:{full:'முழு நேரம்',part:'பகுதி நேரம்'},
+         serveAccount:'வெளியிட இலவச கணக்கு தேவை.', accedi:'பதிவு செய்',
+         mancano:'நட்சத்திரம் இட்ட புலங்களை நிரப்புங்கள்.', inviato:'வெளியிடப்பட்டது. பட்டியலின் மேலே காணலாம்.',
+         erroreInvio:'வெளியிட முடியவில்லை. சிறிது நேரம் கழித்து முயலுங்கள்.',
+         uff:{cli:'Cliclavoro', cpi:'பொது வேலைவாய்ப்பு மையங்கள்', eur:'EURES (ஐரோப்பா)'} }
+  };
+  var V = T[LG] || T.en;
+  function t(k,n){ return String(V[k]).replace('{n}', n); }
+
+  /* Dove cercare quando la bacheca è ancora vuota: sono i servizi pubblici,
+     gratuiti per legge. Meglio mandare qualcuno al centro per l'impiego che
+     lasciarlo davanti a una pagina bianca. */
+  var UFFICIALI = [
+    [V.uff.cli, 'https://www.cliclavoro.gov.it'],
+    [V.uff.cpi, 'https://www.anpal.gov.it/centri-per-l-impiego'],
+    [V.uff.eur, 'https://eures.europa.eu/index_it']
+  ];
+
+  var elGriglia = document.getElementById('lv-griglia');
+  var elConta   = document.getElementById('lv-conteggio');
+  var elCitta   = document.getElementById('lv-citta');
+  var elContr   = document.getElementById('lv-contratto');
+  var elOrario  = document.getElementById('lv-orario');
+  var btnCasa   = document.getElementById('lv-casa');
+  var btnSenza  = document.getElementById('lv-senza');
+  var elForm    = document.getElementById('lv-form');
+  var elEsito   = document.getElementById('lv-esito');
+
+  var offerte = [], sb = null, utente = null;
+
+  function esc(s){
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+    });
+  }
+
+  function quando(iso){
+    var g = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+    if (!isFinite(g) || g < 1) return t('oggi');
+    if (g === 1) return t('ieri');
+    return t('giorni', g);
+  }
+
+  function filtrate(){
+    var c = elCitta.value, k = elContr.value, o = elOrario.value;
+    var casa = btnCasa.getAttribute('aria-pressed') === 'true';
+    var senza = btnSenza.getAttribute('aria-pressed') === 'true';
+    return offerte.filter(function(j){
+      if (c && (j.city || '') !== c) return false;
+      if (k && j.contract !== k) return false;
+      if (o && j.schedule !== o) return false;
+      if (casa && !j.housing) return false;
+      if (senza && !j.no_experience) return false;
+      return true;
+    });
+  }
+
+  function scheda(j){
+    var el = document.createElement('article');
+    el.className = 'lv-card';
+    var et = [];
+    if (j.contract && V.con[j.contract]) et.push('<span class="lv-et">' + esc(V.con[j.contract]) + '</span>');
+    if (j.schedule && V.ora[j.schedule]) et.push('<span class="lv-et">' + esc(V.ora[j.schedule]) + '</span>');
+    if (j.housing) et.push('<span class="lv-et lv-et--casa">🏠 ' + esc(t('casa')) + '</span>');
+    if (j.no_experience) et.push('<span class="lv-et lv-et--senza">🎓 ' + esc(t('senza')) + '</span>');
+
+    el.innerHTML =
+      '<h3 class="lv-tit">' + esc(j.title) + '</h3>' +
+      '<p class="lv-dove">' + esc(j.company || '') + (j.city ? ' · ' + esc(j.city) : '') + '</p>' +
+      (et.length ? '<div class="lv-etichette">' + et.join('') + '</div>' : '') +
+      (j.body ? '<p class="lv-corpo">' + esc(j.body) + '</p>' : '') +
+      (j.url ? '<p class="lv-corpo"><a class="inline" href="' + esc(j.url) + '" target="_blank" rel="noopener nofollow">' + esc(j.url) + '</a></p>' : '') +
+      (j.contact ? '<p class="lv-corpo"><strong>' + esc(j.contact) + '</strong></p>' : '');
+
+    var piede = document.createElement('div');
+    piede.className = 'lv-piede';
+    var q = document.createElement('span');
+    q.className = 'lv-quando';
+    q.textContent = quando(j.created_at);
+    piede.appendChild(q);
+    /* Il pulsante è lo stesso del mercatino: la segnalazione arriva alla
+       casella di moderazione, senza tabelle nuove da sorvegliare. */
+    if (window.EIHModeration && EIHModeration.reportButton) {
+      piede.appendChild(EIHModeration.reportButton(function(){
+        return { area:'lavoro', id:j.id, title:j.title };
+      }, 'lv-segnala'));
+    }
+    el.appendChild(piede);
+    return el;
+  }
+
+  function vuoto(messaggio){
+    var d = document.createElement('div');
+    d.className = 'lv-vuoto';
+    d.innerHTML = '<p>' + esc(messaggio) + '</p><div class="lv-uff">' +
+      UFFICIALI.map(function(u){
+        return '<a class="btn-ghost" data-no-tr href="' + u[1] + '" target="_blank" rel="noopener">' + esc(u[0]) + ' ↗</a>';
+      }).join('') + '</div>';
+    return d;
+  }
+
+  function disegna(){
+    var lista = filtrate();
+    elGriglia.innerHTML = '';
+    elConta.textContent = lista.length === 1 ? t('conta1') : t('contaN', lista.length);
+    if (!lista.length) {
+      elGriglia.appendChild(vuoto(offerte.length ? t('nessuna') : t('vuoto')));
+      return;
+    }
+    lista.forEach(function(j){ elGriglia.appendChild(scheda(j)); });
+  }
+
+  function riempiCitta(){
+    var viste = {}, fuori = [];
+    offerte.forEach(function(j){ if (j.city && !viste[j.city]) { viste[j.city] = 1; fuori.push(j.city); } });
+    fuori.sort();
+    fuori.forEach(function(c){
+      var o = document.createElement('option'); o.value = c; o.textContent = c;
+      elCitta.appendChild(o);
+    });
+  }
+
+  [elCitta, elContr, elOrario].forEach(function(e){ e.addEventListener('change', disegna); });
+  [btnCasa, btnSenza].forEach(function(b){
+    b.addEventListener('click', function(){
+      b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      disegna();
+    });
+  });
+
+  document.getElementById('lv-apri').addEventListener('click', function(){
+    if (!utente) {
+      elEsito.textContent = t('serveAccount');
+      elForm.classList.add('aperto');
+      location.href = '/registrati?next=/lavoro';
+      return;
+    }
+    elForm.classList.toggle('aperto');
+  });
+
+  elForm.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    function val(id){ var e = document.getElementById(id); return (e.value || '').trim(); }
+    var tit = val('lf-tit'), az = val('lf-az'), cit = val('lf-cit'), cont = val('lf-cont');
+    if (!(tit && az && cit && cont)) { elEsito.textContent = t('mancano'); return; }
+    /* Stessa guardia del mercatino: se il testo somiglia a una truffa, chiede
+       conferma prima di pubblicare. Non blocca — avvisa, e chi insiste si
+       prende la responsabilità con il proprio account attaccato. */
+    if (window.EIHModeration && !EIHModeration.scamGuard(tit + ' ' + val('lf-desc') + ' ' + cont)) return;
+    if (!sb || !utente) { location.href = '/registrati?next=/lavoro'; return; }
+
+    var riga = {
+      user_id: utente.id, title: tit, company: az, city: cit,
+      body: val('lf-desc') || null, contact: cont,
+      contract: val('lf-con') || null, schedule: val('lf-ora') || null,
+      housing: document.getElementById('lf-casa').checked,
+      no_experience: document.getElementById('lf-senza').checked,
+      status: 'published', source: 'community',
+      expires_at: new Date(Date.now() + 30 * 86400000).toISOString()
+    };
+    sb.from('jobs').insert(riga).select().then(function(res){
+      if (res.error) { elEsito.textContent = t('erroreInvio'); return; }
+      elEsito.textContent = t('inviato');
+      elForm.reset(); elForm.classList.remove('aperto');
+      offerte.unshift((res.data && res.data[0]) || riga);
+      riempiCitta(); disegna();
+    }).catch(function(){ elEsito.textContent = t('erroreInvio'); });
+  });
+
+  function avvia(){
+    disegna();   // subito qualcosa a schermo, anche senza backend
+    if (!window.EIH_AUTH || !EIH_AUTH.ready) return;
+    EIH_AUTH.ready.then(function(){
+      sb = EIH_AUTH.client && EIH_AUTH.client();
+      return EIH_AUTH.getUser().catch(function(){ return null; });
+    }).then(function(u){
+      utente = u;
+      if (!sb) return;
+      return sb.from('jobs')
+        .select('id,title,company,city,url,body,contract,schedule,housing,no_experience,contact,created_at')
+        .eq('status', 'published').order('created_at', { ascending: false }).limit(120)
+        .then(function(res){
+          if (res.error || !res.data) return;
+          offerte = res.data;
+          riempiCitta(); disegna();
+        });
+    }).catch(function(){});
+  }
+
+  if (document.readyState === 'loading') addEventListener('DOMContentLoaded', avvia);
+  else avvia();
+})();
+</script>
+
+<script src="eih.js" defer></script>
+<script src="eih-auth.js" defer></script>
+<script src="/assets/eih-moderation.js" defer></script>
+<script src="/assets/vendor/lenis.min.js" fetchpriority="low" defer></script>
+<script src="/assets/vendor/gsap.min.js" fetchpriority="low" defer></script>
+<script src="/assets/vendor/ScrollTrigger.min.js" fetchpriority="low" defer></script>
+<script src="/assets/eih-motion.js" fetchpriority="low" defer></script>
+<script src="/assets/eih-misura.js" defer></script>
+<script src="/assets/eih-atmosphere.js" fetchpriority="low" defer></script>
+<script src="/assets/eih-palette.js" fetchpriority="low" defer></script>
+<script src="/assets/eih-theme.js" defer></script>
+<script src="/assets/eih-consent.js" defer></script>
+</body>
+</html>
