@@ -854,9 +854,55 @@ function saveState(s){try{localStorage.setItem(SKEY,JSON.stringify(s));}catch(e)
 let state=loadState();
 if(!state.current)state.current=1;           // current phase (1-9)
 if(!state.completed)state.completed={};       // { "1-0":true, ... } step keys
-if(state.registered===undefined)state.registered=localStorage.getItem('eih-registered')==='1';
+/* Chi e' iscritto non si decide una volta sola.
 
-function isRegistered(){return state.registered===true;}
+   Prima questa riga leggeva il contrassegno locale soltanto se
+   `state.registered` era ancora `undefined`, e poi lo scriveva dentro
+   `eih-journey`. Bastava aprire il percorso una volta da sconosciuti perche'
+   dentro i dati del percorso restasse scritto `registered:false` per sempre:
+   l'utente si iscriveva altrove, tornava qui, e questa pagina continuava a
+   trattarlo da ospite con tutte le fasi chiuse. Su ogni altra pagina risultava
+   entrato, qui no.
+
+   Adesso lo stato non si conserva: si legge ogni volta, e la sessione vera ha
+   la meglio sul contrassegno locale. */
+delete state.registered;
+
+var utenteVero = null;
+function isRegistered(){
+  if (utenteVero) return true;
+  try { return localStorage.getItem('eih-registered') === '1'; } catch(e){ return false; }
+}
+
+/* `eih-auth.js` non era caricato qui — unica pagina del sito — quindi la
+   sessione Supabase non veniva nemmeno consultata, e il contrassegno locale non
+   veniva risincronizzato all'apertura. Adesso c'e': si chiede chi e' l'utente,
+   e se arriva una risposta si ridisegna. */
+(function(){
+  function guarda(){
+    if (!window.EIH_AUTH || !EIH_AUTH.ready) return;
+    EIH_AUTH.ready
+      .then(function(){ return EIH_AUTH.getUser(); })
+      .then(function(u){
+        if (!u) return;
+        utenteVero = u;
+        try { localStorage.setItem('eih-registered','1'); } catch(e){}
+        renderPhases();
+      })
+      .catch(function(){});
+    if (EIH_AUTH.onChange && !window.__percorsoAuthSub) {
+      window.__percorsoAuthSub = 1;
+      try {
+        EIH_AUTH.onChange(function(ev, sess){
+          utenteVero = (sess && sess.user) || null;
+          renderPhases();
+        });
+      } catch(e){}
+    }
+  }
+  if (document.readyState === 'loading') addEventListener('DOMContentLoaded', guarda);
+  else guarda();
+})();
 function allStepsDone(n){
   const total=PHASES[n-1].steps.length;
   for(let i=0;i<total;i++) if(!state.completed[n+'-'+i]) return false;
@@ -1010,7 +1056,6 @@ function applyAuthMode(){
 }
 function completeAuth(){
   // Demo: both signup and login unlock the journey locally (no real backend yet).
-  state.registered=true; saveState(state);
   try{localStorage.setItem('eih-registered','1');}catch(e){}
   closeAuth(); renderPhases();
   // Arrivo da pagina gated (?next=/pagina): torna lì dopo l'iscrizione
@@ -1494,6 +1539,7 @@ renderPhases();
 <script src="assets/eih-atmosphere.js" fetchpriority="low" defer></script>
 <script src="assets/eih-palette.js" fetchpriority="low" defer></script>
 <script src="assets/eih-theme.js" defer></script>
+<script src="/eih-auth.js" defer></script>
 <script src="assets/eih-consent.js" defer></script>
 <script src="/assets/eih-misura.js" defer></script>
 <script src="/assets/vendor/lenis.min.js" fetchpriority="low" defer></script>
