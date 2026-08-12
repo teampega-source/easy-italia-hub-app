@@ -156,12 +156,23 @@ function trackCTA(label){
     console.log('[EIH track]',label,'src:',src);
   }catch(e){}
 }
-// Legge UTM source e salva in localStorage per attribuzione
+/* Da quale campagna arriva chi visita: e' attribuzione pubblicitaria, quindi
+   si scrive solo dopo il consenso di marketing. Prima finiva in localStorage
+   appena la pagina si apriva, e contraddiceva la fascia dei cookie che in quel
+   momento stava ancora chiedendo il permesso. L'indirizzo lo si legge subito
+   — sparisce appena l'utente cambia pagina — ma resta in memoria finche' il
+   consenso non arriva. Se non arriva, non si scrive niente. */
 (function(){
   try{
     var p=new URLSearchParams(location.search);
     var utm={source:p.get('utm_source'),medium:p.get('utm_medium'),campaign:p.get('utm_campaign'),content:p.get('utm_content')};
-    if(utm.source) localStorage.setItem('eih-utm',JSON.stringify({...utm,ts:Date.now()}));
+    if(!utm.source) return;
+    function salva(){
+      try{ localStorage.setItem('eih-utm',JSON.stringify({...utm,ts:Date.now()})); }catch(e){}
+    }
+    function permesso(){ return !!(window.EIH_CONSENT && window.EIH_CONSENT.marketing); }
+    if(permesso()) salva();
+    else addEventListener('cookieConsentUpdated',function(){ if(permesso()) salva(); });
   }catch(e){}
 })();
 </script>

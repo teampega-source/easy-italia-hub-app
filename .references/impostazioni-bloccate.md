@@ -157,6 +157,24 @@ node scripts/verifica-fonti.mjs --controlla # esce 1 se un link ufficiale è rot
 - L'elenco `UFFICIALI` è esplicito di proposito: niente jolly, o il primo blog
   con un dominio giusto diventa «fonte ufficiale».
 
+## Cancellazione dei dati (art. 17 GDPR)
+
+`assets/eih-cancella-dati.js`, usato dal pulsante in `/profili`. Cancella
+**per prefisso `eih-`**, non da un elenco.
+
+- **Non rimettere un elenco di chiavi scritto a mano.** Quello di prima
+  cancellava 5 chiavi su 20 e lasciava indietro l'account, i corsi, la
+  newsletter e l'attribuzione pubblicitaria. Cinque delle dieci voci elencate
+  non esistevano nemmeno più.
+- Una chiave scritta attraverso una variabile (`eih-first-visit`) non si trova
+  cercando nel codice: il prefisso la prende lo stesso.
+- Oltre alla memoria si spegne la **sottoscrizione push** — sta sul server di
+  Google o Apple, non nel browser — e si svuotano le **cache del service
+  worker**, che contengono le pagine personali già visitate.
+- `eih-utm` (da quale campagna arriva chi visita) si scrive **solo dopo il
+  consenso di marketing**. Prima veniva salvato all'apertura della pagina,
+  mentre la fascia dei cookie stava ancora chiedendo il permesso.
+
 ## File che devono esistere in radice
 
 `favicon.ico` — ogni browser e ogni crawler lo chiede senza che nessuno lo
