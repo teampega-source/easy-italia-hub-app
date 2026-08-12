@@ -243,7 +243,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
   <!-- danger zone -->
   <div class="danger-zone reveal">
     <h3>Zona dati</h3>
-    <p>Tutti i dati sono salvati solo su questo dispositivo (localStorage). Puoi cancellarli in qualsiasi momento.</p>
+    <p>Profilo, scadenze, documenti, corsi e messaggi del forum stanno solo su questo dispositivo. Il pulsante li cancella tutti, insieme alle preferenze, alle pagine salvate per l'uso offline e alle notifiche sul telefono.</p>
+    <p>Restano fuori i dati che hai già inviato con un modulo — iscrizione alla newsletter, messaggi dai contatti — perché quelli non sono su questo dispositivo: per farli cancellare scrivici dalla pagina <a class="inline" href="/contatti">Contatti</a>.</p>
     <button class="reset-btn" id="reset-btn">Cancella tutti i dati salvati</button>
   </div>
 
@@ -417,17 +418,28 @@ document.getElementById('save-profile-btn').addEventListener('click', function()
   famRender();
 
 
+/* La cancellazione sta in `assets/eih-cancella-dati.js`: qui c'era un elenco
+   di chiavi scritto a mano che al controllo ne cancellava cinque su venti e
+   lasciava indietro l'account, i corsi, la newsletter e l'attribuzione
+   pubblicitaria. Adesso si cancella per prefisso, e una chiave nuova e'
+   coperta dal giorno in cui nasce. */
 document.getElementById('reset-btn').addEventListener('click', function(){
-  if(!confirm('Sei sicuro? Tutti i dati salvati su questo dispositivo verranno cancellati.')) return;
-  var keys = ['eih-profile','eih-family','eih-deadlines','eih-documents','eih-permesso','eih-forum-v1','eih-first-visit','eih-lang','eih-theme','eih-community-rsvp'];
-  keys.forEach(function(k){ try{ localStorage.removeItem(k); }catch(e){} });
-  render();
+  if(!confirm('Sei sicuro? Tutti i dati salvati su questo dispositivo verranno cancellati: profilo, scadenze, documenti, corsi, forum, notifiche e preferenze. L\'operazione non si puo\' annullare.')) return;
+  var btn = this;
+  btn.disabled = true;
+  window.EIHCancella().then(function(esito){
+    btn.disabled = false;
+    btn.textContent = 'Dati cancellati (' + esito.chiavi.length + ' voci' +
+      (esito.push ? ', notifiche disattivate' : '') + ')';
+    render();
+  });
 });
 
 render();
 })();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="/assets/eih-cancella-dati.js"></script>
 <script src="assets/eih-atmosphere.js" fetchpriority="low" defer></script>
 <script src="assets/eih-palette.js" fetchpriority="low" defer></script>
 <script src="assets/eih-theme.js" defer></script>
