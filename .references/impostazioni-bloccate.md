@@ -176,6 +176,33 @@ node scripts/verifica-fonti.mjs --controlla # esce 1 se un link ufficiale è rot
   consenso di marketing**. Prima veniva salvato all'apertura della pagina,
   mentre la fascia dei cookie stava ancora chiedendo il permesso.
 
+## Dati strutturati e lingue dichiarate
+
+`scripts/dati-strutturati.mjs` scrive, in ogni pagina indicizzabile, fra
+`<!-- seo:inizio -->` e `<!-- seo:fine -->`: i cinque collegamenti `hreflang`,
+la briciola di pane, la `WebPage` con `dateModified` da git, le domande
+frequenti dove ci sono, e sulla home l'identità del sito.
+
+```
+node scripts/dati-strutturati.mjs     # rigenera tutto, è ripetibile
+```
+
+- **Fra i marcatori non si scrive a mano.**
+- Il generatore **non aggiunge quello che c'è già**: se la pagina dichiara da
+  sé `Article`, `WebPage`, `WebSite`, `Organization` o `FAQPage`, lo salta. Due
+  schede per la stessa cosa prima o poi divergono, e la home ne aveva già una
+  scritta a mano.
+- Il controllo «c'è già?» guarda la pagina **senza** il blocco generato. Senza
+  quella accortezza, al secondo giro trova quello che ha scritto lui al primo,
+  conclude che c'è già e non scrive più niente: un generatore che si legge
+  addosso si svuota da solo.
+- Le pagine `noindex` restano fuori, e se una lo diventa il blocco vecchio
+  viene tolto.
+- Le domande frequenti nel sito hanno **tre forme di markup** diverse
+  (`<details><summary>`, pulsante con `aria-controls`, pulsante col div
+  attaccato): il generatore le legge tutte e tre. Non uniformare l'HTML di tre
+  pagine per far contento un generatore.
+
 ## File che devono esistere in radice
 
 `favicon.ico` — ogni browser e ogni crawler lo chiede senza che nessuno lo
