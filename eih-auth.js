@@ -547,9 +547,16 @@
           return supabase.auth.getUser().then(function (res) {
             var uid = res && res.data && res.data.user && res.data.user.id;
             if (!uid) return practice; // unauthenticated — skip silently
+            /* `data` conserva la pratica intera, ma la scadenza va scritta
+               anche nella sua colonna: il promemoria giornaliero cerca le
+               scadenze per data, e dentro un jsonb non le trova. Restava
+               sempre vuota, e il permesso — l'unica scadenza che se scade non
+               si recupera — era l'unica per cui non partiva nessun avviso. */
+            var iso = /^\d{4}-\d{2}-\d{2}$/.test(practice.scadenza || "") ? practice.scadenza : null;
             return supabase
               .from("permesso_practices")
-              .upsert({ user_id: uid, data: practice }, { onConflict: "user_id" })
+              .upsert({ user_id: uid, data: practice, scadenza: iso,
+                        tipo: practice.tipo || null }, { onConflict: "user_id" })
               .select()
               .then(function (res) {
                 var rows = (res && res.data) || [];

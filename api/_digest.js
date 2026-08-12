@@ -43,7 +43,7 @@ function fmtDate(iso) {
 function buildHtml(rows) {
   const items = rows.map((r) =>
     `<tr><td style="padding:8px 12px;border-bottom:1px solid #eee"><strong>${r.title}</strong>${r.note ? `<br/><span style="color:#777;font-size:13px">${r.note}</span>` : ''}</td>` +
-    `<td style="padding:8px 12px;border-bottom:1px solid #eee;white-space:nowrap">${fmtDate(r.due_date)}</td>` +
+    `<td style="padding:8px 12px;border-bottom:1px solid #eee;white-space:nowrap">${fmtDate(r.date)}</td>` +
     `<td style="padding:8px 12px;border-bottom:1px solid #eee;white-space:nowrap;color:${r.days <= 1 ? '#c0392b' : r.days <= 7 ? '#b9772a' : '#555'}">${r.days === 1 ? 'domani' : `tra ${r.days} giorni`}</td></tr>`
   ).join('');
   return `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1c1a17">` +
@@ -60,13 +60,31 @@ module.exports.run = async (req, res) => {
 
   try {
     const dates = OFFSETS.map(ymd);
-    const rows = await sb(`deadlines?select=user_id,title,note,due_date&due_date=in.(${dates.join(',')})&order=due_date`);
+    // La colonna si chiama `date`. Cercava `due_date`, che nella tabella non
+    // esiste: PostgREST rispondeva 400, l'errore finiva nel catch qui sotto e
+    // il promemoria falliva ogni giorno senza che nessuno se ne accorgesse.
+    // Nessun avviso e' mai partito.
+    const rows = await sb(`deadlines?select=user_id,title,note,date&date=in.(${dates.join(',')})&order=date`);
+
+    // La scadenza del permesso non sta fra le scadenze: sta nella sua tabella,
+    // e in dashboard l'abbiamo appena unita alle altre. Se non entrasse anche
+    // qui, l'unica scadenza che se scade non si recupera sarebbe l'unica per
+    // cui non arriva l'avviso.
+    let perm = [];
+    try {
+      perm = await sb(`permesso_practices?select=user_id,tipo,scadenza&scadenza=in.(${dates.join(',')})`);
+    } catch (e) { perm = []; }
+    for (const p of perm) {
+      rows.push({ user_id: p.user_id, title: 'Permesso di soggiorno' + (p.tipo ? ' — ' + p.tipo : ''),
+                  note: '', date: p.scadenza });
+    }
     if (!rows.length) return res.status(200).json({ ok: true, sent: 0 });
 
     const today = ymd(0);
+    rows.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
     const byUser = new Map();
     for (const r of rows) {
-      r.days = Math.round((new Date(r.due_date) - new Date(today)) / 86400000);
+      r.days = Math.round((new Date(r.date) - new Date(today)) / 86400000);
       if (!byUser.has(r.user_id)) byUser.set(r.user_id, []);
       byUser.get(r.user_id).push(r);
     }
