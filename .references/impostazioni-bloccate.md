@@ -257,16 +257,21 @@ python3 scripts/audit-indicizzazione.py    # esce 1 se qualcosa si contraddice
 - La dichiarazione della commissione **c'è su `/wise` e su `/travelpayouts`**
   (`<p class="affiliato">`), che è dove stanno le pagine dei due programmi.
   Quelle non si toccano.
-- **In home la frase è stata tolta su richiesta dell'utente (12 agosto 2026).**
-  Va saputo che cosa comporta, perché nessuno lo riscopra fra sei mesi: la
-  seconda fila della barra partner — Aviasales e Klook — punta a
-  `/api/go?to=…`, cioè a **link affiliati veri**, e adesso quei link stanno in
-  home senza nessuna dichiarazione visibile. `rel="sponsored"` parla ai motori
-  di ricerca, non alle persone, e non vale come informazione al consumatore.
-  I contratti di affiliazione (Travelpayouts in testa) la dichiarazione la
-  chiedono, e l'AGCM ha già sanzionato siti per link affiliati non dichiarati.
-  Se un domani si vuole rimettere qualcosa senza la frase lunga, bastano due
-  parole sotto la fila: «Link sponsorizzati».
+- **In home la frase è stata accorciata su richiesta dell'utente (12 agosto
+  2026)**, da «…se apri un conto o prenoti dai nostri link, la piattaforma
+  riceve una piccola commissione. Per te il costo non cambia.» a
+  **«Wise, Travelpayouts, Aviasales e Klook sono affiliazioni.»**
+  Resta una dichiarazione valida: nomina tutti e quattro i marchi e dice che
+  cosa sono. **Non toglierla del tutto.** La seconda fila della barra —
+  Aviasales e Klook — punta a `/api/go?to=…`, cioè a link affiliati veri, e
+  `rel="sponsored"` parla ai motori di ricerca, non alle persone: non vale come
+  informazione al consumatore. I contratti di affiliazione (Travelpayouts in
+  testa) la dichiarazione la chiedono, e l'AGCM ha già sanzionato siti per link
+  affiliati non dichiarati.
+- Sta in fondo alla sezione e non sotto la seconda fila **perché nomina anche
+  Wise e Travelpayouts**, che stanno nella prima. Se un domani la frase tornasse
+  a parlare dei soli Aviasales e Klook, allora andrebbe spostata sotto la loro
+  fila: una dichiarazione si legge accanto a ciò che dichiara.
 
 ## Sfondo fotografico della home
 
