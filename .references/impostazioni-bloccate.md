@@ -253,8 +253,20 @@ python3 scripts/audit-indicizzazione.py    # esce 1 se qualcosa si contraddice
   Non rimetterlo nella testata di tutte le pagine: c'e' stato per un'ora sola,
   il tempo di far passare la verifica, e contraddiceva la fascia dei cookie.
   Se il consenso manca, la pagina lo dice e offre il pannello: non resta muta.
-- Ogni link affiliato porta `rel="sponsored"` e la commissione è dichiarata
-  nella pagina. Non si toglie.
+- Ogni link affiliato porta `rel="sponsored"`. Non si toglie.
+- La dichiarazione della commissione **c'è su `/wise` e su `/travelpayouts`**
+  (`<p class="affiliato">`), che è dove stanno le pagine dei due programmi.
+  Quelle non si toccano.
+- **In home la frase è stata tolta su richiesta dell'utente (12 agosto 2026).**
+  Va saputo che cosa comporta, perché nessuno lo riscopra fra sei mesi: la
+  seconda fila della barra partner — Aviasales e Klook — punta a
+  `/api/go?to=…`, cioè a **link affiliati veri**, e adesso quei link stanno in
+  home senza nessuna dichiarazione visibile. `rel="sponsored"` parla ai motori
+  di ricerca, non alle persone, e non vale come informazione al consumatore.
+  I contratti di affiliazione (Travelpayouts in testa) la dichiarazione la
+  chiedono, e l'AGCM ha già sanzionato siti per link affiliati non dichiarati.
+  Se un domani si vuole rimettere qualcosa senza la frase lunga, bastano due
+  parole sotto la fila: «Link sponsorizzati».
 
 ## Sfondo fotografico della home
 

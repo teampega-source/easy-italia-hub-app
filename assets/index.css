@@ -1793,8 +1793,6 @@ html[data-theme="dark"] .sm-strato.on{opacity:.16}
 .pt-nome{font-family:'Clash Grotesk',sans-serif;font-size:1.05rem;font-weight:600;
   letter-spacing:-.01em;color:var(--fg-secondary)}
 .pt-logo--s:hover .pt-nome{color:var(--ink)}
-.pt-note{margin:var(--sp-3) auto 0;max-width:640px;text-align:center;
-  font-size:var(--text-xs);color:var(--fg-muted);line-height:1.6;font-weight:300}
 .pt-bar.is-scroll{-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
   mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
 .pt-bar.is-scroll .pt-track{flex-wrap:nowrap;justify-content:flex-start;width:max-content;
