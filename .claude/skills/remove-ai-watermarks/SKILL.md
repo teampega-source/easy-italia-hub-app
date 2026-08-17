@@ -12,10 +12,12 @@ CLI Python per le filigrane di provenienza AI. Pacchetto su PyPI:
 ## Limite non negoziabile per questo repo
 
 Easy Italia Hub pubblica immagini generate con AI e le marca `data-ai-gen`,
-obbligo dell'art. 50 Reg. UE 2024/1689 (sanzioni fino a 15M€). **Questa skill non
-si usa sui media pubblicati o in via di pubblicazione sul sito**: né per togliere
-l'etichetta visibile, né per ripulire i metadati prima del deploy. L'etichetta
-resta, sempre.
+obbligo dell'art. 50 Reg. UE 2024/1689 (sanzioni fino a 15M€). **Sulle immagini
+l'etichetta resta sempre**: questa skill non si usa per toglierla, né per
+ripulire i metadati di un'immagine prima del deploy.
+
+Video, voci sintetiche e ogni altro caso: **decide l'utente, volta per volta**.
+Chiedere prima di toccare qualsiasi filigrana su un media destinato al sito.
 
 Ambiti legittimi: capire cosa porta dentro un file (`identify`), lavorare su
 materiale proprio non destinato al sito, indagare un falso positivo, verificare
