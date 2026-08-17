@@ -19,7 +19,7 @@
 - Immagini/video AI: riattivare MCP **meigen** (da `.references/mcp-disabled.json`), mai altri provider. Conferma prima di video, batch >1, 2K/4K.
 
 ## Contenuti generati dall'AI
-- Video, immagini e voci sintetiche pubblicate vanno marcate `data-ai-gen` (`="immagine"` / `="voce"`): `eih.js` ci mette l'etichetta tradotta. Obbligo art. 50 Reg. UE 2024/1689, sanzioni fino a 15M€.
+- Immagini: `data-ai-gen="immagine"` sempre, mai toglierla. Video, voci e ogni altro caso: chiedere all'utente. `eih.js` mette l'etichetta tradotta. Obbligo art. 50 Reg. UE 2024/1689, sanzioni fino a 15M€.
 
 ## GitHub
 - Dopo ogni push: creare PR e mergiarla autonomamente (squash su main). L'utente non tocca GitHub.
