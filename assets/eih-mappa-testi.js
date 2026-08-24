@@ -28,6 +28,11 @@ window.EIH_MAPPA_TESTI = {
 
   /* ─────────────────────────────── inglese ─────────────────────────────── */
   en: {
+    /* consolato: aggiunto su indicazione del Consolato Generale a Milano */
+    'Consolato Generale dello Sri Lanka a Milano':
+      'Consulate General of Sri Lanka in Milan',
+    'Ufficio consolare per il Nord Italia: passaporti, doppia cittadinanza, registrazione di nascite, matrimoni e decessi, procure, dichiarazioni. Appuntamento dal sito ufficiale, lunedì-venerdì 9-17.':
+      'Consular office for northern Italy: passports, dual citizenship, registration of births, marriages and deaths, powers of attorney, declarations. Book from the official website, Monday to Friday 9am-5pm.',
     /* nomi che sono etichette, non nomi propri: un'insegna registrata resta
        com'e', «Comunità cattolica tamil» no — quella e' una descrizione. */
     'Comunità cattolica tamil': 'Tamil Catholic community',
@@ -138,6 +143,7 @@ window.EIH_MAPPA_TESTI = {
     'Sportelli e sedi ACLI in Italia': 'ACLI help desks and offices in Italy',
     'CAF & patronati': 'CAF & patronati',
     'Negozi srilankesi': 'Sri Lankan shops',
+    'Consolato srilankese': 'Sri Lankan Consulate',
     'Luoghi di culto': 'Places of worship',
     'Professionisti': 'Professionals',
     /* messaggi della ricerca */
@@ -188,6 +194,11 @@ window.EIH_MAPPA_TESTI = {
 
   /* ─────────────────────────────── singalese ────────────────────────────── */
   si: {
+    /* consolato: aggiunto su indicazione del Consolato Generale a Milano */
+    'Consolato Generale dello Sri Lanka a Milano':
+      'මිලානු ශ්‍රී ලංකා කොන්සල් ජනරාල් කාර්යාලය',
+    'Ufficio consolare per il Nord Italia: passaporti, doppia cittadinanza, registrazione di nascite, matrimoni e decessi, procure, dichiarazioni. Appuntamento dal sito ufficiale, lunedì-venerdì 9-17.':
+      'උතුරු ඉතාලිය සඳහා කොන්සල් කාර්යාලය: ගමන් බලපත්‍ර, ද්විත්ව පුරවැසිභාවය, උපත්, විවාහ සහ මරණ පිළිබඳ ලියාපදිංචිය, ඇටෝර්නි බලපත්‍ර, ප්‍රකාශ. නිල වෙබ් අඩවියෙන් වෙලාව වෙන් කරගන්න, සඳුදා-සිකුරාදා 9-17.',
     'Comunità cattolica tamil': 'දෙමළ කතෝලික ප්‍රජාව',
     'Zona Via Padova e Loreto': 'Via Padova සහ Loreto ප්‍රදේශය',
     'Zona Stazione Centrale e Vasto': 'Stazione Centrale සහ Vasto ප්‍රදේශය',
@@ -293,6 +304,7 @@ window.EIH_MAPPA_TESTI = {
     'Sportelli e sedi ACLI in Italia': 'ඉතාලියේ ACLI සේවා මධ්‍යස්ථාන සහ කාර්යාල',
     'CAF & patronati': 'CAF සහ patronato',
     'Negozi srilankesi': 'ශ්‍රී ලාංකික වෙළඳසැල්',
+    'Consolato srilankese': 'ශ්‍රී ලංකා කොන්සල් කාර්යාලය',
     'Luoghi di culto': 'ආගමික ස්ථාන',
     'Professionisti': 'වෘත්තිකයන්',
     'Il tuo browser non permette la geolocalizzazione.':
@@ -341,6 +353,11 @@ window.EIH_MAPPA_TESTI = {
 
   /* ──────────────────────────────── tamil ───────────────────────────────── */
   ta: {
+    /* consolato: aggiunto su indicazione del Consolato Generale a Milano */
+    'Consolato Generale dello Sri Lanka a Milano':
+      'மிலானில் இலங்கைத் துணைத் தூதரகம்',
+    'Ufficio consolare per il Nord Italia: passaporti, doppia cittadinanza, registrazione di nascite, matrimoni e decessi, procure, dichiarazioni. Appuntamento dal sito ufficiale, lunedì-venerdì 9-17.':
+      'வட இத்தாலிக்கான தூதரக அலுவலகம்: கடவுச்சீட்டு, இரட்டை குடியுரிமை, பிறப்பு, திருமணம், இறப்பு பதிவு, அதிகார ஆவணங்கள், உறுதிமொழிகள். அதிகாரப்பூர்வ இணையதளத்தில் நேரம் பதிவு செய்யவும், திங்கள்-வெள்ளி 9-17.',
     'Comunità cattolica tamil': 'தமிழ் கத்தோலிக்கச் சமூகம்',
     'Zona Via Padova e Loreto': 'Via Padova மற்றும் Loreto பகுதி',
     'Zona Stazione Centrale e Vasto': 'Stazione Centrale மற்றும் Vasto பகுதி',
@@ -446,6 +463,7 @@ window.EIH_MAPPA_TESTI = {
     'Sportelli e sedi ACLI in Italia': 'இத்தாலியில் ACLI சேவை மையங்கள் மற்றும் அலுவலகங்கள்',
     'CAF & patronati': 'CAF மற்றும் patronato',
     'Negozi srilankesi': 'இலங்கைக் கடைகள்',
+    'Consolato srilankese': 'இலங்கைத் துணைத் தூதரகம்',
     'Luoghi di culto': 'வழிபாட்டுத் தலங்கள்',
     'Professionisti': 'தொழில் வல்லுநர்கள்',
     'Il tuo browser non permette la geolocalizzazione.':

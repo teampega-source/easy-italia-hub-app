@@ -33,7 +33,8 @@ const GUIDE = [
   'ricongiungimento', 'assegno-unico', 'guida-ssn', 'patente', 'diritti-inps',
   'fisco', 'documenti', 'moduli', 'riconoscimento-titoli', 'certificazioni',
   'scuola', 'housing', 'permesso-tracker', 'guida-conti', 'money-transfer',
-  'lavoro-diritti', 'emergenze', 'esame', 'cargo', 'dizionario-medico'
+  'lavoro-diritti', 'emergenze', 'esame', 'cargo', 'dizionario-medico',
+  'italia-srilanka', 'costruire-futuro'
 ];
 
 /* Un dominio è «ufficiale» se è dello Stato italiano o di un ente pubblico
@@ -62,7 +63,13 @@ const UFFICIALI = [
   [/(^|\.)agid\.gov\.it$/,             'AgID'],
   [/(^|\.)spid\.gov\.it$/,             'SPID'],
   [/(^|\.)garanteprivacy\.it$/,        'Garante Privacy'],
-  [/(^|\.)gov\.it$/,                   'Pubblica amministrazione']
+  [/(^|\.)gov\.it$/,                   'Pubblica amministrazione'],
+  /* Sri Lanka: domini di Stato. Il Consolato Generale a Milano ci ha chiesto
+     di rimandare al proprio sito per tutto ciò che è consolare (agosto 2026). */
+  [/(^|\.)cg-milan\.gov\.lk$/,        'Consolato Generale dello Sri Lanka a Milano'],
+  [/(^|\.)immigration\.gov\.lk$/,     'Department of Immigration and Emigration'],
+  [/(^|\.)mfa\.gov\.lk$/,             'Ministry of Foreign Affairs (Sri Lanka)'],
+  [/(^|\.)gov\.lk$/,                  'Governo dello Sri Lanka']
 ];
 
 function ente(host) {
@@ -116,25 +123,40 @@ function fontiDi(html) {
   return [...visti].map(([n, u]) => ({ n, u }));
 }
 
+/* Il sito del Consolato Generale a Milano risponde 503 a chi non si presenta
+   come un browser, mentre a una persona si apre benissimo. Un controllo che
+   grida «rotto» su un link sano è peggio di nessun controllo: si smette di
+   guardarlo. Perciò l'ultimo tentativo usa un User-Agent da browser. */
+const AGENTI = [
+  'Mozilla/5.0 (compatible; EasyItaliaHub-linkcheck)',
+  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36'
+];
+
 async function raggiungibile(url) {
-  for (const metodo of ['HEAD', 'GET']) {
+  const tentativi = [['HEAD', 0], ['GET', 0], ['GET', 1]];
+  let ultimo = { ok: false, stato: 'sconosciuto' };
+  for (const [metodo, agente] of tentativi) {
     try {
       const c = new AbortController();
       const t = setTimeout(() => c.abort(), 20000);
       const r = await fetch(url, {
         method: metodo, redirect: 'follow', signal: c.signal,
-        headers: { 'User-Agent': 'Mozilla/5.0 (compatible; EasyItaliaHub-linkcheck)' }
+        headers: { 'User-Agent': AGENTI[agente] }
       });
       clearTimeout(t);
       /* Diversi siti della pubblica amministrazione rifiutano HEAD e poi
-         rispondono a GET: un 405 non è un link rotto. */
-      if (r.status === 405 || r.status === 403) continue;
+         rispondono a GET: un 405 non è un link rotto. Lo stesso vale per il
+         403 e per il 503 di chi filtra gli automatismi. */
+      if (r.status === 405 || r.status === 403 || r.status === 503) {
+        ultimo = { ok: false, stato: r.status };
+        continue;
+      }
       return { ok: r.ok, stato: r.status };
     } catch (e) {
-      if (metodo === 'GET') return { ok: false, stato: String(e.name || 'errore') };
+      ultimo = { ok: false, stato: String(e.name || 'errore') };
     }
   }
-  return { ok: false, stato: 'sconosciuto' };
+  return ultimo;
 }
 
 function ultimaModifica(file) {
