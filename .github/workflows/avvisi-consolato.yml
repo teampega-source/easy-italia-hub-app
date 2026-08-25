@@ -1,0 +1,48 @@
+# Rilegge gli avvisi del Consolato Generale a Milano e aggiorna l'elenco.
+#
+# Ogni lunedì mattina. Se cambia qualcosa, il file dei dati viene aggiornato e
+# spinto su main: Vercel ridistribuisce da solo. Se non cambia niente, il
+# lavoro finisce senza toccare nulla — nessun commit vuoto.
+#
+# Se il Consolato rifà il sito e lo script non riconosce più gli avvisi, il
+# lavoro fallisce e GitHub avvisa: meglio un errore visibile che una pagina
+# che invecchia in silenzio.
+name: Avvisi del Consolato
+
+on:
+  schedule:
+    - cron: '17 5 * * 1'   # lunedì 05:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: avvisi-consolato
+  cancel-in-progress: false
+
+jobs:
+  aggiorna:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Rileggi gli avvisi
+        run: node scripts/avvisi-consolato.mjs
+
+      - name: Aggiorna solo se è cambiato qualcosa
+        run: |
+          if git diff --quiet -- assets/eih-avvisi-consolato.js; then
+            echo "nessun avviso nuovo"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/eih-avvisi-consolato.js
+          git commit -m "Avvisi del Consolato: elenco aggiornato" \
+                     -m "Rigenerato da scripts/avvisi-consolato.mjs: titolo, categoria e link. Il testo resta sul sito del Consolato."
+          git push
