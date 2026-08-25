@@ -55,6 +55,8 @@ function buildHtml(rows) {
 }
 
 // Eseguito dal cron via api/email.js (GET autenticato). Vedi vercel.json.
+const { battito } = require('./_battito');
+
 module.exports.run = async (req, res) => {
   if (!SB_URL || !SB_KEY || !RESEND) return res.status(200).json({ demo: true });
 
@@ -78,7 +80,7 @@ module.exports.run = async (req, res) => {
       rows.push({ user_id: p.user_id, title: 'Permesso di soggiorno' + (p.tipo ? ' — ' + p.tipo : ''),
                   note: '', date: p.scadenza });
     }
-    if (!rows.length) return res.status(200).json({ ok: true, sent: 0 });
+    if (!rows.length) { await battito('scadenze'); return res.status(200).json({ ok: true, sent: 0 }); }
 
     const today = ymd(0);
     rows.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
@@ -143,8 +145,14 @@ module.exports.run = async (req, res) => {
       });
       if (r.ok) sent++;
     }
+    // Il lavoro e' arrivato in fondo: lo si dice a chi sorveglia. Se il ping
+    // non arriva all'ora prevista, l'avviso parte da solo.
+    await battito('scadenze');
     return res.status(200).json({ ok: true, users: byUser.size, sent, pushed });
   } catch (e) {
+    // Fallire in silenzio con un 200 e' esattamente com'era prima: chi
+    // sorveglia deve saperlo subito, non fra tre giorni.
+    await battito('scadenze', 'fail');
     return res.status(200).json({ ok: false, error: String(e.message || e) });
   }
 };

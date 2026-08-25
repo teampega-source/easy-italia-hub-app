@@ -28,6 +28,8 @@ const SEASON_TIPS = [
   'Dicembre è alta stagione (Natale/Capodanno). Prenota almeno 3 mesi prima.',
 ];
 
+const { battito } = require('./_battito');
+
 module.exports = async function handler(req, res) {
   const secret = process.env.CRON_SECRET;
   if (!secret || req.headers['authorization'] !== `Bearer ${secret}`) {
@@ -49,6 +51,7 @@ module.exports = async function handler(req, res) {
   );
   if (!subResp.ok) {
     console.error('[flight-digest] fetch subscribers:', await subResp.text());
+    await battito('voli', 'fail');
     return res.status(500).json({ error: 'fetch failed' });
   }
 
@@ -56,11 +59,12 @@ module.exports = async function handler(req, res) {
   // che va in pausa dopo ~7 giorni di inattività). Il digest via email però
   // parte solo il lunedì; gli altri giorni ci fermiamo dopo il keep-alive.
   if (new Date().getUTCDay() !== 1) {
+    await battito('voli');
     return res.status(200).json({ keptAlive: true });
   }
 
   const subscribers = await subResp.json();
-  if (!subscribers.length) return res.status(200).json({ sent: 0, total: 0 });
+  if (!subscribers.length) { await battito('voli'); return res.status(200).json({ sent: 0, total: 0 }); }
 
   const tip = SEASON_TIPS[new Date().getMonth()];
   let sent = 0;
@@ -85,6 +89,7 @@ module.exports = async function handler(req, res) {
     }
   }
 
+  await battito('voli');
   return res.status(200).json({ sent, total: subscribers.length });
 };
 
