@@ -34,6 +34,18 @@ import { execSync } from 'node:child_process';
 
 const BASE = 'https://easyitaliahub.it';
 const LINGUE = ['en', 'si', 'ta'];
+
+/* Gli indirizzi sotto /en, /si e /ta hanno lo spicchio internazionale
+   (/en/forms, non /en/moduli). La mappa sta in assets/eih-lang-url.js, dove
+   serve al browser: qui si legge da lì, per non tenerne due copie che prima o
+   poi divergono. */
+const SLUG = (() => {
+  const src = readFileSync('assets/eih-lang-url.js', 'utf8');
+  const blocco = src.match(/var SLUG = \{([\s\S]*?)\n  \};/);
+  const m = {};
+  if (blocco) for (const v of blocco[1].matchAll(/'([^']+)':\s*'([^']+)'/g)) m[v[1]] = v[2];
+  return m;
+})();
 const fuga = s => s.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&');
 const INIZIO = '<!-- seo:inizio — generato da scripts/dati-strutturati.mjs, non scrivere qui -->';
 const FINE = '<!-- seo:fine -->';
@@ -63,8 +75,8 @@ function ultimaModifica(file) {
 }
 
 function indirizzo(nome, lg) {
-  const coda = nome === 'index' ? '' : '/' + nome;
-  if (lg === 'it') return BASE + (coda || '/');
+  if (lg === 'it') return BASE + (nome === 'index' ? '/' : '/' + nome);
+  const coda = nome === 'index' ? '' : '/' + (SLUG[nome] || nome);
   return BASE + '/' + lg + coda;
 }
 

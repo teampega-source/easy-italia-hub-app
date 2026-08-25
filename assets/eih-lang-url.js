@@ -7,11 +7,110 @@
   'use strict';
   var BASE = 'https://easyitaliahub.it';
   var LANGS = ['en', 'si', 'ta'];
+  /* ── Gli indirizzi tradotti ─────────────────────────────────────────────
+     Sotto /en, /si e /ta l'indirizzo non deve restare italiano: chi legge in
+     inglese si trova easyitaliahub.it/en/moduli e non sa cosa sta aprendo, e
+     nemmeno Google lo sa. Qui ogni pagina ha il suo spicchio internazionale.
+
+     Uno solo per tutte e tre le lingue, in alfabeto latino: uno spicchio in
+     singalese o tamil finirebbe percentualizzato (%E0%B6%B8…) e sarebbe
+     illeggibile ovunque — nella barra, in un messaggio, su un volantino.
+
+     Il file servito resta quello italiano: la riscrittura sta in vercel.json,
+     e i vecchi indirizzi con lo spicchio italiano continuano a funzionare.
+
+     Se aggiungi una pagina, aggiungila qui e rilancia
+     `node scripts/indirizzi-lingua.mjs`: aggiorna riscritture e sitemap. */
+  var SLUG = {
+    'abbonamenti': 'subscriptions',
+    'academy': 'academy',
+    'ai-teacher': 'ai-teacher',
+    'assegno-unico': 'child-allowance',
+    'associazioni': 'associations',
+    'benvenuta': 'welcome',
+    'calendario': 'calendar',
+    'cargo': 'cargo',
+    'cerca': 'search',
+    'certificazioni': 'certifications',
+    'chi-siamo': 'about-us',
+    'community': 'community',
+    'conferma-newsletter': 'newsletter-confirmed',
+    'contatti': 'contact',
+    'cookie': 'cookies',
+    'corsi': 'courses',
+    'costruire-futuro': 'building-your-future',
+    'cv-builder': 'cv-builder',
+    'dashboard': 'dashboard',
+    'diritti-inps': 'inps-benefits',
+    'dizionario-medico': 'medical-dictionary',
+    'documenti': 'documents',
+    'emergenze': 'emergencies',
+    'esame': 'italian-language-test',
+    'fisco': 'taxes',
+    'forum': 'forum',
+    'guida-conti': 'bank-account',
+    'guida-ssn': 'healthcare',
+    'guide': 'guides',
+    'housing': 'housing',
+    'italia-srilanka': 'italy-and-sri-lanka',
+    'lavoro': 'jobs',
+    'lavoro-diritti': 'workers-rights',
+    'mappa': 'map',
+    'media-kit-atena': 'media-kit',
+    'mercatino': 'marketplace',
+    'moduli': 'forms',
+    'money-transfer': 'money-transfer',
+    'news': 'news',
+    'note-legali': 'legal-notice',
+    'offline': 'offline',
+    'opportunita': 'opportunities',
+    'patente': 'driving-licence',
+    'percorso': 'my-journey',
+    'permesso-tracker': 'permit-tracker',
+    'podcast': 'podcast',
+    'privacy': 'privacy',
+    'professionisti': 'professionals',
+    'profili': 'profiles',
+    'registrati': 'sign-up',
+    'rete': 'network',
+    'ricongiungimento': 'family-reunification',
+    'riconoscimento-titoli': 'recognition-of-qualifications',
+    'scuola': 'school',
+    'servizi': 'services',
+    'sponsorizza': 'advertise',
+    'termini': 'terms',
+    'traduci': 'translate',
+    'travel-sri-lanka': 'travel-sri-lanka',
+    'travelpayouts': 'travelpayouts',
+    'voli': 'flights',
+    'wise': 'wise'
+  };
+  var SLUG_INVERSO = {};
+  for (var k in SLUG) if (Object.prototype.hasOwnProperty.call(SLUG, k)) SLUG_INVERSO[SLUG[k]] = k;
+  // A disposizione di chi arriva dopo: eih-i18n-page.js ne ha bisogno per
+  // trovare il dizionario giusto quando l'indirizzo porta lo spicchio inglese.
+  window.EIH_SLUG = SLUG; window.EIH_SLUG_INVERSO = SLUG_INVERSO;
+
+  // Da uno spicchio qualsiasi al nome del file italiano, che e' quello che
+  // il server ha davvero e su cui sono nominati i dizionari.
+  function allItaliano(p) {
+    var n = p.replace(/^\/+|\/+$/g, '').replace(/\.html$/, '');
+    return n && SLUG_INVERSO[n] ? '/' + SLUG_INVERSO[n] : p;
+  }
+  // …e ritorno, per costruire l'indirizzo di una lingua.
+  function allInternazionale(p) {
+    var n = p.replace(/^\/+|\/+$/g, '').replace(/\.html$/, '');
+    return n && SLUG[n] ? '/' + SLUG[n] : p;
+  }
+
   var m = location.pathname.match(/^\/(en|si|ta)(\/|$)/);
   // Fuori dai prefissi la lingua e' quella decisa dallo snippet nel <head>:
   // inglese, salvo scelta dell'utente.
   var lang = m ? m[1] : (window.EIH_LANG || 'en');
+  // `path` e' sempre in italiano: e' il nome del file servito e la radice
+  // del nome del dizionario. Sotto un prefisso lo spicchio va ritradotto.
   var path = location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/, '') || '/';
+  if (m) path = allItaliano(path);
 
   if (m) {
     // Arrivare da /en, /si o /ta e' una scelta esplicita quanto il selettore.
@@ -24,7 +123,8 @@
   document.documentElement.lang = lang;
 
   function url(l) {
-    return BASE + (l === 'it' ? path : '/' + l + (path === '/' ? '' : path));
+    if (l === 'it') return BASE + path;
+    return BASE + '/' + l + (path === '/' ? '' : allInternazionale(path));
   }
 
   // Il canonical dichiara che indirizzo e' questo, non che lingua preferisce

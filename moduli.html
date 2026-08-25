@@ -14,8 +14,8 @@
 try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
 try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
 if(!/^(it|en|si|ta)$/.test(_l))_l="en";
-window.EIH_LANG=_l;
-if(/^(en|si|ta)$/.test(_l)){var _p=location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/,"").replace(/^\/+|\/+$/g,"").replace(/\.html$/,"")||"index";
+window.EIH_LANG=_l;window.EIH_PAGINA="moduli";
+if(/^(en|si|ta)$/.test(_l)){var _p=window.EIH_PAGINA||"index";
 window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),promessaUi:fetch("/assets/i18n/_ui."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
 var _s=document.createElement("script");_s.fetchPriority="high";_s.src="/assets/eih-i18n-page.js";_s.defer=true;document.head.appendChild(_s);
 var _t=document.createElement("style");_t.textContent="html.eih-tr-attesa main{visibility:hidden}";document.head.appendChild(_t);
@@ -36,9 +36,9 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <link rel="canonical" href="https://easyitaliahub.it/moduli"/>
 <!-- seo:inizio — generato da scripts/dati-strutturati.mjs, non scrivere qui -->
 <link rel="alternate" hreflang="it" href="https://easyitaliahub.it/moduli"/>
-<link rel="alternate" hreflang="en" href="https://easyitaliahub.it/en/moduli"/>
-<link rel="alternate" hreflang="si" href="https://easyitaliahub.it/si/moduli"/>
-<link rel="alternate" hreflang="ta" href="https://easyitaliahub.it/ta/moduli"/>
+<link rel="alternate" hreflang="en" href="https://easyitaliahub.it/en/forms"/>
+<link rel="alternate" hreflang="si" href="https://easyitaliahub.it/si/forms"/>
+<link rel="alternate" hreflang="ta" href="https://easyitaliahub.it/ta/forms"/>
 <link rel="alternate" hreflang="x-default" href="https://easyitaliahub.it/moduli"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Easy Italia Hub","item":"https://easyitaliahub.it/"},{"@type":"ListItem","position":2,"name":"Moduli e Lettere pronte","item":"https://easyitaliahub.it/moduli"}]}</script>
 <!-- seo:fine -->
@@ -152,7 +152,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
     <div class="m-form-pane">
       <form class="m-form" id="m-form" autocomplete="on"></form>
       <div class="m-actions" style="margin-top:1rem">
-        <button type="button" class="btn-primary" onclick="window.print()">⬇ Scarica PDF / Stampa</button>
+        <button type="button" class="btn-primary" id="m-scarica">⬇ Scarica il PDF</button>
       </div>
       <p class="m-note" style="margin-top:.8rem">⚠️ Modello a scopo informativo: controlla sempre i dati prima dell'invio. Per casi complessi rivolgiti a un CAF o patronato (li trovi sulla <a href="/mappa">mappa</a>). I tuoi dati restano solo su questo dispositivo.</p>
     </div>
@@ -166,6 +166,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <div id="site-footer"></div>
 <script src="eih.js"></script>
 <script src="eih-auth.js" defer></script>
+<script src="/assets/eih-cv-pdf.js"></script>
+<script src="/assets/eih-lettera-pdf.js"></script>
 <script>
 (function(){
 'use strict';
@@ -265,6 +267,32 @@ function renderSheet(){
     '<div class="s-close"><div>'+(v.luogo||'____________')+', '+v.data+'</div>'+
     '<div class="s-sign">Firma<span class="line">'+(v.nome||'')+'</span></div></div>';
 }
+/* ── Scarico ───────────────────────────────────────────────────────────
+   Il pulsante chiamava window.print(): in tutte le lingue apriva la finestra
+   di stampa e non scaricava nulla, e su molti telefoni quella finestra non
+   porta da nessuna parte. Ora la lettera scende come file. Se il PDF non si
+   puo' scrivere (modulo assente, o un campo in singalese o tamil che la
+   codifica non conosce) si torna alla stampa, che i caratteri li ha. */
+function datiLettera(){
+  var v={};Object.keys(vals).forEach(function(k){v[k]=vals[k]||''});
+  v.data=fmtData(vals.data);
+  var mitt=(v.nome||'____________')+(v.via?'\n'+v.via:'')+(v.tel?'\nTel. '+v.tel:'');
+  return { mittente:mitt, destinatario:cur.dest(v), oggetto:cur.obj(v), corpo:cur.body(v),
+           luogoData:(v.luogo||'____________')+', '+v.data,
+           firma:v.nome||'', etichettaFirma:'Firma', titolo:cur.tit };
+}
+var btnScarica=document.getElementById('m-scarica');
+if(btnScarica) btnScarica.addEventListener('click',function(){
+  var L=window.EIH_LETTERA_PDF, l=datiLettera();
+  if(!L||!L.possibile(l)){ window.print(); return; }
+  var blob=L.genera(l);
+  if(!blob){ window.print(); return; }
+  var url=URL.createObjectURL(blob), a=document.createElement('a');
+  a.href=url; a.download=L.nomeFile(cur.id+'-'+(vals.nome||''));
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){URL.revokeObjectURL(url);},4000);
+});
+
 load();renderPick();renderForm();renderSheet();
 })();
 </script>

@@ -14,8 +14,8 @@
 try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
 try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
 if(!/^(it|en|si|ta)$/.test(_l))_l="en";
-window.EIH_LANG=_l;
-if(/^(en|si|ta)$/.test(_l)){var _p=location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/,"").replace(/^\/+|\/+$/g,"").replace(/\.html$/,"")||"index";
+window.EIH_LANG=_l;window.EIH_PAGINA="forum";
+if(/^(en|si|ta)$/.test(_l)){var _p=window.EIH_PAGINA||"index";
 window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),promessaUi:fetch("/assets/i18n/_ui."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
 var _s=document.createElement("script");_s.fetchPriority="high";_s.src="/assets/eih-i18n-page.js";_s.defer=true;document.head.appendChild(_s);
 var _t=document.createElement("style");_t.textContent="html.eih-tr-attesa main{visibility:hidden}";document.head.appendChild(_t);
@@ -41,7 +41,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <link rel="alternate" hreflang="ta" href="https://easyitaliahub.it/ta/forum"/>
 <link rel="alternate" hreflang="x-default" href="https://easyitaliahub.it/forum"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Easy Italia Hub","item":"https://easyitaliahub.it/"},{"@type":"ListItem","position":2,"name":"Forum Community","item":"https://easyitaliahub.it/forum"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Forum Community","url":"https://easyitaliahub.it/forum","isPartOf":{"@type":"WebSite","name":"Easy Italia Hub","url":"https://easyitaliahub.it/"},"dateModified":"2026-08-12"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Forum Community","url":"https://easyitaliahub.it/forum","isPartOf":{"@type":"WebSite","name":"Easy Italia Hub","url":"https://easyitaliahub.it/"},"dateModified":"2026-08-24"}</script>
 <!-- seo:fine -->
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Easy Italia Hub"/>

@@ -37,7 +37,16 @@
     // esattamente quello che ha gia' usato lo snippet per chiedere il file.
     var b = document.body, p = b && b.getAttribute('data-page');
     if (p) return p;
+    /* Il nome dichiarato dalla pagina stessa, nello snippet in cima al <head>:
+       e' la fonte piu' sicura e la prima disponibile. Serve perche' questo
+       script parte da un tag creato al volo — che il browser tratta come
+       asincrono, `defer` o no — e puo' girare prima di eih-lang-url.js. */
+    if (window.EIH_PAGINA) return window.EIH_PAGINA;
     p = location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/, '').replace(/^\/+|\/+$/g, '').replace(/\.html$/, '');
+    // Sotto /en, /si e /ta lo spicchio e' internazionale (/en/forms): i
+    // dizionari pero' sono nominati sul file italiano (moduli.en.json).
+    var inv = window.EIH_SLUG_INVERSO;
+    if (inv && inv[p]) p = inv[p];
     return p || 'index';
   }
 
