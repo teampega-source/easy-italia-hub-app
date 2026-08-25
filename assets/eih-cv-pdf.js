@@ -269,6 +269,15 @@
     return new Blob(pezzi, { type: 'application/pdf' });
   }
 
+  /* Le stesse primitive servono alle lettere di /moduli: pagina A4, gli stessi
+     due font di sistema, la stessa codifica. Meglio prestarle che riscriverle
+     — e una correzione alla scrittura del PDF vale per tutti e due. */
+  window.EIH_PDF = {
+    A4: A4, BORDO: BORDO, SCURO: SCURO, MEDIO: MEDIO, TENUE: TENUE,
+    scrivibile: scrivibile, ripulisci: ripulisci, largo: largo, spezza: spezza,
+    impacchetta: impacchetta
+  };
+
   window.EIH_CV_PDF = {
     scrivibile: scrivibile,
     /* dati: { nome, ruolo, citta, email, tel, patente, profilo, foto,
