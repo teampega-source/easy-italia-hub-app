@@ -34,7 +34,7 @@ const GUIDE = [
   'fisco', 'documenti', 'moduli', 'riconoscimento-titoli', 'certificazioni',
   'scuola', 'housing', 'permesso-tracker', 'guida-conti', 'money-transfer',
   'lavoro-diritti', 'emergenze', 'esame', 'cargo', 'dizionario-medico',
-  'italia-srilanka', 'costruire-futuro'
+  'italia-srilanka', 'costruire-futuro', 'guide'
 ];
 
 /* Un dominio è «ufficiale» se è dello Stato italiano o di un ente pubblico
