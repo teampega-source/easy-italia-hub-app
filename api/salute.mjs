@@ -41,13 +41,19 @@ async function supabase() {
   // guasto, è una configurazione. Si dichiara e non si fa fallire il controllo.
   if (!url || !key) return { stato: 'assente', essenziale: false };
   try {
-    const r = await fetch(url.replace(/\/+$/, '') + '/rest/v1/', {
+    /* Si bussa a GoTrue, non a PostgREST. La radice di /rest/v1/ è
+       l'introspezione dello schema e da quando esistono le chiavi
+       `sb_publishable_` la rifiuta con 401 «Secret API key required»: con la
+       chiave pubblica quel 401 arriva sempre, anche a progetto sanissimo, e il
+       controllo direbbe «giù» ogni singola volta — misurato in produzione.
+       /auth/v1/health risponde 200 con la chiave pubblica, non tocca nessun
+       dato di nessuno, e sveglia il progetto: che è il guasto vero da vedere,
+       perché il piano gratuito va in pausa da solo dopo una settimana di
+       silenzio. */
+    const r = await fetch(url.replace(/\/+$/, '') + '/auth/v1/health', {
       headers: { apikey: key },
       signal: scadenza(TIMEOUT_MS),
     });
-    // PostgREST sulla radice risponde 200 con lo schema. Qualunque risposta
-    // dice che il progetto è sveglio: il piano gratuito va in pausa da solo
-    // dopo una settimana di silenzio, ed è proprio quello che vogliamo vedere.
     return { stato: r.ok ? 'ok' : 'errore ' + r.status, essenziale: true, ok: r.ok };
   } catch (e) {
     return { stato: String(e.message || e), essenziale: true, ok: false };
