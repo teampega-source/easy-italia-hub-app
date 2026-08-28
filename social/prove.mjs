@@ -81,5 +81,66 @@ console.log('\n— Catena completa, senza chiavi —');
   prova('il rapporto avverte che le bozze sono grezze', md.includes('grezze'));
 }
 
+console.log('\n— Memoria: l\'agente sa dire di no —');
+{
+  const { giaPubblicato, gruppoDisponibile, postOggi, segnaPost, segnaGruppo, REGOLE } = await import('./lib/registro.mjs');
+  let m = { pubblicati: [], gruppi: {}, risposte: [] };
+  m = segnaPost(m, { titolo: 'Mappa dei servizi', formato: 'facebook' });
+  prova('lo stesso tema non torna prima di tre settimane', giaPubblicato(m, 'Mappa dei servizi'));
+  prova('un tema mai uscito passa', !giaPubblicato(m, 'Altro tema'));
+  prova('conta i post di oggi', postOggi(m) === 1);
+
+  const vecchio = { pubblicati: [{ titolo: 'X', quando: new Date(Date.now() - 40 * 86400000).toISOString() }] };
+  prova('dopo il periodo il tema si può ripubblicare', !giaPubblicato(vecchio, 'X'));
+
+  let g = segnaGruppo({ gruppi: {} }, 'milano');
+  prova('nello stesso gruppo non si torna subito', !gruppoDisponibile(g, 'milano'));
+  prova('un gruppo mai usato è libero', gruppoDisponibile(g, 'napoli'));
+  const g2 = { gruppi: { milano: new Date(Date.now() - 10 * 86400000).toISOString() } };
+  prova('dopo una settimana il gruppo torna libero', gruppoDisponibile(g2, 'milano'));
+  prova('le regole sono strette di proposito', REGOLE.postAlGiorno === 1 && REGOLE.stessoGruppoGiorni >= 7);
+}
+
+console.log('\n— Commenti: risponde da solo solo a quello che non fa male —');
+{
+  const { rispostaA, lingua } = await import('./agenti/comunita.mjs');
+  prova('riconosce il sinhala', lingua('ස්තූතියි') === 'si');
+  prova('riconosce il tamil', lingua('நன்றி') === 'ta');
+  prova('riconosce l\'inglese', lingua('how can I get it?') === 'en');
+
+  const g = await rispostaA({ id: '1', message: 'Grazie!' });
+  prova('«grazie» → risposta fissa automatica', g.modalita === 'auto' && g.risposta.length > 0, g);
+
+  const c = await rispostaA({ id: '2', message: 'è gratis?' });
+  prova('«è gratis?» → risposta fissa automatica', c.modalita === 'auto');
+
+  const d = await rispostaA({ id: '3', message: 'Ho il permesso scaduto da due mesi, cosa rischio?' });
+  prova('una domanda vera va SEMPRE in revisione', d.modalita === 'revisione', d.modalita);
+}
+
+console.log('\n— Pubblicazione: i cancelli —');
+{
+  const { acceso, pubblicaDelGiorno } = await import('./pubblica.mjs');
+  delete process.env.SOCIAL_AUTOPUBBLICA;
+  prova('spenta per difetto', acceso() === false);
+  const r = await pubblicaDelGiorno([]);
+  prova('senza interruttore non pubblica', r.fatto === false && /SOCIAL_AUTOPUBBLICA/.test(r.motivo), r);
+
+  process.env.SOCIAL_AUTOPUBBLICA = '1';
+  const r2 = await pubblicaDelGiorno([]);
+  prova('acceso ma senza token Meta non pubblica', r2.fatto === false && /META_PAGE/.test(r2.motivo), r2);
+  delete process.env.SOCIAL_AUTOPUBBLICA;
+}
+
+console.log('\n— Gruppi: nessuna scorciatoia —');
+{
+  const { messaggi, elenco } = await import('./agenti/gruppi.mjs');
+  const g = await messaggi([{ titolo: 'X', fonte: 'https://easyitaliahub.it' }], { gruppi: {} });
+  prova('senza elenco lo dice invece di inventare gruppi', g.senzaElenco === (elenco().length === 0));
+  for (const m of g.messaggi) {
+    prova(`«${m.gruppo.nome}» resta manuale`, m.modalita === 'manuale');
+  }
+}
+
 console.log(`\n${fatte - rotte}/${fatte} prove passate\n`);
 process.exit(rotte ? 1 : 0);

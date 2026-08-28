@@ -1,0 +1,39 @@
+{
+  "_come_si_usa": "Copia questo file in social/gruppi.json e mettici i gruppi veri. Si compila a mano: i gruppi in cui scrivere si scelgono uno per uno, perché ognuno ha le sue regole e in alcuni la promozione è vietata del tutto. Scriverci lo stesso è il modo più veloce di farsi bandire.",
+  "_campi": {
+    "id": "un nome breve senza spazi, serve solo alla memoria interna",
+    "nome": "come si chiama il gruppo su Facebook",
+    "url": "il link del gruppo, per aprirlo al volo",
+    "citta": "facoltativo, se il gruppo è locale",
+    "lingua": "si, ta, en o it — la lingua in cui si scrive lì dentro",
+    "regole": "le regole del gruppo, copiate. L'agente le rispetta alla lettera",
+    "attivo": "false per sospenderlo senza cancellarlo"
+  },
+  "gruppi": [
+    {
+      "id": "srilankesi-italia",
+      "nome": "Sri Lankans in Italy",
+      "url": "https://www.facebook.com/groups/xxxxxxxx",
+      "lingua": "si",
+      "regole": "Vietata la vendita. Ammessi contenuti informativi utili alla comunità.",
+      "attivo": true
+    },
+    {
+      "id": "srilankesi-milano",
+      "nome": "Sri Lankan Community Milano",
+      "url": "https://www.facebook.com/groups/xxxxxxxx",
+      "citta": "Milano",
+      "lingua": "si",
+      "regole": "Un post promozionale a settimana per membro.",
+      "attivo": true
+    },
+    {
+      "id": "srilankesi-napoli",
+      "nome": "Sri Lankan Community Napoli",
+      "url": "https://www.facebook.com/groups/xxxxxxxx",
+      "citta": "Napoli",
+      "lingua": "si",
+      "attivo": true
+    }
+  ]
+}
