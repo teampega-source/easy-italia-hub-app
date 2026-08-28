@@ -8,7 +8,7 @@ nostro server** — ogni pezzo controlla se è configurato e, se non lo è, tace
 
 ## 1 · Il sito risponde? — sorveglianza HTTP
 
-**Cosa c'è già:** `api/salute.js`, raggiungibile su `/api/salute`.
+**Cosa c'è già:** `api/salute.mjs`, raggiungibile su `/api/salute`.
 
 Non è una pagina qualsiasi: interroga davvero Supabase e controlla che le
 chiavi ci siano. Risponde **200** se tutto è in piedi, **503** se qualcosa di
@@ -55,7 +55,7 @@ differenza che distingue «in ritardo» da «morto».
 ## 3 · Qualcuno sta sbattendo contro un errore? — errori del browser
 
 **Cosa c'è già:** `assets/eih-errori.js` (caricato da tutte le pagine) manda gli
-errori a `api/errore.js`, che li scrive nei log della funzione. Questo funziona
+errori a `api/errore.mjs`, che li scrive nei log della funzione. Questo funziona
 **già adesso**, senza configurare niente: i log si leggono su Vercel.
 
 Si manda il minimo: messaggio, file, riga, percorso della pagina, lingua. Niente

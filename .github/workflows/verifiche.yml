@@ -1,0 +1,20 @@
+name: Verifiche prima del deploy
+
+# Il conto delle funzioni serverless: il limite Hobby è 12 e Vercel se ne
+# accorge solo dopo la costruzione, quando ormai la produzione è ferma.
+# Qui salta fuori sulla pull request, dove costa un minuto invece di sei giorni.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  funzioni:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node scripts/conta-funzioni.mjs

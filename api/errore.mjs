@@ -1,4 +1,4 @@
-// api/errore.js — dove arrivano gli errori del browser (assets/eih-errori.js).
+// api/errore.mjs — dove arrivano gli errori del browser (assets/eih-errori.js).
 //
 // Cosa fa, in ordine:
 //   1. scrive l'errore nei log della funzione — sempre, senza configurare
@@ -12,17 +12,38 @@
 // posizione di partenza giusta per un sito che raccoglie codici fiscali:
 // mandare i dati fuori dev'essere una decisione, non un'impostazione di fabbrica.
 //
-// Il limitatore condiviso protegge dal caso peggiore: una pagina che va in
-// ciclo su un errore e sparge richieste.
-'use strict';
+// Perché Edge: vale la stessa ragione scritta in salute.mjs — sul piano Hobby
+// le funzioni serverless sono al massimo 12, e queste due erano la tredicesima
+// e la quattordicesima.
 
-const { isRateLimited, clientIp } = require('./_ratelimit');
+export const config = { runtime: 'edge' };
 
 const MAX_CORPO = 4000;
+
+/* Il limitatore non arriva da api/_ratelimit.js: quello è CommonJS e l'Edge non
+   ha require. Copiarne dodici righe costa meno che tenere due moduli gemelli, e
+   la finestra scorrevole è comunque per singola istanza in entrambi i mondi:
+   condividere il file non avrebbe condiviso il conteggio. Cede aperto. */
+const colpi = new Map();
+function troppi(ip, max = 30, finestra = 60_000) {
+  if (!ip) return false;
+  const ora = Date.now();
+  if (colpi.size > 5000) colpi.clear();
+  const arr = (colpi.get(ip) || []).filter((t) => ora - t < finestra);
+  arr.push(ora);
+  colpi.set(ip, arr);
+  return arr.length > max;
+}
 
 function taglia(v, n) {
   return String(v == null ? '' : v).slice(0, n);
 }
+
+const risposta = (stato, corpo) =>
+  new Response(corpo ? JSON.stringify(corpo) : null, {
+    status: stato,
+    headers: corpo ? { 'Content-Type': 'application/json; charset=utf-8' } : {},
+  });
 
 /* Sentry accetta un evento anche senza SDK: basta l'indirizzo del progetto
    ricavato dal DSN e la chiave nell'intestazione. Si manda il minimo. */
@@ -54,23 +75,26 @@ async function versoSentry(dsn, ev) {
   return r.ok ? 'ok' : 'risposta ' + r.status;
 }
 
-module.exports = async (req, res) => {
+export default async function handler(req) {
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({ error: 'Method not allowed' });
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json', Allow: 'POST' },
+    });
   }
   // Una pagina in ciclo puo' generare errori a raffica: il tetto e' alto
   // abbastanza da non perdere un caso vero e basso da non pagare un abuso.
-  if (isRateLimited(clientIp(req), { name: 'errore', max: 30 })) {
-    return res.status(429).json({ error: 'troppi errori' });
-  }
+  const ip = (req.headers.get('x-forwarded-for') || '').split(',')[0].trim();
+  if (troppi(ip)) return risposta(429, { error: 'troppi errori' });
 
   let b;
   try {
-    const grezzo = typeof req.body === 'string' ? req.body : JSON.stringify(req.body || {});
-    if (grezzo.length > MAX_CORPO) return res.status(413).json({ error: 'troppo lungo' });
-    b = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
-  } catch (e) { return res.status(400).json({ error: 'JSON non valido' }); }
+    const grezzo = await req.text();
+    if (grezzo.length > MAX_CORPO) return risposta(413, { error: 'troppo lungo' });
+    b = grezzo ? JSON.parse(grezzo) : {};
+  } catch (e) {
+    return risposta(400, { error: 'JSON non valido' });
+  }
 
   const ev = {
     tipo: taglia(b.tipo, 20) || 'errore',
@@ -85,28 +109,27 @@ module.exports = async (req, res) => {
     lingua: taglia(b.lingua, 8),
     schermo: taglia(b.schermo, 12),
   };
-  if (!ev.messaggio) return res.status(400).json({ error: 'messaggio mancante' });
+  if (!ev.messaggio) return risposta(400, { error: 'messaggio mancante' });
 
   console.error('[errore-browser]', JSON.stringify(ev));
 
-  const esiti = {};
   const dsn = process.env.SENTRY_DSN;
   if (dsn) {
-    try { esiti.sentry = await versoSentry(dsn, ev); }
-    catch (e) { esiti.sentry = String(e.message || e); }
+    try { await versoSentry(dsn, ev); }
+    catch (e) { console.error('[errore-browser] sentry:', e.message || e); }
   }
   const gancio = process.env.ERRORI_WEBHOOK;
   if (gancio) {
     try {
       await fetch(gancio, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: `⚠️ ${ev.messaggio} — ${ev.pagina} (${ev.lingua}) ${ev.file}:${ev.riga}`, evento: ev }),
         signal: AbortSignal.timeout ? AbortSignal.timeout(4000) : undefined,
       });
-      esiti.webhook = 'ok';
-    } catch (e) { esiti.webhook = String(e.message || e); }
+    } catch (e) { console.error('[errore-browser] webhook:', e.message || e); }
   }
 
   // 204: al browser non serve sapere altro, e non si spreca banda.
-  return res.status(204).end();
-};
+  return risposta(204, null);
+}
