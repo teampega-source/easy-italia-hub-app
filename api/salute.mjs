@@ -1,4 +1,4 @@
-// api/salute.js — «il sito è vivo?», ma sul serio.
+// api/salute.mjs — «il sito è vivo?», ma sul serio.
 //
 // Perché non basta sorvegliare la home. La home è HTML statico servito dalla
 // rete di distribuzione: risponde 200 anche quando Supabase è in pausa,
@@ -14,16 +14,22 @@
 // nessuna tabella con dentro qualcuno. Chiede a Supabase la sua ora e basta.
 // Le chiavi si controllano per presenza, non si stampano mai.
 //
+// Perché Edge e non serverless. Il piano Hobby ammette 12 funzioni serverless
+// per distribuzione, e ne avevamo già 12: questa e /api/errore hanno fatto
+// fallire sei distribuzioni di fila con exceeded_serverless_functions_per_
+// deployment. Le funzioni Edge non entrano in quel conto. Qui non serve altro
+// che fetch e process.env, che l'Edge ha entrambi.
+//
 // Uso: monitor HTTP su https://easyitaliahub.it/api/salute — parola chiave
 // da cercare nella risposta: "ok":true
-'use strict';
+
+export const config = { runtime: 'edge' };
 
 const TIMEOUT_MS = 4000;
 
 /* Si taglia con un segnale di annullamento, non con una corsa contro un timer:
    `Promise.race` fa scadere l'attesa ma lascia la richiesta viva dietro le
-   quinte, che su una funzione serverless significa pagarla e non saperlo.
-   È il punto 4 della checklist in .references/silent-failure-checklist.md. */
+   quinte. È il punto 4 della checklist in .references/silent-failure-checklist.md. */
 function scadenza(ms) {
   return AbortSignal.timeout ? AbortSignal.timeout(ms) : undefined;
 }
@@ -48,14 +54,13 @@ async function supabase() {
   }
 }
 
-module.exports = async (req, res) => {
+export default async function handler(req) {
   if (req.method !== 'GET' && req.method !== 'HEAD') {
-    res.setHeader('Allow', 'GET');
-    return res.status(405).json({ error: 'Method not allowed' });
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json', Allow: 'GET' },
+    });
   }
-  // Mai in cache: una risposta salvata direbbe che il sito sta bene anche
-  // mezz'ora dopo che ha smesso.
-  res.setHeader('Cache-Control', 'no-store');
 
   const db = await supabase();
 
@@ -72,9 +77,13 @@ module.exports = async (req, res) => {
   // configurato il sito vive in demo, se è configurato ma non risponde no.
   const ok = !(db.essenziale && !db.ok);
 
-  return res.status(ok ? 200 : 503).json({
-    ok,
-    quando: new Date().toISOString(),
-    pezzi,
+  return new Response(JSON.stringify({ ok, quando: new Date().toISOString(), pezzi }), {
+    status: ok ? 200 : 503,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      // Mai in cache: una risposta salvata direbbe che il sito sta bene anche
+      // mezz'ora dopo che ha smesso.
+      'Cache-Control': 'no-store',
+    },
   });
-};
+}
