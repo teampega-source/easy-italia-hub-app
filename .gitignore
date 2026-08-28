@@ -17,3 +17,6 @@ node_modules
 # ogni sessione, su qualunque macchina, senza installarle a mano.
 !.claude/skills/
 scratchpad/
+
+# La coda dell'agente social: si rigenera ogni giorno, non si versiona.
+social/coda/
