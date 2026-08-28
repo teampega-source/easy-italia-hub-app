@@ -1,12 +1,15 @@
 # Il giro quotidiano dell'agente social (spec §14).
 #
-# Alle 6:40 UTC — le 8:40 in Italia, quando la giornata è cominciata ma non è
-# ancora andata avanti — l'agente prepara le bozze del giorno e le manda per
-# email. Nessuna pubblicazione automatica: quello che arriva è una coda da
-# approvare.
+# Alle 6:40 UTC — le 8:40 in Italia — l'agente prepara le bozze, i messaggi per
+# i gruppi e, se glielo hai permesso, pubblica sulla Pagina e manda le risposte
+# fisse ai commenti.
 #
-# Gira anche senza chiavi: senza GEMINI_API_KEY produce bozze grezze e lo dice,
-# senza RESEND_API_KEY lascia il rapporto negli artefatti del lavoro.
+# Tre livelli di autonomia, e la differenza sta tutta nei segreti impostati:
+#   nessun segreto        → bozze grezze in un artefatto. Non fa danni.
+#   GEMINI_API_KEY        → testi veri in quattro lingue.
+#   META_* + SOCIAL_AUTOPUBBLICA=1 → la Pagina lavora da sola.
+#
+# I gruppi restano manuali in ogni caso: Meta ha chiuso la Groups API.
 name: Agente social
 
 on:
@@ -19,14 +22,14 @@ on:
         default: '5'
 
 permissions:
-  contents: read
+  contents: write   # serve a spingere la memoria: senza, ogni mattina si sveglia smemorato
 
 concurrency:
   group: social-giornaliero
   cancel-in-progress: false
 
 jobs:
-  bozze:
+  giro:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,26 +39,43 @@ jobs:
           node-version: '22'
 
       # Le prove girano per prime: se il controllo di sicurezza è rotto, meglio
-      # nessuna bozza che bozze non controllate.
+      # nessuna bozza che bozze non controllate — e soprattutto nessuna
+      # pubblicazione automatica.
       - name: Prove
         run: node social/prove.mjs
 
-      - name: Bozze del giorno
+      - name: Giro del giorno
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           META_PAGE_ID: ${{ secrets.META_PAGE_ID }}
           META_PAGE_TOKEN: ${{ secrets.META_PAGE_TOKEN }}
+          SOCIAL_AUTOPUBBLICA: ${{ secrets.SOCIAL_AUTOPUBBLICA }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           SOCIAL_REPORT_TO: ${{ secrets.SOCIAL_REPORT_TO }}
         run: |
           node social/cli.mjs \
             --quante "${{ github.event.inputs.quante || '5' }}" \
-            ${{ secrets.META_PAGE_TOKEN != '' && '--commenti' || '' }} \
+            ${{ secrets.META_PAGE_TOKEN != '' && '--commenti --pubblica' || '' }} \
             ${{ secrets.RESEND_API_KEY != '' && '--email' || '' }}
+
+      # La memoria di cosa è già uscito e in quali gruppi si è già scritto.
+      # Senza questo commit l'agente ripeterebbe se stesso ogni giorno.
+      - name: Ricorda
+        run: |
+          if git diff --quiet -- social/memoria.json; then
+            echo "niente di nuovo da ricordare"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add social/memoria.json
+          git commit -m "Agente social: memoria aggiornata" \
+                     -m "Cosa è stato pubblicato e in quali gruppi si è già scritto."
+          git push
 
       - name: Conserva la coda
         uses: actions/upload-artifact@v4
         with:
-          name: bozze-social
+          name: social-${{ github.run_number }}
           path: social/coda/
           retention-days: 14
