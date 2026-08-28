@@ -1,0 +1,61 @@
+# Il giro quotidiano dell'agente social (spec §14).
+#
+# Alle 6:40 UTC — le 8:40 in Italia, quando la giornata è cominciata ma non è
+# ancora andata avanti — l'agente prepara le bozze del giorno e le manda per
+# email. Nessuna pubblicazione automatica: quello che arriva è una coda da
+# approvare.
+#
+# Gira anche senza chiavi: senza GEMINI_API_KEY produce bozze grezze e lo dice,
+# senza RESEND_API_KEY lascia il rapporto negli artefatti del lavoro.
+name: Agente social
+
+on:
+  schedule:
+    - cron: '40 6 * * *'
+  workflow_dispatch:
+    inputs:
+      quante:
+        description: 'Quanti temi preparare'
+        default: '5'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: social-giornaliero
+  cancel-in-progress: false
+
+jobs:
+  bozze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Le prove girano per prime: se il controllo di sicurezza è rotto, meglio
+      # nessuna bozza che bozze non controllate.
+      - name: Prove
+        run: node social/prove.mjs
+
+      - name: Bozze del giorno
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          META_PAGE_ID: ${{ secrets.META_PAGE_ID }}
+          META_PAGE_TOKEN: ${{ secrets.META_PAGE_TOKEN }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          SOCIAL_REPORT_TO: ${{ secrets.SOCIAL_REPORT_TO }}
+        run: |
+          node social/cli.mjs \
+            --quante "${{ github.event.inputs.quante || '5' }}" \
+            ${{ secrets.META_PAGE_TOKEN != '' && '--commenti' || '' }} \
+            ${{ secrets.RESEND_API_KEY != '' && '--email' || '' }}
+
+      - name: Conserva la coda
+        uses: actions/upload-artifact@v4
+        with:
+          name: bozze-social
+          path: social/coda/
+          retention-days: 14
