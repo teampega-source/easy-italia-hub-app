@@ -19,18 +19,58 @@ import { readFileSync, existsSync } from 'node:fs';
 import { temaRegolato } from '../lib/marca.mjs';
 import { SITO } from '../lib/marca.mjs';
 
+/* Le pagine si leggono dal sito pubblico, non dal disco.
+ *
+ * Prima si leggevano i file accanto — guide.html, assets/… — e funzionava
+ * finché l'agente stava dentro il repository del sito. Ma l'agente non è una
+ * parte del sito: è il gestore della Pagina Facebook, e deve poter girare da
+ * qualunque parte, anche sul portatile di qualcuno. Legato ai file del sito non
+ * si sposta e non parte da solo.
+ *
+ * Via HTTP legge quello che vedono le persone: se una guida è stata pubblicata
+ * ieri e non ancora distribuita, l'agente non ne parla — ed è giusto così.
+ * I file locali restano come ripiego, per girare senza rete.                  */
 const RADICE = new URL('../../', import.meta.url).pathname;
+const BASE = (process.env.SITO_BASE || SITO).replace(/\/+$/, '');
 
-function leggi(f) {
-  const p = RADICE + f;
-  return existsSync(p) ? readFileSync(p, 'utf8') : '';
+const memoria = new Map();
+
+async function scarica(percorso) {
+  try {
+    const r = await fetch(BASE + percorso, {
+      headers: { 'User-Agent': 'EasyItaliaHub-SocialAgent/1.0' },
+      signal: AbortSignal.timeout ? AbortSignal.timeout(15000) : undefined,
+    });
+    return r.ok ? await r.text() : '';
+  } catch (e) {
+    console.error('[fonti] non raggiungo', BASE + percorso, '—', e.message);
+    return '';
+  }
+}
+
+/**
+ * @param {string} percorso  indirizzo pubblico, es. '/guide'
+ * @param {string} file      lo stesso contenuto sul disco, se siamo nel repo del sito
+ */
+async function leggi(percorso, file) {
+  if (memoria.has(percorso)) return memoria.get(percorso);
+  let testo = await scarica(percorso);
+  if (!testo && file && existsSync(RADICE + file)) {
+    /* Nessuna rete: si va avanti coi file accanto invece di produrre un giro
+       vuoto. Detto forte, perché un agente che tace è indistinguibile da uno
+       che non ha trovato niente. */
+    console.error('[fonti] sito non raggiungibile: uso il file locale', file);
+    testo = readFileSync(RADICE + file, 'utf8');
+  }
+  memoria.set(percorso, testo);
+  return testo;
 }
 
 /* ── 1 · gli avvisi del Consolato ────────────────────────────────────────
    Autorizzati da loro, aggiornati ogni lunedì dal lavoro automatico. Sono la
    cosa più vicina a una notizia che questa pagina possa pubblicare. */
-function avvisiConsolato() {
-  const src = leggi('assets/eih-avvisi-consolato.js');
+async function avvisiConsolato() {
+  const src = await leggi('/assets/eih-avvisi-consolato.js', 'assets/eih-avvisi-consolato.js');
   const m = src.match(/voci:\s*\[([\s\S]*?)\n\s*\]/);
   if (!m) return [];
   const voci = [];
@@ -51,8 +91,8 @@ function avvisiConsolato() {
 /* ── 2 · le sezioni delle guide ──────────────────────────────────────────
    Ogni sezione ha un'ancora, quindi un indirizzo suo: un post può portare
    esattamente al paragrafo che risponde, non alla pagina intera. */
-function sezioniGuida() {
-  const html = leggi('guide.html');
+async function sezioniGuida() {
+  const html = await leggi('/guide', 'guide.html');
   const fuori = [];
   const re = /<section id="([a-z0-9-]+)"[^>]*>\s*<h2[^>]*>([^<]+)<\/h2>/g;
   let m;
@@ -107,8 +147,8 @@ export function punteggio(o) {
   return Math.max(0, Math.min(10, p));
 }
 
-export function opportunita({ quante = 6 } = {}) {
-  const tutte = [...avvisiConsolato(), ...sezioniGuida(), ...strumenti()]
+export async function opportunita({ quante = 6 } = {}) {
+  const tutte = [...await avvisiConsolato(), ...await sezioniGuida(), ...strumenti()]
     .map((o) => ({ ...o, punteggio: punteggio(o) }))
     .sort((a, b) => b.punteggio - a.punteggio);
 
