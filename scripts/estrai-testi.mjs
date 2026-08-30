@@ -13,7 +13,7 @@ const BASE = process.argv[2] || 'http://localhost:3100';
 const PAGINE = process.argv[3]
   ? process.argv[3].split(',')
   : readdirSync('.').filter(f => f.endsWith('.html')).map(f => f.slice(0, -5))
-      .filter(n => !['404', 'offline'].includes(n));
+;
 
 mkdirSync('i18n-src', { recursive: true });
 const b = await chromium.launch();
