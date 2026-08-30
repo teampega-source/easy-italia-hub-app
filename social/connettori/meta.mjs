@@ -26,7 +26,17 @@
  * Senza token il connettore non è un errore: è «non collegato», e la catena
  * continua a produrre bozze da pubblicare a mano.                            */
 
-const BASE = 'https://graph.facebook.com/v21.0';
+/* La versione era fissa a v21.0, di fine 2024. Meta ritira ogni versione dopo
+   circa due anni: sarebbe scaduta addosso all'agente, che avrebbe smesso di
+   pubblicare con un errore che nessuno stava guardando.
+
+   Provate una per una il 30 agosto 2026 su graph.facebook.com: da v21.0 a
+   v26.0 rispondono, da v27.0 in su no («Unknown path components», cioè la
+   versione non esiste ancora). Quindi v26.0 è l'ultima buona oggi.
+
+   META_API_VERSION la cambia senza toccare il codice, il giorno che serve. */
+const VERSIONE = process.env.META_API_VERSION || 'v26.0';
+const BASE = `https://graph.facebook.com/${VERSIONE}`;
 
 export function stato() {
   const token = process.env.META_PAGE_TOKEN;

@@ -151,7 +151,7 @@ motivo per cui l'agente oggi prepara e non pubblica.
 5. Quel token dura un'ora. Per averne uno che **non scade**, due chiamate:
 
    ```
-   GET /v21.0/oauth/access_token
+   GET /v26.0/oauth/access_token
        ?grant_type=fb_exchange_token
        &client_id=<app-id>
        &client_secret=<app-secret>
