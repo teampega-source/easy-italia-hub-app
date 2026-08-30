@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AI Social Manager — Easy Italia Hub</title>
+<!-- Non è una pagina del sito: è il banco di lavoro di chi gestisce la pagina
+     Facebook. Fuori dai motori di ricerca e fuori dalla sitemap. -->
+<meta name="robots" content="noindex, nofollow"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<style>
+/* Pagina volutamente sola: niente eih.css. È uno strumento, non una pagina del
+   sito, e non deve rompersi il giorno che si tocca il foglio di stile grande.
+   I colori però sono quelli bloccati in .references/impostazioni-bloccate.md:
+   --oro #8d723f e --profondo #665b46 stanno sopra 4,5:1 su bianco. */
+:root{
+  --fondo:#faf8f4; --carta:#fff; --bordo:#e6e0d4;
+  --testo:#221e18; --tenue:#6b6357;
+  --oro:#8d723f; --profondo:#665b46;
+  --ok:#0f7a45; --attesa:#be5811; --stop:#d73d3d;
+  --raggio:14px;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --fondo:#14120f; --carta:#1c1915; --bordo:#332e26;
+    --testo:#ece5d8; --tenue:#a29885;
+    --oro:#c8a96e; --profondo:#b9a583;
+    --ok:#4ec48b; --attesa:#e79a5a; --stop:#f07a7a;
+  }
+}
+:root[data-theme="dark"]{
+  --fondo:#14120f; --carta:#1c1915; --bordo:#332e26;
+  --testo:#ece5d8; --tenue:#a29885;
+  --oro:#c8a96e; --profondo:#b9a583;
+  --ok:#4ec48b; --attesa:#e79a5a; --stop:#f07a7a;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--fondo); color:var(--testo);
+  font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  padding:0 0 64px;
+}
+.involucro{max-width:760px;margin:0 auto;padding:0 16px}
+
+header{padding:22px 0 10px}
+h1{font-size:20px;margin:0 0 4px;letter-spacing:-.01em}
+.sotto{color:var(--tenue);font-size:13px;margin:0}
+
+.spie{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.spia{
+  font-size:12px;padding:5px 10px;border-radius:999px;
+  border:1px solid var(--bordo);background:var(--carta);color:var(--tenue);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.spia b{font-weight:600;color:var(--testo)}
+.punto{width:7px;height:7px;border-radius:50%;background:var(--tenue);flex:none}
+.punto.on{background:var(--ok)} .punto.off{background:var(--attesa)}
+
+.numeri{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 22px}
+.numero{background:var(--carta);border:1px solid var(--bordo);border-radius:var(--raggio);padding:12px 10px;text-align:center}
+.numero b{display:block;font-size:22px;font-variant-numeric:tabular-nums;line-height:1.1}
+.numero span{font-size:11px;color:var(--tenue)}
+
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--tenue);margin:28px 0 10px;font-weight:600}
+
+.scheda{background:var(--carta);border:1px solid var(--bordo);border-radius:var(--raggio);margin-bottom:12px;overflow:hidden}
+.testa{padding:14px 14px 10px}
+.titolo{font-size:16px;font-weight:600;margin:0 0 6px;line-height:1.3}
+.meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12px;color:var(--tenue)}
+.meta a{color:var(--oro)}
+.marca{font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--bordo)}
+.marca.auto{color:var(--ok);border-color:currentColor}
+.marca.revisione{color:var(--attesa);border-color:currentColor}
+.marca.scartato{color:var(--stop);border-color:currentColor}
+
+.linguette{display:flex;gap:4px;padding:0 14px;flex-wrap:wrap}
+.linguette button{
+  /* 40px di altezza minima: con 6px di padding venivano 31px e su telefono si
+     sbagliava linguetta un colpo su tre. Misurato, non stimato. */
+  font:inherit;font-size:13px;padding:10px 14px;min-height:40px;border-radius:8px 8px 0 0;
+  border:1px solid transparent;border-bottom:none;background:none;color:var(--tenue);cursor:pointer;
+}
+.linguette button[aria-selected="true"]{background:var(--fondo);border-color:var(--bordo);color:var(--testo);font-weight:600}
+.linguette.formati button{border-radius:999px;border:1px solid transparent;border-bottom:1px solid transparent}
+.linguette.formati button[aria-selected="true"]{border-color:var(--bordo)}
+
+.corpo{background:var(--fondo);border-top:1px solid var(--bordo);padding:14px}
+pre.testo{
+  margin:0 0 10px;white-space:pre-wrap;word-break:break-word;
+  font:inherit;font-size:15px;line-height:1.55;
+}
+.tag{color:var(--oro);font-size:13px;margin:0 0 10px}
+.problemi{margin:0 0 10px;padding-left:18px;color:var(--attesa);font-size:12.5px}
+.azioni{display:flex;gap:8px;flex-wrap:wrap}
+button.copia,a.apri{
+  font:inherit;font-size:14px;font-weight:600;padding:9px 16px;border-radius:10px;cursor:pointer;
+  border:1px solid var(--profondo);background:var(--profondo);color:var(--fondo);text-decoration:none;
+}
+a.apri{background:none;color:var(--profondo)}
+button.copia:disabled{opacity:.65;cursor:default}
+
+.avviso{
+  background:var(--carta);border:1px solid var(--bordo);border-left:3px solid var(--attesa);
+  border-radius:var(--raggio);padding:14px;font-size:14px;line-height:1.55;
+}
+.avviso p{margin:0 0 8px} .avviso p:last-child{margin:0}
+.avviso code{background:var(--fondo);padding:2px 6px;border-radius:5px;font-size:13px}
+
+.settimana{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.giorno{background:var(--carta);border:1px solid var(--bordo);border-radius:10px;padding:9px 4px;text-align:center}
+.giorno b{display:block;font-size:11px;text-transform:uppercase;color:var(--tenue);letter-spacing:.06em}
+.giorno span{font-size:11px;line-height:1.25;display:block;margin-top:3px}
+.giorno.oggi{border-color:var(--oro);box-shadow:inset 0 0 0 1px var(--oro)}
+
+.vuoto{color:var(--tenue);font-size:14px}
+@media (max-width:520px){
+  .numeri{grid-template-columns:repeat(2,1fr)}
+  .settimana{grid-template-columns:repeat(4,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="involucro">
+
+<header>
+  <h1>AI Social Manager</h1>
+  <p class="sotto" id="quando">Carico il giro di oggi…</p>
+  <div class="spie" id="spie"></div>
+</header>
+
+<div class="numeri" id="numeri"></div>
+
+<h2>Da pubblicare</h2>
+<div id="coda"><p class="vuoto">Carico…</p></div>
+
+<h2>Gruppi</h2>
+<div id="gruppi"><p class="vuoto">Carico…</p></div>
+
+<h2>La settimana</h2>
+<div class="settimana" id="settimana"></div>
+
+<h2>Stato</h2>
+<div id="mancanze"></div>
+
+</div>
+
+<script>
+/* Tutto qui dentro, e in italiano soltanto: questa pagina la apre chi gestisce
+   la Pagina Facebook, non la comunità. La regola delle quattro lingue vale per
+   il sito — i testi dei post, che sono la cosa pubblica, sono infatti tradotti.
+
+   Nessuna dipendenza: una libreria in più su una pagina che deve solo mostrare
+   un JSON e copiare del testo è peso senza ragione. */
+(function () {
+  'use strict';
+
+  var LINGUE = { si: 'සිංහල', it: 'Italiano', en: 'English', ta: 'தமிழ்' };
+  var FORMATI = { facebook: 'Facebook', instagram: 'Instagram', reel: 'Reel', storia: 'Storia' };
+
+  var $ = function (s) { return document.querySelector(s); };
+  function el(tag, cls, testo) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (testo != null) n.textContent = testo;
+    return n;
+  }
+
+  /* Il file cambia una volta al giorno e il browser lo terrebbe in cache tutto
+     il giorno: con la data attaccata si riprende quello nuovo appena c'è. */
+  fetch('/assets/dati/ai-social.json?v=' + new Date().toISOString().slice(0, 10))
+    .then(function (r) { if (!r.ok) throw new Error('nessun giro trovato (' + r.status + ')'); return r.json(); })
+    .then(mostra)
+    .catch(function (e) {
+      $('#quando').textContent = 'Non riesco a leggere il giro di oggi: ' + e.message;
+      $('#coda').innerHTML = '';
+      $('#coda').appendChild(el('p', 'vuoto', 'Il lavoro automatico gira ogni mattina alle 8:40 italiane. Se non è mai partito, questa pagina resta vuota.'));
+    });
+
+  function mostra(d) {
+    var q = new Date(d.generato);
+    $('#quando').textContent = 'Giro del ' + d.oggi + ', preparato alle ' +
+      String(q.getHours()).padStart(2, '0') + ':' + String(q.getMinutes()).padStart(2, '0') + '.';
+
+    spie(d.stato);
+    numeri(d.conteggi);
+    coda(d.post);
+    gruppi(d.gruppi);
+    settimana(d.calendario);
+    mancanze(d.stato, d.gruppi);
+  }
+
+  function spia(acceso, etichetta, valore) {
+    var s = el('span', 'spia');
+    s.appendChild(el('span', 'punto ' + (acceso ? 'on' : 'off')));
+    s.appendChild(document.createTextNode(etichetta + ' '));
+    s.appendChild(el('b', null, valore));
+    return s;
+  }
+
+  function spie(st) {
+    var c = $('#spie');
+    c.appendChild(spia(st.modello, 'modello', st.modello ? 'collegato' : 'non collegato'));
+    c.appendChild(spia(st.meta, 'Facebook', st.meta ? 'collegato' : 'da collegare'));
+    c.appendChild(spia(st.autopubblica, 'pubblica da sola', st.autopubblica ? 'sì' : 'no'));
+  }
+
+  function numeri(n) {
+    var c = $('#numeri');
+    [['temi', n.temi], ['pezzi', n.pezzi], ['pronti', n.pronti], ['da rivedere', n.revisione]]
+      .forEach(function (v) {
+        var b = el('div', 'numero');
+        b.appendChild(el('b', null, String(v[1])));
+        b.appendChild(el('span', null, v[0]));
+        c.appendChild(b);
+      });
+  }
+
+  function coda(post) {
+    var c = $('#coda');
+    c.innerHTML = '';
+    if (!post.length) { c.appendChild(el('p', 'vuoto', 'Nessun contenuto oggi.')); return; }
+    post.forEach(function (p) { c.appendChild(scheda(p)); });
+  }
+
+  function scheda(p) {
+    var s = el('article', 'scheda');
+    var testa = el('div', 'testa');
+    testa.appendChild(el('h3', 'titolo', p.titolo));
+
+    var meta = el('div', 'meta');
+    meta.appendChild(el('span', null, 'punteggio ' + p.punteggio));
+    meta.appendChild(el('span', null, '·'));
+    var a = el('a', null, p.fonteNome || 'fonte');
+    a.href = p.fonte; a.target = '_blank'; a.rel = 'noopener';
+    meta.appendChild(a);
+    testa.appendChild(meta);
+    s.appendChild(testa);
+
+    var lingue = Object.keys(p.lingue);
+    var statoVista = { lingua: lingue.indexOf('it') >= 0 ? 'it' : lingue[0], formato: 'facebook' };
+
+    var barraL = el('div', 'linguette');
+    var barraF = el('div', 'linguette formati');
+    var corpo = el('div', 'corpo');
+
+    function disegna() {
+      var L = p.lingue[statoVista.lingua];
+      var testo = L.testi[statoVista.formato] || '';
+
+      Array.prototype.forEach.call(barraL.children, function (b) {
+        b.setAttribute('aria-selected', String(b.dataset.lingua === statoVista.lingua));
+      });
+      Array.prototype.forEach.call(barraF.children, function (b) {
+        b.setAttribute('aria-selected', String(b.dataset.formato === statoVista.formato));
+      });
+
+      corpo.innerHTML = '';
+
+      var riga = el('div', 'meta');
+      var m = el('span', 'marca ' + L.modalita, L.modalita === 'auto' ? 'pronto' : L.modalita);
+      riga.appendChild(m);
+      riga.appendChild(el('span', null, L.origine === 'repertorio' ? 'scritto a mano'
+        : L.origine === 'modello' ? 'scritto dal modello' : 'bozza grezza'));
+      riga.appendChild(el('span', null, '·'));
+      riga.appendChild(el('span', null, testo.length + ' caratteri'));
+      corpo.appendChild(riga);
+
+      var pre = el('pre', 'testo', testo);
+      corpo.appendChild(pre);
+
+      if (statoVista.formato !== 'facebook' && L.hashtag && L.hashtag.length && statoVista.formato === 'instagram') {
+        corpo.appendChild(el('p', 'tag', L.hashtag.join(' ')));
+      }
+
+      if (L.problemi && L.problemi.length) {
+        var ul = el('ul', 'problemi');
+        L.problemi.forEach(function (x) { ul.appendChild(el('li', null, x)); });
+        corpo.appendChild(ul);
+      }
+
+      var azioni = el('div', 'azioni');
+      var cop = el('button', 'copia', 'Copia il testo');
+      cop.type = 'button';
+      cop.addEventListener('click', function () { copia(testo, cop); });
+      azioni.appendChild(cop);
+
+      var apri = el('a', 'apri', 'Apri Facebook');
+      apri.href = 'https://www.facebook.com/'; apri.target = '_blank'; apri.rel = 'noopener';
+      azioni.appendChild(apri);
+      corpo.appendChild(azioni);
+    }
+
+    lingue.forEach(function (lg) {
+      var b = el('button', null, LINGUE[lg] || lg);
+      b.type = 'button'; b.dataset.lingua = lg;
+      b.addEventListener('click', function () { statoVista.lingua = lg; disegna(); });
+      barraL.appendChild(b);
+    });
+    Object.keys(FORMATI).forEach(function (f) {
+      var b = el('button', null, FORMATI[f]);
+      b.type = 'button'; b.dataset.formato = f;
+      b.addEventListener('click', function () { statoVista.formato = f; disegna(); });
+      barraF.appendChild(b);
+    });
+
+    s.appendChild(barraL);
+    s.appendChild(barraF);
+    s.appendChild(corpo);
+    disegna();
+    return s;
+  }
+
+  /* navigator.clipboard non esiste fuori da https e in qualche browser vecchio:
+     senza il ripiego il pulsante non farebbe niente e nessuno saprebbe perché. */
+  function copia(testo, bottone) {
+    function fatto() {
+      var prima = bottone.textContent;
+      bottone.textContent = 'Copiato';
+      bottone.disabled = true;
+      setTimeout(function () { bottone.textContent = prima; bottone.disabled = false; }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(testo).then(fatto, function () { vecchioModo(testo, fatto); });
+    } else {
+      vecchioModo(testo, fatto);
+    }
+  }
+  function vecchioModo(testo, poi) {
+    var t = document.createElement('textarea');
+    t.value = testo;
+    t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); poi(); } catch (e) { /* niente da fare */ }
+    document.body.removeChild(t);
+  }
+
+  function gruppi(g) {
+    var c = $('#gruppi');
+    c.innerHTML = '';
+    if (g.senzaElenco) {
+      var a = el('div', 'avviso');
+      a.appendChild(el('p', null, 'Nessun gruppo nell\'elenco, quindi nessun messaggio preparato.'));
+      a.appendChild(el('p', null, 'I gruppi si scelgono a mano, uno per uno: in ognuno valgono regole diverse e in parecchi la promozione è vietata. Mandami i link dei gruppi in cui vuoi entrare e li metto nell\'elenco.'));
+      a.appendChild(el('p', null, 'Nei gruppi si incolla sempre a mano: Meta ha chiuso la Groups API nell\'aprile 2024 e non esiste più nessun modo automatico.'));
+      c.appendChild(a);
+      return;
+    }
+    if (!g.messaggi.length) { c.appendChild(el('p', 'vuoto', 'Tutti i gruppi sono in pausa: si torna dopo una settimana.')); return; }
+    g.messaggi.forEach(function (m) {
+      var s = el('article', 'scheda');
+      var testa = el('div', 'testa');
+      testa.appendChild(el('h3', 'titolo', m.gruppo + (m.citta ? ' · ' + m.citta : '')));
+      var meta = el('div', 'meta');
+      meta.appendChild(el('span', null, (LINGUE[m.lingua] || m.lingua) + ' · ' + m.tema));
+      testa.appendChild(meta);
+      s.appendChild(testa);
+
+      var corpo = el('div', 'corpo');
+      corpo.appendChild(el('pre', 'testo', m.messaggio));
+      var azioni = el('div', 'azioni');
+      var cop = el('button', 'copia', 'Copia il messaggio');
+      cop.type = 'button';
+      cop.addEventListener('click', function () { copia(m.messaggio, cop); });
+      azioni.appendChild(cop);
+      if (m.url) {
+        var apri = el('a', 'apri', 'Apri il gruppo');
+        apri.href = m.url; apri.target = '_blank'; apri.rel = 'noopener';
+        azioni.appendChild(apri);
+      }
+      corpo.appendChild(azioni);
+      s.appendChild(corpo);
+      c.appendChild(s);
+    });
+  }
+
+  function settimana(cal) {
+    var c = $('#settimana');
+    var oggi = (new Date().getDay() + 6) % 7;   // lunedì = 0
+    cal.forEach(function (g, i) {
+      var d = el('div', 'giorno' + (i === oggi ? ' oggi' : ''));
+      d.appendChild(el('b', null, g.giorno));
+      d.appendChild(el('span', null, g.tema));
+      c.appendChild(d);
+    });
+  }
+
+  function mancanze(st, g) {
+    var c = $('#mancanze');
+    var a = el('div', 'avviso');
+    var manca = [];
+    if (!st.modello) manca.push(['GEMINI_API_KEY nei Secrets di GitHub', 'i post di oggi sono quelli scritti a mano nel repertorio: buoni, ma sempre gli stessi. Con la chiave l\'agente scrive sul tema del giorno.']);
+    if (!st.meta) manca.push(['META_PAGE_TOKEN e META_PAGE_ID', 'senza, si copia e si incolla. Con, la Pagina pubblica da sola e legge i commenti.']);
+    if (g.senzaElenco) manca.push(['l\'elenco dei gruppi', 'mandami i link e li aggiungo.']);
+
+    if (!manca.length) {
+      a.appendChild(el('p', null, 'Tutto collegato. L\'agente lavora da solo ogni mattina.'));
+    } else {
+      a.appendChild(el('p', null, 'Funziona già così. Queste tre cose lo fanno funzionare meglio:'));
+      manca.forEach(function (m) {
+        var p = el('p');
+        p.appendChild(el('code', null, m[0]));
+        p.appendChild(document.createTextNode(' — ' + m[1]));
+        a.appendChild(p);
+      });
+    }
+    c.appendChild(a);
+  }
+})();
+</script>
+</body>
+</html>

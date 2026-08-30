@@ -58,19 +58,26 @@ jobs:
             ${{ secrets.META_PAGE_TOKEN != '' && '--commenti --pubblica' || '' }} \
             ${{ secrets.RESEND_API_KEY != '' && '--email' || '' }}
 
-      # La memoria di cosa è già uscito e in quali gruppi si è già scritto.
-      # Senza questo commit l'agente ripeterebbe se stesso ogni giorno.
-      - name: Ricorda
+      # Due file tornano nel repository, e per due ragioni diverse.
+      #
+      # social/memoria.json — cosa è già uscito e in quali gruppi si è già
+      # scritto. Ogni giro parte da una copia pulita: senza questo commit
+      # l'agente si sveglierebbe smemorato e ripeterebbe se stesso.
+      #
+      # assets/dati/ai-social.json — il giro di oggi come lo legge /ai-social.
+      # È il motivo per cui il lavoro dell'agente arriva a qualcuno: chi
+      # gestisce la Pagina apre quell'indirizzo, non GitHub.
+      - name: Ricorda e pubblica il cruscotto
         run: |
-          if git diff --quiet -- social/memoria.json; then
-            echo "niente di nuovo da ricordare"
+          if git diff --quiet -- social/memoria.json assets/dati/ai-social.json; then
+            echo "niente di nuovo"
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add social/memoria.json
-          git commit -m "Agente social: memoria aggiornata" \
-                     -m "Cosa è stato pubblicato e in quali gruppi si è già scritto."
+          git add social/memoria.json assets/dati/ai-social.json
+          git commit -m "Agente social: giro del giorno" \
+                     -m "Memoria aggiornata e cruscotto di /ai-social riscritto."
           git push
 
       - name: Conserva la coda
