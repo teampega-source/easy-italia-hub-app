@@ -58,6 +58,13 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <style>
 :root{--bg:#e9e6e0;--ink:#161412;--muted:#565049;--gold:#7c7059;--coral:#cb4d31;--border:rgba(118,118,118,.25)}
 *{box-sizing:border-box;margin:0;padding:0}
+/* Le due macchie sfocate sporgono di proposito oltre i bordi (right:-100px,
+   left:-80px). overflow:hidden su body non le ritaglia: si propaga al
+   viewport, quindi la barra non compare ma la pagina resta larga 490px su uno
+   schermo da 390 — e qualche browser da telefono la lascia scorrere di lato.
+   overflow-x:clip qui taglia davvero, e non crea un contenitore di scorrimento
+   come farebbe hidden: lo scorrimento verticale resta intatto. */
+html{overflow-x:clip}
 body{min-height:100vh;display:flex;align-items:center;justify-content:center;
   background:linear-gradient(160deg,#f3f1ec,#e9e6e0 60%,#dfdad1);color:var(--ink);
   font-family:'Satoshi',system-ui,sans-serif;padding:2rem;overflow:hidden;position:relative}
@@ -93,7 +100,7 @@ a.btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(22,20,18,.15)}
   <div class="code">4<em>0</em>4</div>
   <h1>Pagina non trovata</h1>
   <p>La pagina che cerchi non esiste o è stata spostata.<br/>
-  <span class="si">Page not found · පිටුව හමු නොවීය · பக்கம் கிடைக்கவில்லை</span></p>
+  <span class="si" data-no-tr>Page not found · පිටුව හමු නොවීය · பக்கம் கிடைக்கவில்லை</span></p>
   <div class="actions">
     <a class="btn primary" href="/">← Torna alla home</a>
     <a class="btn ghost" href="/guide">Esplora le guide</a>
