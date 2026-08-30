@@ -1,5 +1,5 @@
 {
- "generato": "2026-08-30T08:56:52.188Z",
+ "generato": "2026-08-30T12:10:40.006Z",
  "oggi": "2026-08-30",
  "stato": {
   "modello": false,
@@ -13,10 +13,10 @@
   ]
  },
  "conteggi": {
-  "temi": 3,
-  "pezzi": 48,
-  "pronti": 48,
-  "revisione": 0,
+  "temi": 5,
+  "pezzi": 80,
+  "pronti": 64,
+  "revisione": 16,
   "scartati": 0
  },
  "formati": {
@@ -270,6 +270,148 @@
      "hashtag": [
       "#EasyItaliaHub",
       "#இத்தாலி",
+      "#SriLankansInItaly"
+     ]
+    }
+   }
+  },
+  {
+   "titolo": "Partita IVA e regime forfettario",
+   "tipo": "guida",
+   "fonte": "https://easyitaliahub.it/guide#partita-iva",
+   "fonteNome": "Easy Italia Hub — guida verificata",
+   "punteggio": 6,
+   "lingue": {
+    "si": {
+     "origine": "repertorio",
+     "modalita": "auto",
+     "problemi": [],
+     "testi": {
+      "facebook": "තනියම වැඩ කරන්න ඕනද? partita IVA එක නොමිලේ අරින්න පුළුවන්.\n\nregime forfettario කියන්නේ මොකක්ද, ඇත්තටම කීයද ගෙවන්නේ, කවදාද වටින්නේ. Agenzia delle Entrate මූලාශ්‍ර.\n\nසියල්ල නොමිලේ: easyitaliahub.it\nhttps://easyitaliahub.it/guide#partita-iva",
+      "instagram": "තනියම වැඩ කරන්න ඕනද? partita IVA එක නොමිලේ අරින්න පුළුවන්.\n\nregime forfettario කියන්නේ මොකක්ද, ඇත්තටම කීයද ගෙවන්නේ, කවදාද වටින්නේ. Agenzia delle Entrate මූලාශ්‍ර.\n\nසියල්ල නොමිලේ: easyitaliahub.it\n#EasyItaliaHub #ඉතාලිය #SriLankansInItaly",
+      "reel": "[0-2s] තනියම වැඩ කරන්න ඕනද? partita IVA එක නොමිලේ අරින්න පුළුවන්.\n[3-20s] regime forfettario කියන්නේ මොකක්ද, ඇත්තටම කීයද ගෙවන්නේ, කවදාද වටින්නේ. Agenzia delle Entrate මූලාශ්‍ර.\n[fine] සියල්ල නොමිලේ: easyitaliahub.it",
+      "storia": "තනියම වැඩ කරන්න ඕනද? partita IVA එක නොමිලේ අරින්න පුළුවන්. — සියල්ල නොමිලේ: easyitaliahub.it"
+     },
+     "hashtag": [
+      "#EasyItaliaHub",
+      "#ඉතාලිය",
+      "#SriLankansInItaly"
+     ]
+    },
+    "it": {
+     "origine": "repertorio",
+     "modalita": "auto",
+     "problemi": [],
+     "testi": {
+      "facebook": "Vuoi lavorare in proprio? La partita IVA si apre gratis.\n\nCos'è il regime forfettario, quanto si paga davvero, quando conviene. Fonti dell'Agenzia delle Entrate.\n\nTutto gratis su easyitaliahub.it\nhttps://easyitaliahub.it/guide#partita-iva",
+      "instagram": "Vuoi lavorare in proprio? La partita IVA si apre gratis.\n\nCos'è il regime forfettario, quanto si paga davvero, quando conviene. Fonti dell'Agenzia delle Entrate.\n\nTutto gratis su easyitaliahub.it\n#EasyItaliaHub #SriLankaItalia #PermessoDiSoggiorno",
+      "reel": "[0-2s] Vuoi lavorare in proprio? La partita IVA si apre gratis.\n[3-20s] Cos'è il regime forfettario, quanto si paga davvero, quando conviene. Fonti dell'Agenzia delle Entrate.\n[fine] Tutto gratis su easyitaliahub.it",
+      "storia": "Vuoi lavorare in proprio? La partita IVA si apre gratis. — Tutto gratis su easyitaliahub.it"
+     },
+     "hashtag": [
+      "#EasyItaliaHub",
+      "#SriLankaItalia",
+      "#PermessoDiSoggiorno"
+     ]
+    },
+    "en": {
+     "origine": "repertorio",
+     "modalita": "auto",
+     "problemi": [],
+     "testi": {
+      "facebook": "Want to work for yourself? Opening a partita IVA is free.\n\nWhat the flat-rate regime is, what you actually pay, when it is worth it. Sources from the Agenzia delle Entrate.\n\nEverything free at easyitaliahub.it\nhttps://easyitaliahub.it/guide#partita-iva",
+      "instagram": "Want to work for yourself? Opening a partita IVA is free.\n\nWhat the flat-rate regime is, what you actually pay, when it is worth it. Sources from the Agenzia delle Entrate.\n\nEverything free at easyitaliahub.it\n#EasyItaliaHub #SriLankansInItaly #LifeInItaly",
+      "reel": "[0-2s] Want to work for yourself? Opening a partita IVA is free.\n[3-20s] What the flat-rate regime is, what you actually pay, when it is worth it. Sources from the Agenzia delle Entrate.\n[fine] Everything free at easyitaliahub.it",
+      "storia": "Want to work for yourself? Opening a partita IVA is free. — Everything free at easyitaliahub.it"
+     },
+     "hashtag": [
+      "#EasyItaliaHub",
+      "#SriLankansInItaly",
+      "#LifeInItaly"
+     ]
+    },
+    "ta": {
+     "origine": "repertorio",
+     "modalita": "auto",
+     "problemi": [],
+     "testi": {
+      "facebook": "சொந்தமாக வேலை செய்ய வேண்டுமா? partita IVA இலவசமாகத் திறக்கலாம்.\n\nregime forfettario என்றால் என்ன, உண்மையில் எவ்வளவு கட்டணம், எப்போது பயன். Agenzia delle Entrate ஆதாரங்கள்.\n\nஅனைத்தும் இலவசம்: easyitaliahub.it\nhttps://easyitaliahub.it/guide#partita-iva",
+      "instagram": "சொந்தமாக வேலை செய்ய வேண்டுமா? partita IVA இலவசமாகத் திறக்கலாம்.\n\nregime forfettario என்றால் என்ன, உண்மையில் எவ்வளவு கட்டணம், எப்போது பயன். Agenzia delle Entrate ஆதாரங்கள்.\n\nஅனைத்தும் இலவசம்: easyitaliahub.it\n#EasyItaliaHub #இத்தாலி #SriLankansInItaly",
+      "reel": "[0-2s] சொந்தமாக வேலை செய்ய வேண்டுமா? partita IVA இலவசமாகத் திறக்கலாம்.\n[3-20s] regime forfettario என்றால் என்ன, உண்மையில் எவ்வளவு கட்டணம், எப்போது பயன். Agenzia delle Entrate ஆதாரங்கள்.\n[fine] அனைத்தும் இலவசம்: easyitaliahub.it",
+      "storia": "சொந்தமாக வேலை செய்ய வேண்டுமா? partita IVA இலவசமாகத் திறக்கலாம். — அனைத்தும் இலவசம்: easyitaliahub.it"
+     },
+     "hashtag": [
+      "#EasyItaliaHub",
+      "#இத்தாலி",
+      "#SriLankansInItaly"
+     ]
+    }
+   }
+  },
+  {
+   "titolo": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah",
+   "tipo": "avviso-consolato",
+   "fonte": "https://www.cg-milan.gov.lk/posts/6a212574e2e19fabd6f2e7a4",
+   "fonteNome": "Consolato Generale dello Sri Lanka a Milano",
+   "punteggio": 10,
+   "lingue": {
+    "si": {
+     "origine": "montaggio",
+     "modalita": "revisione",
+     "problemi": [],
+     "testi": {
+      "facebook": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah\n\nසියල්ල නොමිලේ: easyitaliahub.it\nhttps://www.cg-milan.gov.lk/posts/6a212574e2e19fabd6f2e7a4",
+      "instagram": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah\n\nසියල්ල නොමිලේ: easyitaliahub.it",
+      "reel": "[gancio] Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah\n[1] …\n[2] …\n[3] …\n[invito] සියල්ල නොමිලේ: easyitaliahub.it",
+      "storia": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah — සියල්ල නොමිලේ: easyitaliahub.it"
+     },
+     "hashtag": [
+      "#EasyItaliaHub",
+      "#SriLankansInItaly"
+     ]
+    },
+    "it": {
+     "origine": "montaggio",
+     "modalita": "revisione",
+     "problemi": [],
+     "testi": {
+      "facebook": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah\n\nTutto gratis su easyitaliahub.it\nhttps://www.cg-milan.gov.lk/posts/6a212574e2e19fabd6f2e7a4",
+      "instagram": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah\n\nTutto gratis su easyitaliahub.it",
+      "reel": "[gancio] Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah\n[1] …\n[2] …\n[3] …\n[invito] Tutto gratis su easyitaliahub.it",
+      "storia": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah — Tutto gratis su easyitaliahub.it"
+     },
+     "hashtag": [
+      "#EasyItaliaHub",
+      "#SriLankansInItaly"
+     ]
+    },
+    "en": {
+     "origine": "montaggio",
+     "modalita": "revisione",
+     "problemi": [],
+     "testi": {
+      "facebook": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah\n\nEverything free at easyitaliahub.it\nhttps://www.cg-milan.gov.lk/posts/6a212574e2e19fabd6f2e7a4",
+      "instagram": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah\n\nEverything free at easyitaliahub.it",
+      "reel": "[gancio] Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah\n[1] …\n[2] …\n[3] …\n[invito] Everything free at easyitaliahub.it",
+      "storia": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah — Everything free at easyitaliahub.it"
+     },
+     "hashtag": [
+      "#EasyItaliaHub",
+      "#SriLankansInItaly"
+     ]
+    },
+    "ta": {
+     "origine": "montaggio",
+     "modalita": "revisione",
+     "problemi": [],
+     "testi": {
+      "facebook": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah\n\nஅனைத்தும் இலவசம்: easyitaliahub.it\nhttps://www.cg-milan.gov.lk/posts/6a212574e2e19fabd6f2e7a4",
+      "instagram": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah\n\nஅனைத்தும் இலவசம்: easyitaliahub.it",
+      "reel": "[gancio] Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah\n[1] …\n[2] …\n[3] …\n[invito] அனைத்தும் இலவசம்: easyitaliahub.it",
+      "storia": "Sri Lankan Community in Northern Italy extends assistance to Sri Lankans affected by Cyclone Ditwah — அனைத்தும் இலவசம்: easyitaliahub.it"
+     },
+     "hashtag": [
+      "#EasyItaliaHub",
       "#SriLankansInItaly"
      ]
     }
