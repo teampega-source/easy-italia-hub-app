@@ -1,7 +1,6 @@
 # Quello che non deve finire sul sito pubblico.
 # Non sono segreti — le chiavi stanno nell'ambiente — ma non sono nemmeno
 # pagine: se stanno nel deploy, sono scaricabili e finiscono indicizzate.
-social/
 .references/
 traduzioni/
 i18n-src/
