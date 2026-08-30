@@ -61,7 +61,7 @@ console.log('\n— Modalità: niente si pubblica da solo —');
 
 console.log('\n— Scout sulle fonti verificate —');
 {
-  const o = opportunita({ quante: 5 });
+  const o = await opportunita({ quante: 5 });
   prova('trova opportunità', o.length === 5, o.length);
   prova('ognuna ha una fonte', o.every((x) => x.fonte && x.fonte.startsWith('http')));
   prova('ordinate per punteggio, senza doppioni', new Set(o.map((x) => x.titolo)).size === o.length);
@@ -70,7 +70,7 @@ console.log('\n— Scout sulle fonti verificate —');
 
 console.log('\n— Catena completa, senza chiavi —');
 {
-  const o = opportunita({ quante: 1 })[0];
+  const o = (await opportunita({ quante: 1 }))[0];
   const p = await pacchetto(o, { lingue: ['it', 'si'] });
   prova('produce le due lingue', Object.keys(p.lingue).length === 2);
   prova('ogni formato ha il suo verdetto', Object.keys(p.lingue.it.verifiche).length === 4);

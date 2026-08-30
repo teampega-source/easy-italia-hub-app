@@ -44,7 +44,7 @@ console.log('Meta       :', statoMeta().collegato ? 'collegato' : 'non collegato
 console.log('pubblica da solo:', acceso() ? 'SÌ' : 'no (SOCIAL_AUTOPUBBLICA non è 1)');
 console.log('lingue     :', lingue.map((l) => NOME_LINGUA[l] || l).join(', '), '\n');
 
-const opp = opportunita({ quante });
+const opp = await opportunita({ quante });
 console.log('Opportunità di oggi:');
 for (const o of opp) console.log(`  [${String(o.punteggio).padStart(2)}] ${o.tipo.padEnd(18)} ${o.titolo.slice(0, 64)}`);
 console.log();
