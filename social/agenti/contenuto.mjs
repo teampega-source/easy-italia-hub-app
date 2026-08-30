@@ -13,12 +13,21 @@
  * fiscale, questura. Chi arriva allo sportello deve saper dire la parola.
  *
  * La seconda: senza chiave del modello non si sbaglia niente e non si finge.
- * Esce comunque una bozza, montata dai pezzi verificati: si vede la forma, si
- * prova tutta la catena, e si capisce a colpo d'occhio che il testo è grezzo. */
+ * Prima usciva titolo + link, e in sinhala era un post italiano con una riga
+ * in sinhala in fondo: si vedeva la forma, non si poteva pubblicare. Adesso
+ * scende in campo il repertorio (lib/repertorio.mjs), che sono post interi
+ * scritti a mano nelle quattro lingue e tenuti nel repository. Il primo giorno,
+ * senza configurare niente, la coda è già piena di roba da incollare.
+ *
+ * Ordine di precedenza, e non è arbitrario:
+ *   1. il modello, se c'è la chiave — sa parlare del tema di oggi;
+ *   2. il repertorio, se il tema è uno dei nostri — scritto da una persona;
+ *   3. il montaggio grezzo — solo per un tema nuovo senza modello, e si vede.  */
 
 import { genera, leggiJson, disponibile } from '../lib/ai.mjs';
 import { VOCE, FORMATI, INVITO, LINGUE, NOME_LINGUA } from '../lib/marca.mjs';
 import { controlla, modalita } from '../lib/sicurezza.mjs';
+import { voce, HASHTAG } from '../lib/repertorio.mjs';
 
 const ISTRUZIONE = `${VOCE}
 
@@ -36,9 +45,37 @@ Regole di forma:
 Rispondi SOLO con JSON valido, senza testo attorno, in questa forma:
 {"facebook":"…","instagram":"…","reel":"…","storia":"…","hashtag":["…"]}`;
 
+/* Dal repertorio esce un post vero. I quattro formati non sono quattro testi
+   diversi: sono lo stesso testo tagliato per dove va a finire — nel feed di
+   Facebook si legge la prima riga, su Instagram non si clicca il link, in una
+   Storia si leggono due secondi. */
+function daRepertorio(opp, lingua) {
+  const v = voce(opp.fonte, lingua);
+  if (!v) return null;
+  const invito = INVITO[lingua] || INVITO.it;
+  const tag = HASHTAG[lingua] || HASHTAG.it;
+
+  /* La Storia sta in 160 caratteri: se il gancio più l'invito non ci stanno,
+     vince il gancio — l'indirizzo in una Storia si mette con l'adesivo. */
+  const storia = `${v.gancio} — ${invito}`;
+
+  return {
+    facebook: `${v.gancio}\n\n${v.corpo}\n\n${invito}\n${opp.fonte}`,
+    instagram: `${v.gancio}\n\n${v.corpo}\n\n${invito}\n${tag.join(' ')}`,
+    reel: `[0-2s] ${v.gancio}\n[3-20s] ${v.corpo}\n[fine] ${invito}`,
+    storia: storia.length <= FORMATI.storia.max ? storia : v.gancio,
+    hashtag: tag,
+    /* Scritto da una persona e versionato: si legge in una pull request, si
+       corregge, e domani è identico a oggi. È la differenza che permette a
+       pubblica.mjs di farlo passare senza revisione. */
+    daRepertorio: true,
+  };
+}
+
 function bozzaAsciutta(opp, lingua) {
-  /* Montata, non generata: nessuna frase inventata, solo i pezzi che abbiamo
-     già verificato più l'invito. Serve a vedere la forma. */
+  /* Ultimo ripiego: tema nuovo, nessun modello collegato. Montata, non
+     generata — nessuna frase inventata, solo i pezzi già verificati più
+     l'invito — e marcata grezza, così si vede che va riscritta. */
   const invito = INVITO[lingua] || INVITO.it;
   const t = opp.titolo;
   return {
@@ -77,18 +114,29 @@ export async function pacchetto(opp, { lingue = LINGUE } = {}) {
 
     const r = await genera(ISTRUZIONE, richiesta, { temperatura: 0.8, max: 1400 });
     const dati = r.testo ? leggiJson(r.testo) : null;
-    const testi = dati && dati.facebook ? dati : bozzaAsciutta(opp, lg);
+    const testi = (dati && dati.facebook) || daRepertorio(opp, lg) || bozzaAsciutta(opp, lg);
 
     /* Il controllo gira su ogni formato separatamente: i limiti sono diversi e
-       un problema su Instagram non deve bloccare il post di Facebook. */
+       un problema su Instagram non deve bloccare il post di Facebook.
+
+       `preautorizzato` vale solo per il repertorio, e la ragione è tutta qui:
+       quel testo l'ha scritto una persona e sta nel repository. Quello che
+       inventa il modello stamattina non l'ha letto nessuno, e passa da una
+       revisione anche quando è perfetto. */
+    const scritto = Boolean(testi.daRepertorio);
     const verifiche = {};
     for (const formato of Object.keys(FORMATI)) {
       const testo = testi[formato] || '';
       const esito = controlla({ testo, formato, lingua: lg, fonte: opp.fonte });
-      verifiche[formato] = { ...esito, modalita: modalita({ azione: 'post' }, esito) };
+      verifiche[formato] = { ...esito, modalita: modalita({ azione: 'post', preautorizzato: scritto }, esito) };
     }
 
-    fuori.lingue[lg] = { testi, verifiche, modello: r.modello || null, grezzo: Boolean(testi.grezzo) };
+    fuori.lingue[lg] = {
+      testi, verifiche,
+      modello: r.modello || null,
+      grezzo: Boolean(testi.grezzo),
+      origine: dati && dati.facebook ? 'modello' : (scritto ? 'repertorio' : 'montaggio'),
+    };
   }
   return fuori;
 }

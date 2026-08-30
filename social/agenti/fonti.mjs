@@ -79,7 +79,11 @@ const STRUMENTI = [
   { titolo: 'Curriculum in formato italiano, gratis', percorso: '/cv-builder', valore: 8 },
   { titolo: 'Il tuo percorso: dall\'arrivo alla cittadinanza', percorso: '/percorso', valore: 9 },
   { titolo: 'Promemoria delle scadenze del permesso', percorso: '/permesso-tracker', valore: 9 },
-  { titolo: 'Assistente che risponde in sinhala e tamil, giorno e notte', percorso: '/percorso', valore: 7 },
+  /* Non punta a /percorso come gli altri: l'assistente non è una pagina, è la
+     finestrella che si apre ovunque. Mandava al percorso e usciva un post col
+     titolo dell'assistente e il testo del percorso — due opportunità diverse
+     con lo stesso indirizzo prendono la stessa voce di repertorio. */
+  { titolo: 'Assistente che risponde in sinhala e tamil, giorno e notte', percorso: '/', valore: 7 },
 ];
 
 function strumenti() {

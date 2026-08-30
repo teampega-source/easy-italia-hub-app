@@ -72,7 +72,11 @@ export function scrivi({ oggi, bozze, commenti, risposte, gruppi, pubblicazione,
   }
 
   if (bozze.some((b) => Object.values(b.lingue).some((l) => l.grezzo))) {
-    r.push('> ⚠️ Bozze **grezze**: manca `GEMINI_API_KEY`, quindi il testo è montato dai pezzi verificati e non scritto. Serve a vedere la forma, non da pubblicare così.');
+    r.push('> ⚠️ Bozze **grezze**: manca `GEMINI_API_KEY` e il tema non è nel repertorio, quindi il testo è montato dai pezzi verificati e non scritto. Serve a vedere la forma, non da pubblicare così.');
+    r.push('');
+  }
+  if (bozze.some((b) => Object.values(b.lingue).some((l) => l.origine === 'repertorio'))) {
+    r.push('> ℹ️ Testi dal **repertorio**: scritti a mano nelle quattro lingue e tenuti nel repository, quindi pubblicabili così come sono. Con `GEMINI_API_KEY` l\'agente scriverebbe sul tema del giorno invece di pescare dal repertorio.');
     r.push('');
   }
 

@@ -24,6 +24,7 @@ import { NOME_LINGUA, LINGUE } from './lib/marca.mjs';
 import { stato as statoMeta, commenti as commentiMeta } from './connettori/meta.mjs';
 import { pubblicaDelGiorno, mandaRisposteAuto, acceso } from './pubblica.mjs';
 import { scrivi as scriviRapporto, manda as mandaRapporto } from './rapporto.mjs';
+import { componi as componiCruscotto, scrivi as scriviCruscotto } from './cruscotto.mjs';
 
 const arg = (nome, pre) => {
   const i = process.argv.indexOf('--' + nome);
@@ -96,6 +97,20 @@ writeFileSync(cartella + 'bozze.json', JSON.stringify(
   { oggi, opportunita: opp, bozze, commenti, risposte, gruppi, pubblicazione, ai: registro }, null, 2));
 const md = scriviRapporto({ oggi, bozze, commenti, risposte, gruppi, pubblicazione, lingue });
 writeFileSync(cartella + 'rapporto.md', md);
+
+/* Il file che legge /ai-social. Sta in assets/, quindi parte col sito: è
+   l'unico modo perché quello che l'agente prepara arrivi a chi deve usarlo
+   senza passare da GitHub. */
+const dove = scriviCruscotto(componiCruscotto({
+  oggi, bozze, gruppi, pubblicazione,
+  stato: {
+    modello: disponibile(),
+    meta: statoMeta().collegato,
+    autopubblica: acceso(),
+    lingue,
+  },
+}));
+console.log('cruscotto:', dove.replace(/^.*\/(?=assets\/)/, ''), '→ https://easyitaliahub.it/ai-social');
 
 let ok = 0, rivedere = 0, scartati = 0;
 for (const b of bozze) for (const lg of Object.keys(b.lingue))

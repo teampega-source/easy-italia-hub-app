@@ -73,11 +73,49 @@ console.log('\n— Catena completa, senza chiavi —');
   const o = opportunita({ quante: 1 })[0];
   const p = await pacchetto(o, { lingue: ['it', 'si'] });
   prova('produce le due lingue', Object.keys(p.lingue).length === 2);
-  prova('marca le bozze come grezze senza modello', p.lingue.it.grezzo === true);
   prova('ogni formato ha il suo verdetto', Object.keys(p.lingue.it.verifiche).length === 4);
   prova('la fonte finisce nel post', p.lingue.it.testi.facebook.includes(o.fonte));
   const md = scrivi({ oggi: '2026-01-01', bozze: [p], commenti: null, lingue: ['it', 'si'] });
   prova('il rapporto cita il tema', md.includes(o.titolo));
+}
+
+/* Il repertorio è la ragione per cui «senza chiavi» non vuol più dire
+   «inservibile». Queste prove tengono ferme le due metà del patto: sui nostri
+   temi esce testo vero e pubblicabile, su un tema che non conosciamo esce una
+   bozza dichiarata grezza — mai qualcosa che sembra scritto e non lo è. */
+console.log('\n— Repertorio: senza modello si pubblica lo stesso —');
+{
+  const { voce, chiave } = await import('./lib/repertorio.mjs');
+  const { INVITO } = await import('./lib/marca.mjs');
+
+  prova('la chiave esce dall\'ancora della guida',
+    chiave('https://easyitaliahub.it/guide#permesso-soggiorno') === 'guide#permesso-soggiorno');
+  prova('la chiave esce dal percorso', chiave('https://easyitaliahub.it/moduli') === '/moduli');
+  prova('la home ha una chiave sua', chiave('https://easyitaliahub.it/') === '/');
+
+  for (const lg of ['si', 'it', 'en', 'ta']) {
+    const v = voce('https://easyitaliahub.it/guide#permesso-soggiorno', lg);
+    prova(`il permesso di soggiorno è scritto in ${lg}`, Boolean(v && v.gancio && v.corpo));
+  }
+  const si = voce('https://easyitaliahub.it/moduli', 'si');
+  prova('il sinhala è davvero in sinhala', /[඀-෿]/.test(si.gancio));
+  const ta = voce('https://easyitaliahub.it/moduli', 'ta');
+  prova('il tamil è davvero in tamil', /[஀-௿]/.test(ta.gancio));
+
+  const noto = { tipo: 'strumento', titolo: 'Moduli', fonte: 'https://easyitaliahub.it/moduli', fonteNome: 'EIH', punteggio: 8 };
+  const p = await pacchetto(noto, { lingue: ['si', 'it'] });
+  prova('un tema nostro non è grezzo nemmeno senza modello', p.lingue.si.grezzo === false);
+  prova('e viene dal repertorio', p.lingue.si.origine === 'repertorio');
+  prova('quindi non ha bisogno di revisione', p.lingue.it.verifiche.facebook.modalita === 'auto');
+  prova('la Storia sta nel suo limite', p.lingue.si.testi.storia.length <= 160);
+  prova('l\'invito c\'è in ogni lingua',
+    p.lingue.si.testi.facebook.includes(INVITO.si) && p.lingue.it.testi.facebook.includes(INVITO.it));
+
+  const ignoto = { tipo: 'guida', titolo: 'Un tema che non conosciamo', fonte: 'https://easyitaliahub.it/guide#inventato', fonteNome: 'EIH', punteggio: 5 };
+  const q = await pacchetto(ignoto, { lingue: ['it'] });
+  prova('un tema fuori repertorio resta grezzo e lo dichiara', q.lingue.it.grezzo === true);
+  prova('e passa comunque da una revisione', q.lingue.it.verifiche.facebook.modalita === 'revisione');
+  const md = scrivi({ oggi: '2026-01-01', bozze: [q], commenti: null, lingue: ['it'] });
   prova('il rapporto avverte che le bozze sono grezze', md.includes('grezze'));
 }
 
