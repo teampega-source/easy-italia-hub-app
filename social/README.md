@@ -125,9 +125,58 @@ Nessuno è obbligatorio: quello che manca resta spento e dichiarato.
 | `SOCIAL_AUTOPUBBLICA=1` | l'interruttore: senza, non pubblica mai da solo | GitHub Secrets |
 | `RESEND_API_KEY`, `SOCIAL_REPORT_TO` | il rapporto quotidiano via email | GitHub Secrets |
 
-Per i due token Meta serve una app Meta con la verifica del business e i
-permessi approvati: è l'unico passaggio che non si può accorciare, e va fatto
-una volta sola.
+---
+
+## Il token di Facebook — l'unica cosa che rende l'agente autonomo
+
+Qui c'era scritto che serviva «una app Meta con la verifica del business e i
+permessi approvati». Non è vero per noi, ed è una differenza grossa: la
+revisione di Meta serve a far usare l'app **ad altre persone**. Per pubblicare
+sulla **propria** Pagina, essendone amministratori, basta una app in modalità
+sviluppo. Nessuna revisione, nessuna attesa: dieci minuti.
+
+Va fatto da chi amministra la Pagina — non è delegabile via codice, ed è il
+motivo per cui l'agente oggi prepara e non pubblica.
+
+1. **developers.facebook.com** → *My Apps* → *Create App*. Tipo **Business**.
+   Lasciala in *Development*: è la modalità giusta, non un ripiego.
+2. **Graph API Explorer** (`developers.facebook.com/tools/explorer`), scegli
+   l'app appena creata → *Get Token* → *Get User Access Token*.
+   Permessi da spuntare:
+   `pages_show_list`, `pages_manage_posts`, `pages_read_engagement`,
+   `pages_manage_engagement`.
+3. Nella finestra di Facebook, autorizza **la Pagina di Easy Italia Hub**.
+4. Sempre nell'Explorer, chiama `GET /me/accounts`: nella risposta trovi la
+   Pagina con il suo `id` (→ `META_PAGE_ID`) e un `access_token`.
+5. Quel token dura un'ora. Per averne uno che **non scade**, due chiamate:
+
+   ```
+   GET /v21.0/oauth/access_token
+       ?grant_type=fb_exchange_token
+       &client_id=<app-id>
+       &client_secret=<app-secret>
+       &fb_exchange_token=<token-utente-del-punto-2>
+   ```
+
+   restituisce un token utente da 60 giorni. Con **quello** richiama
+   `GET /me/accounts`: il token di Pagina che ne esce non ha scadenza.
+   È questo che va in `META_PAGE_TOKEN` — non quello del punto 4, che
+   smetterebbe di funzionare dopo un'ora e l'agente tornerebbe muto senza
+   che nessuno capisca perché.
+
+6. I segreti si mettono in **Settings → Secrets and variables → Actions →
+   New repository secret**: `META_PAGE_ID`, `META_PAGE_TOKEN` e
+   `SOCIAL_AUTOPUBBLICA` = `1`.
+
+Da quel momento, ogni mattina alle 8:40 la Pagina pubblica da sola e risponde
+da sola ai commenti facili. Senza il punto 6 non pubblica nemmeno con i token:
+l'interruttore è separato apposta.
+
+**Quello che il token non sblocca**, perché l'API non esiste: entrare nei
+gruppi, pubblicare nei gruppi, mettere like a post altrui, invitare in blocco.
+La Groups API è chiusa dall'aprile 2024. Quelle restano azioni manuali con il
+testo già pronto — e chi promette il contrario sta pilotando un browser, che è
+il modo più veloce per perdere la Pagina.
 
 ---
 

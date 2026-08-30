@@ -3,8 +3,15 @@
  * Cosa si può fare davvero con la Graph API, verificato sulla documentazione e
  * non dedotto: pubblicare sulla propria Pagina, leggere i commenti dei propri
  * post, rispondere ai propri commenti, leggere le statistiche della Pagina.
- * Serve un token della Pagina con i permessi giusti, e i permessi si ottengono
- * con una app Meta verificata.
+ *
+ * Serve un token della Pagina. Qui c'era scritto che i permessi «si ottengono
+ * con una app Meta verificata», e non è vero nel nostro caso: la revisione di
+ * Meta serve per far usare l'app ad altre persone. Per pubblicare sulla PROPRIA
+ * Pagina, essendone amministratori, basta una app in modalità sviluppo — nessuna
+ * revisione, nessuna attesa. La procedura è in social/README.md.
+ *
+ * La differenza non è un dettaglio: la frase sbagliata faceva sembrare
+ * irraggiungibile l'unica cosa che rende l'agente autonomo.
  *
  * Cosa NON si può fare, e va detto adesso invece che scoprirlo dopo:
  *   · mettere like a post di altri come Pagina — non esiste endpoint;
