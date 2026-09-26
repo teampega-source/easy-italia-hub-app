@@ -57,7 +57,9 @@
   // CSP NOTE (for vercel.json, handled by the main agent): allowing this needs
   //   script-src  https://cdn.jsdelivr.net
   //   connect-src https://*.supabase.co
-  var SUPABASE_ESM = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+  // Versione PINNATA: un CDN su @2 salterebbe un giorno a una major incompatibile.
+  // Per aggiornare: verifica le release note di supabase-js e cambia qui.
+  var SUPABASE_ESM = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/+esm";
 
   // localStorage keys shared with the existing pages (do NOT rename).
   var LS_REGISTERED = "eih-registered";
