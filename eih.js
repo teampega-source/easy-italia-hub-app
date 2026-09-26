@@ -794,3 +794,44 @@
   // parte da assets/eih-lang-url.js, che sta nel <head>.
 })();
 
+/* ── Badge "Aggiornata al …" sulle pagine informative ─────────────────────
+   Le guide parlano di permessi, tasse, scadenze: senza data il lettore non sa
+   se il testo segue ancora la normativa. La data vera esiste gia' (lastmod
+   della sitemap, specchiata in assets/lastmod.json da scripts/dati-vivi.mjs):
+   qui la mostriamo sotto l'h1, in tutte le lingue. Date <= 60 giorni: neutra;
+   oltre: avviso che il contenuto va verificato. Errore/silenzio: nessun badge. */
+(function(){
+  var LANG={
+    it:{agg:'Aggiornata al',vecchia:'Questa guida non è aggiornata da un po\': verifica i dati sulla fonte ufficiale prima di agire.'},
+    en:{agg:'Last updated',vecchia:'This guide hasn\'t been updated in a while: check the official source before acting.'},
+    si:{agg:'අවසන් යාවත්කාලීන',vecchia:'මෙම මාර්ගෝපදේශය දිගු කලක් යාවත්කාලීන නොකර ඇත: ක්‍රියා කිරීමට පෙර නිල මූලාශ්‍රයෙන් තොරතුරු තහවුරු කරගන්න.'},
+    ta:{agg:'கடைசியாக புதுப்பிக்கப்பட்டது',vecchia:'இந்த வழிகாட்டி நாட்களாக புதுப்பிக்கப்படவில்லை: செயல்படுவதற்கு முன் அதிகாரப்பூர்வ மூலத்தில் தரவுகளை சரிபார்க்கவும்.'}
+  };
+  function boot(){
+    try{
+      var el=document.querySelector('h1[data-i18n-html="page.h1"], h1[data-i18n="page.h1"]');
+      if(!el||el.parentElement.querySelector('.eih-lastmod'))return;
+      var path=location.pathname.replace(/\.(html)$/,'');
+      var m=path.match(/^\/(en|si|ta)(\/.*)$/);
+      if(m)path=m[2];
+      if(path!=='/'&&path.endsWith('/'))path=path.slice(0,-1);
+      fetch('/assets/lastmod.json').then(function(r){return r.ok?r.json():null}).then(function(map){
+        if(!map)return;
+        var iso=map[path==='/'?'/':path];
+        if(!iso)return;
+        var gg=Math.round((Date.now()-new Date(iso+'T00:00:00'))/864e5);
+        var L=(LANG[window.EIH_LANG]||LANG.it);
+        var d=new Date(iso+'T00:00:00');
+        var fmt=d.toLocaleDateString(window.EIH_LANG==='en'?'en-GB':(window.EIH_LANG==='si'?'si-LK':(window.EIH_LANG==='ta'?'ta-IN':'it-IT')),{day:'numeric',month:'long',year:'numeric'});
+        var p=document.createElement('p');
+        p.className='eih-lastmod'+(gg>60?' eih-lastmod-vecchia':'');
+        var txt=L.agg+' '+fmt;
+        if(gg>60)txt+=' · '+L.vecchia;
+        p.textContent=txt;
+        el.insertAdjacentElement('afterend',p);
+      }).catch(function(){});
+    }catch(e){}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
+

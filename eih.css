@@ -538,3 +538,16 @@ html[data-theme="dark"] .site-nav{background:#1c1916}
   color:var(--fg-secondary,#565049);background:var(--bg-deep,rgba(40,36,30,.05));
   border:1px solid var(--border,rgba(118,118,118,.18))}
 .eih-ai-gen::before{content:"✦";flex-shrink:0;color:var(--gold,#7c7059)}
+
+/* ── Badge "Aggiornata al …" (iniettato da eih.js sotto l'h1 delle guide) ──
+   Data di ultima modifica del contenuto, da assets/lastmod.json (generato da
+   scripts/dati-vivi.mjs dalla sitemap). Contenuti burocratici senza data sono
+   un rischio: questo dice al lettore da quanto il testo è verificato.        */
+.eih-lastmod{display:inline-flex;align-items:center;gap:.4rem;margin:.4rem 0 0;
+  padding:.28rem .7rem;border-radius:var(--radius-full,99px);
+  font-size:var(--text-xs,.72rem);font-weight:500;line-height:1.4;
+  color:var(--fg-secondary,#565049);background:var(--bg-deep,rgba(40,36,30,.05));
+  border:1px solid var(--border,rgba(118,118,118,.18))}
+.eih-lastmod::before{content:"🗓";flex-shrink:0;font-size:.85em}
+.eih-lastmod-vecchia{color:var(--fg,#3d3831);border-color:rgba(196,148,58,.45);
+  background:rgba(196,148,58,.08)}
