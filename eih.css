@@ -365,7 +365,7 @@ footer{position:relative;z-index:1;margin-top:var(--sp-6);border-top:1px solid v
   #chat-btn,#chat-panel,#eih-mascot,#eih-mascot-bubble,
   #eih-consent,#eih-consent-panel,#jr-cheer,
   #eihp-fab,#eiht-fab,#eihp-box,.clic-onda,
-  .site-nav,#site-nav,#site-footer,.skip-link,.news-rail,#news-rail{
+  .site-nav,#site-nav,#site-footer,.skip-link{
     display:none!important}
   .reveal,.reveal.in,[class*="reveal"]{opacity:1!important;transform:none!important;filter:none!important}
   html,body{background:#fff!important;color:#000!important}
@@ -437,7 +437,6 @@ footer{position:relative;z-index:1;margin-top:var(--sp-6);border-top:1px solid v
 @media(max-width:900px){
   .mission-visual-img{animation:none !important}
   .atmo-beam,.atmo-dust,.atmo-dust2,.atmo-ring,.atmo-orb{animation:none !important}
-  .nr-live{animation:none !important}
 }
 
 /* ── Overlay chiusi ───────────────────────────────────────────────

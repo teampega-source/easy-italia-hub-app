@@ -32,32 +32,11 @@
   .pcard-note{font-size:0.8125rem}
   /* Percorso intro block inside CTA card */ .percorso-intro-tag{font-size:0.8125rem}
   .percorso-pill{font-size:0.8125rem}
-  .nr-sidebar-btn{font-size:0.8125rem}
-  .nr-opp-h{font-size:0.8125rem}
-  .nr-opp-h .nr-spark{font-size:0.8125rem}
-  .nr-opp-eyebrow{font-size:0.8125rem}
-  .nr-opp-line{font-size:0.8125rem}
-  .nr-opp-cta{font-size:0.8125rem}
-  .nr-opp-all{font-size:0.8125rem}
-  /* — News section (now SECONDARY, below the featured widget) — */ .nr-head{font-size:0.8125rem}
-  .nr-src{font-size:0.8125rem}
-  .nr-title{font-size:0.8125rem}
-  .nr-foot{font-size:0.8125rem}
-  .nr-empty{font-size:0.8125rem}
-  .nr-cta-btn{font-size:0.8125rem}
-  .nr-fests-h{font-size:0.8125rem}
-  .nr-fest-tag{font-size:0.8125rem}
-  .nr-fest-name{font-size:0.8125rem}
-  .nr-fest-date{font-size:0.8125rem}
-  .nr-fest-soon{font-size:0.8125rem}
   .eih-fest-toast-close{font-size:0.8125rem}
   .eih-fest-toast-tag{font-size:0.8125rem}
   .eih-fest-toast-title{font-size:0.8125rem}
   .eih-fest-toast-msg{font-size:0.8125rem}
   .eih-fest-toast-cta{font-size:0.8125rem}
-  .nr-nav-tog{font-size:0.8125rem}
-  .nr-nav-sh{font-size:0.8125rem}
-  .nr-nav-ul a,.nr-nav-lnk{font-size:0.8125rem}
   /* Unread-count badge (proactive message while panel closed) */ .chat-badge{font-size:0.8125rem}
   /* Avviso AI: riga breve sempre visibile, testo esteso al tocco */ .ch-ai-note{font-size:0.8125rem}
   /* Da telefono .62rem sono 9,9px: sotto la soglia di leggibilita' */ @media(max-width:640px){font-size:0.8125rem}
