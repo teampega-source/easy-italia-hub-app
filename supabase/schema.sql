@@ -499,6 +499,12 @@ drop policy if exists "subscriptions_select_own" on public.subscriptions;
 create policy "subscriptions_select_own" on public.subscriptions
   for select using (user_id = (select auth.uid()));
 
+-- NOTA (hardening, migration-010): le policy di scrittura client su
+-- subscriptions sono state RIMOSE — il piano è gestito solo dal webhook Stripe
+-- via service role (che bypassa la RLS). Lasciarle permetteva a un utente di
+-- auto-promuoversi a premium con la sola anon key. migration-010 le droppa;
+-- qui restano solo come blocco commentato per riferimento storico.
+/*
 drop policy if exists "subscriptions_insert_own" on public.subscriptions;
 create policy "subscriptions_insert_own" on public.subscriptions
   for insert with check (user_id = (select auth.uid()));
@@ -510,6 +516,7 @@ create policy "subscriptions_update_own" on public.subscriptions
 drop policy if exists "subscriptions_delete_own" on public.subscriptions;
 create policy "subscriptions_delete_own" on public.subscriptions
   for delete using (user_id = (select auth.uid()));
+*/
 
 
 -- ----------------------------------------------------------------------------
