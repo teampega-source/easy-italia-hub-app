@@ -101,6 +101,7 @@ function gitDate(percorsoRel) {
 // mappa path-sito → file sorgente (la home è index.html, il resto 1:1)
 const pagine = execSync("git ls-files \"*.html\"", { cwd: root, encoding: "utf8" })
   .split("\n").filter(Boolean)
+  .filter((f) => !f.includes("/")) // solo le pagine reali: niente template di skill interne
   .filter((f) => !/^(404|offline|abbonamenti|conferma-newsletter|registrati|dashboard)\.html$/.test(f))
   .map((f) => ({ file: f, path: f === "index.html" ? "/" : "/" + f.replace(/\.html$/, "") }));
 
