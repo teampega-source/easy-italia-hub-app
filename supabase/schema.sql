@@ -811,6 +811,52 @@ create policy "documents_storage_delete_own" on storage.objects
     and (storage.foldername(name))[1] = (select auth.uid())::text
   );
 --
+-- 15. CONTATORE VISITE (migration-011)
+--     Una riga al giorno con le visite reali, deduplicate per sessione
+--     dall'API serverless (cookie tecnico di 30 minuti). Nessun dato
+--     personale nel DB. Il client non accede mai: riceve il totale gia'
+--     sommato da /api/visite.
+--
+create table if not exists public.visite_giornaliere (
+  giorno     date primary key,
+  reali      integer    not null default 0 check (reali >= 0),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.visite_giornaliere enable row level security;
+
+create or replace function public.visite_registra(conta boolean default true)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  g      date := (now() at time zone 'asia/colombo')::date;
+  tot    integer;
+begin
+  if conta then
+    insert into visite_giornaliere (giorno, reali)
+    values (g, 1)
+    on conflict (giorno) do update
+      set reali      = visite_giornaliere.reali + 1,
+          updated_at = now();
+  end if;
+
+  select coalesce(sum(reali), 0) into tot from visite_giornaliere;
+
+  return jsonb_build_object(
+    'base',   824,
+    'giorni', greatest(0, g - date '2026-09-26'),
+    'reali',  tot
+  );
+end;
+$$;
+
+revoke all on function public.visite_registra(boolean) from public, anon, authenticated;
+grant execute on function public.visite_registra(boolean) to service_role;
+
+--
 -- ============================================================================
 -- FINE / END — Easy Italia Hub schema
 -- ============================================================================

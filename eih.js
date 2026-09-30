@@ -434,6 +434,9 @@
     document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSubs();});
   }
   const footHost=document.getElementById('site-footer'); if(footHost)footHost.innerHTML=footHTML();
+  // Contatore visite del footer: caricato solo dove c'e' davvero un footer
+  // (le pagine speciali come 404/offline restano intoccate).
+  if(footHost&&!window.__eihVisite){const vs=document.createElement('script');vs.src='/assets/eih-visite.js';vs.defer=true;document.head.appendChild(vs);}
 
   // WhatsApp: link unico per tutto il sito. Imposta window.EIH_WHATSAPP_URL
   // con il link reale del canale (es. https://whatsapp.com/channel/XXXX) per

@@ -301,6 +301,10 @@ footer{position:relative;z-index:1;margin-top:var(--sp-6);border-top:1px solid v
 .footer-inner>div:nth-child(2) ul{columns:2;column-gap:var(--sp-2)}
 .footer-inner>div:nth-child(2) li{break-inside:avoid}
 .footer-bottom{max-width:1200px;margin:0 auto;padding:var(--sp-1) var(--sp-5) var(--sp-2);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--sp-1)}
+/* Contatore visite: un numero tranquillo accanto alle note legali. */
+.eih-visite{margin:0;font-size:var(--text-xs);color:var(--fg-muted);font-weight:300;font-variant-numeric:tabular-nums;white-space:nowrap}
+.eih-visite-n{font-weight:600;color:var(--ink)}
+[data-theme="dark"] .eih-visite-n{color:var(--fg)}
 .footer-copy{font-size:var(--text-xs);color:var(--fg-muted);font-weight:300}
 .footer-legal{display:flex;gap:var(--sp-2);flex-wrap:wrap}
 .footer-legal a{font-size:var(--text-xs);color:var(--fg-muted);text-decoration:none;transition:color var(--dur-micro)}
