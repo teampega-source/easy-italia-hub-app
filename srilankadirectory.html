@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<script>/* La lingua della pagina si decide qui, prima di qualsiasi foglio di
+   stile: uno script che sta dopo un <link rel=stylesheet> non gira finche' il
+   CSS non e' arrivato, e quel ritardo si vedeva tutto sul cambio di lingua.
+
+   La lingua predefinita del sito e' l'inglese. L'italiano e' una scelta come
+   le altre: si applica solo se l'utente l'ha chiesto. "eih-lang-scelta"
+   distingue una scelta vera dalla lingua che il sito applicava da se': prima
+   ogni visita salvava "it" anche a chi non aveva mai toccato il selettore, e
+   senza questa distinzione quei visitatori resterebbero in italiano per
+   sempre. Chi non ha il segno di scelta riparte dall'inglese, una volta sola. */
+try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
+try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+if(!/^(it|en|si|ta)$/.test(_l))_l="en";
+window.EIH_LANG=_l;window.EIH_PAGINA="srilankadirectory";
+if(/^(en|si|ta)$/.test(_l)){var _p=window.EIH_PAGINA||"index";
+window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),promessaUi:fetch("/assets/i18n/_ui."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
+var _s=document.createElement("script");_s.fetchPriority="high";_s.src="/assets/eih-i18n-page.js";_s.defer=true;document.head.appendChild(_s);
+var _t=document.createElement("style");_t.textContent="html.eih-tr-attesa main{visibility:hidden}";document.head.appendChild(_t);
+document.documentElement.classList.add("eih-tr-attesa");
+setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")},500);}}catch(e){}</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sri Lanka Directory — Partner community · Easy Italia Hub</title>
+<meta name="description" content="Sri Lanka Directory (SLD) raccoglie le imprese e i servizi della diaspora srilankese in tutto il mondo. Chi sono, cosa trovi nella directory e come contattarli: sito, email, social e canale WhatsApp ufficiali."/>
+<link rel="canonical" href="https://easyitaliahub.it/srilankadirectory"/>
+<!-- seo:inizio — generato da scripts/dati-strutturati.mjs, non scrivere qui -->
+<link rel="alternate" hreflang="it" href="https://easyitaliahub.it/srilankadirectory"/>
+<link rel="alternate" hreflang="en" href="https://easyitaliahub.it/en/srilankadirectory"/>
+<link rel="alternate" hreflang="si" href="https://easyitaliahub.it/si/srilankadirectory"/>
+<link rel="alternate" hreflang="ta" href="https://easyitaliahub.it/ta/srilankadirectory"/>
+<link rel="alternate" hreflang="x-default" href="https://easyitaliahub.it/srilankadirectory"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Easy Italia Hub","item":"https://easyitaliahub.it/"},{"@type":"ListItem","position":2,"name":"Sri Lanka Directory","item":"https://easyitaliahub.it/srilankadirectory"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Sri Lanka Directory","url":"https://easyitaliahub.it/srilankadirectory","isPartOf":{"@type":"WebSite","name":"Easy Italia Hub","url":"https://easyitaliahub.it/"}}</script>
+<!-- seo:fine -->
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<meta name="theme-color" content="#7d7058"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Easy Italia Hub"/>
+<meta property="og:title" content="Sri Lanka Directory — Partner community · Easy Italia Hub"/>
+<meta property="og:description" content="La directory globale delle imprese srilankesi, dal nostro partner in Australia. Link e contatti ufficiali."/>
+<meta property="og:url" content="https://easyitaliahub.it/srilankadirectory"/>
+<meta property="og:image" content="https://easyitaliahub.it/api/og?t=Sri%20Lanka%20Directory&amp;s=Partner%20community%20%E2%80%94%20link%20e%20contatti%20ufficiali"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="it_IT"/>
+<meta property="og:locale:alternate" content="en_US"/>
+<meta property="og:locale:alternate" content="si_LK"/>
+<meta property="og:locale:alternate" content="ta_IN"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Sri Lanka Directory — Partner community"/>
+<meta name="twitter:description" content="La directory globale delle imprese srilankesi: link e contatti ufficiali del nostro partner."/>
+<meta name="twitter:image" content="https://easyitaliahub.it/api/og?t=Sri%20Lanka%20Directory&amp;s=Partner%20community%20%E2%80%94%20link%20e%20contatti%20ufficiali"/>
+<link rel="preconnect" href="https://api.fontshare.com"/>
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" media="print" onload="this.media='all'"/>
+<noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/></noscript>
+<link rel="stylesheet" href="eih.css"/>
+<script>window.EIH_I18N_EXTRA={"en":{"page.h1":"Sri Lanka Directory,<br/><em>our Australian partner.</em>","page.lead":"From the Sri Lankan diaspora in Australia, a directory gathering verified Sri Lankan businesses and services worldwide. Here is who they are, what you find in it and how to reach them.","s1.t":"What the directory is","s1.p1":"Born in Australia in 2010 as a print publication, Sri Lanka Directory (SLD) is today a global directory: verified Sri Lankan businesses, professionals and services across the world, from restaurants to consultants. They call it \u201cthe Sri Lankans' first-ever global directory\u201d.","s1.p2":"We are community partners: they present Easy Italia Hub to their readers, we present their directory to the community in Italy. No commercial agreement — two projects telling each other's story.","s2.t":"What you find there","s2.l1":"<strong>The global directory:</strong> businesses and services of the diaspora, searchable by category and country.","s2.l2":"<strong>The rate card</strong> for businesses that want to be listed in the directory.","s2.l3":"<strong>SLD Global on WhatsApp:</strong> the official channel with news and announcements.","s3.t":"Contacts","s3.p":"All official links, verified in October 2026 on SLD's channels.","c1.t":"Official website","c1.d":"srilankadirectory.com","c2.t":"Facebook","c2.d":"facebook.com/SriLankaDirectory","c3.t":"Instagram","c3.d":"instagram.com/srilankadirectory","c4.t":"LinkedIn","c4.d":"linkedin.com/company/srilankadirectory","c5.t":"WhatsApp channel","c5.d":"SLD Global — news and announcements","c6.t":"Business email","c6.d":"business@srilankadirectory.com","cta.t":"Run a Sri Lankan business?","cta.p":"SLD's rate card explains how to be listed in the directory; for everything else, use the contacts above.","cta.btn":"Visit srilankadirectory.com ↗","cta.alt":"Work with us","nota":"Editorial page by Easy Italia Hub about our community partner: the contacts are SLD's official public ones.","upd":"Contacts verified in October 2026 on SLD's official channels."},"si":{"page.h1":"Sri Lanka Directory,<br/><em>අපේ ඕස්ට්‍රේලියානු හවුල්කරුවා.</em>","page.lead":"ඕස්ට්‍රේලියාවේ ශ්‍රී ලාංකික ඩයස්පෝරාවෙන්, ලොව පුරා සත්‍යාපිත ශ්‍රී ලාංකික ව්‍යාපාර සහ සේවා එකතු කරන ඩිරෙක්ටරියක්. ඔවුන් කවුද, එහි මොනවා සොයාගන්නත්ද සහ අමතන්නේ කෙසේද මෙන්න.","s1.t":"ඩිරෙක්ටරිය කියන්නේ මොකක්ද","s1.p1":"2010දී ඕස්ට්‍රේලියාවේ මුද්‍රිත ප්‍රකාශනයක් ලෙස ආරම්භ වූ Sri Lanka Directory (SLD) අද ගෝලීය ඩිරෙක්ටරියකි: ලොව පුරා සත්‍යාපිත ශ්‍රී ලාංකික ව්‍යාපාර, වෘත්තිකයන් සහ සේවා — අවන්හල්වලින් උපදේශකයන් දක්වා. ඔවුහු එය \u201cශ්‍රී ලාංකිකයන්ගේ පළමු ගෝලීය ඩිරෙක්ටරිය\u201d ලෙස හඳුන්වති.","s1.p2":"අපි ප්‍රජා හවුල්කරුවෝ: ඔවුහු ඔවුන්ගේ පාඨකයන්ට Easy Italia Hub හඳුන්වා දෙති, අපි ඉතාලියේ ප්‍රජාවට ඔවුන්ගේ ඩිරෙක්ටරිය හඳුන්වා දෙනවා. වාණිජ ගිවිසුමක් නැත — එකිනෙකා ගැන කතා කරන ව්‍යාපෘති දෙකක්.","s2.t":"එහි ඔබ සොයා ගන්නේ","s2.l1":"<strong>ගෝලීය ඩිරෙක්ටරිය:</strong> ඩයස්පෝරාවේ ව්‍යාපාර සහ සේවා, කාණ්ඩය සහ රට අනුව සොයා ගත හැක.","s2.l2":"<strong>Rate Card</strong> — ඩිරෙක්ටරියේ ලැයිස්තුගත වීමට අවශ්‍ය ව්‍යාපාර සඳහා.","s2.l3":"<strong>WhatsApp හි SLD Global:</strong> පුවත් සහ නිවේදන සහිත නිල නාලිකාව.","s3.t":"සම්බන්ධතා","s3.p":"2026 ඔක්තෝබර් මාසයේ ඔවුන්ගේ නාලිකාවල සත්‍යාපිත සියලු නිල සබැඳි.","c1.t":"නිල වෙබ් අඩවිය","c1.d":"srilankadirectory.com","c2.t":"Facebook","c2.d":"facebook.com/SriLankaDirectory","c3.t":"Instagram","c3.d":"instagram.com/srilankadirectory","c4.t":"LinkedIn","c4.d":"linkedin.com/company/srilankadirectory","c5.t":"WhatsApp නාලිකාව","c5.d":"SLD Global — පුවත් සහ නිවේදන","c6.t":"ව්‍යාපාර ඊමේල්","c6.d":"business@srilankadirectory.com","cta.t":"ශ්‍රී ලාංකික ව්‍යාපාරයක් ඔබට තිබේද?","cta.p":"SLD ගේ rate card ඩිරෙක්ටරියේ ලැයිස්තුගත වන ආකාරය පැහැදිලි කරයි; අනෙක් සියල්ලට ඉහත සම්බන්ධතා භාවිතා කරන්න.","cta.btn":"srilankadirectory.com වෙත යන්න ↗","cta.alt":"අප සමඟ වැඩ කරන්න","nota":"අපගේ ප්‍රජා හවුල්කරුවා ගැන Easy Italia Hub හි කතෘ පිටුවකි: සම්බන්ධතා SLD ගේ නිල පොදු ඒවාය.","upd":"සම්බන්ධතා 2026 ඔක්තෝබර් මාසයේ SLD නිල නාලිකාවලින් සත්‍යාපිතයි."},"ta":{"page.h1":"Sri Lanka Directory,<br/><em>எங்கள் ஆஸ்திரேலிய கூட்டாளர்.</em>","page.lead":"ஆஸ்திரேலியாவின் இலங்கை டயஸ்போராவிலிருந்து, உலகெங்கும் உள்ள சரிபார்க்கப்பட்ட இலங்கை வணிகங்களையும் சேவைகளையும் திரட்டும் அடைவு ஒன்று. அவர்கள் யார், அதில் என்ன காண்பது, எப்படித் தொடர்பு கொள்வது என்பது இங்கே.","s1.t":"அடைவு என்றால் என்ன","s1.p1":"2010 இல் ஆஸ்திரேலியாவில் அச்சு வெளியீடாகத் தொடங்கிய Sri Lanka Directory (SLD) இன்று உலகளாவிய அடைவு: உலகெங்கும் உள்ள சரிபார்க்கப்பட்ட இலங்கை வணிகங்கள், நிபுணர்கள் மற்றும் சேவைகள் — உணவகங்களிலிருந்து ஆலோசகர்கள் வரை. \u201cஇலங்கையர்களின் முதல் உலகளாவிய அடைவு\u201d என்று அவர்கள் அழைக்கிறார்கள்.","s1.p2":"நாங்கள் சமூக கூட்டாளர்கள்: அவர்கள் தங்கள் வாசகர்களுக்கு Easy Italia Hub-ஐ அறிமுகப்படுத்துகிறார்கள், நாங்கள் இத்தாலியின் சமூகத்திற்கு அவர்களின் அடைவை அறிமுகப்படுத்துகிறோம். வணிக ஒப்பந்தம் இல்லை — ஒருவரைப் பற்றி மற்றவர் பேசும் இரண்டு திட்டங்கள்.","s2.t":"அங்கு நீங்கள் காண்பவை","s2.l1":"<strong>உலகளாவிய அடைவு:</strong> டயஸ்போராவின் வணிகங்கள் மற்றும் சேவைகள், வகை மற்றும் நாடு வாரியாகத் தேடலாம்.","s2.l2":"<strong>Rate Card</strong> — அடைவில் பட்டியலிட விரும்பும் வணிகங்களுக்கு.","s2.l3":"<strong>WhatsApp-இல் SLD Global:</strong> செய்திகள் மற்றும் அறிவிப்புகளுடன் அதிகாரப்பூர்வ சேனல்.","s3.t":"தொடர்புகள்","s3.p":"அக்டோபர் 2026 இல் SLD இன் சேனல்களில் சரிபார்க்கப்பட்ட அதிகாரப்பூர்வ இணைப்புகள்.","c1.t":"அதிகாரப்பூர்வ இணையதளம்","c1.d":"srilankadirectory.com","c2.t":"Facebook","c2.d":"facebook.com/SriLankaDirectory","c3.t":"Instagram","c3.d":"instagram.com/srilankadirectory","c4.t":"LinkedIn","c4.d":"linkedin.com/company/srilankadirectory","c5.t":"WhatsApp சேனல்","c5.d":"SLD Global — செய்திகள் மற்றும் அறிவிப்புகள்","c6.t":"வணிக மின்னஞ்சல்","c6.d":"business@srilankadirectory.com","cta.t":"இலங்கை வணிகம் உங்களிடம் உள்ளதா?","cta.p":"SLD இன் rate card அடைவில் பட்டியலிடப்படுவது எப்படி என்பதை விளக்குகிறது; மற்ற அனைத்திற்கும் மேலே உள்ள தொடர்புகளைப் பயன்படுத்துங்கள்.","cta.btn":"srilankadirectory.com-ஐப் பார்வையிடு ↗","cta.alt":"எங்களுடன் பணியாற்றுங்கள்","nota":"எங்கள் சமூக கூட்டாளரைப் பற்றிய Easy Italia Hub இன் தொகுப்புப் பக்கம்: தொடர்புகள் SLD இன் அதிகாரப்பூர்வ பொதுவானவை.","upd":"தொடர்புகள் அக்டோபர் 2026 இல் SLD இன் அதிகாரப்பூர்வ சேனல்களில் சரிபார்க்கப்பட்டன."}};</script>
+<link rel="stylesheet" href="/assets/eih-leggibilita.css"/>
+<script src="/assets/eih-lang-url.js"></script>
+<script src="/assets/eih-errori.js" defer></script>
+</head>
+<body data-page="srilankadirectory">
+<a href="#main" class="skip-link">Salta al contenuto</a>
+<div id="preloader" aria-hidden="true"><span class="pre-logo">Easy <em>Italia</em> Hub</span><span class="pre-bar"></span></div>
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <style>
+    [data-page="srilankadirectory"] .page section{scroll-margin-top:6rem}
+    [data-page="srilankadirectory"] .sld-marchio{display:inline-flex;align-items:center;justify-content:center;
+      padding:14px 26px;border-radius:16px;background:#fff;border:1px solid var(--border);margin-bottom:var(--sp-2)}
+    html[data-theme="dark"] [data-page="srilankadirectory"] .sld-marchio{background:#eceae4}
+    [data-page="srilankadirectory"] .sld-marchio img{height:44px;width:auto;display:block}
+    [data-page="srilankadirectory"] .contatti{display:grid;gap:.75rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));margin-top:var(--sp-2)}
+    [data-page="srilankadirectory"] .contatto{display:flex;flex-direction:column;gap:.15rem;padding:1rem 1.1rem;
+      border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--border);text-decoration:none;
+      color:inherit;transition:border-color var(--dur-micro),transform var(--dur-micro)}
+    [data-page="srilankadirectory"] .contatto:hover{border-color:var(--gold);transform:translateY(-2px)}
+    [data-page="srilankadirectory"] .contatto .t{font-family:'Clash Grotesk',sans-serif;font-weight:600;font-size:var(--text-sm)}
+    [data-page="srilankadirectory"] .contatto .d{font-size:var(--text-xs);color:var(--fg-muted);word-break:break-all}
+    [data-page="srilankadirectory"] .nota{margin-top:var(--sp-2);font-size:var(--text-xs);color:var(--fg-muted);line-height:1.6}
+  </style>
+  <div class="page">
+    <p class="eyebrow reveal"><span class="eyebrow-line"></span> <span data-no-tr>Partner</span></p>
+    <span class="sld-marchio reveal"><img src="/assets/img/partner-sld-logo.png" alt="Sri Lanka Directory" width="563" height="206"/></span>
+    <h1 class="reveal" data-i18n-html="page.h1">Sri Lanka Directory,<br/><em>il nostro partner in Australia.</em></h1>
+    <p class="lead reveal" data-i18n-html="page.lead">Dalla diaspora srilankese in Australia, una directory che raccoglie le imprese e i servizi srilankesi verificati in tutto il mondo. Qui trovi chi sono, cosa c'è nella directory e come contattarli.</p>
+
+    <section id="cos-e" class="reveal">
+      <h2 data-i18n="s1.t">Cos'è la directory</h2>
+      <p data-i18n="s1.p1">Nata in Australia nel 2010 come pubblicazione cartacea, Sri Lanka Directory (SLD) è oggi una directory globale: attività, professionisti e servizi srilankesi verificati, dal ristorante al consulente. La definiscono «la prima directory globale degli srilankesi».</p>
+      <p data-i18n="s1.p2">Siamo partner di community: loro presentano Easy Italia Hub ai loro lettori, noi presentiamo la loro directory alla community in Italia. Nessun accordo economico — due progetti che si raccontano a vicenda.</p>
+    </section>
+
+    <section id="cosa-trovi" class="reveal">
+      <h2 data-i18n="s2.t">Cosa trovi nella directory</h2>
+      <ul>
+        <li data-i18n-html="s2.l1"><strong>La directory globale:</strong> imprese e servizi della diaspora, ricercabili per categoria e paese.</li>
+        <li data-i18n-html="s2.l2"><strong>La rate card</strong> per le aziende che vogliono essere elencate nella directory.</li>
+        <li data-i18n-html="s2.l3"><strong>SLD Global su WhatsApp:</strong> il canale ufficiale con novità e annunci.</li>
+      </ul>
+    </section>
+
+    <section id="contatti" class="reveal">
+      <h2 data-i18n="s3.t">Contatti</h2>
+      <p data-i18n="s3.p">Tutti i link ufficiali, verificati nell'ottobre 2026 sui canali di SLD.</p>
+      <div class="contatti">
+        <a class="contatto" href="https://srilankadirectory.com" target="_blank" rel="noopener" data-no-tr>
+          <span class="t" data-i18n="c1.t">Sito ufficiale</span>
+          <span class="d">srilankadirectory.com</span>
+        </a>
+        <a class="contatto" href="mailto:business@srilankadirectory.com" data-no-tr>
+          <span class="t" data-i18n="c6.t">Email aziende</span>
+          <span class="d">business@srilankadirectory.com</span>
+        </a>
+        <a class="contatto" href="https://www.facebook.com/SriLankaDirectory" target="_blank" rel="noopener" data-no-tr>
+          <span class="t" data-i18n="c2.t">Facebook</span>
+          <span class="d">facebook.com/SriLankaDirectory</span>
+        </a>
+        <a class="contatto" href="https://www.instagram.com/srilankadirectory/" target="_blank" rel="noopener" data-no-tr>
+          <span class="t" data-i18n="c3.t">Instagram</span>
+          <span class="d">instagram.com/srilankadirectory</span>
+        </a>
+        <a class="contatto" href="https://www.linkedin.com/company/srilankadirectory/" target="_blank" rel="noopener" data-no-tr>
+          <span class="t" data-i18n="c4.t">LinkedIn</span>
+          <span class="d">linkedin.com/company/srilankadirectory</span>
+        </a>
+        <a class="contatto" href="https://www.whatsapp.com/channel/0029VaNUFVE1dAvuzBmUpa3g" target="_blank" rel="noopener" data-no-tr>
+          <span class="t" data-i18n="c5.t">Canale WhatsApp</span>
+          <span class="d" data-i18n="c5.d">SLD Global — novità e annunci</span>
+        </a>
+      </div>
+    </section>
+
+    <section id="vai" class="reveal">
+      <h2 data-i18n="cta.t">Hai un'attività srilankese?</h2>
+      <p data-i18n="cta.p">La rate card di SLD spiega come essere elencati nella directory; per tutto il resto, usa i contatti qui sopra.</p>
+      <div class="azioni">
+        <a href="https://srilankadirectory.com" target="_blank" rel="noopener" class="btn-primary" data-no-tr data-i18n="cta.btn">Vai a srilankadirectory.com ↗</a>
+        <a href="/contatti?motivo=partner" class="btn-ghost" data-i18n="cta.alt">Lavora con noi</a>
+      </div>
+      <p class="nota" data-i18n="nota">Pagina redazionale di Easy Italia Hub sul nostro partner community: i contatti sono quelli pubblici ufficiali di SLD.</p>
+      <p class="nota" data-i18n="upd">Contatti verificati nell'ottobre 2026 sui canali ufficiali di SLD.</p>
+    </section>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script src="eih-auth.js" defer></script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')});</script>
+<script src="assets/eih-atmosphere.js" fetchpriority="low" defer></script>
+<script src="assets/eih-palette.js" fetchpriority="low" defer></script>
+<script src="assets/eih-theme.js" defer></script>
+<script src="assets/eih-consent.js" defer></script>
+<script src="/assets/eih-misura.js" defer></script>
+<script src="/assets/eih-hero3d.js" fetchpriority="low" defer></script>
+<script src="/assets/vendor/lenis.min.js" fetchpriority="low" defer></script>
+<script src="/assets/vendor/gsap.min.js" fetchpriority="low" defer></script>
+<script src="/assets/vendor/ScrollTrigger.min.js" fetchpriority="low" defer></script>
+<script src="/assets/eih-motion.js" fetchpriority="low" defer></script>
+</body>
+</html>

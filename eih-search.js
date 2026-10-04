@@ -43,6 +43,7 @@
     // /abbonamenti oggi rimanda alla home (vercel.json): cercarlo e finire
     // altrove e' peggio che non trovarlo. Torna quando la pagina torna.
     {u:'/wise',e:'💸',c:'Servizi',t:'Wise',k:'wise conto carta rupie lkr rimesse commissioni wise account card rupees lkr remittance fees partner',en:'Wise'},
+    {u:'/srilankadirectory',e:'🌏',c:'Azienda',t:'Sri Lanka Directory',k:'sri lanka directory sld partner australia directory imprese srilankesi diaspora contatti whatsapp facebook instagram linkedin srilankadirectory global',en:'Sri Lanka Directory'},
     {u:'/privacy',e:'🔒',c:'Legal',t:'Privacy Policy',k:'privacy gdpr dati personali privacy gdpr personal data',en:'Privacy Policy'},
     {u:'/termini',e:'📑',c:'Legal',t:'Termini di Servizio',k:'termini condizioni uso legale terms conditions use legal',en:'Terms of Service'},
     {u:'/cookie',e:'🍪',c:'Legal',t:'Cookie Policy',k:'cookie informativa tracciamento cookie notice tracking',en:'Cookie Policy'},

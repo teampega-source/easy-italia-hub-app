@@ -77,6 +77,7 @@
     'riconoscimento-titoli': 'recognition-of-qualifications',
     'scuola': 'school',
     'servizi': 'services',
+    'srilankadirectory': 'srilankadirectory',
     'sponsorizza': 'advertise',
     'termini': 'terms',
     'traduci': 'translate',
