@@ -17,9 +17,11 @@
 
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const LIMITE = 12;                  // piano Hobby, per distribuzione
-const CARTELLA = new URL('../api/', import.meta.url).pathname;
+/* fileURLToPath: .pathname da' /C:/... su Windows e readdirSync esplode. */
+const CARTELLA = fileURLToPath(new URL('../api/', import.meta.url));
 
 const rotte = readdirSync(CARTELLA)
   .filter((f) => /\.(js|mjs|ts)$/.test(f) && !f.startsWith('_'))
