@@ -1657,6 +1657,36 @@ html[data-theme="dark"] .sm-strato.on{opacity:.16}
 .pt-logo--vuoto{background:transparent;border-style:dashed;color:var(--fg-muted);
   font-size:var(--text-xs);letter-spacing:.04em}
 .pt-logo--vuoto:hover{color:var(--ink)}
+/* Spotlight SLD (Sri Lanka Directory): community partner, nessun accordo economico.
+   Card bianca come le targhette della barra: il rosso SLD e il blu dei QR restano
+   leggibili anche di notte. */
+.pt-logo img.pt-sld{height:34px}
+.sld-card{max-width:880px;margin:var(--sp-4) auto 0;padding:var(--sp-4) var(--sp-4) var(--sp-3);
+  background:#fff;border:1px solid var(--border);border-radius:20px}
+.sld-banner{display:block}
+.sld-banner img{width:100%;max-width:620px;height:auto;display:block;margin:0 auto;
+  transition:transform var(--dur-micro)}
+.sld-banner:hover img{transform:translateY(-2px)}
+.sld-row{display:flex;align-items:center;justify-content:center;gap:var(--sp-4);
+  margin-top:var(--sp-3);text-align:left}
+.sld-text{flex:1 1 300px;min-width:0}
+.sld-badge{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:#e82030;background:rgba(232,32,48,.08);
+  border:1px solid rgba(232,32,48,.25);border-radius:999px;padding:.18rem .6rem}
+.sld-desc{margin:.6rem 0 .8rem;font-size:var(--text-sm);color:#545e6e;line-height:1.55;font-weight:300}
+.sld-cta{display:inline-flex;align-items:center;font-size:var(--text-sm);font-weight:600;
+  color:#e82030;text-decoration:none;border-bottom:1px solid rgba(232,32,48,.4);padding-bottom:2px}
+.sld-cta:hover{border-bottom-color:#e82030}
+.sld-qr{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:.45rem;text-decoration:none}
+.sld-qr img{width:118px;height:auto;display:block;transition:transform var(--dur-micro)}
+.sld-qr:hover img{transform:translateY(-2px)}
+.sld-qr span{font-size:.72rem;color:#8a93a1;text-align:center;max-width:132px;line-height:1.35}
+@media(max-width:767px){
+  .sld-row{flex-direction:column;text-align:center;gap:var(--sp-3)}
+  .sld-qr{flex-direction:row;width:100%;max-width:320px;justify-content:flex-start}
+  .sld-qr img{width:96px}
+  .sld-qr span{max-width:none;text-align:left}
+}
 /* Seconda fila: qui non ci sono partner, ci sono servizi che si cercano da noi.
    Targhette piu' piccole e etichetta diversa: la differenza fra "lavora con noi"
    e "lo trovi qui" deve vedersi, non solo leggersi. */
