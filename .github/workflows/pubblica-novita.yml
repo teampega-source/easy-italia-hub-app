@@ -1,0 +1,68 @@
+# Pubblica le novità del sito sui canali social, da solo.
+#
+# Ogni giorno legge la sitemap, guarda cosa è cambiato dall'ultimo giro e
+# annuncia le pagine nuove su Telegram e Bluesky. Lo stato di cosa è già
+# stato pubblicato vive in scripts/social/state.json e viene committato qui:
+# così il giro dopo sa da dove ripartire anche se il runner è nuovo.
+#
+# Senza i segreti configurati il lavoro NON fallisce: gira in prova, stampa
+# cosa avrebbe pubblicato e non tocca lo stato. Appena aggiungi le chiavi
+# (vedi scripts/social/LEGGIMI.md) parte tutto quello rimasto indietro.
+name: Pubblica le novità
+
+on:
+  schedule:
+    - cron: '23 7 * * *'   # ogni giorno alle 07:23 UTC (09:23 in Italia d'estate)
+  workflow_dispatch:
+    inputs:
+      max_post:
+        description: 'Quante pagine pubblicare in questo giro'
+        required: false
+        default: '2'
+      dry_run:
+        description: 'Solo prova, senza pubblicare'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pubblica-novita
+  cancel-in-progress: false
+
+jobs:
+  pubblica:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Annuncia le pagine nuove
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          MAX_POST: ${{ github.event.inputs.max_post || '2' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
+        run: node scripts/social/pubblica.mjs
+
+      - name: Ricorda cosa è stato pubblicato
+        run: |
+          if git diff --quiet -- scripts/social/state.json; then
+            echo "stato invariato"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/social/state.json
+          git commit -m "Social: stato delle pubblicazioni aggiornato" \
+                     -m "Scritto da scripts/social/pubblica.mjs: le pagine qui elencate non verranno annunciate di nuovo."
+          git push

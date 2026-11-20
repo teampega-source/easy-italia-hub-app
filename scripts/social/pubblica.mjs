@@ -1,0 +1,360 @@
+#!/usr/bin/env node
+/**
+ * Pubblica in automatico le pagine nuove o aggiornate del sito.
+ *
+ * Come funziona, in breve:
+ *   1. legge la sitemap (che è già la verità sulle pagine e sulle date);
+ *   2. raggruppa le quattro lingue di una stessa pagina in una sola notizia;
+ *   3. tiene traccia in state.json di cosa ha già annunciato;
+ *   4. per ogni pagina nuova o con lastmod più recente prepara un testo
+ *      (con un'AI gratuita, se c'è la chiave; altrimenti con titolo e
+ *      descrizione della pagina) e lo manda ai canali configurati.
+ *
+ * Canali: Telegram e Bluesky, tutti e due gratuiti via API.
+ * Senza segreti configurati il lavoro gira in prova: stampa cosa avrebbe
+ * pubblicato e non tocca lo stato, così quando aggiungi le chiavi parte
+ * tutto quello che era rimasto indietro.
+ *
+ * Uso:
+ *   node scripts/social/pubblica.mjs            # pubblica davvero
+ *   node scripts/social/pubblica.mjs --dry-run  # solo stampa
+ *   MAX_POST=3 node scripts/social/pubblica.mjs # più di due pagine per giro
+ */
+import { readFile, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+const SITEMAP = join(RADICE, 'sitemap.xml');
+const STATO = join(RADICE, 'scripts', 'social', 'state.json');
+
+const SITO = 'https://easyitaliahub.it';
+const MAX_POST = Math.max(1, Number(process.env.MAX_POST || 2));
+const DRY = process.argv.includes('--dry-run') || process.env.DRY_RUN === '1';
+
+// Pagine che non hanno senso annunciare: la home cambia troppo spesso per
+// essere una "novità", le legali non interessano a nessuno e le aree personali
+// non si aprono senza account.
+const ESCLUSE = new Set([
+  '/', '/cerca', '/registrati', '/dashboard', '/abbonamenti',
+  '/privacy', '/cookie', '/termini', '/note-legali', '/offline',
+]);
+
+// ── sitemap ────────────────────────────────────────────────────────────────
+
+function leggiSitemap(xml) {
+  const voci = [];
+  const blocchi = xml.match(/<url>[\s\S]*?<\/url>/g) || [];
+  for (const b of blocchi) {
+    const loc = (b.match(/<loc>([^<]+)<\/loc>/) || [])[1];
+    const lastmod = (b.match(/<lastmod>([^<]+)<\/lastmod>/) || [])[1] || '';
+    const it = (b.match(/hreflang="it"\s+href="([^"]+)"/) || [])[1];
+    if (!loc) continue;
+    voci.push({ loc, lastmod, canonico: it || loc });
+  }
+  return voci;
+}
+
+// Le quattro lingue sono la stessa notizia: si annuncia la versione italiana
+// una volta sola, con il lastmod più recente fra le varianti.
+function raggruppa(voci) {
+  const perPagina = new Map();
+  for (const v of voci) {
+    let chiave;
+    try { chiave = new URL(v.canonico).pathname; } catch { continue; }
+    const attuale = perPagina.get(chiave);
+    if (!attuale || (v.lastmod || '') > (attuale.lastmod || '')) {
+      perPagina.set(chiave, { chiave, url: v.canonico, lastmod: v.lastmod });
+    }
+  }
+  return [...perPagina.values()];
+}
+
+// ── testo del post ─────────────────────────────────────────────────────────
+
+function pulisciTitolo(t) {
+  return String(t || '')
+    .replace(/\s+/g, ' ')
+    .split(/\s+[—|·]\s+/)[0]   // "Pagina — Easy Italia Hub" → "Pagina"
+    .trim();
+}
+
+function decodifica(html) {
+  return String(html || '')
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ');
+}
+
+async function leggiPagina(url) {
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(20000) });
+    if (!res.ok) return {};
+    const html = await res.text();
+    const titolo = decodifica((html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '');
+    const descrizione = decodifica(
+      (html.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"/i) ||
+       html.match(/<meta[^>]+content="([^"]*)"[^>]+name="description"/i) || [])[1] || ''
+    );
+    return { titolo: pulisciTitolo(titolo), descrizione: descrizione.replace(/\s+/g, ' ').trim() };
+  } catch {
+    return {};
+  }
+}
+
+// Un'AI gratuita è un di più, non un requisito: se c'è una chiave il testo
+// suona più naturale, altrimenti titolo e descrizione bastano.
+async function conAI(titolo, descrizione, url) {
+  const istruzioni =
+    'Scrivi un post sociale in italiano per Easy Italia Hub, il punto di riferimento ' +
+    'della comunità srilankese in Italia. Tono concreto e amichevole, niente enfasi da ' +
+    'pubblicità, niente hashtag, massimo 240 caratteri, una sola frase di invito. ' +
+    'Non inventare dati che non ti do. Rispondi solo con il testo del post.';
+  const richiesta = `Titolo: ${titolo}\nDescrizione: ${descrizione}\nIndirizzo: ${url}`;
+
+  if (process.env.GEMINI_API_KEY) {
+    try {
+      const res = await fetch(
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' +
+          encodeURIComponent(process.env.GEMINI_API_KEY),
+        {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: istruzioni }] },
+            contents: [{ role: 'user', parts: [{ text: richiesta }] }],
+            generationConfig: { temperature: 0.7, maxOutputTokens: 200 },
+          }),
+          signal: AbortSignal.timeout(25000),
+        }
+      );
+      if (res.ok) {
+        const dati = await res.json();
+        const testo = dati?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (testo) return testo.trim();
+      } else {
+        console.log(`  · Gemini ha risposto ${res.status}, uso il testo base`);
+      }
+    } catch (e) {
+      console.log(`  · Gemini non raggiungibile (${e.message}), uso il testo base`);
+    }
+  }
+
+  if (process.env.GROQ_API_KEY) {
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
+          temperature: 0.7,
+          max_tokens: 200,
+          messages: [
+            { role: 'system', content: istruzioni },
+            { role: 'user', content: richiesta },
+          ],
+        }),
+        signal: AbortSignal.timeout(25000),
+      });
+      if (res.ok) {
+        const dati = await res.json();
+        const testo = dati?.choices?.[0]?.message?.content;
+        if (testo) return testo.trim();
+      } else {
+        console.log(`  · Groq ha risposto ${res.status}, uso il testo base`);
+      }
+    } catch (e) {
+      console.log(`  · Groq non raggiungibile (${e.message}), uso il testo base`);
+    }
+  }
+
+  return null;
+}
+
+function testoBase(titolo, descrizione, url) {
+  const pezzi = [titolo];
+  if (descrizione) pezzi.push(descrizione);
+  pezzi.push(url);
+  return pezzi.join('\n\n');
+}
+
+function tronca(testo, max) {
+  if (testo.length <= max) return testo;
+  return testo.slice(0, max - 1).replace(/\s+\S*$/, '') + '…';
+}
+
+// ── canali ─────────────────────────────────────────────────────────────────
+
+const escapaHtml = (t) =>
+  String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+// Ogni canale porta il suo UTM: senza, non si sa quale dei due porta visite.
+function conUta(url, canale) {
+  const u = new URL(url);
+  u.searchParams.set('utm_source', canale);
+  u.searchParams.set('utm_medium', 'social');
+  u.searchParams.set('utm_campaign', 'novita');
+  return u.toString();
+}
+
+async function telegram(testo, url) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chat = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chat) return { canale: 'telegram', esito: 'saltato', motivo: 'segreti assenti' };
+
+  const link = conUta(url, 'telegram');
+  const html = `<b>${escapaHtml(testo.titolo)}</b>\n\n${escapaHtml(testo.descrizione)}\n\n${escapaHtml(link)}`;
+  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: chat,
+      text: html.slice(0, 4000),
+      parse_mode: 'HTML',
+      disable_web_page_preview: false,
+    }),
+    signal: AbortSignal.timeout(20000),
+  });
+  const dati = await res.json().catch(() => ({}));
+  if (!res.ok || dati.ok === false) {
+    return { canale: 'telegram', esito: 'errore', motivo: dati.description || res.status };
+  }
+  return { canale: 'telegram', esito: 'pubblicato' };
+}
+
+async function bluesky(testo, url) {
+  const handle = process.env.BLUESKY_HANDLE;
+  const password = process.env.BLUESKY_APP_PASSWORD;
+  if (!handle || !password) return { canale: 'bluesky', esito: 'saltato', motivo: 'segreti assenti' };
+
+  const sessione = await fetch('https://bsky.social/xrpc/com.atproto.server.createSession', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ identifier: handle, password }),
+    signal: AbortSignal.timeout(20000),
+  });
+  const dati = await sessione.json().catch(() => ({}));
+  if (!sessione.ok) {
+    return { canale: 'bluesky', esito: 'errore', motivo: dati.message || sessione.status };
+  }
+
+  // Bluesky conta 300 caratteri in tutto: l'URL deve restare intero, altrimenti
+  // il link non è cliccabile e la facet punterebbe a un indirizzo mozzato.
+  url = conUta(url, 'bluesky');
+  const spazio = 300 - url.length - 2;
+  const corpo = tronca(`${testo.titolo}\n\n${testo.descrizione}`.trim(), Math.max(40, spazio));
+  const text = `${corpo}\n\n${url}`;
+  const prima = text.slice(0, text.lastIndexOf(url));
+  const facet = [{
+    index: {
+      byteStart: Buffer.byteLength(prima, 'utf8'),
+      byteEnd: Buffer.byteLength(prima + url, 'utf8'),
+    },
+    features: [{ $type: 'app.bsky.richtext.facet#link', uri: url }],
+  }];
+
+  const res = await fetch('https://bsky.social/xrpc/com.atproto.repo.createRecord', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer ${dati.accessJwt}`,
+    },
+    body: JSON.stringify({
+      repo: dati.did,
+      collection: 'app.bsky.feed.post',
+      record: {
+        $type: 'app.bsky.feed.post',
+        text,
+        facets: facet,
+        langs: ['it'],
+        createdAt: new Date().toISOString(),
+      },
+    }),
+    signal: AbortSignal.timeout(20000),
+  });
+  if (!res.ok) {
+    const errore = await res.json().catch(() => ({}));
+    return { canale: 'bluesky', esito: 'errore', motivo: errore.message || res.status };
+  }
+  return { canale: 'bluesky', esito: 'pubblicato' };
+}
+
+// ── giro completo ──────────────────────────────────────────────────────────
+
+async function main() {
+  const xml = await readFile(SITEMAP, 'utf8');
+  let stato = { pubblicati: {} };
+  try {
+    stato = JSON.parse(await readFile(STATO, 'utf8'));
+    if (!stato.pubblicati) stato.pubblicati = {};
+  } catch { /* primo giro: stato vuoto */ }
+
+  const candidate = raggruppa(leggiSitemap(xml))
+    .filter((p) => !ESCLUSE.has(p.chiave))
+    .filter((p) => p.lastmod && (!stato.pubblicati[p.chiave] || p.lastmod > stato.pubblicati[p.chiave]))
+    .sort((a, b) => (a.lastmod < b.lastmod ? 1 : -1))
+    .slice(0, MAX_POST);
+
+  if (!candidate.length) {
+    console.log('Nessuna pagina nuova o aggiornata da annunciare.');
+    return;
+  }
+
+  const canaliConfigurati =
+    Boolean(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) ||
+    Boolean(process.env.BLUESKY_HANDLE && process.env.BLUESKY_APP_PASSWORD);
+
+  if (!canaliConfigurati) {
+    console.log('Nessun canale configurato: giro di prova, non pubblico nulla.');
+    console.log('Segreti attesi: TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID, BLUESKY_HANDLE + BLUESKY_APP_PASSWORD.');
+  }
+
+  for (const pagina of candidate) {
+    console.log(`\n▸ ${pagina.chiave} (aggiornata il ${pagina.lastmod})`);
+    const url = new URL(pagina.chiave, SITO).toString();
+    const info = await leggiPagina(url);
+    const titolo = info.titolo || pagina.chiave;
+    const descrizione = info.descrizione || '';
+
+    const scritto = await conAI(titolo, descrizione, url);
+    const testo = scritto
+      ? { titolo: scritto, descrizione: '' }
+      : { titolo, descrizione };
+
+    if (DRY || !canaliConfigurati) {
+      console.log('  [prova] ' + testoBase(testo.titolo, testo.descrizione, url).replace(/\n+/g, ' / '));
+      continue;
+    }
+
+    const esiti = [];
+    for (const canale of [telegram, bluesky]) {
+      try {
+        esiti.push(await canale(testo, url));
+      } catch (e) {
+        esiti.push({ canale: canale.name, esito: 'errore', motivo: e.message });
+      }
+    }
+
+    for (const e of esiti) {
+      console.log(`  · ${e.canale}: ${e.esito}${e.motivo ? ' — ' + e.motivo : ''}`);
+    }
+
+    // Lo stato avanza solo se almeno un canale ha davvero pubblicato:
+    // così un errore temporaneo non fa perdere la notizia per sempre.
+    if (esiti.some((e) => e.esito === 'pubblicato')) {
+      stato.pubblicati[pagina.chiave] = pagina.lastmod;
+    }
+  }
+
+  if (!DRY && canaliConfigurati) {
+    await writeFile(STATO, JSON.stringify(stato, null, 2) + '\n', 'utf8');
+    console.log('\nStato salvato in scripts/social/state.json');
+  }
+}
+
+main().catch((e) => {
+  console.error('Errore imprevisto:', e);
+  process.exit(1);
+});
