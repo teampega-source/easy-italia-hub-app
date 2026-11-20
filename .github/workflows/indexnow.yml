@@ -1,8 +1,11 @@
 # Dice a IndexNow (Bing, Yandex, Naver, Seznam) quali pagine sono cambiate.
 #
-# Parte a ogni push su main e una volta al giorno, così anche un cambio fatto
-# a mano sulla sitemap viene segnalato. Gratuito, senza account: la chiave è
-# il file <chiave>.txt nella radice del sito.
+# A ogni push guarda i file HTML toccati e segnala le loro URL in tutte e
+# quattro le lingue. Il lastmod della sitemap non basta: resta vecchio anche
+# quando una pagina cambia, e IndexNow non riceverebbe niente.
+#
+# Una volta al giorno, senza push, ripiega sulle pagine con lastmod recente.
+# Gratuito e senza account: la chiave è il file <chiave>.txt nella radice.
 name: IndexNow
 
 on:
@@ -17,6 +20,10 @@ on:
         type: boolean
         required: false
         default: false
+      file:
+        description: 'Prova: file HTML da segnalare (es. srilankadirectory.html)'
+        type: string
+        required: false
 
 concurrency:
   group: indexnow
@@ -27,14 +34,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
 
+      - name: Quali file HTML sono cambiati
+        id: cambiati
+        if: github.event_name == 'push'
+        run: |
+          BASE="${{ github.event.before }}"
+          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+            echo "file=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          FILE=$(git diff --name-only "$BASE" "${{ github.sha }}" | grep -E '\.html$' || true)
+          {
+            echo "file<<FINE_FILE"
+            echo "$FILE"
+            echo "FINE_FILE"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Segnala le pagine cambiate
         env:
           GIORNI: '3'
+          FILE_CAMBIATI: ${{ github.event.inputs.file || steps.cambiati.outputs.file }}
         run: |
           if [ "${{ github.event.inputs.tutte }}" = "true" ]; then
             node scripts/indexnow.mjs --tutte

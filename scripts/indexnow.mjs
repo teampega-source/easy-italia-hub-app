@@ -12,9 +12,15 @@
  * Lo script la trova da solo fra i file della radice (oppure usa INDEXNOW_KEY).
  *
  * Uso:
+ *   FILE_CAMBIATI="a.html\nb.html" node scripts/indexnow.mjs   # dal push
  *   node scripts/indexnow.mjs            # pagine cambiate negli ultimi 3 giorni
  *   GIORNI=7 node scripts/indexnow.mjs   # finestra più larga
  *   node scripts/indexnow.mjs --tutte    # tutte le pagine della sitemap
+ *
+ * Il modo giusto è il primo: il lastmod della sitemap può essere vecchio
+ * anche quando una pagina cambia davvero, e allora IndexNow non segnalerebbe
+ * niente. Con i file del push si manda esattamente quello che è cambiato,
+ * comprese le quattro lingue della stessa pagina.
  */
 import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -37,9 +43,23 @@ function urlDellaSitemap(xml) {
   for (const b of xml.match(/<url>[\s\S]*?<\/url>/g) || []) {
     const loc = (b.match(/<loc>([^<]+)<\/loc>/) || [])[1];
     const lastmod = (b.match(/<lastmod>([^<]+)<\/lastmod>/) || [])[1] || '';
-    if (loc) out.push({ loc, lastmod });
+    const it = (b.match(/hreflang="it"\s+href="([^"]+)"/) || [])[1] || loc;
+    if (loc) out.push({ loc, lastmod, it });
   }
   return out;
+}
+
+// Da "srilankadirectory.html" a tutte le URL della pagina, in ogni lingua.
+function urlDaFile(voci, file) {
+  const base = file.replace(/^.*\//, '').replace(/\.html$/, '');
+  const percorso = base === 'index' ? '/' : '/' + base;
+  const dellaPagina = voci.filter((v) => {
+    try { return new URL(v.it).pathname === percorso; } catch { return false; }
+  });
+  if (dellaPagina.length) return dellaPagina.map((v) => v.loc);
+  // Alcune lingue hanno slug diversi: se la pagina italiana non si trova,
+  // ripiego su una corrispondenza per nome file.
+  return voci.filter((v) => v.loc.split('/').pop() === base).map((v) => v.loc);
 }
 
 async function main() {
@@ -50,15 +70,32 @@ async function main() {
   }
 
   const xml = await readFile(join(RADICE, 'sitemap.xml'), 'utf8');
-  const limite = new Date(Date.now() - GIORNI * 86400000).toISOString().slice(0, 10);
-  const scelte = urlDellaSitemap(xml).filter((u) => TUTTE || (u.lastmod && u.lastmod >= limite));
+  const voci = urlDellaSitemap(xml);
 
-  if (!scelte.length) {
-    console.log(`Nessuna pagina cambiata negli ultimi ${GIORNI} giorni: niente da segnalare.`);
+  const cambiati = (process.env.FILE_CAMBIATI || '')
+    .split(/\r?\n/)
+    .map((f) => f.trim())
+    .filter((f) => f.endsWith('.html'));
+
+  let urlList;
+  if (cambiati.length) {
+    const insieme = new Set();
+    for (const file of cambiati) {
+      for (const u of urlDaFile(voci, file)) insieme.add(u);
+    }
+    urlList = [...insieme];
+    console.log(`File cambiati nel push: ${cambiati.length}, URL ricavate: ${urlList.length}`);
+  } else {
+    const limite = new Date(Date.now() - GIORNI * 86400000).toISOString().slice(0, 10);
+    urlList = voci.filter((u) => TUTTE || (u.lastmod && u.lastmod >= limite)).map((u) => u.loc);
+  }
+
+  if (!urlList.length) {
+    console.log('Nessuna pagina da segnalare: niente da fare.');
     return;
   }
 
-  const urlList = scelte.map((u) => u.loc);
+  urlList = urlList.slice(0, 10000);
   const res = await fetch('https://api.indexnow.org/indexnow', {
     method: 'POST',
     headers: { 'content-type': 'application/json; charset=utf-8' },
