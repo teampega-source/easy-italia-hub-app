@@ -281,6 +281,31 @@ async function bluesky(testo, url) {
   return { canale: 'bluesky', esito: 'pubblicato' };
 }
 
+// Facebook Page: l'API è gratuita, ma serve un token di pagina a lunga
+// durata preso da un'app Meta. Senza token il canale viene saltato.
+async function facebook(testo, url) {
+  const pageId = process.env.FACEBOOK_PAGE_ID;
+  const token = process.env.FACEBOOK_PAGE_TOKEN;
+  if (!pageId || !token) return { canale: 'facebook', esito: 'saltato', motivo: 'segreti assenti' };
+
+  const link = conUta(url, 'facebook');
+  const res = await fetch(`https://graph.facebook.com/v21.0/${pageId}/feed`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      message: `${testo.titolo}\n\n${testo.descrizione}`.trim(),
+      link,
+      access_token: token,
+    }),
+    signal: AbortSignal.timeout(20000),
+  });
+  const dati = await res.json().catch(() => ({}));
+  if (!res.ok || dati.error) {
+    return { canale: 'facebook', esito: 'errore', motivo: (dati.error && dati.error.message) || res.status };
+  }
+  return { canale: 'facebook', esito: 'pubblicato' };
+}
+
 // ── giro completo ──────────────────────────────────────────────────────────
 
 async function main() {
@@ -304,11 +329,12 @@ async function main() {
 
   const canaliConfigurati =
     Boolean(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) ||
-    Boolean(process.env.BLUESKY_HANDLE && process.env.BLUESKY_APP_PASSWORD);
+    Boolean(process.env.BLUESKY_HANDLE && process.env.BLUESKY_APP_PASSWORD) ||
+    Boolean(process.env.FACEBOOK_PAGE_ID && process.env.FACEBOOK_PAGE_TOKEN);
 
   if (!canaliConfigurati) {
     console.log('Nessun canale configurato: giro di prova, non pubblico nulla.');
-    console.log('Segreti attesi: TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID, BLUESKY_HANDLE + BLUESKY_APP_PASSWORD.');
+    console.log('Segreti attesi: TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID, BLUESKY_HANDLE + BLUESKY_APP_PASSWORD, FACEBOOK_PAGE_ID + FACEBOOK_PAGE_TOKEN.');
   }
 
   for (const pagina of candidate) {
@@ -329,7 +355,7 @@ async function main() {
     }
 
     const esiti = [];
-    for (const canale of [telegram, bluesky]) {
+    for (const canale of [telegram, bluesky, facebook]) {
       try {
         esiti.push(await canale(testo, url));
       } catch (e) {
