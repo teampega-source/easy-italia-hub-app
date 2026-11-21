@@ -6,9 +6,17 @@
  *   1. legge la sitemap (che è già la verità sulle pagine e sulle date);
  *   2. raggruppa le quattro lingue di una stessa pagina in una sola notizia;
  *   3. tiene traccia in state.json di cosa ha già annunciato;
- *   4. per ogni pagina nuova o con lastmod più recente prepara un testo
- *      bilingue — italiano dalla pagina italiana, inglese dalla sua versione
- *      /en — e lo manda ai canali configurati.
+ *   4. per ogni pagina nuova prepara un post bilingue — italiano dalla pagina
+ *      italiana, inglese dalle traduzioni della stessa pagina — e lo manda ai
+ *      canali configurati.
+ *
+ * Da dove viene l'inglese. Le pagine /en non hanno meta inglesi: il testo è
+ * tradotto nel browser da assets/eih-i18n-page.js, che pesca in
+ * traduzioni/<pagina>.en.json (italiano → inglese) e dai blocchi
+ * window.EIH_I18N_EXTRA scritti dentro le pagine. Qui si usano le stesse due
+ * fonti: si prende il titolo italiano della pagina, lo si cerca nella
+ * traduzione e si tiene l'inglese. Niente testo inventato: se una pagina non
+ * è tradotta, il post resta solo in italiano e il log lo dice.
  *
  * Canali: Telegram, Bluesky e Facebook Page, tutti gratuiti via API.
  * Senza segreti configurati il lavoro gira in prova: stampa cosa avrebbe
@@ -21,12 +29,14 @@
  *   MAX_POST=3 node scripts/social/pubblica.mjs # più di due pagine per giro
  */
 import { readFile, writeFile } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const SITEMAP = join(RADICE, 'sitemap.xml');
 const STATO = join(RADICE, 'scripts', 'social', 'state.json');
+const TRADUZIONI = join(RADICE, 'traduzioni');
 
 const SITO = 'https://easyitaliahub.it';
 const MAX_POST = Math.max(1, Number(process.env.MAX_POST || 2));
@@ -58,7 +68,7 @@ function leggiSitemap(xml) {
 
 // Le quattro lingue sono la stessa notizia: si annuncia la versione italiana
 // una volta sola, con il lastmod più recente fra le varianti. Della variante
-// inglese interessa l'indirizzo: da lì si legge il testo da affiancare.
+// inglese interessa l'indirizzo, che è quello da mettere nel blocco inglese.
 function raggruppa(voci) {
   const perPagina = new Map();
   for (const v of voci) {
@@ -75,13 +85,12 @@ function raggruppa(voci) {
   return [...perPagina.values()];
 }
 
-// ── testo del post ─────────────────────────────────────────────────────────
+// ── testo della pagina ─────────────────────────────────────────────────────
+
+const normalizza = (t) => String(t || '').replace(/\s+/g, ' ').trim();
 
 function pulisciTitolo(t) {
-  return String(t || '')
-    .replace(/\s+/g, ' ')
-    .split(/\s+[—|·]\s+/)[0]   // "Pagina — Easy Italia Hub" → "Pagina"
-    .trim();
+  return normalizza(t).split(/\s+[—|·]\s+/)[0].trim();   // "Pagina — Easy Italia Hub"
 }
 
 function decodifica(html) {
@@ -90,116 +99,96 @@ function decodifica(html) {
     .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ');
 }
 
+function senzaTag(html) {
+  return normalizza(decodifica(String(html || '').replace(/<[^>]+>/g, ' ')));
+}
+
 async function leggiPagina(url) {
   try {
     const res = await fetch(url, { signal: AbortSignal.timeout(20000) });
     if (!res.ok) return {};
     const html = await res.text();
     const titolo = decodifica((html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '');
-    const descrizione = decodifica(
+    const h1 = senzaTag((html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i) || [])[1] || '');
+    const descrizione = senzaTag(
       (html.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"/i) ||
        html.match(/<meta[^>]+content="([^"]*)"[^>]+name="description"/i) || [])[1] || ''
     );
-    return { titolo: pulisciTitolo(titolo), descrizione: descrizione.replace(/\s+/g, ' ').trim() };
+
+    // Alcune pagine scrivono le traduzioni direttamente nell'HTML, in un
+    // blocco window.EIH_I18N_EXTRA: sono le stesse che usa il browser.
+    let extraEn = null;
+    const extra = html.match(/window\.EIH_I18N_EXTRA=(\{[\s\S]*?\});/);
+    if (extra) {
+      try { extraEn = JSON.parse(extra[1]).en || null; } catch { /* blocco rotto: si ignora */ }
+    }
+
+    return { titolo: pulisciTitolo(titolo), h1, descrizione, extraEn };
   } catch {
     return {};
   }
 }
 
-// Un'AI gratuita è un di più, non un requisito: se c'è una chiave il testo
-// suona più naturale, altrimenti titolo e descrizione bastano. La richiesta
-// si fa una volta per lingua, così ogni blocco resta nella sua lingua invece
-// di mescolarle in un testo solo.
-async function conAI(titolo, descrizione, url, lingua) {
-  const istruzioni = lingua === 'en'
-    ? 'Write a social post in English for Easy Italia Hub, a reference point for the Sri Lankan ' +
-      'community in Italy. Concrete, friendly tone, no advertising hype, no hashtags, at most 240 ' +
-      'characters, one short call to action. Do not invent facts beyond the ones given. Reply with ' +
-      'the post text only.'
-    : 'Scrivi un post sociale in italiano per Easy Italia Hub, il punto di riferimento ' +
-      'della comunità srilankese in Italia. Tono concreto e amichevole, niente enfasi da ' +
-      'pubblicità, niente hashtag, massimo 240 caratteri, una sola frase di invito. ' +
-      'Non inventare dati che non ti do. Rispondi solo con il testo del post.';
-  const richiesta = `Titolo: ${titolo}\nDescrizione: ${descrizione}\nIndirizzo: ${url}`;
+// ── italiano → inglese ─────────────────────────────────────────────────────
+//
+// Stessa coppia di fonti usata dal browser: traduzioni/<pagina>.en.json per il
+// corpo, EIH_I18N_EXTRA per le pagine che se la cavano da sole. Le chiavi sono
+// il testo italiano, quindi il confronto si fa sul testo normalizzato: spazi
+// multipli e a capo non devono contare.
 
-  if (process.env.GEMINI_API_KEY) {
+function leggiTraduzioni(base) {
+  const mappa = new Map();
+  for (const file of ['_comuni.en.json', `${base}.en.json`]) {
     try {
-      const res = await fetch(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' +
-          encodeURIComponent(process.env.GEMINI_API_KEY),
-        {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({
-            systemInstruction: { parts: [{ text: istruzioni }] },
-            contents: [{ role: 'user', parts: [{ text: richiesta }] }],
-            generationConfig: { temperature: 0.7, maxOutputTokens: 200 },
-          }),
-          signal: AbortSignal.timeout(25000),
-        }
-      );
-      if (res.ok) {
-        const dati = await res.json();
-        const testo = dati?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (testo) return testo.trim();
-      } else {
-        console.log(`  · Gemini ha risposto ${res.status} (${lingua}), uso il testo base`);
+      const dati = JSON.parse(readFileSync(join(TRADUZIONI, file), 'utf8'));
+      for (const [it, en] of Object.entries(dati)) {
+        if (typeof en === 'string' && en.trim()) mappa.set(normalizza(it), en);
       }
-    } catch (e) {
-      console.log(`  · Gemini non raggiungibile (${e.message}), uso il testo base`);
-    }
+    } catch { /* pagina senza traduzioni: si va avanti */ }
   }
-
-  if (process.env.GROQ_API_KEY) {
-    try {
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
-          temperature: 0.7,
-          max_tokens: 200,
-          messages: [
-            { role: 'system', content: istruzioni },
-            { role: 'user', content: richiesta },
-          ],
-        }),
-        signal: AbortSignal.timeout(25000),
-      });
-      if (res.ok) {
-        const dati = await res.json();
-        const testo = dati?.choices?.[0]?.message?.content;
-        if (testo) return testo.trim();
-      } else {
-        console.log(`  · Groq ha risposto ${res.status} (${lingua}), uso il testo base`);
-      }
-    } catch (e) {
-      console.log(`  · Groq non raggiungibile (${e.message}), uso il testo base`);
-    }
-  }
-
-  return null;
+  return mappa;
 }
 
-// Due blocchi con la bandierina davanti: si legge subito chi parla italiano e
-// chi inglese, senza etichette tipo "IT:" che sembrano un telegiornale.
+function versioneInglese(info, base) {
+  const mappa = leggiTraduzioni(base);
+  const candidatiTitolo = [info.h1, info.titolo].filter(Boolean);
+  let titolo = '';
+  for (const c of candidatiTitolo) {
+    const trovato = mappa.get(normalizza(c));
+    if (trovato) { titolo = senzaTag(trovato); break; }
+  }
+  if (!titolo && info.extraEn) {
+    titolo = senzaTag(info.extraEn['page.h1'] || info.extraEn['page.title'] || '');
+  }
+
+  let descrizione = mappa.get(normalizza(info.descrizione)) || '';
+  if (!descrizione && info.extraEn) {
+    descrizione = senzaTag(info.extraEn['page.lead'] || '');
+  }
+
+  if (!titolo) return null;   // niente inglese vero: meglio nessun blocco
+  return { titolo, descrizione: senzaTag(descrizione) };
+}
+
+// ── testo del post ─────────────────────────────────────────────────────────
+
+// Ogni blocco ha il link della propria lingua: chi legge in inglese finisce
+// sulla pagina inglese, non su quella italiana.
 function corpoBilingue(testo) {
-  const blocchi = [];
-  blocchi.push(`🇮🇹 ${testo.it.titolo}`);
-  if (testo.it.descrizione) blocchi.push(testo.it.descrizione);
+  const righe = [`🇮🇹 ${testo.it.titolo}`];
+  if (testo.it.descrizione) righe.push(testo.it.descrizione);
+  righe.push(testo.it.url);
   if (testo.en) {
-    blocchi.push('');
-    blocchi.push(`🇬🇧 ${testo.en.titolo}`);
-    if (testo.en.descrizione) blocchi.push(testo.en.descrizione);
+    righe.push('');
+    righe.push(`🇬🇧 ${testo.en.titolo}`);
+    if (testo.en.descrizione) righe.push(testo.en.descrizione);
+    righe.push(testo.en.url);
   }
-  return blocchi.join('\n');
+  return righe.join('\n');
 }
 
-function testoBase(testo, url) {
-  return `${corpoBilingue(testo)}\n\n${url}`;
+function testoBase(testo) {
+  return corpoBilingue(testo);
 }
 
 function tronca(testo, max) {
@@ -212,7 +201,7 @@ function tronca(testo, max) {
 const escapaHtml = (t) =>
   String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-// Ogni canale porta il suo UTM: senza, non si sa quale dei due porta visite.
+// Ogni canale porta il suo UTM: senza, non si sa quale porta visite.
 function conUta(url, canale) {
   const u = new URL(url);
   u.searchParams.set('utm_source', canale);
@@ -221,19 +210,20 @@ function conUta(url, canale) {
   return u.toString();
 }
 
-async function telegram(testo, url) {
+async function telegram(testo) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chat = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chat) return { canale: 'telegram', esito: 'saltato', motivo: 'segreti assenti' };
 
-  const link = conUta(url, 'telegram');
+  const itUrl = conUta(testo.it.url, 'telegram');
   const righe = [`🇮🇹 <b>${escapaHtml(testo.it.titolo)}</b>`];
   if (testo.it.descrizione) righe.push(escapaHtml(testo.it.descrizione));
+  righe.push(escapaHtml(itUrl));
   if (testo.en) {
     righe.push('', `🇬🇧 <b>${escapaHtml(testo.en.titolo)}</b>`);
     if (testo.en.descrizione) righe.push(escapaHtml(testo.en.descrizione));
+    righe.push(escapaHtml(conUta(testo.en.url, 'telegram')));
   }
-  righe.push('', escapaHtml(link));
 
   const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',
@@ -253,7 +243,7 @@ async function telegram(testo, url) {
   return { canale: 'telegram', esito: 'pubblicato' };
 }
 
-async function bluesky(testo, url) {
+async function bluesky(testo) {
   const handle = process.env.BLUESKY_HANDLE;
   const password = process.env.BLUESKY_APP_PASSWORD;
   if (!handle || !password) return { canale: 'bluesky', esito: 'saltato', motivo: 'segreti assenti' };
@@ -270,8 +260,9 @@ async function bluesky(testo, url) {
   }
 
   // Bluesky conta 300 caratteri in tutto, URL compreso: due descrizioni non ci
-  // stanno. Restano i due titoli, che dicono già di cosa si tratta, e il link.
-  url = conUta(url, 'bluesky');
+  // stanno. Restano i due titoli e il link alla pagina italiana, che ha il
+  // selettore lingua in cima.
+  const url = conUta(testo.it.url, 'bluesky');
   const spazio = 300 - url.length - 2;
   const titoli = [`🇮🇹 ${testo.it.titolo}`];
   if (testo.en) titoli.push(`🇬🇧 ${testo.en.titolo}`);
@@ -299,7 +290,7 @@ async function bluesky(testo, url) {
         $type: 'app.bsky.feed.post',
         text,
         facets: facet,
-        langs: ['it', 'en'],
+        langs: testo.en ? ['it', 'en'] : ['it'],
         createdAt: new Date().toISOString(),
       },
     }),
@@ -314,20 +305,20 @@ async function bluesky(testo, url) {
 
 // Facebook Page: l'API è gratuita, ma serve un token di pagina a lunga
 // durata preso da un'app Meta. Senza token il canale viene saltato.
-async function facebook(testo, url) {
+async function facebook(testo) {
   const pageId = process.env.FACEBOOK_PAGE_ID;
   const token = process.env.FACEBOOK_PAGE_TOKEN;
   if (!pageId || !token) return { canale: 'facebook', esito: 'saltato', motivo: 'segreti assenti' };
 
-  const link = conUta(url, 'facebook');
+  const messaggio = corpoBilingue({
+    it: { ...testo.it, url: conUta(testo.it.url, 'facebook') },
+    en: testo.en ? { ...testo.en, url: conUta(testo.en.url, 'facebook') } : null,
+  });
+
   const res = await fetch(`https://graph.facebook.com/v21.0/${pageId}/feed`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({
-      message: corpoBilingue(testo),
-      link,
-      access_token: token,
-    }),
+    body: JSON.stringify({ message: messaggio, link: conUta(testo.it.url, 'facebook'), access_token: token }),
     signal: AbortSignal.timeout(20000),
   });
   const dati = await res.json().catch(() => ({}));
@@ -375,36 +366,25 @@ async function main() {
     const titoloIt = info.titolo || pagina.chiave;
     const descrizioneIt = info.descrizione || '';
 
-    // La versione inglese è un'altra pagina, non una traduzione a mano: si
-    // legge da lì, così il post inglese dice quello che il sito dice in inglese.
-    let infoEn = {};
-    if (pagina.urlEn && pagina.urlEn !== pagina.url) {
-      infoEn = await leggiPagina(pagina.urlEn);
-    }
-    const en = (infoEn.titolo || infoEn.descrizione)
-      ? { titolo: infoEn.titolo || titoloIt, descrizione: infoEn.descrizione || '' }
-      : null;
-    if (!en) console.log('  · versione inglese non trovata: post solo in italiano');
-
-    const scrittoIt = await conAI(titoloIt, descrizioneIt, url, 'it');
-    const scrittoEn = en ? await conAI(en.titolo, en.descrizione, pagina.urlEn || url, 'en') : null;
+    const base = pagina.chiave === '/' ? 'index' : pagina.chiave.replace(/^\//, '');
+    const enBase = versioneInglese({ ...info, titolo: titoloIt, descrizione: descrizioneIt }, base);
+    const en = enBase ? { ...enBase, url: pagina.urlEn || url } : null;
+    if (!en) console.log('  · nessuna traduzione inglese per questa pagina: post solo in italiano');
 
     const testo = {
-      it: scrittoIt ? { titolo: scrittoIt, descrizione: '' } : { titolo: titoloIt, descrizione: descrizioneIt },
-      en: en
-        ? (scrittoEn ? { titolo: scrittoEn, descrizione: '' } : en)
-        : null,
+      it: { titolo: titoloIt, descrizione: descrizioneIt, url },
+      en,
     };
 
     if (DRY || !canaliConfigurati) {
-      console.log('  [prova] ' + testoBase(testo, url).replace(/\n+/g, ' / '));
+      console.log('  [prova] ' + testoBase(testo).replace(/\n+/g, ' / '));
       continue;
     }
 
     const esiti = [];
     for (const canale of [telegram, bluesky, facebook]) {
       try {
-        esiti.push(await canale(testo, url));
+        esiti.push(await canale(testo));
       } catch (e) {
         esiti.push({ canale: canale.name, esito: 'errore', motivo: e.message });
       }

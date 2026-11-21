@@ -54,18 +54,7 @@ token immediato, nessuna approvazione, nessun costo per chiamata.
    pagine di cui sei amministratore; per l'uso continuativo serve la verifica
    del business.
 
-## 4. Testi con l'AI (opzionale, gratuito)
-
-Senza chiavi i post usano titolo e descrizione della pagina, che è già
-decoroso. Con una chiave diventano più naturali.
-
-- **Google Gemini**: https://aistudio.google.com/apikey → piano gratuito.
-- **Groq**: https://console.groq.com/keys → piano gratuito.
-
-Lo script prova prima Gemini, poi Groq, poi torna al testo base. Un errore
-dell'AI non blocca mai la pubblicazione.
-
-## 5. Inserisci i segreti su GitHub
+## 4. Inserisci i segreti su GitHub
 
 Repository → **Settings** → **Secrets and variables** → **Actions** →
 *New repository secret*. Nomi esatti:
@@ -77,11 +66,9 @@ BLUESKY_HANDLE          easyitaliahub.bsky.social
 BLUESKY_APP_PASSWORD    app password di Bluesky
 FACEBOOK_PAGE_ID        id numerico della pagina
 FACEBOOK_PAGE_TOKEN     token di pagina a lunga durata
-GEMINI_API_KEY          opzionale
-GROQ_API_KEY            opzionale
 ```
 
-## 6. Prova
+## 5. Prova
 
 Actions → **Pubblica le novità** → *Run workflow* → spunta `dry_run` per
 vedere cosa pubblicherebbe senza pubblicare. Togli la spunta per pubblicare
@@ -95,11 +82,14 @@ notizia. Pubblica se il `lastmod` è più recente di quello registrato in
 solo per i canali che hanno accettato il post, così un errore di rete non fa
 perdere l'annuncio.
 
-**I post sono bilingui.** Il blocco italiano viene dalla pagina italiana, il
-blocco inglese dalla sua versione `/en` indicata nella sitemap: titolo e
-descrizione si leggono da lì, non sono tradotti a mano. Su Telegram e
-Facebook ci stanno due blocchi completi (🇮🇹 e 🇬🇧); su Bluesky, dove il
-limite è 300 caratteri compreso il link, restano i due titoli.
+**I post sono bilingui.** Il blocco italiano viene dalla pagina italiana; il
+blocco inglese dalle traduzioni vere della stessa pagina, cioè
+`traduzioni/<pagina>.en.json` e i blocchi `EIH_I18N_EXTRA` scritti dentro la
+pagina — le stesse fonti che usa il browser, non una traduzione inventata dallo
+script. Se una pagina non è tradotta, il post esce solo in italiano e il log lo
+dice. Ogni blocco porta il link della propria lingua; su Bluesky, dove il
+limite è 300 caratteri compreso il link, restano i due titoli e il link
+italiano.
 
 Restano fuori: home, ricerca, pagine legali, area personale e abbonamenti.
 
