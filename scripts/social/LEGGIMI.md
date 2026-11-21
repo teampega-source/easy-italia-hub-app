@@ -83,13 +83,13 @@ solo per i canali che hanno accettato il post, così un errore di rete non fa
 perdere l'annuncio.
 
 **I post sono bilingui.** Il blocco italiano viene dalla pagina italiana; il
-blocco inglese dalle traduzioni vere della stessa pagina, cioè
-`traduzioni/<pagina>.en.json` e i blocchi `EIH_I18N_EXTRA` scritti dentro la
-pagina — le stesse fonti che usa il browser, non una traduzione inventata dallo
-script. Se una pagina non è tradotta, il post esce solo in italiano e il log lo
-dice. Ogni blocco porta il link della propria lingua; su Bluesky, dove il
-limite è 300 caratteri compreso il link, restano i due titoli e il link
-italiano.
+blocco inglese dalla traduzione vera della stessa pagina, in quest'ordine:
+`EIH_I18N_EXTRA` (`page.h1` e `page.lead`, quello che mostra il browser), i
+blocchi `en:{...}` scritti dentro la pagina, `traduzioni/<pagina>.en.json`.
+Niente traduzione inventata dallo script: se nessuna delle tre ha la pagina, il
+post esce solo in italiano e il log lo dice pagina per pagina. Ogni blocco
+porta il link della propria lingua; su Bluesky, dove il limite è 300 caratteri
+compreso il link, restano i due titoli e il link italiano.
 
 Restano fuori: home, ricerca, pagine legali, area personale e abbonamenti.
 

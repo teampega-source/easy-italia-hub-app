@@ -10,13 +10,15 @@
  *      italiana, inglese dalle traduzioni della stessa pagina — e lo manda ai
  *      canali configurati.
  *
- * Da dove viene l'inglese. Le pagine /en non hanno meta inglesi: il testo è
- * tradotto nel browser da assets/eih-i18n-page.js, che pesca in
- * traduzioni/<pagina>.en.json (italiano → inglese) e dai blocchi
- * window.EIH_I18N_EXTRA scritti dentro le pagine. Qui si usano le stesse due
- * fonti: si prende il titolo italiano della pagina, lo si cerca nella
- * traduzione e si tiene l'inglese. Niente testo inventato: se una pagina non
- * è tradotta, il post resta solo in italiano e il log lo dice.
+ * Da dove viene l'inglese. Tre fonti, tutte già scritte nel sito:
+ *   · window.EIH_I18N_EXTRA della pagina (page.h1, page.lead): è la
+ *     traduzione che il browser mostra nel titolo e nel sommario;
+ *   · i blocchi en:{...} accanto a it/si/ta dentro la pagina, per le pagine
+ *     che si portano dietro il proprio dizionario;
+ *   · traduzioni/<pagina>.en.json (italiano → inglese) per le pagine più
+ *     vecchie, dove la traduzione è indicizzata sul testo italiano.
+ * Niente testo inventato: se nessuna delle tre ha la pagina, il post resta
+ * solo in italiano e il log lo dice.
  *
  * Canali: Telegram, Bluesky e Facebook Page, tutti gratuiti via API.
  * Senza segreti configurati il lavoro gira in prova: stampa cosa avrebbe
@@ -103,23 +105,28 @@ function senzaTag(html) {
   return normalizza(decodifica(String(html || '').replace(/<[^>]+>/g, ' ')));
 }
 
+/* Coppie "chiave":"valore" di un dizionario JavaScript. Non si usa
+   JSON.parse sul blocco intero: alcune pagine hanno una virgola di troppo
+   prima della graffa finale e il parse fallirebbe tutto. Letta coppia per
+   coppia, una voce strana si salta e le altre restano. */
+function coppie(testo) {
+  const mappa = {};
+  for (const c of testo.matchAll(/"((?:[^"\\]|\\.)*)"\s*:\s*"((?:[^"\\]|\\.)*)"/g)) {
+    try { mappa[JSON.parse('"' + c[1] + '"')] = JSON.parse('"' + c[2] + '"'); } catch { /* coppia strana */ }
+  }
+  return mappa;
+}
+
 /* Le pagine più recenti portano le traduzioni dentro di sé, in blocchi
-   `en:{...}` accanto a it/si/ta. Sono oggetti JavaScript ma con chiavi e
-   valori fra doppi apici, quindi quasi sempre JSON valido: si prova a leggerli
-   così, e se il blocco ha qualcosa di strano si rinuncia invece di sbagliare. */
+   `en:{...}` accanto a it/si/ta. Il blocco inglese finisce dove comincia la
+   lingua successiva, così non si devono bilanciare le graffe dentro le
+   stringhe (ci sono testi con { e } dentro). */
 function dizionarioInline(html) {
   const inglese = {};
   for (const m of html.matchAll(/\ben:\s*\{/g)) {
-    // I dizionari sono uno dopo l'altro nella stessa forma: it:{...} en:{...}
-    // si:{...} ta:{...}. Il blocco inglese finisce dove comincia la lingua
-    // successiva, e questo evita di dover bilanciare le graffe dentro le
-    // stringhe (ci sono testi con { e } dentro).
     const dopo = html.slice(m.index + m[0].length - 1);
     const fine = dopo.search(/\n\s*(?:it|si|ta):\s*\{/);
-    const blocco = fine === -1 ? dopo : dopo.slice(0, fine);
-    for (const c of blocco.matchAll(/"((?:[^"\\]|\\.)*)"\s*:\s*"((?:[^"\\]|\\.)*)"/g)) {
-      try { inglese[JSON.parse('"' + c[1] + '"')] = JSON.parse('"' + c[2] + '"'); } catch { /* coppia strana */ }
-    }
+    Object.assign(inglese, coppie(fine === -1 ? dopo : dopo.slice(0, fine)));
   }
   return inglese;
 }
@@ -151,11 +158,18 @@ async function leggiPagina(url) {
       paragrafi.find((p) => p.testo.length >= 60) || { testo: '', chiave: '' };
 
     // Alcune pagine scrivono le traduzioni direttamente nell'HTML, in un
-    // blocco window.EIH_I18N_EXTRA: sono le stesse che usa il browser.
+    // blocco window.EIH_I18N_EXTRA: sono le stesse che usa il browser. Il
+    // blocco ha en/si/ta uno accanto all'altro, quindi si tiene solo en.
     let extraEn = null;
-    const extra = html.match(/window\.EIH_I18N_EXTRA=(\{[\s\S]*?\});/);
+    const extra = html.match(/window\.EIH_I18N_EXTRA\s*=/);
     if (extra) {
-      try { extraEn = JSON.parse(extra[1]).en || null; } catch { /* blocco rotto: si ignora */ }
+      const resto = html.slice(extra.index + extra[0].length);
+      const inizio = resto.search(/"en"\s*:\s*\{/);
+      if (inizio !== -1) {
+        const blocco = resto.slice(inizio);
+        const fine = blocco.slice(1).search(/"\s*(?:si|ta)"\s*:\s*\{|\}\s*;/);
+        extraEn = coppie(fine === -1 ? blocco : blocco.slice(0, fine + 1));
+      }
     }
 
     return {
@@ -170,72 +184,41 @@ async function leggiPagina(url) {
 
 // ── italiano → inglese ─────────────────────────────────────────────────────
 //
-// Stessa coppia di fonti usata dal browser: traduzioni/<pagina>.en.json per il
-// corpo, EIH_I18N_EXTRA per le pagine che se la cavano da sole. Le chiavi sono
-// il testo italiano, quindi il confronto si fa sul testo normalizzato: spazi
-// multipli e a capo non devono contare.
-
-/** Il dizionario italiano→inglese dentro eih.js (le chiavi data-i18n). */
-let DIZIONARIO_EIH = null;
-function dizionarioEih() {
-  if (DIZIONARIO_EIH) return DIZIONARIO_EIH;
-  const mappa = new Map();
-  try {
-    const src = readFileSync(join(RADICE, 'eih.js'), 'utf8');
-    const inizio = src.indexOf('en:{');
-    if (inizio !== -1) {
-      let livello = 0, fine = -1;
-      for (let i = src.indexOf('{', inizio); i < src.length; i++) {
-        if (src[i] === '{') livello++;
-        else if (src[i] === '}') { livello--; if (!livello) { fine = i; break; } }
-      }
-      const blocco = src.slice(inizio, fine + 1);
-      for (const c of blocco.matchAll(/"((?:[^"\\]|\\.)*)":\s*"((?:[^"\\]|\\.)*)"/g)) {
-        try { mappa.set(JSON.parse('"' + c[1] + '"'), JSON.parse('"' + c[2] + '"')); } catch { /* coppia strana */ }
-      }
-    }
-  } catch { /* eih.js assente: si prosegue */ }
-  DIZIONARIO_EIH = mappa;
-  return mappa;
-}
+// Prima la traduzione che la pagina porta con sé (EIH_I18N_EXTRA, blocchi
+// en:{...}), poi traduzioni/<pagina>.en.json, dove le chiavi sono il testo
+// italiano: il confronto si fa sul testo normalizzato, così spazi multipli e
+// a capo non contano.
 
 function leggiTraduzioni(base) {
   const mappa = new Map();
-  for (const file of ['_comuni.en.json', `${base}.en.json`]) {
-    try {
-      const dati = JSON.parse(readFileSync(join(TRADUZIONI, file), 'utf8'));
-      for (const [it, en] of Object.entries(dati)) {
-        if (typeof en === 'string' && en.trim()) mappa.set(normalizza(it), en);
-      }
-    } catch { /* pagina senza traduzioni: si va avanti */ }
-  }
+  try {
+    const dati = JSON.parse(readFileSync(join(TRADUZIONI, `${base}.en.json`), 'utf8'));
+    for (const [it, en] of Object.entries(dati)) {
+      if (typeof en === 'string' && en.trim()) mappa.set(normalizza(it), en);
+    }
+  } catch { /* pagina senza traduzioni: si va avanti */ }
   return mappa;
 }
 
 function versioneInglese(info, base) {
   const mappa = leggiTraduzioni(base);
-  const candidatiTitolo = [info.h1, info.titolo].filter(Boolean);
-  let titolo = '';
-  for (const c of candidatiTitolo) {
-    const trovato = mappa.get(normalizza(c));
-    if (trovato) { titolo = senzaTag(trovato); break; }
-  }
-  if (!titolo && info.extraEn) {
-    titolo = senzaTag(info.extraEn['page.h1'] || info.extraEn['page.title'] || '');
-  }
+  const inline = info.inlineEn || {};
+  const extra = info.extraEn || {};
 
-  if (!titolo && info.chiaveH1) {
-    titolo = senzaTag((info.inlineEn && info.inlineEn[info.chiaveH1]) || dizionarioEih().get(info.chiaveH1) || '');
-  }
+  // Prima la traduzione scritta per questa pagina, poi quella indicizzata sul
+  // testo italiano. Il dizionario globale di eih.js non entra: contiene solo
+  // le voci del menu e del piede, mai il titolo o il sommario di una pagina.
+  const titolo =
+    senzaTag(extra['page.h1'] || '') ||
+    (info.chiaveH1 ? senzaTag(inline[info.chiaveH1] || '') : '') ||
+    mappa.get(normalizza(info.h1)) ||
+    mappa.get(normalizza(info.titolo)) || '';
 
-  let descrizione = mappa.get(normalizza(info.descrizione)) ||
+  const descrizione =
+    senzaTag(extra['page.lead'] || '') ||
+    (info.chiaveParagrafo ? senzaTag(inline[info.chiaveParagrafo] || '') : '') ||
+    mappa.get(normalizza(info.descrizione)) ||
     mappa.get(normalizza(info.primoParagrafo)) || '';
-  if (!descrizione && info.chiaveParagrafo) {
-    descrizione = senzaTag((info.inlineEn && info.inlineEn[info.chiaveParagrafo]) || dizionarioEih().get(info.chiaveParagrafo) || '');
-  }
-  if (!descrizione && info.extraEn) {
-    descrizione = senzaTag(info.extraEn['page.lead'] || '');
-  }
 
   if (!titolo) return null;   // niente inglese vero: meglio nessun blocco
   return { titolo, descrizione: senzaTag(descrizione) };
