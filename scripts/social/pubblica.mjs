@@ -115,6 +115,11 @@ async function leggiPagina(url) {
        html.match(/<meta[^>]+content="([^"]*)"[^>]+name="description"/i) || [])[1] || ''
     );
 
+    // Il primo paragrafo vero serve quando la descrizione non è tradotta: è
+    // testo del corpo, e il corpo è quello che i dizionari coprono meglio.
+    const paragrafi = [...html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)].map((m) => senzaTag(m[1]));
+    const primoParagrafo = paragrafi.find((t) => t.length >= 60) || '';
+
     // Alcune pagine scrivono le traduzioni direttamente nell'HTML, in un
     // blocco window.EIH_I18N_EXTRA: sono le stesse che usa il browser.
     let extraEn = null;
@@ -123,7 +128,7 @@ async function leggiPagina(url) {
       try { extraEn = JSON.parse(extra[1]).en || null; } catch { /* blocco rotto: si ignora */ }
     }
 
-    return { titolo: pulisciTitolo(titolo), h1, descrizione, extraEn };
+    return { titolo: pulisciTitolo(titolo), h1, descrizione, primoParagrafo, extraEn };
   } catch {
     return {};
   }
@@ -161,7 +166,8 @@ function versioneInglese(info, base) {
     titolo = senzaTag(info.extraEn['page.h1'] || info.extraEn['page.title'] || '');
   }
 
-  let descrizione = mappa.get(normalizza(info.descrizione)) || '';
+  let descrizione = mappa.get(normalizza(info.descrizione)) ||
+    mappa.get(normalizza(info.primoParagrafo)) || '';
   if (!descrizione && info.extraEn) {
     descrizione = senzaTag(info.extraEn['page.lead'] || '');
   }
