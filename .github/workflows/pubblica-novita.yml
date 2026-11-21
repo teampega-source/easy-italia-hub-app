@@ -1,7 +1,7 @@
 # Pubblica le novità del sito sui canali social, da solo.
 #
 # Ogni giorno legge la sitemap, guarda cosa è cambiato dall'ultimo giro e
-# annuncia le pagine nuove su Telegram e Bluesky. Lo stato di cosa è già
+# annuncia le pagine nuove su Telegram, Bluesky e Facebook Page. Lo stato di cosa è già
 # stato pubblicato vive in scripts/social/state.json e viene committato qui:
 # così il giro dopo sa da dove ripartire anche se il runner è nuovo.
 #

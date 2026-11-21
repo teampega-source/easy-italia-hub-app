@@ -10,7 +10,7 @@
  *      (con un'AI gratuita, se c'è la chiave; altrimenti con titolo e
  *      descrizione della pagina) e lo manda ai canali configurati.
  *
- * Canali: Telegram e Bluesky, tutti e due gratuiti via API.
+ * Canali: Telegram, Bluesky e Facebook Page, tutti gratuiti via API.
  * Senza segreti configurati il lavoro gira in prova: stampa cosa avrebbe
  * pubblicato e non tocca lo stato, così quando aggiungi le chiavi parte
  * tutto quello che era rimasto indietro.
