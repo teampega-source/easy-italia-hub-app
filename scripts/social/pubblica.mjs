@@ -145,7 +145,10 @@ async function leggiPagina(url) {
     // testo del corpo, e il corpo è quello che i dizionari coprono meglio.
     const paragrafi = [...html.matchAll(/<p([^>]*)>([\s\S]*?)<\/p>/gi)]
       .map((m) => ({ testo: senzaTag(m[2]), chiave: (m[1].match(/data-i18n(?:-html)?="([^"]+)"/) || [])[1] || '' }));
-    const primo = paragrafi.find((p) => p.testo.length >= 60) || { testo: '', chiave: '' };
+    // Meglio un paragrafo con chiave, anche se non è il primo: senza chiave
+    // non c'è modo di risalire alla traduzione inglese.
+    const primo = paragrafi.find((p) => p.chiave && p.testo.length >= 40) ||
+      paragrafi.find((p) => p.testo.length >= 60) || { testo: '', chiave: '' };
 
     // Alcune pagine scrivono le traduzioni direttamente nell'HTML, in un
     // blocco window.EIH_I18N_EXTRA: sono le stesse che usa il browser.
