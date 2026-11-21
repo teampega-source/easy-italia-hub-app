@@ -110,30 +110,15 @@ function senzaTag(html) {
 function dizionarioInline(html) {
   const inglese = {};
   for (const m of html.matchAll(/\ben:\s*\{/g)) {
-    const inizio = html.indexOf('{', m.index);
-    let livello = 0, stringa = null, fuga = false, fine = -1;
-    for (let i = inizio; i < html.length; i++) {
-      const c = html[i];
-      if (stringa) {
-        if (fuga) fuga = false;
-        else if (c === '\\') fuga = true;
-        else if (c === stringa) stringa = null;
-        continue;
-      }
-      if (c === '"' || c === "'") { stringa = c; continue; }
-      if (c === '{') livello++;
-      else if (c === '}') { livello--; if (!livello) { fine = i; break; } }
-    }
-    if (fine === -1) continue;
-    const blocco = html.slice(inizio, fine + 1);
-    try {
-      const letto = JSON.parse(blocco);
-      for (const [k, v] of Object.entries(letto)) if (typeof v === 'string') inglese[k] = v;
-    } catch {
-      // Blocco non perfettamente JSON: si prendono le coppie una per una.
-      for (const c of blocco.matchAll(/"((?:[^"\\]|\\.)*)"\s*:\s*"((?:[^"\\]|\\.)*)"/g)) {
-        try { inglese[JSON.parse('"' + c[1] + '"')] = JSON.parse('"' + c[2] + '"'); } catch { /* coppia strana */ }
-      }
+    // I dizionari sono uno dopo l'altro nella stessa forma: it:{...} en:{...}
+    // si:{...} ta:{...}. Il blocco inglese finisce dove comincia la lingua
+    // successiva, e questo evita di dover bilanciare le graffe dentro le
+    // stringhe (ci sono testi con { e } dentro).
+    const dopo = html.slice(m.index + m[0].length - 1);
+    const fine = dopo.search(/\n\s*(?:it|si|ta):\s*\{/);
+    const blocco = fine === -1 ? dopo : dopo.slice(0, fine);
+    for (const c of blocco.matchAll(/"((?:[^"\\]|\\.)*)"\s*:\s*"((?:[^"\\]|\\.)*)"/g)) {
+      try { inglese[JSON.parse('"' + c[1] + '"')] = JSON.parse('"' + c[2] + '"'); } catch { /* coppia strana */ }
     }
   }
   return inglese;
@@ -453,6 +438,9 @@ async function main() {
     const enBase = versioneInglese({ ...info, titolo: titoloIt, descrizione: descrizioneIt }, base);
     const en = enBase ? { ...enBase, url: pagina.urlEn || url } : null;
     if (!en) console.log('  · nessuna traduzione inglese per questa pagina: post solo in italiano');
+    else if (!en.descrizione) {
+      console.log(`  · inglese senza descrizione (chiave ${info.chiaveParagrafo || '—'}, voci inline ${Object.keys(info.inlineEn || {}).length})`);
+    }
 
     const testo = {
       it: { titolo: titoloIt, descrizione: descrizioneIt, url },
