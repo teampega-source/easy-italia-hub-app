@@ -7,8 +7,8 @@
  *   2. raggruppa le quattro lingue di una stessa pagina in una sola notizia;
  *   3. tiene traccia in state.json di cosa ha già annunciato;
  *   4. per ogni pagina nuova o con lastmod più recente prepara un testo
- *      (con un'AI gratuita, se c'è la chiave; altrimenti con titolo e
- *      descrizione della pagina) e lo manda ai canali configurati.
+ *      bilingue — italiano dalla pagina italiana, inglese dalla sua versione
+ *      /en — e lo manda ai canali configurati.
  *
  * Canali: Telegram, Bluesky e Facebook Page, tutti gratuiti via API.
  * Senza segreti configurati il lavoro gira in prova: stampa cosa avrebbe
@@ -48,24 +48,29 @@ function leggiSitemap(xml) {
   for (const b of blocchi) {
     const loc = (b.match(/<loc>([^<]+)<\/loc>/) || [])[1];
     const lastmod = (b.match(/<lastmod>([^<]+)<\/lastmod>/) || [])[1] || '';
-    const it = (b.match(/hreflang="it"\s+href="([^"]+)"/) || [])[1];
+    const it = (b.match(/hreflang="it"\s+href="([^"]+)"[^>]*>/) || [])[1];
+    const ing = (b.match(/hreflang="en"\s+href="([^"]+)"[^>]*>/) || [])[1];
     if (!loc) continue;
-    voci.push({ loc, lastmod, canonico: it || loc });
+    voci.push({ loc, lastmod, canonico: it || loc, inglese: ing || '' });
   }
   return voci;
 }
 
 // Le quattro lingue sono la stessa notizia: si annuncia la versione italiana
-// una volta sola, con il lastmod più recente fra le varianti.
+// una volta sola, con il lastmod più recente fra le varianti. Della variante
+// inglese interessa l'indirizzo: da lì si legge il testo da affiancare.
 function raggruppa(voci) {
   const perPagina = new Map();
   for (const v of voci) {
     let chiave;
     try { chiave = new URL(v.canonico).pathname; } catch { continue; }
     const attuale = perPagina.get(chiave);
-    if (!attuale || (v.lastmod || '') > (attuale.lastmod || '')) {
-      perPagina.set(chiave, { chiave, url: v.canonico, lastmod: v.lastmod });
+    if (!attuale) {
+      perPagina.set(chiave, { chiave, url: v.canonico, urlEn: v.inglese, lastmod: v.lastmod });
+      continue;
     }
+    if ((v.lastmod || '') > (attuale.lastmod || '')) attuale.lastmod = v.lastmod;
+    if (v.inglese) attuale.urlEn = v.inglese;
   }
   return [...perPagina.values()];
 }
@@ -102,13 +107,19 @@ async function leggiPagina(url) {
 }
 
 // Un'AI gratuita è un di più, non un requisito: se c'è una chiave il testo
-// suona più naturale, altrimenti titolo e descrizione bastano.
-async function conAI(titolo, descrizione, url) {
-  const istruzioni =
-    'Scrivi un post sociale in italiano per Easy Italia Hub, il punto di riferimento ' +
-    'della comunità srilankese in Italia. Tono concreto e amichevole, niente enfasi da ' +
-    'pubblicità, niente hashtag, massimo 240 caratteri, una sola frase di invito. ' +
-    'Non inventare dati che non ti do. Rispondi solo con il testo del post.';
+// suona più naturale, altrimenti titolo e descrizione bastano. La richiesta
+// si fa una volta per lingua, così ogni blocco resta nella sua lingua invece
+// di mescolarle in un testo solo.
+async function conAI(titolo, descrizione, url, lingua) {
+  const istruzioni = lingua === 'en'
+    ? 'Write a social post in English for Easy Italia Hub, a reference point for the Sri Lankan ' +
+      'community in Italy. Concrete, friendly tone, no advertising hype, no hashtags, at most 240 ' +
+      'characters, one short call to action. Do not invent facts beyond the ones given. Reply with ' +
+      'the post text only.'
+    : 'Scrivi un post sociale in italiano per Easy Italia Hub, il punto di riferimento ' +
+      'della comunità srilankese in Italia. Tono concreto e amichevole, niente enfasi da ' +
+      'pubblicità, niente hashtag, massimo 240 caratteri, una sola frase di invito. ' +
+      'Non inventare dati che non ti do. Rispondi solo con il testo del post.';
   const richiesta = `Titolo: ${titolo}\nDescrizione: ${descrizione}\nIndirizzo: ${url}`;
 
   if (process.env.GEMINI_API_KEY) {
@@ -132,7 +143,7 @@ async function conAI(titolo, descrizione, url) {
         const testo = dati?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (testo) return testo.trim();
       } else {
-        console.log(`  · Gemini ha risposto ${res.status}, uso il testo base`);
+        console.log(`  · Gemini ha risposto ${res.status} (${lingua}), uso il testo base`);
       }
     } catch (e) {
       console.log(`  · Gemini non raggiungibile (${e.message}), uso il testo base`);
@@ -163,7 +174,7 @@ async function conAI(titolo, descrizione, url) {
         const testo = dati?.choices?.[0]?.message?.content;
         if (testo) return testo.trim();
       } else {
-        console.log(`  · Groq ha risposto ${res.status}, uso il testo base`);
+        console.log(`  · Groq ha risposto ${res.status} (${lingua}), uso il testo base`);
       }
     } catch (e) {
       console.log(`  · Groq non raggiungibile (${e.message}), uso il testo base`);
@@ -173,11 +184,22 @@ async function conAI(titolo, descrizione, url) {
   return null;
 }
 
-function testoBase(titolo, descrizione, url) {
-  const pezzi = [titolo];
-  if (descrizione) pezzi.push(descrizione);
-  pezzi.push(url);
-  return pezzi.join('\n\n');
+// Due blocchi con la bandierina davanti: si legge subito chi parla italiano e
+// chi inglese, senza etichette tipo "IT:" che sembrano un telegiornale.
+function corpoBilingue(testo) {
+  const blocchi = [];
+  blocchi.push(`🇮🇹 ${testo.it.titolo}`);
+  if (testo.it.descrizione) blocchi.push(testo.it.descrizione);
+  if (testo.en) {
+    blocchi.push('');
+    blocchi.push(`🇬🇧 ${testo.en.titolo}`);
+    if (testo.en.descrizione) blocchi.push(testo.en.descrizione);
+  }
+  return blocchi.join('\n');
+}
+
+function testoBase(testo, url) {
+  return `${corpoBilingue(testo)}\n\n${url}`;
 }
 
 function tronca(testo, max) {
@@ -205,13 +227,20 @@ async function telegram(testo, url) {
   if (!token || !chat) return { canale: 'telegram', esito: 'saltato', motivo: 'segreti assenti' };
 
   const link = conUta(url, 'telegram');
-  const html = `<b>${escapaHtml(testo.titolo)}</b>\n\n${escapaHtml(testo.descrizione)}\n\n${escapaHtml(link)}`;
+  const righe = [`🇮🇹 <b>${escapaHtml(testo.it.titolo)}</b>`];
+  if (testo.it.descrizione) righe.push(escapaHtml(testo.it.descrizione));
+  if (testo.en) {
+    righe.push('', `🇬🇧 <b>${escapaHtml(testo.en.titolo)}</b>`);
+    if (testo.en.descrizione) righe.push(escapaHtml(testo.en.descrizione));
+  }
+  righe.push('', escapaHtml(link));
+
   const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
       chat_id: chat,
-      text: html.slice(0, 4000),
+      text: righe.join('\n').slice(0, 4000),
       parse_mode: 'HTML',
       disable_web_page_preview: false,
     }),
@@ -240,11 +269,13 @@ async function bluesky(testo, url) {
     return { canale: 'bluesky', esito: 'errore', motivo: dati.message || sessione.status };
   }
 
-  // Bluesky conta 300 caratteri in tutto: l'URL deve restare intero, altrimenti
-  // il link non è cliccabile e la facet punterebbe a un indirizzo mozzato.
+  // Bluesky conta 300 caratteri in tutto, URL compreso: due descrizioni non ci
+  // stanno. Restano i due titoli, che dicono già di cosa si tratta, e il link.
   url = conUta(url, 'bluesky');
   const spazio = 300 - url.length - 2;
-  const corpo = tronca(`${testo.titolo}\n\n${testo.descrizione}`.trim(), Math.max(40, spazio));
+  const titoli = [`🇮🇹 ${testo.it.titolo}`];
+  if (testo.en) titoli.push(`🇬🇧 ${testo.en.titolo}`);
+  const corpo = tronca(titoli.join('\n'), Math.max(40, spazio));
   const text = `${corpo}\n\n${url}`;
   const prima = text.slice(0, text.lastIndexOf(url));
   const facet = [{
@@ -268,7 +299,7 @@ async function bluesky(testo, url) {
         $type: 'app.bsky.feed.post',
         text,
         facets: facet,
-        langs: ['it'],
+        langs: ['it', 'en'],
         createdAt: new Date().toISOString(),
       },
     }),
@@ -293,7 +324,7 @@ async function facebook(testo, url) {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
-      message: `${testo.titolo}\n\n${testo.descrizione}`.trim(),
+      message: corpoBilingue(testo),
       link,
       access_token: token,
     }),
@@ -341,16 +372,32 @@ async function main() {
     console.log(`\n▸ ${pagina.chiave} (aggiornata il ${pagina.lastmod})`);
     const url = new URL(pagina.chiave, SITO).toString();
     const info = await leggiPagina(url);
-    const titolo = info.titolo || pagina.chiave;
-    const descrizione = info.descrizione || '';
+    const titoloIt = info.titolo || pagina.chiave;
+    const descrizioneIt = info.descrizione || '';
 
-    const scritto = await conAI(titolo, descrizione, url);
-    const testo = scritto
-      ? { titolo: scritto, descrizione: '' }
-      : { titolo, descrizione };
+    // La versione inglese è un'altra pagina, non una traduzione a mano: si
+    // legge da lì, così il post inglese dice quello che il sito dice in inglese.
+    let infoEn = {};
+    if (pagina.urlEn && pagina.urlEn !== pagina.url) {
+      infoEn = await leggiPagina(pagina.urlEn);
+    }
+    const en = (infoEn.titolo || infoEn.descrizione)
+      ? { titolo: infoEn.titolo || titoloIt, descrizione: infoEn.descrizione || '' }
+      : null;
+    if (!en) console.log('  · versione inglese non trovata: post solo in italiano');
+
+    const scrittoIt = await conAI(titoloIt, descrizioneIt, url, 'it');
+    const scrittoEn = en ? await conAI(en.titolo, en.descrizione, pagina.urlEn || url, 'en') : null;
+
+    const testo = {
+      it: scrittoIt ? { titolo: scrittoIt, descrizione: '' } : { titolo: titoloIt, descrizione: descrizioneIt },
+      en: en
+        ? (scrittoEn ? { titolo: scrittoEn, descrizione: '' } : en)
+        : null,
+    };
 
     if (DRY || !canaliConfigurati) {
-      console.log('  [prova] ' + testoBase(testo.titolo, testo.descrizione, url).replace(/\n+/g, ' / '));
+      console.log('  [prova] ' + testoBase(testo, url).replace(/\n+/g, ' / '));
       continue;
     }
 

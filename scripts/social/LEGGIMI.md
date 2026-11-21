@@ -95,6 +95,12 @@ notizia. Pubblica se il `lastmod` è più recente di quello registrato in
 solo per i canali che hanno accettato il post, così un errore di rete non fa
 perdere l'annuncio.
 
+**I post sono bilingui.** Il blocco italiano viene dalla pagina italiana, il
+blocco inglese dalla sua versione `/en` indicata nella sitemap: titolo e
+descrizione si leggono da lì, non sono tradotti a mano. Su Telegram e
+Facebook ci stanno due blocchi completi (🇮🇹 e 🇬🇧); su Bluesky, dove il
+limite è 300 caratteri compreso il link, restano i due titoli.
+
 Restano fuori: home, ricerca, pagine legali, area personale e abbonamenti.
 
 ## Se qualcosa non va
