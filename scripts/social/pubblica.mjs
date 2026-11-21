@@ -103,6 +103,42 @@ function senzaTag(html) {
   return normalizza(decodifica(String(html || '').replace(/<[^>]+>/g, ' ')));
 }
 
+/* Le pagine più recenti portano le traduzioni dentro di sé, in blocchi
+   `en:{...}` accanto a it/si/ta. Sono oggetti JavaScript ma con chiavi e
+   valori fra doppi apici, quindi quasi sempre JSON valido: si prova a leggerli
+   così, e se il blocco ha qualcosa di strano si rinuncia invece di sbagliare. */
+function dizionarioInline(html) {
+  const inglese = {};
+  for (const m of html.matchAll(/\ben:\s*\{/g)) {
+    const inizio = html.indexOf('{', m.index);
+    let livello = 0, stringa = null, fuga = false, fine = -1;
+    for (let i = inizio; i < html.length; i++) {
+      const c = html[i];
+      if (stringa) {
+        if (fuga) fuga = false;
+        else if (c === '\\') fuga = true;
+        else if (c === stringa) stringa = null;
+        continue;
+      }
+      if (c === '"' || c === "'") { stringa = c; continue; }
+      if (c === '{') livello++;
+      else if (c === '}') { livello--; if (!livello) { fine = i; break; } }
+    }
+    if (fine === -1) continue;
+    const blocco = html.slice(inizio, fine + 1);
+    try {
+      const letto = JSON.parse(blocco);
+      for (const [k, v] of Object.entries(letto)) if (typeof v === 'string') inglese[k] = v;
+    } catch {
+      // Blocco non perfettamente JSON: si prendono le coppie una per una.
+      for (const c of blocco.matchAll(/"((?:[^"\\]|\\.)*)"\s*:\s*"((?:[^"\\]|\\.)*)"/g)) {
+        try { inglese[JSON.parse('"' + c[1] + '"')] = JSON.parse('"' + c[2] + '"'); } catch { /* coppia strana */ }
+      }
+    }
+  }
+  return inglese;
+}
+
 async function leggiPagina(url) {
   try {
     const res = await fetch(url, { signal: AbortSignal.timeout(20000) });
@@ -110,9 +146,10 @@ async function leggiPagina(url) {
     const html = await res.text();
     const titolo = decodifica((html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '');
     // Titolo e primo paragrafo possono essere marcati data-i18n: in quel caso
-    // la traduzione sta nel dizionario di eih.js, non nei file hash.
+    // la traduzione sta nel dizionario della pagina, non nei file hash.
+    const h1Tag = (html.match(/<h1([^>]*)>/i) || [])[1] || '';
     const h1Html = (html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i) || [])[1] || '';
-    const chiaveH1 = (html.match(/<h1[^>]*data-i18n="([^"]+)"/i) || [])[1] || '';
+    const chiaveH1 = (h1Tag.match(/data-i18n(?:-html)?="([^"]+)"/i) || [])[1] || '';
     const h1 = senzaTag(h1Html);
     const descrizione = senzaTag(
       (html.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"/i) ||
@@ -122,7 +159,7 @@ async function leggiPagina(url) {
     // Il primo paragrafo vero serve quando la descrizione non è tradotta: è
     // testo del corpo, e il corpo è quello che i dizionari coprono meglio.
     const paragrafi = [...html.matchAll(/<p([^>]*)>([\s\S]*?)<\/p>/gi)]
-      .map((m) => ({ testo: senzaTag(m[2]), chiave: (m[1].match(/data-i18n="([^"]+)"/) || [])[1] || '' }));
+      .map((m) => ({ testo: senzaTag(m[2]), chiave: (m[1].match(/data-i18n(?:-html)?="([^"]+)"/) || [])[1] || '' }));
     const primo = paragrafi.find((p) => p.testo.length >= 60) || { testo: '', chiave: '' };
 
     // Alcune pagine scrivono le traduzioni direttamente nell'HTML, in un
@@ -136,6 +173,7 @@ async function leggiPagina(url) {
     return {
       titolo: pulisciTitolo(titolo), h1, chiaveH1,
       descrizione, primoParagrafo: primo.testo, chiaveParagrafo: primo.chiave, extraEn,
+      inlineEn: dizionarioInline(html),
     };
   } catch {
     return {};
@@ -199,13 +237,13 @@ function versioneInglese(info, base) {
   }
 
   if (!titolo && info.chiaveH1) {
-    titolo = senzaTag(dizionarioEih().get(info.chiaveH1) || '');
+    titolo = senzaTag((info.inlineEn && info.inlineEn[info.chiaveH1]) || dizionarioEih().get(info.chiaveH1) || '');
   }
 
   let descrizione = mappa.get(normalizza(info.descrizione)) ||
     mappa.get(normalizza(info.primoParagrafo)) || '';
   if (!descrizione && info.chiaveParagrafo) {
-    descrizione = senzaTag(dizionarioEih().get(info.chiaveParagrafo) || '');
+    descrizione = senzaTag((info.inlineEn && info.inlineEn[info.chiaveParagrafo]) || dizionarioEih().get(info.chiaveParagrafo) || '');
   }
   if (!descrizione && info.extraEn) {
     descrizione = senzaTag(info.extraEn['page.lead'] || '');
