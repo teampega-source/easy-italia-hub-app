@@ -109,7 +109,11 @@ async function leggiPagina(url) {
     if (!res.ok) return {};
     const html = await res.text();
     const titolo = decodifica((html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '');
-    const h1 = senzaTag((html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i) || [])[1] || '');
+    // Titolo e primo paragrafo possono essere marcati data-i18n: in quel caso
+    // la traduzione sta nel dizionario di eih.js, non nei file hash.
+    const h1Html = (html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i) || [])[1] || '';
+    const chiaveH1 = (html.match(/<h1[^>]*data-i18n="([^"]+)"/i) || [])[1] || '';
+    const h1 = senzaTag(h1Html);
     const descrizione = senzaTag(
       (html.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"/i) ||
        html.match(/<meta[^>]+content="([^"]*)"[^>]+name="description"/i) || [])[1] || ''
@@ -117,8 +121,9 @@ async function leggiPagina(url) {
 
     // Il primo paragrafo vero serve quando la descrizione non è tradotta: è
     // testo del corpo, e il corpo è quello che i dizionari coprono meglio.
-    const paragrafi = [...html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)].map((m) => senzaTag(m[1]));
-    const primoParagrafo = paragrafi.find((t) => t.length >= 60) || '';
+    const paragrafi = [...html.matchAll(/<p([^>]*)>([\s\S]*?)<\/p>/gi)]
+      .map((m) => ({ testo: senzaTag(m[2]), chiave: (m[1].match(/data-i18n="([^"]+)"/) || [])[1] || '' }));
+    const primo = paragrafi.find((p) => p.testo.length >= 60) || { testo: '', chiave: '' };
 
     // Alcune pagine scrivono le traduzioni direttamente nell'HTML, in un
     // blocco window.EIH_I18N_EXTRA: sono le stesse che usa il browser.
@@ -128,7 +133,10 @@ async function leggiPagina(url) {
       try { extraEn = JSON.parse(extra[1]).en || null; } catch { /* blocco rotto: si ignora */ }
     }
 
-    return { titolo: pulisciTitolo(titolo), h1, descrizione, primoParagrafo, extraEn };
+    return {
+      titolo: pulisciTitolo(titolo), h1, chiaveH1,
+      descrizione, primoParagrafo: primo.testo, chiaveParagrafo: primo.chiave, extraEn,
+    };
   } catch {
     return {};
   }
@@ -140,6 +148,30 @@ async function leggiPagina(url) {
 // corpo, EIH_I18N_EXTRA per le pagine che se la cavano da sole. Le chiavi sono
 // il testo italiano, quindi il confronto si fa sul testo normalizzato: spazi
 // multipli e a capo non devono contare.
+
+/** Il dizionario italiano→inglese dentro eih.js (le chiavi data-i18n). */
+let DIZIONARIO_EIH = null;
+function dizionarioEih() {
+  if (DIZIONARIO_EIH) return DIZIONARIO_EIH;
+  const mappa = new Map();
+  try {
+    const src = readFileSync(join(RADICE, 'eih.js'), 'utf8');
+    const inizio = src.indexOf('en:{');
+    if (inizio !== -1) {
+      let livello = 0, fine = -1;
+      for (let i = src.indexOf('{', inizio); i < src.length; i++) {
+        if (src[i] === '{') livello++;
+        else if (src[i] === '}') { livello--; if (!livello) { fine = i; break; } }
+      }
+      const blocco = src.slice(inizio, fine + 1);
+      for (const c of blocco.matchAll(/"((?:[^"\\]|\\.)*)":\s*"((?:[^"\\]|\\.)*)"/g)) {
+        try { mappa.set(JSON.parse('"' + c[1] + '"'), JSON.parse('"' + c[2] + '"')); } catch { /* coppia strana */ }
+      }
+    }
+  } catch { /* eih.js assente: si prosegue */ }
+  DIZIONARIO_EIH = mappa;
+  return mappa;
+}
 
 function leggiTraduzioni(base) {
   const mappa = new Map();
@@ -166,8 +198,15 @@ function versioneInglese(info, base) {
     titolo = senzaTag(info.extraEn['page.h1'] || info.extraEn['page.title'] || '');
   }
 
+  if (!titolo && info.chiaveH1) {
+    titolo = senzaTag(dizionarioEih().get(info.chiaveH1) || '');
+  }
+
   let descrizione = mappa.get(normalizza(info.descrizione)) ||
     mappa.get(normalizza(info.primoParagrafo)) || '';
+  if (!descrizione && info.chiaveParagrafo) {
+    descrizione = senzaTag(dizionarioEih().get(info.chiaveParagrafo) || '');
+  }
   if (!descrizione && info.extraEn) {
     descrizione = senzaTag(info.extraEn['page.lead'] || '');
   }
