@@ -72,6 +72,14 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <script src="/assets/eih-lang-url.js"></script>
 <script src="/assets/eih-errori.js" defer></script>
 <link rel="stylesheet" href="/assets/eih-leggibilita.css"/>
+<script>/* Il titolo e' spezzato da <br> ed <em>: il dizionario del corpo lo
+   tradurrebbe pezzo per pezzo, e in singalese e tamil l'ordine delle parole
+   non e' quello italiano. Qui c'e' la frase intera, gia' nell'ordine giusto. */
+window.EIH_I18N_EXTRA={
+"en":{"page.h1":"Recognition of foreign<br/><em>qualifications in Italy</em>"},
+"si":{"page.h1":"ඉතාලියේ<br/><em>විදේශීය සුදුසුකම් පිළිගැනීම</em>"},
+"ta":{"page.h1":"இத்தாலியில்<br/><em>வெளிநாட்டு தகுதிகளின் அங்கீகாரம்</em>"}
+};</script>
 </head>
 <body data-page="riconoscimento-titoli">
 <a href="#main" class="skip-link">Salta al contenuto</a>
@@ -142,7 +150,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 
   <div class="page page-wide">
     <p class="eyebrow reveal"><span class="eyebrow-line"></span> Strumenti</p>
-    <h1 class="reveal">Riconoscimento titoli<br/><em>stranieri</em> in Italia</h1>
+    <h1 class="reveal" data-i18n-html="page.h1">Riconoscimento titoli<br/><em>stranieri</em> in Italia</h1>
     <p class="lead reveal">Hai una laurea, un diploma o una qualifica professionale conseguita in Sri Lanka? Ecco come farla riconoscere in Italia per lavorare, iscriverti all'università o esercitare una professione regolamentata.</p>
     <!-- fonti:inizio — generato da scripts/verifica-fonti.mjs, non scrivere qui -->
     <div class="guide-meta reveal">
