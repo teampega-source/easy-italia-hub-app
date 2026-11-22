@@ -10,15 +10,19 @@
  *      italiana, inglese dalle traduzioni della stessa pagina — e lo manda ai
  *      canali configurati.
  *
- * Da dove viene l'inglese. Tre fonti, tutte già scritte nel sito:
- *   · window.EIH_I18N_EXTRA della pagina (page.h1, page.lead): è la
- *     traduzione che il browser mostra nel titolo e nel sommario;
+ * Da dove viene l'inglese. Quattro fonti, tutte già scritte nel sito:
+ *   · window.EIH_I18N_EXTRA della pagina: page.h1/page.lead, oppure la voce
+ *     della chiave data-i18n quando la pagina traduce così titolo e sommario;
  *   · i blocchi en:{...} accanto a it/si/ta dentro la pagina, per le pagine
  *     che si portano dietro il proprio dizionario;
  *   · traduzioni/<pagina>.en.json (italiano → inglese) per le pagine più
- *     vecchie, dove la traduzione è indicizzata sul testo italiano.
- * Niente testo inventato: se nessuna delle tre ha la pagina, il post resta
- * solo in italiano e il log lo dice.
+ *     vecchie, dove la traduzione è indicizzata sul testo italiano;
+ *   · assets/i18n/<pagina>.en.json, il dizionario che usa il browser nel
+ *     corpo della pagina: le impronte dei pezzi dell'h1 e del sommario danno
+ *     la traduzione che il visitatore vede davvero.
+ * Niente testo inventato: se nessuna delle quattro ha la pagina, il post
+ * resta solo in italiano e il log lo dice. Una pagina che non risponde, o che
+ * risponde senza titolo, viene saltata: non si annuncia il suo percorso.
  *
  * Canali: Telegram, Bluesky e Facebook Page, tutti gratuiti via API.
  * Senza segreti configurati il lavoro gira in prova: stampa cosa avrebbe
@@ -39,6 +43,7 @@ const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const SITEMAP = join(RADICE, 'sitemap.xml');
 const STATO = join(RADICE, 'scripts', 'social', 'state.json');
 const TRADUZIONI = join(RADICE, 'traduzioni');
+const I18N = join(RADICE, 'assets', 'i18n');
 
 const SITO = 'https://easyitaliahub.it';
 const MAX_POST = Math.max(1, Number(process.env.MAX_POST || 2));
@@ -112,9 +117,58 @@ function senzaTag(html) {
 function coppie(testo) {
   const mappa = {};
   for (const c of testo.matchAll(/"((?:[^"\\]|\\.)*)"\s*:\s*"((?:[^"\\]|\\.)*)"/g)) {
-    try { mappa[JSON.parse('"' + c[1] + '"')] = JSON.parse('"' + c[2] + '"'); } catch { /* coppia strana */ }
+    try {
+      // In un blocco JavaScript l'apostrofo si può scrivere \' (su
+      // /diritti-inps succede): JSON.parse da solo lo rifiuterebbe e la voce
+      // andrebbe persa.
+      const valore = c[2].replace(/\\'/g, "'");
+      mappa[JSON.parse('"' + c[1] + '"')] = JSON.parse('"' + valore + '"');
+    } catch { /* coppia strana */ }
   }
   return mappa;
+}
+
+/* Il dizionario che il browser usa per il corpo della pagina: impronta
+   FNV-1a a 32 bit del testo italiano → inglese. Deve restare identica a
+   quella di assets/eih-i18n-page.js, altrimenti le chiavi non combaciano. */
+function improntaBrowser(testo) {
+  const s = normalizza(testo);
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
+  }
+  return ('0000000' + h.toString(16)).slice(-8);
+}
+
+function dizionarioBrowser(base) {
+  const mappa = new Map();
+  try {
+    const dati = JSON.parse(readFileSync(join(I18N, `${base}.en.json`), 'utf8'));
+    for (const [k, v] of Object.entries(dati)) {
+      if (typeof v === 'string' && v.trim()) mappa.set(k, v);
+    }
+  } catch { /* pagina senza dizionario: si va avanti */ }
+  return mappa;
+}
+
+/* L'h1 è spezzato da <br> ed <em>: il browser lo traduce pezzo per pezzo e
+   ricompone la frase. Si fa lo stesso. Il titolo si accetta solo se ogni
+   pezzo ha la sua traduzione — un titolo mezzo italiano non serve. */
+function titoloDaPezzi(html, dizionario) {
+  const pezzi = [];
+  for (const m of String(html || '').matchAll(/([^<]+)|(<[^>]+>)/g)) {
+    if (m[1] === undefined) continue;
+    const t = senzaTag(m[1]);
+    if (t) pezzi.push(t);
+  }
+  if (!pezzi.length) return '';
+  const tradotti = pezzi.map((p) => dizionario.get(improntaBrowser(p)));
+  if (tradotti.some((t) => !t)) return '';
+  // Su /riconoscimento-titoli il dizionario traduce "stranieri" con
+  // "qualifications": unito a "Riconoscimento titoli" la parola usciva due
+  // volte. Si toglie la ripetizione; la traduzione resta quella del sito.
+  return senzaTag(tradotti.join(' ')).replace(/\b([\p{L}]+)(\s+\1\b)+/giu, '$1');
 }
 
 /* Le pagine più recenti portano le traduzioni dentro di sé, in blocchi
@@ -134,7 +188,7 @@ function dizionarioInline(html) {
 async function leggiPagina(url) {
   try {
     const res = await fetch(url, { signal: AbortSignal.timeout(20000) });
-    if (!res.ok) return {};
+    if (!res.ok) return null;
     const html = await res.text();
     const titolo = decodifica((html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '');
     // Titolo e primo paragrafo possono essere marcati data-i18n: in quel caso
@@ -143,6 +197,8 @@ async function leggiPagina(url) {
     const h1Html = (html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i) || [])[1] || '';
     const chiaveH1 = (h1Tag.match(/data-i18n(?:-html)?="([^"]+)"/i) || [])[1] || '';
     const h1 = senzaTag(h1Html);
+    const leadHtml = (html.match(/<p[^>]*class="[^"]*\blead\b[^"]*"[^>]*>([\s\S]*?)<\/p>/i) || [])[1] || '';
+    const lead = senzaTag(leadHtml);
     const descrizione = senzaTag(
       (html.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"/i) ||
        html.match(/<meta[^>]+content="([^"]*)"[^>]+name="description"/i) || [])[1] || ''
@@ -173,12 +229,12 @@ async function leggiPagina(url) {
     }
 
     return {
-      titolo: pulisciTitolo(titolo), h1, chiaveH1,
-      descrizione, primoParagrafo: primo.testo, chiaveParagrafo: primo.chiave, extraEn,
+      titolo: pulisciTitolo(titolo), h1, h1Html, h1NoTr: /\bdata-no-tr\b/i.test(h1Tag), chiaveH1,
+      descrizione, lead, primoParagrafo: primo.testo, chiaveParagrafo: primo.chiave, extraEn,
       inlineEn: dizionarioInline(html),
     };
   } catch {
-    return {};
+    return null;
   }
 }
 
@@ -202,26 +258,39 @@ function leggiTraduzioni(base) {
 
 function versioneInglese(info, base) {
   const mappa = leggiTraduzioni(base);
+  const browser = dizionarioBrowser(base);
   const inline = info.inlineEn || {};
   const extra = info.extraEn || {};
 
-  // Prima la traduzione scritta per questa pagina, poi quella indicizzata sul
-  // testo italiano. Il dizionario globale di eih.js non entra: contiene solo
-  // le voci del menu e del piede, mai il titolo o il sommario di una pagina.
+  // Prima la traduzione scritta per questa pagina (page.h1/page.lead, poi la
+  // chiave data-i18n quando la pagina traduce così titolo e sommario), poi
+  // quella indicizzata sul testo italiano, infine il dizionario del browser.
+  // Il dizionario globale di eih.js non entra: contiene solo le voci del menu
+  // e del piede, mai il titolo o il sommario di una pagina.
   const titolo =
     senzaTag(extra['page.h1'] || '') ||
+    (info.chiaveH1 ? senzaTag(extra[info.chiaveH1] || '') : '') ||
     (info.chiaveH1 ? senzaTag(inline[info.chiaveH1] || '') : '') ||
     mappa.get(normalizza(info.h1)) ||
-    mappa.get(normalizza(info.titolo)) || '';
+    mappa.get(normalizza(info.titolo)) ||
+    (info.h1NoTr ? info.h1 : '') ||
+    titoloDaPezzi(info.h1Html, browser);
 
   const descrizione =
     senzaTag(extra['page.lead'] || '') ||
+    (info.chiaveParagrafo ? senzaTag(extra[info.chiaveParagrafo] || '') : '') ||
     (info.chiaveParagrafo ? senzaTag(inline[info.chiaveParagrafo] || '') : '') ||
     mappa.get(normalizza(info.descrizione)) ||
-    mappa.get(normalizza(info.primoParagrafo)) || '';
+    mappa.get(normalizza(info.primoParagrafo)) ||
+    browser.get(improntaBrowser(info.descrizione)) ||
+    browser.get(improntaBrowser(info.lead)) ||
+    // Senza un paragrafo "lead" esplicito vale il primo paragrafo del corpo,
+    // ma solo se il dizionario lo traduce: l'avviso AI, che spesso è il primo
+    // paragrafo lungo, non è un sommario.
+    (!info.lead ? browser.get(improntaBrowser(info.primoParagrafo)) : '');
 
   if (!titolo) return null;   // niente inglese vero: meglio nessun blocco
-  return { titolo, descrizione: senzaTag(descrizione) };
+  return { titolo, descrizione: senzaTag(descrizione || '') };
 }
 
 // ── testo del post ─────────────────────────────────────────────────────────
@@ -417,7 +486,15 @@ async function main() {
     console.log(`\n▸ ${pagina.chiave} (aggiornata il ${pagina.lastmod})`);
     const url = new URL(pagina.chiave, SITO).toString();
     const info = await leggiPagina(url);
-    const titoloIt = info.titolo || pagina.chiave;
+    if (!info) {
+      console.log('  · la pagina non risponde: salto (lo stato non avanza)');
+      continue;
+    }
+    if (!info.titolo) {
+      console.log('  · la pagina non ha un titolo: salto (lo stato non avanza)');
+      continue;
+    }
+    const titoloIt = info.titolo;
     const descrizioneIt = info.descrizione || '';
 
     const base = pagina.chiave === '/' ? 'index' : pagina.chiave.replace(/^\//, '');

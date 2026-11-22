@@ -84,12 +84,17 @@ perdere l'annuncio.
 
 **I post sono bilingui.** Il blocco italiano viene dalla pagina italiana; il
 blocco inglese dalla traduzione vera della stessa pagina, in quest'ordine:
-`EIH_I18N_EXTRA` (`page.h1` e `page.lead`, quello che mostra il browser), i
-blocchi `en:{...}` scritti dentro la pagina, `traduzioni/<pagina>.en.json`.
-Niente traduzione inventata dallo script: se nessuna delle tre ha la pagina, il
-post esce solo in italiano e il log lo dice pagina per pagina. Ogni blocco
-porta il link della propria lingua; su Bluesky, dove il limite è 300 caratteri
-compreso il link, restano i due titoli e il link italiano.
+`EIH_I18N_EXTRA` (`page.h1`/`page.lead`, oppure la voce della chiave
+`data-i18n` quando la pagina traduce così titolo e sommario), i blocchi
+`en:{...}` scritti dentro la pagina, `traduzioni/<pagina>.en.json` e infine
+`assets/i18n/<pagina>.en.json`, il dizionario del browser. Da lì il titolo si
+ricompone pezzo per pezzo, come fa il browser con l'h1 spezzato da `<br>` ed
+`<em>`; se un pezzo non è tradotto il titolo non si usa. Niente traduzione
+inventata dallo script: se nessuna delle quattro ha la pagina, il post esce
+solo in italiano e il log lo dice pagina per pagina. Una pagina che non
+risponde, o che risponde senza titolo, viene saltata e non finisce nello stato.
+Ogni blocco porta il link della propria lingua; su Bluesky, dove il limite è
+300 caratteri compreso il link, restano i due titoli e il link italiano.
 
 Restano fuori: home, ricerca, pagine legali, area personale e abbonamenti.
 
