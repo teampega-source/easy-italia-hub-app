@@ -1,10 +1,12 @@
 /* Controllo incrociato delle traduzioni: ogni pagina in ogni lingua.
 
-   Per ciascuna combinazione misura tre cose diverse, che si guastano in modi
-   diversi:
+   Per ciascuna combinazione misura quattro cose diverse, che si guastano in
+   modi diversi:
      1. chiavi data-i18n rimaste in italiano (dizionario di eih.js o di pagina)
      2. frammenti del corpo non coperti dal dizionario di /assets/i18n/
      3. quanto testo latino resta visibile in <main> (il sintomo che vede l'utente)
+     4. frammenti adiacenti che ricevono la stessa traduzione: un titolo
+        spezzato dal markup che finisce letto due volte
 
    Uso: node scripts/audit-lingue.mjs [base-url] [pagina,...] [lingua,...]      */
 import pw from 'playwright';
@@ -114,7 +116,71 @@ for (const lg of LINGUE) {
         avviso: !!document.getElementById('eih-tr-avviso')
       };
     }, lg);
-    esito.push({ lg, nome, ...r });
+
+    // 4. due frammenti adiacenti con la stessa traduzione
+    // Un titolo spezzato dal markup — «Forum,<br><em>domande reali.</em>» — e'
+    // due frammenti, non una frase. Se il dizionario li traduce allo stesso
+    // modo, la pagina legge «Forum, Forum,»: e' successo in singalese e tamil,
+    // dove il titolo del forum ripeteva la parola invece di dire «domande
+    // reali». Si legge l'HTML come e' arrivato dal server, non il DOM: la
+    // tipografia cinetica riscrive i titoli parola per parola, e nel DOM
+    // tradotto i due frammenti originali non esistono piu'.
+    // I frammenti si estraggono con la stessa raccogli() che traduce la
+    // pagina, cosi' le regole di cosa e' traducibile restano in un posto solo.
+    const dup = await p.evaluate(async ([lang, nome]) => {
+      const api = window.EIHPageI18N;
+      const [html, diz] = await Promise.all([
+        fetch(location.pathname + location.search, { cache: 'no-store' }).then(r => r.ok ? r.text() : null),
+        // e' lo stesso file che la pagina ha gia' scaricato: arriva dalla cache
+        fetch('/assets/i18n/' + nome + '.' + lang + '.json').then(r => r.ok ? r.json() : null)
+      ]).catch(() => []);
+      if (!html || !diz) return { coppie: 0, esempi: [] };
+
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      let radice = document.importNode(doc.querySelector('main') || doc.body, true);
+      // raccogli() sa partire solo da <main>. Le due pagine che non ce l'hanno
+      // (registrati, media-kit) si controllano dentro un <main> finto, senza
+      // menu e piede: e' la stessa regola che usa raccogli() quando <main>
+      // manca.
+      if (radice.tagName !== 'MAIN') {
+        radice.querySelectorAll('nav,footer').forEach(e => e.remove());
+        const finto = document.createElement('main');
+        finto.append(...radice.childNodes);
+        radice = finto;
+      }
+      const voci = api.raccogli(radice).filter(v => v.nodo);
+
+      // Adiacenti conta solo dentro lo stesso blocco di testo: due «Leggi di
+      // piu'» in due schede diverse non sono un errore. Il <br> e le <em> del
+      // titolo invece non interrompono il blocco, ed e' proprio li' che il
+      // doppione si nasconde.
+      const BLOCCO = 'h1,h2,h3,h4,h5,h6,p,li,td,th,dt,dd,figcaption,blockquote,summary,div,section,article,header,footer,aside,nav,form';
+      const norm = (t) => t.toLowerCase()
+        .replace(/[\p{P}\p{S}]/gu, ' ')  // il punto finale non fa la differenza
+        .replace(/\s+/g, ' ').trim();
+
+      const coppie = [], gia = new Set();
+      for (let i = 1; i < voci.length; i++) {
+        const prima = voci[i - 1], dopo = voci[i];
+        if (prima.testo === dopo.testo) continue;
+        const blocco = prima.nodo.parentElement.closest(BLOCCO);
+        if (!blocco || blocco !== dopo.nodo.parentElement.closest(BLOCCO)) continue;
+        const trA = diz[api.impronta(prima.testo)], trB = diz[api.impronta(dopo.testo)];
+        // un frammento senza traduzione interrompe l'adiacenza: la sua assenza
+        // e' gia' segnalata come corpo non tradotto
+        if (typeof trA !== 'string' || typeof trB !== 'string') continue;
+        const na = norm(trA), nb = norm(trB);
+        // "" e' una traduzione voluta (svuota uno spezzone): non e' un doppione
+        if (!na || na !== nb) continue;
+        const chiave = prima.testo + '\u241f' + dopo.testo;
+        if (gia.has(chiave)) continue;
+        gia.add(chiave);
+        coppie.push({ it: [prima.testo, dopo.testo], trad: trB });
+      }
+      return { coppie: coppie.length, esempi: coppie.slice(0, 3) };
+    }, [lg, nome]);
+
+    esito.push({ lg, nome, ...r, coppie: dup.coppie, esempiCoppie: dup.esempi });
   }
   await ctx.close();
 }
@@ -124,19 +190,26 @@ writeFileSync('/tmp/audit-lingue.json', JSON.stringify(esito, null, 1));
 
 for (const lg of LINGUE) {
   const righe = esito.filter(e => e.lg === lg && !e.errore);
-  righe.sort((a, b2) => (b2.corpoFermi + b2.chiaviFerme) - (a.corpoFermi + a.chiaviFerme));
+  righe.sort((a, b2) => (b2.corpoFermi + b2.chiaviFerme + b2.coppie) - (a.corpoFermi + a.chiaviFerme + a.coppie));
   console.log('\n═══ ' + lg.toUpperCase() + ' ═══');
-  console.log('pagina'.padEnd(22), 'chiavi ferme', ' corpo non tradotto', ' latino in main', ' avviso');
+  console.log('pagina'.padEnd(22), 'chiavi ferme', ' corpo non tradotto', ' latino in main', 'coppie uguali', ' avviso');
   for (const r of righe) {
-    if (!r.chiaviFerme && !r.corpoFermi) continue;
+    if (!r.chiaviFerme && !r.corpoFermi && !r.coppie) continue;
     const perc = r.parole ? Math.round(r.latine * 100 / r.parole) : 0;
     console.log(
       r.nome.padEnd(22),
       String(r.chiaviFerme + '/' + r.chiaviTot).padStart(12),
       String(r.corpoFermi + '/' + r.corpoTot).padStart(19),
       String(perc + '%').padStart(15),
+      String(r.coppie).padStart(13),
       String(r.avviso ? 'sì' : '—').padStart(7));
+    // Le coppie sospette si stampano per esteso: chi corregge deve sapere
+    // quali due frammenti si contendono la stessa parola.
+    for (const c of r.esempiCoppie)
+      console.log('   ⚠ stessa traduzione:', c.it.join(' + '), '→', c.trad.slice(0, 60));
   }
-  const pulite = righe.filter(r => !r.chiaviFerme && !r.corpoFermi).map(r => r.nome);
+  const sospette = righe.reduce((n, r) => n + r.coppie, 0);
+  console.log('coppie con la stessa traduzione:', sospette);
+  const pulite = righe.filter(r => !r.chiaviFerme && !r.corpoFermi && !r.coppie).map(r => r.nome);
   console.log('senza carenze:', pulite.length ? pulite.join(', ') : 'nessuna');
 }

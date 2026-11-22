@@ -36,7 +36,7 @@ conto l'effetto sul posizionamento delle ricerche italiane.
 
 ## 🆕 3 agosto: il sito è tradotto per intero
 
-- **Audit delle lingue a zero** — `node scripts/audit-lingue.mjs` (59 pagine × en/si/ta) non trova più né chiavi `data-i18n` ferme all'italiano né frammenti di corpo non tradotti; `node scripts/audit-cornice.mjs` conferma menu, piede e modali. Si partiva da 341 frammenti in singalese su 51 pagine.
+- **Audit delle lingue a zero** — `node scripts/audit-lingue.mjs` (59 pagine × en/si/ta) non trova più né chiavi `data-i18n` ferme all'italiano, né frammenti di corpo non tradotti, né due frammenti adiacenti con la stessa traduzione (il doppione che aveva fatto leggere due volte «Forum» nel titolo); `node scripts/audit-cornice.mjs` conferma menu, piede e modali. Si partiva da 341 frammenti in singalese su 51 pagine.
 - **Causa dei titoli in italiano** — `eih-motion.js` spezza ogni titolo in una `<span>` per parola e in italiano non ha nessun traduttore da aspettare: l'estrazione registrava `Aprire | un | conto`, impronte che nessuna traduzione poteva agganciare. `scripts/estrai-testi.mjs` ora blocca quello script.
 - **`data-i18n-ph` era applicato solo da `assets/index.js`** — sulle pagine col solo `eih.js` i segnaposto dei campi restavano in italiano. Ora lo applica anche `eih.js`.
 - **Eccezioni nel markup** — nomi propri, marchi, sigle di volo, codici fiscali, hashtag, token colore e email d'esempio sono marcati `data-no-tr`, con la ragione accanto al testo. Nuovi strumenti: `scripts/segna-no-tr.py` e `scripts/elenca-non-tradotti.mjs`.
