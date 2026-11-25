@@ -65,4 +65,8 @@ jobs:
           git add scripts/social/state.json
           git commit -m "Social: stato delle pubblicazioni aggiornato" \
                      -m "Scritto da scripts/social/pubblica.mjs: le pagine qui elencate non verranno annunciate di nuovo."
-          git push
+          # Se qualcuno ha pushato mentre giravamo, il push diretto fallirebbe
+          # e il prossimo giro ripeterebbe gli stessi post: ci rimettiamo in cima.
+          git fetch origin main
+          git rebase --autostash origin/main
+          git push origin HEAD:main

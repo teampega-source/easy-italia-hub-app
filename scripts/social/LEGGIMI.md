@@ -5,7 +5,7 @@ questo repository. Nessun server da mantenere.
 
 | Cosa | Quando parte | Cosa fa |
 |---|---|---|
-| `pubblica-novita.yml` | ogni giorno alle 07:23 UTC + a mano | annuncia le pagine nuove o aggiornate su Telegram, Bluesky e Facebook Page |
+| `pubblica-novita.yml` | ogni giorno alle 07:23 UTC + a mano | annuncia le pagine nuove o aggiornate su Telegram, Bluesky e Facebook Page. Al primo giro parte da dieci guide scelte, non dall'archivio. |
 | `indexnow.yml` | a ogni push su `main` + ogni giorno | dice a Bing/Yandex/Naver/Seznam quali URL sono cambiate |
 
 ## Perché Telegram e Bluesky
@@ -74,6 +74,20 @@ Actions → **Pubblica le novità** → *Run workflow* → spunta `dry_run` per
 vedere cosa pubblicherebbe senza pubblicare. Togli la spunta per pubblicare
 davvero.
 
+In locale, senza segreti, il giro è sempre di prova:
+
+```bash
+node scripts/social/pubblica.mjs --dry-run
+MAX_POST=10 node scripts/social/pubblica.mjs --dry-run
+```
+
+Il secondo comando mostra tutte e dieci le guide del primo giro. Per guardare
+l'arretrato senza pubblicarlo:
+
+```bash
+MAX_POST=100 node scripts/social/pubblica.mjs --dry-run --tutte
+```
+
 ## Come decide cosa pubblicare
 
 Legge `sitemap.xml`: le quattro lingue di una pagina contano come una sola
@@ -82,19 +96,35 @@ notizia. Pubblica se il `lastmod` è più recente di quello registrato in
 solo per i canali che hanno accettato il post, così un errore di rete non fa
 perdere l'annuncio.
 
-**I post sono bilingui.** Il blocco italiano viene dalla pagina italiana; il
-blocco inglese dalla traduzione vera della stessa pagina, in quest'ordine:
+**Il primo giro.** Con `state.json` vuoto il motore non annuncia l'archivio:
+parte da dieci guide scelte a mano (`PRIMO_GIRO` in `pubblica.mjs`) e segna
+tutte le altre come già viste. Due al giorno, quindi cinque giorni. Se
+preferisci partire da zero e aspettare la prima modifica vera:
+
+```bash
+node scripts/social/pubblica.mjs --semina
+```
+
+`--semina` scrive nello stato tutte le pagine attuali e non pubblica niente.
+La prima modifica successiva sarà la prima notizia.
+
+**I post sono in quattro lingue.** Ogni post porta italiano, sinhala, tamil e
+inglese. I testi vengono dalle traduzioni già presenti nel sito:
 `EIH_I18N_EXTRA` (`page.h1`/`page.lead`, oppure la voce della chiave
 `data-i18n` quando la pagina traduce così titolo e sommario), i blocchi
-`en:{...}` scritti dentro la pagina, `traduzioni/<pagina>.en.json` e infine
-`assets/i18n/<pagina>.en.json`, il dizionario del browser. Da lì il titolo si
-ricompone pezzo per pezzo, come fa il browser con l'h1 spezzato da `<br>` ed
-`<em>`; se un pezzo non è tradotto il titolo non si usa. Niente traduzione
-inventata dallo script: se nessuna delle quattro ha la pagina, il post esce
-solo in italiano e il log lo dice pagina per pagina. Una pagina che non
-risponde, o che risponde senza titolo, viene saltata e non finisce nello stato.
-Ogni blocco porta il link della propria lingua; su Bluesky, dove il limite è
-300 caratteri compreso il link, restano i due titoli e il link italiano.
+`en/si/ta` scritti dentro la pagina, `traduzioni/<pagina>.<lingua>.json` e
+infine `assets/i18n/<pagina>.<lingua>.json`, il dizionario del browser. Da lì
+il titolo si ricompone pezzo per pezzo, come fa il browser con l'h1 spezzato
+da `<br>` ed `<em>`; se un pezzo non è tradotto il titolo non si usa. Niente
+traduzione inventata: se una lingua non c'è, il blocco non compare e il log lo
+dice pagina per pagina. Una pagina che non risponde, o che risponde senza
+titolo, viene saltata e non finisce nello stato.
+
+Ogni blocco porta il link della propria lingua: chi legge in tamil finisce
+sulla pagina tamil, non su quella italiana con il selettore in cima. Su
+Bluesky, dove il limite è 300 caratteri compreso il link, restano italiano e
+le lingue della community, e l'inglese solo se avanza spazio. Le descrizioni
+sono tagliate a 320 caratteri per stare dentro il limite di Telegram.
 
 Restano fuori: home, ricerca, pagine legali, area personale e abbonamenti.
 
