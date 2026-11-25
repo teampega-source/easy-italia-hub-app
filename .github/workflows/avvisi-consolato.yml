@@ -50,11 +50,16 @@ jobs:
 
       # Il battito: dice a chi sorveglia che il lavoro si è fatto vivo. Senza
       # il segreto configurato non fa niente — e non fallisce per questo.
+      # Il controllo sta qui dentro perché `secrets` non si può usare in `if:`.
       - name: Battito
-        if: always() && secrets.BATTITO_AVVISI != ''
+        if: always()
         env:
           BATTITO: ${{ secrets.BATTITO_AVVISI }}
         run: |
+          if [ -z "$BATTITO" ]; then
+            echo "nessun battito configurato"
+            exit 0
+          fi
           if [ "${{ job.status }}" = "success" ]; then
             curl -fsS -m 10 "$BATTITO" || true
           else
