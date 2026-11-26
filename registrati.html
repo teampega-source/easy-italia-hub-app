@@ -338,9 +338,15 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 
   el('reg-lang').addEventListener('click', function(e){
     var b = e.target.closest('button[data-lg]'); if(!b) return;
-    var l = b.dataset.lg; if(!TR[l] || l===lingua()) return;
+    var l = b.dataset.lg; if(!TR[l]) return;
     try{ localStorage.setItem('eih-lang',l); localStorage.setItem('eih-lang-scelta','1'); }catch(_){}
     window.EIH_LANG = l;
+    /* Anche qui la lingua è un indirizzo: /it, /si, /ta o la radice. */
+    if(window.EIH_URL_LINGUA){
+      var dest = window.EIH_URL_LINGUA(l);
+      if(dest !== location.pathname){ location.href = dest + location.search + location.hash; return; }
+    }
+    if(l===lingua()) return;
     applyMode();
     videoLingua();
   });

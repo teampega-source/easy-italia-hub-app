@@ -2,6 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "functions": {
+    "api/pagina-it.js": {
+      "includeFiles": "*.html"
+    }
+  },
   "crons": [
     {
       "path": "/api/flight-digest",
@@ -817,6 +822,14 @@
   ],
   "rewrites": [
     {
+      "source": "/it",
+      "destination": "/api/pagina-it?p=index"
+    },
+    {
+      "source": "/it/:pagina([a-z0-9-]+)",
+      "destination": "/api/pagina-it?p=:pagina"
+    },
+    {
       "source": "/(si|ta)/subscriptions",
       "destination": "/abbonamenti"
     },
@@ -999,10 +1012,6 @@
     {
       "source": "/(si|ta)/flights",
       "destination": "/voli"
-    },
-    {
-      "source": "/it",
-      "destination": "/"
     },
     {
       "source": "/it/:path*",

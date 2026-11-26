@@ -75,10 +75,16 @@ for (const [it, ing] of voci) {
 /* Le riscritture specifiche vanno prima della generica `/si/:path*`, altrimenti
    quella acchiappa tutto e /si/forms cerca un file forms.html che non esiste. */
 const nuoveRiscritture = [];
+/* Le pagine /it passano da una funzione che corregge canonical e lingua del
+   documento: il file HTML è lo stesso della radice, e da solo non può sapere
+   sotto quale prefisso è stato chiesto. Una sola regola copre ogni spicchio
+   di pagina; la generica che segue resta per gli asset (che hanno un'altra
+   barra) e per gli indirizzi non mappati. */
+nuoveRiscritture.push({ source: '/it', destination: '/api/pagina-it?p=index' });
+nuoveRiscritture.push({ source: '/it/:pagina([a-z0-9-]+)', destination: '/api/pagina-it?p=:pagina' });
 for (const [it, ing] of voci) {
   if (it !== ing) nuoveRiscritture.push({ source: `/(si|ta)/${ing}`, destination: `/${it}` });
 }
-nuoveRiscritture.push({ source: '/it', destination: '/' });
 nuoveRiscritture.push({ source: '/it/:path*', destination: '/:path*' });
 nuoveRiscritture.push({ source: '/(si|ta)', destination: '/' });
 nuoveRiscritture.push({ source: '/(si|ta)/:path*', destination: '/:path*' });

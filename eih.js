@@ -239,7 +239,16 @@
     // Solo di qui passa una scelta vera: applyLang da sola non salva niente,
     // altrimenti la lingua predefinita si scriverebbe addosso a chi non ha
     // mai aperto il selettore e non si distinguerebbe piu' da una scelta.
-    setLang(l){ricordaLingua(l);applyLang(l);EIH.closeLang();etichettaAiGen();eihDopoLingua(l);},
+    setLang(l){
+      ricordaLingua(l);
+      /* La lingua è un indirizzo, non solo una preferenza: /it, /si, /ta o la
+         radice. Così il canonical resta coerente anche senza JavaScript. */
+      if(window.EIH_URL_LINGUA){
+        var dest=window.EIH_URL_LINGUA(l);
+        if(dest!==location.pathname){ location.href=dest+location.search+location.hash; return; }
+      }
+      applyLang(l);EIH.closeLang();etichettaAiGen();eihDopoLingua(l);
+    },
     // Il testo tradotto di una chiave, per il JavaScript che riscrive un
     // elemento dopo che la pagina e' stata tradotta: scrivere la frase a mano
     // la riporterebbe in italiano, e a seconda di chi arriva primo il difetto

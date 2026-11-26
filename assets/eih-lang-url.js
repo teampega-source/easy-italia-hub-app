@@ -129,6 +129,20 @@
     return BASE + '/' + l + (path === '/' ? '' : allInternazionale(path));
   }
 
+  /* L'indirizzo della pagina che si sta guardando in un'altra lingua. Il
+     selettore ci porta con un caricamento vero: così lingua, canonical e
+     hreflang restano quelli dell'indirizzo, anche per chi non esegue JS. */
+  function urlLingua(l) {
+    var n = path.replace(/^\/+|\/+$/g, '').replace(/\.html$/, '');
+    if (n === 'index') n = '';
+    var it = n && SLUG_INVERSO[n] ? SLUG_INVERSO[n] : n;
+    if (l === 'en') return it ? '/' + it : '/';
+    if (l === 'it') return '/it' + (it ? '/' + it : '');
+    var ing = it && SLUG[it] ? SLUG[it] : it;
+    return '/' + l + (ing ? '/' + ing : '');
+  }
+  window.EIH_URL_LINGUA = urlLingua;
+
   // Il canonical dichiara che indirizzo e' questo, non che lingua preferisce
   // chi sta guardando: dipende dal prefisso del percorso e da nient'altro.
   // Legarlo alla lingua attiva significherebbe, ora che l'inglese e' quella

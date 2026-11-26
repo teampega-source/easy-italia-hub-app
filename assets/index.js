@@ -343,7 +343,14 @@ function eihDopoLingua(l){
   }catch(e){}
   try{ window.dispatchEvent(new CustomEvent('eihLangChanged',{detail:{lingua:l}})); }catch(e){}
 }
-function setLang(lang){try{localStorage.setItem('eih-lang',lang);localStorage.setItem('eih-lang-scelta','1');}catch(e){}applyLang(lang);closeLang();eihDopoLingua(lang);}
+function setLang(lang){
+  try{localStorage.setItem('eih-lang',lang);localStorage.setItem('eih-lang-scelta','1');}catch(e){}
+  if(window.EIH_URL_LINGUA){
+    var dest=window.EIH_URL_LINGUA(lang);
+    if(dest!==location.pathname){ location.href=dest+location.search+location.hash; return; }
+  }
+  applyLang(lang);closeLang();eihDopoLingua(lang);
+}
 
 
 window.refreshLang=function(){applyLang(currentLang);};

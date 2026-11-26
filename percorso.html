@@ -782,7 +782,14 @@ function closeLang(){const m=document.getElementById('lang-menu');if(m){m.classL
 // Il salvataggio sta qui e non in applyLang: applyLang gira anche all'avvio
 // con la lingua predefinita, e scriverla equivarrebbe a scegliere per
 // conto dell'utente.
-function setLang(l){try{localStorage.setItem('eih-lang',l);localStorage.setItem('eih-lang-scelta','1');}catch(e){}applyLang(l);closeLang();}
+function setLang(l){
+  try{localStorage.setItem('eih-lang',l);localStorage.setItem('eih-lang-scelta','1');}catch(e){}
+  if(window.EIH_URL_LINGUA){
+    var dest=window.EIH_URL_LINGUA(l);
+    if(dest!==location.pathname){ location.href=dest+location.search+location.hash; return; }
+  }
+  applyLang(l);closeLang();
+}
 document.addEventListener('click',e=>{if(!e.target.closest('.lang-switch'))closeLang();});
 
 /* ═══ Mobile nav ═══ */
