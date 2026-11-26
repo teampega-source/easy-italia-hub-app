@@ -32,8 +32,8 @@
   function lingua() {
     var l = '';
     try { l = localStorage.getItem('eih-lang') || ''; } catch (e) {}
-    l = l || window.EIH_LANG || (document.documentElement.lang || 'it').slice(0, 2);
-    return ETICHETTA[l] ? l : 'it';
+    l = l || window.EIH_LANG || (document.documentElement.lang || 'en').slice(0, 2);
+    return ETICHETTA[l] ? l : 'en';
   }
 
   /* Il numero "di formula": cresce ogni giorno anche se tutto il resto non

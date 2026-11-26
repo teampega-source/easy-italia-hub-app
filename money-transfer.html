@@ -12,7 +12,7 @@
    senza questa distinzione quei visitatori resterebbero in italiano per
    sempre. Chi non ha il segno di scelta riparte dall'inglese, una volta sola. */
 try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
-try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+try{var _m=location.pathname.match(/^\/(it|en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
 if(!/^(it|en|si|ta)$/.test(_l))_l="en";
 window.EIH_LANG=_l;window.EIH_PAGINA="money-transfer";
 if(/^(en|si|ta)$/.test(_l)){var _p=window.EIH_PAGINA||"index";
@@ -34,8 +34,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <meta name="theme-color" content="#7d7058"/>
 <link rel="canonical" href="https://easyitaliahub.it/money-transfer"/>
 <!-- seo:inizio — generato da scripts/dati-strutturati.mjs, non scrivere qui -->
-<link rel="alternate" hreflang="it" href="https://easyitaliahub.it/money-transfer"/>
-<link rel="alternate" hreflang="en" href="https://easyitaliahub.it/en/money-transfer"/>
+<link rel="alternate" hreflang="en" href="https://easyitaliahub.it/money-transfer"/>
+<link rel="alternate" hreflang="it" href="https://easyitaliahub.it/it/money-transfer"/>
 <link rel="alternate" hreflang="si" href="https://easyitaliahub.it/si/money-transfer"/>
 <link rel="alternate" hreflang="ta" href="https://easyitaliahub.it/ta/money-transfer"/>
 <link rel="alternate" hreflang="x-default" href="https://easyitaliahub.it/money-transfer"/>

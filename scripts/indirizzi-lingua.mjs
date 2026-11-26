@@ -1,26 +1,26 @@
 /* Gli indirizzi delle pagine tradotte: riscritture, redirezioni, sitemap.
 
-   La mappa vive in un posto solo — `assets/eih-lang-url.js`, perché deve
-   girare nel browser prima di tutto il resto. Questo script la legge da lì e
-   ne fa scendere tre conseguenze:
+   La mappa vive in un posto solo — `assets/eih-lang-url.js`, perche' deve
+   girare nel browser prima di tutto il resto. Questo script la legge da li' e
+   ne fa scendere le conseguenze:
 
-     1. `vercel.json` · una riscrittura per pagina: /en/forms serve /moduli.
-        Il file HTML resta uno, in italiano: non si duplica niente.
-     2. `vercel.json` · una redirezione per pagina: /en/moduli → /en/forms,
-        permanente. I vecchi indirizzi restano validi e portano al nuovo, così
-        un link già condiviso non muore e Google non vede due pagine uguali.
-     3. `sitemap.xml` · gli indirizzi sotto prefisso passano allo spicchio
-        internazionale, negli <loc> e negli hreflang.
+     · la radice e' la versione inglese, quella predefinita;
+     · /it e' la versione italiana (stessi nomi di pagina);
+     · /si e /ta usano gli spicchi internazionali (/si/forms, /ta/jobs);
+     · /en non e' piu' una seconda copia dell'inglese: redirige alla radice
+       con un 301, cosi' non resta un doppione da indicizzare;
+     · sitemap.xml elenca le quattro lingue, con `en` e `x-default` sulla
+       radice.
 
-   Scritto a mano tutto questo sarebbero centoventi regole: la prima svista si
-   nota il giorno in cui una pagina non si apre più.
+   Scritto a mano tutto questo sarebbero centinaia di regole: la prima svista
+   si nota il giorno in cui una pagina non si apre piu'.
 
    Uso:  node scripts/indirizzi-lingua.mjs [--controlla]
 */
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 
 const SOLO_CONTROLLO = process.argv.includes('--controlla');
-const LINGUE = ['en', 'si', 'ta'];
+const BASE = 'https://easyitaliahub.it';
 
 /* ── la mappa, letta dalla sua unica casa ─────────────────────────────── */
 const sorgente = readFileSync('assets/eih-lang-url.js', 'utf8');
@@ -45,40 +45,55 @@ const conf = JSON.parse(readFileSync('vercel.json', 'utf8'));
 
 // Le regole generate si riconoscono e si rifanno da capo a ogni giro; quelle
 // scritte a mano (dominio, abbonamenti) restano dove sono.
-const miaRiscrittura = r => typeof r.source === 'string' &&
-  /^\/\(en\|si\|ta\)\//.test(r.source) && r.source !== '/(en|si|ta)/:path*';
-const miaRedirezione = r => typeof r.destination === 'string' && /^\/\$1\//.test(r.destination) &&
-  /^\/\(en\|si\|ta\)\//.test(r.source);
+const generata = s => typeof s === 'string' &&
+  (/^\/(it|en|si|ta)(\/|$)/.test(s) ||
+   s.startsWith('/(en|si|ta)') || s.startsWith('/(si|ta)'));
 
-const riscrittureTenute = (conf.rewrites || []).filter(r => !miaRiscrittura(r));
-const redirezioniTenute = (conf.redirects || []).filter(r => !miaRedirezione(r));
+const riscrittureTenute = (conf.rewrites || []).filter(r => !generata(r.source));
+const redirezioniTenute = (conf.redirects || []).filter(r => !generata(r.source));
 
-const nuoveRiscritture = voci
-  .filter(([it, ing]) => it !== ing)
-  .map(([it, ing]) => ({ source: `/(en|si|ta)/${ing}`, destination: `/${it}` }));
+/* /en era la copia inglese; ora l'inglese e' la radice. Le regole precise
+   vengono prima della regola generale, che resta come rete di sicurezza per
+   un indirizzo non mappato. */
+const nuoveRedirezioni = [];
+for (const [it, ing] of voci) {
+  nuoveRedirezioni.push({ source: `/en/${ing}`, destination: `/${it}`, permanent: true });
+}
+nuoveRedirezioni.push({ source: '/en', destination: '/', permanent: true });
+nuoveRedirezioni.push({ source: '/en/:path*', destination: '/:path*', permanent: true });
 
-const nuoveRedirezioni = voci
-  .filter(([it, ing]) => it !== ing)
-  .map(([it, ing]) => ({ source: `/(en|si|ta)/${it}`, destination: `/$1/${ing}`, permanent: true }));
+/* Sotto /it si tengono i nomi italiani: uno spicchio inglese (/it/guides)
+   porta al nome giusto con un 301 invece di sparire. Sotto /si e /ta vale la
+   stessa regola di sempre: i vecchi nomi italiani portano allo spicchio
+   internazionale. */
+for (const [it, ing] of voci) {
+  if (it === ing) continue;
+  nuoveRedirezioni.push({ source: `/it/${ing}`, destination: `/it/${it}`, permanent: true });
+  nuoveRedirezioni.push({ source: `/(si|ta)/${it}`, destination: `/$1/${ing}`, permanent: true });
+}
 
-/* L'ordine conta. Le riscritture specifiche vanno prima della generica
-   `/(en|si|ta)/:path*`, altrimenti quella acchiappa tutto e /en/forms cerca
-   un file forms.html che non esiste. */
-const generiche = riscrittureTenute.filter(r => /:path\*/.test(r.source) || r.source === '/(en|si|ta)');
-const altre = riscrittureTenute.filter(r => !generiche.includes(r));
-conf.rewrites = [...altre, ...nuoveRiscritture, ...generiche];
-/* Le redirezioni invece stanno davanti alle riscritture per definizione: qui
-   basta accodarle a quelle scritte a mano. */
+/* Le riscritture specifiche vanno prima della generica `/si/:path*`, altrimenti
+   quella acchiappa tutto e /si/forms cerca un file forms.html che non esiste. */
+const nuoveRiscritture = [];
+for (const [it, ing] of voci) {
+  if (it !== ing) nuoveRiscritture.push({ source: `/(si|ta)/${ing}`, destination: `/${it}` });
+}
+nuoveRiscritture.push({ source: '/it', destination: '/' });
+nuoveRiscritture.push({ source: '/it/:path*', destination: '/:path*' });
+nuoveRiscritture.push({ source: '/(si|ta)', destination: '/' });
+nuoveRiscritture.push({ source: '/(si|ta)/:path*', destination: '/:path*' });
+
+conf.rewrites = [...riscrittureTenute, ...nuoveRiscritture];
 conf.redirects = [...redirezioniTenute, ...nuoveRedirezioni];
 
 /* ── ogni pagina dichiara il proprio nome ─────────────────────────────────
    Lo snippet in cima al <head> fa partire la richiesta del dizionario prima di
    tutto il resto, e finora ricavava il nome della pagina dall'indirizzo. Con
-   gli spicchi tradotti quel calcolo sbaglia: da /en/forms chiedeva
-   forms.en.json, che non esiste, e la traduzione arrivava al secondo tentativo.
+   gli spicchi tradotti quel calcolo sbaglia: da /si/forms chiedeva
+   forms.si.json, che non esiste, e la traduzione arrivava al secondo tentativo.
 
-   Portarsi dietro la mappa in ogni pagina sarebbe stato pesante — è inline in
-   sessantaquattro file. Molto meglio: ogni pagina sa già come si chiama, basta
+   Portarsi dietro la mappa in ogni pagina sarebbe stato pesante — e' inline in
+   sessantaquattro file. Molto meglio: ogni pagina sa gia' come si chiama, basta
    che lo dica. Qui si controlla che lo dica, e che dica il vero. */
 const paginaHtml = readdirSync('.').filter(f => f.endsWith('.html'));
 let dichiarate = 0, sistemate = 0;
@@ -98,24 +113,80 @@ for (const file of paginaHtml) {
 }
 console.log('pagine che dichiarano il proprio nome:', dichiarate, '· sistemate:', sistemate);
 
-/* ── sitemap.xml ──────────────────────────────────────────────────────── */
-let sitemap = readFileSync('sitemap.xml', 'utf8');
-let cambi = 0;
-for (const [it, ing] of voci) {
-  if (it === ing) continue;
-  for (const lg of LINGUE) {
-    const da = new RegExp(`(https://easyitaliahub\\.it/${lg}/)${it}(?=["<])`, 'g');
-    sitemap = sitemap.replace(da, (t, capo) => { cambi++; return capo + ing; });
+/* ── sitemap.xml ──────────────────────────────────────────────────────────
+   Non si riscrive da zero: si leggono i gruppi gia' presenti (una pagina,
+   quattro lingue) e si rimette in ordine ogni gruppo. Cosi' restano le pagine
+   scelte, le date e le priorita', e lo script e' ripetibile. */
+const xml = readFileSync('sitemap.xml', 'utf8');
+const testa = xml.slice(0, xml.indexOf('<url>')).replace(/\s+$/, '') + '\n';
+const coda = '</urlset>\n';
+const grezzi = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(m => m[1]);
+const gruppi = [];
+const indice = new Map();
+for (const b of grezzi) {
+  const loc = (b.match(/<loc>([^<]+)<\/loc>/) || [])[1];
+  const itHref = (b.match(/hreflang="it" href="([^"]+)"/) || [])[1];
+  if (!loc || !itHref) continue;
+  if (!indice.has(itHref)) {
+    const g = { chiave: itHref, lingue: {} };
+    indice.set(itHref, g);
+    gruppi.push(g);
   }
+  let percorso = '';
+  try { percorso = new URL(loc).pathname; } catch (e) { continue; }
+  const m = percorso.match(/^\/(en|it|si|ta)(?=\/|$)/);
+  indice.get(itHref).lingue[m ? m[1] : 'radice'] = b;
 }
+
+const valore = (b, tag) => b ? ((b.match(new RegExp(`<${tag}>([^<]+)</${tag}>`)) || [])[1] || '') : '';
+
+let cambiati = 0;
+const nuoveUrl = [];
+for (const g of gruppi) {
+  /* La chiave e' l'indirizzo italiano: nella prima versione era la radice,
+     dopo il primo giro e' /it/... */
+  let percorso = new URL(g.chiave).pathname;
+  if (percorso === '/it') percorso = '/';
+  else if (percorso.startsWith('/it/')) percorso = percorso.slice(3);
+  const nome = percorso === '/' ? 'index' : percorso.slice(1);
+  const ing = SLUG[nome] || nome;
+  const enUrl = BASE + percorso;
+  const itUrl = BASE + '/it' + (percorso === '/' ? '' : percorso);
+  const siUrl = BASE + '/si' + (percorso === '/' ? '' : '/' + ing);
+  const taUrl = BASE + '/ta' + (percorso === '/' ? '' : '/' + ing);
+
+  const alternati = [['en', enUrl], ['it', itUrl], ['si', siUrl], ['ta', taUrl], ['x-default', enUrl]]
+    .map(([l, h]) => `<xhtml:link rel="alternate" hreflang="${l}" href="${h}"/>`).join('');
+
+  const radice = g.lingue.radice || g.lingue.en;
+  const italiano = g.lingue.it || g.lingue.radice;
+  const righe = [
+    [radice, enUrl, valore(radice, 'priority') || '0.8'],
+    [italiano, itUrl, valore(italiano, 'priority') || '0.8'],
+    [g.lingue.si, siUrl, valore(g.lingue.si, 'priority') || '0.7'],
+    [g.lingue.ta, taUrl, valore(g.lingue.ta, 'priority') || '0.7']
+  ];
+
+  for (const [b, loc, priorita] of righe) {
+    if (!b) continue;
+    const lastmod = valore(b, 'lastmod');
+    const changefreq = valore(b, 'changefreq');
+    nuoveUrl.push(`  <url><loc>${loc}</loc>` +
+      (lastmod ? `<lastmod>${lastmod}</lastmod>` : '') +
+      (changefreq ? `<changefreq>${changefreq}</changefreq>` : '') +
+      `<priority>${priorita}</priority>${alternati}</url>`);
+  }
+  cambiati++;
+}
+const nuovoSitemap = testa + nuoveUrl.join('\n') + '\n' + coda;
 
 if (SOLO_CONTROLLO) {
   console.log('riscritture da scrivere:', nuoveRiscritture.length,
-              '· redirezioni:', nuoveRedirezioni.length, '· indirizzi in sitemap:', cambi);
+              '· redirezioni:', nuoveRedirezioni.length, '· pagine in sitemap:', cambiati);
   process.exit(0);
 }
 
 writeFileSync('vercel.json', JSON.stringify(conf, null, 2) + '\n');
-writeFileSync('sitemap.xml', sitemap);
+writeFileSync('sitemap.xml', nuovoSitemap);
 console.log('vercel.json  ·', nuoveRiscritture.length, 'riscritture,', nuoveRedirezioni.length, 'redirezioni');
-console.log('sitemap.xml  ·', cambi, 'indirizzi aggiornati');
+console.log('sitemap.xml  ·', cambiati, 'pagine,', nuoveUrl.length, 'indirizzi');

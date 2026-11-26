@@ -1,28 +1,26 @@
 /* Quello che i motori di ricerca devono poter leggere, scritto dentro le pagine.
 
-   Due buchi, trovati contando:
+   Due cose in un colpo solo:
 
-   1. **Le lingue.** La mappa del sito dichiara che ogni pagina esiste in
-      italiano, inglese, sinhala e tamil. Le pagine no: l'unica che lo diceva
-      era la home. Per Google la mappa è un suggerimento, il collegamento
-      `hreflang` dentro la pagina è la prova — senza, le quattro versioni non
-      risultano la stessa pagina, si fanno concorrenza fra loro e chi cerca in
-      sinhala non trova la versione in sinhala.
+   1. **Le lingue.** La pagina senza prefisso e' quella predefinita e parla
+      inglese: la dichiarano `en` e `x-default`. L'italiano vive sotto /it, il
+      sinhala sotto /si e il tamil sotto /ta. Il collegamento `hreflang` dentro
+      la pagina e' la prova che le quattro versioni sono la stessa pagina:
+      senza, si fanno concorrenza fra loro.
 
-   2. **Il dato strutturato.** Ce l'avevano 21 pagine su 61, e sono le guide,
-      dove l'ha messo `verifica-fonti.mjs`. Alle altre mancava tutto: nessuna
-      briciola di pane, nessuna identità del sito, nessuna data.
+   2. **Il dato strutturato.** Una `BreadcrumbList` — Home › pagina — e una
+      `WebPage` con `dateModified` presa da git, ma **solo** se la pagina non
+      ha gia' un `Article` (le guide ce l'hanno: due schede per la stessa
+      pagina si contraddicono a vicenda). Sulla sola home, `WebSite` con la
+      ricerca interna e `Organization`.
 
-   Cosa scrive, per ogni pagina indicizzabile:
-     - i cinque collegamenti di lingua (it, en, si, ta, x-default);
-     - una `BreadcrumbList` — Home › pagina;
-     - una `WebPage` con `dateModified` presa da git, ma **solo** se la pagina
-       non ha già un `Article` (le guide ce l'hanno: due schede per la stessa
-       pagina si contraddicono a vicenda);
-     - sulla sola home, `WebSite` con la ricerca interna e `Organization`.
+   I nomi delle briciole e delle pagine vengono dal `<title>`, gia' inglese:
+   cosi' non c'e' una seconda traduzione da tenere aggiornata. Le domande
+   frequenti stanno in `scripts/faq-en.mjs`, perche' il testo italiano nel
+   markup non e' quello che l'utente legge.
 
    Le pagine `noindex` restano fuori: dichiarare le lingue di una pagina che
-   chiedi di non indicizzare è la stessa contraddizione che
+   chiedi di non indicizzare e' la stessa contraddizione che
    `audit-indicizzazione.py` va a caccia di trovare.
 
    Fra i due marcatori non si scrive a mano: al giro dopo viene sovrascritto.
@@ -31,14 +29,16 @@
 */
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { execSync } from 'node:child_process';
+import { FAQ_EN } from './faq-en.mjs';
 
 const BASE = 'https://easyitaliahub.it';
-const LINGUE = ['en', 'si', 'ta'];
+const LINGUE = ['en', 'it', 'si', 'ta'];
 
-/* Gli indirizzi sotto /en, /si e /ta hanno lo spicchio internazionale
-   (/en/forms, non /en/moduli). La mappa sta in assets/eih-lang-url.js, dove
-   serve al browser: qui si legge da lì, per non tenerne due copie che prima o
-   poi divergono. */
+/* Gli indirizzi sotto /si e /ta hanno lo spicchio internazionale
+   (/si/forms, non /si/moduli). /it invece tiene i nomi italiani, perche' e'
+   la versione italiana. La mappa sta in assets/eih-lang-url.js, dove serve al
+   browser: qui si legge da li', per non tenerne due copie che prima o poi
+   divergono. */
 const SLUG = (() => {
   const src = readFileSync('assets/eih-lang-url.js', 'utf8');
   const blocco = src.match(/var SLUG = \{([\s\S]*?)\n  \};/);
@@ -64,9 +64,14 @@ function indicizzabile(html) {
 function titolo(html) {
   const m = html.match(/<title>([^<]*)<\/title>/);
   if (!m) return null;
-  /* Il titolo della scheda è «Pagina — Easy Italia Hub»: nella briciola di pane
-     ci va solo la prima metà, o si legge «Home › Mappa — Easy Italia Hub». */
-  return m[1].split('—')[0].trim() || m[1].trim();
+  /* Il titolo della scheda e' «Pagina — Easy Italia Hub»: nella briciola di
+     pane ci va la pagina, non il nome del sito. Si toglie solo la coda, cosi'
+     i titoli lunghi delle guide restano interi. */
+  const senzaSito = m[1]
+    .replace(/\s*—\s*Easy Italia Hub\s*$/, '')
+    .replace(/\s*·\s*Easy Italia Hub\s*$/, '')
+    .trim();
+  return senzaSito || m[1].trim();
 }
 
 function ultimaModifica(file) {
@@ -75,78 +80,27 @@ function ultimaModifica(file) {
 }
 
 function indirizzo(nome, lg) {
-  if (lg === 'it') return BASE + (nome === 'index' ? '/' : '/' + nome);
-  const coda = nome === 'index' ? '' : '/' + (SLUG[nome] || nome);
-  return BASE + '/' + lg + coda;
-}
-
-function testo(html) {
-  return html
-    .replace(/<svg[\s\S]*?<\/svg>/gi, '')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\s+/g, ' ').trim();
-}
-
-function domande(html) {
-  const fuori = [];
-
-  /* Due forme nel sito, entrambe legittime: la home usa <details><summary>,
-     community e guida-conti un <button> con `aria-controls` che punta alla
-     risposta. Si leggono tutte e due invece di uniformare il markup: cambiare
-     l'HTML di tre pagine per far contento un generatore è il verso sbagliato. */
-  const dettagli = /<summary class="faq-q">([\s\S]*?)<\/summary>\s*<div class="faq-a"[^>]*>([\s\S]*?)<\/div>/g;
-  let m;
-  while ((m = dettagli.exec(html))) {
-    const d = testo(m[1]), r = testo(m[2]);
-    if (d && r) fuori.push({ d, r });
-  }
-
-  /* Terza forma, in guida-conti: pulsante senza `aria-controls`, con la
-     risposta nel div subito dopo. Qui «il div che viene dopo» è l'unica cosa
-     che c'è, quindi si prende quello — ma solo se attacca subito. */
-  const vicini = /<button class="faq-q"[^>]*>([\s\S]*?)<\/button>\s*<div class="faq-a">([\s\S]*?)<\/div>\s*<\/div>/g;
-  while ((m = vicini.exec(html))) {
-    const d = testo(m[1]), r = testo(m[2]);
-    if (d && r) fuori.push({ d, r });
-  }
-
-  const bottoni = /<button class="faq-q"[^>]*aria-controls="([^"]+)"[^>]*>([\s\S]*?)<\/button>/g;
-  while ((m = bottoni.exec(html))) {
-    const d = testo(m[2]);
-    if (!d) continue;
-    /* La risposta si trova dall'identificativo dichiarato dal pulsante: si
-       prende quella vera, non «il div che viene dopo». */
-    const attributo = html.indexOf('id="' + m[1] + '"');
-    if (attributo === -1) continue;
-    /* Si parte dopo la chiusura del tag: partendo dall'attributo, dentro la
-       risposta finivano `role="region" aria-labelledby="..."` e compagnia. */
-    const dopo = html.indexOf('>', attributo);
-    if (dopo === -1) continue;
-    const fine = html.indexOf('</div></div>', dopo);
-    const r = testo(html.slice(dopo + 1, fine === -1 ? dopo + 4000 : fine));
-    if (r) fuori.push({ d, r });
-  }
-
-  return fuori;
+  const coda = nome === 'index' ? '' : '/' + nome;
+  if (lg === 'en') return BASE + (coda || '/');
+  if (lg === 'it') return BASE + '/it' + coda;
+  const internazionale = nome === 'index' ? '' : '/' + (SLUG[nome] || nome);
+  return BASE + '/' + lg + internazionale;
 }
 
 function blocco(nome, html) {
-  const t = titolo(nome === 'index' ? html : html) || nome;
-  const righe = [
-    `<link rel="alternate" hreflang="it" href="${indirizzo(nome, 'it')}"/>`,
-    ...LINGUE.map(l => `<link rel="alternate" hreflang="${l}" href="${indirizzo(nome, l)}"/>`),
-    `<link rel="alternate" hreflang="x-default" href="${indirizzo(nome, 'it')}"/>`
-  ];
+  const t = titolo(html) || nome;
+  const righe = LINGUE.map(l =>
+    `<link rel="alternate" hreflang="${l}" href="${indirizzo(nome, l)}"/>`
+  ).concat([
+    `<link rel="alternate" hreflang="x-default" href="${indirizzo(nome, 'en')}"/>`
+  ]);
 
   const dati = [];
 
-  /* La home aveva gia' un `@graph` scritto a mano con Organization, WebSite e
-     WebPage. Aggiungerne altri due sarebbe stato dichiarare due volte chi
-     siamo, con due schede che prima o poi divergono: si guarda cosa c'e' e si
-     aggiunge solo quello che manca. */
+  /* La home ha gia' un `@graph` scritto a mano con Organization, WebSite e
+     WebPage. Aggiungerne altri sarebbe dichiarare due volte chi siamo, con
+     due schede che prima o poi divergono: si guarda cosa c'e' e si aggiunge
+     solo quello che manca. */
   /* Si guarda la pagina SENZA il blocco generato: altrimenti al secondo giro
      il controllo trova quello che ha scritto lui al primo, conclude che c'e'
      gia' e non scrive piu' niente. Un generatore che si legge addosso si
@@ -158,7 +112,7 @@ function blocco(nome, html) {
     if (!gia('WebSite')) dati.push({
       '@context': 'https://schema.org', '@type': 'WebSite',
       name: 'Easy Italia Hub', url: BASE + '/',
-      inLanguage: ['it', 'en', 'si', 'ta'],
+      inLanguage: ['en', 'it', 'si', 'ta'],
       potentialAction: {
         '@type': 'SearchAction',
         target: { '@type': 'EntryPoint', urlTemplate: BASE + '/cerca?q={search_term_string}' },
@@ -169,24 +123,24 @@ function blocco(nome, html) {
       '@context': 'https://schema.org', '@type': 'Organization',
       name: 'Easy Italia Hub', url: BASE + '/',
       logo: BASE + '/assets/apple-touch-icon.png',
-      description: 'Guide, strumenti e community per la comunità srilankese in Italia.'
+      description: 'Guides, multilingual AI assistant and community for the Sri Lankan community in Italy.'
     });
   } else {
     dati.push({
       '@context': 'https://schema.org', '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Easy Italia Hub', item: BASE + '/' },
-        { '@type': 'ListItem', position: 2, name: t, item: indirizzo(nome, 'it') }
+        { '@type': 'ListItem', position: 2, name: t, item: indirizzo(nome, 'en') }
       ]
     });
-    /* Le guide hanno già il loro `Article` da verifica-fonti.mjs: aggiungere
+    /* Le guide hanno gia' il loro `Article` da verifica-fonti.mjs: aggiungere
        una `WebPage` sulla stessa pagina vorrebbe dire dichiarare due volte la
        stessa cosa con date che prima o poi divergono. */
     if (!gia('Article') && !gia('WebPage')) {
       const d = ultimaModifica(nome + '.html');
       const w = {
         '@context': 'https://schema.org', '@type': 'WebPage',
-        name: t, url: indirizzo(nome, 'it'),
+        name: t, url: indirizzo(nome, 'en'), inLanguage: 'en',
         isPartOf: { '@type': 'WebSite', name: 'Easy Italia Hub', url: BASE + '/' }
       };
       if (d) w.dateModified = d;
@@ -194,19 +148,16 @@ function blocco(nome, html) {
     }
   }
 
-  /* Domande frequenti: dove ci sono davvero, si dichiarano. È l'unico dato
-     strutturato che cambia come la pagina appare fra i risultati — Google
-     mostra le domande sotto il titolo — e finora nessuna delle tre pagine che
-     le hanno lo diceva. Si legge il markup che c'è (`<summary class="faq-q">`
-     + `<div class="faq-a">`), non si inventa: se una risposta non si trova,
-     quella domanda si salta. */
-  const faq = domande(html);
+  /* Domande frequenti: dove ci sono davvero, si dichiarano. I testi vengono
+     da scripts/faq-en.mjs — la pagina si presenta in inglese, e il JSON-LD
+     deve descrivere quello che si legge, non l'italiano del markup. */
+  const faq = FAQ_EN[nome] || [];
   if (faq.length && !gia('FAQPage')) {
     dati.push({
-      '@context': 'https://schema.org', '@type': 'FAQPage',
+      '@context': 'https://schema.org', '@type': 'FAQPage', inLanguage: 'en',
       mainEntity: faq.map(q => ({
-        '@type': 'Question', name: q.d,
-        acceptedAnswer: { '@type': 'Answer', text: q.r }
+        '@type': 'Question', name: q.q,
+        acceptedAnswer: { '@type': 'Answer', text: q.a }
       }))
     });
   }
@@ -223,7 +174,7 @@ for (const nome of pagine()) {
   let html = readFileSync(file, 'utf8');
 
   if (!indicizzabile(html)) {
-    /* Se una pagina è diventata noindex dopo un giro precedente, il blocco
+    /* Se una pagina e' diventata noindex dopo un giro precedente, il blocco
        vecchio va tolto: resterebbe a dichiarare lingue di una pagina che
        chiediamo di ignorare. */
     if (html.includes(INIZIO)) {
@@ -240,8 +191,8 @@ for (const nome of pagine()) {
     html = html.replace(new RegExp(fuga(INIZIO) + '[\\s\\S]*?' + fuga(FINE)), nuovo);
   } else {
     /* Sotto il canonical: sono la stessa famiglia di dichiarazioni, e chi apre
-       il sorgente le trova insieme. La home ha già i suoi hreflang scritti a
-       mano: si tolgono, o finirebbero doppi. */
+       il sorgente le trova insieme. Se ci sono hreflang scritti a mano si
+       tolgono, o finirebbero doppi. */
     const vecchi = /(?:[ \t]*<link rel="alternate" hreflang="[^"]*" href="[^"]*"\/>\n?)+/;
     if (vecchi.test(html)) html = html.replace(vecchi, '');
     const can = /(<link rel="canonical"[^>]*>)/;

@@ -12,7 +12,7 @@
    senza questa distinzione quei visitatori resterebbero in italiano per
    sempre. Chi non ha il segno di scelta riparte dall'inglese, una volta sola. */
 try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
-try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+try{var _m=location.pathname.match(/^\/(it|en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
 if(!/^(it|en|si|ta)$/.test(_l))_l="en";
 window.EIH_LANG=_l;window.EIH_PAGINA="dashboard";
 if(/^(en|si|ta)$/.test(_l)){var _p=window.EIH_PAGINA||"index";
@@ -446,7 +446,7 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
      sono generati dal JavaScript e nel dizionario per impronta finirebbero
      dodici voci per lingua che cambiano ogni mese. */
   var LG = (function(){ try {
-    var m = location.pathname.match(/^\/(en|si|ta)(\/|$)/);
+    var m = location.pathname.match(/^\/(it|en|si|ta)(\/|$)/);
     return m ? m[1] : (localStorage.getItem('eih-lang') || window.EIH_LANG || 'en');
   } catch(e){ return 'it'; } })();
   var CAL = {

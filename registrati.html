@@ -12,7 +12,7 @@
    senza questa distinzione quei visitatori resterebbero in italiano per
    sempre. Chi non ha il segno di scelta riparte dall'inglese, una volta sola. */
 try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
-try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+try{var _m=location.pathname.match(/^\/(it|en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
 if(!/^(it|en|si|ta)$/.test(_l))_l="en";
 window.EIH_LANG=_l;window.EIH_PAGINA="registrati";
 if(/^(en|si|ta)$/.test(_l)){var _p=window.EIH_PAGINA||"index";

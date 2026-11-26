@@ -12,7 +12,7 @@
    senza questa distinzione quei visitatori resterebbero in italiano per
    sempre. Chi non ha il segno di scelta riparte dall'inglese, una volta sola. */
 try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
-try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+try{var _m=location.pathname.match(/^\/(it|en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
 if(!/^(it|en|si|ta)$/.test(_l))_l="en";
 window.EIH_LANG=_l;window.EIH_PAGINA="diritti-inps";
 if(/^(en|si|ta)$/.test(_l)){var _p=window.EIH_PAGINA||"index";
@@ -34,12 +34,12 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <meta name="theme-color" content="#7d7058"/>
 <link rel="canonical" href="https://easyitaliahub.it/diritti-inps"/>
 <!-- seo:inizio — generato da scripts/dati-strutturati.mjs, non scrivere qui -->
-<link rel="alternate" hreflang="it" href="https://easyitaliahub.it/diritti-inps"/>
-<link rel="alternate" hreflang="en" href="https://easyitaliahub.it/en/inps-benefits"/>
+<link rel="alternate" hreflang="en" href="https://easyitaliahub.it/diritti-inps"/>
+<link rel="alternate" hreflang="it" href="https://easyitaliahub.it/it/diritti-inps"/>
 <link rel="alternate" hreflang="si" href="https://easyitaliahub.it/si/inps-benefits"/>
 <link rel="alternate" hreflang="ta" href="https://easyitaliahub.it/ta/inps-benefits"/>
 <link rel="alternate" hreflang="x-default" href="https://easyitaliahub.it/diritti-inps"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Easy Italia Hub","item":"https://easyitaliahub.it/"},{"@type":"ListItem","position":2,"name":"Verifica i tuoi Diritti INPS","item":"https://easyitaliahub.it/diritti-inps"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Easy Italia Hub","item":"https://easyitaliahub.it/"},{"@type":"ListItem","position":2,"name":"Check Your INPS Rights","item":"https://easyitaliahub.it/diritti-inps"}]}</script>
 <!-- seo:fine -->
 
 <!-- ─── Open Graph ─── -->
@@ -344,11 +344,11 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
       si:{q:'ප්‍රශ්නය',of:'න',done:'සම්පූර්ණ',yes:'✓ හිමිකාරිත්වය',partial:'~ සත්‍යාපනය',no:'✗ අදාළ නොවේ',summary:'ඔබේ පිළිතුරු මත: {0} ප්‍රතිලාභ ලැබිය හැකිය, {1} සත්‍යාපනය කළ යුතුය.'},
       ta:{q:'கேள்வி',of:'இல்',done:'நிறைவு',yes:'✓ உரிமை உண்டு',partial:'~ சரிபார்க்கவும்',no:'✗ பொருந்தாது',summary:'உங்கள் பதில்களின் அடிப்படையில்: {0} நலன்கள் அனுமதிக்கப்பட்டவை, {1} சரிபார்க்க வேண்டியவை.'}
     };
-    var _T=_T_MAP[_LANG]||{q:'Domanda',of:'di',done:'Completato',yes:'✓ Hai diritto',partial:'~ Verifica',no:'✗ Non applicabile',summary:'Basato sulle tue risposte: {0} prestazioni probabilmente accessibili, {1} da verificare.'};
+    var _T=_T_MAP[_LANG]||_T_MAP.en;
     // l'evento vero e' eihLangChanged su window: prima il nome non coincideva
   window.addEventListener('eihLangChanged',function(e){
-      _LANG=(e.detail&&e.detail.lingua)||'it';
-      _T=_T_MAP[_LANG]||{q:'Domanda',of:'di',done:'Completato',yes:'✓ Hai diritto',partial:'~ Verifica',no:'✗ Non applicabile',summary:'Basato sulle tue risposte: {0} prestazioni probabilmente accessibili, {1} da verificare.'};
+      _LANG=(e.detail&&e.detail.lingua)||'en';
+      _T=_T_MAP[_LANG]||_T_MAP.en;
     });
 
     // benefit definitions

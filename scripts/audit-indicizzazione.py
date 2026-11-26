@@ -24,7 +24,7 @@ def main():
     mappa = set()
     for u in re.findall(r'<loc>([^<]+)</loc>', io.open('sitemap.xml', encoding='utf-8').read()):
         p = u.replace(BASE, '').strip('/')
-        if p.split('/')[0] in ('en', 'si', 'ta'):
+        if p.split('/')[0] in ('it', 'en', 'si', 'ta'):
             p = '/'.join(p.split('/')[1:])
         mappa.add(p or 'index')
 

@@ -64,7 +64,7 @@
     document.head.appendChild(st);
 
     var l = lingua();
-    var qui = location.pathname.replace(/\/$/, '') || '/';
+    var qui = location.pathname.replace(/^\/(it|en|si|ta)(?=\/|$)/, '').replace(/\/$/, '') || '/';
     var nav = document.createElement('nav');
     nav.id = 'eih-bnav';
     nav.setAttribute('aria-label', 'Navigazione rapida');

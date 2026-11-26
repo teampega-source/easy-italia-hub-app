@@ -30,427 +30,990 @@
       "permanent": false
     },
     {
-      "source": "/(en|si|ta)/abbonamenti",
+      "source": "/en/subscriptions",
+      "destination": "/abbonamenti",
+      "permanent": true
+    },
+    {
+      "source": "/en/academy",
+      "destination": "/academy",
+      "permanent": true
+    },
+    {
+      "source": "/en/ai-teacher",
+      "destination": "/ai-teacher",
+      "permanent": true
+    },
+    {
+      "source": "/en/child-allowance",
+      "destination": "/assegno-unico",
+      "permanent": true
+    },
+    {
+      "source": "/en/associations",
+      "destination": "/associazioni",
+      "permanent": true
+    },
+    {
+      "source": "/en/welcome",
+      "destination": "/benvenuta",
+      "permanent": true
+    },
+    {
+      "source": "/en/calendar",
+      "destination": "/calendario",
+      "permanent": true
+    },
+    {
+      "source": "/en/cargo",
+      "destination": "/cargo",
+      "permanent": true
+    },
+    {
+      "source": "/en/search",
+      "destination": "/cerca",
+      "permanent": true
+    },
+    {
+      "source": "/en/certifications",
+      "destination": "/certificazioni",
+      "permanent": true
+    },
+    {
+      "source": "/en/about-us",
+      "destination": "/chi-siamo",
+      "permanent": true
+    },
+    {
+      "source": "/en/community",
+      "destination": "/community",
+      "permanent": true
+    },
+    {
+      "source": "/en/newsletter-confirmed",
+      "destination": "/conferma-newsletter",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact",
+      "destination": "/contatti",
+      "permanent": true
+    },
+    {
+      "source": "/en/cookies",
+      "destination": "/cookie",
+      "permanent": true
+    },
+    {
+      "source": "/en/courses",
+      "destination": "/corsi",
+      "permanent": true
+    },
+    {
+      "source": "/en/building-your-future",
+      "destination": "/costruire-futuro",
+      "permanent": true
+    },
+    {
+      "source": "/en/cv-builder",
+      "destination": "/cv-builder",
+      "permanent": true
+    },
+    {
+      "source": "/en/dashboard",
+      "destination": "/dashboard",
+      "permanent": true
+    },
+    {
+      "source": "/en/inps-benefits",
+      "destination": "/diritti-inps",
+      "permanent": true
+    },
+    {
+      "source": "/en/medical-dictionary",
+      "destination": "/dizionario-medico",
+      "permanent": true
+    },
+    {
+      "source": "/en/documents",
+      "destination": "/documenti",
+      "permanent": true
+    },
+    {
+      "source": "/en/emergencies",
+      "destination": "/emergenze",
+      "permanent": true
+    },
+    {
+      "source": "/en/italian-language-test",
+      "destination": "/esame",
+      "permanent": true
+    },
+    {
+      "source": "/en/taxes",
+      "destination": "/fisco",
+      "permanent": true
+    },
+    {
+      "source": "/en/forum",
+      "destination": "/forum",
+      "permanent": true
+    },
+    {
+      "source": "/en/bank-account",
+      "destination": "/guida-conti",
+      "permanent": true
+    },
+    {
+      "source": "/en/healthcare",
+      "destination": "/guida-ssn",
+      "permanent": true
+    },
+    {
+      "source": "/en/guides",
+      "destination": "/guide",
+      "permanent": true
+    },
+    {
+      "source": "/en/housing",
+      "destination": "/housing",
+      "permanent": true
+    },
+    {
+      "source": "/en/italy-and-sri-lanka",
+      "destination": "/italia-srilanka",
+      "permanent": true
+    },
+    {
+      "source": "/en/jobs",
+      "destination": "/lavoro",
+      "permanent": true
+    },
+    {
+      "source": "/en/workers-rights",
+      "destination": "/lavoro-diritti",
+      "permanent": true
+    },
+    {
+      "source": "/en/map",
+      "destination": "/mappa",
+      "permanent": true
+    },
+    {
+      "source": "/en/media-kit",
+      "destination": "/media-kit-atena",
+      "permanent": true
+    },
+    {
+      "source": "/en/marketplace",
+      "destination": "/mercatino",
+      "permanent": true
+    },
+    {
+      "source": "/en/forms",
+      "destination": "/moduli",
+      "permanent": true
+    },
+    {
+      "source": "/en/money-transfer",
+      "destination": "/money-transfer",
+      "permanent": true
+    },
+    {
+      "source": "/en/news",
+      "destination": "/news",
+      "permanent": true
+    },
+    {
+      "source": "/en/legal-notice",
+      "destination": "/note-legali",
+      "permanent": true
+    },
+    {
+      "source": "/en/offline",
+      "destination": "/offline",
+      "permanent": true
+    },
+    {
+      "source": "/en/opportunities",
+      "destination": "/opportunita",
+      "permanent": true
+    },
+    {
+      "source": "/en/driving-licence",
+      "destination": "/patente",
+      "permanent": true
+    },
+    {
+      "source": "/en/my-journey",
+      "destination": "/percorso",
+      "permanent": true
+    },
+    {
+      "source": "/en/permit-tracker",
+      "destination": "/permesso-tracker",
+      "permanent": true
+    },
+    {
+      "source": "/en/podcast",
+      "destination": "/podcast",
+      "permanent": true
+    },
+    {
+      "source": "/en/privacy",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/en/professionals",
+      "destination": "/professionisti",
+      "permanent": true
+    },
+    {
+      "source": "/en/profiles",
+      "destination": "/profili",
+      "permanent": true
+    },
+    {
+      "source": "/en/sign-up",
+      "destination": "/registrati",
+      "permanent": true
+    },
+    {
+      "source": "/en/network",
+      "destination": "/rete",
+      "permanent": true
+    },
+    {
+      "source": "/en/family-reunification",
+      "destination": "/ricongiungimento",
+      "permanent": true
+    },
+    {
+      "source": "/en/recognition-of-qualifications",
+      "destination": "/riconoscimento-titoli",
+      "permanent": true
+    },
+    {
+      "source": "/en/school",
+      "destination": "/scuola",
+      "permanent": true
+    },
+    {
+      "source": "/en/services",
+      "destination": "/servizi",
+      "permanent": true
+    },
+    {
+      "source": "/en/srilankadirectory",
+      "destination": "/srilankadirectory",
+      "permanent": true
+    },
+    {
+      "source": "/en/advertise",
+      "destination": "/sponsorizza",
+      "permanent": true
+    },
+    {
+      "source": "/en/terms",
+      "destination": "/termini",
+      "permanent": true
+    },
+    {
+      "source": "/en/translate",
+      "destination": "/traduci",
+      "permanent": true
+    },
+    {
+      "source": "/en/travel-sri-lanka",
+      "destination": "/travel-sri-lanka",
+      "permanent": true
+    },
+    {
+      "source": "/en/travelpayouts",
+      "destination": "/travelpayouts",
+      "permanent": true
+    },
+    {
+      "source": "/en/flights",
+      "destination": "/voli",
+      "permanent": true
+    },
+    {
+      "source": "/en/wise",
+      "destination": "/wise",
+      "permanent": true
+    },
+    {
+      "source": "/en",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/:path*",
+      "destination": "/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/it/subscriptions",
+      "destination": "/it/abbonamenti",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/abbonamenti",
       "destination": "/$1/subscriptions",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/assegno-unico",
+      "source": "/it/child-allowance",
+      "destination": "/it/assegno-unico",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/assegno-unico",
       "destination": "/$1/child-allowance",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/associazioni",
+      "source": "/it/associations",
+      "destination": "/it/associazioni",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/associazioni",
       "destination": "/$1/associations",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/benvenuta",
+      "source": "/it/welcome",
+      "destination": "/it/benvenuta",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/benvenuta",
       "destination": "/$1/welcome",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/calendario",
+      "source": "/it/calendar",
+      "destination": "/it/calendario",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/calendario",
       "destination": "/$1/calendar",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/cerca",
+      "source": "/it/search",
+      "destination": "/it/cerca",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/cerca",
       "destination": "/$1/search",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/certificazioni",
+      "source": "/it/certifications",
+      "destination": "/it/certificazioni",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/certificazioni",
       "destination": "/$1/certifications",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/chi-siamo",
+      "source": "/it/about-us",
+      "destination": "/it/chi-siamo",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/chi-siamo",
       "destination": "/$1/about-us",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/conferma-newsletter",
+      "source": "/it/newsletter-confirmed",
+      "destination": "/it/conferma-newsletter",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/conferma-newsletter",
       "destination": "/$1/newsletter-confirmed",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/contatti",
+      "source": "/it/contact",
+      "destination": "/it/contatti",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/contatti",
       "destination": "/$1/contact",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/cookie",
+      "source": "/it/cookies",
+      "destination": "/it/cookie",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/cookie",
       "destination": "/$1/cookies",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/corsi",
+      "source": "/it/courses",
+      "destination": "/it/corsi",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/corsi",
       "destination": "/$1/courses",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/costruire-futuro",
+      "source": "/it/building-your-future",
+      "destination": "/it/costruire-futuro",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/costruire-futuro",
       "destination": "/$1/building-your-future",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/diritti-inps",
+      "source": "/it/inps-benefits",
+      "destination": "/it/diritti-inps",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/diritti-inps",
       "destination": "/$1/inps-benefits",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/dizionario-medico",
+      "source": "/it/medical-dictionary",
+      "destination": "/it/dizionario-medico",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/dizionario-medico",
       "destination": "/$1/medical-dictionary",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/documenti",
+      "source": "/it/documents",
+      "destination": "/it/documenti",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/documenti",
       "destination": "/$1/documents",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/emergenze",
+      "source": "/it/emergencies",
+      "destination": "/it/emergenze",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/emergenze",
       "destination": "/$1/emergencies",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/esame",
+      "source": "/it/italian-language-test",
+      "destination": "/it/esame",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/esame",
       "destination": "/$1/italian-language-test",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/fisco",
+      "source": "/it/taxes",
+      "destination": "/it/fisco",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/fisco",
       "destination": "/$1/taxes",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/guida-conti",
+      "source": "/it/bank-account",
+      "destination": "/it/guida-conti",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/guida-conti",
       "destination": "/$1/bank-account",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/guida-ssn",
+      "source": "/it/healthcare",
+      "destination": "/it/guida-ssn",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/guida-ssn",
       "destination": "/$1/healthcare",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/guide",
+      "source": "/it/guides",
+      "destination": "/it/guide",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/guide",
       "destination": "/$1/guides",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/italia-srilanka",
+      "source": "/it/italy-and-sri-lanka",
+      "destination": "/it/italia-srilanka",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/italia-srilanka",
       "destination": "/$1/italy-and-sri-lanka",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/lavoro",
+      "source": "/it/jobs",
+      "destination": "/it/lavoro",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/lavoro",
       "destination": "/$1/jobs",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/lavoro-diritti",
+      "source": "/it/workers-rights",
+      "destination": "/it/lavoro-diritti",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/lavoro-diritti",
       "destination": "/$1/workers-rights",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/mappa",
+      "source": "/it/map",
+      "destination": "/it/mappa",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/mappa",
       "destination": "/$1/map",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/media-kit-atena",
+      "source": "/it/media-kit",
+      "destination": "/it/media-kit-atena",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/media-kit-atena",
       "destination": "/$1/media-kit",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/mercatino",
+      "source": "/it/marketplace",
+      "destination": "/it/mercatino",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/mercatino",
       "destination": "/$1/marketplace",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/moduli",
+      "source": "/it/forms",
+      "destination": "/it/moduli",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/moduli",
       "destination": "/$1/forms",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/note-legali",
+      "source": "/it/legal-notice",
+      "destination": "/it/note-legali",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/note-legali",
       "destination": "/$1/legal-notice",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/opportunita",
+      "source": "/it/opportunities",
+      "destination": "/it/opportunita",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/opportunita",
       "destination": "/$1/opportunities",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/patente",
+      "source": "/it/driving-licence",
+      "destination": "/it/patente",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/patente",
       "destination": "/$1/driving-licence",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/percorso",
+      "source": "/it/my-journey",
+      "destination": "/it/percorso",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/percorso",
       "destination": "/$1/my-journey",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/permesso-tracker",
+      "source": "/it/permit-tracker",
+      "destination": "/it/permesso-tracker",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/permesso-tracker",
       "destination": "/$1/permit-tracker",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/professionisti",
+      "source": "/it/professionals",
+      "destination": "/it/professionisti",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/professionisti",
       "destination": "/$1/professionals",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/profili",
+      "source": "/it/profiles",
+      "destination": "/it/profili",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/profili",
       "destination": "/$1/profiles",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/registrati",
+      "source": "/it/sign-up",
+      "destination": "/it/registrati",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/registrati",
       "destination": "/$1/sign-up",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/rete",
+      "source": "/it/network",
+      "destination": "/it/rete",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/rete",
       "destination": "/$1/network",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/ricongiungimento",
+      "source": "/it/family-reunification",
+      "destination": "/it/ricongiungimento",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/ricongiungimento",
       "destination": "/$1/family-reunification",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/riconoscimento-titoli",
+      "source": "/it/recognition-of-qualifications",
+      "destination": "/it/riconoscimento-titoli",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/riconoscimento-titoli",
       "destination": "/$1/recognition-of-qualifications",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/scuola",
+      "source": "/it/school",
+      "destination": "/it/scuola",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/scuola",
       "destination": "/$1/school",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/servizi",
+      "source": "/it/services",
+      "destination": "/it/servizi",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/servizi",
       "destination": "/$1/services",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/sponsorizza",
+      "source": "/it/advertise",
+      "destination": "/it/sponsorizza",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/sponsorizza",
       "destination": "/$1/advertise",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/termini",
+      "source": "/it/terms",
+      "destination": "/it/termini",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/termini",
       "destination": "/$1/terms",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/traduci",
+      "source": "/it/translate",
+      "destination": "/it/traduci",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/traduci",
       "destination": "/$1/translate",
       "permanent": true
     },
     {
-      "source": "/(en|si|ta)/voli",
+      "source": "/it/flights",
+      "destination": "/it/voli",
+      "permanent": true
+    },
+    {
+      "source": "/(si|ta)/voli",
       "destination": "/$1/flights",
       "permanent": true
     }
   ],
   "rewrites": [
     {
-      "source": "/(en|si|ta)/subscriptions",
+      "source": "/(si|ta)/subscriptions",
       "destination": "/abbonamenti"
     },
     {
-      "source": "/(en|si|ta)/child-allowance",
+      "source": "/(si|ta)/child-allowance",
       "destination": "/assegno-unico"
     },
     {
-      "source": "/(en|si|ta)/associations",
+      "source": "/(si|ta)/associations",
       "destination": "/associazioni"
     },
     {
-      "source": "/(en|si|ta)/welcome",
+      "source": "/(si|ta)/welcome",
       "destination": "/benvenuta"
     },
     {
-      "source": "/(en|si|ta)/calendar",
+      "source": "/(si|ta)/calendar",
       "destination": "/calendario"
     },
     {
-      "source": "/(en|si|ta)/search",
+      "source": "/(si|ta)/search",
       "destination": "/cerca"
     },
     {
-      "source": "/(en|si|ta)/certifications",
+      "source": "/(si|ta)/certifications",
       "destination": "/certificazioni"
     },
     {
-      "source": "/(en|si|ta)/about-us",
+      "source": "/(si|ta)/about-us",
       "destination": "/chi-siamo"
     },
     {
-      "source": "/(en|si|ta)/newsletter-confirmed",
+      "source": "/(si|ta)/newsletter-confirmed",
       "destination": "/conferma-newsletter"
     },
     {
-      "source": "/(en|si|ta)/contact",
+      "source": "/(si|ta)/contact",
       "destination": "/contatti"
     },
     {
-      "source": "/(en|si|ta)/cookies",
+      "source": "/(si|ta)/cookies",
       "destination": "/cookie"
     },
     {
-      "source": "/(en|si|ta)/courses",
+      "source": "/(si|ta)/courses",
       "destination": "/corsi"
     },
     {
-      "source": "/(en|si|ta)/building-your-future",
+      "source": "/(si|ta)/building-your-future",
       "destination": "/costruire-futuro"
     },
     {
-      "source": "/(en|si|ta)/inps-benefits",
+      "source": "/(si|ta)/inps-benefits",
       "destination": "/diritti-inps"
     },
     {
-      "source": "/(en|si|ta)/medical-dictionary",
+      "source": "/(si|ta)/medical-dictionary",
       "destination": "/dizionario-medico"
     },
     {
-      "source": "/(en|si|ta)/documents",
+      "source": "/(si|ta)/documents",
       "destination": "/documenti"
     },
     {
-      "source": "/(en|si|ta)/emergencies",
+      "source": "/(si|ta)/emergencies",
       "destination": "/emergenze"
     },
     {
-      "source": "/(en|si|ta)/italian-language-test",
+      "source": "/(si|ta)/italian-language-test",
       "destination": "/esame"
     },
     {
-      "source": "/(en|si|ta)/taxes",
+      "source": "/(si|ta)/taxes",
       "destination": "/fisco"
     },
     {
-      "source": "/(en|si|ta)/bank-account",
+      "source": "/(si|ta)/bank-account",
       "destination": "/guida-conti"
     },
     {
-      "source": "/(en|si|ta)/healthcare",
+      "source": "/(si|ta)/healthcare",
       "destination": "/guida-ssn"
     },
     {
-      "source": "/(en|si|ta)/guides",
+      "source": "/(si|ta)/guides",
       "destination": "/guide"
     },
     {
-      "source": "/(en|si|ta)/italy-and-sri-lanka",
+      "source": "/(si|ta)/italy-and-sri-lanka",
       "destination": "/italia-srilanka"
     },
     {
-      "source": "/(en|si|ta)/jobs",
+      "source": "/(si|ta)/jobs",
       "destination": "/lavoro"
     },
     {
-      "source": "/(en|si|ta)/workers-rights",
+      "source": "/(si|ta)/workers-rights",
       "destination": "/lavoro-diritti"
     },
     {
-      "source": "/(en|si|ta)/map",
+      "source": "/(si|ta)/map",
       "destination": "/mappa"
     },
     {
-      "source": "/(en|si|ta)/media-kit",
+      "source": "/(si|ta)/media-kit",
       "destination": "/media-kit-atena"
     },
     {
-      "source": "/(en|si|ta)/marketplace",
+      "source": "/(si|ta)/marketplace",
       "destination": "/mercatino"
     },
     {
-      "source": "/(en|si|ta)/forms",
+      "source": "/(si|ta)/forms",
       "destination": "/moduli"
     },
     {
-      "source": "/(en|si|ta)/legal-notice",
+      "source": "/(si|ta)/legal-notice",
       "destination": "/note-legali"
     },
     {
-      "source": "/(en|si|ta)/opportunities",
+      "source": "/(si|ta)/opportunities",
       "destination": "/opportunita"
     },
     {
-      "source": "/(en|si|ta)/driving-licence",
+      "source": "/(si|ta)/driving-licence",
       "destination": "/patente"
     },
     {
-      "source": "/(en|si|ta)/my-journey",
+      "source": "/(si|ta)/my-journey",
       "destination": "/percorso"
     },
     {
-      "source": "/(en|si|ta)/permit-tracker",
+      "source": "/(si|ta)/permit-tracker",
       "destination": "/permesso-tracker"
     },
     {
-      "source": "/(en|si|ta)/professionals",
+      "source": "/(si|ta)/professionals",
       "destination": "/professionisti"
     },
     {
-      "source": "/(en|si|ta)/profiles",
+      "source": "/(si|ta)/profiles",
       "destination": "/profili"
     },
     {
-      "source": "/(en|si|ta)/sign-up",
+      "source": "/(si|ta)/sign-up",
       "destination": "/registrati"
     },
     {
-      "source": "/(en|si|ta)/network",
+      "source": "/(si|ta)/network",
       "destination": "/rete"
     },
     {
-      "source": "/(en|si|ta)/family-reunification",
+      "source": "/(si|ta)/family-reunification",
       "destination": "/ricongiungimento"
     },
     {
-      "source": "/(en|si|ta)/recognition-of-qualifications",
+      "source": "/(si|ta)/recognition-of-qualifications",
       "destination": "/riconoscimento-titoli"
     },
     {
-      "source": "/(en|si|ta)/school",
+      "source": "/(si|ta)/school",
       "destination": "/scuola"
     },
     {
-      "source": "/(en|si|ta)/services",
+      "source": "/(si|ta)/services",
       "destination": "/servizi"
     },
     {
-      "source": "/(en|si|ta)/advertise",
+      "source": "/(si|ta)/advertise",
       "destination": "/sponsorizza"
     },
     {
-      "source": "/(en|si|ta)/terms",
+      "source": "/(si|ta)/terms",
       "destination": "/termini"
     },
     {
-      "source": "/(en|si|ta)/translate",
+      "source": "/(si|ta)/translate",
       "destination": "/traduci"
     },
     {
-      "source": "/(en|si|ta)/flights",
+      "source": "/(si|ta)/flights",
       "destination": "/voli"
     },
     {
-      "source": "/(en|si|ta)",
+      "source": "/it",
       "destination": "/"
     },
     {
-      "source": "/(en|si|ta)/:path*",
+      "source": "/it/:path*",
+      "destination": "/:path*"
+    },
+    {
+      "source": "/(si|ta)",
+      "destination": "/"
+    },
+    {
+      "source": "/(si|ta)/:path*",
       "destination": "/:path*"
     }
   ],

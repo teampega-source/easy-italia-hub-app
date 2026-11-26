@@ -42,7 +42,7 @@
        script parte da un tag creato al volo — che il browser tratta come
        asincrono, `defer` o no — e puo' girare prima di eih-lang-url.js. */
     if (window.EIH_PAGINA) return window.EIH_PAGINA;
-    p = location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/, '').replace(/^\/+|\/+$/g, '').replace(/\.html$/, '');
+    p = location.pathname.replace(/^\/(it|en|si|ta)(?=\/|$)/, '').replace(/^\/+|\/+$/g, '').replace(/\.html$/, '');
     // Sotto /en, /si e /ta lo spicchio e' internazionale (/en/forms): i
     // dizionari pero' sono nominati sul file italiano (moduli.en.json).
     var inv = window.EIH_SLUG_INVERSO;

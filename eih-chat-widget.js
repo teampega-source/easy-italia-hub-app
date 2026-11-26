@@ -51,7 +51,7 @@
   var SUGS=['sug1','sug2','sug3','sug4'];
   var QS=['q1','q2','q3','q4'];
   function applyLang(){
-    var d=CHAT_I18N[lang]||CHAT_I18N.it;
+    var d=CHAT_I18N[lang]||CHAT_I18N.en;
     document.getElementById('ch-name').textContent=d.name;
     document.getElementById('ch-status').textContent=d.status;
     document.getElementById('ch-ainote-short').textContent=d.ainoteShort||'';document.getElementById('ch-ainote-full').innerHTML=d.ainote;
@@ -81,7 +81,7 @@
     setTimeout(function(){mascot.classList.remove('cheer');},640);
   }
   function toggleChat(){
-    lang=(function(){try{return localStorage.getItem('eih-lang')}catch(e){return null}})()||'it';
+    lang=(function(){try{return localStorage.getItem('eih-lang')||window.EIH_LANG}catch(e){return window.EIH_LANG}})()||'en';
     applyLang();
     open=!open;
     panel.classList.toggle('open',open);
@@ -98,7 +98,7 @@
   setTimeout(function(){bubble.classList.remove('show');},7200);
 
   function escapeHtml(s){return String(s).replace(/[&<>"']/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];});}
-  function nowLabel(){return(CHAT_I18N[lang]||CHAT_I18N.it).now||'Ora';}
+  function nowLabel(){return(CHAT_I18N[lang]||CHAT_I18N.en).now||'Now';}
   function appendMsg(text,type){
     var log=document.getElementById('ch-msgs');
     var d=document.createElement('div');
@@ -135,7 +135,7 @@
       chatHistory.push({role:'assistant',content:reply});
     }catch(err){
       hideTyping();
-      appendMsg((CHAT_I18N[lang]||CHAT_I18N.it).offline,'bot');
+      appendMsg((CHAT_I18N[lang]||CHAT_I18N.en).offline,'bot');
     }finally{chatBusy=false;}
   }
 /* ── Traslitterazione singalese (Singlish → සිංහල) ──
@@ -207,7 +207,7 @@
   document.getElementById('ch-in').addEventListener('keydown',function(e){if(e.key==='Enter')sendMsg();});
   document.getElementById('ch-send').addEventListener('click',sendMsg);
   document.querySelectorAll('.sug[data-qi]').forEach(function(el,i){
-    el.addEventListener('click',function(){sendToAgent((CHAT_I18N[lang]||CHAT_I18N.it)[QS[i]]);});
+    el.addEventListener('click',function(){sendToAgent((CHAT_I18N[lang]||CHAT_I18N.en)[QS[i]]);});
   });
   document.addEventListener('keydown',function(e){
     if((e.metaKey||e.ctrlKey)&&!e.altKey&&e.key.toLowerCase()==='j'){e.preventDefault();toggleChat();}
@@ -215,5 +215,5 @@
     if(e.key==='Escape' && open){ e.preventDefault(); toggleChat(); }
   });
 
-  window.EIH_CHAT={toggle:toggleChat,send:sendToAgent,sendSug:function(idx){sendToAgent((CHAT_I18N[lang]||CHAT_I18N.it)[QS[idx]]);}};
+  window.EIH_CHAT={toggle:toggleChat,send:sendToAgent,sendSug:function(idx){sendToAgent((CHAT_I18N[lang]||CHAT_I18N.en)[QS[idx]]);}};
 })();

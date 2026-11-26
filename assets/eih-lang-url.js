@@ -1,5 +1,5 @@
 /* Easy Italia Hub — lingua dall'indirizzo.
-   Le stesse pagine sono raggiungibili anche sotto /en, /si e /ta (le riscritture
+   Le stesse pagine sono raggiungibili anche sotto /it, /si e /ta (le riscritture
    stanno in vercel.json). Qui si legge il prefisso, si imposta la lingua prima
    che parta eih.js e si corregge il canonical: senza questo Google vedrebbe
    quattro indirizzi con lo stesso canonical italiano e ne indicizzerebbe uno. */
@@ -8,7 +8,7 @@
   var BASE = 'https://easyitaliahub.it';
   var LANGS = ['en', 'si', 'ta'];
   /* ── Gli indirizzi tradotti ─────────────────────────────────────────────
-     Sotto /en, /si e /ta l'indirizzo non deve restare italiano: chi legge in
+     Sotto /si e /ta l'indirizzo non deve restare italiano: chi legge in
      inglese si trova easyitaliahub.it/en/moduli e non sa cosa sta aprendo, e
      nemmeno Google lo sa. Qui ogni pagina ha il suo spicchio internazionale.
 
@@ -104,13 +104,13 @@
     return n && SLUG[n] ? '/' + SLUG[n] : p;
   }
 
-  var m = location.pathname.match(/^\/(en|si|ta)(\/|$)/);
+  var m = location.pathname.match(/^\/(it|en|si|ta)(\/|$)/);
   // Fuori dai prefissi la lingua e' quella decisa dallo snippet nel <head>:
   // inglese, salvo scelta dell'utente.
   var lang = m ? m[1] : (window.EIH_LANG || 'en');
   // `path` e' sempre in italiano: e' il nome del file servito e la radice
   // del nome del dizionario. Sotto un prefisso lo spicchio va ritradotto.
-  var path = location.pathname.replace(/^\/(en|si|ta)(?=\/|$)/, '') || '/';
+  var path = location.pathname.replace(/^\/(it|en|si|ta)(?=\/|$)/, '') || '/';
   if (m) path = allItaliano(path);
 
   if (m) {
@@ -124,7 +124,8 @@
   document.documentElement.lang = lang;
 
   function url(l) {
-    if (l === 'it') return BASE + path;
+    if (l === 'en') return BASE + path;
+    if (l === 'it') return BASE + '/it' + (path === '/' ? '' : path);
     return BASE + '/' + l + (path === '/' ? '' : allInternazionale(path));
   }
 
@@ -133,7 +134,7 @@
   // Legarlo alla lingua attiva significherebbe, ora che l'inglese e' quella
   // predefinita, far dire a ogni pagina senza prefisso di essere /en.
   var can = document.querySelector('link[rel="canonical"]');
-  if (can) can.setAttribute('href', url(m ? m[1] : 'it'));
+  if (can) can.setAttribute('href', url(m ? m[1] : 'en'));
 
   /* Avvio anticipato della traduzione di pagina.
 
@@ -191,11 +192,11 @@
   // hreflang: se la pagina non li ha già, li aggiunge (una riga per lingua)
   if (!document.querySelector('link[rel="alternate"][hreflang]')) {
     var head = document.head, frag = document.createDocumentFragment();
-    ['it'].concat(LANGS).concat(['x-default']).forEach(function (l) {
+    ['en', 'it', 'si', 'ta', 'x-default'].forEach(function (l) {
       var link = document.createElement('link');
       link.rel = 'alternate';
       link.hreflang = l;
-      link.href = url(l === 'x-default' ? 'it' : l);
+      link.href = url(l === 'x-default' ? 'en' : l);
       frag.appendChild(link);
     });
     head.appendChild(frag);

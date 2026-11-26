@@ -12,7 +12,7 @@
    senza questa distinzione quei visitatori resterebbero in italiano per
    sempre. Chi non ha il segno di scelta riparte dall'inglese, una volta sola. */
 try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
-try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+try{var _m=location.pathname.match(/^\/(it|en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
 if(!/^(it|en|si|ta)$/.test(_l))_l="en";
 window.EIH_LANG=_l;window.EIH_PAGINA="esame";
 if(/^(en|si|ta)$/.test(_l)){var _p=window.EIH_PAGINA||"index";
@@ -35,12 +35,12 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <meta name="theme-color" content="#7d7058"/>
 <link rel="canonical" href="https://easyitaliahub.it/esame"/>
 <!-- seo:inizio — generato da scripts/dati-strutturati.mjs, non scrivere qui -->
-<link rel="alternate" hreflang="it" href="https://easyitaliahub.it/esame"/>
-<link rel="alternate" hreflang="en" href="https://easyitaliahub.it/en/italian-language-test"/>
+<link rel="alternate" hreflang="en" href="https://easyitaliahub.it/esame"/>
+<link rel="alternate" hreflang="it" href="https://easyitaliahub.it/it/esame"/>
 <link rel="alternate" hreflang="si" href="https://easyitaliahub.it/si/italian-language-test"/>
 <link rel="alternate" hreflang="ta" href="https://easyitaliahub.it/ta/italian-language-test"/>
 <link rel="alternate" hreflang="x-default" href="https://easyitaliahub.it/esame"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Easy Italia Hub","item":"https://easyitaliahub.it/"},{"@type":"ListItem","position":2,"name":"Esame & Badge","item":"https://easyitaliahub.it/esame"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Easy Italia Hub","item":"https://easyitaliahub.it/"},{"@type":"ListItem","position":2,"name":"Exam &amp; Badge","item":"https://easyitaliahub.it/esame"}]}</script>
 <!-- seo:fine -->
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Easy Italia Hub"/>
@@ -207,8 +207,8 @@ setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")
 <script>
 (function(){
   'use strict';
-  function lang(){ try{return localStorage.getItem('eih-lang')||document.documentElement.lang||'it';}catch(e){return 'it';} }
-  function t(o){ var l=lang(); return o[l]||o.it; }
+  function lang(){ try{return localStorage.getItem('eih-lang')||document.documentElement.lang||'en';}catch(e){return 'en';} }
+  function t(o){ var l=lang(); return o[l]||o.en; }
   var UI={
     none:{it:"Nessun badge ancora — fai l'esame per ottenerlo.",en:"No badge yet — take the exam to earn one.",si:"තවම බැජ් නැත — ලබා ගැනීමට විභාගය කරන්න.",ta:"இன்னும் பேட்ஜ் இல்லை — பெற தேர்வை எழுதுங்கள்."},
     min:{it:"da",en:"from",si:"සිට",ta:"முதல்"}, you:{it:"Tu",en:"You",si:"ඔබ",ta:"நீங்கள்"}, reached:{it:"Raggiunto",en:"Reached",si:"ලබා ඇත",ta:"அடைந்தது"},

@@ -12,7 +12,7 @@
    senza questa distinzione quei visitatori resterebbero in italiano per
    sempre. Chi non ha il segno di scelta riparte dall'inglese, una volta sola. */
 try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
-try{var _m=location.pathname.match(/^\/(en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+try{var _m=location.pathname.match(/^\/(it|en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
 if(!/^(it|en|si|ta)$/.test(_l))_l="en";
 window.EIH_LANG=_l;window.EIH_PAGINA="index";
 if(/^(en|si|ta)$/.test(_l)){var _p=window.EIH_PAGINA||"index";
@@ -47,12 +47,12 @@ try{if(localStorage.getItem("eih-si-bar-2")!=="off")document.documentElement.cla
 <meta name="theme-color" content="#8a909a"/>
 <link rel="canonical" href="https://easyitaliahub.it/"/>
 <!-- seo:inizio — generato da scripts/dati-strutturati.mjs, non scrivere qui -->
-<link rel="alternate" hreflang="it" href="https://easyitaliahub.it/"/>
-<link rel="alternate" hreflang="en" href="https://easyitaliahub.it/en"/>
+<link rel="alternate" hreflang="en" href="https://easyitaliahub.it/"/>
+<link rel="alternate" hreflang="it" href="https://easyitaliahub.it/it"/>
 <link rel="alternate" hreflang="si" href="https://easyitaliahub.it/si"/>
 <link rel="alternate" hreflang="ta" href="https://easyitaliahub.it/ta"/>
 <link rel="alternate" hreflang="x-default" href="https://easyitaliahub.it/"/>
-
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[{"@type":"Question","name":"How long does the residence permit take?","acceptedAnswer":{"@type":"Answer","text":"It depends on the police headquarters (questura) and the type of permit: timelines can range from a few weeks to several months. After submitting your application you receive a receipt that, together with your passport, serves as a temporary document. For the step-by-step procedure, see our residence permit guide."}},{"@type":"Question","name":"Is the service free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Reading the guides, using the AI Assistant and reading the news are free. No credit card is required to sign up."}},{"@type":"Question","name":"Which languages can I use the site in?","acceptedAnswer":{"@type":"Answer","text":"The site interface is available in 4 languages: Italian, English, Sinhala (සිංහල) and Tamil (தமிழ்). You can change the language from the menu in the top right."}},{"@type":"Question","name":"How does the AI Advisor work?","acceptedAnswer":{"@type":"Answer","text":"It's an assistant available 24 hours a day that answers your questions about bureaucracy and services. Open the chat from the button in the bottom right (or with Ctrl/⌘+J) and type your question: it points you to the relevant steps and guides."}},{"@type":"Question","name":"Do I need to register to use the guides?","acceptedAnswer":{"@type":"Answer","text":"No. The practical guides are freely available without registration. The free account is only needed to save the progress of your personal journey."}},{"@type":"Question","name":"Is the information official?","acceptedAnswer":{"@type":"Answer","text":"Our guides are informational and orient you through the main steps, but they do not replace official sources. For definitive data always check the institutional websites (e.g. Polizia di Stato, Agenzia delle Entrate, INPS) or contact a CAF or patronato."}}]}</script>
 <!-- seo:fine -->
 
 <!-- ─── Open Graph ─── -->
@@ -87,7 +87,7 @@ try{if(localStorage.getItem("eih-si-bar-2")!=="off")document.documentElement.cla
       "@id": "https://easyitaliahub.it/#organization",
       "name": "Easy Italia Hub",
       "url": "https://easyitaliahub.it/",
-      "description": "Piattaforma di guide, assistente AI multilingua e community per la comunità srilankese in Italia.",
+      "description": "Guides, multilingual AI assistant and community platform for the Sri Lankan community in Italy.",
       "areaServed": "IT",
       "knowsLanguage": ["it", "en", "si", "ta"]
     },
@@ -97,7 +97,7 @@ try{if(localStorage.getItem("eih-si-bar-2")!=="off")document.documentElement.cla
       "url": "https://easyitaliahub.it/",
       "name": "Easy Italia Hub",
       "publisher": { "@id": "https://easyitaliahub.it/#organization" },
-      "inLanguage": "it",
+      "inLanguage": "en",
       "potentialAction": {
         "@type": "SearchAction",
         "target": { "@type": "EntryPoint", "urlTemplate": "https://easyitaliahub.it/cerca?q={search_term_string}" },
@@ -108,68 +108,10 @@ try{if(localStorage.getItem("eih-si-bar-2")!=="off")document.documentElement.cla
       "@type": "WebPage",
       "@id": "https://easyitaliahub.it/#webpage",
       "url": "https://easyitaliahub.it/",
-      "name": "Easy Italia Hub — Guide e Community Srilankese in Italia",
+      "name": "Easy Italia Hub — Guides and Community for Sri Lankans in Italy",
       "isPartOf": { "@id": "https://easyitaliahub.it/#website" },
       "about": { "@id": "https://easyitaliahub.it/#organization" },
-      "inLanguage": "it"
-    }
-  ]
-}
-</script>
-
-<!-- ─── FAQPage (questions/answers match the visible FAQ section) ─── -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Quanto tempo ci vuole per il permesso di soggiorno?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Dipende dalla questura e dal tipo di permesso: i tempi possono variare da alcune settimane a diversi mesi. Dopo la presentazione della domanda ricevi una ricevuta che, insieme al passaporto, vale come documento provvisorio. Per la procedura passo-passo consulta la nostra guida al permesso di soggiorno."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Il servizio è gratuito?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Sì. Consultare le guide, usare l'Assistente AI e leggere le news è gratuito. Non è richiesta alcuna carta di credito per registrarti."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "In che lingue posso usare il sito?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "L'interfaccia del sito è disponibile in 4 lingue: italiano, inglese, sinhala (සිංහල) e tamil (தமிழ்). Puoi cambiare lingua dal menu in alto a destra."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Come funziona il Consigliere AI?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "È un assistente disponibile 24 ore su 24 che risponde alle tue domande sulla burocrazia e sui servizi. Apri la chat dal pulsante in basso a destra (o con Ctrl/⌘+J) e scrivi la tua domanda: ti indica i passaggi e le guide pertinenti."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Devo registrarmi per usare le guide?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. Le guide pratiche sono liberamente consultabili senza registrazione. L'account gratuito serve solo per salvare i progressi del tuo percorso personale."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Le informazioni sono ufficiali?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Le nostre guide sono divulgative e ti orientano nei passaggi principali, ma non sostituiscono le fonti ufficiali. Per i dati definitivi verifica sempre sui siti istituzionali (es. Polizia di Stato, Agenzia delle Entrate, INPS) o rivolgiti a un CAF o patronato."
-      }
+      "inLanguage": "en"
     }
   ]
 }
@@ -409,7 +351,7 @@ body.has-si-bar .hero,html.si-bar-on .hero{padding-top:var(--sp-4)}
   /* Le date sono l'unico testo che si costruisce qui: un dizionario minimo,
      letto dalla lingua scelta, evita di dipendere da eih.js che su questa
      pagina puo' non essere ancora arrivato. */
-  var LG=(function(){try{var m=location.pathname.match(/^\/(en|si|ta)(\/|$)/);
+  var LG=(function(){try{var m=location.pathname.match(/^\/(it|en|si|ta)(\/|$)/);
     return m?m[1]:(localStorage.getItem('eih-lang')||window.EIH_LANG||'en');}catch(e){return window.EIH_LANG||'en';}})();
   var Q={
     it:{oggi:'Oggi',domani:'Domani',fra:'Tra {n} gg',oggiL:'oggi',domaniL:'domani',fraL:'tra {n} giorni',
