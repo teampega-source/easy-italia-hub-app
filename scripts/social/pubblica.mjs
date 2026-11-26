@@ -284,10 +284,6 @@ async function leggiPagina(url) {
     const chiaveLead = (leadTag.match(/data-i18n(?:-html)?="([^"]+)"/i) || [])[1] || '';
     const leadHtml = (html.match(/<p[^>]*class="[^"]*\blead\b[^"]*"[^>]*>([\s\S]*?)<\/p>/i) || [])[1] || '';
     const lead = senzaTag(leadHtml);
-    const descrizione = senzaTag(
-      (html.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"/i) ||
-       html.match(/<meta[^>]+content="([^"]*)"[^>]+name="description"/i) || [])[1] || ''
-    );
 
     // Il primo paragrafo vero serve quando la descrizione non è tradotta: è
     // testo del corpo, e il corpo è quello che i dizionari coprono meglio.
@@ -307,9 +303,12 @@ async function leggiPagina(url) {
       extra = blocchiLingua(estraiOggetto(html, inizio));
     }
 
+    /* La testata delle pagine è in inglese (lingua predefinita del sito): il
+       blocco italiano del post prende h1 e sommario, che nel markup restano
+       scritti in italiano, e la stessa coppia serve da chiave di traduzione. */
     return {
-      titolo: pulisciTitolo(titolo), h1, h1Html, h1NoTr: /\bdata-no-tr\b/i.test(h1Tag),
-      chiaveH1, chiaveLead, descrizione, lead,
+      titolo: pulisciTitolo(h1) || pulisciTitolo(titolo), h1, h1Html, h1NoTr: /\bdata-no-tr\b/i.test(h1Tag),
+      chiaveH1, chiaveLead, descrizione: lead || primo.testo, lead,
       primoParagrafo: primo.testo, chiaveParagrafo: primo.chiave, extra,
       inline: blocchiLingua(html),
     };
