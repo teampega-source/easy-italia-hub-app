@@ -77,11 +77,12 @@ for (const [it, ing] of voci) {
 const nuoveRiscritture = [];
 /* Le pagine /it passano da una funzione che corregge canonical e lingua del
    documento: il file HTML è lo stesso della radice, e da solo non può sapere
-   sotto quale prefisso è stato chiesto. Una sola regola copre ogni spicchio
-   di pagina; la generica che segue resta per gli asset (che hanno un'altra
-   barra) e per gli indirizzi non mappati. */
+   sotto quale prefisso è stato chiesto. Le regole precise vengono prima della
+   generica, che resta per gli asset e per gli indirizzi non mappati. */
+for (const [it] of voci) {
+  nuoveRiscritture.push({ source: `/it/${it}`, destination: `/api/pagina-it?p=${it}` });
+}
 nuoveRiscritture.push({ source: '/it', destination: '/api/pagina-it?p=index' });
-nuoveRiscritture.push({ source: '/it/:pagina([a-z0-9-]+)', destination: '/api/pagina-it?p=:pagina' });
 for (const [it, ing] of voci) {
   if (it !== ing) nuoveRiscritture.push({ source: `/(si|ta)/${ing}`, destination: `/${it}` });
 }
