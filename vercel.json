@@ -2,11 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
-  "functions": {
-    "api/pagina-it.js": {
-      "includeFiles": "*.html"
-    }
-  },
   "crons": [
     {
       "path": "/api/flight-digest",
@@ -822,262 +817,6 @@
   ],
   "rewrites": [
     {
-      "source": "/it/abbonamenti",
-      "destination": "/api/pagina-it?p=abbonamenti"
-    },
-    {
-      "source": "/it/academy",
-      "destination": "/api/pagina-it?p=academy"
-    },
-    {
-      "source": "/it/ai-teacher",
-      "destination": "/api/pagina-it?p=ai-teacher"
-    },
-    {
-      "source": "/it/assegno-unico",
-      "destination": "/api/pagina-it?p=assegno-unico"
-    },
-    {
-      "source": "/it/associazioni",
-      "destination": "/api/pagina-it?p=associazioni"
-    },
-    {
-      "source": "/it/benvenuta",
-      "destination": "/api/pagina-it?p=benvenuta"
-    },
-    {
-      "source": "/it/calendario",
-      "destination": "/api/pagina-it?p=calendario"
-    },
-    {
-      "source": "/it/cargo",
-      "destination": "/api/pagina-it?p=cargo"
-    },
-    {
-      "source": "/it/cerca",
-      "destination": "/api/pagina-it?p=cerca"
-    },
-    {
-      "source": "/it/certificazioni",
-      "destination": "/api/pagina-it?p=certificazioni"
-    },
-    {
-      "source": "/it/chi-siamo",
-      "destination": "/api/pagina-it?p=chi-siamo"
-    },
-    {
-      "source": "/it/community",
-      "destination": "/api/pagina-it?p=community"
-    },
-    {
-      "source": "/it/conferma-newsletter",
-      "destination": "/api/pagina-it?p=conferma-newsletter"
-    },
-    {
-      "source": "/it/contatti",
-      "destination": "/api/pagina-it?p=contatti"
-    },
-    {
-      "source": "/it/cookie",
-      "destination": "/api/pagina-it?p=cookie"
-    },
-    {
-      "source": "/it/corsi",
-      "destination": "/api/pagina-it?p=corsi"
-    },
-    {
-      "source": "/it/costruire-futuro",
-      "destination": "/api/pagina-it?p=costruire-futuro"
-    },
-    {
-      "source": "/it/cv-builder",
-      "destination": "/api/pagina-it?p=cv-builder"
-    },
-    {
-      "source": "/it/dashboard",
-      "destination": "/api/pagina-it?p=dashboard"
-    },
-    {
-      "source": "/it/diritti-inps",
-      "destination": "/api/pagina-it?p=diritti-inps"
-    },
-    {
-      "source": "/it/dizionario-medico",
-      "destination": "/api/pagina-it?p=dizionario-medico"
-    },
-    {
-      "source": "/it/documenti",
-      "destination": "/api/pagina-it?p=documenti"
-    },
-    {
-      "source": "/it/emergenze",
-      "destination": "/api/pagina-it?p=emergenze"
-    },
-    {
-      "source": "/it/esame",
-      "destination": "/api/pagina-it?p=esame"
-    },
-    {
-      "source": "/it/fisco",
-      "destination": "/api/pagina-it?p=fisco"
-    },
-    {
-      "source": "/it/forum",
-      "destination": "/api/pagina-it?p=forum"
-    },
-    {
-      "source": "/it/guida-conti",
-      "destination": "/api/pagina-it?p=guida-conti"
-    },
-    {
-      "source": "/it/guida-ssn",
-      "destination": "/api/pagina-it?p=guida-ssn"
-    },
-    {
-      "source": "/it/guide",
-      "destination": "/api/pagina-it?p=guide"
-    },
-    {
-      "source": "/it/housing",
-      "destination": "/api/pagina-it?p=housing"
-    },
-    {
-      "source": "/it/italia-srilanka",
-      "destination": "/api/pagina-it?p=italia-srilanka"
-    },
-    {
-      "source": "/it/lavoro",
-      "destination": "/api/pagina-it?p=lavoro"
-    },
-    {
-      "source": "/it/lavoro-diritti",
-      "destination": "/api/pagina-it?p=lavoro-diritti"
-    },
-    {
-      "source": "/it/mappa",
-      "destination": "/api/pagina-it?p=mappa"
-    },
-    {
-      "source": "/it/media-kit-atena",
-      "destination": "/api/pagina-it?p=media-kit-atena"
-    },
-    {
-      "source": "/it/mercatino",
-      "destination": "/api/pagina-it?p=mercatino"
-    },
-    {
-      "source": "/it/moduli",
-      "destination": "/api/pagina-it?p=moduli"
-    },
-    {
-      "source": "/it/money-transfer",
-      "destination": "/api/pagina-it?p=money-transfer"
-    },
-    {
-      "source": "/it/news",
-      "destination": "/api/pagina-it?p=news"
-    },
-    {
-      "source": "/it/note-legali",
-      "destination": "/api/pagina-it?p=note-legali"
-    },
-    {
-      "source": "/it/offline",
-      "destination": "/api/pagina-it?p=offline"
-    },
-    {
-      "source": "/it/opportunita",
-      "destination": "/api/pagina-it?p=opportunita"
-    },
-    {
-      "source": "/it/patente",
-      "destination": "/api/pagina-it?p=patente"
-    },
-    {
-      "source": "/it/percorso",
-      "destination": "/api/pagina-it?p=percorso"
-    },
-    {
-      "source": "/it/permesso-tracker",
-      "destination": "/api/pagina-it?p=permesso-tracker"
-    },
-    {
-      "source": "/it/podcast",
-      "destination": "/api/pagina-it?p=podcast"
-    },
-    {
-      "source": "/it/privacy",
-      "destination": "/api/pagina-it?p=privacy"
-    },
-    {
-      "source": "/it/professionisti",
-      "destination": "/api/pagina-it?p=professionisti"
-    },
-    {
-      "source": "/it/profili",
-      "destination": "/api/pagina-it?p=profili"
-    },
-    {
-      "source": "/it/registrati",
-      "destination": "/api/pagina-it?p=registrati"
-    },
-    {
-      "source": "/it/rete",
-      "destination": "/api/pagina-it?p=rete"
-    },
-    {
-      "source": "/it/ricongiungimento",
-      "destination": "/api/pagina-it?p=ricongiungimento"
-    },
-    {
-      "source": "/it/riconoscimento-titoli",
-      "destination": "/api/pagina-it?p=riconoscimento-titoli"
-    },
-    {
-      "source": "/it/scuola",
-      "destination": "/api/pagina-it?p=scuola"
-    },
-    {
-      "source": "/it/servizi",
-      "destination": "/api/pagina-it?p=servizi"
-    },
-    {
-      "source": "/it/srilankadirectory",
-      "destination": "/api/pagina-it?p=srilankadirectory"
-    },
-    {
-      "source": "/it/sponsorizza",
-      "destination": "/api/pagina-it?p=sponsorizza"
-    },
-    {
-      "source": "/it/termini",
-      "destination": "/api/pagina-it?p=termini"
-    },
-    {
-      "source": "/it/traduci",
-      "destination": "/api/pagina-it?p=traduci"
-    },
-    {
-      "source": "/it/travel-sri-lanka",
-      "destination": "/api/pagina-it?p=travel-sri-lanka"
-    },
-    {
-      "source": "/it/travelpayouts",
-      "destination": "/api/pagina-it?p=travelpayouts"
-    },
-    {
-      "source": "/it/voli",
-      "destination": "/api/pagina-it?p=voli"
-    },
-    {
-      "source": "/it/wise",
-      "destination": "/api/pagina-it?p=wise"
-    },
-    {
-      "source": "/it",
-      "destination": "/api/pagina-it?p=index"
-    },
-    {
       "source": "/(si|ta)/subscriptions",
       "destination": "/abbonamenti"
     },
@@ -1262,6 +1001,10 @@
       "destination": "/voli"
     },
     {
+      "source": "/it",
+      "destination": "/"
+    },
+    {
       "source": "/it/:path*",
       "destination": "/:path*"
     },
@@ -1332,6 +1075,42 @@
         {
           "key": "X-Robots-Tag",
           "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://easyitaliahub.it/>; rel=\"canonical\""
+        }
+      ]
+    },
+    {
+      "source": "/it",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://easyitaliahub.it/it>; rel=\"canonical\""
+        }
+      ]
+    },
+    {
+      "source": "/si",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://easyitaliahub.it/si>; rel=\"canonical\""
+        }
+      ]
+    },
+    {
+      "source": "/ta",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://easyitaliahub.it/ta>; rel=\"canonical\""
         }
       ]
     }

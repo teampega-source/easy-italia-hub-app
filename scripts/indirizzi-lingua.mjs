@@ -75,23 +75,29 @@ for (const [it, ing] of voci) {
 /* Le riscritture specifiche vanno prima della generica `/si/:path*`, altrimenti
    quella acchiappa tutto e /si/forms cerca un file forms.html che non esiste. */
 const nuoveRiscritture = [];
-/* Le pagine /it passano da una funzione che corregge canonical e lingua del
-   documento: il file HTML è lo stesso della radice, e da solo non può sapere
-   sotto quale prefisso è stato chiesto. Le regole precise vengono prima della
-   generica, che resta per gli asset e per gli indirizzi non mappati. */
-for (const [it] of voci) {
-  nuoveRiscritture.push({ source: `/it/${it}`, destination: `/api/pagina-it?p=${it}` });
-}
-nuoveRiscritture.push({ source: '/it', destination: '/api/pagina-it?p=index' });
 for (const [it, ing] of voci) {
   if (it !== ing) nuoveRiscritture.push({ source: `/(si|ta)/${ing}`, destination: `/${it}` });
 }
+nuoveRiscritture.push({ source: '/it', destination: '/' });
 nuoveRiscritture.push({ source: '/it/:path*', destination: '/:path*' });
 nuoveRiscritture.push({ source: '/(si|ta)', destination: '/' });
 nuoveRiscritture.push({ source: '/(si|ta)/:path*', destination: '/:path*' });
 
 conf.rewrites = [...riscrittureTenute, ...nuoveRiscritture];
 conf.redirects = [...redirezioniTenute, ...nuoveRedirezioni];
+
+/* Le home non possono dichiarare il canonical nell'HTML: lo stesso file serve
+   la radice e il prefisso. Lo dice l'header Link, che vede l'indirizzo vero. */
+const linkCasa = r => (r.headers || []).some(h => h.key === 'Link' && /rel="canonical"/.test(h.value));
+const headersTenuti = (conf.headers || []).filter(r =>
+  !(['/', '/it', '/si', '/ta'].includes(r.source) && linkCasa(r)));
+conf.headers = [
+  ...headersTenuti,
+  { source: '/', headers: [{ key: 'Link', value: `<${BASE}/>; rel="canonical"` }] },
+  { source: '/it', headers: [{ key: 'Link', value: `<${BASE}/it>; rel="canonical"` }] },
+  { source: '/si', headers: [{ key: 'Link', value: `<${BASE}/si>; rel="canonical"` }] },
+  { source: '/ta', headers: [{ key: 'Link', value: `<${BASE}/ta>; rel="canonical"` }] }
+];
 
 /* ── ogni pagina dichiara il proprio nome ─────────────────────────────────
    Lo snippet in cima al <head> fa partire la richiesta del dizionario prima di
@@ -108,8 +114,17 @@ for (const file of paginaHtml) {
   const nome = file.slice(0, -5);
   let html = readFileSync(file, 'utf8');
   if (!/window\.EIH_LANG=_l;/.test(html)) continue;
-  const giusto = `window.EIH_LANG=_l;window.EIH_PAGINA=${JSON.stringify(nome)};`;
   const prima = html;
+  /* Il canonical statico non può portare la radice assoluta: sotto /it
+     dichiarerebbe inglese la pagina italiana. Relativo allo spicchio,
+     risolve alla radice o a /it/... a seconda dell'indirizzo. La home non
+     ce l'ha: senza tag ogni suo indirizzo è canonico di sé (e l'header Link
+     qui sotto lo dice esplicitamente). */
+  html = html.replace(/<link\s+rel="canonical"\s+href="https:\/\/easyitaliahub\.it\/([^"]*)"\s*\/?>/i,
+    (m, p) => p ? `<link rel="canonical" href="${p}"/>` : '');
+  html = html.replace(/<link\s+rel="canonical"\s+href="\/([^"]*)"\s*\/?>/i,
+    (m, p) => p ? `<link rel="canonical" href="${p}"/>` : '');
+  const giusto = `window.EIH_LANG=_l;window.EIH_PAGINA=${JSON.stringify(nome)};`;
   html = html.replace(/window\.EIH_LANG=_l;(window\.EIH_PAGINA="[^"]*";)?/, giusto);
   // e il calcolo dal percorso lascia il posto al nome dichiarato
   html = html.replace(

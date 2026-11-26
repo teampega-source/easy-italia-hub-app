@@ -148,7 +148,12 @@
   // Legarlo alla lingua attiva significherebbe, ora che l'inglese e' quella
   // predefinita, far dire a ogni pagina senza prefisso di essere /en.
   var can = document.querySelector('link[rel="canonical"]');
-  if (can) can.setAttribute('href', url(m ? m[1] : 'en'));
+  if (!can) {
+    can = document.createElement('link');
+    can.setAttribute('rel', 'canonical');
+    document.head.appendChild(can);
+  }
+  can.setAttribute('href', url(m ? m[1] : 'en'));
 
   /* Avvio anticipato della traduzione di pagina.
 
