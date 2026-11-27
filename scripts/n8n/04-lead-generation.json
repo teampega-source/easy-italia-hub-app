@@ -6,14 +6,24 @@
         "httpMethod": "POST",
         "path": "eih-lead",
         "responseMode": "onReceived",
-        "options": {}
+        "options": {},
+        "authentication": "headerAuth"
       },
       "id": "webhook-lead",
       "name": "Webhook form lead",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [240, 300],
-      "notes": "Body: { name, email, phone, tipo (struttura|tour_operator|privato), interesse, messaggio }"
+      "position": [
+        240,
+        300
+      ],
+      "notes": "Body: { name, email, phone, tipo (struttura|tour_operator|privato), interesse, messaggio }",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "eih-webhook-auth",
+          "name": "EIH Webhook Header"
+        }
+      }
     },
     {
       "parameters": {
@@ -23,14 +33,38 @@
         "dataToSend": "defineBelow",
         "fieldsUi": {
           "fieldValues": [
-            { "fieldId": "name", "fieldValue": "={{ $json.name }}" },
-            { "fieldId": "email", "fieldValue": "={{ $json.email }}" },
-            { "fieldId": "phone", "fieldValue": "={{ $json.phone }}" },
-            { "fieldId": "tipo", "fieldValue": "={{ $json.tipo }}" },
-            { "fieldId": "interesse", "fieldValue": "={{ $json.interesse }}" },
-            { "fieldId": "messaggio", "fieldValue": "={{ $json.messaggio }}" },
-            { "fieldId": "status", "fieldValue": "new" },
-            { "fieldId": "created_at", "fieldValue": "={{ $now.toISO() }}" }
+            {
+              "fieldId": "name",
+              "fieldValue": "={{ $json.name }}"
+            },
+            {
+              "fieldId": "email",
+              "fieldValue": "={{ $json.email }}"
+            },
+            {
+              "fieldId": "phone",
+              "fieldValue": "={{ $json.phone }}"
+            },
+            {
+              "fieldId": "tipo",
+              "fieldValue": "={{ $json.tipo }}"
+            },
+            {
+              "fieldId": "interesse",
+              "fieldValue": "={{ $json.interesse }}"
+            },
+            {
+              "fieldId": "messaggio",
+              "fieldValue": "={{ $json.messaggio }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "new"
+            },
+            {
+              "fieldId": "created_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
           ]
         }
       },
@@ -38,8 +72,16 @@
       "name": "Salva lead in Supabase",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [460, 300],
-      "credentials": { "supabaseApi": { "id": "supabase-creds", "name": "Supabase EIH" } }
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase-creds",
+          "name": "Supabase EIH"
+        }
+      }
     },
     {
       "parameters": {
@@ -61,8 +103,16 @@
       "name": "AI genera email follow-up",
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1,
-      "position": [680, 200],
-      "credentials": { "openAiApi": { "id": "openai-creds", "name": "OpenAI" } }
+      "position": [
+        680,
+        200
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-creds",
+          "name": "OpenAI"
+        }
+      }
     },
     {
       "parameters": {
@@ -76,8 +126,16 @@
       "name": "Invia email follow-up",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2,
-      "position": [900, 200],
-      "credentials": { "smtp": { "id": "resend-smtp", "name": "Resend SMTP" } }
+      "position": [
+        900,
+        200
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "resend-smtp",
+          "name": "Resend SMTP"
+        }
+      }
     },
     {
       "parameters": {
@@ -88,24 +146,66 @@
       "name": "Notifica Slack #leads",
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2,
-      "position": [680, 400],
-      "credentials": { "slackApi": { "id": "slack-creds", "name": "Slack EIH" } }
+      "position": [
+        680,
+        400
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "slack-creds",
+          "name": "Slack EIH"
+        }
+      }
     }
   ],
   "connections": {
     "Webhook form lead": {
-      "main": [[ { "node": "Salva lead in Supabase", "type": "main", "index": 0 } ]]
+      "main": [
+        [
+          {
+            "node": "Salva lead in Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Salva lead in Supabase": {
       "main": [
-        [ { "node": "AI genera email follow-up", "type": "main", "index": 0 } ],
-        [ { "node": "Notifica Slack #leads", "type": "main", "index": 0 } ]
+        [
+          {
+            "node": "AI genera email follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notifica Slack #leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "AI genera email follow-up": {
-      "main": [[ { "node": "Invia email follow-up", "type": "main", "index": 0 } ]]
+      "main": [
+        [
+          {
+            "node": "Invia email follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "settings": { "executionOrder": "v1" },
-  "tags": ["eih", "lead", "b2b"]
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    "eih",
+    "lead",
+    "b2b"
+  ]
 }

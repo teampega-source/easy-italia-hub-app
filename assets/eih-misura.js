@@ -69,6 +69,18 @@
     // anonymize_ip resta per chiarezza, anche se GA4 lo fa comunque
     window.gtag('config', ID.ga4, { anonymize_ip: true, cookie_flags: 'SameSite=None;Secure' });
     caricaGtag(ID.ga4);
+    svuotaCoda();
+  }
+
+  function svuotaCoda() {
+    var coda = codaEventi; codaEventi = [];
+    var c = consenso();
+    coda.forEach(function (e) {
+      /* Se GA4 ha già ricevuto l'evento, al consenso marketing non va
+         rimandato: mancherebbe solo il pixel. */
+      if (e.ga && !c.marketing) { codaEventi.push(e); return; }
+      manda(e.nome, e.dati, e.ga);
+    });
   }
 
   function accendiMarketing() {
@@ -115,8 +127,7 @@
       })(window, document, 'ttq');
     }
     // quello che era stato chiesto prima del consenso parte adesso
-    var coda = codaEventi; codaEventi = [];
-    coda.forEach(function (e) { manda(e.nome, e.dati); });
+    svuotaCoda();
   }
 
   function applica() {
@@ -135,13 +146,30 @@
     guida:       { meta: 'ViewContent', tiktok: 'ViewContent' }
   };
 
-  function manda(nome, dati) {
-    dati = dati || {};
+  /* Solo dati anonimi e brevi: nessuna email, testo libero o dato sanitario.
+     Un evento non deve diventare un modo per portare PII dentro GA4. */
+  function datiPuliti(dati) {
+    var out = {};
+    if (!dati || typeof dati !== 'object') return out;
+    var vietati = /^(email|e-mail|mail|phone|telefono|name|nome|cognome|message|messaggio|token|password|user|user_id|cf-turnstile|turnstile|query|q)$/i;
+    Object.keys(dati).slice(0, 12).forEach(function (k) {
+      if (!/^[a-z0-9_]{1,40}$/i.test(k) || vietati.test(k)) return;
+      var v = dati[k];
+      if (typeof v === 'number' || typeof v === 'boolean') out[k] = v;
+      else if (typeof v === 'string') out[k] = v.slice(0, 100);
+    });
+    return out;
+  }
+
+  function manda(nome, dati, saltaGa) {
+    nome = String(nome || '').toLowerCase().replace(/[^a-z0-9_]/g, '_').slice(0, 40);
+    if (!nome) return;
+    dati = datiPuliti(dati);
     var c = consenso();
-    if (window.gtag && acceso.ga4) window.gtag('event', nome, dati);
+    if (!saltaGa && window.gtag && acceso.ga4) window.gtag('event', nome, dati);
     if (!c.marketing) {
       // il consenso di marketing puo' arrivare dopo: l'evento aspetta
-      if (codaEventi.length < 20) codaEventi.push({ nome: nome, dati: dati });
+      if (codaEventi.length < 20) codaEventi.push({ nome: nome, dati: dati, ga: !saltaGa && acceso.ga4 });
       return;
     }
     var n = NOMI[nome];
@@ -151,6 +179,7 @@
 
   window.EIH_MISURA = {
     evento: manda,
+    datiPuliti: datiPuliti,
     /* L'unica conversione che conta: qualcuno si e' iscritto.
        Va chiamata una volta sola, appena l'iscrizione e' andata a buon fine e
        prima del cambio pagina. */
@@ -164,4 +193,67 @@
 
   applica();
   window.addEventListener('cookieConsentUpdated', applica);
+
+  /* ── Misurazione minima e automatica ──────────────────────────────────
+     Un solo punto per tutte le pagine: pagina vista, tipo di pagina,
+     profondità di lettura delle guide, invio form, click esterni e click
+     marcati con data-eih-evento. Nessun valore dei campi viene letto. */
+  function nomePagina() {
+    var n = window.EIH_PAGINA;
+    if (!n) {
+      n = String(location.pathname || '/').replace(/^\/(it|en|si|ta)(?=\/|$)/, '').replace(/^\/+|\/+$/g, '').replace(/\.html$/, '');
+    }
+    return n || 'index';
+  }
+
+  function tipoPagina(nome) {
+    if (nome === 'index' || nome === '') return 'home';
+    if (/^(guida|permesso|assegno|diritti|fisco|scuola|housing|patente|lavoro|ricongiungimento|documenti|ssn|conti|money|italia|esame|certificazioni)/.test(nome)) return 'guida';
+    if (/^(cv-builder|calcol|tracker|traduci|dizionario|cerca)/.test(nome)) return 'strumento';
+    if (/^(community|forum|mercatino|professionisti|associazioni|rete)/.test(nome)) return 'community';
+    return 'pagina';
+  }
+
+  var nome = nomePagina();
+  var tipo = tipoPagina(nome);
+  manda('pagina', { pagina: nome, lingua: (window.EIH_LANG || 'en'), tipo: tipo });
+
+  if (tipo === 'guida') {
+    var letto = false;
+    var controlla = function () {
+      if (letto) return;
+      var h = document.documentElement;
+      var totale = Math.max(h.scrollHeight - window.innerHeight, 1);
+      if ((window.scrollY || h.scrollTop || 0) / totale >= 0.75) {
+        letto = true;
+        manda('guida_letta', { pagina: nome, lingua: (window.EIH_LANG || 'en') });
+        window.removeEventListener('scroll', controlla);
+      }
+    };
+    window.addEventListener('scroll', controlla, { passive: true });
+    setTimeout(controlla, 2500);
+  }
+
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest('[data-eih-evento]') : null;
+    if (el) {
+      manda(el.getAttribute('data-eih-evento') || 'click', {
+        elemento: (el.id || el.tagName || 'elemento').toString().slice(0, 60),
+        pagina: nome,
+      });
+      return;
+    }
+    var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (!a) return;
+    try {
+      var u = new URL(a.href, location.href);
+      if (u.origin !== location.origin) manda('uscita', { dominio: u.hostname.slice(0, 100) });
+    } catch (err) { /* link non valido: ignora */ }
+  });
+
+  document.addEventListener('submit', function (e) {
+    var f = e.target;
+    if (!f || !f.tagName || f.tagName !== 'FORM') return;
+    manda('form', { form_id: (f.id || f.getAttribute('name') || 'senza_id').slice(0, 60), pagina: nome });
+  }, true);
 })();

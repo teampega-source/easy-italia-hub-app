@@ -119,6 +119,7 @@
   }
   function hideTyping(){var t=document.getElementById('ch-typing');if(t)t.remove();}
   async function sendToAgent(text){
+    try { if (window.EIH_MISURA) window.EIH_MISURA.evento('chat', { lingua: lang }); } catch (e) {}
     text=(text||'').trim();if(chatBusy||!text)return;
     chatBusy=true;
     var _sg=document.querySelector('.ch-sugs');if(_sg)_sg.classList.add('hide');

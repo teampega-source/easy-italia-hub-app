@@ -11,7 +11,10 @@
       "name": "Webhook Verifica Token",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [250, 200],
+      "position": [
+        250,
+        200
+      ],
       "webhookId": "eih-whatsapp-verify"
     },
     {
@@ -24,7 +27,10 @@
       "name": "Webhook Messaggio Entrata",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [250, 400],
+      "position": [
+        250,
+        400
+      ],
       "webhookId": "eih-whatsapp-msg"
     },
     {
@@ -35,7 +41,10 @@
       "name": "Controlla Verify Token",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [450, 200]
+      "position": [
+        450,
+        200
+      ]
     },
     {
       "parameters": {
@@ -45,7 +54,10 @@
       "name": "Estrai Messaggio",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [450, 400]
+      "position": [
+        450,
+        400
+      ]
     },
     {
       "parameters": {
@@ -56,17 +68,30 @@
               "role": "system",
               "content": "Sei Atena Solis, assistente virtuale di Easy Italia Hub. Aiuti la comunità srilankese in Italia con permessi di soggiorno, lavoro, visti Sri Lanka, trasferimenti di denaro e viaggi. Rispondi in modo chiaro, amichevole e professionale. Usa l'italiano. Se non sai qualcosa di preciso, rimanda sempre al sito easyitaliahub.it o agli uffici competenti. Mai dare consulenza legale definitiva."
             },
-            { "role": "user", "content": "={{ $json.text }}" }
+            {
+              "role": "user",
+              "content": "={{ $json.text }}"
+            }
           ]
         },
-        "options": { "maxTokens": 500 }
+        "options": {
+          "maxTokens": 500
+        }
       },
       "id": "ai-reply",
       "name": "AI Risposta Atena",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1,
-      "position": [700, 400],
-      "credentials": { "openAiApi": { "id": "openai-creds", "name": "OpenAI" } }
+      "position": [
+        700,
+        400
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-creds",
+          "name": "OpenAI"
+        }
+      }
     },
     {
       "parameters": {
@@ -75,14 +100,33 @@
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
-        "headerParameters": { "parameters": [{ "name": "Authorization", "value": "Bearer {{ $env.WHATSAPP_TOKEN }}" }] },
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.WHATSAPP_TOKEN }}"
+            }
+          ]
+        },
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
-            { "name": "messaging_product", "value": "whatsapp" },
-            { "name": "to", "value": "={{ $('Estrai Messaggio').item.json.from }}" },
-            { "name": "type", "value": "text" },
-            { "name": "text", "value": "={{ JSON.stringify({ body: $json.message.content }) }}" }
+            {
+              "name": "messaging_product",
+              "value": "whatsapp"
+            },
+            {
+              "name": "to",
+              "value": "={{ $('Estrai Messaggio').item.json.from }}"
+            },
+            {
+              "name": "type",
+              "value": "text"
+            },
+            {
+              "name": "text",
+              "value": "={{ JSON.stringify({ body: $json.message.content }) }}"
+            }
           ]
         }
       },
@@ -90,34 +134,112 @@
       "name": "Invia Risposta WhatsApp",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
-      "position": [950, 400]
+      "position": [
+        950,
+        400
+      ]
     },
     {
-      "parameters": { "respondWith": "text", "responseBody": "={{ $('Controlla Verify Token').item.json.challenge }}" },
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $('Controlla Verify Token').item.json.challenge }}"
+      },
       "id": "respond-verify",
       "name": "Risposta Verifica",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [700, 200]
+      "position": [
+        700,
+        200
+      ]
     },
     {
-      "parameters": { "respondWith": "json", "responseBody": "{\"status\":\"ok\"}" },
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"status\":\"ok\"}"
+      },
       "id": "respond-ok",
       "name": "Risposta 200 OK",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [1150, 400]
+      "position": [
+        1150,
+        400
+      ]
     }
   ],
   "connections": {
-    "Webhook Verifica Token": { "main": [[{ "node": "Controlla Verify Token", "type": "main", "index": 0 }]] },
-    "Webhook Messaggio Entrata": { "main": [[{ "node": "Estrai Messaggio", "type": "main", "index": 0 }]] },
-    "Controlla Verify Token": { "main": [[{ "node": "Risposta Verifica", "type": "main", "index": 0 }]] },
-    "Estrai Messaggio": { "main": [[{ "node": "AI Risposta Atena", "type": "main", "index": 0 }]] },
-    "AI Risposta Atena": { "main": [[{ "node": "Invia Risposta WhatsApp", "type": "main", "index": 0 }]] },
-    "Invia Risposta WhatsApp": { "main": [[{ "node": "Risposta 200 OK", "type": "main", "index": 0 }]] }
+    "Webhook Verifica Token": {
+      "main": [
+        [
+          {
+            "node": "Controlla Verify Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Messaggio Entrata": {
+      "main": [
+        [
+          {
+            "node": "Estrai Messaggio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Controlla Verify Token": {
+      "main": [
+        [
+          {
+            "node": "Risposta Verifica",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Estrai Messaggio": {
+      "main": [
+        [
+          {
+            "node": "AI Risposta Atena",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Risposta Atena": {
+      "main": [
+        [
+          {
+            "node": "Invia Risposta WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invia Risposta WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Risposta 200 OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
   },
   "active": false,
   "settings": {},
-  "notes": "Richiede: WHATSAPP_TOKEN, WHATSAPP_PHONE_ID, WHATSAPP_VERIFY_TOKEN env vars in n8n. Configurare webhook URL in Meta Business Manager → WhatsApp → Webhook."
+  "notes": "Richiede: WHATSAPP_TOKEN, WHATSAPP_PHONE_ID, WHATSAPP_VERIFY_TOKEN env vars in n8n. Configurare webhook URL in Meta Business Manager → WhatsApp → Webhook.",
+  "meta": {
+    "note": "NON attivare senza verifica della firma X-Hub-Signature-256 di Meta: i webhook n8n sono aperti. Aggiungere un nodo Code di verifica HMAC con WHATSAPP_APP_SECRET prima del chatbot."
+  }
 }

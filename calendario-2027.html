@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>/* Lingua prima del CSS, come nel resto del sito. */
+try{if(!localStorage.getItem("eih-lang-scelta"))localStorage.removeItem("eih-lang");}catch(e){}
+try{var _m=location.pathname.match(/^\/(it|en|si|ta)(\/|$)/),_l=_m?_m[1]:(localStorage.getItem("eih-lang")||"en");
+if(!/^(it|en|si|ta)$/.test(_l))_l="en";
+window.EIH_LANG=_l;window.EIH_PAGINA="calendario-2027";
+if(/^(en|si|ta)$/.test(_l)){var _p=window.EIH_PAGINA||"index";
+window.__eihTrad={pagina:_p,lingua:_l,promessa:fetch("/assets/i18n/"+_p+"."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),promessaUi:fetch("/assets/i18n/_ui."+_l+".json",{priority:"high"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})};
+var _s=document.createElement("script");_s.fetchPriority="high";_s.src="/assets/eih-i18n-page.js";_s.defer=true;document.head.appendChild(_s);
+var _t=document.createElement("style");_t.textContent="html.eih-tr-attesa main{visibility:hidden}";document.head.appendChild(_t);
+document.documentElement.classList.add("eih-tr-attesa");
+setTimeout(function(){document.documentElement.classList.remove("eih-tr-attesa")},500);}}catch(e){}</script>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="/assets/eih-theme.css"/>
+<link rel="stylesheet" href="/assets/eih-atmosphere.css"/>
+<script>try{var t=localStorage.getItem("eih-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"/>
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Calendario scadenze 2027 — Easy Italia Hub</title>
+<meta name="description" content="Calendario stampabile delle scadenze da controllare nel 2027 per la comunità srilankese in Italia: ISEE, 730, IMU, permesso, passaporto e documenti."/>
+<meta name="theme-color" content="#7d7058"/>
+<link rel="canonical" href="calendario-2027"/>
+<link rel="alternate" hreflang="en" href="https://easyitaliahub.it/calendario-2027"/>
+<link rel="alternate" hreflang="it" href="https://easyitaliahub.it/it/calendario-2027"/>
+<link rel="alternate" hreflang="si" href="https://easyitaliahub.it/si/deadline-calendar-2027"/>
+<link rel="alternate" hreflang="ta" href="https://easyitaliahub.it/ta/deadline-calendar-2027"/>
+<link rel="alternate" hreflang="x-default" href="https://easyitaliahub.it/calendario-2027"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Easy Italia Hub"/>
+<meta property="og:title" content="Calendario scadenze 2027 — Easy Italia Hub"/>
+<meta property="og:description" content="Le scadenze da controllare nel 2027, in italiano, English, සිංහල e தமிழ்."/>
+<meta property="og:url" content="https://easyitaliahub.it/calendario-2027"/>
+<meta property="og:locale" content="it_IT"/>
+<link rel="preconnect" href="https://api.fontshare.com"/><link rel="preconnect" href="https://cdn.fontshare.com" crossorigin/>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" media="print" onload="this.media='all'"/>
+<noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap"/></noscript>
+<link rel="stylesheet" href="eih.css"/>
+<link rel="stylesheet" href="/assets/eih-leggibilita.css"/>
+<script src="/assets/eih-lang-url.js"></script>
+<script src="/assets/eih-errori.js" defer></script>
+<style>
+  .lm-wrap{max-width:860px;margin:0 auto;padding:var(--sp-4) var(--sp-3)}
+  .lm-kicker{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-muted);margin:0 0 .6rem}
+  .lm-ui,.lm-ui-block{display:none}
+  html[lang="it"] .lm-ui[data-l="it"],html[lang="en"] .lm-ui[data-l="en"],html[lang="si"] .lm-ui[data-l="si"],html[lang="ta"] .lm-ui[data-l="ta"]{display:inline}
+  html[lang="it"] .lm-ui-block[data-l="it"],html[lang="en"] .lm-ui-block[data-l="en"],html[lang="si"] .lm-ui-block[data-l="si"],html[lang="ta"] .lm-ui-block[data-l="ta"]{display:block}
+  .lm-wrap h1{font-family:'Clash Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.1;margin:0 0 .7rem}
+  .lm-wrap h1 em{color:var(--gold,#c8a96e);font-style:normal}
+  .lm-lead{font-size:1rem;line-height:1.65;color:var(--fg-secondary);max-width:62ch;margin:0 0 1.2rem}
+  .lm-actions{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:0 0 1.6rem}
+  .lm-btn{display:inline-flex;align-items:center;gap:.45rem;border:1px solid var(--border);background:var(--bg-elevated);color:var(--fg);border-radius:99px;padding:.65rem 1.15rem;font:inherit;font-size:.88rem;font-weight:600;cursor:pointer;text-decoration:none}
+  .lm-btn:hover{border-color:var(--gold,#c8a96e)}
+  .lm-btn.primary{background:var(--gold,#c8a96e);border-color:var(--gold,#c8a96e);color:#0e0b06}
+  .lm-form{display:flex;gap:.5rem;flex-wrap:wrap;margin:0 0 .5rem}
+  .lm-form input{flex:1;min-width:210px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--fg);border-radius:9px;padding:.7rem .85rem;font:inherit;font-size:.9rem}
+  .lm-state{font-size:.82rem;color:var(--fg-muted);margin:.2rem 0 1.4rem}
+  .lm-state[data-esito="ok"]{color:#1f9d55}
+  .lm-state[data-esito="errore"]{color:#c0392b}
+  .lm-lang{display:none}
+  html[lang="it"] .lm-lang[data-l="it"],html[lang="en"] .lm-lang[data-l="en"],html[lang="si"] .lm-lang[data-l="si"],html[lang="ta"] .lm-lang[data-l="ta"]{display:block}
+  .lm-list{list-style:none;padding:0;margin:1rem 0 1.4rem;display:grid;gap:.7rem}
+  .lm-item{display:grid;grid-template-columns:78px 1fr;gap:.9rem;border:1px solid var(--border);border-radius:12px;background:var(--bg-elevated);padding:.9rem 1rem}
+  .lm-month{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#c8a96e);padding-top:.2rem}
+  .lm-item h3{font-family:'Clash Grotesk',sans-serif;font-size:1rem;margin:0 0 .25rem}
+  .lm-item p{font-size:.88rem;line-height:1.55;color:var(--fg-secondary);margin:0}
+  .lm-item a{font-size:.78rem;color:var(--gold,#c8a96e);display:inline-block;margin-top:.35rem}
+  .lm-note{font-size:.78rem;line-height:1.6;color:var(--fg-muted);border-left:2px solid var(--border);padding-left:.8rem;margin:1.2rem 0 2rem}
+  @media(max-width:520px){.lm-item{grid-template-columns:1fr;gap:.2rem}.lm-month{padding-top:0}}
+  @media print{
+    #site-nav,#site-footer,#chat-btn,#chat-panel,#eih-mascot,#eih-mascot-bubble,.lm-actions,.lm-form,.lm-state,#wipe,#bg,#noise{display:none!important}
+    body{background:#fff!important;color:#111!important}
+    .lm-wrap{max-width:none;padding:0}
+    .lm-lang{display:none!important}
+    html[lang="it"] .lm-lang[data-l="it"],html[lang="en"] .lm-lang[data-l="en"],html[lang="si"] .lm-lang[data-l="si"],html[lang="ta"] .lm-lang[data-l="ta"]{display:block!important}
+    .lm-item{break-inside:avoid;border-color:#ccc;background:#fff!important}
+    .lm-item p,.lm-lead,.lm-note{color:#333!important}
+    a{color:#333!important;text-decoration:none}
+  }
+</style>
+</head>
+<body data-page="calendario-2027">
+<div id="wipe" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div><div id="noise" aria-hidden="true"></div>
+<div id="site-nav"></div>
+
+<main id="main">
+  <div class="lm-wrap">
+    <p class="lm-kicker">Easy Italia Hub · 2027</p>
+    <h1>
+      <span class="lm-ui-block" data-l="it">Le scadenze del 2027,<br/><em>in una pagina.</em></span>
+      <span class="lm-ui-block" data-l="en">The 2027 deadlines,<br/><em>on one page.</em></span>
+      <span class="lm-ui-block" data-l="si">2027 අවසන් දින,<br/><em>එක් පිටුවක.</em></span>
+      <span class="lm-ui-block" data-l="ta">2027 இறுதி தேதிகள்,<br/><em>ஒரு பக்கத்தில்.</em></span>
+    </h1>
+    <p class="lm-lead">
+      <span class="lm-ui-block" data-l="it">Le date che riguardano la vita in Italia — e quelle personali che nessun calendario può sapere al posto tuo. Stampalo, salvalo sul telefono, o iscriviti per ricevere i promemoria.</span>
+      <span class="lm-ui-block" data-l="en">The dates that matter for life in Italy — and the personal ones no calendar can know for you. Print it, save it on your phone, or subscribe for reminders.</span>
+      <span class="lm-ui-block" data-l="si">ඉතාලියේ ජීවිතයට වැදගත් දින — ඔබ වෙනුවට කිසිදු දින දර්ශනයකට දැනගත නොහැකි පුද්ගලික දින ද ඇතුළත්. මුද්‍රණය කරන්න, දුරකථනයේ සුරකින්න, නැතහොත් මතක් කිරීම් සඳහා ලියාපදිංචි වන්න.</span>
+      <span class="lm-ui-block" data-l="ta">இத்தாலியில் வாழ்க்கைக்கு முக்கியமான தேதிகள் — உங்களுக்காக எந்த நாட்காட்டியும் அறிய முடியாத தனிப்பட்ட தேதிகளும். அச்சிடுங்கள், மொபைலில் சேமியுங்கள், அல்லது நினைவூட்டல்களுக்கு பதிவு செய்யுங்கள்.</span>
+    </p>
+
+    <div class="lm-actions">
+      <button type="button" class="lm-btn primary" onclick="window.print()" data-eih-evento="lead-magnet-stampa">🖨️ <span class="lm-ui" data-l="it">Stampa / PDF</span><span class="lm-ui" data-l="en">Print / PDF</span><span class="lm-ui" data-l="si">මුද්‍රණය / PDF</span><span class="lm-ui" data-l="ta">அச்சிடு / PDF</span></button>
+      <a class="lm-btn" href="/calendario-2027.ics" download data-eih-evento="lead-magnet-ics">📅 <span class="lm-ui" data-l="it">Aggiungi al calendario</span><span class="lm-ui" data-l="en">Add to calendar</span><span class="lm-ui" data-l="si">දින දර්ශනයට එක් කරන්න</span><span class="lm-ui" data-l="ta">நாட்காட்டியில் சேர்</span></a>
+      <a class="lm-btn" href="/permesso-tracker" data-eih-evento="lead-magnet-tracker">⏰ <span class="lm-ui" data-l="it">Promemoria permesso</span><span class="lm-ui" data-l="en">Permit reminder</span><span class="lm-ui" data-l="si">පදිංචි බලපත්‍ර මතක් කිරීම</span><span class="lm-ui" data-l="ta">வதிவு நினைவூட்டல்</span></a>
+    </div>
+
+    <form class="lm-form" id="lm-form" novalidate>
+      <label for="lm-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Email</label>
+      <input id="lm-email" type="email" inputmode="email" autocomplete="email" placeholder="Email" required/>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px" aria-hidden="true"/>
+      <button class="lm-btn primary" type="submit" data-eih-evento="lead-magnet-newsletter"><span class="lm-ui" data-l="it">Ricevi il calendario</span><span class="lm-ui" data-l="en">Get the calendar</span><span class="lm-ui" data-l="si">දින දර්ශනය ලබා ගන්න</span><span class="lm-ui" data-l="ta">நாட்காட்டியைப் பெறுங்கள்</span></button>
+    </form>
+    <p class="lm-state" id="lm-state" role="status"></p>
+
+    <section class="lm-lang" data-l="it" lang="it">
+      <ol class="lm-list">
+        <li class="lm-item"><div class="lm-month">Gennaio</div><div><h3>ISEE / DSU</h3><p>Fai la DSU appena possibile: serve per Assegno Unico, bonus e agevolazioni. Le sedi CAF sono meno affollate nelle prime settimane.</p><a href="https://www.inps.it" target="_blank" rel="noopener">Fonte: INPS</a></div></li>
+        <li class="lm-item"><div class="lm-month">16 giugno</div><div><h3>IMU — prima rata</h3><p>Solo per chi possiede immobili. Verifica l’aliquota e l’eventuale esenzione del tuo Comune: non è una scadenza per tutti.</p><a href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">Fonte: Agenzia delle Entrate</a></div></li>
+        <li class="lm-item"><div class="lm-month">30 settembre</div><div><h3>Dichiarazione 730</h3><p>Termine ordinario della dichiarazione dei redditi. Se hai redditi da lavoro dipendente, controlla il modello precompilato e le detrazioni.</p><a href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">Fonte: Agenzia delle Entrate</a></div></li>
+        <li class="lm-item"><div class="lm-month">16 dicembre</div><div><h3>IMU — saldo</h3><p>Seconda rata per chi possiede immobili. Anche qui aliquote e scadenze possono variare: controlla il sito del Comune.</p><a href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">Fonte: Agenzia delle Entrate</a></div></li>
+        <li class="lm-item"><div class="lm-month">Personale</div><div><h3>Permesso di soggiorno</h3><p>Non ha una data fissa: è quella stampata sul tuo permesso. Avvia il rinnovo circa 60 giorni prima e conserva la ricevuta.</p><a href="/permesso-tracker">Apri il tracker</a></div></li>
+        <li class="lm-item"><div class="lm-month">Personale</div><div><h3>Passaporto</h3><p>Rinnova al Consolato dello Sri Lanka a Milano quando mancano circa 12 mesi alla scadenza: i tempi non dipendono da te.</p><a href="https://www.cg-milan.gov.lk" target="_blank" rel="noopener">Fonte: Consolato</a></div></li>
+        <li class="lm-item"><div class="lm-month">Ogni mese</div><div><h3>Buste paga e contributi</h3><p>Controlla che il datore di lavoro versi i contributi. Un estratto contributivo INPS chiaro oggi evita una pensione incompleta domani.</p><a href="/diritti-inps">Guida INPS</a></div></li>
+        <li class="lm-item"><div class="lm-month">Prima della richiesta</div><div><h3>Certificazione di italiano</h3><p>Serve per il permesso di lungo periodo e per la cittadinanza. Informati su A2/B1 e sulle sessioni disponibili.</p><a href="/esame">Preparati</a></div></li>
+        <li class="lm-item"><div class="lm-month">Quando serve</div><div><h3>Documenti dallo Sri Lanka</h3><p>Atto di nascita, certificato di stato civile, traduzioni e legalizzazioni richiedono settimane. Non aspettare la scadenza.</p><a href="/documenti">Guida documenti</a></div></li>
+      </ol>
+      <p class="lm-note">Date nazionali indicate “di norma”. Non sono consulenza legale o fiscale: prima di pagare o presentare una pratica verifica sempre la fonte ufficiale e il tuo Comune. Le scadenze personali dipendono dal tuo documento.</p>
+    </section>
+
+    <section class="lm-lang" data-l="en" lang="en">
+      <ol class="lm-list">
+        <li class="lm-item"><div class="lm-month">January</div><div><h3>ISEE / DSU</h3><p>File the DSU as early as possible: it is needed for child allowance, bonuses and discounts. CAF offices are quieter in the first weeks.</p><a href="https://www.inps.it" target="_blank" rel="noopener">Source: INPS</a></div></li>
+        <li class="lm-item"><div class="lm-month">16 June</div><div><h3>IMU — first instalment</h3><p>Only for property owners. Check your municipality’s rate and exemptions: this is not a deadline for everyone.</p><a href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">Source: Revenue Agency</a></div></li>
+        <li class="lm-item"><div class="lm-month">30 September</div><div><h3>Income tax return (730)</h3><p>Standard deadline for the tax return. If you have employment income, check the pre-filled form and the deductions you can claim.</p><a href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">Source: Revenue Agency</a></div></li>
+        <li class="lm-item"><div class="lm-month">16 December</div><div><h3>IMU — balance</h3><p>Second instalment for property owners. Rates and dates can vary by municipality: check your Comune’s website.</p><a href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">Source: Revenue Agency</a></div></li>
+        <li class="lm-item"><div class="lm-month">Personal</div><div><h3>Residence permit</h3><p>There is no fixed date: it is the date printed on your permit. Start the renewal about 60 days before it expires and keep the receipt.</p><a href="/permesso-tracker">Open the tracker</a></div></li>
+        <li class="lm-item"><div class="lm-month">Personal</div><div><h3>Passport</h3><p>Renew at the Sri Lankan Consulate in Milan when about 12 months are left. Processing times are not in your hands.</p><a href="https://www.cg-milan.gov.lk" target="_blank" rel="noopener">Source: Consulate</a></div></li>
+        <li class="lm-item"><div class="lm-month">Every month</div><div><h3>Payslips and contributions</h3><p>Check that your employer pays your contributions. A clear INPS statement today prevents an incomplete pension tomorrow.</p><a href="/diritti-inps">INPS guide</a></div></li>
+        <li class="lm-item"><div class="lm-month">Before applying</div><div><h3>Italian language certificate</h3><p>Required for long-term residence and citizenship. Find out about A2/B1 and the available exam sessions.</p><a href="/esame">Prepare</a></div></li>
+        <li class="lm-item"><div class="lm-month">When needed</div><div><h3>Documents from Sri Lanka</h3><p>Birth certificates, civil status records, translations and legalisations take weeks. Do not wait until the deadline.</p><a href="/documenti">Documents guide</a></div></li>
+      </ol>
+      <p class="lm-note">National dates are “standard” dates. This is not legal or tax advice: before paying or filing, always check the official source and your municipality. Personal deadlines depend on your own document.</p>
+    </section>
+
+    <section class="lm-lang" data-l="si" lang="si">
+      <ol class="lm-list">
+        <li class="lm-item"><div class="lm-month">ජනවාරි</div><div><h3>ISEE / DSU</h3><p>හැකි ඉක්මනින් DSU කරන්න: ළමා දීමනා, ප්‍රතිලාභ සහ වට්ටම් සඳහා එය අවශ්‍යයි. මුල් සතිවල CAF කාර්යාල අඩු තදබදයක් ඇත.</p><a href="https://www.inps.it" target="_blank" rel="noopener">මූලාශ්‍රය: INPS</a></div></li>
+        <li class="lm-item"><div class="lm-month">ජූනි 16</div><div><h3>IMU — පළමු වාරිකය</h3><p>දේපල හිමි අයට පමණි. ඔබේ නගර සභාවේ අනුපාතය සහ නිදහස් කිරීම් පරීක්ෂා කරන්න: මෙය සැමට අදාළ දිනයක් නොවේ.</p><a href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">මූලාශ්‍රය: ආදායම් ඒජන්සිය</a></div></li>
+        <li class="lm-item"><div class="lm-month">සැප්තැම්බර් 30</div><div><h3>ආදායම් බදු ප්‍රකාශය (730)</h3><p>බදු ප්‍රකාශයට සාමාන්‍ය අවසන් දිනය. රැකියා ආදායමක් ඇත්නම්, පූර්ව පිරවූ පෝරමය සහ ඔබට හිමි බදු සහන පරීක්ෂා කරන්න.</p><a href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">මූලාශ්‍රය: ආදායම් ඒජන්සිය</a></div></li>
+        <li class="lm-item"><div class="lm-month">දෙසැම්බර් 16</div><div><h3>IMU — අවසන් වාරිකය</h3><p>දේපල හිමි අයට දෙවන වාරිකය. අනුපාත සහ දින නගරය අනුව වෙනස් විය හැක: ඔබේ Comune වෙබ් අඩවිය බලන්න.</p><a href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">මූලාශ්‍රය: ආදායම් ඒජන්සිය</a></div></li>
+        <li class="lm-item"><div class="lm-month">පුද්ගලික</div><div><h3>පදිංචි බලපත්‍රය</h3><p>ස්ථිර දිනයක් නැත: එය ඔබේ බලපත්‍රයේ මුද්‍රණය කර ඇත. කල් ඉකුත් වීමට දින 60කට පමණ පෙර අලුත් කිරීම අරඹා රිසිට්පත තබා ගන්න.</p><a href="/permesso-tracker">Tracker විවෘත කරන්න</a></div></li>
+        <li class="lm-item"><div class="lm-month">පුද්ගලික</div><div><h3>ගමන් බලපත්‍රය</h3><p>කල් ඉකුත් වීමට මාස 12ක් පමණ ඉතිරි විට මිලාන් ශ්‍රී ලංකා කොන්සියුලර් කාර්යාලයෙන් අලුත් කරන්න. කාලය ඔබේ අතේ නැත.</p><a href="https://www.cg-milan.gov.lk" target="_blank" rel="noopener">මූලාශ්‍රය: කොන්සියුලර්</a></div></li>
+        <li class="lm-item"><div class="lm-month">සෑම මාසයකම</div><div><h3>වැටුප් පත්‍රිකා සහ දායක මුදල්</h3><p>ඔබේ සේවායෝජකයා දායක මුදල් ගෙවන බව පරීක්ෂා කරන්න. අද පැහැදිලි INPS ප්‍රකාශනයක් හෙට අසම්පූර්ණ විශ්‍රාම වැටුපක් වළක්වයි.</p><a href="/diritti-inps">INPS මාර්ගෝපදේශය</a></div></li>
+        <li class="lm-item"><div class="lm-month">ඉල්ලීමට පෙර</div><div><h3>ඉතාලි භාෂා සහතිකය</h3><p>දිගුකාලීන පදිංචිය සහ පුරවැසිභාවය සඳහා අවශ්‍යයි. A2/B1 සහ පවතින විභාග දින ගැන විමසන්න.</p><a href="/esame">සූදානම් වන්න</a></div></li>
+        <li class="lm-item"><div class="lm-month">අවශ්‍ය විට</div><div><h3>ශ්‍රී ලංකාවෙන් ලේඛන</h3><p>උපත සහතික, සිවිල් තත්ත්ව ලේඛන, පරිවර්තන සහ නීත්‍යානුකූල කිරීම් සති ගණනක් ගත වේ. අවසන් දිනය දක්වා බලා නොසිටින්න.</p><a href="/documenti">ලේඛන මාර්ගෝපදේශය</a></div></li>
+      </ol>
+      <p class="lm-note">ජාතික දින “සාමාන්‍ය” දින වේ. මෙය නීතිමය හෝ බදු උපදෙස් නොවේ: ගෙවීමට හෝ ඉල්ලීමට පෙර සැමවිටම නිල මූලාශ්‍රය සහ ඔබේ නගර සභාව පරීක්ෂා කරන්න. පුද්ගලික දින ඔබේ ලේඛනය මත රඳා පවතී.</p>
+    </section>
+
+    <section class="lm-lang" data-l="ta" lang="ta">
+      <ol class="lm-list">
+        <li class="lm-item"><div class="lm-month">ஜனவரி</div><div><h3>ISEE / DSU</h3><p>முடிந்தவரை விரைவாக DSU செய்யுங்கள்: குழந்தை உதவித்தொகை, போனஸ் மற்றும் தள்ளுபடிகளுக்கு இது தேவை. முதல் வாரங்களில் CAF அலுவலகங்களில் கூட்டம் குறைவு.</p><a href="https://www.inps.it" target="_blank" rel="noopener">ஆதாரம்: INPS</a></div></li>
+        <li class="lm-item"><div class="lm-month">ஜூன் 16</div><div><h3>IMU — முதல் தவணை</h3><p>சொத்து உரிமையாளர்களுக்கு மட்டும். உங்கள் நகராட்சியின் விகிதம் மற்றும் விலக்குகளைச் சரிபார்க்கவும்: இது அனைவருக்கும் உரிய தேதி அல்ல.</p><a href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">ஆதாரம்: வரி அமைப்பு</a></div></li>
+        <li class="lm-item"><div class="lm-month">செப்டம்பர் 30</div><div><h3>வருமான வரி அறிக்கை (730)</h3><p>வரி அறிக்கைக்கான வழக்கமான இறுதி தேதி. வேலை வருமானம் இருந்தால், முன்பே நிரப்பப்பட்ட படிவம் மற்றும் உங்களுக்கு உரிய வரி சலுகைகளைச் சரிபார்க்கவும்.</p><a href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">ஆதாரம்: வரி அமைப்பு</a></div></li>
+        <li class="lm-item"><div class="lm-month">டிசம்பர் 16</div><div><h3>IMU — இறுதி தவணை</h3><p>சொத்து உரிமையாளர்களுக்கான இரண்டாவது தவணை. விகிதங்களும் தேதிகளும் நகராட்சியைப் பொறுத்து மாறலாம்: உங்கள் Comune இணையதளத்தைப் பாருங்கள்.</p><a href="https://www.agenziaentrate.gov.it" target="_blank" rel="noopener">ஆதாரம்: வரி அமைப்பு</a></div></li>
+        <li class="lm-item"><div class="lm-month">தனிப்பட்டது</div><div><h3>வதிவு அனுமதி</h3><p>நிலையான தேதி இல்லை: உங்கள் அனுமதியில் அச்சிடப்பட்ட தேதிதான். காலாவதிக்கு சுமார் 60 நாட்களுக்கு முன் புதுப்பிப்பைத் தொடங்கி ரசீதை வைத்திருங்கள்.</p><a href="/permesso-tracker">Tracker திறக்க</a></div></li>
+        <li class="lm-item"><div class="lm-month">தனிப்பட்டது</div><div><h3>கடவுச்சீட்டு</h3><p>காலாவதிக்கு சுமார் 12 மாதங்கள் இருக்கும்போது மிலான் இலங்கை தூதரகத்தில் புதுப்பிக்கவும். காலம் உங்கள் கையில் இல்லை.</p><a href="https://www.cg-milan.gov.lk" target="_blank" rel="noopener">ஆதாரம்: தூதரகம்</a></div></li>
+        <li class="lm-item"><div class="lm-month">ஒவ்வொரு மாதமும்</div><div><h3>ஊதியச் சீட்டுகள் மற்றும் பங்களிப்புகள்</h3><p>உங்கள் முதலாளி பங்களிப்புகளைச் செலுத்துகிறாரா எனச் சரிபார்க்கவும். இன்று தெளிவான INPS அறிக்கை நாளை முழுமையற்ற ஓய்வூதியத்தைத் தடுக்கும்.</p><a href="/diritti-inps">INPS வழிகாட்டி</a></div></li>
+        <li class="lm-item"><div class="lm-month">விண்ணப்பிக்கும் முன்</div><div><h3>இத்தாலிய மொழிச் சான்றிதழ்</h3><p>நீண்டகால வதிவு மற்றும் குடியுரிமைக்குத் தேவை. A2/B1 மற்றும் கிடைக்கும் தேர்வுத் தேதிகளைக் கேளுங்கள்.</p><a href="/esame">தயாராகுங்கள்</a></div></li>
+        <li class="lm-item"><div class="lm-month">தேவைப்படும்போது</div><div><h3>இலங்கையிலிருந்து ஆவணங்கள்</h3><p>பிறப்புச் சான்றிதழ், சிவில் நிலை ஆவணங்கள், மொழிபெயர்ப்பு மற்றும் சட்டப்பூர்வமாக்கல் வாரங்கள் எடுக்கும். இறுதி நாள் வரை காத்திருக்க வேண்டாம்.</p><a href="/documenti">ஆவண வழிகாட்டி</a></div></li>
+      </ol>
+      <p class="lm-note">தேசிய தேதிகள் “வழக்கமான” தேதிகள். இது சட்ட அல்லது வரி ஆலோசனை அல்ல: செலுத்தும் அல்லது சமர்ப்பிக்கும் முன் எப்போதும் அதிகாரப்பூர்வ ஆதாரத்தையும் உங்கள் நகராட்சியையும் சரிபார்க்கவும். தனிப்பட்ட தேதிகள் உங்கள் ஆவணத்தைப் பொறுத்தது.</p>
+    </section>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="eih.js"></script>
+<script src="eih-auth.js" defer></script>
+<script src="assets/eih-atmosphere.js" fetchpriority="low" defer></script>
+<script src="assets/eih-palette.js" fetchpriority="low" defer></script>
+<script src="assets/eih-theme.js" defer></script>
+<script src="assets/eih-consent.js" defer></script>
+<script src="/assets/eih-misura.js" defer></script>
+<script>
+(function(){
+  var form=document.getElementById('lm-form');
+  var input=document.getElementById('lm-email');
+  var state=document.getElementById('lm-state');
+  if(!form)return;
+  var MSG={
+    it:{email:'Inserisci un indirizzo email valido.',attesa:'Invio…',ok:'Controlla la posta: ti abbiamo inviato il link di conferma.',errore:'Non ha funzionato. Riprova fra poco.'},
+    en:{email:'Please enter a valid email address.',attesa:'Sending…',ok:'Check your inbox: we sent you the confirmation link.',errore:'That did not work. Please try again shortly.'},
+    si:{email:'වලංගු විද්‍යුත් තැපැල් ලිපිනයක් ලියන්න.',attesa:'යවමින්…',ok:'ඔබේ විද්‍යුත් තැපෑල පරීක්ෂා කරන්න: තහවුරු කිරීමේ සබැඳිය යවා ඇත.',errore:'එය ක්‍රියා නොකළේය. මොහොතකින් නැවත උත්සාහ කරන්න.'},
+    ta:{email:'சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்.',attesa:'அனுப்புகிறது…',ok:'உங்கள் மின்னஞ்சலைப் பாருங்கள்: உறுதிப்படுத்தும் இணைப்பை அனுப்பியுள்ளோம்.',errore:'அது வேலை செய்யவில்லை. சிறிது நேரத்தில் மீண்டும் முயலவும்.'}
+  };
+  function lingua(){var l=window.EIH_LANG||document.documentElement.lang||'it';return MSG[l]?l:'it';}
+  function dice(k){state.textContent=MSG[lingua()][k];}
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var email=(input&&input.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      dice('email');
+      state.setAttribute('data-esito','errore');return;
+    }
+    dice('attesa');state.removeAttribute('data-esito');
+    fetch('/api/newsletter',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,lang:lingua()})})
+      .then(function(r){return r.json().then(function(d){return {ok:r.ok,d:d};});})
+      .then(function(x){
+        if(!x.ok||!x.d||x.d.error){throw new Error((x.d&&x.d.error)||'errore');}
+        dice('ok');
+        state.setAttribute('data-esito','ok');
+        try{if(window.EIH_MISURA)window.EIH_MISURA.evento('newsletter',{pagina:'calendario-2027'});}catch(e){}
+        form.reset();
+      })
+      .catch(function(){
+        dice('errore');
+        state.setAttribute('data-esito','errore');
+      });
+  });
+})();
+</script>
+</body>
+</html>

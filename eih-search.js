@@ -135,7 +135,15 @@
     if(e.key==='ArrowUp'){e.preventDefault();if(items.length){sel=(sel-1+items.length)%items.length;mark();}return;}
     if(e.key==='Enter'){e.preventDefault();if(sel>-1&&items[sel])go(items[sel].getAttribute('data-u'));return;}
   }
-  function go(u){close();location.href=u;}
+  function go(u){
+    try {
+      if (window.EIH_MISURA) window.EIH_MISURA.evento('cerca', {
+        pagina: 'search',
+        destinazione: String(u || '').slice(0, 80),
+      });
+    } catch (e) {}
+    close();location.href=u;
+  }
 
   function open(){if(!ov)build();render('');ov.classList.add('on');document.documentElement.style.overflow='hidden';setTimeout(function(){inp.focus();},30);}
   function close(){if(!ov)return;ov.classList.remove('on');document.documentElement.style.overflow='';}

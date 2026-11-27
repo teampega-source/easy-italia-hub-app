@@ -1,0 +1,47 @@
+name: Newsletter settimanale
+
+on:
+  schedule:
+    - cron: '30 7 * * 1'   # lunedì 07:30 UTC (09:30 in Italia d'estate)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Costruisce il digest senza inviare'
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: newsletter-settimanale
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Controlla il secret
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "CRON_SECRET assente: nessun invio. Aggiungilo in Settings → Secrets → Actions."
+            exit 0
+          fi
+
+      - name: Invia il digest
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
+        run: |
+          URL="https://easyitaliahub.it/api/email?tipo=newsletter"
+          if [ "$DRY_RUN" = "1" ]; then URL="$URL&dry=1"; fi
+          code=$(curl -sS -o /tmp/digest.json -w '%{http_code}' \
+            -H "Authorization: Bearer $CRON_SECRET" "$URL")
+          echo "HTTP $code"
+          cat /tmp/digest.json
+          test "$code" = "200"
+          # Il digest risponde 200 anche quando l'invio fallisce: leggi il JSON.
+          node -e "const j=require('/tmp/digest.json'); if(j.ok===false) process.exit(1); if(j.demo) console.log('demo: credenziali assenti, nessun invio');"

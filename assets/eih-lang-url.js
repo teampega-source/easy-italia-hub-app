@@ -29,6 +29,7 @@
     'associazioni': 'associations',
     'benvenuta': 'welcome',
     'calendario': 'calendar',
+    'calendario-2027': 'deadline-calendar-2027',
     'cargo': 'cargo',
     'cerca': 'search',
     'certificazioni': 'certifications',

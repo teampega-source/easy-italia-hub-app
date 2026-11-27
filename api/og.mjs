@@ -4,8 +4,13 @@ export const config = { runtime: 'edge' };
 
 export default function handler(req) {
   const { searchParams } = new URL(req.url);
-  const t = searchParams.get('t') || 'La comunità srilankese in Italia';
-  const s = searchParams.get('s') || 'Guide, strumenti e community per vivere al meglio.';
+  const pulisci = (v, max) => String(v || '')
+    .replace(/[\u0000-\u001f\u007f]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, max);
+  const t = pulisci(searchParams.get('t'), 120) || 'La comunità srilankese in Italia';
+  const s = pulisci(searchParams.get('s'), 180) || 'Guide, strumenti e community per vivere al meglio.';
 
   return new ImageResponse(
     {

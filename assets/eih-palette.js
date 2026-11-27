@@ -12,6 +12,7 @@
     { href: '/cv-builder', it: 'CV Builder', en: 'CV Builder', k: 'curriculum lavoro europass resume' },
     { href: '/moduli', it: 'Moduli e Lettere', en: 'Letters & forms', k: 'delega disdetta ospitalita sollecito lettera pdf stampa' },
     { href: '/dashboard', it: 'La mia Dashboard', en: 'My Dashboard', k: 'scadenze calendario promemoria' },
+    { href: '/calendario-2027', it: 'Calendario scadenze 2027', en: '2027 deadline calendar', k: 'isee imu 730 permesso passaporto pdf stampa scadenze' },
     { href: '/community', it: 'Community', en: 'Community', k: 'forum domande persone annunci' },
     { href: '/news', it: 'News', en: 'News', k: 'notizie sri lanka aggiornamenti' },
     { href: '/mappa', it: 'Mappa dei servizi', en: 'Services map', k: 'caf patronato questura consolato negozio' },

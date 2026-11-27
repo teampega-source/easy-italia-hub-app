@@ -1,0 +1,35 @@
+name: Security audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Vulnerabilità high/critical
+        run: npm audit --audit-level=high
+      - name: Limite funzioni serverless (Hobby: 12)
+        run: node scripts/conta-funzioni.mjs
+      - name: Sintassi delle funzioni API
+        run: |
+          fail=0
+          for f in api/*.js api/*.mjs; do
+            case "$f" in api/_*) continue;; esac
+            node --check "$f" || fail=1
+          done
+          exit $fail

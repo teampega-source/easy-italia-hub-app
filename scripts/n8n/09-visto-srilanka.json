@@ -5,14 +5,24 @@
       "parameters": {
         "httpMethod": "POST",
         "path": "eih-visto-srilanka",
-        "responseMode": "responseNode"
+        "responseMode": "responseNode",
+        "authentication": "headerAuth"
       },
       "id": "webhook-visto",
       "name": "Webhook Richiesta Visto",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [250, 300],
-      "webhookId": "eih-visto-srilanka"
+      "position": [
+        250,
+        300
+      ],
+      "webhookId": "eih-visto-srilanka",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "eih-webhook-auth",
+          "name": "EIH Webhook Header"
+        }
+      }
     },
     {
       "parameters": {
@@ -22,7 +32,10 @@
       "name": "Valida Input",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [450, 300]
+      "position": [
+        450,
+        300
+      ]
     },
     {
       "parameters": {
@@ -32,7 +45,10 @@
       "name": "Dati Visto",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [650, 300]
+      "position": [
+        650,
+        300
+      ]
     },
     {
       "parameters": {
@@ -45,8 +61,16 @@
       "name": "Invia Email Info Visto",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2,
-      "position": [900, 300],
-      "credentials": { "smtp": { "id": "resend-smtp", "name": "Resend SMTP" } }
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "resend-smtp",
+          "name": "Resend SMTP"
+        }
+      }
     },
     {
       "parameters": {
@@ -57,14 +81,57 @@
       "name": "Risposta JSON",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [1100, 300]
+      "position": [
+        1100,
+        300
+      ]
     }
   ],
   "connections": {
-    "Webhook Richiesta Visto": { "main": [[{ "node": "Valida Input", "type": "main", "index": 0 }]] },
-    "Valida Input": { "main": [[{ "node": "Dati Visto", "type": "main", "index": 0 }]] },
-    "Dati Visto": { "main": [[{ "node": "Invia Email Info Visto", "type": "main", "index": 0 }]] },
-    "Invia Email Info Visto": { "main": [[{ "node": "Risposta JSON", "type": "main", "index": 0 }]] }
+    "Webhook Richiesta Visto": {
+      "main": [
+        [
+          {
+            "node": "Valida Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valida Input": {
+      "main": [
+        [
+          {
+            "node": "Dati Visto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dati Visto": {
+      "main": [
+        [
+          {
+            "node": "Invia Email Info Visto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invia Email Info Visto": {
+      "main": [
+        [
+          {
+            "node": "Risposta JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
   },
   "active": false,
   "settings": {},

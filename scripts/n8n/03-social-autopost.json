@@ -6,14 +6,24 @@
         "httpMethod": "POST",
         "path": "eih-social-post",
         "responseMode": "onReceived",
-        "options": {}
+        "options": {},
+        "authentication": "headerAuth"
       },
       "id": "webhook-trigger",
       "name": "Webhook nuovo contenuto pronto",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [240, 300],
-      "notes": "Chiamare da Supabase trigger o manualmente quando il video è pronto. Body: { video_url, caption_it, caption_si, hashtags, platform }"
+      "position": [
+        240,
+        300
+      ],
+      "notes": "Chiamare da Supabase trigger o manualmente quando il video è pronto. Body: { video_url, caption_it, caption_si, hashtags, platform }",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "eih-webhook-auth",
+          "name": "EIH Webhook Header"
+        }
+      }
     },
     {
       "parameters": {
@@ -30,14 +40,24 @@
             }
           ]
         },
-        "options": { "temperature": 0.7 }
+        "options": {
+          "temperature": 0.7
+        }
       },
       "id": "ai-optimize-caption",
       "name": "AI ottimizza caption",
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1,
-      "position": [460, 300],
-      "credentials": { "openAiApi": { "id": "openai-creds", "name": "OpenAI" } }
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-creds",
+          "name": "OpenAI"
+        }
+      }
     },
     {
       "parameters": {
@@ -47,19 +67,31 @@
       "name": "Split per piattaforma",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [680, 300]
+      "position": [
+        680,
+        300
+      ]
     },
     {
       "parameters": {
         "conditions": {
-          "string": [{ "value1": "={{ $json.platform }}", "operation": "equals", "value2": "instagram" }]
+          "string": [
+            {
+              "value1": "={{ $json.platform }}",
+              "operation": "equals",
+              "value2": "instagram"
+            }
+          ]
         }
       },
       "id": "if-instagram",
       "name": "Instagram?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
-      "position": [900, 200]
+      "position": [
+        900,
+        200
+      ]
     },
     {
       "parameters": {
@@ -67,15 +99,32 @@
         "url": "https://api.buffer.com/1/updates/create.json",
         "sendHeaders": true,
         "headerParameters": {
-          "parameters": [{ "name": "Authorization", "value": "Bearer {{ $env.BUFFER_TOKEN }}" }]
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.BUFFER_TOKEN }}"
+            }
+          ]
         },
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
-            { "name": "text", "value": "={{ $json.caption + '\n\n' + $json.hashtags }}" },
-            { "name": "media[video]", "value": "={{ $json.video_url }}" },
-            { "name": "profile_ids[]", "value": "={{ $env.BUFFER_INSTAGRAM_ID }}" },
-            { "name": "scheduled_at", "value": "={{ $now.plus({hours: 2}).toISO() }}" }
+            {
+              "name": "text",
+              "value": "={{ $json.caption + '\n\n' + $json.hashtags }}"
+            },
+            {
+              "name": "media[video]",
+              "value": "={{ $json.video_url }}"
+            },
+            {
+              "name": "profile_ids[]",
+              "value": "={{ $env.BUFFER_INSTAGRAM_ID }}"
+            },
+            {
+              "name": "scheduled_at",
+              "value": "={{ $now.plus({hours: 2}).toISO() }}"
+            }
           ]
         }
       },
@@ -83,7 +132,10 @@
       "name": "Pubblica su Instagram (Buffer)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [1120, 100]
+      "position": [
+        1120,
+        100
+      ]
     },
     {
       "parameters": {
@@ -91,15 +143,32 @@
         "url": "https://api.buffer.com/1/updates/create.json",
         "sendHeaders": true,
         "headerParameters": {
-          "parameters": [{ "name": "Authorization", "value": "Bearer {{ $env.BUFFER_TOKEN }}" }]
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.BUFFER_TOKEN }}"
+            }
+          ]
         },
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
-            { "name": "text", "value": "={{ $json.caption + '\n\n' + $json.hashtags }}" },
-            { "name": "media[video]", "value": "={{ $json.video_url }}" },
-            { "name": "profile_ids[]", "value": "={{ $env.BUFFER_TIKTOK_ID }}" },
-            { "name": "scheduled_at", "value": "={{ $now.plus({hours: 3}).toISO() }}" }
+            {
+              "name": "text",
+              "value": "={{ $json.caption + '\n\n' + $json.hashtags }}"
+            },
+            {
+              "name": "media[video]",
+              "value": "={{ $json.video_url }}"
+            },
+            {
+              "name": "profile_ids[]",
+              "value": "={{ $env.BUFFER_TIKTOK_ID }}"
+            },
+            {
+              "name": "scheduled_at",
+              "value": "={{ $now.plus({hours: 3}).toISO() }}"
+            }
           ]
         }
       },
@@ -107,7 +176,10 @@
       "name": "Pubblica su TikTok (Buffer)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [1120, 400]
+      "position": [
+        1120,
+        400
+      ]
     },
     {
       "parameters": {
@@ -117,11 +189,26 @@
         "dataToSend": "defineBelow",
         "fieldsUi": {
           "fieldValues": [
-            { "fieldId": "video_url", "fieldValue": "={{ $('Webhook nuovo contenuto pronto').item.json.video_url }}" },
-            { "fieldId": "platform", "fieldValue": "={{ $json.platform }}" },
-            { "fieldId": "caption", "fieldValue": "={{ $json.caption }}" },
-            { "fieldId": "scheduled_at", "fieldValue": "={{ $now.toISO() }}" },
-            { "fieldId": "status", "fieldValue": "scheduled" }
+            {
+              "fieldId": "video_url",
+              "fieldValue": "={{ $('Webhook nuovo contenuto pronto').item.json.video_url }}"
+            },
+            {
+              "fieldId": "platform",
+              "fieldValue": "={{ $json.platform }}"
+            },
+            {
+              "fieldId": "caption",
+              "fieldValue": "={{ $json.caption }}"
+            },
+            {
+              "fieldId": "scheduled_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "scheduled"
+            }
           ]
         }
       },
@@ -129,33 +216,100 @@
       "name": "Log su Supabase",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1340, 250],
-      "credentials": { "supabaseApi": { "id": "supabase-creds", "name": "Supabase EIH" } }
+      "position": [
+        1340,
+        250
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase-creds",
+          "name": "Supabase EIH"
+        }
+      }
     }
   ],
   "connections": {
     "Webhook nuovo contenuto pronto": {
-      "main": [[ { "node": "AI ottimizza caption", "type": "main", "index": 0 } ]]
+      "main": [
+        [
+          {
+            "node": "AI ottimizza caption",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "AI ottimizza caption": {
-      "main": [[ { "node": "Split per piattaforma", "type": "main", "index": 0 } ]]
+      "main": [
+        [
+          {
+            "node": "Split per piattaforma",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Split per piattaforma": {
-      "main": [[ { "node": "Instagram?", "type": "main", "index": 0 } ]]
+      "main": [
+        [
+          {
+            "node": "Instagram?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Instagram?": {
       "main": [
-        [ { "node": "Pubblica su Instagram (Buffer)", "type": "main", "index": 0 } ],
-        [ { "node": "Pubblica su TikTok (Buffer)", "type": "main", "index": 0 } ]
+        [
+          {
+            "node": "Pubblica su Instagram (Buffer)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Pubblica su TikTok (Buffer)",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Pubblica su Instagram (Buffer)": {
-      "main": [[ { "node": "Log su Supabase", "type": "main", "index": 0 } ]]
+      "main": [
+        [
+          {
+            "node": "Log su Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Pubblica su TikTok (Buffer)": {
-      "main": [[ { "node": "Log su Supabase", "type": "main", "index": 0 } ]]
+      "main": [
+        [
+          {
+            "node": "Log su Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "settings": { "executionOrder": "v1" },
-  "tags": ["eih", "atena", "social", "autopost"]
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    "eih",
+    "atena",
+    "social",
+    "autopost"
+  ]
 }

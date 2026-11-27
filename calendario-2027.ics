@@ -1,0 +1,49 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Easy Italia Hub//Calendario scadenze 2027//IT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Easy Italia Hub — Scadenze 2027
+X-WR-CALDESC:Promemoria delle scadenze nazionali 2027. Verifica sempre la fonte ufficiale.
+X-WR-TIMEZONE:Europe/Rome
+BEGIN:VEVENT
+UID:isee-dsu-2027@easyitaliahub.it
+DTSTAMP:20261127T001332Z
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+SUMMARY:ISEE / DSU 2027 — controlla e presenta
+DESCRIPTION:Presenta la DSU per Assegno Unico\, bonus e agevolazioni. Verifica il calendario INPS/CAF: la data è un promemoria\, non un termine legale unico.
+URL:https://easyitaliahub.it/calendario-2027
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:imu-acconto-2027@easyitaliahub.it
+DTSTAMP:20261127T001332Z
+DTSTART;VALUE=DATE:20270616
+DTEND;VALUE=DATE:20270617
+SUMMARY:IMU 2027 — acconto (solo proprietari)
+DESCRIPTION:Prima rata IMU per chi possiede immobili. Verifica aliquota ed esenzioni del tuo Comune.
+URL:https://easyitaliahub.it/calendario-2027
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:730-2027@easyitaliahub.it
+DTSTAMP:20261127T001332Z
+DTSTART;VALUE=DATE:20270930
+DTEND;VALUE=DATE:20270931
+SUMMARY:Dichiarazione dei redditi 730 — termine ordinario
+DESCRIPTION:Termine ordinario della dichiarazione. Controlla il modello precompilato e le detrazioni\; possibili proroghe.
+URL:https://easyitaliahub.it/calendario-2027
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:imu-saldo-2027@easyitaliahub.it
+DTSTAMP:20261127T001332Z
+DTSTART;VALUE=DATE:20271216
+DTEND;VALUE=DATE:20271217
+SUMMARY:IMU 2027 — saldo (solo proprietari)
+DESCRIPTION:Seconda rata IMU per chi possiede immobili. Verifica le delibere del tuo Comune.
+URL:https://easyitaliahub.it/calendario-2027
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR

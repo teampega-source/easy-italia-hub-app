@@ -3,30 +3,39 @@
 'use strict';
 
 const { isRateLimited, clientIp } = require('./_ratelimit');
+const {
+  isCron, isSameOrigin, validEmail, text, json, verifyTurnstile,
+} = require('./_security');
 
 const MAX_NAME = 120;
 const MAX_MSG  = 5000;
 
 module.exports = async function handler(req, res) {
-  // Cron Vercel (GET + Bearer CRON_SECRET): digest scadenze → email automatiche
+  // Cron (GET + Bearer CRON_SECRET): digest scadenze o newsletter settimanale.
   if (req.method === 'GET') {
-    const secret = process.env.CRON_SECRET;
-    if (!secret || req.headers['authorization'] !== `Bearer ${secret}`)
-      return res.status(401).json({ error: 'unauthorized' });
+    if (!isCron(req)) return json(res, 401, { error: 'unauthorized' });
+    const tipo = String((req.query && req.query.tipo) || '');
+    if (tipo === 'newsletter') return require('./_newsletter-digest').run(req, res);
     return require('./_digest').run(req, res);
   }
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' }, { Allow: 'POST' });
+  res.setHeader('Cache-Control', 'no-store');
+
+  // Le form pubbliche non devono poter essere inviate da un sito terzo.
+  if (!isSameOrigin(req)) return json(res, 403, { error: 'Origine non consentita.' });
 
   let body;
   try { body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {}); }
   catch (e) { return res.status(400).json({ error: 'JSON non valido.' }); }
 
   const type = ['newsletter', 'remind', 'signup'].includes(body.type) ? body.type : 'contact';
+  const captchaOk = await verifyTurnstile(req, body.turnstileToken || body['cf-turnstile-response']);
+  if (!captchaOk) return json(res, 400, { error: 'Verifica anti-bot non riuscita. Ricarica e riprova.' });
   const ip = clientIp(req);
   const rlName = type === 'remind' ? 'email-remind' : 'email';
   const rlMax  = type === 'remind' ? 2 : 8;
   if (isRateLimited(ip, { name: rlName, max: rlMax })) {
-    return res.status(429).json({ error: 'Troppe richieste. Attendi un minuto e riprova.' });
+    return json(res, 429, { error: 'Troppe richieste. Attendi un minuto e riprova.' });
   }
 
   if (type === 'remind') return handleRemind(req, res, body);
@@ -42,23 +51,24 @@ async function handleContact(req, res, body, type) {
 
   if (body.website) return res.status(200).json({ ok: true }); // honeypot
 
-  const email   = String(body.email   || '').trim().slice(0, 254);
-  const name    = String(body.name    || '').trim().slice(0, MAX_NAME);
-  const message = String(body.message || '').trim().slice(0, MAX_MSG);
+  const email   = text(body.email, 254).toLowerCase();
+  const name    = text(body.name, MAX_NAME);
+  const message = text(body.message, MAX_MSG);
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-    return res.status(400).json({ error: 'Email non valida.' });
+  if (!validEmail(email))
+    return json(res, 400, { error: 'Email non valida.' });
   if (type === 'contact' && (!name || !message))
-    return res.status(400).json({ error: 'Nome e messaggio sono obbligatori.' });
+    return json(res, 400, { error: 'Nome e messaggio sono obbligatori.' });
 
   if (!RESEND_KEY) {
     console.error('[email/contact] RESEND_API_KEY mancante — impossibile inviare.');
     return res.status(500).json({ error: 'Servizio email momentaneamente non disponibile. Scrivi a info@easyitaliahub.it.' });
   }
 
+  const safeName = name.replace(/[\r\n]+/g, ' ');
   const subject = type === 'newsletter'
-    ? `Nuova iscrizione newsletter — ${name ? name + ' ' : ''}<${email}>`
-    : `Nuovo messaggio dal sito — ${name}`;
+    ? `Nuova iscrizione newsletter — ${safeName ? safeName + ' ' : ''}<${email}>`
+    : `Nuovo messaggio dal sito — ${safeName}`;
   const html = type === 'newsletter' ? buildNewsletterHtml(name, email) : buildContactHtml(name, email, message);
   const payload = { from: 'Easy Italia Hub <notifiche@easyitaliahub.it>', to: [TO], subject, html };
   if (type === 'contact') payload.reply_to = email;
@@ -108,10 +118,10 @@ async function handleSignup(req, res, body) {
   const RESEND_KEY = process.env.RESEND_API_KEY;
   const ADMIN = process.env.CONTACT_TO_EMAIL || 'info@easyitaliahub.it';
 
-  const email = String(body.email || '').trim().slice(0, 254);
-  const name  = String(body.name  || '').trim().slice(0, MAX_NAME);
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-    return res.status(400).json({ error: 'Email non valida.' });
+  const email = text(body.email, 254).toLowerCase();
+  const name  = text(body.name, MAX_NAME);
+  if (!validEmail(email))
+    return json(res, 400, { error: 'Email non valida.' });
 
   if (!RESEND_KEY) {
     console.error('[email/signup] RESEND_API_KEY mancante');
@@ -174,12 +184,14 @@ function signupStrings(lang) {
 
 async function handleRemind(req, res, body) {
   const RESEND_KEY = process.env.RESEND_API_KEY;
-  const { email, name = '', deadlines = [] } = body;
+  const email = text(body.email, 254).toLowerCase();
+  const name = text(body.name, MAX_NAME);
+  const deadlines = body.deadlines;
 
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-    return res.status(400).json({ error: 'Email non valida.' });
-  if (!Array.isArray(deadlines))
-    return res.status(400).json({ error: 'deadlines deve essere un array.' });
+  if (!validEmail(email))
+    return json(res, 400, { error: 'Email non valida.' });
+  if (!Array.isArray(deadlines) || deadlines.length > 50)
+    return json(res, 400, { error: 'deadlines deve essere un array (max 50).' });
 
   if (!RESEND_KEY)
     return res.status(200).json({ demo: true, message: 'Demo: RESEND_API_KEY non impostato.' });
@@ -190,6 +202,9 @@ async function handleRemind(req, res, body) {
   const upcoming = deadlines
     .filter(d => {
       if (!d || typeof d.date !== 'string' || !d.title) return false;
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(d.date)) return false;
+      if (String(d.title).length > 160) return false;
+      if (d.note != null && String(d.note).length > 240) return false;
       const dt = parseDate(d.date);
       return dt !== null && dt >= today && dt <= limit;
     })
@@ -285,8 +300,12 @@ function buildNewsletterHtml(name, email) {
 function parseDate(s) {
   const p = String(s).split('-');
   if (p.length !== 3) return null;
-  const d = new Date(+p[0], (+p[1] || 1) - 1, +p[2] || 1, 0, 0, 0, 0);
-  return isNaN(d.getTime()) ? null : d;
+  const y = +p[0], m = +p[1], day = +p[2];
+  if (!y || m < 1 || m > 12 || day < 1 || day > 31) return null;
+  const d = new Date(y, m - 1, day, 0, 0, 0, 0);
+  if (isNaN(d.getTime())) return null;
+  if (d.getFullYear() !== y || d.getMonth() !== m - 1 || d.getDate() !== day) return null;
+  return d;
 }
 
 function fmtDate(s) {

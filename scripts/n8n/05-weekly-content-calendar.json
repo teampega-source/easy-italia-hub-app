@@ -13,7 +13,7 @@
     },
     {
       "parameters": {
-        "model": "gpt-4o",
+        "model": "gpt-4o-mini",
         "messages": {
           "values": [
             {
@@ -112,6 +112,10 @@
       "main": [[ { "node": "Invia riepilogo su Slack", "type": "main", "index": 0 } ]]
     }
   },
+  "active": false,
   "settings": { "executionOrder": "v1" },
-  "tags": ["eih", "atena", "content", "calendar"]
+  "tags": ["eih", "atena", "content", "calendar"],
+  "meta": {
+    "note": "Richiede la tabella public.content_calendar di migration-012. Il workflow crea solo bozze: la pubblicazione passa da una persona."
+  }
 }

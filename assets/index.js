@@ -178,7 +178,7 @@ function subscribeNewsletter(){
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){nlDice('email','errore');if(campo)campo.focus();return;}
   nlDice('attesa');
   fetch('/api/newsletter',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({email})})
+    body:JSON.stringify({email,lang:currentLang})})
     .then(r=>r.json().then(d=>({ok:r.ok,d})))
     .then(({ok,d})=>{
       if(!ok||!d||d.error){nlDice('errore','errore');return;}

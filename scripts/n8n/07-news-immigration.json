@@ -1,5 +1,5 @@
 {
-  "name": "07 — Immigration News Feed",
+  "name": "07 — Monitoraggio notizie ufficiali",
   "nodes": [
     {
       "parameters": {
@@ -9,93 +9,77 @@
       "name": "Cron ogni 6h",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
-      "position": [250, 300]
+      "position": [240, 300]
     },
     {
       "parameters": {
-        "url": "https://www.interno.gov.it/it/stampa-e-comunicazione/comunicati/rss.xml",
-        "method": "GET"
+        "url": "https://www.interno.gov.it/it/rss/news.xml",
+        "method": "GET",
+        "options": { "timeout": 15000, "response": { "response": { "responseFormat": "text" } } }
       },
       "id": "fetch-interno",
-      "name": "RSS Interno.gov.it",
+      "name": "RSS Ministero dell'Interno",
       "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 3,
-      "position": [450, 200]
+      "typeVersion": 4,
+      "position": [460, 300]
     },
     {
       "parameters": {
-        "url": "https://www.lavoro.gov.it/rss/Pages/default.aspx",
-        "method": "GET"
-      },
-      "id": "fetch-lavoro",
-      "name": "RSS Lavoro.gov.it",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 3,
-      "position": [450, 400]
-    },
-    {
-      "parameters": {
-        "jsCode": "const parseRSS = (xml, source) => {\n  const items = [];\n  const blocks = xml.match(/<item[\\s\\S]*?<\\/item>/gi) || [];\n  for (const b of blocks.slice(0, 5)) {\n    const title = (b.match(/<title[^>]*><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/title>/) || b.match(/<title[^>]*>([\\s\\S]*?)<\\/title>/) || [])[1] || '';\n    const link  = (b.match(/<link[^>]*>([\\s\\S]*?)<\\/link>/) || [])[1] || '';\n    const desc  = (b.match(/<description[^>]*><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/description>/) || b.match(/<description[^>]*>([\\s\\S]*?)<\\/description>/) || [])[1] || '';\n    const clean = s => s.replace(/<[^>]+>/g,'').replace(/\\s+/g,' ').trim().slice(0,400);\n    if (title && link) items.push({ title: clean(title), link: clean(link), description: clean(desc), source });\n  }\n  return items;\n};\nconst all = [\n  ...(parseRSS($('RSS Interno.gov.it').item.json.data || '', 'interno')),\n  ...(parseRSS($('RSS Lavoro.gov.it').item.json.data || '', 'lavoro')),\n];\nreturn all.map(x => ({ json: x }));"
+        "jsCode": "const xml = String($input.first().json.data || $input.first().json.body || '');\nconst clean = (s) => String(s || '')\n  .replace(/<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>/g, '$1')\n  .replace(/<[^>]+>/g, '')\n  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')\n  .replace(/&quot;/g, '\"').replace(/&#(\\d+);/g, (_, n) => String.fromCharCode(+n))\n  .replace(/\\s+/g, ' ').trim();\nconst grab = (block, tag) => {\n  const m = block.match(new RegExp('<' + tag + '[^>]*>([\\\\s\\\\S]*?)<\\\\/' + tag + '>', 'i'));\n  return m ? m[1] : '';\n};\nconst items = [];\nfor (const block of (xml.match(/<item[\\s\\S]*?<\\/item>/gi) || []).slice(0, 8)) {\n  const title = clean(grab(block, 'title'));\n  let link = clean(grab(block, 'link')) || clean(grab(block, 'guid'));\n  if (!/^https?:\\/\\//i.test(link)) continue;\n  const desc = clean(grab(block, 'description'));\n  const dateRaw = clean(grab(block, 'pubDate') || grab(block, 'dc:date'));\n  const ts = dateRaw ? Date.parse(dateRaw) : NaN;\n  items.push({\n    title: title.slice(0, 300),\n    link: link.slice(0, 1000),\n    description: desc.slice(0, 1000),\n    source: 'Ministero dell’Interno',\n    published_at: ts && !isNaN(ts) ? new Date(ts).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10)\n  });\n}\nif (!items.length) throw new Error('Nessuna notizia riconosciuta nel feed: formato cambiato?');\nreturn items.map((json) => ({ json }));"
       },
       "id": "parse-rss",
       "name": "Parsa RSS",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [700, 300]
+      "position": [680, 300]
     },
     {
       "parameters": {
-        "model": "gpt-4o-mini",
-        "messages": {
-          "values": [
-            { "role": "system", "content": "Sei un assistente che traduce brevi notizie italiane in sinhala (si_LK). Traduci solo il testo fornito, nessuna spiegazione aggiuntiva." },
-            { "role": "user", "content": "Titolo: {{ $json.title }}\n\nDescrizione: {{ $json.description }}\n\nTraduzione Sinhala:" }
-          ]
-        },
-        "options": { "maxTokens": 300 }
-      },
-      "id": "translate-si",
-      "name": "Traduzione Sinhala",
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1,
-      "position": [950, 300],
-      "credentials": { "openAiApi": { "id": "openai-creds", "name": "OpenAI" } }
-    },
-    {
-      "parameters": {
+        "resource": "row",
         "operation": "upsert",
         "tableId": "news_items",
-        "dataToSend": "autoMapInputData",
-        "conflictColumns": "link"
+        "conflictColumns": "link",
+        "dataToSend": "defineBelow",
+        "fieldsUi": {
+          "fieldValues": [
+            { "fieldId": "title", "fieldValue": "={{ $json.title }}" },
+            { "fieldId": "link", "fieldValue": "={{ $json.link }}" },
+            { "fieldId": "description", "fieldValue": "={{ $json.description }}" },
+            { "fieldId": "source", "fieldValue": "={{ $json.source }}" },
+            { "fieldId": "published_at", "fieldValue": "={{ $json.published_at }}" }
+          ]
+        }
       },
-      "id": "save-supabase",
+      "id": "save-news",
       "name": "Salva su Supabase",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1150, 300],
-      "credentials": { "supabaseApi": { "id": "supabase-creds", "name": "Supabase" } }
+      "position": [900, 300],
+      "credentials": { "supabaseApi": { "id": "supabase-creds", "name": "Supabase EIH" } }
     },
     {
       "parameters": {
         "channel": "#news-feed",
-        "text": "📰 {{ $json.title }}\n{{ $json.link }}"
+        "text": "📰 *{{ $json.title }}*\\n{{ $json.link }}"
       },
       "id": "slack-news",
-      "name": "Slack Riepilogo",
+      "name": "Riepilogo Slack",
       "type": "n8n-nodes-base.slack",
-      "typeVersion": 1,
-      "position": [1350, 300],
-      "credentials": { "slackApi": { "id": "slack-creds", "name": "Slack" } }
+      "typeVersion": 2,
+      "position": [1120, 300],
+      "credentials": { "slackApi": { "id": "slack-creds", "name": "Slack EIH" } }
     }
   ],
   "connections": {
-    "Cron ogni 6h": { "main": [[{ "node": "RSS Interno.gov.it", "type": "main", "index": 0 }, { "node": "RSS Lavoro.gov.it", "type": "main", "index": 0 }]] },
-    "RSS Interno.gov.it": { "main": [[{ "node": "Parsa RSS", "type": "main", "index": 0 }]] },
-    "RSS Lavoro.gov.it": { "main": [[{ "node": "Parsa RSS", "type": "main", "index": 0 }]] },
-    "Parsa RSS": { "main": [[{ "node": "Traduzione Sinhala", "type": "main", "index": 0 }]] },
-    "Traduzione Sinhala": { "main": [[{ "node": "Salva su Supabase", "type": "main", "index": 0 }]] },
-    "Salva su Supabase": { "main": [[{ "node": "Slack Riepilogo", "type": "main", "index": 0 }]] }
+    "Cron ogni 6h": { "main": [[{ "node": "RSS Ministero dell'Interno", "type": "main", "index": 0 }]] },
+    "RSS Ministero dell'Interno": { "main": [[{ "node": "Parsa RSS", "type": "main", "index": 0 }]] },
+    "Parsa RSS": { "main": [[{ "node": "Salva su Supabase", "type": "main", "index": 0 }]] },
+    "Salva su Supabase": { "main": [[{ "node": "Riepilogo Slack", "type": "main", "index": 0 }]] }
   },
   "active": false,
-  "settings": {}
+  "settings": { "executionOrder": "v1" },
+  "tags": ["eih", "news", "monitoraggio"],
+  "meta": {
+    "note": "Richiede public.news_items di migration-012. Salva titolo, link, descrizione e fonte; la traduzione automatica si aggiunge dopo, con approvazione umana."
+  }
 }

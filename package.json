@@ -8,11 +8,8 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@vercel/og": "^0.6.3",
-    "web-push": "^3.6.7",
-    "@vercel/speed-insights": "^2.0.0"
-  },
-  "devDependencies": {
-    "shadcn": "^4.12.0"
+    "@vercel/og": "^0.6.8",
+    "@vercel/speed-insights": "^2.0.0",
+    "web-push": "^3.6.7"
   }
 }

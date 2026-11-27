@@ -3,14 +3,22 @@
 'use strict';
 
 const { isRateLimited, clientIp } = require('./_ratelimit');
+const {
+  isSameOrigin, originForRedirect, userFromRequest, publicUser,
+  validEmail, text, json,
+} = require('./_security');
 
 const ALLOWED_DONATE_AMOUNTS = [200, 500, 1000, 2000, 5000];
 
 module.exports = async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  res.setHeader('Cache-Control', 'no-store');
+  if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' }, { Allow: 'POST' });
+
+  // Una sessione Stripe non deve poter essere creata da un sito terzo.
+  if (!isSameOrigin(req)) return json(res, 403, { error: 'Origine non consentita.' });
 
   if (isRateLimited(clientIp(req), { name: 'stripe', max: 10 })) {
-    return res.status(429).json({ error: 'Troppe richieste. Attendi un minuto e riprova.' });
+    return json(res, 429, { error: 'Troppe richieste. Attendi un minuto e riprova.' });
   }
 
   let body;
@@ -32,11 +40,20 @@ async function handleCheckout(req, res, body) {
     });
   }
 
-  const { email, user_id, plan = 'premium' } = body;
-  const safePlan = ['premium', 'premium_plus', 'business'].includes(plan) ? plan : 'premium';
-  const origin =
-    req.headers.origin ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://easyitaliahub.it');
+  /* L'identità non si prende dal body: se c'è un token Supabase valido
+     usiamo quell'utente, altrimenti il checkout resta ospite con la sola
+     email. Prima un client poteva scrivere user_id di un altro account nei
+     metadata Stripe. */
+  const authUser = publicUser(await userFromRequest(req));
+  const bodyEmail = validEmail(body.email) ? text(body.email, 254).toLowerCase() : '';
+  const email = authUser ? authUser.email : bodyEmail;
+  const userId = authUser ? authUser.id : null;
+  /* Il piano NON si prende dal body: con un solo prezzo Stripe, lasciare che
+     il client scelga "business" significherebbe pagare premium e ricevere
+     business. Se un giorno servono più piani, mappare price_id → piano qui. */
+  const safePlan = ['premium', 'premium_plus', 'business'].includes(process.env.STRIPE_PLAN)
+    ? process.env.STRIPE_PLAN : 'premium';
+  const origin = originForRedirect(req);
 
   const params = new URLSearchParams();
   params.set('mode', 'subscription');
@@ -48,7 +65,7 @@ async function handleCheckout(req, res, body) {
   params.set('locale', 'it');
   params.set('billing_address_collection', 'auto');
   if (email) params.set('customer_email', email);
-  if (user_id) params.set('subscription_data[metadata][user_id]', user_id);
+  if (userId) params.set('subscription_data[metadata][user_id]', userId);
   params.set('subscription_data[metadata][plan]', safePlan);
 
   const resp = await fetch('https://api.stripe.com/v1/checkout/sessions', {
@@ -61,7 +78,7 @@ async function handleCheckout(req, res, body) {
     const errData = await resp.json().catch(() => ({}));
     const msg = (errData.error && errData.error.message) || 'Errore Stripe.';
     console.error('[stripe/checkout]', resp.status, msg);
-    return res.status(500).json({ error: msg });
+    return res.status(500).json({ error: 'Errore pagamento. Riprova.' });
   }
 
   const session = await resp.json();
@@ -82,9 +99,7 @@ async function handleDonate(req, res, body) {
   if (!ALLOWED_DONATE_AMOUNTS.includes(amount))
     return res.status(400).json({ error: 'Importo non valido.' });
 
-  const origin =
-    req.headers.origin ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://easyitaliahub.it');
+  const origin = originForRedirect(req);
 
   const params = new URLSearchParams();
   params.set('mode', 'payment');
@@ -108,7 +123,7 @@ async function handleDonate(req, res, body) {
     const errData = await resp.json().catch(() => ({}));
     const msg = (errData.error && errData.error.message) || 'Errore Stripe.';
     console.error('[stripe/donate]', resp.status, msg);
-    return res.status(500).json({ error: msg });
+    return res.status(500).json({ error: 'Errore pagamento. Riprova.' });
   }
 
   const session = await resp.json();

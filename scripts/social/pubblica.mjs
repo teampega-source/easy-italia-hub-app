@@ -105,8 +105,14 @@ function leggiSitemap(xml) {
     const si = (b.match(/hreflang="si"\s+href="([^"]+)"/) || [])[1];
     const ta = (b.match(/hreflang="ta"\s+href="([^"]+)"/) || [])[1];
     if (!loc) continue;
+    /* La chiave del gruppo è sempre l'indirizzo inglese (la radice): da
+       quando /it è un prefisso vero, usare l'hreflang italiano come chiave
+       produceva /it/assegno-unico, che non combaciava con PRIMO_GIRO e con
+       l'elenco delle escluse. Il risultato era un primo giro con zero post. */
+    const canonico = en || loc.replace(/\/it\/(?=[^/]|$)/, '/');
     voci.push({
-      loc, lastmod, canonico: it || loc,
+      loc, lastmod, canonico,
+      italiano: it || canonico,
       inglese: en || '', sinhala: si || '', tamil: ta || '',
     });
   }
@@ -125,7 +131,7 @@ function raggruppa(voci) {
     if (!attuale) {
       perPagina.set(chiave, {
         chiave,
-        url: { it: v.canonico, en: v.inglese, si: v.sinhala, ta: v.tamil },
+        url: { it: v.italiano, en: v.inglese, si: v.sinhala, ta: v.tamil },
         lastmod: v.lastmod,
       });
       continue;
