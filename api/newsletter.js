@@ -60,7 +60,7 @@ module.exports = async function handler(req, res) {
 
   const base = { email, name: name || null, token, token_expires_at: expires, confirmed: false };
   let upsert = await sbFetch('POST', 'newsletter_subscribers?on_conflict=email',
-    { ...base, lang }, { 'Prefer': 'resolution=merge-duplicates' });
+    { ...base, lang, unsubscribed_at: null }, { 'Prefer': 'resolution=merge-duplicates' });
 
   /* La colonna lang arriva con migration-012. Se il database non è ancora
      aggiornato, non blocchiamo l'iscrizione: salviamo senza lingua e la
@@ -107,9 +107,15 @@ async function handleConfirm(req, res) {
   if (new Date(sub.token_expires_at) < new Date())
     return redirect(res, '/conferma-newsletter?e=expired');
 
-  const update = await sbFetch('PATCH',
+  let update = await sbFetch('PATCH',
     `newsletter_subscribers?id=eq.${sub.id}`,
-    { confirmed: true, confirmed_at: new Date().toISOString(), token: null, token_expires_at: null });
+    { confirmed: true, confirmed_at: new Date().toISOString(), token: null, token_expires_at: null, unsubscribed_at: null });
+  if (!update.ok && update.status === 400) {
+    // Pre-migration-012: la colonna non esiste ancora, ma la conferma deve funzionare.
+    update = await sbFetch('PATCH',
+      `newsletter_subscribers?id=eq.${sub.id}`,
+      { confirmed: true, confirmed_at: new Date().toISOString(), token: null, token_expires_at: null });
+  }
 
   if (!update.ok) {
     logError('nl-confirm/patch', new Error(`supabase ${update.status}`));
