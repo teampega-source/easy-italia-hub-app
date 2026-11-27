@@ -145,10 +145,10 @@ tutti i sottodomini siano HTTPS prima di chiedere il preload.
 
 ### 18. Dipendenze
 - Rimosso `shadcn` (dev, non usato): da 26 vulnerabilità a 3.
-- `@vercel/og` resta a `0.6.3`: la `1.0.3` non si importa correttamente in
+- `@vercel/og` resta a `0.6.8`: la `1.0.3` non si importa correttamente in
   Node locale (`hb.wasm` mancante). Non è un upgrade sicuro senza test sul
   runtime Edge.
-- `npm audit`: **0 critical, 0 high, 2 moderate** (`satori`/`fflate`, ZIP64).
+- `npm audit`: **0 critical, 0 high, 2 moderate** (`@vercel/og`/`satori`).
   Non c'è un fix non-breaking disponibile al momento; il pacchetto è usato solo
   per generare l'immagine OG, non per input arbitrari.
 - Dependabot settimanale e workflow `security-audit.yml`.
